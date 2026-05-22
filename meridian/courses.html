@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Courses — Meridian Institute of AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"] {
+    --bg: #080808; --bg-2: #111111; --bg-3: #1a1a1a; --bg-4: #222222;
+    --text: #f0f0f0; --text-2: #a0a0a0; --text-3: #606060;
+    --border: rgba(255,255,255,0.08); --border-2: rgba(255,255,255,0.15);
+    --accent: #5b8ff8; --accent-dim: rgba(91,143,248,0.1); --accent-dim2: rgba(91,143,248,0.05);
+    --nav-bg: rgba(8,8,8,0.9);
+    --success: #22c55e; --success-bg: rgba(34,197,94,0.08); --success-border: rgba(34,197,94,0.2);
+    --hero-gradient: radial-gradient(ellipse 80% 60% at 50% -10%, rgba(91,143,248,0.1) 0%, transparent 70%);
+  }
+  :root[data-theme="light"] {
+    --bg: #fafaf8; --bg-2: #f0f0ec; --bg-3: #e8e8e2; --bg-4: #ddddd6;
+    --text: #0a0a0a; --text-2: #555550; --text-3: #999990;
+    --border: rgba(0,0,0,0.08); --border-2: rgba(0,0,0,0.15);
+    --accent: #2563eb; --accent-dim: rgba(37,99,235,0.08); --accent-dim2: rgba(37,99,235,0.04);
+    --nav-bg: rgba(250,250,248,0.9);
+    --success: #16a34a; --success-bg: rgba(22,163,74,0.06); --success-border: rgba(22,163,74,0.2);
+    --hero-gradient: radial-gradient(ellipse 80% 60% at 50% -10%, rgba(37,99,235,0.06) 0%, transparent 70%);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'DM Sans', sans-serif; background: var(--bg);
+    color: var(--text); min-height: 100vh; transition: background 0.3s, color 0.3s;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--nav-bg); backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 5%; height: 60px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+  .nav-logo-mark {
+    width: 28px; height: 28px; border: 1.5px solid var(--accent);
+    border-radius: 6px; display: flex; align-items: center; justify-content: center;
+    font-family: 'Cormorant Garamond', serif; font-size: 16px; font-weight: 600; color: var(--accent);
+  }
+  .nav-logo-text { font-size: 13px; font-weight: 500; color: var(--text); }
+  .nav-links { display: flex; align-items: center; gap: 28px; list-style: none; }
+  .nav-links a { font-size: 13px; color: var(--text-2); text-decoration: none; transition: color 0.2s; }
+  .nav-links a:hover, .nav-links a.active { color: var(--text); }
+  .nav-right { display: flex; align-items: center; gap: 10px; }
+  .btn-login {
+    font-size: 13px; font-weight: 500; color: var(--text-2);
+    text-decoration: none; padding: 8px 16px; border-radius: 8px;
+    border: 1px solid var(--border-2); transition: all 0.2s;
+  }
+  .btn-login:hover { background: var(--bg-3); color: var(--text); }
+  .btn-signup {
+    font-size: 13px; font-weight: 500; color: #fff;
+    text-decoration: none; padding: 8px 18px; border-radius: 8px;
+    background: var(--accent); border: none; transition: opacity 0.2s;
+  }
+  .btn-signup:hover { opacity: 0.88; }
+  .theme-toggle {
+    width: 32px; height: 32px; border-radius: 7px;
+    border: 1px solid var(--border-2); background: transparent;
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+    color: var(--text-2); font-size: 14px; transition: all 0.2s;
+  }
+  .theme-toggle:hover { background: var(--bg-3); color: var(--text); }
+
+  /* HERO */
+  .hero {
+    padding: 120px 5% 60px;
+    position: relative; overflow: hidden;
+    background: var(--hero-gradient);
+  }
+  .hero-eyebrow {
+    font-size: 11px; font-weight: 500; letter-spacing: 0.15em;
+    text-transform: uppercase; color: var(--accent); margin-bottom: 16px;
+  }
+  .hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(38px, 6vw, 64px); font-weight: 300;
+    line-height: 1.05; letter-spacing: -0.02em; color: var(--text);
+    max-width: 700px; margin-bottom: 20px;
+  }
+  .hero-sub {
+    font-size: 16px; font-weight: 300; color: var(--text-2);
+    max-width: 520px; line-height: 1.7; margin-bottom: 40px;
+  }
+
+  /* LEVEL TABS */
+  .tabs-bar {
+    position: sticky; top: 60px; z-index: 90;
+    background: var(--bg); border-bottom: 1px solid var(--border);
+    padding: 0 5%;
+  }
+  .tabs {
+    display: flex; gap: 0; max-width: 100%;
+    overflow-x: auto;
+  }
+  .tab {
+    padding: 16px 24px; font-size: 13px; font-weight: 500;
+    color: var(--text-3); border-bottom: 2px solid transparent;
+    cursor: pointer; white-space: nowrap; transition: all 0.2s;
+    background: transparent; border-top: none; border-left: none; border-right: none;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .tab:hover { color: var(--text-2); }
+  .tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+  .tab-count {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 18px; height: 18px; border-radius: 50%;
+    background: var(--bg-4); font-size: 10px; font-weight: 500;
+    color: var(--text-3); margin-left: 6px; vertical-align: middle;
+  }
+  .tab.active .tab-count { background: var(--accent-dim); color: var(--accent); }
+
+  /* CONTENT */
+  .content { padding: 48px 5% 100px; }
+  .level-section { display: none; }
+  .level-section.active { display: block; }
+
+  .level-header { margin-bottom: 32px; }
+  .level-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 11px; font-weight: 500; letter-spacing: 0.12em;
+    text-transform: uppercase; padding: 6px 14px; border-radius: 100px;
+    margin-bottom: 14px;
+  }
+  .badge-beginner { background: var(--success-bg); color: var(--success); border: 1px solid var(--success-border); }
+  .badge-intermediate { background: var(--accent-dim); color: var(--accent); border: 1px solid rgba(91,143,248,0.2); }
+  .badge-advanced { background: rgba(168,85,247,0.08); color: #a855f7; border: 1px solid rgba(168,85,247,0.2); }
+  .level-title {
+    font-family: 'Cormorant Garamond', serif; font-size: 32px;
+    font-weight: 300; color: var(--text); margin-bottom: 8px; line-height: 1.2;
+  }
+  .level-desc { font-size: 14px; font-weight: 300; color: var(--text-2); line-height: 1.7; }
+
+  /* COURSE GRID */
+  .course-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 16px; margin-top: 28px;
+  }
+  .course-card {
+    background: var(--bg-2); border: 1px solid var(--border);
+    border-radius: 16px; padding: 28px;
+    transition: all 0.25s; cursor: pointer;
+    position: relative; overflow: hidden;
+  }
+  .course-card:hover { border-color: var(--border-2); transform: translateY(-2px); }
+  .course-card.available:hover { border-color: rgba(91,143,248,0.35); }
+  .course-card.completed { border-color: var(--success-border); }
+  .course-card.coming-soon { cursor: pointer; }
+  .course-card-top {
+    display: flex; justify-content: space-between;
+    align-items: flex-start; margin-bottom: 18px;
+  }
+  .course-icon { font-size: 32px; }
+  .course-status-badge {
+    font-size: 10px; font-weight: 500; letter-spacing: 0.1em;
+    text-transform: uppercase; padding: 4px 10px; border-radius: 100px;
+  }
+  .status-free { background: var(--success-bg); color: var(--success); border: 1px solid var(--success-border); }
+  .status-paid { background: var(--accent-dim); color: var(--accent); border: 1px solid rgba(91,143,248,0.2); }
+  .status-soon { background: var(--bg-4); color: var(--text-3); border: 1px solid var(--border-2); }
+  .status-done { background: var(--success-bg); color: var(--success); border: 1px solid var(--success-border); }
+  .course-name {
+    font-size: 17px; font-weight: 500; color: var(--text);
+    margin-bottom: 10px; line-height: 1.3;
+  }
+  .course-desc {
+    font-size: 13px; color: var(--text-2); line-height: 1.65; margin-bottom: 22px;
+  }
+  .course-meta {
+    display: flex; gap: 16px; font-size: 12px; color: var(--text-3);
+    margin-bottom: 20px;
+  }
+  .course-meta span { display: flex; align-items: center; gap: 5px; }
+  .course-footer {
+    display: flex; align-items: center; justify-content: space-between;
+    padding-top: 18px; border-top: 1px solid var(--border);
+  }
+  .course-price {
+    font-family: 'Cormorant Garamond', serif; font-size: 22px;
+    font-weight: 600; color: var(--text);
+  }
+  .course-price small {
+    font-family: 'DM Sans', sans-serif; font-size: 12px;
+    font-weight: 400; color: var(--text-3); margin-left: 2px;
+  }
+  .btn-card {
+    font-size: 13px; font-weight: 500; padding: 9px 18px;
+    border-radius: 8px; border: none; cursor: pointer;
+    font-family: 'DM Sans', sans-serif; transition: all 0.2s;
+    text-decoration: none; display: inline-block;
+  }
+  .btn-card-primary { background: var(--accent); color: #fff; }
+  .btn-card-primary:hover { opacity: 0.88; }
+  .btn-card-ghost { background: transparent; color: var(--text-2); border: 1px solid var(--border-2) !important; }
+  .btn-card-ghost:hover { background: var(--bg-3); color: var(--text); }
+  .btn-card-done { background: var(--success-bg); color: var(--success); border: 1px solid var(--success-border) !important; }
+
+  /* PROGRESS BAR ON CARD */
+  .card-progress { margin-bottom: 18px; }
+  .card-progress-label {
+    display: flex; justify-content: space-between;
+    font-size: 11px; color: var(--text-3); margin-bottom: 6px;
+  }
+  .card-progress-track { height: 3px; background: var(--border); border-radius: 2px; overflow: hidden; }
+  .card-progress-fill { height: 100%; border-radius: 2px; transition: width 0.5s; }
+  .fill-accent { background: var(--accent); }
+  .fill-success { background: var(--success); }
+
+  /* NOTIFY POPUP */
+  .overlay {
+    position: fixed; inset: 0; z-index: 200;
+    background: rgba(0,0,0,0.7); backdrop-filter: blur(4px);
+    display: none; align-items: center; justify-content: center;
+    padding: 24px;
+  }
+  .overlay.show { display: flex; }
+  .popup {
+    background: var(--bg-2); border: 1px solid var(--border-2);
+    border-radius: 20px; padding: 40px; max-width: 440px; width: 100%;
+    position: relative;
+  }
+  .popup-close {
+    position: absolute; top: 16px; right: 16px;
+    width: 32px; height: 32px; border-radius: 8px;
+    background: var(--bg-3); border: 1px solid var(--border);
+    cursor: pointer; font-size: 16px; color: var(--text-2);
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s;
+  }
+  .popup-close:hover { color: var(--text); }
+  .popup-icon { font-size: 36px; margin-bottom: 16px; }
+  .popup-eyebrow {
+    font-size: 10px; font-weight: 500; letter-spacing: 0.15em;
+    text-transform: uppercase; color: var(--accent); margin-bottom: 10px;
+  }
+  .popup-title {
+    font-family: 'Cormorant Garamond', serif; font-size: 28px;
+    font-weight: 300; color: var(--text); margin-bottom: 10px;
+  }
+  .popup-desc { font-size: 14px; color: var(--text-2); line-height: 1.6; margin-bottom: 24px; }
+  .popup-input {
+    width: 100%; padding: 12px 16px;
+    background: var(--bg); border: 1px solid var(--border-2);
+    border-radius: 10px; font-size: 15px; font-family: 'DM Sans', sans-serif;
+    color: var(--text); outline: none; margin-bottom: 12px; transition: border-color 0.2s;
+  }
+  .popup-input:focus { border-color: var(--accent); }
+  .popup-input::placeholder { color: var(--text-3); }
+  .btn-notify {
+    width: 100%; padding: 13px; border-radius: 10px;
+    font-size: 14px; font-weight: 500; font-family: 'DM Sans', sans-serif;
+    background: var(--accent); color: #fff; border: none; cursor: pointer;
+    transition: opacity 0.2s;
+  }
+  .btn-notify:hover { opacity: 0.88; }
+  .notify-success {
+    text-align: center; padding: 16px; font-size: 14px;
+    color: var(--success); display: none;
+  }
+  .notify-success.show { display: block; }
+
+  /* SIGNUP GATE POPUP */
+  .gate-popup {
+    background: var(--bg-2); border: 1px solid var(--border-2);
+    border-radius: 20px; padding: 40px; max-width: 480px; width: 100%;
+    position: relative; text-align: center;
+  }
+  .gate-cert {
+    width: 72px; height: 72px; border-radius: 16px;
+    background: var(--accent-dim); border: 1px solid rgba(91,143,248,0.25);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 32px; margin: 0 auto 20px;
+  }
+  .gate-title {
+    font-family: 'Cormorant Garamond', serif; font-size: 30px;
+    font-weight: 300; color: var(--text); margin-bottom: 12px; line-height: 1.2;
+  }
+  .gate-desc { font-size: 14px; color: var(--text-2); line-height: 1.7; margin-bottom: 28px; }
+  .gate-perks {
+    display: flex; flex-direction: column; gap: 10px;
+    margin-bottom: 28px; text-align: left;
+  }
+  .gate-perk {
+    display: flex; align-items: center; gap: 12px;
+    font-size: 13px; color: var(--text-2); padding: 12px 16px;
+    background: var(--bg-3); border-radius: 10px;
+  }
+  .gate-perk-icon { font-size: 18px; flex-shrink: 0; }
+  .btn-gate-signup {
+    display: block; width: 100%; padding: 14px;
+    border-radius: 10px; font-size: 15px; font-weight: 500;
+    font-family: 'DM Sans', sans-serif; background: var(--accent);
+    color: #fff; border: none; cursor: pointer; text-decoration: none;
+    transition: opacity 0.2s; margin-bottom: 12px;
+  }
+  .btn-gate-signup:hover { opacity: 0.88; }
+  .btn-gate-login {
+    display: block; width: 100%; padding: 13px;
+    border-radius: 10px; font-size: 14px; font-weight: 500;
+    font-family: 'DM Sans', sans-serif; background: transparent;
+    color: var(--text-2); border: 1px solid var(--border-2);
+    cursor: pointer; text-decoration: none; transition: all 0.2s;
+  }
+  .btn-gate-login:hover { background: var(--bg-3); color: var(--text); }
+  .gate-note { font-size: 12px; color: var(--text-3); margin-top: 16px; }
+
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .course-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">
+    <div class="nav-logo-mark">M</div>
+    <span class="nav-logo-text">Meridian Institute of AI</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="courses.html" class="active">Courses</a></li>
+    <li><a href="index.html#about">About</a></li>
+    <li><a href="index.html#pricing">Pricing</a></li>
+  </ul>
+  <div class="nav-right">
+    <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">☀</span></button>
+    <a href="login.html" class="btn-login">Log in</a>
+    <a href="signup.html" class="btn-signup">Sign up free</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-eyebrow">Course Catalog</div>
+  <h1>Every course you need<br>to master AI.</h1>
+  <p class="hero-sub">Start free with Foundations. Go deeper into the domains that matter for your career and goals. Earn certificates that mean something.</p>
+</div>
+
+<!-- TABS -->
+<div class="tabs-bar">
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab('beginner')">Beginner <span class="tab-count">2</span></button>
+    <button class="tab" onclick="switchTab('intermediate')">Intermediate <span class="tab-count">6</span></button>
+    <button class="tab" onclick="switchTab('advanced')">Advanced <span class="tab-count">4</span></button>
+  </div>
+</div>
+
+<!-- CONTENT -->
+<div class="content">
+
+  <!-- BEGINNER -->
+  <div class="level-section active" id="tab-beginner">
+    <div class="level-header">
+      <div class="level-badge badge-beginner">Beginner · Free</div>
+      <h2 class="level-title">Build the foundation.<br>No experience required.</h2>
+      <p class="level-desc">Everything starts here. These courses are completely free and designed for anyone — regardless of technical background. Finish a beginner course and you'll understand AI better than most adults working in tech today.</p>
+    </div>
+    <div class="course-grid" id="beginner-grid">
+
+      <div class="course-card available" onclick="handleCourseClick('foundations')">
+        <div class="course-card-top">
+          <div class="course-icon">🧠</div>
+          <span class="course-status-badge status-free" id="foundations-badge">Free</span>
+        </div>
+        <div class="course-name">Foundations of AI</div>
+        <div class="course-desc">What AI actually is, how it works, the tools that exist right now, prompt engineering, ethics, and your first real AI project. The course that makes everything else make sense.</div>
+        <div class="course-meta">
+          <span>📚 6 modules</span>
+          <span>⏱ ~2 hours</span>
+          <span>🏆 Certificate</span>
+        </div>
+        <div class="card-progress" id="foundations-progress" style="display:none;">
+          <div class="card-progress-label">
+            <span>Progress</span>
+            <span id="foundations-pct">0%</span>
+          </div>
+          <div class="card-progress-track">
+            <div class="card-progress-fill fill-accent" id="foundations-fill" style="width:0%"></div>
+          </div>
+        </div>
+        <div class="course-footer">
+          <div class="course-price">$0 <small>/ free forever</small></div>
+          <button class="btn-card btn-card-primary" id="foundations-btn">Start course →</button>
+        </div>
+      </div>
+
+      <div class="course-card coming-soon" onclick="openNotify('AI Tools Deep Dive', '🛠️')">
+        <div class="course-card-top">
+          <div class="course-icon">🛠️</div>
+          <span class="course-status-badge status-soon">Coming Soon</span>
+        </div>
+        <div class="course-name">AI Tools Deep Dive</div>
+        <div class="course-desc">A course dedicated to every major AI tool — Claude, ChatGPT, Gemini, Midjourney, Perplexity and more. When to use each, how to get the most out of them, and how they compare.</div>
+        <div class="course-meta">
+          <span>📚 8 modules</span>
+          <span>⏱ ~2.5 hours</span>
+          <span>🏆 Certificate</span>
+        </div>
+        <div class="course-footer">
+          <div class="course-price">$0 <small>/ free forever</small></div>
+          <button class="btn-card btn-card-ghost">Notify me</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- INTERMEDIATE -->
+  <div class="level-section" id="tab-intermediate">
+    <div class="level-header">
+      <div class="level-badge badge-intermediate">Intermediate · $10</div>
+      <h2 class="level-title">Apply AI to the field<br>you're building toward.</h2>
+      <p class="level-desc">Each track is built around a specific domain. Real tools, real workflows, real outcomes. Complete the Foundations course first, then pick the domain that matters most to you.</p>
+    </div>
+    <div class="course-grid">
+
+      <div class="course-card coming-soon" onclick="openNotify('AI in Finance', '📈')">
+        <div class="course-card-top">
+          <div class="course-icon">📈</div>
+          <span class="course-status-badge status-soon">Coming Soon</span>
+        </div>
+        <div class="course-name">AI in Finance</div>
+        <div class="course-desc">Stock analysis, pattern recognition, portfolio optimization, and market intelligence. Learn to use AI the way Wall Street analysts wish they had when they were starting out.</div>
+        <div class="course-meta">
+          <span>📚 7 modules</span>
+          <span>⏱ ~3 hours</span>
+          <span>🏆 Certificate</span>
+        </div>
+        <div class="course-footer">
+          <div class="course-price">$10</div>
+          <button class="btn-card btn-card-ghost">Notify me</button>
+        </div>
+      </div>
+
+      <div class="course-card coming-soon" onclick="openNotify('AI in Law', '⚖️')">
+        <div class="course-card-top">
+          <div class="course-icon">⚖️</div>
+          <span class="course-status-badge status-soon">Coming Soon</span>
+        </div>
+        <div class="course-name">AI in Law</div>
+        <div class="course-desc">Contract review, legal research automation, document summarization, and compliance analysis. Built with real law firm workflows — not textbook theory.</div>
+        <div class="course-meta">
+          <span>📚 7 modules</span>
+          <span>⏱ ~3 hours</span>
+          <span>🏆 Certificate</span>
+        </div>
+        <div class="course-footer">
+          <div class="course-price">$10</div>
+          <button class="btn-card btn-card-ghost">Notify me</button>
+        </div>
+      </div>
+
+      <div class="course-card coming-soon" onclick="openNotify('AI in Cybersecurity', '🛡️')">
+        <div class="course-card-top">
+          <div class="course-icon">🛡️</div>
+          <span class="course-status-badge status-soon">Coming Soon</span>
+        </div>
+        <div class="course-name">AI in Cybersecurity</div>
+        <div class="course-desc">Threat detection, vulnerability analysis, automated monitoring, and security intelligence. How the best security teams are using AI to stay ahead of attacks.</div>
+        <div class="course-meta">
+          <span>📚 8 modules</span>
+          <span>⏱ ~3.5 hours</span>
+          <span>🏆 Certificate</span>
+        </div>
+        <div class="course-footer">
+          <div class="course-price">$10</div>
+          <button class="btn-card btn-card-ghost">Notify me</button>
+        </div>
+      </div>
+
+      <div class="course-card coming-soon" onclick="openNotify('AI in Healthcare', '🏥')">
+        <div class="course-card-top">
+          <div class="course-icon">🏥</div>
+          <span class="course-status-badge status-soon">Coming Soon</span>
+        </div>
+        <div class="course-name">AI in Healthcare</div>
+        <div class="course-desc">Diagnostic support, medical research synthesis, patient data analysis, and clinical decision tools. The intersection of AI and medicine is one of the most important spaces in the world right now.</div>
+        <div class="course-meta">
+          <span>📚 7 modules</span>
+          <span>⏱ ~3 hours</span>
+          <span>🏆 Certificate</span>
+        </div>
+        <div class="course-footer">
+          <div class="course-price">$10</div>
+          <button class="btn-card btn-card-ghost">Notify me</button>
+        </div>
+      </div>
+
+      <div class="course-card coming-soon" onclick="openNotify('AI in Governance & Policy', '🏛️')">
+        <div class="course-card-top">
+          <div class="course-icon">🏛️</div>
+          <span class="course-status-badge status-soon">Coming Soon</span>
+        </div>
+        <div class="course-name">AI in Governance & Policy</div>
+        <div class="course-desc">Policy analysis, regulation frameworks, international cooperation tools, and civic AI applications. The course nobody else is building — and the one the world needs most.</div>
+        <div class="course-meta">
+          <span>📚 8 modules</span>
+          <span>⏱ ~3.5 hours</span>
+          <span>🏆 Certificate</span>
+        </div>
+        <div class="course-footer">
+          <div class="course-price">$10</div>
+          <button class="btn-card btn-card-ghost">Notify me</button>
+        </div>
+      </div>
+
+      <div class="course-card coming-soon" onclick="openNotify('AI for Productivity', '⚡')">
+        <div class="course-card-top">
+          <div class="course-icon">⚡</div>
+          <span class="course-status-badge status-soon">Coming Soon</span>
+        </div>
+        <div class="course-name">AI for Productivity</div>
+        <div class="course-desc">Summarization, writing enhancement, research automation, and intelligent workflow design. Double your output without doubling your hours.</div>
+        <div class="course-meta">
+          <span>📚 6 modules</span>
+          <span>⏱ ~2.5 hours</span>
+          <span>🏆 Certificate</span>
+        </div>
+        <div class="course-footer">
+          <div class="course-price">$10</div>
+          <button class="btn-card btn-card-ghost">Notify me</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ADVANCED -->
+  <div class="level-section" id="tab-advanced">
+    <div class="level-header">
+      <div class="level-badge badge-advanced">Advanced · $20</div>
+      <h2 class="level-title">Deep mastery.<br>Portfolio-ready work.</h2>
+      <p class="level-desc">Advanced tracks go beyond application into architecture, strategy, and systems thinking. You leave with a capstone project and expert certification. These are for people building the future, not just using it.</p>
+    </div>
+    <div class="course-grid">
+
+      <div class="course-card coming-soon" onclick="openNotify('Building AI Systems', '⚙️')">
+        <div class="course-card-top">
+          <div class="course-icon">⚙️</div>
+          <span class="course-status-badge status-soon">Coming Soon</span>
+        </div>
+        <div class="course-name">Building AI Systems</div>
+        <div class="course-desc">How to architect, prompt, and chain AI systems that do real work. APIs, agents, automation pipelines, and production deployment. For builders, not just users.</div>
+        <div class="course-meta">
+          <span>📚 10 modules</span>
+          <span>⏱ ~5 hours</span>
+          <span>🏆 Expert Certificate</span>
+        </div>
+        <div class="course-footer">
+          <div class="course-price">$20</div>
+          <button class="btn-card btn-card-ghost">Notify me</button>
+        </div>
+      </div>
+
+      <div class="course-card coming-soon" onclick="openNotify('AI Strategy & Leadership', '🎯')">
+        <div class="course-card-top">
+          <div class="course-icon">🎯</div>
+          <span class="course-status-badge status-soon">Coming Soon</span>
+        </div>
+        <div class="course-name">AI Strategy & Leadership</div>
+        <div class="course-desc">How to lead AI adoption in organizations. Strategy frameworks, change management, ethical deployment, and building teams that use AI well. For the people making decisions.</div>
+        <div class="course-meta">
+          <span>📚 9 modules</span>
+          <span>⏱ ~4.5 hours</span>
+          <span>🏆 Expert Certificate</span>
+        </div>
+        <div class="course-footer">
+          <div class="course-price">$20</div>
+          <button class="btn-card btn-card-ghost">Notify me</button>
+        </div>
+      </div>
+
+      <div class="course-card coming-soon" onclick="openNotify('AI Ethics & Safety', '🔬')">
+        <div class="course-card-top">
+          <div class="course-icon">🔬</div>
+          <span class="course-status-badge status-soon">Coming Soon</span>
+        </div>
+        <div class="course-name">AI Ethics & Safety</div>
+        <div class="course-desc">Bias, alignment, regulation, and the long-term trajectory of AI development. For people who want to understand — and shape — what comes next.</div>
+        <div class="course-meta">
+          <span>📚 9 modules</span>
+          <span>⏱ ~4 hours</span>
+          <span>🏆 Expert Certificate</span>
+        </div>
+        <div class="course-footer">
+          <div class="course-price">$20</div>
+          <button class="btn-card btn-card-ghost">Notify me</button>
+        </div>
+      </div>
+
+      <div class="course-card coming-soon" onclick="openNotify('AI & The Future of Work', '🌐')">
+        <div class="course-card-top">
+          <div class="course-icon">🌐</div>
+          <span class="course-status-badge status-soon">Coming Soon</span>
+        </div>
+        <div class="course-name">AI & The Future of Work</div>
+        <div class="course-desc">Which jobs AI will transform, which it will create, and how to position yourself ahead of the curve. Economic analysis, career strategy, and what the data actually says.</div>
+        <div class="course-meta">
+          <span>📚 8 modules</span>
+          <span>⏱ ~4 hours</span>
+          <span>🏆 Expert Certificate</span>
+        </div>
+        <div class="course-footer">
+          <div class="course-price">$20</div>
+          <button class="btn-card btn-card-ghost">Notify me</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- NOTIFY POPUP -->
+<div class="overlay" id="notify-overlay" onclick="closeNotify(event)">
+  <div class="popup">
+    <button class="popup-close" onclick="closeNotifyBtn()">✕</button>
+    <div class="popup-icon" id="notify-icon">📈</div>
+    <div class="popup-eyebrow">Coming Soon</div>
+    <div class="popup-title" id="notify-title">AI in Finance</div>
+    <div class="popup-desc">This course is in development. Drop your email and you'll be the first to know when it launches — plus get an early access discount.</div>
+    <input type="email" class="popup-input" id="notify-email" placeholder="your@email.com">
+    <button class="btn-notify" onclick="submitNotify()">Notify me when it's ready</button>
+    <div class="notify-success" id="notify-success">You're on the list. We'll reach out the moment it launches. 🎉</div>
+  </div>
+</div>
+
+<!-- SIGNUP GATE POPUP -->
+<div class="overlay" id="gate-overlay" onclick="closeGate(event)">
+  <div class="gate-popup">
+    <button class="popup-close" onclick="closeGateBtn()">✕</button>
+    <div class="gate-cert">🏆</div>
+    <div class="gate-title">Earn your certificate.<br>Track your progress.</div>
+    <div class="gate-desc">Create a free account to start the course, save your progress, and earn a verified Meridian certificate when you complete it.</div>
+    <div class="gate-perks">
+      <div class="gate-perk">
+        <span class="gate-perk-icon">🏆</span>
+        <span>Earn a verified certificate you can share on LinkedIn and your resume</span>
+      </div>
+      <div class="gate-perk">
+        <span class="gate-perk-icon">📊</span>
+        <span>Track your progress across all modules automatically</span>
+      </div>
+      <div class="gate-perk">
+        <span class="gate-perk-icon">🔓</span>
+        <span>Unlock all 6 modules and the final AI project</span>
+      </div>
+      <div class="gate-perk">
+        <span class="gate-perk-icon">✅</span>
+        <span>Always free — no credit card required</span>
+      </div>
+    </div>
+    <a href="signup.html" class="btn-gate-signup">Create free account →</a>
+    <a href="login.html" class="btn-gate-login">Already have an account? Sign in</a>
+    <p class="gate-note">Takes less than 60 seconds. No spam, ever.</p>
+  </div>
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",
+    authDomain: "meridian-institute.firebaseapp.com",
+    projectId: "meridian-institute",
+    storageBucket: "meridian-institute.firebasestorage.app",
+    messagingSenderId: "355371012929",
+    appId: "1:355371012929:web:244fc2f15ee8ac656887c0",
+    measurementId: "G-ER0EN6DE4N"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+
+  onAuthStateChanged(auth, async (user) => {
+    if (user) {
+      // Update nav for logged in user
+      const navRight = document.querySelector('.nav-right');
+      const firstName = user.displayName ? user.displayName.split(' ')[0] : 'You';
+      navRight.innerHTML = `
+        <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">☀</span></button>
+        <a href="dashboard.html" style="font-size:13px;font-weight:500;color:var(--text-2);text-decoration:none;padding:8px 16px;border-radius:8px;border:1px solid var(--border-2);transition:all 0.2s;">My dashboard</a>
+      `;
+
+      // Load progress
+      try {
+        const userDoc = await getDoc(doc(db, 'users', user.uid));
+        if (userDoc.exists()) {
+          const completedModules = userDoc.data().completedModules || [];
+          const totalModules = 6;
+          const pct = Math.round((completedModules.length / totalModules) * 100);
+
+          document.getElementById('foundations-progress').style.display = 'block';
+          document.getElementById('foundations-pct').textContent = pct + '%';
+          document.getElementById('foundations-fill').style.width = pct + '%';
+
+          const btn = document.getElementById('foundations-btn');
+          const badge = document.getElementById('foundations-badge');
+          if (pct === 100) {
+            btn.textContent = 'Review course';
+            btn.className = 'btn-card btn-card-done';
+            badge.textContent = 'Completed';
+            badge.className = 'course-status-badge status-done';
+            document.getElementById('foundations-fill').className = 'card-progress-fill fill-success';
+          } else if (pct > 0) {
+            btn.textContent = 'Continue →';
+          }
+        }
+      } catch(e) {}
+
+      // Override course click for logged in users
+      window.handleCourseClick = function(course) {
+        if (course === 'foundations') {
+          window.location.href = 'module-1-what-ai-actually-is.html';
+        }
+      }
+    }
+  });
+
+  window.switchTab = function(tab) {
+    document.querySelectorAll('.level-section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.getElementById('tab-' + tab).classList.add('active');
+    event.target.classList.add('active');
+  }
+
+  window.handleCourseClick = function(course) {
+    if (course === 'foundations') {
+      document.getElementById('gate-overlay').classList.add('show');
+    }
+  }
+
+  window.openNotify = function(name, icon) {
+    document.getElementById('notify-title').textContent = name;
+    document.getElementById('notify-icon').textContent = icon;
+    document.getElementById('notify-email').value = '';
+    document.getElementById('notify-success').classList.remove('show');
+    document.getElementById('notify-overlay').classList.add('show');
+  }
+
+  window.closeNotify = function(e) {
+    if (e.target === document.getElementById('notify-overlay')) {
+      document.getElementById('notify-overlay').classList.remove('show');
+    }
+  }
+
+  window.closeNotifyBtn = function() {
+    document.getElementById('notify-overlay').classList.remove('show');
+  }
+
+  window.submitNotify = function() {
+    const email = document.getElementById('notify-email').value.trim();
+    if (!email || !email.includes('@')) {
+      document.getElementById('notify-email').style.borderColor = '#ef4444';
+      return;
+    }
+    document.getElementById('notify-email').style.borderColor = '';
+    document.getElementById('notify-success').classList.add('show');
+    document.getElementById('notify-email').style.display = 'none';
+    document.querySelector('.btn-notify').style.display = 'none';
+  }
+
+  window.closeGate = function(e) {
+    if (e.target === document.getElementById('gate-overlay')) {
+      document.getElementById('gate-overlay').classList.remove('show');
+    }
+  }
+
+  window.closeGateBtn = function() {
+    document.getElementById('gate-overlay').classList.remove('show');
+  }
+
+  window.toggleTheme = function() {
+    const html = document.documentElement;
+    const icon = document.getElementById('theme-icon');
+    if (html.getAttribute('data-theme') === 'dark') {
+      html.setAttribute('data-theme', 'light');
+      icon.textContent = '☾';
+    } else {
+      html.setAttribute('data-theme', 'dark');
+      icon.textContent = '☀';
+    }
+  }
+</script>
+</body>
+</html>
