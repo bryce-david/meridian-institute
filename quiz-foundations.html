@@ -282,8 +282,8 @@
       <h1 class="intro-title">Final Assessment</h1>
       <p class="intro-desc">This assessment covers all six modules of the Foundations of AI course. Pass it and you'll earn your verified Meridian certificate — proof that you understand AI at a level most people don't.</p>
       <div class="intro-rules">
-        <div class="rule-item"><span class="rule-icon">📝</span><span><strong style="color:var(--text)">15 questions</strong> drawn from all six modules</span></div>
-        <div class="rule-item"><span class="rule-icon">🎯</span><span><strong style="color:var(--text)">75% passing score</strong> — you need 14 out of 18 correct</span></div>
+        <div class="rule-item"><span class="rule-icon">📝</span><span><strong style="color:var(--text)">15 questions</strong> drawn randomly from a question bank</span></div>
+        <div class="rule-item"><span class="rule-icon">🎯</span><span><strong style="color:var(--text)">70% passing score</strong> — you need 11 out of 15 correct</span></div>
         <div class="rule-item"><span class="rule-icon">🔄</span><span><strong style="color:var(--text)">Unlimited retakes</strong> — questions reshuffle each time</span></div>
         <div class="rule-item"><span class="rule-icon">⏱</span><span><strong style="color:var(--text)">No time limit</strong> — read each question carefully</span></div>
         <div class="rule-item"><span class="rule-icon">🏆</span><span><strong style="color:var(--text)">Certificate awarded</strong> immediately on passing</span></div>
@@ -373,221 +373,319 @@
   const db = getFirestore(app);
 
   const ALL_QUESTIONS = [
+    // MODULE 1 — What AI Actually Is
     {
-      module: "Module 1 — What AI Actually Is",
+      module: "Module 1",
       question: "What most accurately explains why AI can perform tasks that traditional software cannot?",
-      options: [
-        "AI hardware operates at speeds that standard processors cannot match",
-        "AI learns statistical patterns from data rather than following explicit programmed rules",
-        "AI systems store significantly more information than conventional databases",
-        "AI programs are written by larger teams using more sophisticated methods"
-      ],
+      options: ["AI hardware operates at speeds that standard processors cannot match","AI learns statistical patterns from data rather than following explicit programmed rules","AI systems store significantly more information than conventional databases","AI programs are written by larger teams using more sophisticated methods"],
       correct: 1,
       explanation: "Traditional software executes rules a programmer wrote. AI learns patterns from examples — that difference lets it handle tasks too complex or ambiguous to program directly."
     },
     {
-      module: "Module 1 — What AI Actually Is",
+      module: "Module 1",
       question: "General AI — a system that reasons across any domain the way humans do — is best described as:",
-      options: [
-        "Operational in limited form within the most advanced current models",
-        "Developed privately by major tech companies but withheld from public release",
-        "A long-term research goal that does not yet exist in any form",
-        "Present only within classified government and military systems"
-      ],
+      options: ["Operational in limited form within the most advanced current models","Developed privately by major tech companies but withheld from public release","A long-term research goal that does not yet exist in any form","Present only within classified government and military systems"],
       correct: 2,
       explanation: "General AI does not exist. Every AI system today — no matter how capable — is narrow, meaning it cannot generalize beyond what it was trained to do."
     },
     {
-      module: "Module 1 — What AI Actually Is",
-      question: "A spam filter that reliably sorts email but cannot write code or answer questions is an example of:",
-      options: [
-        "Narrow AI — capable within one domain but unable to generalize beyond it",
-        "General AI operating within a deliberately constrained environment",
-        "A system that has reached the upper boundary of machine learning capability",
-        "Early-stage Artificial General Intelligence running in a limited deployment"
-      ],
+      module: "Module 1",
+      question: "A spam filter that reliably sorts email but cannot write code or hold a conversation is an example of:",
+      options: ["Narrow AI — capable within one domain but unable to generalize beyond it","General AI operating within a deliberately constrained environment","A system that has reached the upper boundary of machine learning capability","Early-stage Artificial General Intelligence running in a limited deployment"],
       correct: 0,
-      explanation: "A system that excels at one task but cannot generalize is narrow AI — the category that includes every AI system that exists today, from spam filters to language models."
+      explanation: "A system that excels at one task but cannot generalize is narrow AI — the category that includes every AI system that exists today."
     },
     {
-      module: "Module 1 — What AI Actually Is",
-      question: "Why did the 2017 paper 'Attention Is All You Need' become so significant to the field of AI?",
-      options: [
-        "It introduced the first training method that eliminated hallucination in language models",
-        "It established the legal framework for AI intellectual property that companies use today",
-        "It introduced the Transformer architecture that now underlies virtually all major language models",
-        "It demonstrated for the first time that AI could outperform humans on reading comprehension"
-      ],
+      module: "Module 1",
+      question: "Why did the 2017 paper 'Attention Is All You Need' become so significant to AI?",
+      options: ["It introduced the first training method that eliminated hallucination in language models","It established the legal framework for AI intellectual property used by companies today","It introduced the Transformer architecture that now underlies virtually all major language models","It demonstrated for the first time that AI could outperform humans on reading comprehension"],
       correct: 2,
       explanation: "The Transformer introduced an attention mechanism that lets AI understand context and relationships in language at scale. Claude, GPT, and Gemini are all built on this architecture."
     },
     {
-      module: "Module 2 — How AI Models Work",
+      module: "Module 1",
+      question: "Alan Turing's 1950 paper is significant to AI history primarily because:",
+      options: ["It provided the first working algorithm for machine learning systems","It raised the foundational question of whether machines can think","It demonstrated the first successful computer vision classification system","It established the mathematical framework underlying modern neural networks"],
+      correct: 1,
+      explanation: "Turing's paper asked 'Can machines think?' and proposed the Turing Test — a foundational question that launched the entire field of artificial intelligence research."
+    },
+    {
+      module: "Module 1",
+      question: "The 2012 deep learning breakthrough at the University of Toronto was significant because:",
+      options: ["It produced the first AI system to achieve any form of general intelligence","It dramatically outperformed all other approaches to image recognition by a wide margin","It created the first chatbot capable of passing the Turing Test in formal evaluation","It demonstrated that AI could learn useful representations without any human-labeled data"],
+      correct: 1,
+      explanation: "The breakthrough showed that deep neural networks, given enough data and compute, could crush previous approaches to image recognition — triggering the modern AI era."
+    },
+    {
+      module: "Module 1",
+      question: "ChatGPT reaching 100 million users in two months was significant primarily because:",
+      options: ["It proved AI had achieved human-level intelligence for the first time in history","It made AI more capable than any previous model by a statistically significant margin","It was the first time ordinary people could interact meaningfully with a capable AI system","It demonstrated that AI could generate images as well as coherent natural language text"],
+      correct: 2,
+      explanation: "ChatGPT wasn't the most powerful model — it was the most accessible. It was the first AI that normal people could actually talk to, making the technology impossible to ignore."
+    },
+    {
+      module: "Module 1",
+      question: "Which combination of factors best explains the dramatic acceleration in AI capability over the last decade?",
+      options: ["Government funding, university research programs, and new programming languages","Cheaper and faster hardware, much larger datasets, and algorithmic breakthroughs converging","Open source collaboration, cloud computing infrastructure, and reduced regulatory oversight","Competition between major tech companies, venture capital investment, and global talent migration"],
+      correct: 1,
+      explanation: "Three things converged: compute got cheap, data exploded with the internet, and the Transformer architecture arrived. Each amplified the others."
+    },
+    // MODULE 2 — How AI Models Work
+    {
+      module: "Module 2",
       question: "At the most fundamental level, what is a language model doing when it generates a response?",
-      options: [
-        "Retrieving pre-written answers from a structured knowledge database it was given",
-        "Applying grammatical and logical rules programmed by its developers",
-        "Predicting the most statistically likely next token given the preceding context",
-        "Searching the web in real time and summarizing the most relevant results"
-      ],
+      options: ["Retrieving pre-written answers from a structured knowledge database it was given","Applying grammatical and logical rules programmed by its developers","Predicting the most statistically likely next token given the preceding context","Searching the web in real time and summarizing the most relevant results found"],
       correct: 2,
-      explanation: "Language models predict the next most probable token given everything before it. Applied at enormous scale across billions of parameters, this simple mechanism produces remarkably coherent output."
+      explanation: "Language models predict the next most probable token given everything before it. Applied at enormous scale, this simple mechanism produces remarkably coherent output."
     },
     {
-      module: "Module 2 — How AI Models Work",
+      module: "Module 2",
       question: "Once an AI model finishes training, what happens to its knowledge?",
-      options: [
-        "It updates automatically whenever new information is published online",
-        "It becomes fixed — the model cannot learn or update from new conversations",
-        "It gradually degrades in accuracy unless the model is periodically retrained",
-        "It expands through interactions with users who correct errors over time"
-      ],
+      options: ["It updates automatically whenever new information is published online","It becomes fixed — the model cannot learn or update from new conversations","It gradually degrades in accuracy unless the model is periodically retrained on new data","It expands through interactions with users who correct its errors over time"],
       correct: 1,
-      explanation: "After training, the model's weights are frozen. It does not learn from conversations or absorb new information. This is exactly why every language model has a knowledge cutoff date."
+      explanation: "After training, the model's weights are frozen. It does not learn from conversations or absorb new information — which is why every model has a knowledge cutoff date."
     },
     {
-      module: "Module 2 — How AI Models Work",
+      module: "Module 2",
       question: "AI hallucination — generating confident but factually false statements — most directly results from:",
-      options: [
-        "Insufficient storage preventing models from retaining accurate factual information",
-        "Training datasets that contain a high proportion of intentionally misleading content",
-        "Engineers not yet developing reliable real-time fact-checking layers for production models",
-        "Models being optimized for fluent and coherent text rather than verified factual accuracy"
-      ],
+      options: ["Insufficient storage preventing models from retaining accurate factual information","Training datasets that contain a high proportion of intentionally misleading content","Engineers not yet developing reliable real-time fact-checking layers for production models","Models being optimized for fluent and coherent text rather than verified factual accuracy"],
       correct: 3,
-      explanation: "Models optimize for plausible, coherent text — not verified truth. The most statistically likely continuation of a sentence can be completely false, and the model has no way to detect this."
+      explanation: "Models optimize for plausible, coherent text — not verified truth. The most statistically likely continuation of a sentence can be completely false."
     },
     {
-      module: "Module 2 — How AI Models Work",
+      module: "Module 2",
       question: "RLHF — Reinforcement Learning from Human Feedback — shapes AI models by:",
-      options: [
-        "Using human preferences between response pairs to train models toward more helpful behavior",
-        "Having engineers manually review and rewrite every model response before deployment",
-        "Connecting models to live human feedback systems that update their weights in real time",
-        "Filtering out harmful content from training data before the main training process begins"
-      ],
+      options: ["Using human preferences between response pairs to train models toward more helpful behavior","Having engineers manually review and rewrite every model response before it is deployed","Connecting models to live human feedback systems that update their weights in real time","Filtering harmful content from training data before the main training process begins"],
       correct: 0,
-      explanation: "RLHF uses human raters who compare pairs of responses and indicate which is better. This preference data trains a reward model, which then guides the main model toward outputs humans prefer."
+      explanation: "RLHF uses human raters comparing pairs of responses. Their preferences train a reward model, which then guides the main model toward outputs humans prefer."
     },
     {
-      module: "Module 3 — Tools That Exist Right Now",
-      question: "What most distinguishes Perplexity AI from general-purpose tools like Claude or ChatGPT?",
-      options: [
-        "It uses a proprietary model architecture not available in any competing product",
-        "It specializes in real-time web search with sourced, cited answers rather than generation",
-        "It is specifically optimized for writing long documents and structured reports",
-        "It consistently outperforms competing models on standardized reasoning benchmarks"
-      ],
+      module: "Module 2",
+      question: "During AI training, backpropagation refers to:",
+      options: ["Removing harmful or low-quality content from training data before it is used","Adjusting model parameters based on the difference between predicted and actual outputs","Running the model in reverse to verify its outputs match the original training examples","Feeding the model's outputs back as new inputs to progressively improve response quality"],
       correct: 1,
-      explanation: "Perplexity's niche is AI-powered search with citations — synthesizing current web sources into direct answers. It functions more like a research tool than a general conversational assistant."
+      explanation: "Backpropagation calculates how wrong the model's prediction was, then nudges thousands of parameters in the direction that would have made the right answer more likely."
     },
     {
-      module: "Module 3 — Tools That Exist Right Now",
+      module: "Module 2",
+      question: "An AI model's 'context window' determines:",
+      options: ["The geographic regions where the model is permitted to operate under license","The types of content the model's safety filters will decline to generate","How much text the model can process and reference in a single interaction","The maximum number of users who can access the model simultaneously"],
+      correct: 2,
+      explanation: "The context window is how much text the model can 'see' at once — its working memory for a conversation. Longer context windows let models handle longer documents."
+    },
+    {
+      module: "Module 2",
+      question: "Why do Claude and ChatGPT feel noticeably different in tone, caution, and style?",
+      options: ["They run on different hardware architectures that process language in distinct ways","They were designed by engineers with fundamentally different personal communication styles","Different training data, fine-tuning choices, and human feedback shaped each model distinctly","One model was designed for professional users while the other targets general consumers"],
+      correct: 2,
+      explanation: "Different companies, different training philosophies, different human raters. These choices encode different values and behaviors — neither model is objectively better, they're just different."
+    },
+    {
+      module: "Module 2",
+      question: "Why do AI models sometimes struggle with tasks like counting letters in a specific word?",
+      options: ["Language models are fundamentally not designed to process text at the character level","Models process text as tokens rather than individual characters, making letter-level tasks unreliable","Counting tasks require mathematical reasoning capabilities that language models entirely lack","Character-level tasks fall outside the training data that most language models are exposed to"],
+      correct: 1,
+      explanation: "Models tokenize text — chunks that may span multiple characters. 'strawberry' might be two or three tokens. The model never truly 'sees' individual letters the way humans do."
+    },
+    // MODULE 3 — Tools That Exist Right Now
+    {
+      module: "Module 3",
+      question: "What most distinguishes Perplexity AI from general-purpose tools like Claude or ChatGPT?",
+      options: ["It uses a proprietary model architecture not available in any competing AI product","It specializes in real-time web search with sourced and cited answers rather than generation","It is specifically optimized for writing long documents and well-structured reports","It consistently outperforms competing models on standardized reasoning benchmarks"],
+      correct: 1,
+      explanation: "Perplexity's niche is AI-powered search with citations — synthesizing current web sources into direct answers. It functions more like a research tool than a general assistant."
+    },
+    {
+      module: "Module 3",
       question: "Which tool's primary competitive advantage is its native integration with Gmail, Docs, and Drive?",
-      options: [
-        "Claude, through Anthropic's enterprise data partnership with Google Workspace",
-        "Perplexity, through real-time indexing of content across Google's search infrastructure",
-        "Gemini, as Google's own model built directly into its productivity ecosystem",
-        "ChatGPT, through Microsoft's deep integration with Google's business tools"
-      ],
+      options: ["Claude, through Anthropic's enterprise data partnership with Google Workspace","Perplexity, through real-time indexing of content across Google's search infrastructure","Gemini, as Google's own model built directly into its productivity ecosystem","ChatGPT, through Microsoft's integration agreements with Google's business tools"],
       correct: 2,
-      explanation: "Gemini is Google's model and integrates natively with Google Workspace. For users already working inside Gmail, Docs, and Drive, this is a meaningful practical advantage over standalone tools."
+      explanation: "Gemini is Google's model and integrates natively with Google Workspace. For users already working inside Gmail, Docs, and Drive, this is a meaningful practical advantage."
     },
     {
-      module: "Module 3 — Tools That Exist Right Now",
+      module: "Module 3",
       question: "A model's 'knowledge cutoff' refers to:",
-      options: [
-        "The date beyond which the model has no training data and may be unaware of events",
-        "A daily usage limit that resets when the user's subscription period renews",
-        "A content policy that prevents the model from discussing certain restricted topics",
-        "The maximum length of input text the model can process in a single conversation"
-      ],
+      options: ["The date beyond which the model has no training data and may be unaware of events","A daily usage limit on messages that resets when the user's subscription period renews","A content policy that prevents the model from discussing certain restricted topics","The maximum length of input text the model can process in a single conversation"],
       correct: 0,
-      explanation: "Training data has an end date. Events, research, or changes after that date are unknown to the model unless it has real-time web access or is explicitly told in the conversation."
+      explanation: "Training data has an end date. Events, research, or changes after that date are unknown to the model unless it has real-time web access or is told directly."
     },
     {
-      module: "Module 4 — Prompt Engineering",
+      module: "Module 3",
+      question: "Midjourney is generally preferred over other image generators for professional creative work because:",
+      options: ["It is significantly less expensive than competing image generation tools on the market","It produces more photorealistic images than any other tool currently available","It consistently generates more visually refined and artistically striking outputs","It allows unlimited commercial use without licensing restrictions that competitors impose"],
+      correct: 2,
+      explanation: "Midjourney's reputation is built on visual quality and aesthetic refinement — cinematic, detailed, and dramatically composed outputs that other tools struggle to consistently match."
+    },
+    {
+      module: "Module 3",
+      question: "GitHub Copilot differs from general AI assistants like Claude or ChatGPT primarily because:",
+      options: ["It can only answer questions about existing code rather than writing new code","It operates directly inside code editors, suggesting completions as you type in real time","It is exclusively available to professional software engineers employed at large companies","It uses a specialized model architecture designed only for programming language syntax"],
+      correct: 1,
+      explanation: "Copilot lives inside your editor. As you type, it suggests completions — sometimes lines, sometimes entire functions — without ever leaving your development environment."
+    },
+    {
+      module: "Module 3",
+      question: "For researching a news story that broke yesterday, which tool is most appropriate?",
+      options: ["Claude, because it has the largest and most recent training dataset of available models","ChatGPT, because OpenAI trains its models on a more frequent release schedule than others","Perplexity, because it searches the web in real time and cites its sources directly","Gemini, because Google indexes new content faster than any other company's infrastructure"],
+      correct: 2,
+      explanation: "A language model without web access cannot know about yesterday's news — its training has a cutoff. Perplexity searches the live web and returns sourced results for exactly this use case."
+    },
+    {
+      module: "Module 3",
+      question: "The main practical advantage of a paid AI subscription over a free tier is:",
+      options: ["Paid tiers remove all content restrictions that exist on free accounts permanently","Paid tiers guarantee factually accurate outputs that free tier models cannot produce","Access to more capable models, higher usage limits, and features like file analysis","Paid users receive priority support from the AI company's human engineering team"],
+      correct: 2,
+      explanation: "Free tiers are useful for casual use. Paid tiers unlock the most capable models, remove usage caps, and add features like image generation, web search, and file analysis."
+    },
+    // MODULE 4 — Prompt Engineering
+    {
+      module: "Module 4",
       question: "Why do vague prompts consistently produce poor AI outputs?",
-      options: [
-        "Vague prompts trigger content filters that limit what the AI will discuss",
-        "AI models deprioritize short inputs and allocate less processing to them",
-        "The AI can only work with the context it is given — gaps get filled with generic defaults",
-        "Vague prompts cause the AI to search a broader range of training data than necessary"
-      ],
+      options: ["Vague prompts trigger content filters that limit what the AI is willing to discuss","AI models deprioritize short inputs and allocate less processing capacity to them","The AI can only work with the context it is given — gaps get filled with generic defaults","Vague prompts cause the AI to search a broader range of training data than necessary"],
       correct: 2,
-      explanation: "AI has no way to read your mind. When context is missing, it fills the gap with statistical defaults that rarely match what you actually wanted. Specificity is the single biggest lever in prompting."
+      explanation: "AI cannot read your mind. When context is missing, it fills the gap with statistical defaults that rarely match what you actually wanted. Specificity is the single biggest lever."
     },
     {
-      module: "Module 4 — Prompt Engineering",
+      module: "Module 4",
       question: "Chain-of-thought prompting improves AI accuracy on complex problems primarily because:",
-      options: [
-        "It allows the model to access additional training data relevant to the problem",
-        "It signals to the model that the user wants a longer and more detailed response",
-        "Generating intermediate reasoning steps leads the model toward more accurate conclusions",
-        "It reduces the chance the model will refuse a difficult or sensitive request"
-      ],
+      options: ["It allows the model to access additional training data relevant to the specific problem","It signals to the model that the user wants a longer and more thoroughly detailed response","Generating explicit intermediate reasoning steps leads the model to more accurate conclusions","It reduces the chance the model will decline a difficult or potentially sensitive request"],
       correct: 2,
-      explanation: "When a model works through a problem step by step rather than jumping to a conclusion, the intermediate reasoning acts as scaffolding that measurably improves accuracy on complex tasks."
+      explanation: "When a model works through a problem step by step rather than jumping to a conclusion, the intermediate reasoning acts as scaffolding that measurably improves accuracy."
     },
     {
-      module: "Module 4 — Prompt Engineering",
-      question: "Assigning a specific persona in a prompt — 'You are a ruthlessly honest editor' — primarily affects:",
-      options: [
-        "The technical accuracy of factual information included in the response",
-        "The perspective, tone, and frame of reference the model brings to its output",
-        "The model's willingness to engage with controversial or sensitive subject matter",
-        "The length and structural format of the response the model produces"
-      ],
+      module: "Module 4",
+      question: "Assigning a specific persona — 'You are a ruthlessly honest editor' — primarily affects:",
+      options: ["The technical accuracy of factual information included in the AI's response","The perspective, tone, and frame of reference the model brings to its output","The model's willingness to engage with controversial or sensitive subject matter","The length and structural format of the response the model chooses to produce"],
       correct: 1,
       explanation: "A persona shapes which knowledge the model draws on and what perspective it takes. An editor gives different feedback than a cheerleader — the persona is the instruction that creates that difference."
     },
     {
-      module: "Module 5 — AI Ethics & Real Risks",
+      module: "Module 4",
+      question: "Adding explicit constraints like 'avoid bullet points' or 'keep under 100 words' to a prompt:",
+      options: ["Confuses the model by restricting its natural and preferred response patterns","Is unnecessary because the model automatically calibrates format to match the question","Directly improves output by preventing the model from defaulting to generic formats","Only helps with simple tasks — complex prompts benefit from having fewer constraints"],
+      correct: 2,
+      explanation: "Without constraints the AI fills formatting gaps with defaults that may not match your needs. Explicit instructions about length, format, and structure are just as important as content instructions."
+    },
+    {
+      module: "Module 4",
+      question: "Why are examples often more effective than descriptions when prompting AI?",
+      options: ["Examples bypass content filters that might block certain types of requests","The model extracts patterns from examples more reliably than following verbal instructions","Examples reduce total prompt length which speeds up the model's processing time","Instructions and examples are stored in fundamentally different parts of the model"],
+      correct: 1,
+      explanation: "A model can often infer what you want from a single well-chosen example better than from a paragraph of description. Showing is frequently more precise than telling."
+    },
+    {
+      module: "Module 4",
+      question: "Asking an AI 'what important considerations did I not ask about?' is useful primarily because:",
+      options: ["It forces the model to search a broader and more diverse range of its training data","Models perform better when explicitly given permission to expand beyond the original question","It surfaces gaps and counterarguments the model would not volunteer without being asked","It reduces hallucination risk by giving the model more context to work with before answering"],
+      correct: 2,
+      explanation: "AI models are often better at identifying gaps and counterarguments when explicitly asked than when trying to give a comprehensive answer upfront. It's a powerful underused technique."
+    },
+    {
+      module: "Module 4",
+      question: "After getting an AI response that is accurate but too formal in tone, the best next step is:",
+      options: ["Start a completely new conversation and write a better-constructed initial prompt","Ask the same question again and hope the model produces a different stylistic result","Follow up with a specific instruction about tone and request a targeted rewrite","Switch to a different AI tool that naturally produces more casual conversational output"],
+      correct: 2,
+      explanation: "Iterative refinement is the core of effective AI use. Get a first draft, then refine it with specific follow-up instructions. Each instruction moves the output closer to what you want."
+    },
+    // MODULE 5 — AI Ethics & Real Risks
+    {
+      module: "Module 5",
       question: "Algorithmic bias in AI systems most commonly originates from:",
-      options: [
-        "Mathematical errors introduced during the optimization phase of model training",
-        "Deliberate choices by engineers to favor certain demographic groups in outputs",
-        "Skewed or unrepresentative patterns embedded in the training data itself",
-        "Hardware limitations that cause models to process some inputs less accurately"
-      ],
+      options: ["Mathematical errors introduced during the optimization phase of model training","Deliberate choices by engineers to favor certain demographic groups in model outputs","Skewed or unrepresentative patterns embedded in the training data itself","Hardware limitations that cause models to process some inputs less accurately than others"],
       correct: 2,
-      explanation: "AI learns from data. If training data reflects historical inequalities or underrepresents certain groups, the model learns and reproduces those patterns — often without any intentional discrimination by its builders."
+      explanation: "AI learns from data. If training data reflects historical inequalities or underrepresents certain groups, the model learns and reproduces those patterns — often without intentional discrimination."
     },
     {
-      module: "Module 5 — AI Ethics & Real Risks",
+      module: "Module 5",
       question: "What makes AI-enabled misinformation a qualitatively different problem than pre-AI misinformation?",
-      options: [
-        "AI-generated content is more persuasive because it sounds more authoritative than human writing",
-        "AI dramatically lowers the cost and time required to produce convincing false content at scale",
-        "AI misinformation is harder to detect because it never contains factual errors",
-        "Governments have fewer legal tools to address AI content than traditional media"
-      ],
+      options: ["AI-generated content is more persuasive because it sounds more authoritative than human writing","AI dramatically lowers the cost and time required to produce convincing false content at scale","AI misinformation is harder to detect because AI-generated text never contains factual errors","Governments currently have fewer legal tools to address AI content than traditional media"],
       correct: 1,
-      explanation: "What previously required teams of people and significant resources can now be done by one person in minutes. The scale and speed of production is the core change — not just the content itself."
+      explanation: "What previously required teams and significant resources can now be done by one person in minutes. Scale and speed of production is the core change — not just the content itself."
     },
     {
-      module: "Module 5 — AI Ethics & Real Risks",
+      module: "Module 5",
       question: "A biased AI risk-assessment tool used in criminal sentencing is most dangerous specifically because:",
-      options: [
-        "Judges are legally required to follow AI recommendations in most jurisdictions",
-        "The tool's outputs cannot be appealed or reviewed once they enter the court record",
-        "Biased decisions are applied consistently at scale across thousands of cases simultaneously",
-        "Defense attorneys do not have legal access to inspect how the tool reaches its conclusions"
-      ],
+      options: ["Judges are legally required to follow AI recommendations in most court jurisdictions","The tool's outputs cannot be appealed or reviewed once they enter the official court record","Biased decisions are applied consistently at scale across thousands of cases simultaneously","Defense attorneys do not have legal access to inspect how the tool reaches its conclusions"],
       correct: 2,
-      explanation: "A biased human makes biased decisions one at a time. A biased algorithm applies that same bias consistently across thousands or millions of cases — scale is what transforms a flaw into a systemic problem."
+      explanation: "A biased human makes biased decisions one at a time. A biased algorithm applies that same bias consistently across thousands of cases — scale is what makes a flaw systemic."
     },
     {
-      module: "Module 6 — Your First AI Project",
-      question: "A well-written system prompt for a custom AI assistant primarily accomplishes:",
-      options: [
-        "Providing the assistant with a private database of facts relevant to its use case",
-        "Defining the role, rules, tone, and behavioral boundaries that shape every response",
-        "Setting the technical parameters that govern the model's processing speed and memory",
-        "Establishing the security permissions that determine what content the assistant can access"
-      ],
+      module: "Module 5",
+      question: "Why does removing race from an AI hiring model's input data often fail to eliminate racial bias?",
+      options: ["AI models reconstruct protected attributes from correlated variables like zip code or school name","The model retains a mathematical memory of protected attributes from earlier stages of training","Removing variables causes the model to weight all remaining variables more heavily by default","Bias in hiring outcomes is primarily caused by human reviewers who override AI recommendations"],
+      correct: 0,
+      explanation: "Even without explicit protected attributes, models can infer them from proxies — zip codes, school names, browsing patterns. Removing the variable often doesn't remove the discrimination."
+    },
+    {
+      module: "Module 5",
+      question: "The most accurate description of AI's likely effect on employment is:",
+      options: ["AI will eliminate all knowledge-based jobs within the next decade without creating new ones","AI will create significantly more jobs than it eliminates so no policy intervention is needed","AI will transform many jobs with transition speed being the primary risk factor for workers","AI's employment effects will remain limited to software development and creative industries"],
+      correct: 2,
+      explanation: "The risk isn't that all work disappears — it's that transformation happens faster than education systems and labor markets can adapt, leaving people economically stranded during transition."
+    },
+    {
+      module: "Module 5",
+      question: "The power concentration risk from advanced AI primarily concerns:",
+      options: ["AI systems autonomously accumulating decision-making authority without any human oversight","A small number of companies and governments controlling the most capable AI systems","AI enabling authoritarian governments to monitor all citizens without any possibility of detection","AI companies acquiring enough revenue to directly influence democratic elections worldwide"],
       correct: 1,
-      explanation: "The system prompt is the instruction set that transforms a general-purpose AI into a specialized tool. Without it, the model defaults to generic behavior. With it, every response is shaped by your specific design."
+      explanation: "The most capable AI requires billions to build. If it provides enormous advantages and access stays concentrated, it dramatically amplifies existing power imbalances — regardless of intent."
+    },
+    {
+      module: "Module 5",
+      question: "When using AI to research an important medical question, the most responsible approach is:",
+      options: ["Trust the output if it cites specific medical studies or recognized healthcare organizations","Use AI for medical research only if you already have training to critically evaluate its claims","Treat AI output as a starting point and verify important claims through independent sources","Ask the AI to rate its own confidence level before deciding how much to trust its answer"],
+      correct: 2,
+      explanation: "AI is a thinking and drafting tool, not an oracle. Medical information that matters should always be verified through authoritative independent sources — regardless of how confident the AI sounds."
+    },
+    // MODULE 6 — Your First AI Project
+    {
+      module: "Module 6",
+      question: "A well-written system prompt for a custom AI assistant primarily accomplishes:",
+      options: ["Providing the assistant with a private database of facts relevant to its specific use case","Defining the role, rules, tone, and behavioral boundaries that shape every response it gives","Setting the technical parameters that govern the model's processing speed and memory allocation","Establishing the security permissions that determine what content the assistant can access"],
+      correct: 1,
+      explanation: "The system prompt is the instruction set that transforms a general-purpose AI into a specialized tool. Without it the model defaults to generic behavior. With it every response is shaped by your design."
+    },
+    {
+      module: "Module 6",
+      question: "When selecting what kind of custom AI assistant to build, the most important factor is:",
+      options: ["Choosing the domain where AI models have demonstrated the strongest performance benchmarks","Selecting the assistant type with the most potential users and long-term commercial value","Identifying a specific real problem you actually have that the assistant would genuinely solve","Picking an assistant type that requires the least technical knowledge to build successfully"],
+      correct: 2,
+      explanation: "The most useful custom assistants solve real, specific problems. The more concrete and personal the problem, the more motivated you are to iterate and the more useful the result."
+    },
+    {
+      module: "Module 6",
+      question: "A system prompt saying 'be helpful and friendly' produces worse results than one that:",
+      options: ["Uses technical language that signals to the model you have advanced programming expertise","Specifies exact role, behavioral rules, tone, and examples of ideal responses explicitly","Is longer and more detailed regardless of whether the additional content is actually relevant","Includes names of specific communicators whose style the assistant should attempt to emulate"],
+      correct: 1,
+      explanation: "Vague instructions produce vague behavior. Specific role, rules, tone, and examples give the model everything it needs to behave consistently the way you intended."
+    },
+    {
+      module: "Module 6",
+      question: "The most reliable way to improve a custom AI assistant that is not behaving as intended is:",
+      options: ["Switch to a more powerful AI model that can better interpret your existing instructions","Add more specificity to the system prompt based on exactly where the behavior drifted","Increase the total length of the system prompt until the behavior becomes more consistent","Ask the AI to critique its own system prompt and automatically suggest improvements to it"],
+      correct: 1,
+      explanation: "When output doesn't match expectations, the fix is almost always prompt specificity. Identify where behavior drifted, then add explicit instructions to prevent it."
+    },
+    {
+      module: "Module 6",
+      question: "Why is actually building and using a custom AI assistant more valuable than just reading about prompt engineering?",
+      options: ["The AI performs better when it knows it is being used in a real rather than test scenario","Building provides evidence to employers and admissions committees of practical technical skills","Real use surfaces gaps in understanding and prompt quality that theoretical study cannot reveal","Custom assistants built by individual users can access more recent model training data by default"],
+      correct: 2,
+      explanation: "Application exposes what you don't actually understand. You can read about prompting, but building a real assistant and seeing where it fails — then fixing it — builds competency that reading cannot."
+    },
+    {
+      module: "Module 6",
+      question: "Documenting what you built, what you iterated on, and why creates value primarily because:",
+      options: ["Documentation is required by most AI platforms before a custom assistant can be shared publicly","Written records allow you to restore your assistant if the platform resets your account settings","It demonstrates the thinking process behind the work — which is what evaluators actually assess","Platform terms of service require users to document any AI assistants built for other people"],
+      correct: 2,
+      explanation: "Anyone can copy a result. Documentation shows the thinking, the iteration, the problem-solving. That process is what college admissions, employers, and collaborators actually want to see."
+    },
+    {
+      module: "Module 6",
+      question: "Sharing your custom AI assistant with others who face similar problems is valuable because:",
+      options: ["AI platforms reward users who share their work with improved model access and features","Sharing is required to receive a verified certificate from most AI education providers","It builds credibility and demonstrates initiative — concrete evidence you build real things","Sharing increases your assistant's performance by exposing it to more diverse user inputs"],
+      correct: 2,
+      explanation: "Sharing is a signal. It shows you built something worth sharing, that you thought about who else might benefit, and that you take your work seriously enough to put it in front of others."
     }
   ];
 
@@ -609,7 +707,7 @@
   }
 
   window.startQuiz = function() {
-    questions = shuffle(ALL_QUESTIONS);
+    questions = shuffle(ALL_QUESTIONS).slice(0, 15);
     currentQ = 0; score = 0; answers = [];
     document.getElementById('q-total').textContent = questions.length;
     showScreen('quiz');
@@ -687,7 +785,7 @@
   async function showResults() {
     const total = questions.length;
     const pct = Math.round((score / total) * 100);
-    const passed = score >= 14;
+    const passed = score >= 11;
 
     showScreen('results');
 
