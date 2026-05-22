@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 1: What AI Actually Is — Meridian Institute of AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"] {
+    --bg: #080808;
+    --bg-2: #111111;
+    --bg-3: #1a1a1a;
+    --bg-4: #222222;
+    --text: #f0f0f0;
+    --text-2: #a0a0a0;
+    --text-3: #606060;
+    --border: rgba(255,255,255,0.08);
+    --border-2: rgba(255,255,255,0.15);
+    --accent: #5b8ff8;
+    --accent-dim: rgba(91,143,248,0.1);
+    --accent-dim2: rgba(91,143,248,0.05);
+    --card-bg: #111111;
+    --nav-bg: rgba(8,8,8,0.9);
+    --callout-bg: rgba(91,143,248,0.07);
+    --callout-border: rgba(91,143,248,0.25);
+    --highlight-bg: rgba(91,143,248,0.08);
+  }
+  :root[data-theme="light"] {
+    --bg: #fafaf8;
+    --bg-2: #f0f0ec;
+    --bg-3: #e8e8e2;
+    --bg-4: #ddddd6;
+    --text: #0a0a0a;
+    --text-2: #555550;
+    --text-3: #999990;
+    --border: rgba(0,0,0,0.08);
+    --border-2: rgba(0,0,0,0.15);
+    --accent: #2563eb;
+    --accent-dim: rgba(37,99,235,0.08);
+    --accent-dim2: rgba(37,99,235,0.04);
+    --card-bg: #ffffff;
+    --nav-bg: rgba(250,250,248,0.9);
+    --callout-bg: rgba(37,99,235,0.05);
+    --callout-border: rgba(37,99,235,0.2);
+    --highlight-bg: rgba(37,99,235,0.06);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; overflow-x: hidden; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 16px;
+    line-height: 1.7;
+    transition: background 0.3s, color 0.3s;
+    overflow-x: hidden;
+    width: 100%;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: var(--nav-bg);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 5%;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .nav-left { display: flex; align-items: center; gap: 20px; }
+  .nav-back {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--text-2);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-back:hover { color: var(--text); }
+  .nav-divider { width: 1px; height: 16px; background: var(--border-2); }
+  .nav-course-title {
+    font-size: 13px;
+    color: var(--text-3);
+  }
+  .nav-logo-mark {
+    width: 28px; height: 28px;
+    border: 1.5px solid var(--accent);
+    border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 16px; font-weight: 600;
+    color: var(--accent);
+  }
+  .theme-toggle {
+    width: 32px; height: 32px;
+    border-radius: 7px;
+    border: 1px solid var(--border-2);
+    background: transparent;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--text-2);
+    font-size: 14px;
+    transition: all 0.2s;
+  }
+  .theme-toggle:hover { background: var(--bg-3); color: var(--text); }
+
+  /* PROGRESS BAR */
+  .progress-bar {
+    position: fixed;
+    top: 60px; left: 0; right: 0;
+    z-index: 99;
+    height: 2px;
+    background: var(--border);
+  }
+  .progress-fill {
+    height: 100%;
+    background: var(--accent);
+    width: 0%;
+    transition: width 0.1s;
+  }
+
+  /* LAYOUT */
+  .page-wrapper {
+    display: grid;
+    grid-template-columns: 260px minmax(0, 1fr);
+    min-height: 100vh;
+    padding-top: 62px;
+    max-width: 100%;
+    overflow: hidden;
+  }
+
+  /* SIDEBAR */
+  .sidebar {
+    position: sticky;
+    top: 62px;
+    height: calc(100vh - 62px);
+    overflow-y: auto;
+    border-right: 1px solid var(--border);
+    padding: 32px 24px;
+    background: var(--bg-2);
+  }
+  .sidebar-label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-3);
+    margin-bottom: 16px;
+  }
+  .sidebar-module {
+    margin-bottom: 4px;
+  }
+  .sidebar-module-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 12px;
+    border-radius: 8px;
+    font-size: 13px;
+    color: var(--text-2);
+    text-decoration: none;
+    transition: all 0.2s;
+    line-height: 1.4;
+  }
+  .sidebar-module-link:hover { background: var(--bg-3); color: var(--text); }
+  .sidebar-module-link.active {
+    background: var(--accent-dim);
+    color: var(--accent);
+  }
+  .sidebar-num {
+    font-size: 11px;
+    font-weight: 500;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    background: var(--bg-4);
+    color: var(--text-3);
+  }
+  .sidebar-module-link.active .sidebar-num {
+    background: var(--accent-dim);
+    color: var(--accent);
+  }
+  .sidebar-module-link.locked { opacity: 0.4; cursor: not-allowed; }
+  .sidebar-divider {
+    height: 1px;
+    background: var(--border);
+    margin: 20px 0;
+  }
+  .sidebar-progress-label {
+    font-size: 12px;
+    color: var(--text-3);
+    margin-bottom: 8px;
+    display: flex;
+    justify-content: space-between;
+  }
+  .sidebar-progress-track {
+    height: 4px;
+    background: var(--border);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .sidebar-progress-fill {
+    height: 100%;
+    width: 16%;
+    background: var(--accent);
+    border-radius: 2px;
+  }
+
+  /* CONTENT */
+  main { display: block; min-width: 0; overflow: hidden; }
+  .content {
+    max-width: 760px;
+    width: 100%;
+    padding: 60px 64px 120px;
+    margin: 0 auto;
+  }
+  .module-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  .module-tag {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: var(--accent-dim);
+    border: 1px solid rgba(91,143,248,0.2);
+    padding: 4px 12px;
+    border-radius: 100px;
+  }
+  .module-meta {
+    font-size: 12px;
+    color: var(--text-3);
+  }
+  h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 52px;
+    font-weight: 300;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    margin-bottom: 24px;
+  }
+  .intro-text {
+    font-size: 19px;
+    font-weight: 300;
+    color: var(--text-2);
+    line-height: 1.7;
+    margin-bottom: 48px;
+    padding-bottom: 48px;
+    border-bottom: 1px solid var(--border);
+  }
+  h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 32px;
+    font-weight: 400;
+    color: var(--text);
+    margin: 52px 0 18px;
+    line-height: 1.2;
+  }
+  h3 {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--text);
+    margin: 32px 0 12px;
+    letter-spacing: 0.01em;
+  }
+  p {
+    font-size: 16px;
+    font-weight: 300;
+    color: var(--text-2);
+    line-height: 1.8;
+    margin-bottom: 20px;
+  }
+  strong { font-weight: 500; color: var(--text); }
+
+  /* CALLOUT */
+  .callout {
+    background: var(--callout-bg);
+    border: 1px solid var(--callout-border);
+    border-radius: 12px;
+    padding: 24px 28px;
+    margin: 32px 0;
+  }
+  .callout-label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 10px;
+  }
+  .callout p {
+    margin: 0;
+    font-size: 15px;
+    color: var(--text-2);
+  }
+  .callout p + p { margin-top: 12px; }
+
+  /* KEY TERM */
+  .key-term {
+    background: var(--highlight-bg);
+    border-left: 2px solid var(--accent);
+    padding: 16px 20px;
+    margin: 20px 0;
+    border-radius: 0 8px 8px 0;
+  }
+  .key-term-word {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--accent);
+    letter-spacing: 0.05em;
+    margin-bottom: 6px;
+  }
+  .key-term p {
+    margin: 0;
+    font-size: 14px;
+    color: var(--text-2);
+    line-height: 1.65;
+  }
+
+  /* ANALOGY BOX */
+  .analogy {
+    background: var(--bg-2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px;
+    margin: 28px 0;
+  }
+  .analogy-label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-3);
+    margin-bottom: 12px;
+  }
+  .analogy p { margin: 0; font-size: 15px; }
+
+  /* COMPARISON TABLE */
+  .comparison {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 28px 0;
+    font-size: 14px;
+  }
+  .comparison th {
+    text-align: left;
+    padding: 12px 16px;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-3);
+    border-bottom: 1px solid var(--border-2);
+  }
+  .comparison td {
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text-2);
+    line-height: 1.6;
+    vertical-align: top;
+  }
+  .comparison tr:last-child td { border-bottom: none; }
+  .comparison td:first-child { color: var(--text); font-weight: 500; width: 30%; }
+
+  /* GLOSSARY */
+  .glossary-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin: 28px 0;
+  }
+  .glossary-item {
+    background: var(--bg-2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px;
+  }
+  .glossary-term {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--accent);
+    margin-bottom: 6px;
+  }
+  .glossary-def {
+    font-size: 13px;
+    color: var(--text-2);
+    line-height: 1.6;
+  }
+
+  /* NAVIGATION BUTTONS */
+  .lesson-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 60px;
+    padding-top: 40px;
+    border-top: 1px solid var(--border);
+  }
+  .btn-lesson {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.2s;
+    cursor: pointer;
+    border: none;
+  }
+  .btn-next {
+    background: var(--accent);
+    color: #fff;
+    margin-left: auto;
+  }
+  .btn-next:hover { opacity: 0.88; }
+  .btn-prev {
+    background: transparent;
+    color: var(--text-2);
+    border: 1px solid var(--border-2) !important;
+  }
+  .btn-prev:hover { background: var(--bg-3); color: var(--text); }
+
+  /* RESPONSIVE */
+  .comparison-wrapper { overflow-x: auto; -webkit-overflow-scrolling: touch; width: 100%; }
+  .comparison { width: 100%; min-width: 500px; }
+  
+  @media (max-width: 1100px) {
+    .content { padding: 60px 40px 120px; }
+  }
+  @media (max-width: 900px) {
+    .page-wrapper { grid-template-columns: 1fr; }
+    .sidebar { display: none; }
+    .content { padding: 40px 24px 80px; }
+    h1 { font-size: 38px; }
+    .glossary-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 600px) {
+    .content { padding: 28px 16px 80px; }
+    h1 { font-size: 30px; }
+    h2 { font-size: 24px; }
+    .quiz-section { padding: 24px 20px; }
+  }
+
+  ::-webkit-scrollbar { width: 5px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--bg-4); border-radius: 3px; }
+
+  .sticky-bar {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    z-index: 200;
+    background: var(--bg-2);
+    border-top: 1px solid var(--border-2);
+    padding: 14px 5%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    backdrop-filter: blur(12px);
+    transition: all 0.3s;
+  }
+  .sticky-bar-track {
+    flex: 1;
+    height: 4px;
+    background: var(--border);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .sticky-bar-fill {
+    height: 100%;
+    background: var(--accent);
+    border-radius: 2px;
+    transition: width 0.2s;
+    width: 0%;
+  }
+  .sticky-bar-label {
+    font-size: 12px;
+    color: var(--text-3);
+    white-space: nowrap;
+    min-width: 60px;
+    text-align: right;
+  }
+  .sticky-bar-btn {
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    font-family: 'DM Sans', sans-serif;
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: opacity 0.2s;
+    display: none;
+  }
+  .sticky-bar-btn:hover { opacity: 0.88; }
+  .sticky-bar-reading {
+    font-size: 12px;
+    color: var(--text-3);
+    white-space: nowrap;
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-left">
+    <div class="nav-logo-mark">M</div>
+    <div class="nav-divider"></div>
+    <a href="index.html" class="nav-back">← Foundations of AI</a>
+    <div class="nav-divider"></div>
+    <span class="nav-course-title">Module 1</span>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">☀</span></button>
+</nav>
+
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+
+<div class="page-wrapper">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-label">Foundations of AI</div>
+
+    <div class="sidebar-module">
+      <a href="module-1-what-ai-actually-is.html" class="sidebar-module-link active">
+        <span class="sidebar-num">1</span>
+        What AI Actually Is
+      </a>
+    </div>
+    <div class="sidebar-module">
+      <a href="#" class="sidebar-module-link locked">
+        <span class="sidebar-num">2</span>
+        How AI Models Work
+      </a>
+    </div>
+    <div class="sidebar-module">
+      <a href="#" class="sidebar-module-link locked">
+        <span class="sidebar-num">3</span>
+        Tools That Exist Right Now
+      </a>
+    </div>
+    <div class="sidebar-module">
+      <a href="#" class="sidebar-module-link locked">
+        <span class="sidebar-num">4</span>
+        Prompt Engineering
+      </a>
+    </div>
+    <div class="sidebar-module">
+      <a href="#" class="sidebar-module-link locked">
+        <span class="sidebar-num">5</span>
+        AI Ethics & Real Risks
+      </a>
+    </div>
+    <div class="sidebar-module">
+      <a href="#" class="sidebar-module-link locked">
+        <span class="sidebar-num">6</span>
+        Your First AI Project
+      </a>
+    </div>
+
+    <div class="sidebar-module">
+      <a href="quiz-foundations.html" class="sidebar-module-link" style="color: var(--accent); margin-top: 4px;">
+        <span class="sidebar-num" style="background: var(--accent-dim); color: var(--accent);">✦</span>
+        Final Assessment
+      </a>
+    </div>
+
+    <div class="sidebar-divider"></div>
+
+    <div class="sidebar-progress-label">
+      <span>Course progress</span>
+      <span style="color: var(--accent);">1 / 6</span>
+    </div>
+    <div class="sidebar-progress-track">
+      <div class="sidebar-progress-fill"></div>
+    </div>
+  </aside>
+
+  <!-- CONTENT -->
+  <main class="content">
+
+    <div class="module-eyebrow">
+      <span class="module-tag">Module 1</span>
+      <span class="module-meta">15 min read · Foundations</span>
+    </div>
+
+    <h1>What AI<br>Actually Is</h1>
+
+    <p class="intro-text">Before we go anywhere, we need to clear something up. Almost everything you've been told about AI — by movies, headlines, and people who haven't looked closely — is wrong. Not a little wrong. Completely wrong. And until we fix that, everything else is built on a shaky foundation.</p>
+
+    <!-- SECTION 1 -->
+    <h2>The version you were sold</h2>
+
+    <p>When most people hear "Artificial Intelligence," they picture one of two things. Either a humanoid robot walking through a factory, or a supercomputer with glowing eyes that's about to decide humanity is a problem worth solving.</p>
+
+    <p>Hollywood spent fifty years building that image, and it stuck. The Terminator. HAL 9000. Ex Machina. Powerful, conscious, dangerous, and fundamentally human in its ambitions — just without the empathy.</p>
+
+    <p>Here's the problem: that version of AI doesn't exist. Not even close. What we actually have — and what you're going to learn to use better than 99% of people — is something far more interesting and far more useful than a science fiction villain.</p>
+
+    <div class="callout">
+      <div class="callout-label">The core truth</div>
+      <p>AI, as it exists today, is not conscious. It does not have goals. It does not want anything. It is an extraordinarily powerful pattern-matching system trained on human-generated information — and that description, unglamorous as it sounds, is why it can do things that feel like magic.</p>
+    </div>
+
+    <!-- SECTION 2 -->
+    <h2>What it actually is</h2>
+
+    <p>At its core, AI is software that learns from examples rather than being explicitly programmed with rules.</p>
+
+    <p>Traditional software is a set of instructions. <strong>If this happens, do that.</strong> A calculator doesn't learn — it executes logic a programmer wrote. Change the logic, change the behavior.</p>
+
+    <p>AI is different. Instead of writing rules, you show it millions of examples and let it figure out the patterns itself. Then you give it something new and ask it to apply what it learned.</p>
+
+    <div class="analogy">
+      <div class="analogy-label">Think of it this way</div>
+      <p style="color: var(--text-2);">Imagine teaching someone to recognize a chair. You could write a rulebook — four legs, flat surface, used for sitting — but that breaks the moment someone shows them a beanbag or a barstool. Or, you could just show them ten thousand chairs. After enough examples, they develop an intuition that handles the edge cases automatically. That's how modern AI learns. Not rules. Examples at scale.</p>
+    </div>
+
+    <p>The word "intelligence" in Artificial Intelligence is both accurate and misleading. It's accurate because the outputs — coherent writing, complex reasoning, creative problem-solving — genuinely look intelligent. It's misleading because the underlying process is statistical pattern recognition, not thought. It has no experiences, no beliefs, no understanding of what words mean in the way you do.</p>
+
+    <p>But here's what that doesn't mean: it doesn't mean AI is simple, or unimpressive, or easy to use well. Pattern recognition at this scale, trained on essentially the entire output of human civilization, produces something genuinely remarkable. Knowing what it actually is makes you better at using it — not worse.</p>
+
+    <!-- SECTION 3 -->
+    <h2>A brief honest history</h2>
+
+    <p>You don't need the full academic timeline. But four moments are worth knowing because they explain why AI suddenly seems to be everywhere.</p>
+
+    <h3>1950 — The question that started everything</h3>
+    <p>Alan Turing, a British mathematician who had already helped crack Nazi codes in World War II, published a paper asking a deceptively simple question: <strong>Can machines think?</strong> He proposed a test — if a machine could carry on a conversation indistinguishable from a human, you'd have to at least take the question seriously. This is where the field was born.</p>
+
+    <h3>2012 — The deep learning breakthrough</h3>
+    <p>For sixty years, AI made slow, inconsistent progress. Then a team at the University of Toronto built a neural network that crushed every other approach to image recognition by a margin that shocked the field. It worked because of three things converging at once: better algorithms, massive datasets, and cheap computing power. Every major AI advance since then traces back to this moment.</p>
+
+    <h3>2017 — Attention changes everything</h3>
+    <p>Researchers at Google published a paper with a deliberately modest title: "Attention Is All You Need." Inside was the architecture that now powers virtually every large AI language model — the Transformer. It gave AI a way to understand context and relationships in language that nothing before it could match.</p>
+
+    <h3>2022 — The moment the world noticed</h3>
+    <p>OpenAI released ChatGPT. One hundred million users in two months. Not because it was the first AI language model — it wasn't — but because it was the first one normal people could actually talk to. The technology had been building for a decade. ChatGPT was the moment it became impossible to ignore.</p>
+
+    <!-- SECTION 4 -->
+    <h2>Two types of AI — and why the difference matters</h2>
+
+    <p>When people argue about AI being dangerous or revolutionary, they're often talking past each other because they're picturing different things. Here's the distinction you need:</p>
+
+    <div class="comparison-wrapper"><table class="comparison">
+      <tr>
+        <th>Type</th>
+        <th>What it means</th>
+        <th>Examples</th>
+      </tr>
+      <tr>
+        <td>Narrow AI</td>
+        <td>Designed to do one specific thing extremely well. No ability to generalize beyond its training.</td>
+        <td>Chess engines, image recognition, spam filters, recommendation algorithms, voice assistants</td>
+      </tr>
+      <tr>
+        <td>General AI</td>
+        <td>A system that can learn and apply intelligence across any domain the way humans can. Flexible, adaptable, capable of genuine reasoning.</td>
+        <td>Does not exist yet. This is the long-term goal of the field — and the version that raises serious philosophical and safety questions.</td>
+      </tr>
+    </table></div>
+
+    <p>Everything you're going to use in this course — Claude, ChatGPT, Gemini, Midjourney — is Narrow AI. Extraordinarily capable narrow AI, but narrow. It was trained on text and images. It is very good at text and images. It cannot drive your car, run your business autonomously, or decide to do anything on its own.</p>
+
+    <div class="callout">
+      <div class="callout-label">Why this matters for you</div>
+      <p>When you understand that today's AI is narrow, you stop being afraid of the wrong things and start noticing the real ones. The risk isn't an AI deciding to take over — it's AI being used by humans to spread misinformation, automate bias, or concentrate power. Those are human problems enabled by a powerful tool. That's a more accurate — and more useful — thing to worry about.</p>
+    </div>
+
+    <!-- SECTION 5 -->
+    <h2>Why right now is genuinely different</h2>
+
+    <p>AI has been "the future" for decades. So why does it actually feel different now?</p>
+
+    <p>Three things changed at the same time, and when they collided, the results compounded in ways nobody fully predicted.</p>
+
+    <h3>Data exploded</h3>
+    <p>The internet created an unprecedented archive of human thought — books, articles, conversations, code, research, arguments, stories — at a scale that would have been impossible to collect deliberately. AI models trained on this data learned to reflect human language and reasoning in ways that earlier, data-starved models never could.</p>
+
+    <h3>Computing got cheap</h3>
+    <p>Training a large AI model in 2012 would have cost hundreds of millions of dollars. The same training today costs a fraction of that — and continues to fall. This means smaller organizations, universities, and eventually individuals can build and run powerful models. The barrier is dropping fast.</p>
+
+    <h3>The models crossed a threshold</h3>
+    <p>There's a difference between an AI that can <em>sort of</em> write a sentence and one that can hold a complex conversation, write functional code, analyze a legal document, and explain quantum mechanics to a twelve year old — all in the same session. Somewhere in the last few years, the models crossed from impressive-but-limited to genuinely useful across a huge range of real tasks. That threshold crossing is what makes this moment different from every previous AI hype cycle.</p>
+
+    <!-- GLOSSARY -->
+    <h2>Key terms from this module</h2>
+
+    <div class="glossary-grid">
+      <div class="glossary-item">
+        <div class="glossary-term">Artificial Intelligence (AI)</div>
+        <div class="glossary-def">Software that learns patterns from data rather than following explicitly programmed rules.</div>
+      </div>
+      <div class="glossary-item">
+        <div class="glossary-term">Machine Learning</div>
+        <div class="glossary-def">The branch of AI where systems improve their performance by learning from examples, without being explicitly programmed for each task.</div>
+      </div>
+      <div class="glossary-item">
+        <div class="glossary-term">Neural Network</div>
+        <div class="glossary-def">A computing system loosely modeled on the human brain, made of layers of connected nodes that process and transmit information.</div>
+      </div>
+      <div class="glossary-item">
+        <div class="glossary-term">Large Language Model (LLM)</div>
+        <div class="glossary-def">An AI system trained on massive amounts of text data, capable of generating, analyzing, and reasoning about language. Claude and ChatGPT are LLMs.</div>
+      </div>
+      <div class="glossary-item">
+        <div class="glossary-term">Narrow AI</div>
+        <div class="glossary-def">AI designed for a specific task. Cannot generalize beyond what it was trained for. All current AI systems are narrow.</div>
+      </div>
+      <div class="glossary-item">
+        <div class="glossary-term">Transformer</div>
+        <div class="glossary-def">The architecture behind most modern AI language models. Introduced in 2017, it allows AI to understand context and relationships in language at scale.</div>
+      </div>
+    </div>
+
+    <!-- MINI REVIEW -->
+    <div style="background:var(--bg-2);border:1px solid var(--border);border-radius:16px;padding:36px;margin-top:60px;" id="mini-review">
+      <div style="font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;">Quick Review</div>
+      <div style="font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:300;color:var(--text);margin-bottom:8px;">Check your understanding</div>
+      <div style="font-size:14px;color:var(--text-2);margin-bottom:28px;">Answer all three questions correctly to unlock the next module. Retry as many times as you need.</div>
+      <div id="mr-container"></div>
+      <div style="display:flex;gap:12px;margin-top:24px;flex-wrap:wrap;">
+        <button type="button" id="mr-retry" onclick="initMiniReview()" style="display:none;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:500;font-family:'DM Sans',sans-serif;background:var(--bg-3);color:var(--text-2);border:1px solid var(--border-2);cursor:pointer;">↺ Try Again</button>
+        <a href="module-2-how-ai-models-work.html" id="mr-next" style="display:none;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:500;font-family:'DM Sans',sans-serif;background:var(--accent);color:#fff;text-decoration:none;">Module 2: How AI Models Work →</a>
+      </div>
+    </div>
+
+    <!-- NAV BUTTONS -->
+<div id="scroll-next-btn" style="display:none;flex-direction:column;align-items:center;gap:12px;">
+        <div style="font-size:13px;color:var(--success,#22c55e);margin-bottom:4px;">✓ Module complete — you can continue</div>
+        <button type="button" onclick="completeAndNext()" style="padding:14px 32px;background:var(--accent);color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:500;font-family:'DM Sans',sans-serif;cursor:pointer;transition:opacity 0.2s;" onmouseover="this.style.opacity=0.88" onmouseout="this.style.opacity=1">Module 2: How AI Models Work →</button>
+      </div>
+    </div>
+
+    </main>
+</div>
+
+<script>
+  function toggleTheme() {
+    const html = document.documentElement;
+    const icon = document.getElementById('theme-icon');
+    if (html.getAttribute('data-theme') === 'dark') {
+      html.setAttribute('data-theme', 'light');
+      icon.textContent = '☾';
+    } else {
+      html.setAttribute('data-theme', 'dark');
+      icon.textContent = '☀';
+    }
+  }
+
+  window.addEventListener('scroll', () => {
+    const doc = document.documentElement;
+    const scrolled = doc.scrollTop || document.body.scrollTop;
+    const total = doc.scrollHeight - doc.clientHeight;
+    const pct = (scrolled / total) * 100;
+    document.getElementById('progress').style.width = pct + '%';
+  });
+
+  const MR_QUESTIONS = [
+    {
+      q: "What fundamentally separates AI from traditional software?",
+      options: ["AI runs on faster hardware","AI learns patterns from data instead of following programmed rules","AI is always connected to the internet","AI uses a different coding language"],
+      correct: 1,
+      explanation: "Traditional software follows hand-coded rules. AI learns statistical patterns from examples — that's the core difference."
+    },
+    {
+      q: "All AI systems that exist today are best described as:",
+      options: ["General AI — able to learn any task","Conscious systems with their own goals","Narrow AI — highly capable within specific domains only","Fully autonomous decision makers"],
+      correct: 2,
+      explanation: "Every AI system today is narrow — excellent at specific tasks, unable to generalize the way humans can."
+    },
+    {
+      q: "Which architecture, introduced in 2017, now powers virtually every major AI language model?",
+      options: ["The Neural Engine","The Deep Learner","The Transformer","The Recursive Network"],
+      correct: 2,
+      explanation: "The Transformer architecture from the paper 'Attention Is All You Need' is the foundation for Claude, GPT, Gemini, and almost every major language model today."
+    }
+  ];
+
+  let mrAnswers = [];
+
+  function initMiniReview() {
+    mrAnswers = [];
+    document.getElementById('mr-retry').style.display = 'none';
+    document.getElementById('mr-next').style.display = 'none';
+    const c = document.getElementById('mr-container');
+    c.innerHTML = MR_QUESTIONS.map((q, qi) => `
+      <div style="margin-bottom:24px;padding-bottom:24px;border-bottom:1px solid var(--border);" id="mr-q${qi}">
+        <div style="font-size:15px;font-weight:500;color:var(--text);margin-bottom:14px;">${qi+1}. ${q.q}</div>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          ${q.options.map((o, oi) => `
+            <button type="button" onclick="mrAnswer(${qi},${oi})" id="mr-btn-${qi}-${oi}"
+              style="display:flex;align-items:center;gap:12px;padding:13px 16px;border:1px solid var(--border-2);border-radius:10px;cursor:pointer;font-size:14px;font-weight:300;color:var(--text-2);background:transparent;text-align:left;width:100%;font-family:'DM Sans',sans-serif;transition:all 0.2s;">
+              <span style="width:24px;height:24px;border-radius:50%;background:var(--bg-4);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:500;color:var(--text-3);flex-shrink:0;">${'ABCD'[oi]}</span>
+              ${o}
+            </button>
+          `).join('')}
+        </div>
+        <div id="mr-fb-${qi}" style="display:none;margin-top:10px;padding:12px 16px;border-radius:8px;font-size:13px;line-height:1.5;"></div>
+      </div>
+    `).join('');
+  }
+
+  function mrAnswer(qi, oi) {
+    const q = MR_QUESTIONS[qi];
+    const isCorrect = oi === q.correct;
+    mrAnswers[qi] = isCorrect;
+
+    // Disable all buttons for this question
+    for (let i = 0; i < q.options.length; i++) {
+      const btn = document.getElementById(`mr-btn-${qi}-${i}`);
+      btn.onclick = null;
+      btn.style.cursor = 'not-allowed';
+    }
+
+    // Style selected button
+    const selectedBtn = document.getElementById(`mr-btn-${qi}-${oi}`);
+    const correctBtn = document.getElementById(`mr-btn-${qi}-${q.correct}`);
+
+    if (isCorrect) {
+      selectedBtn.style.borderColor = '#22c55e';
+      selectedBtn.style.background = 'rgba(34,197,94,0.08)';
+      selectedBtn.style.color = '#22c55e';
+    } else {
+      selectedBtn.style.borderColor = '#ef4444';
+      selectedBtn.style.background = 'rgba(239,68,68,0.08)';
+      selectedBtn.style.color = '#ef4444';
+      correctBtn.style.borderColor = '#22c55e';
+      correctBtn.style.background = 'rgba(34,197,94,0.08)';
+      correctBtn.style.color = '#22c55e';
+    }
+
+    // Show feedback
+    const fb = document.getElementById(`mr-fb-${qi}`);
+    fb.textContent = (isCorrect ? '✓ ' : '✗ ') + q.explanation;
+    fb.style.display = 'block';
+    fb.style.background = isCorrect ? 'rgba(34,197,94,0.08)' : 'rgba(239,68,68,0.08)';
+    fb.style.border = isCorrect ? '1px solid rgba(34,197,94,0.2)' : '1px solid rgba(239,68,68,0.2)';
+    fb.style.color = isCorrect ? '#22c55e' : '#ef4444';
+
+    // Check if all answered
+    const answered = mrAnswers.filter(a => a !== undefined).length;
+    if (answered === MR_QUESTIONS.length) {
+      const allCorrect = mrAnswers.every(a => a === true);
+      if (allCorrect) {
+        document.getElementById('mr-next').style.display = 'inline-block';
+      } else {
+        document.getElementById('mr-retry').style.display = 'inline-block';
+      }
+    }
+  }
+
+  initMiniReview();
+
+
+  // Scroll progress tracking
+  let unlocked = false;
+  function updateScrollProgress() {
+    const scrolled = window.scrollY + window.innerHeight;
+    const total = document.documentElement.scrollHeight;
+    const pct = Math.min(100, Math.round((scrolled / total) * 100));
+
+    const fill = document.getElementById('sticky-fill');
+    const label = document.getElementById('sticky-label');
+    const btn = document.getElementById('sticky-btn');
+    const reading = document.getElementById('sticky-reading');
+
+    if (fill) fill.style.width = pct + '%';
+    if (label) label.textContent = pct + '%';
+
+    if (pct >= 95 && !unlocked) {
+      unlocked = true;
+      if (btn) btn.style.display = 'block';
+      if (reading) reading.style.display = 'none';
+      if (fill) fill.style.background = '#22c55e';
+      if (label) label.style.color = '#22c55e';
+    }
+  }
+  window.addEventListener('scroll', updateScrollProgress);
+  updateScrollProgress();
+
+  function completeAndNext() {
+    try { localStorage.setItem('meridian_m1', 'true'); } catch(e) {}
+    setTimeout(() => { window.location.href = 'module-2-how-ai-models-work.html'; }, 80);
+  }
+
+
+</script>
+
+<!-- STICKY PROGRESS BAR -->
+<div class="sticky-bar" id="sticky-bar">
+  <div class="sticky-bar-reading" id="sticky-reading">Read to the end to unlock the next module</div>
+  <div class="sticky-bar-track">
+    <div class="sticky-bar-fill" id="sticky-fill"></div>
+  </div>
+  <div class="sticky-bar-label" id="sticky-label">0%</div>
+  <button class="sticky-bar-btn" id="sticky-btn" onclick="completeAndNext()">
+    Module 2: How AI Models Work →
+  </button>
+</div>
+
+</body>
+</html>
