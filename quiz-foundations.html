@@ -808,11 +808,25 @@
       document.getElementById('cert-section').style.display = 'block';
       if (currentUser) {
         try {
+          const certId = currentUser.uid + '-foundations';
+          const completedDate = new Date();
+          
+          // Update user document
           await updateDoc(doc(db, 'users', currentUser.uid), {
             completedModules: arrayUnion('foundations-complete'),
             certificatesEarned: arrayUnion('foundations'),
-            foundationsCompletedAt: new Date(),
-            foundationsCertId: currentUser.uid + '-foundations'
+            foundationsCompletedAt: completedDate,
+            foundationsCertId: certId
+          });
+
+          // Write to public certificates collection so anyone can verify
+          await setDoc(doc(db, 'certificates', certId), {
+            name: currentUser.displayName || 'Meridian Student',
+            email: currentUser.email,
+            course: 'Foundations of AI',
+            issuedAt: completedDate,
+            certId: certId,
+            valid: true
           });
         } catch(e) { console.log('Could not save completion', e); }
       }

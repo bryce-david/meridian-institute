@@ -97,7 +97,7 @@
 
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-  import { getFirestore, collection, query, where, getDocs, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
   const firebaseConfig = {
     apiKey: "AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",
@@ -123,57 +123,38 @@
 
   async function loadCertificate(id) {
     try {
-      let userName = null;
-      let completedDate = null;
+      console.log('Looking up certificate:', id);
 
-      // Extract UID - cert ID is always uid + "-foundations"
-      const uid = id.endsWith('-foundations') ? id.slice(0, -('-foundations'.length)) : id;
+      // Read from public certificates collection
+      const certDoc = await getDoc(doc(db, 'certificates', id));
 
-      console.log('Looking up UID:', uid);
+      if (certDoc.exists()) {
+        const data = certDoc.data();
+        console.log('Certificate found:', data);
 
-      const userDoc = await getDoc(doc(db, 'users', uid));
+        if (data.valid) {
+          const dateObj = data.issuedAt && data.issuedAt.toDate
+            ? data.issuedAt.toDate()
+            : new Date(data.issuedAt || Date.now());
 
-      if (userDoc.exists()) {
-        const data = userDoc.data();
-        console.log('Found user data:', data);
+          const completedDate = dateObj.toLocaleDateString('en-US', {
+            year: 'numeric', month: 'long', day: 'numeric'
+          });
 
-        const certificates = data.certificatesEarned || [];
-        const completedModules = data.completedModules || [];
-        const hasCert = certificates.includes('foundations') ||
-                        completedModules.includes('foundations-complete');
-
-        if (hasCert) {
-          userName = data.name || 'Meridian Student';
-
-          // Handle Firestore Timestamp object
-          if (data.foundationsCompletedAt) {
-            try {
-              const dateObj = data.foundationsCompletedAt.toDate
-                ? data.foundationsCompletedAt.toDate()
-                : new Date(data.foundationsCompletedAt);
-              completedDate = dateObj.toLocaleDateString('en-US', {year:'numeric',month:'long',day:'numeric'});
-            } catch(e) {
-              completedDate = 'May 2026';
-            }
-          } else {
-            completedDate = 'May 2026';
-          }
-
-          showCertificate(userName, completedDate, id);
+          showCertificate(data.name, completedDate, id);
           return;
         }
-      } else {
-        console.log('No user found for UID:', uid);
       }
 
+      console.log('Certificate not found in public collection');
       showNotFound();
     } catch(e) {
-      console.log('Error loading cert:', e);
+      console.log('Error:', e);
       showNotFound();
     }
   }
 
-  function showCertificate(name, date, id) {
+    function showCertificate(name, date, id) {
     const shortId = id.substring(0, 16).toUpperCase();
     container.innerHTML = `
       <div class="cert-wrap">
