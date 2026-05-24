@@ -95,31 +95,32 @@
   .tabs-bar {
     position: sticky; top: 60px; z-index: 90;
     background: var(--bg); border-bottom: 1px solid var(--border);
-    padding: 0 5%;
+    padding: 14px 5%;
   }
   .tabs {
-    display: flex; gap: 0; max-width: 100%;
+    display: flex; gap: 10px; max-width: 100%;
     overflow-x: auto;
   }
   .tab {
-    padding: 16px 24px; font-size: 13px; font-weight: 500;
-    color: var(--text-3); border-bottom: 2px solid transparent;
+    padding: 10px 22px; font-size: 13px; font-weight: 500;
+    color: var(--text-2); border-radius: 100px;
     cursor: pointer; white-space: nowrap; transition: all 0.2s;
-    background: transparent; text-decoration: none; display: inline-block;
+    background: var(--bg-3); text-decoration: none; display: inline-block;
+    border: 1px solid var(--border-2);
   }
-  .tab:hover { color: var(--text-2); border-bottom-color: var(--border-2); }
-  .tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+  .tab:hover { background: var(--bg-4); color: var(--text); }
+  .tab.active { background: var(--accent); color: #fff; border-color: var(--accent); }
   .tab-count {
     display: inline-flex; align-items: center; justify-content: center;
     width: 18px; height: 18px; border-radius: 50%;
-    background: var(--bg-4); font-size: 10px; font-weight: 500;
-    color: var(--text-3); margin-left: 6px; vertical-align: middle;
+    background: rgba(255,255,255,0.15); font-size: 10px; font-weight: 500;
+    color: inherit; margin-left: 6px; vertical-align: middle;
   }
-  .tab.active .tab-count { background: var(--accent-dim); color: var(--accent); }
+  .tab.active .tab-count { background: rgba(255,255,255,0.2); }
 
   /* CONTENT */
   .content { padding: 48px 5% 100px; }
-  .level-section { display: block; }
+  .level-section { display: block; scroll-margin-top: 110px; }
   .level-section + .level-section { margin-top: 80px; }
 
   .level-header { margin-bottom: 32px; }
@@ -416,9 +417,9 @@
   <!-- INTERMEDIATE -->
   <div class="level-section" id="intermediate">
     <div class="level-header">
-      <div class="level-badge badge-intermediate">Intermediate · $10</div>
+      <div class="level-badge badge-intermediate">Intermediate · Coming Soon</div>
       <h2 class="level-title">Apply AI to the field<br>you're building toward.</h2>
-      <p class="level-desc">Each track is built around a specific domain. Real tools, real workflows, real outcomes. Complete the Foundations course first, then pick the domain that matters most to you.</p>
+      <p class="level-desc">Each track is built around a specific domain. Real tools, real workflows, real outcomes. These courses are coming soon — notify below to be first to know when they launch.</p>
     </div>
     <div class="course-grid">
 
@@ -536,9 +537,9 @@
   <!-- ADVANCED -->
   <div class="level-section" id="advanced">
     <div class="level-header">
-      <div class="level-badge badge-advanced">Advanced · $20</div>
+      <div class="level-badge badge-advanced">Advanced · Coming Soon</div>
       <h2 class="level-title">Deep mastery.<br>Portfolio-ready work.</h2>
-      <p class="level-desc">Advanced tracks go beyond application into architecture, strategy, and systems thinking. You leave with a capstone project and expert certification. These are for people building the future, not just using it.</p>
+      <p class="level-desc">Advanced tracks go beyond application into architecture, strategy, and systems thinking. Coming soon — notify below to be first in line when they launch.</p>
     </div>
     <div class="course-grid">
 
