@@ -728,7 +728,7 @@
     <li><a href="#pricing">Pricing</a></li>
     <li><a href="#about">About</a></li>
   </ul>
-  <div class="nav-right">
+  <div class="nav-right" id="nav-right">
     <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
       <span id="theme-icon">☀</span>
     </button>
@@ -789,14 +789,14 @@
       <span class="track-badge badge-paid">Intermediate</span>
       <h3 class="track-title">Applied AI</h3>
       <p class="track-desc">Domain-specific AI application across finance, law, healthcare, cybersecurity, and more. Real tools, real workflows, real outcomes.</p>
-      <div class="track-price">$10 <span>/ per track</span></div>
+      <div class="track-price" style="color:var(--text-3);font-size:16px;">Coming soon</div>
     </div>
     <div class="track-card">
       <div class="track-icon">◎</div>
       <span class="track-badge badge-paid">Advanced</span>
       <h3 class="track-title">Expert Certification</h3>
       <p class="track-desc">Deep technical mastery, complex projects, and certification. For those building AI systems, policies, and institutions of the future.</p>
-      <div class="track-price">$20 <span>/ per track</span></div>
+      <div class="track-price" style="color:var(--text-3);font-size:16px;">Coming soon</div>
     </div>
   </div>
 </section>
@@ -947,8 +947,8 @@
     <div class="pricing-card featured">
       <div class="pricing-featured-label">Most Popular</div>
       <div class="pricing-tier">Intermediate</div>
-      <div class="pricing-price"><sup>$</sup>10</div>
-      <div class="pricing-cadence">per specialization track</div>
+      <div class="pricing-price"><span style="font-size:24px;font-weight:300;">Coming</span></div>
+      <div class="pricing-cadence">launching soon</div>
       <div class="pricing-divider"></div>
       <ul class="pricing-features">
         <li class="pricing-feature"><span class="pricing-feature-check">✓</span> Full domain-specific track</li>
@@ -961,8 +961,8 @@
     </div>
     <div class="pricing-card">
       <div class="pricing-tier">Advanced</div>
-      <div class="pricing-price"><sup>$</sup>20</div>
-      <div class="pricing-cadence">per expert track</div>
+      <div class="pricing-price"><span style="font-size:24px;font-weight:300;">Coming</span></div>
+      <div class="pricing-cadence">launching soon</div>
       <div class="pricing-divider"></div>
       <ul class="pricing-features">
         <li class="pricing-feature"><span class="pricing-feature-check">✓</span> Deep technical curriculum</li>
@@ -971,7 +971,7 @@
         <li class="pricing-feature"><span class="pricing-feature-check">✓</span> Portfolio-ready work</li>
         <li class="pricing-feature"><span class="pricing-feature-check">✓</span> Priority support</li>
       </ul>
-      <a href="#" class="btn-pricing btn-pricing-ghost">Enroll Now</a>
+      <a href="courses.html" class="btn-pricing btn-pricing-ghost">Coming Soon</a>
     </div>
   </div>
 </section>
@@ -1023,7 +1023,7 @@
   </div>
   <div class="footer-bottom">
     <p>© 2025 Meridian Institute of AI. All rights reserved.</p>
-    <p style="color: var(--text-3);">Privacy · Terms</p>
+    <p style="color: var(--text-3);"><a href="privacy.html" style="color:var(--text-3);text-decoration:none;">Privacy Policy</a> · <a href="terms.html" style="color:var(--text-3);text-decoration:none;">Terms of Service</a></p>
   </div>
 </footer>
 
@@ -1050,5 +1050,37 @@
 
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 </script>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",
+    authDomain: "meridian-institute.firebaseapp.com",
+    projectId: "meridian-institute",
+    storageBucket: "meridian-institute.firebasestorage.app",
+    messagingSenderId: "355371012929",
+    appId: "1:355371012929:web:244fc2f15ee8ac656887c0"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+
+  onAuthStateChanged(auth, (user) => {
+    const navRight = document.getElementById('nav-right');
+    if (user && navRight) {
+      const firstName = user.displayName ? user.displayName.split(' ')[0] : 'Account';
+      navRight.innerHTML = `
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
+          <span id="theme-icon">☀</span>
+        </button>
+        <a href="courses.html" style="font-size:13px;font-weight:500;color:var(--text-2);text-decoration:none;padding:8px 16px;border-radius:8px;border:1px solid var(--border-2);transition:all 0.2s;" onmouseover="this.style.background='var(--bg-3)';this.style.color='var(--text)'" onmouseout="this.style.background='transparent';this.style.color='var(--text-2)'">Courses</a>
+        <a href="dashboard.html" style="font-size:13px;font-weight:500;color:#fff;text-decoration:none;padding:8px 18px;border-radius:8px;background:var(--accent);transition:opacity 0.2s;" onmouseover="this.style.opacity=0.88" onmouseout="this.style.opacity=1">My Dashboard</a>
+      `;
+    }
+  });
+</script>
+
 </body>
 </html>

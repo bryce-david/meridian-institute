@@ -192,7 +192,9 @@
         </div>
         ${nextModule
           ? `<a href="${nextModule.file}" class="btn-continue">Continue Learning →</a>`
-          : `<a href="quiz-foundations.html" class="btn-continue">🏆 Take Final Assessment →</a>`
+          : hasCert
+            ? `<a href="courses.html" class="btn-continue">Browse More Courses →</a>`
+            : `<a href="quiz-foundations.html" class="btn-continue">🏆 Take Final Assessment →</a>`
         }
       </div>
 
