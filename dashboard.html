@@ -159,16 +159,27 @@
       }
     } catch(e) { console.log('Firebase read failed', e); }
 
-    // Also check localStorage as fallback
-    MODULE_LIST.forEach(m => {
-      if (localStorage.getItem(m.lsKey) && !completedModules.includes(m.id)) {
+    // Also check localStorage as fallback and normalize IDs
+    MODULE_LIST.forEach((m, i) => {
+      const lsDone = localStorage.getItem(m.lsKey);
+      const fbDone = completedModules.includes(m.id) ||
+                     completedModules.includes('module-' + (i+1)) ||
+                     completedModules.includes(m.id.replace('module-', 'module-'));
+      if ((lsDone || fbDone) && !completedModules.includes(m.id)) {
         completedModules.push(m.id);
       }
     });
 
+    // If foundations-complete is saved, mark all modules done
+    if (completedModules.includes('foundations-complete') || certificates.includes('foundations')) {
+      MODULE_LIST.forEach(m => {
+        if (!completedModules.includes(m.id)) completedModules.push(m.id);
+      });
+    }
+
     const completedCount = MODULE_LIST.filter(m => completedModules.includes(m.id)).length;
     const allDone = completedCount === MODULE_LIST.length;
-    const hasCert = certificates.includes('foundations') || allDone;
+    const hasCert = certificates.includes('foundations') || completedModules.includes('foundations-complete');
 
     // Find next module
     const nextModule = MODULE_LIST.find(m => !completedModules.includes(m.id));

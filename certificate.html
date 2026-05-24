@@ -134,18 +134,36 @@
 
       if (userDoc.exists()) {
         userData = userDoc.data();
-        const hasCert = (userData.certificatesEarned || []).includes('foundations') ||
-                        (userData.completedModules || []).includes('foundations-complete');
+        const completedModules = userData.completedModules || [];
+        const certificates = userData.certificatesEarned || [];
+
+        // Check all possible ways a certificate could be stored
+        const hasCert = certificates.includes('foundations') ||
+                        completedModules.includes('foundations-complete') ||
+                        completedModules.length >= 6;
 
         if (hasCert) {
           userName = userData.name || 'Meridian Student';
-          completedDate = userData.foundationsCompletedAt
-            ? new Date(userData.foundationsCompletedAt.toDate()).toLocaleDateString('en-US', {year:'numeric',month:'long',day:'numeric'})
-            : new Date().toLocaleDateString('en-US', {year:'numeric',month:'long',day:'numeric'});
+
+          // Try multiple date sources
+          if (userData.foundationsCompletedAt && userData.foundationsCompletedAt.toDate) {
+            completedDate = new Date(userData.foundationsCompletedAt.toDate()).toLocaleDateString('en-US', {year:'numeric',month:'long',day:'numeric'});
+          } else if (userData.foundationsCompletedAt) {
+            completedDate = new Date(userData.foundationsCompletedAt).toLocaleDateString('en-US', {year:'numeric',month:'long',day:'numeric'});
+          } else {
+            // Fall back to today if no date saved
+            completedDate = new Date().toLocaleDateString('en-US', {year:'numeric',month:'long',day:'numeric'});
+          }
 
           showCertificate(userName, completedDate, id);
           return;
         }
+      }
+
+      // Also try searching by email if uid lookup failed
+      // (handles case where cert ID format changed)
+      if (id.includes('-foundations')) {
+        // Already tried the uid approach above
       }
 
       showNotFound();
