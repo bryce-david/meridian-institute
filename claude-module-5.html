@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 5: Advanced Claude Features — Mastering Claude — Meridian Institute of AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#5b8ff8;--accent-dim:rgba(91,143,248,0.1);--nav-bg:rgba(8,8,8,0.9);--callout-bg:rgba(91,143,248,0.07);--callout-border:rgba(91,143,248,0.25);--good-bg:rgba(34,197,94,0.07);--good-border:rgba(34,197,94,0.2);--warn-bg:rgba(251,146,60,0.07);--warn-border:rgba(251,146,60,0.2);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#2563eb;--accent-dim:rgba(37,99,235,0.08);--nav-bg:rgba(250,250,248,0.9);--callout-bg:rgba(37,99,235,0.05);--callout-border:rgba(37,99,235,0.2);--good-bg:rgba(22,163,74,0.06);--good-border:rgba(22,163,74,0.2);--warn-bg:rgba(234,88,12,0.05);--warn-border:rgba(234,88,12,0.2);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;overflow-x:hidden;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.7;overflow-x:hidden;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}
+  .nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}
+  .nav-back{font-size:13px;color:var(--text-2);text-decoration:none;transition:color 0.2s;}
+  .nav-back:hover{color:var(--text);}
+  .nav-label{font-size:13px;color:var(--text-3);}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;transition:all 0.2s;}
+  .theme-toggle:hover{background:var(--bg-3);color:var(--text);}
+  .progress-bar{position:fixed;top:60px;left:0;right:0;z-index:99;height:2px;background:var(--border);}
+  .progress-fill{height:100%;background:var(--accent);width:0%;transition:width 0.1s;}
+  .page-wrapper{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:100vh;padding-top:62px;overflow:hidden;}
+  .sidebar{position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto;border-right:1px solid var(--border);padding:32px 24px;background:var(--bg-2);}
+  .sidebar-course{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;}
+  .sidebar-course-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+  .sidebar-module{margin-bottom:4px;}
+  .sidebar-module-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:13px;color:var(--text-2);text-decoration:none;transition:all 0.2s;line-height:1.4;}
+  .sidebar-module-link:hover{background:var(--bg-3);color:var(--text);}
+  .sidebar-module-link.active{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-num{font-size:11px;font-weight:500;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--bg-4);color:var(--text-3);}
+  .sidebar-module-link.active .sidebar-num{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-divider{height:1px;background:var(--border);margin:20px 0;}
+  .sidebar-progress-label{font-size:12px;color:var(--text-3);margin-bottom:8px;display:flex;justify-content:space-between;}
+  .sidebar-progress-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sidebar-progress-fill{height:100%;width:71%;background:var(--accent);border-radius:2px;}
+  main{display:block;min-width:0;overflow:hidden;}
+  .content{max-width:760px;width:100%;padding:60px 64px 140px;margin:0 auto;}
+  .module-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+  .module-tag{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(91,143,248,0.2);padding:4px 12px;border-radius:100px;}
+  .module-meta{font-size:12px;color:var(--text-3);}
+  h1{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1.05;letter-spacing:-0.02em;color:var(--text);margin-bottom:24px;}
+  .intro-text{font-size:19px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+  h2{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:400;color:var(--text);margin:52px 0 18px;line-height:1.2;}
+  h3{font-size:16px;font-weight:500;color:var(--text);margin:32px 0 12px;}
+  p{font-size:16px;font-weight:300;color:var(--text-2);line-height:1.8;margin-bottom:20px;}
+  strong{font-weight:500;color:var(--text);}
+  .callout{background:var(--callout-bg);border:1px solid var(--callout-border);border-radius:12px;padding:24px 28px;margin:32px 0;}
+  .callout-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+  .callout p{margin:0;font-size:15px;color:var(--text-2);}
+  .callout p+p{margin-top:12px;}
+  .good{background:var(--good-bg);border:1px solid var(--good-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .good-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#22c55e;margin-bottom:10px;}
+  .good p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn{background:var(--warn-bg);border:1px solid var(--warn-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .warn-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#fb923c;margin-bottom:10px;}
+  .warn p{margin:0;font-size:15px;color:var(--text-2);}
+  .feature-card{background:var(--bg-2);border:1px solid var(--border);border-radius:14px;padding:28px;margin:20px 0;}
+  .feature-icon{font-size:28px;margin-bottom:14px;}
+  .feature-name{font-size:17px;font-weight:500;color:var(--text);margin-bottom:10px;}
+  .feature-desc{font-size:14px;color:var(--text-2);line-height:1.7;margin-bottom:16px;}
+  .feature-use{font-size:13px;color:var(--text-3);padding-top:14px;border-top:1px solid var(--border);}
+  .feature-use strong{color:var(--text-2);display:block;margin-bottom:6px;font-size:11px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;}
+  .comparison-wrapper{overflow-x:auto;-webkit-overflow-scrolling:touch;width:100%;margin:28px 0;}
+  table{width:100%;border-collapse:collapse;font-size:14px;min-width:480px;}
+  th{text-align:left;padding:12px 16px;font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-3);border-bottom:1px solid var(--border-2);}
+  td{padding:14px 16px;border-bottom:1px solid var(--border);color:var(--text-2);line-height:1.6;vertical-align:top;}
+  tr:last-child td{border-bottom:none;}
+  td:first-child{color:var(--text);font-weight:500;}
+  .sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:var(--bg-2);border-top:1px solid var(--border-2);padding:14px 5%;display:flex;align-items:center;justify-content:space-between;gap:16px;backdrop-filter:blur(12px);}
+  .sticky-bar-track{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sticky-bar-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.2s;width:0%;}
+  .sticky-bar-label{font-size:12px;color:var(--text-3);white-space:nowrap;min-width:60px;text-align:right;}
+  .sticky-bar-btn{padding:10px 20px;border-radius:8px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;background:var(--accent);color:#fff;border:none;cursor:pointer;white-space:nowrap;transition:opacity 0.2s;display:none;}
+  .sticky-bar-btn:hover{opacity:0.88;}
+  .sticky-bar-reading{font-size:12px;color:var(--text-3);white-space:nowrap;}
+  @media(max-width:900px){.page-wrapper{grid-template-columns:1fr;}.sidebar{display:none;}.content{padding:40px 24px 120px;}h1{font-size:38px;}}
+  @media(max-width:600px){.content{padding:28px 16px 120px;}h1{font-size:30px;}h2{font-size:24px;}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="index.html" class="nav-back">🏠 Home</a>
+    <div class="nav-divider"></div>
+    <a href="courses.html" class="nav-back">← Mastering Claude</a>
+    <div class="nav-divider"></div>
+    <span class="nav-label">Module 5</span>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">☀</span></button>
+</nav>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+
+<div class="page-wrapper">
+<aside class="sidebar">
+  <div class="sidebar-course">Course</div>
+  <div class="sidebar-course-name">Mastering Claude</div>
+  <div class="sidebar-module"><a href="claude-module-1.html" class="sidebar-module-link"><span class="sidebar-num">1</span>Understanding Claude</a></div>
+  <div class="sidebar-module"><a href="claude-module-2.html" class="sidebar-module-link"><span class="sidebar-num">2</span>Claude's Model Lineup</a></div>
+  <div class="sidebar-module"><a href="claude-module-3.html" class="sidebar-module-link"><span class="sidebar-num">3</span>Prompting Claude Effectively</a></div>
+  <div class="sidebar-module"><a href="claude-module-4.html" class="sidebar-module-link"><span class="sidebar-num">4</span>Claude Projects & Memory</a></div>
+  <div class="sidebar-module"><a href="claude-module-5.html" class="sidebar-module-link active"><span class="sidebar-num">5</span>Advanced Claude Features</a></div>
+  <div class="sidebar-module"><a href="claude-module-6.html" class="sidebar-module-link"><span class="sidebar-num">6</span>Claude in the Real World</a></div>
+  <div class="sidebar-module"><a href="claude-module-7.html" class="sidebar-module-link"><span class="sidebar-num">7</span>Claude vs The Field</a></div>
+  <div class="sidebar-module"><a href="quiz-claude.html" class="sidebar-module-link" style="color:var(--accent);margin-top:4px;"><span class="sidebar-num" style="background:var(--accent-dim);color:var(--accent);">✦</span>Final Assessment</a></div>
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-progress-label"><span>Course progress</span><span style="color:var(--accent);">5 / 7</span></div>
+  <div class="sidebar-progress-track"><div class="sidebar-progress-fill"></div></div>
+</aside>
+
+<main>
+<div class="content">
+  <div class="module-eyebrow"><span class="module-tag">Module 5</span><span class="module-meta">22 min read · Mastering Claude</span></div>
+  <h1>Advanced Claude Features</h1>
+  <p class="intro-text">Beyond the core conversational interface, Claude has a set of capabilities that most users never explore. This module covers the features that separate casual users from power users — extended thinking, vision, document analysis, code execution, artifacts, and web search — and exactly when and how to use each one.</p>
+
+  <h2>Extended Thinking</h2>
+
+  <div class="feature-card">
+    <div class="feature-icon">🧠</div>
+    <div class="feature-name">Extended Thinking Mode</div>
+    <div class="feature-desc">Extended thinking gives Claude the ability to reason through complex problems step by step before producing its final response. When enabled, you can see Claude's actual reasoning process — its working notes, considerations, and deliberations — before it lands on an answer. This isn't just showing its work for your benefit. The reasoning process itself produces measurably better answers on hard problems by allowing Claude to catch its own errors and explore alternative approaches before committing.</div>
+    <div class="feature-use">
+      <strong>Best for</strong>
+      Hard math and logic, complex code debugging, multi-step strategic decisions, ambiguous problems with multiple valid interpretations, any task where you want to understand how Claude arrived at its answer
+    </div>
+  </div>
+
+  <h3>How to activate extended thinking</h3>
+  <p>In Claude.ai, look for the thinking toggle in the interface (available on Claude Sonnet 3.7+ and Claude 4 models). You can also prompt it explicitly: "Think through this carefully step by step before giving your final answer." The explicit prompt version works on any model — you won't see the internal reasoning, but the quality improvement from the instruction itself is significant.</p>
+
+  <div class="callout">
+    <div class="callout-label">When to use extended thinking vs. standard responses</div>
+    <p>Standard responses are fast and appropriate for most tasks. Use extended thinking when: the problem is genuinely hard and you've seen Claude get similar things wrong before, you need to understand the reasoning to trust the answer, or you're working on something where a wrong answer has real consequences. Extended thinking is slower and uses more tokens — treat it as a premium mode for premium problems.</p>
+  </div>
+
+  <h2>Vision — analyzing images and documents</h2>
+
+  <div class="feature-card">
+    <div class="feature-icon">👁️</div>
+    <div class="feature-name">Vision Capabilities</div>
+    <div class="feature-desc">Claude can see and analyze images, screenshots, diagrams, charts, handwritten notes, photos of documents, and visual media of almost any kind. This isn't basic OCR — Claude understands spatial relationships, interprets charts and graphs, reads handwriting, analyzes UI/UX designs, and can reason about what it sees rather than just transcribing text from images.</div>
+    <div class="feature-use">
+      <strong>Best for</strong>
+      Analyzing charts and graphs, reviewing UI designs, extracting data from photos of documents, interpreting diagrams, reading handwritten notes, getting feedback on visual work, understanding screenshots of errors
+    </div>
+  </div>
+
+  <h3>Practical vision use cases</h3>
+  <p><strong>Screenshot debugging:</strong> Screenshot an error message, a broken UI, or unexpected behavior and ask Claude to diagnose it. This is dramatically faster than transcribing error messages manually.</p>
+  <p><strong>Chart and graph analysis:</strong> Upload a chart and ask Claude to explain the trends, identify anomalies, compare data points, or suggest what conclusions are and aren't supported by the data.</p>
+  <p><strong>Document photos:</strong> Photograph a physical document — a handwritten note, a printed form, a whiteboard — and ask Claude to extract, summarize, or work with the content.</p>
+  <p><strong>Design feedback:</strong> Share a UI mockup, website screenshot, or design and ask for specific feedback on usability, clarity, or aesthetic choices.</p>
+
+  <h2>Document analysis</h2>
+
+  <div class="feature-card">
+    <div class="feature-icon">📄</div>
+    <div class="feature-name">Document Upload and Analysis</div>
+    <div class="feature-desc">Claude accepts uploaded documents — PDFs, Word files, text files, spreadsheets — and can analyze them with full comprehension of their content. This goes well beyond keyword search. Claude reads the document, understands its structure and arguments, and can answer nuanced questions, find specific information, compare sections, identify inconsistencies, or summarize at any level of detail you specify.</div>
+    <div class="feature-use">
+      <strong>Best for</strong>
+      Legal document review, research paper analysis, contract comparison, report summarization, finding specific information in long documents, cross-referencing multiple documents
+    </div>
+  </div>
+
+  <h3>Getting the most from document analysis</h3>
+  <p>Be specific about what you want. "Summarize this document" produces a generic summary. "Identify every commitment made by each party in this contract, organized by party" produces something actionable. The more precisely you frame the task, the more useful Claude's output.</p>
+  <p>For very long documents, consider breaking your analysis into focused questions rather than asking for everything at once. "What are the key risks mentioned in sections 3 and 4?" is more effective than "analyze this 200-page report."</p>
+
+  <h2>Artifacts</h2>
+
+  <div class="feature-card">
+    <div class="feature-icon">⚡</div>
+    <div class="feature-name">Claude Artifacts</div>
+    <div class="feature-desc">Artifacts are standalone outputs — code, documents, diagrams, web pages — that Claude creates in a separate panel alongside the conversation. Unlike regular responses, artifacts can be run, edited, and exported. When Claude writes code in an artifact, you can see it execute in a preview window. When it creates an HTML document, you can see the rendered result. Artifacts are where Claude's outputs become interactive rather than just text.</div>
+    <div class="feature-use">
+      <strong>Best for</strong>
+      Interactive code demos, HTML/CSS layouts, data visualizations, React components, formatted documents you'll export, anything where seeing the output rendered is valuable
+    </div>
+  </div>
+
+  <h3>When artifacts automatically appear</h3>
+  <p>Claude creates artifacts automatically when it writes substantial code (typically 20+ lines), creates HTML/CSS content, builds data visualizations, or produces structured documents that benefit from separate rendering. You can also request them explicitly: "Create this as an artifact" or "Put this in a separate document I can edit."</p>
+
+  <div class="warn">
+    <div class="warn-label">Important limitation</div>
+    <p>Artifacts run in a sandboxed environment with no internet access and limited browser APIs. Code that works in an artifact may behave differently in a production environment. Always test artifact code in your actual development environment before deploying it.</p>
+  </div>
+
+  <h2>Web search</h2>
+
+  <div class="feature-card">
+    <div class="feature-icon">🔍</div>
+    <div class="feature-name">Web Search Integration</div>
+    <div class="feature-desc">When web search is enabled, Claude can search the internet during a conversation to find current information, verify facts, or research topics beyond its training cutoff. Claude doesn't just return search results — it synthesizes them into coherent answers with citations, just like Perplexity but integrated into a full-featured AI assistant. Search is triggered automatically when Claude determines it needs current information, or you can prompt it explicitly.</div>
+    <div class="feature-use">
+      <strong>Best for</strong>
+      Current events and news, recent research, up-to-date pricing or availability, verifying facts that may have changed, anything where your question requires information from after Claude's training cutoff
+    </div>
+  </div>
+
+  <h3>How to get the most from web search</h3>
+  <p>Tell Claude explicitly when you need current information: "Search for the latest research on X" or "What are the current prices for Y — please search for up-to-date information." This ensures Claude searches rather than relying on potentially outdated training data.</p>
+  <p>For research tasks, combining web search with Claude's synthesis capabilities produces something more useful than either a search engine or a static AI alone — current information, intelligently integrated and explained.</p>
+
+  <h2>Code execution</h2>
+
+  <div class="feature-card">
+    <div class="feature-icon">💻</div>
+    <div class="feature-name">Code Execution</div>
+    <div class="feature-desc">Claude can write and run code — primarily Python — and show you the actual output rather than predicting what it would be. This is genuinely different from asking Claude to write code and then running it yourself. Claude can iterate based on actual execution results, catch runtime errors it couldn't have predicted, and work through data analysis tasks where the output shapes the next step.</div>
+    <div class="feature-use">
+      <strong>Best for</strong>
+      Data analysis and manipulation, math calculations, generating and testing code iteratively, file processing tasks, visualization generation, anything where you need verified rather than predicted outputs
+    </div>
+  </div>
+
+  <h2>Capability comparison at a glance</h2>
+  <div class="comparison-wrapper">
+    <table>
+      <tr><th>Feature</th><th>Available on</th><th>Key limitation</th></tr>
+      <tr><td>Extended thinking</td><td>Sonnet 3.7+, Claude 4 models</td><td>Slower, higher token usage</td></tr>
+      <tr><td>Vision</td><td>All current Claude models</td><td>No video; images only</td></tr>
+      <tr><td>Document upload</td><td>Claude.ai (all tiers)</td><td>File size limits apply</td></tr>
+      <tr><td>Artifacts</td><td>Claude.ai Pro and above</td><td>Sandboxed — no internet</td></tr>
+      <tr><td>Web search</td><td>Claude.ai (when enabled)</td><td>May not always trigger automatically</td></tr>
+      <tr><td>Code execution</td><td>Claude.ai Pro</td><td>Python primary; sandboxed</td></tr>
+    </table>
+  </div>
+
+  <div class="good">
+    <div class="good-label">Combining features for maximum impact</div>
+    <p>The real power comes from combining features. Upload a PDF research paper, enable extended thinking, ask Claude to synthesize the key findings, cross-reference them with a web search for more recent work, and generate a formatted summary as an artifact. Each capability amplifies the others. Think about what combination of features fits your task rather than using features in isolation.</p>
+  </div>
+
+</div>
+</main>
+</div>
+
+<div class="sticky-bar" id="sticky-bar">
+  <div class="sticky-bar-reading" id="sticky-reading">Read to the end to unlock the next module</div>
+  <div class="sticky-bar-track"><div class="sticky-bar-fill" id="sticky-fill"></div></div>
+  <div class="sticky-bar-label" id="sticky-label">0%</div>
+  <button class="sticky-bar-btn" id="sticky-btn" onclick="completeAndNext()">Module 6: Claude in the Real World →</button>
+</div>
+
+<script>
+  function toggleTheme(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='☾'):(h.setAttribute('data-theme','dark'),i.textContent='☀');}
+  window.addEventListener('scroll',()=>{const d=document.documentElement,s=d.scrollTop||document.body.scrollTop,t=d.scrollHeight-d.clientHeight;document.getElementById('progress').style.width=(s/t*100)+'%';});
+  if (!localStorage.getItem('meridian_claude_m4')) {
+    document.body.innerHTML = `<div style="min-height:100vh;display:flex;align-items:center;justify-content:center;background:#080808;font-family:'DM Sans',sans-serif;padding:24px;"><div style="max-width:440px;text-align:center;background:#111;border:1px solid rgba(255,255,255,0.08);border-radius:20px;padding:48px;"><div style="font-size:48px;margin-bottom:20px;">🔒</div><div style="font-size:20px;font-weight:500;color:#f0f0f0;margin-bottom:12px;">Module locked</div><div style="font-size:14px;color:#a0a0a0;margin-bottom:28px;line-height:1.6;">Complete Module 4 before continuing.</div><a href="claude-module-4.html" style="display:inline-block;padding:12px 24px;background:#5b8ff8;color:#fff;border-radius:10px;font-size:14px;font-weight:500;text-decoration:none;">← Go to Module 4</a></div></div>`;
+  }
+  let unlocked = false;
+  function updateScrollProgress() {
+    const scrolled = window.scrollY + window.innerHeight;
+    const total = document.documentElement.scrollHeight;
+    const pct = Math.min(100, Math.round((scrolled / total) * 100));
+    const fill = document.getElementById('sticky-fill');
+    const label = document.getElementById('sticky-label');
+    const btn = document.getElementById('sticky-btn');
+    const reading = document.getElementById('sticky-reading');
+    if (fill) fill.style.width = pct + '%';
+    if (label) label.textContent = pct + '%';
+    if (pct >= 95 && !unlocked) {
+      unlocked = true;
+      if (btn) btn.style.display = 'block';
+      if (reading) reading.style.display = 'none';
+      if (fill) fill.style.background = '#22c55e';
+      if (label) label.style.color = '#22c55e';
+    }
+  }
+  window.addEventListener('scroll', updateScrollProgress);
+  updateScrollProgress();
+  function completeAndNext() {
+    try { localStorage.setItem('meridian_claude_m5', 'true'); localStorage.setItem('meridian_last_claude_module', '5'); } catch(e) {}
+    setTimeout(() => { window.location.href = 'claude-module-6.html'; }, 80);
+  }
+</script>
+</body>
+</html>

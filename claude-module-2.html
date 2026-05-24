@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 2: Claude's Model Lineup — Mastering Claude — Meridian Institute of AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#5b8ff8;--accent-dim:rgba(91,143,248,0.1);--nav-bg:rgba(8,8,8,0.9);--callout-bg:rgba(91,143,248,0.07);--callout-border:rgba(91,143,248,0.25);--good-bg:rgba(34,197,94,0.07);--good-border:rgba(34,197,94,0.2);--warn-bg:rgba(251,146,60,0.07);--warn-border:rgba(251,146,60,0.2);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#2563eb;--accent-dim:rgba(37,99,235,0.08);--nav-bg:rgba(250,250,248,0.9);--callout-bg:rgba(37,99,235,0.05);--callout-border:rgba(37,99,235,0.2);--good-bg:rgba(22,163,74,0.06);--good-border:rgba(22,163,74,0.2);--warn-bg:rgba(234,88,12,0.05);--warn-border:rgba(234,88,12,0.2);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;overflow-x:hidden;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.7;overflow-x:hidden;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}
+  .nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}
+  .nav-back{font-size:13px;color:var(--text-2);text-decoration:none;transition:color 0.2s;}
+  .nav-back:hover{color:var(--text);}
+  .nav-label{font-size:13px;color:var(--text-3);}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;transition:all 0.2s;}
+  .theme-toggle:hover{background:var(--bg-3);color:var(--text);}
+  .progress-bar{position:fixed;top:60px;left:0;right:0;z-index:99;height:2px;background:var(--border);}
+  .progress-fill{height:100%;background:var(--accent);width:0%;transition:width 0.1s;}
+  .page-wrapper{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:100vh;padding-top:62px;overflow:hidden;}
+  .sidebar{position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto;border-right:1px solid var(--border);padding:32px 24px;background:var(--bg-2);}
+  .sidebar-course{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;}
+  .sidebar-course-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+  .sidebar-module{margin-bottom:4px;}
+  .sidebar-module-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:13px;color:var(--text-2);text-decoration:none;transition:all 0.2s;line-height:1.4;}
+  .sidebar-module-link:hover{background:var(--bg-3);color:var(--text);}
+  .sidebar-module-link.active{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-num{font-size:11px;font-weight:500;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--bg-4);color:var(--text-3);}
+  .sidebar-module-link.active .sidebar-num{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-divider{height:1px;background:var(--border);margin:20px 0;}
+  .sidebar-progress-label{font-size:12px;color:var(--text-3);margin-bottom:8px;display:flex;justify-content:space-between;}
+  .sidebar-progress-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sidebar-progress-fill{height:100%;width:28%;background:var(--accent);border-radius:2px;}
+  main{display:block;min-width:0;overflow:hidden;}
+  .content{max-width:760px;width:100%;padding:60px 64px 140px;margin:0 auto;}
+  .module-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+  .module-tag{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(91,143,248,0.2);padding:4px 12px;border-radius:100px;}
+  .module-meta{font-size:12px;color:var(--text-3);}
+  h1{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1.05;letter-spacing:-0.02em;color:var(--text);margin-bottom:24px;}
+  .intro-text{font-size:19px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+  h2{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:400;color:var(--text);margin:52px 0 18px;line-height:1.2;}
+  h3{font-size:16px;font-weight:500;color:var(--text);margin:32px 0 12px;}
+  p{font-size:16px;font-weight:300;color:var(--text-2);line-height:1.8;margin-bottom:20px;}
+  strong{font-weight:500;color:var(--text);}
+  .callout{background:var(--callout-bg);border:1px solid var(--callout-border);border-radius:12px;padding:24px 28px;margin:32px 0;}
+  .callout-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+  .callout p{margin:0;font-size:15px;color:var(--text-2);}
+  .callout p+p{margin-top:12px;}
+  .good{background:var(--good-bg);border:1px solid var(--good-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .good-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#22c55e;margin-bottom:10px;}
+  .good p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn{background:var(--warn-bg);border:1px solid var(--warn-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .warn-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#fb923c;margin-bottom:10px;}
+  .warn p{margin:0;font-size:15px;color:var(--text-2);}
+  .model-card{background:var(--bg-2);border:1px solid var(--border);border-radius:16px;padding:32px;margin:20px 0;position:relative;overflow:hidden;}
+  .model-card.featured{border-color:rgba(91,143,248,0.4);}
+  .model-card::before{content:'';position:absolute;top:-30px;right:-30px;width:120px;height:120px;border-radius:50%;pointer-events:none;}
+  .model-card.haiku::before{background:radial-gradient(circle,rgba(34,197,94,0.08) 0%,transparent 70%);}
+  .model-card.sonnet::before{background:radial-gradient(circle,rgba(91,143,248,0.1) 0%,transparent 70%);}
+  .model-card.opus::before{background:radial-gradient(circle,rgba(168,85,247,0.1) 0%,transparent 70%);}
+  .model-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:16px;}
+  .model-name{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:400;color:var(--text);line-height:1;}
+  .model-version{font-size:12px;color:var(--text-3);margin-top:4px;font-family:monospace;}
+  .model-badge{font-size:11px;font-weight:500;padding:5px 12px;border-radius:100px;white-space:nowrap;}
+  .badge-fast{background:rgba(34,197,94,0.1);color:#22c55e;border:1px solid rgba(34,197,94,0.2);}
+  .badge-balanced{background:var(--accent-dim);color:var(--accent);border:1px solid rgba(91,143,248,0.2);}
+  .badge-powerful{background:rgba(168,85,247,0.1);color:#a855f7;border:1px solid rgba(168,85,247,0.2);}
+  .model-desc{font-size:15px;color:var(--text-2);line-height:1.7;margin-bottom:20px;}
+  .model-specs{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px;}
+  .model-spec{background:var(--bg-3);border-radius:8px;padding:12px 16px;}
+  .model-spec-label{font-size:10px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-3);margin-bottom:4px;}
+  .model-spec-value{font-size:14px;font-weight:500;color:var(--text);}
+  .model-best{margin-top:16px;}
+  .model-best-label{font-size:12px;font-weight:500;color:var(--text-2);margin-bottom:10px;text-transform:uppercase;letter-spacing:0.08em;}
+  .use-tags{display:flex;flex-wrap:wrap;gap:8px;}
+  .use-tag{font-size:12px;padding:4px 10px;border-radius:6px;background:var(--bg-4);color:var(--text-2);border:1px solid var(--border);}
+  .decision-tree{background:var(--bg-2);border:1px solid var(--border);border-radius:14px;padding:28px;margin:28px 0;}
+  .decision-tree-title{font-size:14px;font-weight:500;color:var(--text);margin-bottom:20px;}
+  .decision-item{display:flex;gap:16px;padding:14px 0;border-bottom:1px solid var(--border);}
+  .decision-item:last-child{border-bottom:none;}
+  .decision-if{font-size:13px;color:var(--text-2);flex:1;line-height:1.5;}
+  .decision-then{font-size:13px;font-weight:500;color:var(--accent);white-space:nowrap;padding-top:1px;}
+  .comparison-wrapper{overflow-x:auto;-webkit-overflow-scrolling:touch;width:100%;margin:28px 0;}
+  table{width:100%;border-collapse:collapse;font-size:14px;min-width:500px;}
+  th{text-align:left;padding:12px 16px;font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-3);border-bottom:1px solid var(--border-2);}
+  td{padding:14px 16px;border-bottom:1px solid var(--border);color:var(--text-2);line-height:1.6;vertical-align:top;}
+  tr:last-child td{border-bottom:none;}
+  td:first-child{color:var(--text);font-weight:500;}
+  .sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:var(--bg-2);border-top:1px solid var(--border-2);padding:14px 5%;display:flex;align-items:center;justify-content:space-between;gap:16px;backdrop-filter:blur(12px);}
+  .sticky-bar-track{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sticky-bar-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.2s;width:0%;}
+  .sticky-bar-label{font-size:12px;color:var(--text-3);white-space:nowrap;min-width:60px;text-align:right;}
+  .sticky-bar-btn{padding:10px 20px;border-radius:8px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;background:var(--accent);color:#fff;border:none;cursor:pointer;white-space:nowrap;transition:opacity 0.2s;display:none;}
+  .sticky-bar-btn:hover{opacity:0.88;}
+  .sticky-bar-reading{font-size:12px;color:var(--text-3);white-space:nowrap;}
+  @media(max-width:900px){.page-wrapper{grid-template-columns:1fr;}.sidebar{display:none;}.content{padding:40px 24px 120px;}h1{font-size:38px;}.model-specs{grid-template-columns:1fr;}}
+  @media(max-width:600px){.content{padding:28px 16px 120px;}h1{font-size:30px;}h2{font-size:24px;}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="index.html" class="nav-back">🏠 Home</a>
+    <div class="nav-divider"></div>
+    <a href="courses.html" class="nav-back">← Mastering Claude</a>
+    <div class="nav-divider"></div>
+    <span class="nav-label">Module 2</span>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">☀</span></button>
+</nav>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+
+<div class="page-wrapper">
+<aside class="sidebar">
+  <div class="sidebar-course">Course</div>
+  <div class="sidebar-course-name">Mastering Claude</div>
+  <div class="sidebar-module"><a href="claude-module-1.html" class="sidebar-module-link"><span class="sidebar-num">1</span>Understanding Claude</a></div>
+  <div class="sidebar-module"><a href="claude-module-2.html" class="sidebar-module-link active"><span class="sidebar-num">2</span>Claude's Model Lineup</a></div>
+  <div class="sidebar-module"><a href="claude-module-3.html" class="sidebar-module-link"><span class="sidebar-num">3</span>Prompting Claude Effectively</a></div>
+  <div class="sidebar-module"><a href="claude-module-4.html" class="sidebar-module-link"><span class="sidebar-num">4</span>Claude Projects & Memory</a></div>
+  <div class="sidebar-module"><a href="claude-module-5.html" class="sidebar-module-link"><span class="sidebar-num">5</span>Advanced Claude Features</a></div>
+  <div class="sidebar-module"><a href="claude-module-6.html" class="sidebar-module-link"><span class="sidebar-num">6</span>Claude in the Real World</a></div>
+  <div class="sidebar-module"><a href="claude-module-7.html" class="sidebar-module-link"><span class="sidebar-num">7</span>Claude vs The Field</a></div>
+  <div class="sidebar-module"><a href="quiz-claude.html" class="sidebar-module-link" style="color:var(--accent);margin-top:4px;"><span class="sidebar-num" style="background:var(--accent-dim);color:var(--accent);">✦</span>Final Assessment</a></div>
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-progress-label"><span>Course progress</span><span style="color:var(--accent);">2 / 7</span></div>
+  <div class="sidebar-progress-track"><div class="sidebar-progress-fill"></div></div>
+</aside>
+
+<main>
+<div class="content">
+  <div class="module-eyebrow"><span class="module-tag">Module 2</span><span class="module-meta">22 min read · Mastering Claude</span></div>
+  <h1>Claude's Model Lineup</h1>
+  <p class="intro-text">Anthropic doesn't offer one Claude — they offer a family of models at different points on the capability-speed-cost spectrum. Choosing the wrong model for a task is one of the most common ways people underuse Claude. This module gives you the exact decision framework you need to always use the right tool.</p>
+
+  <h2>The Claude family explained</h2>
+  <p>As of 2025, Anthropic's Claude family consists of three tiers: <strong>Haiku</strong>, <strong>Sonnet</strong>, and <strong>Opus</strong>. Each name comes from a type of poetry — Haiku being short and precise, Sonnet being structured and expressive, Opus being a major work of depth and complexity. The naming is deliberate.</p>
+  <p>Each tier has a numbered version (Claude 3, Claude 3.5, Claude 4) indicating the generation. A Claude 4 Haiku is faster and cheaper than a Claude 3 Sonnet, but may be less capable on complex reasoning tasks. Understanding both the tier and the generation is essential for making good model choices.</p>
+
+  <div class="model-card haiku">
+    <div class="model-header">
+      <div>
+        <div class="model-name">Claude Haiku</div>
+        <div class="model-version">Latest: claude-haiku-4-5 · claude-haiku-3-5</div>
+      </div>
+      <span class="model-badge badge-fast">⚡ Fastest</span>
+    </div>
+    <p class="model-desc">Haiku is Claude's speed-optimized tier. It's designed for tasks where response time matters more than maximum depth — high-volume applications, real-time interactions, quick lookups, and lightweight tasks that don't require heavy reasoning. Don't mistake fast for dumb — Haiku is still remarkably capable. It handles most everyday tasks well. What it doesn't do is match Sonnet or Opus on complex multi-step reasoning, nuanced writing, or tasks requiring deep context integration.</p>
+    <div class="model-specs">
+      <div class="model-spec"><div class="model-spec-label">Speed</div><div class="model-spec-value">Fastest in the family</div></div>
+      <div class="model-spec"><div class="model-spec-label">Cost</div><div class="model-spec-value">Lowest — ideal for high volume</div></div>
+      <div class="model-spec"><div class="model-spec-label">Context window</div><div class="model-spec-value">200K tokens</div></div>
+      <div class="model-spec"><div class="model-spec-label">Best for</div><div class="model-spec-value">Speed-critical, high-volume tasks</div></div>
+    </div>
+    <div class="model-best">
+      <div class="model-best-label">Use Haiku for</div>
+      <div class="use-tags">
+        <span class="use-tag">Customer support chatbots</span>
+        <span class="use-tag">Quick summaries</span>
+        <span class="use-tag">Content classification</span>
+        <span class="use-tag">Real-time applications</span>
+        <span class="use-tag">Simple Q&A</span>
+        <span class="use-tag">Data extraction</span>
+        <span class="use-tag">API integrations needing speed</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="model-card sonnet featured">
+    <div class="model-header">
+      <div>
+        <div class="model-name">Claude Sonnet</div>
+        <div class="model-version">Latest: claude-sonnet-4-5 · claude-sonnet-4 · claude-sonnet-3-7</div>
+      </div>
+      <span class="model-badge badge-balanced">⚖ Best Balance</span>
+    </div>
+    <p class="model-desc">Sonnet is the sweet spot — and for most users most of the time, it's the right choice. It balances capability, speed, and cost in a way that makes it the default workhorse for serious work. Claude Sonnet 4 and 4.5 are among the most capable models available from any company for practical everyday tasks. When people say "I use Claude," they're almost always using Sonnet. It handles complex reasoning, long documents, nuanced writing, and multi-step tasks with high reliability.</p>
+    <div class="model-specs">
+      <div class="model-spec"><div class="model-spec-label">Speed</div><div class="model-spec-value">Fast — typically under 2 seconds</div></div>
+      <div class="model-spec"><div class="model-spec-label">Cost</div><div class="model-spec-value">Moderate — excellent value</div></div>
+      <div class="model-spec"><div class="model-spec-label">Context window</div><div class="model-spec-value">200K tokens</div></div>
+      <div class="model-spec"><div class="model-spec-label">Best for</div><div class="model-spec-value">Most serious work — the default choice</div></div>
+    </div>
+    <div class="model-best">
+      <div class="model-best-label">Use Sonnet for</div>
+      <div class="use-tags">
+        <span class="use-tag">Complex analysis</span>
+        <span class="use-tag">Professional writing</span>
+        <span class="use-tag">Research synthesis</span>
+        <span class="use-tag">Coding projects</span>
+        <span class="use-tag">Long document review</span>
+        <span class="use-tag">Strategic planning</span>
+        <span class="use-tag">Most everyday tasks</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="model-card opus">
+    <div class="model-header">
+      <div>
+        <div class="model-name">Claude Opus</div>
+        <div class="model-version">Latest: claude-opus-4 · claude-opus-4-5</div>
+      </div>
+      <span class="model-badge badge-powerful">🧠 Most Powerful</span>
+    </div>
+    <p class="model-desc">Opus is Anthropic's most capable model — their frontier, the one they use to demonstrate what's possible. It excels at tasks requiring the deepest reasoning, the most nuanced judgment, and the most sophisticated synthesis. It's slower and significantly more expensive than Sonnet, which means it's not the right default. But for tasks where you genuinely need maximum capability — complex research, difficult code, high-stakes writing, deep strategic analysis — Opus is worth the premium.</p>
+    <div class="model-specs">
+      <div class="model-spec"><div class="model-spec-label">Speed</div><div class="model-spec-value">Slower — worth the wait for hard tasks</div></div>
+      <div class="model-spec"><div class="model-spec-label">Cost</div><div class="model-spec-value">Highest — use selectively</div></div>
+      <div class="model-spec"><div class="model-spec-label">Context window</div><div class="model-spec-value">200K tokens</div></div>
+      <div class="model-spec"><div class="model-spec-label">Best for</div><div class="model-spec-value">Tasks where quality matters most</div></div>
+    </div>
+    <div class="model-best">
+      <div class="model-best-label">Use Opus for</div>
+      <div class="use-tags">
+        <span class="use-tag">Complex research synthesis</span>
+        <span class="use-tag">Difficult reasoning problems</span>
+        <span class="use-tag">High-stakes writing</span>
+        <span class="use-tag">PhD-level analysis</span>
+        <span class="use-tag">Frontier coding challenges</span>
+        <span class="use-tag">Strategic decision support</span>
+      </div>
+    </div>
+  </div>
+
+  <h2>Understanding model versions — the numbers matter</h2>
+  <p>Beyond Haiku/Sonnet/Opus, Claude models have version numbers. Claude 3 models launched in early 2024. Claude 3.5 models launched mid-2024 with significant improvements. Claude 3.7 followed with reasoning enhancements. Claude 4 models launched in 2025 and represent a substantial generational leap.</p>
+  <p>A key insight: <strong>newer Haiku models often outperform older Sonnet or Opus models</strong> on many tasks. Claude Haiku 4.5 may outperform Claude Sonnet 3 on standard benchmarks despite being the lower tier in the newer generation. This matters when choosing models through the API or comparing options.</p>
+
+  <div class="comparison-wrapper">
+    <table>
+      <tr><th>Model</th><th>Tier</th><th>Best version string</th><th>Primary strength</th></tr>
+      <tr><td>Claude Haiku 4.5</td><td>Speed</td><td>claude-haiku-4-5-20251001</td><td>Fastest, cheapest, high volume</td></tr>
+      <tr><td>Claude Sonnet 4.5</td><td>Balanced</td><td>claude-sonnet-4-5</td><td>Best everyday workhorse</td></tr>
+      <tr><td>Claude Sonnet 4</td><td>Balanced</td><td>claude-sonnet-4</td><td>Strong reasoning, coding</td></tr>
+      <tr><td>Claude Opus 4.5</td><td>Power</td><td>claude-opus-4-5</td><td>Maximum capability</td></tr>
+      <tr><td>Claude Opus 4</td><td>Power</td><td>claude-opus-4</td><td>Deep analysis, frontier tasks</td></tr>
+    </table>
+  </div>
+
+  <h2>The model selection decision framework</h2>
+  <p>Here's how to think about model selection in practice. Run through these questions in order:</p>
+
+  <div class="decision-tree">
+    <div class="decision-tree-title">Model Selection Decision Tree</div>
+    <div class="decision-item">
+      <div class="decision-if">Is this a real-time application or do I need a response in under one second?</div>
+      <div class="decision-then">→ Haiku</div>
+    </div>
+    <div class="decision-item">
+      <div class="decision-if">Am I building something that will make thousands or millions of API calls?</div>
+      <div class="decision-then">→ Haiku</div>
+    </div>
+    <div class="decision-item">
+      <div class="decision-if">Is this a complex reasoning task, long document, or high-quality writing project?</div>
+      <div class="decision-then">→ Sonnet (default)</div>
+    </div>
+    <div class="decision-item">
+      <div class="decision-if">Did Sonnet give me an answer that felt incomplete or not quite right?</div>
+      <div class="decision-then">→ Try Opus</div>
+    </div>
+    <div class="decision-item">
+      <div class="decision-if">Is this a genuinely hard problem — frontier research, complex code, high-stakes strategic decision?</div>
+      <div class="decision-then">→ Opus directly</div>
+    </div>
+    <div class="decision-item">
+      <div class="decision-if">Am I unsure? Default to:</div>
+      <div class="decision-then">→ Sonnet</div>
+    </div>
+  </div>
+
+  <h2>Extended thinking — a special capability</h2>
+  <p>Some Claude models support <strong>extended thinking</strong> — a mode where Claude works through a problem step by step internally before giving its answer. This is different from regular responses. When extended thinking is enabled, Claude essentially shows its work, reasoning through the problem explicitly before arriving at a conclusion.</p>
+  <p>Extended thinking is most valuable for:</p>
+  <p><strong>Hard math and logic problems</strong> where the reasoning chain matters as much as the answer.</p>
+  <p><strong>Complex code debugging</strong> where understanding the thought process helps you trust and extend the solution.</p>
+  <p><strong>Multi-step decisions</strong> where you want to see the trade-off analysis, not just the recommendation.</p>
+  <p><strong>Ambiguous problems</strong> where different interpretations lead to different answers and you want to see Claude navigate that explicitly.</p>
+
+  <div class="callout">
+    <div class="callout-label">Extended thinking in the Claude.ai interface</div>
+    <p>In Claude.ai, you can access extended thinking by starting your prompt with phrases like "think through this carefully step by step" or by enabling it in model settings where available. The response will show Claude's reasoning process before its final answer. This is slower but often significantly more accurate on complex tasks.</p>
+  </div>
+
+  <h2>How to access different models</h2>
+
+  <h3>Claude.ai (web and mobile)</h3>
+  <p>When using claude.ai directly, you select the model from a dropdown in the conversation interface. Claude Pro subscribers have access to Sonnet and Opus. The free tier typically runs on Haiku or an older Sonnet version. If you're on Pro and doing serious work, always verify you're using your intended model before starting.</p>
+
+  <h3>Claude API</h3>
+  <p>When building with the API, you specify the model using its exact string identifier. Using a specific version string like <code>claude-sonnet-4-5</code> locks you to that exact model. Using <code>claude-sonnet-4-5-latest</code> automatically uses the newest version of that model tier as Anthropic updates it. For production applications, specific version strings are safer. For personal projects, latest is usually fine.</p>
+
+  <div class="good">
+    <div class="good-label">Pro tip for Claude.ai users</div>
+    <p>For most work sessions, start with Sonnet. If you hit a wall — a reasoning problem that feels underserved, a piece of writing that isn't quite landing, a coding challenge Sonnet isn't cracking — switch to Opus for that specific problem. Then switch back. This gives you the speed and cost benefits of Sonnet for routine work while reserving Opus's power for where it actually matters.</p>
+  </div>
+
+</div>
+</main>
+</div>
+
+<div class="sticky-bar" id="sticky-bar">
+  <div class="sticky-bar-reading" id="sticky-reading">Read to the end to unlock the next module</div>
+  <div class="sticky-bar-track"><div class="sticky-bar-fill" id="sticky-fill"></div></div>
+  <div class="sticky-bar-label" id="sticky-label">0%</div>
+  <button class="sticky-bar-btn" id="sticky-btn" onclick="completeAndNext()">Module 3: Prompting Claude Effectively →</button>
+</div>
+
+<script>
+  function toggleTheme(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='☾'):(h.setAttribute('data-theme','dark'),i.textContent='☀');}
+  window.addEventListener('scroll',()=>{const d=document.documentElement,s=d.scrollTop||document.body.scrollTop,t=d.scrollHeight-d.clientHeight;document.getElementById('progress').style.width=(s/t*100)+'%';});
+
+  // Check progression
+  if (!localStorage.getItem('meridian_claude_m1')) {
+    document.body.innerHTML = `<div style="min-height:100vh;display:flex;align-items:center;justify-content:center;background:#080808;font-family:'DM Sans',sans-serif;padding:24px;"><div style="max-width:440px;text-align:center;background:#111;border:1px solid rgba(255,255,255,0.08);border-radius:20px;padding:48px;"><div style="font-size:48px;margin-bottom:20px;">🔒</div><div style="font-size:20px;font-weight:500;color:#f0f0f0;margin-bottom:12px;">Module locked</div><div style="font-size:14px;color:#a0a0a0;margin-bottom:28px;line-height:1.6;">Complete Module 1 before continuing.</div><a href="claude-module-1.html" style="display:inline-block;padding:12px 24px;background:#5b8ff8;color:#fff;border-radius:10px;font-size:14px;font-weight:500;text-decoration:none;">← Go to Module 1</a></div></div>`;
+  }
+
+  let unlocked = false;
+  function updateScrollProgress() {
+    const scrolled = window.scrollY + window.innerHeight;
+    const total = document.documentElement.scrollHeight;
+    const pct = Math.min(100, Math.round((scrolled / total) * 100));
+    const fill = document.getElementById('sticky-fill');
+    const label = document.getElementById('sticky-label');
+    const btn = document.getElementById('sticky-btn');
+    const reading = document.getElementById('sticky-reading');
+    if (fill) fill.style.width = pct + '%';
+    if (label) label.textContent = pct + '%';
+    if (pct >= 95 && !unlocked) {
+      unlocked = true;
+      if (btn) btn.style.display = 'block';
+      if (reading) reading.style.display = 'none';
+      if (fill) fill.style.background = '#22c55e';
+      if (label) label.style.color = '#22c55e';
+    }
+  }
+  window.addEventListener('scroll', updateScrollProgress);
+  updateScrollProgress();
+
+  function completeAndNext() {
+    try {
+      localStorage.setItem('meridian_claude_m2', 'true');
+      localStorage.setItem('meridian_last_claude_module', '2');
+    } catch(e) {}
+    setTimeout(() => { window.location.href = 'claude-module-3.html'; }, 80);
+  }
+</script>
+</body>
+</html>

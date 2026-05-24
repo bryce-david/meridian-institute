@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 6: Claude in the Real World — Mastering Claude — Meridian Institute of AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#5b8ff8;--accent-dim:rgba(91,143,248,0.1);--nav-bg:rgba(8,8,8,0.9);--callout-bg:rgba(91,143,248,0.07);--callout-border:rgba(91,143,248,0.25);--good-bg:rgba(34,197,94,0.07);--good-border:rgba(34,197,94,0.2);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#2563eb;--accent-dim:rgba(37,99,235,0.08);--nav-bg:rgba(250,250,248,0.9);--callout-bg:rgba(37,99,235,0.05);--callout-border:rgba(37,99,235,0.2);--good-bg:rgba(22,163,74,0.06);--good-border:rgba(22,163,74,0.2);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;overflow-x:hidden;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.7;overflow-x:hidden;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}
+  .nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}
+  .nav-back{font-size:13px;color:var(--text-2);text-decoration:none;transition:color 0.2s;}
+  .nav-back:hover{color:var(--text);}
+  .nav-label{font-size:13px;color:var(--text-3);}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;transition:all 0.2s;}
+  .theme-toggle:hover{background:var(--bg-3);color:var(--text);}
+  .progress-bar{position:fixed;top:60px;left:0;right:0;z-index:99;height:2px;background:var(--border);}
+  .progress-fill{height:100%;background:var(--accent);width:0%;transition:width 0.1s;}
+  .page-wrapper{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:100vh;padding-top:62px;overflow:hidden;}
+  .sidebar{position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto;border-right:1px solid var(--border);padding:32px 24px;background:var(--bg-2);}
+  .sidebar-course{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;}
+  .sidebar-course-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+  .sidebar-module{margin-bottom:4px;}
+  .sidebar-module-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:13px;color:var(--text-2);text-decoration:none;transition:all 0.2s;line-height:1.4;}
+  .sidebar-module-link:hover{background:var(--bg-3);color:var(--text);}
+  .sidebar-module-link.active{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-num{font-size:11px;font-weight:500;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--bg-4);color:var(--text-3);}
+  .sidebar-module-link.active .sidebar-num{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-divider{height:1px;background:var(--border);margin:20px 0;}
+  .sidebar-progress-label{font-size:12px;color:var(--text-3);margin-bottom:8px;display:flex;justify-content:space-between;}
+  .sidebar-progress-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sidebar-progress-fill{height:100%;width:85%;background:var(--accent);border-radius:2px;}
+  main{display:block;min-width:0;overflow:hidden;}
+  .content{max-width:760px;width:100%;padding:60px 64px 140px;margin:0 auto;}
+  .module-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+  .module-tag{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(91,143,248,0.2);padding:4px 12px;border-radius:100px;}
+  .module-meta{font-size:12px;color:var(--text-3);}
+  h1{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1.05;letter-spacing:-0.02em;color:var(--text);margin-bottom:24px;}
+  .intro-text{font-size:19px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+  h2{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:400;color:var(--text);margin:52px 0 18px;line-height:1.2;}
+  h3{font-size:16px;font-weight:500;color:var(--text);margin:32px 0 12px;}
+  p{font-size:16px;font-weight:300;color:var(--text-2);line-height:1.8;margin-bottom:20px;}
+  strong{font-weight:500;color:var(--text);}
+  .callout{background:var(--callout-bg);border:1px solid var(--callout-border);border-radius:12px;padding:24px 28px;margin:32px 0;}
+  .callout-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+  .callout p{margin:0;font-size:15px;color:var(--text-2);}
+  .callout p+p{margin-top:12px;}
+  .good{background:var(--good-bg);border:1px solid var(--good-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .good-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#22c55e;margin-bottom:10px;}
+  .good p{margin:0;font-size:15px;color:var(--text-2);}
+  .workflow{background:var(--bg-2);border:1px solid var(--border);border-radius:14px;padding:28px;margin:20px 0;}
+  .workflow-domain{font-size:11px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:8px;}
+  .workflow-title{font-size:17px;font-weight:500;color:var(--text);margin-bottom:12px;}
+  .workflow-prompt{background:var(--bg-3);border-radius:8px;padding:16px 20px;font-size:13px;color:var(--text-2);line-height:1.7;white-space:pre-wrap;font-family:'DM Sans',sans-serif;margin-bottom:12px;}
+  .workflow-why{font-size:13px;color:var(--text-3);line-height:1.6;padding-top:12px;border-top:1px solid var(--border);}
+  .sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:var(--bg-2);border-top:1px solid var(--border-2);padding:14px 5%;display:flex;align-items:center;justify-content:space-between;gap:16px;backdrop-filter:blur(12px);}
+  .sticky-bar-track{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sticky-bar-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.2s;width:0%;}
+  .sticky-bar-label{font-size:12px;color:var(--text-3);white-space:nowrap;min-width:60px;text-align:right;}
+  .sticky-bar-btn{padding:10px 20px;border-radius:8px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;background:var(--accent);color:#fff;border:none;cursor:pointer;white-space:nowrap;transition:opacity 0.2s;display:none;}
+  .sticky-bar-btn:hover{opacity:0.88;}
+  .sticky-bar-reading{font-size:12px;color:var(--text-3);white-space:nowrap;}
+  @media(max-width:900px){.page-wrapper{grid-template-columns:1fr;}.sidebar{display:none;}.content{padding:40px 24px 120px;}h1{font-size:38px;}}
+  @media(max-width:600px){.content{padding:28px 16px 120px;}h1{font-size:30px;}h2{font-size:24px;}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="index.html" class="nav-back">🏠 Home</a>
+    <div class="nav-divider"></div>
+    <a href="courses.html" class="nav-back">← Mastering Claude</a>
+    <div class="nav-divider"></div>
+    <span class="nav-label">Module 6</span>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">☀</span></button>
+</nav>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+
+<div class="page-wrapper">
+<aside class="sidebar">
+  <div class="sidebar-course">Course</div>
+  <div class="sidebar-course-name">Mastering Claude</div>
+  <div class="sidebar-module"><a href="claude-module-1.html" class="sidebar-module-link"><span class="sidebar-num">1</span>Understanding Claude</a></div>
+  <div class="sidebar-module"><a href="claude-module-2.html" class="sidebar-module-link"><span class="sidebar-num">2</span>Claude's Model Lineup</a></div>
+  <div class="sidebar-module"><a href="claude-module-3.html" class="sidebar-module-link"><span class="sidebar-num">3</span>Prompting Claude Effectively</a></div>
+  <div class="sidebar-module"><a href="claude-module-4.html" class="sidebar-module-link"><span class="sidebar-num">4</span>Claude Projects & Memory</a></div>
+  <div class="sidebar-module"><a href="claude-module-5.html" class="sidebar-module-link"><span class="sidebar-num">5</span>Advanced Claude Features</a></div>
+  <div class="sidebar-module"><a href="claude-module-6.html" class="sidebar-module-link active"><span class="sidebar-num">6</span>Claude in the Real World</a></div>
+  <div class="sidebar-module"><a href="claude-module-7.html" class="sidebar-module-link"><span class="sidebar-num">7</span>Claude vs The Field</a></div>
+  <div class="sidebar-module"><a href="quiz-claude.html" class="sidebar-module-link" style="color:var(--accent);margin-top:4px;"><span class="sidebar-num" style="background:var(--accent-dim);color:var(--accent);">✦</span>Final Assessment</a></div>
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-progress-label"><span>Course progress</span><span style="color:var(--accent);">6 / 7</span></div>
+  <div class="sidebar-progress-track"><div class="sidebar-progress-fill"></div></div>
+</aside>
+
+<main>
+<div class="content">
+  <div class="module-eyebrow"><span class="module-tag">Module 6</span><span class="module-meta">25 min read · Mastering Claude</span></div>
+  <h1>Claude in the Real World</h1>
+  <p class="intro-text">Everything in this course has built toward this module. This is where abstract capability becomes concrete workflow — specific, tested prompts and approaches for the tasks you actually need Claude for. Writing, research, coding, business, and personal use. Not generic advice. Real examples that work.</p>
+
+  <h2>Writing workflows</h2>
+
+  <div class="workflow">
+    <div class="workflow-domain">Writing</div>
+    <div class="workflow-title">Getting honest feedback on your writing</div>
+    <div class="workflow-prompt">I'm going to share a [essay/article/email/report]. Before I share it, I want to set your role clearly: you are a direct, honest editor. Your job is not to encourage me — it's to make the writing better.
+
+When you read it, tell me:
+1. What is and isn't working in the first paragraph (this is where most readers decide whether to continue)
+2. Where the argument or narrative loses momentum
+3. Any claims that need better support
+4. One thing I should cut entirely
+5. One thing that deserves more development
+
+Then give me an overall assessment of whether this piece is ready to share, needs significant revision, or needs rethinking from the ground up.
+
+Here's the piece: [paste your writing]</div>
+    <div class="workflow-why">Why this works: Framing Claude as an honest editor rather than a helpful assistant shifts its default behavior toward direct feedback. The specific five-part structure ensures you get actionable input rather than vague praise.</div>
+  </div>
+
+  <div class="workflow">
+    <div class="workflow-domain">Writing</div>
+    <div class="workflow-title">College application essay development</div>
+    <div class="workflow-prompt">I'm writing a college application essay for [school]. The prompt is: "[prompt]"
+
+Before you help me write anything, ask me three questions that will help you understand what's most authentic and compelling about my experience with this topic. After I answer, reflect back to me what you think the core of my story is — the specific moment, insight, or transformation that should anchor the essay.
+
+Only after we've agreed on the core should we start drafting.</div>
+    <div class="workflow-why">This prevents the most common essay mistake: writing before you know what you're actually trying to say. Claude surfaces the authentic story before drafting, which produces better essays than jumping straight to writing.</div>
+  </div>
+
+  <div class="workflow">
+    <div class="workflow-domain">Writing</div>
+    <div class="workflow-title">Editing for concision</div>
+    <div class="workflow-prompt">Edit the following text for concision. Your goal is to reduce it by approximately 30% without losing any substantive content, argument, or nuance. Do not make it sound like someone else wrote it — preserve my voice. Show me the edited version first, then briefly explain the most significant cuts you made.
+
+[paste text]</div>
+    <div class="workflow-why">Specifying the percentage reduction and the voice preservation constraint prevents Claude from either under-cutting (being too cautious) or over-cutting (producing something that doesn't sound like you).</div>
+  </div>
+
+  <h2>Research workflows</h2>
+
+  <div class="workflow">
+    <div class="workflow-domain">Research</div>
+    <div class="workflow-title">Deep topic research with structured output</div>
+    <div class="workflow-prompt">I need to understand [topic] deeply. Structure your response as follows:
+
+1. Core concept (2-3 sentences that capture the essence)
+2. Why this matters right now (the current relevance)
+3. The key debates or disagreements within this space
+4. What most people get wrong about it
+5. The 3-5 most important things to know if you're going to engage seriously with this topic
+6. What I should read or explore next
+
+Be direct. If something is genuinely contested, say so rather than picking a side. If there are things you're uncertain about, flag them.</div>
+    <div class="workflow-why">This structure forces Claude out of generic encyclopedia mode into something more analytical and useful. The "what most people get wrong" prompt specifically unlocks Claude's capacity for honest assessment rather than received wisdom.</div>
+  </div>
+
+  <div class="workflow">
+    <div class="workflow-domain">Research</div>
+    <div class="workflow-title">Analyzing and challenging your own assumptions</div>
+    <div class="workflow-prompt">I hold the following belief: [state your belief or position clearly]
+
+I want you to do two things:
+First, steelman this position — make the strongest possible case for it, including arguments I may not have considered.
+Second, make the strongest possible case against it — not a weak strawman, but the most rigorous opposition.
+
+Then tell me: based on this analysis, what would it take to change this belief, and what evidence or arguments should I be looking for?</div>
+    <div class="workflow-why">Claude's honesty training makes it genuinely good at adversarial analysis. This workflow uses that capability deliberately to stress-test your thinking rather than confirm it.</div>
+  </div>
+
+  <h2>Coding workflows</h2>
+
+  <div class="workflow">
+    <div class="workflow-domain">Coding</div>
+    <div class="workflow-title">Getting code you can actually use</div>
+    <div class="workflow-prompt">I need to [describe what the code should do].
+
+Context:
+- Language: [Python/JavaScript/etc.]
+- Environment: [where this will run]
+- Existing code it needs to work with: [describe or paste relevant code]
+- Constraints: [any limitations — libraries available, performance requirements, etc.]
+
+Write the code, then:
+1. Explain what each significant section does
+2. Identify the most likely failure points and how to handle them
+3. Suggest one test case I should run before using this in production</div>
+    <div class="workflow-why">This produces code you understand, not just code that works. The failure point analysis and test case requirement force Claude to think through edge cases it might otherwise skip.</div>
+  </div>
+
+  <div class="workflow">
+    <div class="workflow-domain">Coding</div>
+    <div class="workflow-title">Code review that actually catches problems</div>
+    <div class="workflow-prompt">Review this code as a senior engineer doing a security-focused code review. I need you to be thorough and specific:
+
+1. Security vulnerabilities — any inputs that aren't validated, data that isn't sanitized, or attack vectors
+2. Logic errors — cases where the code doesn't do what it appears to intend
+3. Edge cases — inputs or conditions that would cause unexpected behavior
+4. Performance issues — anything that would be unnecessarily slow or resource-intensive at scale
+5. Readability and maintainability — anything that makes this harder to maintain than it needs to be
+
+For each issue, tell me the severity (critical/high/medium/low) and suggest the specific fix.
+
+[paste code]</div>
+    <div class="workflow-why">Specifying a security-focused senior engineer role and asking for severity ratings produces more rigorous, prioritized feedback than asking Claude to "review my code."</div>
+  </div>
+
+  <h2>Business and professional workflows</h2>
+
+  <div class="workflow">
+    <div class="workflow-domain">Business</div>
+    <div class="workflow-title">Decision analysis for important choices</div>
+    <div class="workflow-prompt">I'm deciding between these options: [describe options clearly]
+
+Context: [relevant background, constraints, goals]
+
+Help me think through this systematically:
+1. What am I actually optimizing for? (Reflect back what you think my real priority is based on the context)
+2. What information am I missing that would significantly change this decision?
+3. What does each option look like at best case, realistic case, and worst case?
+4. What would I regret not having considered?
+5. Your recommendation, and the one thing that could make that recommendation wrong
+
+Don't tell me what I want to hear. Tell me what I need to know.</div>
+    <div class="workflow-why">The "what am I actually optimizing for" question often surfaces misalignments between stated goals and actual priorities. The "what would I regret" prompt accesses a different reasoning mode than straightforward analysis.</div>
+  </div>
+
+  <div class="workflow">
+    <div class="workflow-domain">Business</div>
+    <div class="workflow-title">Preparing for difficult conversations</div>
+    <div class="workflow-prompt">I need to have a difficult conversation with [role/relationship] about [topic]. Here's the situation: [describe]
+
+Help me prepare by:
+1. Identifying the core thing I need to communicate (distilled to one sentence)
+2. Anticipating the 3 most likely objections or reactions, and how I should respond to each
+3. Suggesting how to open the conversation in a way that's direct but not defensive
+4. Identifying anything in my framing that might make this conversation harder than it needs to be
+
+Then give me a draft opening statement I could use or adapt.</div>
+    <div class="workflow-why">Preparation dramatically improves outcomes for difficult conversations. Claude's ability to model different reactions and flag framing problems makes this particularly valuable.</div>
+  </div>
+
+  <h2>Personal productivity workflows</h2>
+
+  <div class="workflow">
+    <div class="workflow-domain">Productivity</div>
+    <div class="workflow-title">Turning vague goals into concrete plans</div>
+    <div class="workflow-prompt">I want to achieve: [goal]
+
+Timeframe: [when]
+Resources I have: [time, money, skills, access]
+Constraints: [what's limiting me]
+
+Don't give me a generic framework. Give me a specific, ordered action plan with:
+- The first 3 things I should do this week
+- The biggest obstacle I'll hit and how to get past it
+- One thing I'm probably underestimating about this
+- A check-in question I should ask myself at the 30-day mark
+
+If my goal is unrealistic given my constraints, tell me that directly and suggest what is realistic.</div>
+    <div class="workflow-why">Asking Claude to call out unrealistic goals and specify the first three actions this week forces concreteness and honesty that generic goal-setting frameworks avoid.</div>
+  </div>
+
+  <div class="good">
+    <div class="good-label">The meta-skill behind all of this</div>
+    <p>Every workflow here shares a common structure: specific role, explicit task, structured output requirements, and permission to be direct. That combination — specificity plus structure plus honesty permission — is the formula that unlocks Claude's real capability. Apply it to any domain and you'll produce better results than generic prompts every time.</p>
+  </div>
+
+</div>
+</main>
+</div>
+
+<div class="sticky-bar" id="sticky-bar">
+  <div class="sticky-bar-reading" id="sticky-reading">Read to the end to unlock the next module</div>
+  <div class="sticky-bar-track"><div class="sticky-bar-fill" id="sticky-fill"></div></div>
+  <div class="sticky-bar-label" id="sticky-label">0%</div>
+  <button class="sticky-bar-btn" id="sticky-btn" onclick="completeAndNext()">Module 7: Claude vs The Field →</button>
+</div>
+
+<script>
+  function toggleTheme(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='☾'):(h.setAttribute('data-theme','dark'),i.textContent='☀');}
+  window.addEventListener('scroll',()=>{const d=document.documentElement,s=d.scrollTop||document.body.scrollTop,t=d.scrollHeight-d.clientHeight;document.getElementById('progress').style.width=(s/t*100)+'%';});
+  if (!localStorage.getItem('meridian_claude_m5')) {
+    document.body.innerHTML = `<div style="min-height:100vh;display:flex;align-items:center;justify-content:center;background:#080808;font-family:'DM Sans',sans-serif;padding:24px;"><div style="max-width:440px;text-align:center;background:#111;border:1px solid rgba(255,255,255,0.08);border-radius:20px;padding:48px;"><div style="font-size:48px;margin-bottom:20px;">🔒</div><div style="font-size:20px;font-weight:500;color:#f0f0f0;margin-bottom:12px;">Module locked</div><div style="font-size:14px;color:#a0a0a0;margin-bottom:28px;line-height:1.6;">Complete Module 5 before continuing.</div><a href="claude-module-5.html" style="display:inline-block;padding:12px 24px;background:#5b8ff8;color:#fff;border-radius:10px;font-size:14px;font-weight:500;text-decoration:none;">← Go to Module 5</a></div></div>`;
+  }
+  let unlocked = false;
+  function updateScrollProgress() {
+    const scrolled = window.scrollY + window.innerHeight;
+    const total = document.documentElement.scrollHeight;
+    const pct = Math.min(100, Math.round((scrolled / total) * 100));
+    const fill = document.getElementById('sticky-fill');
+    const label = document.getElementById('sticky-label');
+    const btn = document.getElementById('sticky-btn');
+    const reading = document.getElementById('sticky-reading');
+    if (fill) fill.style.width = pct + '%';
+    if (label) label.textContent = pct + '%';
+    if (pct >= 95 && !unlocked) {
+      unlocked = true;
+      if (btn) btn.style.display = 'block';
+      if (reading) reading.style.display = 'none';
+      if (fill) fill.style.background = '#22c55e';
+      if (label) label.style.color = '#22c55e';
+    }
+  }
+  window.addEventListener('scroll', updateScrollProgress);
+  updateScrollProgress();
+  function completeAndNext() {
+    try { localStorage.setItem('meridian_claude_m6', 'true'); localStorage.setItem('meridian_last_claude_module', '6'); } catch(e) {}
+    setTimeout(() => { window.location.href = 'claude-module-7.html'; }, 80);
+  }
+</script>
+</body>
+</html>

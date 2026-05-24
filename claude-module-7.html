@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 7: Claude vs The Field — Mastering Claude — Meridian Institute of AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#5b8ff8;--accent-dim:rgba(91,143,248,0.1);--nav-bg:rgba(8,8,8,0.9);--callout-bg:rgba(91,143,248,0.07);--callout-border:rgba(91,143,248,0.25);--good-bg:rgba(34,197,94,0.07);--good-border:rgba(34,197,94,0.2);--warn-bg:rgba(251,146,60,0.07);--warn-border:rgba(251,146,60,0.2);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#2563eb;--accent-dim:rgba(37,99,235,0.08);--nav-bg:rgba(250,250,248,0.9);--callout-bg:rgba(37,99,235,0.05);--callout-border:rgba(37,99,235,0.2);--good-bg:rgba(22,163,74,0.06);--good-border:rgba(22,163,74,0.2);--warn-bg:rgba(234,88,12,0.05);--warn-border:rgba(234,88,12,0.2);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;overflow-x:hidden;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.7;overflow-x:hidden;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}
+  .nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}
+  .nav-back{font-size:13px;color:var(--text-2);text-decoration:none;transition:color 0.2s;}
+  .nav-back:hover{color:var(--text);}
+  .nav-label{font-size:13px;color:var(--text-3);}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;transition:all 0.2s;}
+  .theme-toggle:hover{background:var(--bg-3);color:var(--text);}
+  .progress-bar{position:fixed;top:60px;left:0;right:0;z-index:99;height:2px;background:var(--border);}
+  .progress-fill{height:100%;background:var(--accent);width:0%;transition:width 0.1s;}
+  .page-wrapper{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:100vh;padding-top:62px;overflow:hidden;}
+  .sidebar{position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto;border-right:1px solid var(--border);padding:32px 24px;background:var(--bg-2);}
+  .sidebar-course{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;}
+  .sidebar-course-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+  .sidebar-module{margin-bottom:4px;}
+  .sidebar-module-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:13px;color:var(--text-2);text-decoration:none;transition:all 0.2s;line-height:1.4;}
+  .sidebar-module-link:hover{background:var(--bg-3);color:var(--text);}
+  .sidebar-module-link.active{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-num{font-size:11px;font-weight:500;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--bg-4);color:var(--text-3);}
+  .sidebar-module-link.active .sidebar-num{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-divider{height:1px;background:var(--border);margin:20px 0;}
+  .sidebar-progress-label{font-size:12px;color:var(--text-3);margin-bottom:8px;display:flex;justify-content:space-between;}
+  .sidebar-progress-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sidebar-progress-fill{height:100%;width:100%;background:var(--success,#22c55e);border-radius:2px;}
+  main{display:block;min-width:0;overflow:hidden;}
+  .content{max-width:760px;width:100%;padding:60px 64px 140px;margin:0 auto;}
+  .module-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+  .module-tag{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(91,143,248,0.2);padding:4px 12px;border-radius:100px;}
+  .module-meta{font-size:12px;color:var(--text-3);}
+  h1{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1.05;letter-spacing:-0.02em;color:var(--text);margin-bottom:24px;}
+  .intro-text{font-size:19px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+  h2{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:400;color:var(--text);margin:52px 0 18px;line-height:1.2;}
+  h3{font-size:16px;font-weight:500;color:var(--text);margin:32px 0 12px;}
+  p{font-size:16px;font-weight:300;color:var(--text-2);line-height:1.8;margin-bottom:20px;}
+  strong{font-weight:500;color:var(--text);}
+  .callout{background:var(--callout-bg);border:1px solid var(--callout-border);border-radius:12px;padding:24px 28px;margin:32px 0;}
+  .callout-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+  .callout p{margin:0;font-size:15px;color:var(--text-2);}
+  .callout p+p{margin-top:12px;}
+  .good{background:var(--good-bg);border:1px solid var(--good-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .good-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#22c55e;margin-bottom:10px;}
+  .good p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn{background:var(--warn-bg);border:1px solid var(--warn-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .warn-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#fb923c;margin-bottom:10px;}
+  .warn p{margin:0;font-size:15px;color:var(--text-2);}
+  .comparison-wrapper{overflow-x:auto;-webkit-overflow-scrolling:touch;width:100%;margin:28px 0;}
+  table{width:100%;border-collapse:collapse;font-size:14px;min-width:560px;}
+  th{text-align:left;padding:12px 16px;font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-3);border-bottom:1px solid var(--border-2);background:var(--bg-2);}
+  td{padding:14px 16px;border-bottom:1px solid var(--border);color:var(--text-2);line-height:1.5;vertical-align:top;font-size:13px;}
+  tr:last-child td{border-bottom:none;}
+  td:first-child{color:var(--text);font-weight:500;width:22%;}
+  .win{color:#22c55e;font-weight:500;}
+  .lose{color:#ef4444;}
+  .tie{color:var(--accent);}
+  .verdict-card{background:var(--bg-2);border:1px solid var(--border);border-radius:14px;padding:24px 28px;margin:16px 0;display:flex;gap:20px;align-items:flex-start;}
+  .verdict-tool{font-size:22px;flex-shrink:0;}
+  .verdict-title{font-size:15px;font-weight:500;color:var(--text);margin-bottom:8px;}
+  .verdict-desc{font-size:14px;color:var(--text-2);line-height:1.65;margin:0;}
+  .complete-banner{background:linear-gradient(135deg,rgba(34,197,94,0.08) 0%,rgba(91,143,248,0.08) 100%);border:1px solid rgba(91,143,248,0.3);border-radius:16px;padding:40px;text-align:center;margin-top:60px;}
+  .complete-icon{font-size:48px;margin-bottom:16px;}
+  .complete-title{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:300;color:var(--text);margin-bottom:12px;}
+  .complete-desc{font-size:15px;color:var(--text-2);line-height:1.7;margin-bottom:28px;}
+  .btn-assessment{display:inline-block;padding:14px 32px;background:var(--accent);color:#fff;border-radius:10px;font-size:15px;font-weight:500;text-decoration:none;transition:opacity 0.2s;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;}
+  .btn-assessment:hover{opacity:0.88;}
+  .sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:var(--bg-2);border-top:1px solid var(--border-2);padding:14px 5%;display:flex;align-items:center;justify-content:space-between;gap:16px;backdrop-filter:blur(12px);}
+  .sticky-bar-track{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sticky-bar-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.2s;width:0%;}
+  .sticky-bar-label{font-size:12px;color:var(--text-3);white-space:nowrap;min-width:60px;text-align:right;}
+  .sticky-bar-btn{padding:10px 20px;border-radius:8px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;background:var(--accent);color:#fff;border:none;cursor:pointer;white-space:nowrap;transition:opacity 0.2s;display:none;}
+  .sticky-bar-btn:hover{opacity:0.88;}
+  .sticky-bar-reading{font-size:12px;color:var(--text-3);white-space:nowrap;}
+  @media(max-width:900px){.page-wrapper{grid-template-columns:1fr;}.sidebar{display:none;}.content{padding:40px 24px 120px;}h1{font-size:38px;}}
+  @media(max-width:600px){.content{padding:28px 16px 120px;}h1{font-size:30px;}h2{font-size:24px;}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="index.html" class="nav-back">🏠 Home</a>
+    <div class="nav-divider"></div>
+    <a href="courses.html" class="nav-back">← Mastering Claude</a>
+    <div class="nav-divider"></div>
+    <span class="nav-label">Module 7</span>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">☀</span></button>
+</nav>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+
+<div class="page-wrapper">
+<aside class="sidebar">
+  <div class="sidebar-course">Course</div>
+  <div class="sidebar-course-name">Mastering Claude</div>
+  <div class="sidebar-module"><a href="claude-module-1.html" class="sidebar-module-link"><span class="sidebar-num">1</span>Understanding Claude</a></div>
+  <div class="sidebar-module"><a href="claude-module-2.html" class="sidebar-module-link"><span class="sidebar-num">2</span>Claude's Model Lineup</a></div>
+  <div class="sidebar-module"><a href="claude-module-3.html" class="sidebar-module-link"><span class="sidebar-num">3</span>Prompting Claude Effectively</a></div>
+  <div class="sidebar-module"><a href="claude-module-4.html" class="sidebar-module-link"><span class="sidebar-num">4</span>Claude Projects & Memory</a></div>
+  <div class="sidebar-module"><a href="claude-module-5.html" class="sidebar-module-link"><span class="sidebar-num">5</span>Advanced Claude Features</a></div>
+  <div class="sidebar-module"><a href="claude-module-6.html" class="sidebar-module-link"><span class="sidebar-num">6</span>Claude in the Real World</a></div>
+  <div class="sidebar-module"><a href="claude-module-7.html" class="sidebar-module-link active"><span class="sidebar-num">7</span>Claude vs The Field</a></div>
+  <div class="sidebar-module"><a href="quiz-claude.html" class="sidebar-module-link" style="color:var(--accent);margin-top:4px;"><span class="sidebar-num" style="background:var(--accent-dim);color:var(--accent);">✦</span>Final Assessment</a></div>
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-progress-label"><span>Course progress</span><span style="color:#22c55e;">7 / 7 ✓</span></div>
+  <div class="sidebar-progress-track"><div class="sidebar-progress-fill"></div></div>
+</aside>
+
+<main>
+<div class="content">
+  <div class="module-eyebrow"><span class="module-tag">Module 7</span><span class="module-meta">20 min read · Mastering Claude</span></div>
+  <h1>Claude vs<br>The Field</h1>
+  <p class="intro-text">This is the honest comparison you've been waiting for. Not marketing. Not hype. A direct, task-by-task assessment of where Claude genuinely leads, where it genuinely doesn't, and how to build a multi-tool workflow that uses the best tool for every job. Being loyal to one AI assistant is like being loyal to one type of wrench.</p>
+
+  <div class="callout">
+    <div class="callout-label">A note on honesty</div>
+    <p>This module was written for Meridian's Mastering Claude course — which means we have an obvious interest in making Claude look good. We're going to resist that. Claude has real limitations. Other tools are genuinely better at specific things. An honest assessment of the field is more valuable to you than a sales pitch, and you'll trust this course more for it.</p>
+  </div>
+
+  <h2>Head-to-head comparison by task</h2>
+
+  <div class="comparison-wrapper">
+    <table>
+      <tr>
+        <th>Task</th>
+        <th>Claude</th>
+        <th>ChatGPT</th>
+        <th>Gemini</th>
+        <th>Perplexity</th>
+      </tr>
+      <tr>
+        <td>Long document analysis</td>
+        <td class="win">★ Best</td>
+        <td>Good</td>
+        <td>Good (large context)</td>
+        <td>Limited</td>
+      </tr>
+      <tr>
+        <td>Nuanced writing & editing</td>
+        <td class="win">★ Best</td>
+        <td>Very good</td>
+        <td>Good</td>
+        <td>Not its purpose</td>
+      </tr>
+      <tr>
+        <td>Complex reasoning</td>
+        <td class="win">★ Best (Opus)</td>
+        <td class="tie">★ Best (o1/o3)</td>
+        <td>Good</td>
+        <td>Moderate</td>
+      </tr>
+      <tr>
+        <td>Coding</td>
+        <td>Very good</td>
+        <td class="win">★ Slight edge</td>
+        <td>Good</td>
+        <td>Limited</td>
+      </tr>
+      <tr>
+        <td>Current information</td>
+        <td class="lose">Limited (cutoff)</td>
+        <td>Good (with search)</td>
+        <td>Good (real-time)</td>
+        <td class="win">★ Best</td>
+      </tr>
+      <tr>
+        <td>Image generation</td>
+        <td class="lose">None</td>
+        <td class="win">★ Best (DALL-E)</td>
+        <td>Good (Imagen)</td>
+        <td class="lose">None</td>
+      </tr>
+      <tr>
+        <td>Research with citations</td>
+        <td>Good</td>
+        <td>Good</td>
+        <td>Good</td>
+        <td class="win">★ Best</td>
+      </tr>
+      <tr>
+        <td>Google Workspace tasks</td>
+        <td>Limited</td>
+        <td>Limited</td>
+        <td class="win">★ Best (native)</td>
+        <td>Limited</td>
+      </tr>
+      <tr>
+        <td>Honesty & uncertainty</td>
+        <td class="win">★ Best</td>
+        <td>Good</td>
+        <td>Good</td>
+        <td>Good</td>
+      </tr>
+      <tr>
+        <td>Multimodal (text+image+audio)</td>
+        <td>Good (vision)</td>
+        <td>Very good</td>
+        <td class="win">★ Best</td>
+        <td>Limited</td>
+      </tr>
+      <tr>
+        <td>Extended context (longest)</td>
+        <td class="tie">200K tokens</td>
+        <td>128K tokens</td>
+        <td class="win">★ 1M+ tokens</td>
+        <td>Moderate</td>
+      </tr>
+      <tr>
+        <td>Voice conversation</td>
+        <td>Limited</td>
+        <td class="win">★ Best (Advanced Voice)</td>
+        <td>Good</td>
+        <td>Limited</td>
+      </tr>
+    </table>
+  </div>
+
+  <h2>Where Claude genuinely leads</h2>
+
+  <h3>Long-form analysis and nuanced writing</h3>
+  <p>On tasks involving deep engagement with complex text — analyzing a legal document, synthesizing research across multiple sources, editing a 5,000-word essay — Claude consistently produces output that feels more thoughtful and less generic than its competitors. The Constitutional AI training shows up here: Claude engages with nuance rather than averaging across positions.</p>
+
+  <h3>Honesty and calibrated uncertainty</h3>
+  <p>This is the area where Claude's design philosophy creates the most tangible difference. Claude is specifically trained to acknowledge what it doesn't know, to express appropriate uncertainty, and to push back rather than agree with you. When accuracy matters more than confidence, Claude is the more trustworthy tool.</p>
+
+  <h3>Extended, coherent reasoning</h3>
+  <p>Claude Opus 4, especially with extended thinking enabled, competes directly with OpenAI's o1/o3 reasoning models on hard problems. For deep analytical tasks — not just generating plausible text but genuinely working through complex reasoning — Claude Opus is among the best available.</p>
+
+  <h3>Complex instruction following</h3>
+  <p>Claude is exceptionally good at following detailed, multi-part instructions and maintaining that behavior throughout a long response. When you give Claude a complex structured prompt (especially with XML tags), it follows the structure precisely in ways that other models sometimes drift from.</p>
+
+  <h2>Where Claude genuinely doesn't lead</h2>
+
+  <h3>Current information</h3>
+  <p>Claude has a training cutoff. Without web search enabled, it doesn't know about events, research, or changes after that date. For anything requiring up-to-date information, Perplexity or a search-enabled ChatGPT or Gemini is the better choice. This is a real limitation and not a small one — a significant percentage of useful AI queries involve current information.</p>
+
+  <h3>Image generation</h3>
+  <p>Claude cannot generate images. If you need image generation, ChatGPT with DALL-E 3 or Midjourney are your options. There's no workaround — this capability simply doesn't exist in Claude.</p>
+
+  <h3>Google Workspace integration</h3>
+  <p>If you live in Gmail, Google Docs, and Google Drive, Gemini's native integration provides a workflow advantage that Claude can't match. Writing a reply in Gmail with Gemini aware of the full email thread, or summarizing a Drive folder from within Google Docs — these are things Gemini does natively that Claude requires copying and pasting to accomplish.</p>
+
+  <h3>Voice interaction</h3>
+  <p>ChatGPT's Advanced Voice Mode is genuinely impressive — real-time voice conversation with emotional intelligence and interruption handling. Claude's voice capabilities are significantly more limited as of 2025. For voice-first interactions, ChatGPT is the clear choice.</p>
+
+  <h2>The case for each tool</h2>
+
+  <div class="verdict-card">
+    <div class="verdict-tool">🤖</div>
+    <div>
+      <div class="verdict-title">Use Claude when</div>
+      <div class="verdict-desc">You need deep analysis, nuanced writing, honest feedback, complex reasoning, or sustained engagement with long documents. Claude is the thinking partner — the tool that pushes back, acknowledges uncertainty, and engages with complexity rather than averaging it away.</div>
+    </div>
+  </div>
+
+  <div class="verdict-card">
+    <div class="verdict-tool">💬</div>
+    <div>
+      <div class="verdict-title">Use ChatGPT when</div>
+      <div class="verdict-desc">You need image generation, voice conversation, coding with the broadest plugin ecosystem, or maximum versatility in a single tool. ChatGPT's breadth — the range of things it can do through integrations and features — is unmatched.</div>
+    </div>
+  </div>
+
+  <div class="verdict-card">
+    <div class="verdict-tool">✨</div>
+    <div>
+      <div class="verdict-title">Use Gemini when</div>
+      <div class="verdict-desc">You're working inside Google's ecosystem, need the longest context window available, or need multimodal capabilities across text, image, audio, and video. Gemini's depth in Google's tools is a genuine productivity advantage for Google Workspace users.</div>
+    </div>
+  </div>
+
+  <div class="verdict-card">
+    <div class="verdict-tool">🔍</div>
+    <div>
+      <div class="verdict-title">Use Perplexity when</div>
+      <div class="verdict-desc">You need current, sourced information quickly. Perplexity is the AI-powered replacement for Google Search — synthesized answers with citations. For research that requires up-to-date information, it's the most efficient tool in the field.</div>
+    </div>
+  </div>
+
+  <h2>Building a multi-tool workflow</h2>
+  <p>The sophistication isn't in picking one tool and being loyal to it. It's in knowing which tool fits which task and switching fluidly.</p>
+  <p>A practical multi-tool workflow might look like: Use <strong>Perplexity</strong> to research current information on a topic. Paste the key findings into <strong>Claude</strong> to synthesize, analyze, and write a structured report. Use <strong>ChatGPT</strong> to generate an image for the report. Use <strong>Gemini</strong> to integrate the final document into your Google Drive and share it.</p>
+  <p>Each tool did what it does best. No single tool did everything.</p>
+
+  <div class="warn">
+    <div class="warn-label">The skill that matters most</div>
+    <p>Knowing which tool to use for which task is a genuine skill — and it's one most people don't develop because they pick one assistant and use it for everything. The time invested in learning the strengths and weaknesses of the major AI tools pays back in dramatically better outputs across everything you do with them.</p>
+  </div>
+
+  <div class="good">
+    <div class="good-label">Where you stand after this course</div>
+    <p>You now understand Claude at a level that most users — including professionals who use it daily — don't. You know what it's optimized for, how to prompt it effectively, how to build persistent workspaces with Projects, what its advanced features do and when to use them, and honestly where it beats and loses to the competition. That's not a small thing. Use it.</p>
+  </div>
+
+  <div class="complete-banner">
+    <div class="complete-icon">🎓</div>
+    <div class="complete-title">You've completed Mastering Claude.</div>
+    <div class="complete-desc">Seven modules of genuine depth — from Constitutional AI to model selection to real-world workflows to honest competitive analysis. Take the final assessment and earn your Mastering Claude certificate.</div>
+    <button class="btn-assessment" onclick="completeAndGoToQuiz()">Take the Final Assessment →</button>
+  </div>
+
+</div>
+</main>
+</div>
+
+<div class="sticky-bar" id="sticky-bar">
+  <div class="sticky-bar-reading" id="sticky-reading">Read to the end to unlock the assessment</div>
+  <div class="sticky-bar-track"><div class="sticky-bar-fill" id="sticky-fill"></div></div>
+  <div class="sticky-bar-label" id="sticky-label">0%</div>
+  <button class="sticky-bar-btn" id="sticky-btn" onclick="completeAndGoToQuiz()">Take the Final Assessment →</button>
+</div>
+
+<script>
+  function toggleTheme(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='☾'):(h.setAttribute('data-theme','dark'),i.textContent='☀');}
+  window.addEventListener('scroll',()=>{const d=document.documentElement,s=d.scrollTop||document.body.scrollTop,t=d.scrollHeight-d.clientHeight;document.getElementById('progress').style.width=(s/t*100)+'%';});
+  if (!localStorage.getItem('meridian_claude_m6')) {
+    document.body.innerHTML = `<div style="min-height:100vh;display:flex;align-items:center;justify-content:center;background:#080808;font-family:'DM Sans',sans-serif;padding:24px;"><div style="max-width:440px;text-align:center;background:#111;border:1px solid rgba(255,255,255,0.08);border-radius:20px;padding:48px;"><div style="font-size:48px;margin-bottom:20px;">🔒</div><div style="font-size:20px;font-weight:500;color:#f0f0f0;margin-bottom:12px;">Module locked</div><div style="font-size:14px;color:#a0a0a0;margin-bottom:28px;line-height:1.6;">Complete Module 6 before continuing.</div><a href="claude-module-6.html" style="display:inline-block;padding:12px 24px;background:#5b8ff8;color:#fff;border-radius:10px;font-size:14px;font-weight:500;text-decoration:none;">← Go to Module 6</a></div></div>`;
+  }
+  let unlocked = false;
+  function updateScrollProgress() {
+    const scrolled = window.scrollY + window.innerHeight;
+    const total = document.documentElement.scrollHeight;
+    const pct = Math.min(100, Math.round((scrolled / total) * 100));
+    const fill = document.getElementById('sticky-fill');
+    const label = document.getElementById('sticky-label');
+    const btn = document.getElementById('sticky-btn');
+    const reading = document.getElementById('sticky-reading');
+    if (fill) fill.style.width = pct + '%';
+    if (label) label.textContent = pct + '%';
+    if (pct >= 95 && !unlocked) {
+      unlocked = true;
+      if (btn) btn.style.display = 'block';
+      if (reading) reading.style.display = 'none';
+      if (fill) fill.style.background = '#22c55e';
+      if (label) label.style.color = '#22c55e';
+    }
+  }
+  window.addEventListener('scroll', updateScrollProgress);
+  updateScrollProgress();
+  function completeAndGoToQuiz() {
+    try { localStorage.setItem('meridian_claude_m7', 'true'); localStorage.setItem('meridian_last_claude_module', '7'); } catch(e) {}
+    setTimeout(() => { window.location.href = 'quiz-claude.html'; }, 80);
+  }
+</script>
+</body>
+</html>
