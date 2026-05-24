@@ -105,10 +105,9 @@
     padding: 16px 24px; font-size: 13px; font-weight: 500;
     color: var(--text-3); border-bottom: 2px solid transparent;
     cursor: pointer; white-space: nowrap; transition: all 0.2s;
-    background: transparent; border-top: none; border-left: none; border-right: none;
-    font-family: 'DM Sans', sans-serif;
+    background: transparent; text-decoration: none; display: inline-block;
   }
-  .tab:hover { color: var(--text-2); }
+  .tab:hover { color: var(--text-2); border-bottom-color: var(--border-2); }
   .tab.active { color: var(--accent); border-bottom-color: var(--accent); }
   .tab-count {
     display: inline-flex; align-items: center; justify-content: center;
@@ -120,8 +119,8 @@
 
   /* CONTENT */
   .content { padding: 48px 5% 100px; }
-  .level-section { display: none; }
-  .level-section.active { display: block; }
+  .level-section { display: block; }
+  .level-section + .level-section { margin-top: 80px; }
 
   .level-header { margin-bottom: 32px; }
   .level-badge {
@@ -358,7 +357,7 @@
 <div class="content">
 
   <!-- BEGINNER -->
-  <div class="level-section active" id="tab-beginner">
+  <div class="level-section" id="beginner">
     <div class="level-header">
       <div class="level-badge badge-beginner">Beginner · Free</div>
       <h2 class="level-title">Build the foundation.<br>No experience required.</h2>
@@ -415,7 +414,7 @@
   </div>
 
   <!-- INTERMEDIATE -->
-  <div class="level-section" id="tab-intermediate">
+  <div class="level-section" id="intermediate">
     <div class="level-header">
       <div class="level-badge badge-intermediate">Intermediate · $10</div>
       <h2 class="level-title">Apply AI to the field<br>you're building toward.</h2>
@@ -436,7 +435,7 @@
           <span>🏆 Certificate</span>
         </div>
         <div class="course-footer">
-          <div class="course-price">$10</div>
+          <div class="course-price" style="font-size:20px;color:var(--text-3);">Coming Soon</div>
           <button class="btn-card btn-card-ghost">Notify me</button>
         </div>
       </div>
@@ -454,7 +453,7 @@
           <span>🏆 Certificate</span>
         </div>
         <div class="course-footer">
-          <div class="course-price">$10</div>
+          <div class="course-price" style="font-size:20px;color:var(--text-3);">Coming Soon</div>
           <button class="btn-card btn-card-ghost">Notify me</button>
         </div>
       </div>
@@ -472,7 +471,7 @@
           <span>🏆 Certificate</span>
         </div>
         <div class="course-footer">
-          <div class="course-price">$10</div>
+          <div class="course-price" style="font-size:20px;color:var(--text-3);">Coming Soon</div>
           <button class="btn-card btn-card-ghost">Notify me</button>
         </div>
       </div>
@@ -490,7 +489,7 @@
           <span>🏆 Certificate</span>
         </div>
         <div class="course-footer">
-          <div class="course-price">$10</div>
+          <div class="course-price" style="font-size:20px;color:var(--text-3);">Coming Soon</div>
           <button class="btn-card btn-card-ghost">Notify me</button>
         </div>
       </div>
@@ -508,7 +507,7 @@
           <span>🏆 Certificate</span>
         </div>
         <div class="course-footer">
-          <div class="course-price">$10</div>
+          <div class="course-price" style="font-size:20px;color:var(--text-3);">Coming Soon</div>
           <button class="btn-card btn-card-ghost">Notify me</button>
         </div>
       </div>
@@ -526,7 +525,7 @@
           <span>🏆 Certificate</span>
         </div>
         <div class="course-footer">
-          <div class="course-price">$10</div>
+          <div class="course-price" style="font-size:20px;color:var(--text-3);">Coming Soon</div>
           <button class="btn-card btn-card-ghost">Notify me</button>
         </div>
       </div>
@@ -535,7 +534,7 @@
   </div>
 
   <!-- ADVANCED -->
-  <div class="level-section" id="tab-advanced">
+  <div class="level-section" id="advanced">
     <div class="level-header">
       <div class="level-badge badge-advanced">Advanced · $20</div>
       <h2 class="level-title">Deep mastery.<br>Portfolio-ready work.</h2>
@@ -556,7 +555,7 @@
           <span>🏆 Expert Certificate</span>
         </div>
         <div class="course-footer">
-          <div class="course-price">$20</div>
+          <div class="course-price" style="font-size:20px;color:var(--text-3);">Coming Soon</div>
           <button class="btn-card btn-card-ghost">Notify me</button>
         </div>
       </div>
@@ -574,7 +573,7 @@
           <span>🏆 Expert Certificate</span>
         </div>
         <div class="course-footer">
-          <div class="course-price">$20</div>
+          <div class="course-price" style="font-size:20px;color:var(--text-3);">Coming Soon</div>
           <button class="btn-card btn-card-ghost">Notify me</button>
         </div>
       </div>
@@ -592,7 +591,7 @@
           <span>🏆 Expert Certificate</span>
         </div>
         <div class="course-footer">
-          <div class="course-price">$20</div>
+          <div class="course-price" style="font-size:20px;color:var(--text-3);">Coming Soon</div>
           <button class="btn-card btn-card-ghost">Notify me</button>
         </div>
       </div>
@@ -610,7 +609,7 @@
           <span>🏆 Expert Certificate</span>
         </div>
         <div class="course-footer">
-          <div class="course-price">$20</div>
+          <div class="course-price" style="font-size:20px;color:var(--text-3);">Coming Soon</div>
           <button class="btn-card btn-card-ghost">Notify me</button>
         </div>
       </div>
@@ -697,9 +696,18 @@
       try {
         const userDoc = await getDoc(doc(db, 'users', user.uid));
         if (userDoc.exists()) {
-          const completedModules = userDoc.data().completedModules || [];
-          const totalModules = 6;
-          const pct = Math.round((completedModules.length / totalModules) * 100);
+          const data = userDoc.data();
+          const completedModules = data.completedModules || [];
+          const certificates = data.certificatesEarned || [];
+
+          // Check if fully completed
+          const isComplete = certificates.includes('foundations') ||
+                             completedModules.includes('foundations-complete');
+
+          // Count individual modules
+          const moduleIds = ['module-1','module-2','module-3','module-4','module-5','module-6'];
+          const modulesCount = isComplete ? 6 : moduleIds.filter(id => completedModules.includes(id)).length;
+          const pct = isComplete ? 100 : Math.round((modulesCount / 6) * 100);
 
           document.getElementById('foundations-progress').style.display = 'block';
           document.getElementById('foundations-pct').textContent = pct + '%';
@@ -707,7 +715,8 @@
 
           const btn = document.getElementById('foundations-btn');
           const badge = document.getElementById('foundations-badge');
-          if (pct === 100) {
+
+          if (isComplete) {
             btn.textContent = 'Review course';
             btn.className = 'btn-card btn-card-done';
             badge.textContent = 'Completed';
@@ -728,12 +737,20 @@
     }
   });
 
-  window.switchTab = function(tab) {
-    document.querySelectorAll('.level-section').forEach(s => s.classList.remove('active'));
-    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-    document.getElementById('tab-' + tab).classList.add('active');
-    event.target.classList.add('active');
-  }
+  // Scroll spy - highlight active tab based on scroll position
+  window.addEventListener('scroll', () => {
+    const sections = ['beginner', 'intermediate', 'advanced'];
+    const tabs = document.querySelectorAll('.tab');
+    let current = 'beginner';
+    sections.forEach(id => {
+      const el = document.getElementById(id);
+      if (el && window.scrollY >= el.offsetTop - 120) current = id;
+    });
+    tabs.forEach(t => {
+      t.classList.remove('active');
+      if (t.getAttribute('href') === '#' + current) t.classList.add('active');
+    });
+  });
 
   window.handleCourseClick = function(course) {
     if (course === 'foundations') {
