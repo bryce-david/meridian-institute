@@ -348,9 +348,9 @@
 <!-- TABS -->
 <div class="tabs-bar">
   <div class="tabs">
-    <button class="tab active" onclick="switchTab('beginner')">Beginner <span class="tab-count">2</span></button>
-    <button class="tab" onclick="switchTab('intermediate')">Intermediate <span class="tab-count">6</span></button>
-    <button class="tab" onclick="switchTab('advanced')">Advanced <span class="tab-count">4</span></button>
+    <a class="tab active" href="#beginner" onclick="setActive(this)">Beginner <span class="tab-count">2</span></a>
+    <a class="tab" href="#intermediate" onclick="setActive(this)">Intermediate <span class="tab-count">6</span></a>
+    <a class="tab" href="#advanced" onclick="setActive(this)">Advanced <span class="tab-count">4</span></a>
   </div>
 </div>
 
@@ -738,7 +738,12 @@
     }
   });
 
-  // Scroll spy - highlight active tab based on scroll position
+  window.setActive = function(el) {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    el.classList.add('active');
+  }
+
+  // Scroll spy
   window.addEventListener('scroll', () => {
     const sections = ['beginner', 'intermediate', 'advanced'];
     const tabs = document.querySelectorAll('.tab');
