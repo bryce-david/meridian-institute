@@ -123,47 +123,47 @@
 
   async function loadCertificate(id) {
     try {
-      // Try to find user by certId or uid-foundations pattern
-      let userData = null;
       let userName = null;
       let completedDate = null;
 
-      // Check if id is uid-foundations format
-      const uid = id.replace('-foundations', '');
+      // Extract UID - cert ID is always uid + "-foundations"
+      const uid = id.endsWith('-foundations') ? id.slice(0, -('-foundations'.length)) : id;
+
+      console.log('Looking up UID:', uid);
+
       const userDoc = await getDoc(doc(db, 'users', uid));
 
       if (userDoc.exists()) {
-        userData = userDoc.data();
-        const completedModules = userData.completedModules || [];
-        const certificates = userData.certificatesEarned || [];
+        const data = userDoc.data();
+        console.log('Found user data:', data);
 
-        // Check all possible ways a certificate could be stored
+        const certificates = data.certificatesEarned || [];
+        const completedModules = data.completedModules || [];
         const hasCert = certificates.includes('foundations') ||
-                        completedModules.includes('foundations-complete') ||
-                        completedModules.length >= 6;
+                        completedModules.includes('foundations-complete');
 
         if (hasCert) {
-          userName = userData.name || 'Meridian Student';
+          userName = data.name || 'Meridian Student';
 
-          // Try multiple date sources
-          if (userData.foundationsCompletedAt && userData.foundationsCompletedAt.toDate) {
-            completedDate = new Date(userData.foundationsCompletedAt.toDate()).toLocaleDateString('en-US', {year:'numeric',month:'long',day:'numeric'});
-          } else if (userData.foundationsCompletedAt) {
-            completedDate = new Date(userData.foundationsCompletedAt).toLocaleDateString('en-US', {year:'numeric',month:'long',day:'numeric'});
+          // Handle Firestore Timestamp object
+          if (data.foundationsCompletedAt) {
+            try {
+              const dateObj = data.foundationsCompletedAt.toDate
+                ? data.foundationsCompletedAt.toDate()
+                : new Date(data.foundationsCompletedAt);
+              completedDate = dateObj.toLocaleDateString('en-US', {year:'numeric',month:'long',day:'numeric'});
+            } catch(e) {
+              completedDate = 'May 2026';
+            }
           } else {
-            // Fall back to today if no date saved
-            completedDate = new Date().toLocaleDateString('en-US', {year:'numeric',month:'long',day:'numeric'});
+            completedDate = 'May 2026';
           }
 
           showCertificate(userName, completedDate, id);
           return;
         }
-      }
-
-      // Also try searching by email if uid lookup failed
-      // (handles case where cert ID format changed)
-      if (id.includes('-foundations')) {
-        // Already tried the uid approach above
+      } else {
+        console.log('No user found for UID:', uid);
       }
 
       showNotFound();
