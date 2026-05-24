@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Certificate — Meridian Institute of AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#5b8ff8;--accent-dim:rgba(91,143,248,0.1);--nav-bg:rgba(8,8,8,0.9);--success:#22c55e;--success-bg:rgba(34,197,94,0.08);--success-border:rgba(34,197,94,0.25);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#2563eb;--accent-dim:rgba(37,99,235,0.08);--nav-bg:rgba(250,250,248,0.9);--success:#16a34a;--success-bg:rgba(22,163,74,0.06);--success-border:rgba(22,163,74,0.25);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;}
+  .nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);}
+  .nav-logo-text{font-size:13px;font-weight:500;color:var(--text);}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;transition:all 0.2s;}
+  .theme-toggle:hover{background:var(--bg-3);color:var(--text);}
+
+  .page{padding:90px 5% 80px;display:flex;flex-direction:column;align-items:center;min-height:100vh;}
+
+  /* CERTIFICATE */
+  .cert-wrap{width:100%;max-width:860px;margin-bottom:40px;}
+  .cert{background:linear-gradient(135deg,#0a0a14 0%,#0d0d1a 50%,#0a0a14 100%);border:1px solid rgba(91,143,248,0.3);border-radius:4px;padding:64px;position:relative;overflow:hidden;aspect-ratio:1.414;}
+  .cert::before{content:'';position:absolute;inset:12px;border:1px solid rgba(91,143,248,0.15);border-radius:2px;pointer-events:none;}
+  .cert::after{content:'';position:absolute;top:-100px;right:-100px;width:400px;height:400px;background:radial-gradient(circle,rgba(91,143,248,0.06) 0%,transparent 70%);pointer-events:none;}
+  .cert-watermark{position:absolute;bottom:40px;right:40px;font-family:'Cormorant Garamond',serif;font-size:80px;font-weight:600;color:rgba(91,143,248,0.04);line-height:1;letter-spacing:-2px;pointer-events:none;user-select:none;}
+  .cert-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:48px;}
+  .cert-logo{display:flex;align-items:center;gap:12px;}
+  .cert-logo-mark{width:36px;height:36px;border:1.5px solid #5b8ff8;border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;color:#5b8ff8;}
+  .cert-logo-text{font-size:13px;font-weight:500;color:rgba(240,240,240,0.6);letter-spacing:0.02em;}
+  .cert-verified{display:flex;align-items:center;gap:8px;font-size:11px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:#22c55e;}
+  .cert-verified-dot{width:8px;height:8px;border-radius:50%;background:#22c55e;}
+  .cert-body{text-align:center;margin-bottom:48px;}
+  .cert-presents{font-size:12px;font-weight:400;letter-spacing:0.2em;text-transform:uppercase;color:rgba(240,240,240,0.4);margin-bottom:24px;}
+  .cert-recipient{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:600;color:#f0f0f0;line-height:1;margin-bottom:20px;letter-spacing:-0.01em;}
+  .cert-has-completed{font-size:13px;font-weight:300;color:rgba(240,240,240,0.5);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:8px;}
+  .cert-course{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:400;color:#5b8ff8;margin-bottom:8px;}
+  .cert-institution{font-size:13px;color:rgba(240,240,240,0.4);letter-spacing:0.05em;}
+  .cert-divider{width:80px;height:1px;background:rgba(91,143,248,0.3);margin:28px auto;}
+  .cert-footer{display:flex;justify-content:space-between;align-items:flex-end;}
+  .cert-field{text-align:center;}
+  .cert-field-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:rgba(240,240,240,0.3);margin-bottom:8px;}
+  .cert-field-value{font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:400;color:rgba(240,240,240,0.7);}
+  .cert-field-line{width:140px;height:1px;background:rgba(91,143,248,0.2);margin:8px auto 0;}
+  .cert-seal{width:64px;height:64px;border-radius:50%;border:2px solid rgba(91,143,248,0.4);display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(91,143,248,0.06);}
+  .cert-seal-icon{font-size:22px;line-height:1;}
+  .cert-seal-text{font-size:7px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:rgba(91,143,248,0.6);margin-top:2px;}
+
+  /* VERIFICATION PANEL */
+  .verify-panel{width:100%;max-width:860px;background:var(--bg-2);border:1px solid var(--success-border);border-radius:16px;padding:28px 32px;display:flex;align-items:center;justify-content:space-between;gap:24px;margin-bottom:24px;flex-wrap:wrap;}
+  .verify-left{display:flex;align-items:center;gap:16px;}
+  .verify-icon{font-size:28px;}
+  .verify-title{font-size:16px;font-weight:500;color:var(--success);margin-bottom:4px;}
+  .verify-sub{font-size:13px;color:var(--text-2);}
+  .verify-id{font-size:12px;font-family:monospace;color:var(--text-3);margin-top:4px;}
+  .cert-actions{display:flex;gap:10px;flex-wrap:wrap;}
+  .btn-action{padding:10px 20px;border-radius:9px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;cursor:pointer;border:none;transition:all 0.2s;text-decoration:none;display:inline-block;}
+  .btn-primary{background:var(--accent);color:#fff;}
+  .btn-primary:hover{opacity:0.88;}
+  .btn-ghost{background:transparent;color:var(--text-2);border:1px solid var(--border-2);}
+  .btn-ghost:hover{background:var(--bg-3);color:var(--text);}
+
+  .not-found{text-align:center;padding:80px 24px;}
+  .not-found-icon{font-size:56px;margin-bottom:20px;}
+  .not-found-title{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:300;color:var(--text);margin-bottom:12px;}
+  .not-found-desc{font-size:15px;color:var(--text-2);margin-bottom:28px;}
+  .loading-cert{text-align:center;padding:80px;color:var(--text-3);font-size:14px;}
+
+  @media print {
+    nav, .verify-panel, .cert-actions, .theme-toggle { display: none !important; }
+    body { background: white; }
+    .page { padding: 0; }
+    .cert { border: 2px solid #5b8ff8; }
+  }
+
+  @media(max-width:700px){
+    .cert{padding:32px;aspect-ratio:auto;}
+    .cert-recipient{font-size:36px;}
+    .cert-footer{flex-direction:column;align-items:center;gap:24px;}
+  }
+</style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="nav-logo">
+    <div class="nav-logo-mark">M</div>
+    <span class="nav-logo-text">Meridian Institute of AI</span>
+  </a>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">☀</span></button>
+</nav>
+
+<div class="page">
+  <div id="cert-container" class="loading-cert">Loading certificate...</div>
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getFirestore, collection, query, where, getDocs, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",
+    authDomain: "meridian-institute.firebaseapp.com",
+    projectId: "meridian-institute",
+    storageBucket: "meridian-institute.firebasestorage.app",
+    messagingSenderId: "355371012929",
+    appId: "1:355371012929:web:244fc2f15ee8ac656887c0"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  const params = new URLSearchParams(window.location.search);
+  const certId = params.get('id');
+  const container = document.getElementById('cert-container');
+
+  if (!certId) {
+    showNotFound();
+  } else {
+    loadCertificate(certId);
+  }
+
+  async function loadCertificate(id) {
+    try {
+      // Try to find user by certId or uid-foundations pattern
+      let userData = null;
+      let userName = null;
+      let completedDate = null;
+
+      // Check if id is uid-foundations format
+      const uid = id.replace('-foundations', '');
+      const userDoc = await getDoc(doc(db, 'users', uid));
+
+      if (userDoc.exists()) {
+        userData = userDoc.data();
+        const hasCert = (userData.certificatesEarned || []).includes('foundations') ||
+                        (userData.completedModules || []).includes('foundations-complete');
+
+        if (hasCert) {
+          userName = userData.name || 'Meridian Student';
+          completedDate = userData.foundationsCompletedAt
+            ? new Date(userData.foundationsCompletedAt.toDate()).toLocaleDateString('en-US', {year:'numeric',month:'long',day:'numeric'})
+            : new Date().toLocaleDateString('en-US', {year:'numeric',month:'long',day:'numeric'});
+
+          showCertificate(userName, completedDate, id);
+          return;
+        }
+      }
+
+      showNotFound();
+    } catch(e) {
+      console.log('Error loading cert:', e);
+      showNotFound();
+    }
+  }
+
+  function showCertificate(name, date, id) {
+    const shortId = id.substring(0, 16).toUpperCase();
+    container.innerHTML = `
+      <div class="cert-wrap">
+        <div class="cert" id="cert-printable">
+          <div class="cert-watermark">M</div>
+          <div class="cert-top">
+            <div class="cert-logo">
+              <div class="cert-logo-mark">M</div>
+              <span class="cert-logo-text">Meridian Institute of AI</span>
+            </div>
+            <div class="cert-verified">
+              <div class="cert-verified-dot"></div>
+              Verified Certificate
+            </div>
+          </div>
+          <div class="cert-body">
+            <div class="cert-presents">This certifies that</div>
+            <div class="cert-recipient">${name}</div>
+            <div class="cert-has-completed">has successfully completed</div>
+            <div class="cert-course">Foundations of AI</div>
+            <div class="cert-institution">Meridian Institute of AI</div>
+            <div class="cert-divider"></div>
+          </div>
+          <div class="cert-footer">
+            <div class="cert-field">
+              <div class="cert-field-label">Date Issued</div>
+              <div class="cert-field-value">${date}</div>
+              <div class="cert-field-line"></div>
+            </div>
+            <div class="cert-seal">
+              <div class="cert-seal-icon">🏅</div>
+              <div class="cert-seal-text">Meridian</div>
+            </div>
+            <div class="cert-field">
+              <div class="cert-field-label">Certificate ID</div>
+              <div class="cert-field-value" style="font-size:12px;font-family:monospace;">${shortId}</div>
+              <div class="cert-field-line"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="verify-panel">
+        <div class="verify-left">
+          <div class="verify-icon">✅</div>
+          <div>
+            <div class="verify-title">Certificate Verified</div>
+            <div class="verify-sub">This certificate was legitimately issued by Meridian Institute of AI to <strong>${name}</strong> upon passing the Foundations of AI final assessment.</div>
+            <div class="verify-id">Certificate ID: ${id}</div>
+          </div>
+        </div>
+        <div class="cert-actions">
+          <button class="btn-action btn-primary" onclick="window.print()">Print / Save PDF</button>
+          <button class="btn-action btn-ghost" onclick="copyLink()">Copy Verification Link</button>
+        </div>
+      </div>
+
+      <div style="font-size:13px;color:var(--text-3);text-align:center;">
+        This certificate can be verified at <strong style="color:var(--text-2);">meridianinstituteai.com/certificate.html?id=${id}</strong>
+      </div>
+    `;
+  }
+
+  function showNotFound() {
+    container.innerHTML = `
+      <div class="not-found">
+        <div class="not-found-icon">🔍</div>
+        <div class="not-found-title">Certificate not found</div>
+        <div class="not-found-desc">This certificate ID does not match any record in our system. If you believe this is an error, contact us at support@meridianinstituteai.com</div>
+        <a href="index.html" class="btn-action btn-primary">Return to Meridian</a>
+      </div>
+    `;
+  }
+
+  window.copyLink = function() {
+    navigator.clipboard.writeText(window.location.href).then(() => {
+      alert('Verification link copied to clipboard.');
+    });
+  }
+
+  window.toggleTheme = function() {
+    const h = document.documentElement;
+    const i = document.getElementById('theme-icon');
+    h.getAttribute('data-theme')==='dark' ? (h.setAttribute('data-theme','light'),i.textContent='☾') : (h.setAttribute('data-theme','dark'),i.textContent='☀');
+  }
+</script>
+</body>
+</html>

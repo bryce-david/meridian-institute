@@ -298,6 +298,8 @@
   }
 
   window.handleSignOut = async function() {
+    const lsKeys = ['meridian_m1','meridian_m2','meridian_m3','meridian_m4','meridian_m5','meridian_m6','meridian_last_module'];
+    lsKeys.forEach(k => localStorage.removeItem(k));
     await signOut(auth);
     window.location.href = 'index.html';
   }

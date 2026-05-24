@@ -810,7 +810,9 @@
         try {
           await updateDoc(doc(db, 'users', currentUser.uid), {
             completedModules: arrayUnion('foundations-complete'),
-            certificatesEarned: arrayUnion('foundations')
+            certificatesEarned: arrayUnion('foundations'),
+            foundationsCompletedAt: new Date(),
+            foundationsCertId: currentUser.uid + '-foundations'
           });
         } catch(e) { console.log('Could not save completion', e); }
       }
