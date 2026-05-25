@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Final Assessment — Mastering ChatGPT — Meridian Institute of AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#10a37f;--accent-dim:rgba(16,163,127,0.1);--nav-bg:rgba(8,8,8,0.9);--success:#22c55e;--success-bg:rgba(34,197,94,0.08);--success-border:rgba(34,197,94,0.25);--fail-bg:rgba(239,68,68,0.08);--fail-border:rgba(239,68,68,0.25);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#0d9370;--accent-dim:rgba(13,147,112,0.08);--nav-bg:rgba(250,250,248,0.9);--success:#16a34a;--success-bg:rgba(22,163,74,0.06);--success-border:rgba(22,163,74,0.25);--fail-bg:rgba(220,38,38,0.06);--fail-border:rgba(220,38,38,0.25);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}
+  .nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}
+  .nav-back{font-size:13px;color:var(--text-2);text-decoration:none;}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;}
+  .page{max-width:680px;margin:0 auto;padding:90px 24px 80px;}
+  .quiz-header{margin-bottom:40px;}
+  .quiz-eyebrow{font-size:11px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:12px;}
+  .quiz-title{font-family:'Cormorant Garamond',serif;font-size:42px;font-weight:300;color:var(--text);line-height:1.1;margin-bottom:12px;}
+  .quiz-sub{font-size:15px;color:var(--text-2);line-height:1.7;}
+  .quiz-rules{background:var(--bg-2);border:1px solid var(--border);border-radius:12px;padding:20px 24px;margin:24px 0;display:flex;gap:24px;flex-wrap:wrap;}
+  .quiz-rule{font-size:13px;color:var(--text-2);display:flex;align-items:center;gap:8px;}
+  .btn-start{display:inline-block;padding:14px 32px;background:var(--accent);color:#fff;border-radius:10px;font-size:15px;font-weight:500;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;transition:opacity 0.2s;margin-top:8px;}
+  .btn-start:hover{opacity:0.88;}
+  #quiz-section{display:none;}
+  .progress-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;}
+  .progress-label{font-size:13px;color:var(--text-3);}
+  .progress-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;margin-bottom:36px;}
+  .progress-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.3s;}
+  .question-num{font-size:11px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:16px;}
+  .question-text{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:400;color:var(--text);line-height:1.35;margin-bottom:32px;}
+  .options{display:flex;flex-direction:column;gap:12px;margin-bottom:32px;}
+  .option{display:flex;align-items:flex-start;gap:14px;padding:16px 20px;border:1px solid var(--border-2);border-radius:12px;cursor:pointer;transition:all 0.2s;background:var(--bg-2);}
+  .option:hover{border-color:var(--accent);background:var(--accent-dim);}
+  .option.selected{border-color:var(--accent);background:var(--accent-dim);}
+  .option.correct{border-color:var(--success);background:var(--success-bg);cursor:default;}
+  .option.wrong{border-color:#ef4444;background:rgba(239,68,68,0.08);cursor:default;}
+  .option.disabled{cursor:default;opacity:0.6;}
+  .option-letter{width:28px;height:28px;border-radius:6px;background:var(--bg-3);border:1px solid var(--border-2);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:500;color:var(--text-3);flex-shrink:0;}
+  .option.selected .option-letter{background:var(--accent);color:#fff;border-color:var(--accent);}
+  .option.correct .option-letter{background:var(--success);color:#fff;border-color:var(--success);}
+  .option.wrong .option-letter{background:#ef4444;color:#fff;border-color:#ef4444;}
+  .option-text{font-size:15px;color:var(--text-2);line-height:1.5;padding-top:4px;}
+  .option.selected .option-text,.option.correct .option-text{color:var(--text);}
+  .feedback{padding:16px 20px;border-radius:10px;font-size:14px;line-height:1.6;margin-bottom:24px;display:none;}
+  .feedback.show{display:block;}
+  .feedback.correct{background:var(--success-bg);border:1px solid var(--success-border);color:var(--success);}
+  .feedback.wrong{background:var(--fail-bg);border:1px solid var(--fail-border);color:#ef4444;}
+  .btn-next{padding:12px 28px;background:var(--accent);color:#fff;border-radius:9px;font-size:14px;font-weight:500;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;transition:opacity 0.2s;display:none;}
+  .btn-next:hover{opacity:0.88;}
+  .btn-next.show{display:inline-block;}
+  #result-section{display:none;text-align:center;padding:20px 0;}
+  .result-icon{font-size:64px;margin-bottom:20px;}
+  .result-title{font-family:'Cormorant Garamond',serif;font-size:42px;font-weight:300;color:var(--text);margin-bottom:12px;}
+  .result-score{font-size:56px;font-weight:300;font-family:'Cormorant Garamond',serif;margin:20px 0;}
+  .result-score.pass{color:var(--success);}
+  .result-score.fail{color:#ef4444;}
+  .result-message{font-size:16px;color:var(--text-2);line-height:1.7;max-width:500px;margin:0 auto 32px;}
+  .result-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
+  .btn-result{padding:13px 28px;border-radius:10px;font-size:14px;font-weight:500;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;text-decoration:none;display:inline-block;}
+  .btn-primary{background:var(--accent);color:#fff;}
+  .btn-ghost{background:transparent;color:var(--text-2);border:1px solid var(--border-2);}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="index.html" class="nav-back">🏠 Home</a>
+    <div class="nav-divider"></div>
+    <a href="chatgpt-module-7.html" class="nav-back">← Module 7</a>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">☀</span></button>
+</nav>
+<div class="page">
+  <div id="start-section">
+    <div class="quiz-header">
+      <div class="quiz-eyebrow">Final Assessment · Mastering ChatGPT</div>
+      <div class="quiz-title">Test Your Knowledge</div>
+      <div class="quiz-sub">15 questions from all seven modules. Show that you understand ChatGPT deeply — the models, the techniques, and the honest trade-offs.</div>
+    </div>
+    <div class="quiz-rules">
+      <div class="quiz-rule">📋 15 questions per attempt</div>
+      <div class="quiz-rule">✅ 70% to pass (11 of 15)</div>
+      <div class="quiz-rule">🔀 Questions randomized</div>
+      <div class="quiz-rule">🏆 Pass to earn your certificate</div>
+    </div>
+    <button class="btn-start" onclick="startQuiz()">Begin Assessment →</button>
+  </div>
+
+  <div id="quiz-section">
+    <div class="progress-header">
+      <span class="progress-label" id="progress-label">Question 1 of 15</span>
+      <span class="progress-label" id="score-label">0 correct</span>
+    </div>
+    <div class="progress-track"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+    <div class="question-num" id="question-num">Question 1</div>
+    <div class="question-text" id="question-text"></div>
+    <div class="options" id="options"></div>
+    <div class="feedback" id="feedback"></div>
+    <button class="btn-next" id="btn-next" onclick="nextQuestion()">Next Question →</button>
+  </div>
+
+  <div id="result-section">
+    <div class="result-icon" id="result-icon"></div>
+    <div class="result-title" id="result-title"></div>
+    <div class="result-score" id="result-score"></div>
+    <div class="result-message" id="result-message"></div>
+    <div class="result-actions" id="result-actions"></div>
+  </div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import { getFirestore, doc, updateDoc, setDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+const app = initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+const auth = getAuth(app);
+const db = getFirestore(app);
+let currentUser = null;
+onAuthStateChanged(auth, u => { currentUser = u; });
+
+const ALL_QUESTIONS = [
+  {q:"What was OpenAI's founding logic that distinguishes it from Anthropic?",options:["Build the cheapest AI possible","If powerful AI is coming regardless, safety-conscious researchers should be at the frontier rather than ceding ground to others","Prioritize safety research above all capability development","Focus exclusively on enterprise software"],answer:1,explain:"OpenAI's founding thesis was that powerful AI is inevitable — better to have safety-conscious researchers leading the charge than to leave the frontier to those with fewer safety concerns."},
+  {q:"What is the key structural difference between GPT models and o-series reasoning models?",options:["GPT models are more expensive","o-series models use chain-of-thought reasoning, spending more time thinking before responding","GPT models only work with text","o-series models are faster"],answer:1,explain:"GPT models (4o, 4o mini) are standard LLMs optimized for speed and versatility. o-series models (o1, o3, o4-mini) use chain-of-thought reasoning — working through problems methodically before answering, making them better at hard reasoning but slower."},
+  {q:"For most everyday ChatGPT tasks — writing, summarizing, image analysis — which model is the right default?",options:["o3, because it's the most capable","GPT-4o mini, because it's fastest","GPT-4o, because it balances capability and speed","o1, because it thinks more carefully"],answer:2,explain:"GPT-4o is the right default for most tasks. It's fast, multimodal, and capable enough for the vast majority of work without the cost and latency of o-series reasoning models."},
+  {q:"When should you specifically choose o4-mini over GPT-4o?",options:["For creative writing tasks","For simple Q&A and quick questions","For technical work involving code, math, or structured analysis where reasoning matters","For image generation tasks"],answer:2,explain:"o4-mini applies chain-of-thought reasoning at much lower cost than o3, dramatically outperforming GPT-4o on technical tasks involving code, math, and structured reasoning — making it the practical default for technical work."},
+  {q:"ChatGPT's RLHF training creates a tendency toward what behavior?",options:["Expressing more uncertainty than necessary","Refusing requests more often than competitors","Agreeableness — telling users what they want to hear rather than what's accurate","Using shorter responses than other AI models"],answer:2,explain:"RLHF trains ChatGPT on human preference data. Since humans tend to rate agreeable, confident responses higher, ChatGPT learns to be agreeable — sometimes at the expense of accuracy or honest pushback."},
+  {q:"What are the four components of a strong ChatGPT prompt?",options:["Length, tone, examples, format","Role, context, task, and format","System prompt, user prompt, examples, constraints","Question, background, goal, timeline"],answer:1,explain:"Strong ChatGPT prompts contain: Role (who ChatGPT is), Context (what it needs to know), Task (exactly what you want done), and Format (how you want the output structured)."},
+  {q:"How do you get genuinely honest feedback from ChatGPT rather than validation?",options:["Ask in a very polite tone","Use the o3 model instead of GPT-4o","Explicitly frame ChatGPT as a skeptical critic and tell it its job is NOT to encourage you","Use shorter, more direct questions"],answer:2,explain:"ChatGPT defaults to agreeableness. To get honest feedback you need to explicitly reframe its role — 'your job is NOT to encourage me, act as a skeptical investor who has seen these fail' — which overrides the default agreeable behavior."},
+  {q:"What is ChatGPT's Custom Instructions feature?",options:["A way to add plugins to ChatGPT","A persistent background prompt that runs in every conversation — set once, improves all conversations","A feature exclusive to the o-series models","A way to create shareable ChatGPT conversations"],answer:1,explain:"Custom Instructions are persistent background instructions — equivalent to a system prompt — that run in every ChatGPT conversation. You set them once in Settings → Personalization and every conversation benefits automatically."},
+  {q:"What is the key difference between Custom GPTs and Claude Projects?",options:["Custom GPTs use better AI models","Claude Projects can be shared publicly; Custom GPTs are private","Custom GPTs can be published publicly and shared with anyone; Claude Projects are private workspaces","They are functionally identical"],answer:2,explain:"Custom GPTs can be published publicly and shared via link — you can build a specialized assistant and share it with your team or the world. Claude Projects are private workspaces for your own recurring work."},
+  {q:"What are Actions in a Custom GPT?",options:["The conversation starters shown to users","Connections to external APIs that allow the GPT to actually call services and trigger workflows","The knowledge files uploaded to the GPT","The tone and style settings for the GPT's responses"],answer:1,explain:"Actions allow a Custom GPT to connect to external APIs — actually calling your company's database, triggering workflows in other tools, or checking external services. This is what enables truly integrated AI assistants."},
+  {q:"What is DALL-E 3's key advantage over using a standalone image generation tool like Midjourney?",options:["It generates higher quality images in all cases","It's completely free to use","Conversational iteration — you can refine images through natural language in the same chat where you're working","It supports more image styles"],answer:2,explain:"The native integration means you can iterate on images conversationally — 'make it more professional,' 'add a plant,' 'change the lighting' — in the same conversation context as your other work. This is faster and more practical than standalone tools for many use cases."},
+  {q:"What makes Advanced Voice Mode genuinely distinctive compared to other AI voice features?",options:["It supports more languages than competitors","It's cheaper than other voice AI products","Real-time speech processing with emotional awareness and natural interruption handling — a qualitatively different experience from voice-to-text tools","It can speak in different voices"],answer:2,explain:"Advanced Voice Mode processes speech in real-time — not voice-to-text then text response — with emotional awareness and natural interruption handling. This creates a fundamentally different conversational experience that no competitor currently matches."},
+  {q:"What is the Code Interpreter's key advantage over asking ChatGPT to predict what code would output?",options:["It writes cleaner code","It supports more programming languages","It actually runs the code and shows verified real outputs — not predictions","It's faster to respond"],answer:2,explain:"Code Interpreter executes real Python and shows actual outputs. This means bugs are found from actual errors (not predicted ones), fixes get verified before you see them, and data analysis results are real — not what ChatGPT thinks the analysis would show."},
+  {q:"Why should you NOT add 'think step by step' to prompts for o-series models?",options:["It makes them run out of tokens faster","It causes safety filters to activate","o-series models already do this internally — the instruction can interfere with their built-in reasoning process","It changes the output language"],answer:2,explain:"Reasoning models (o1, o3, o4-mini) perform chain-of-thought reasoning internally by design. Adding 'think step by step' instructions can interfere with this process. The right approach is to give them the full problem clearly and let them reason."},
+  {q:"In an honest comparison, which task category is ChatGPT's clearest weakness compared to Claude?",options:["Image generation","Data analysis","Nuanced writing and honest, calibrated feedback","Hard mathematical reasoning"],answer:2,explain:"ChatGPT's RLHF training makes it more sycophantic than Claude — more likely to validate ideas rather than push back, and more likely to produce polished rather than honest feedback. For tasks requiring genuine critique or honest assessment, Claude consistently outperforms ChatGPT."},
+  {q:"What does the 'o' in GPT-4o stand for?",options:["Optimized","Output","Omni — indicating it handles text, image, and audio natively","Online"],answer:2,explain:"The 'o' stands for omni — indicating that GPT-4o handles text, images, and audio natively in a single model, unlike previous GPT versions that required separate modalities."},
+  {q:"When building a Custom GPT, what is the most important step?",options:["Choosing an eye-catching name and icon","Uploading as many knowledge files as possible","Writing precise, specific instructions that define the GPT's role, behaviors, and how to handle edge cases","Enabling all available capabilities"],answer:2,explain:"The instructions are what make or break a Custom GPT. They define who it is, what it always does, what it never does, how it handles edge cases, and what tone to use. A GPT with poor instructions performs poorly regardless of other settings."},
+  {q:"What data privacy consideration should you keep in mind when using Code Interpreter?",options:["Code Interpreter only works with public datasets","ChatGPT charges extra for processing sensitive files","Uploaded files are sent to OpenAI's servers — don't upload files with sensitive personal data, confidential business information, or NDA-protected content without checking policies","Code Interpreter automatically anonymizes all uploaded data"],answer:2,explain:"Files uploaded to ChatGPT's Code Interpreter are processed on OpenAI's servers. Before uploading sensitive data, check whether your organization's data policies permit it."},
+  {q:"What makes Perplexity a better choice than ChatGPT for some research tasks?",options:["Perplexity has a larger context window","Perplexity is optimized specifically for current, cited information retrieval — giving it an edge on research requiring up-to-date sources","Perplexity's AI is more capable overall","Perplexity is cheaper"],answer:1,explain:"Perplexity is purpose-built for sourced information retrieval with citations. For research requiring current information, it consistently outperforms ChatGPT because it's optimized specifically for that use case rather than being a general-purpose assistant."},
+  {q:"What is the most effective technique for brainstorming with ChatGPT that leverages its unique capabilities?",options:["Sending very long, detailed prompts","Using o3 for all creative tasks","Using Advanced Voice Mode to talk through ideas while walking, with ChatGPT asking questions in real-time","Typing all your ideas first then asking ChatGPT to organize them"],answer:2,explain:"Voice brainstorming while walking combines ChatGPT's real-time voice capability with the cognitive benefits of movement and speech. This unlocks different thinking than typing does, and ChatGPT's ability to ask follow-up questions and push back creates genuine dialogue."},
+  {q:"Which of these correctly describes ChatGPT's ecosystem position?",options:["Narrowly specialized for coding tasks","The deepest thinker with highest reasoning quality across all tasks","The broadest capability set — image generation, voice, data analysis, custom assistants, web browsing — more features than any competitor","The most accurate and honest model available"],answer:2,explain:"ChatGPT's defining characteristic is breadth. It does more different things than any competitor — image generation, voice conversation, code execution, web browsing, Custom GPTs, file analysis — making it the Swiss Army knife of AI assistants."},
+  {q:"For a high-volume customer service chatbot application, which OpenAI model is most appropriate?",options:["o3, for maximum accuracy","GPT-4o, for best quality","GPT-4o mini, for speed and cost efficiency at scale","o4-mini, for better reasoning"],answer:2,explain:"GPT-4o mini is designed for high-volume, cost-sensitive applications. Customer service bots need speed and low cost at scale — tasks that don't require frontier reasoning — making mini the right choice over the more expensive, slower alternatives."},
+  {q:"What happened when ChatGPT launched in November 2022?",options:["It reached 1 million users in its first week and 100 million in 2 months — the fastest consumer app adoption in history","It launched quietly with a small beta test","It was initially only available to enterprise customers","It only worked for coding tasks in the beginning"],answer:0,explain:"ChatGPT's launch was unprecedented. It reached 1 million users in 5 days and 100 million users in 2 months — far faster than any consumer app before it. AI became mainstream overnight."},
+  {q:"Why is GPT-4o described as 'omni'?",options:["Because it works in all countries","Because it handles text, images, and audio natively in a single model","Because it's optimized for all industries","Because it can generate any type of content"],answer:1,explain:"GPT-4o's 'omni' designation reflects its native multimodal capability — processing and generating text, images, and audio without requiring separate specialized models for each modality."},
+  {q:"In a multi-tool AI workflow, what is ChatGPT's ideal role?",options:["The only tool — use it for everything","The tool for tasks requiring image generation, voice interaction, real data analysis, broad feature access, and frontier hard reasoning","The tool for nuanced writing and honest feedback","The tool for current information retrieval"],answer:1,explain:"In a sophisticated multi-tool workflow, ChatGPT handles what it does best: image generation, voice conversation, code execution/data analysis, Custom GPTs, and frontier hard reasoning (o3). Claude handles depth and honesty; Perplexity handles current research."}
+];
+
+let questions=[], current=0, score=0, answered=false;
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+
+window.startQuiz = function(){
+  const required=['meridian_chatgpt_m1','meridian_chatgpt_m2','meridian_chatgpt_m3','meridian_chatgpt_m4','meridian_chatgpt_m5','meridian_chatgpt_m6','meridian_chatgpt_m7'];
+  if(required.some(k=>!localStorage.getItem(k))){alert('Please complete all 7 modules first.');window.location.href='chatgpt-module-1.html';return;}
+  questions=shuffle([...ALL_QUESTIONS]).slice(0,15);current=0;score=0;
+  document.getElementById('start-section').style.display='none';
+  document.getElementById('quiz-section').style.display='block';
+  renderQuestion();
+}
+
+function renderQuestion(){
+  answered=false;
+  const q=questions[current];
+  document.getElementById('question-num').textContent=`Question ${current+1} of 15`;
+  document.getElementById('question-text').textContent=q.q;
+  document.getElementById('progress-label').textContent=`Question ${current+1} of 15`;
+  document.getElementById('score-label').textContent=`${score} correct`;
+  document.getElementById('progress-fill').style.width=`${(current/15)*100}%`;
+  document.getElementById('feedback').className='feedback';
+  document.getElementById('btn-next').className='btn-next';
+  const letters=['A','B','C','D'];
+  const optionsEl=document.getElementById('options');
+  optionsEl.innerHTML='';
+  const indices=shuffle([0,1,2,3]);
+  indices.forEach((origIdx,displayIdx)=>{
+    const opt=document.createElement('div');
+    opt.className='option';
+    opt.innerHTML=`<div class="option-letter">${letters[displayIdx]}</div><div class="option-text">${q.options[origIdx]}</div>`;
+    opt.onclick=()=>selectAnswer(opt,origIdx===q.answer,indices.indexOf(q.answer),displayIdx,q.explain,indices);
+    optionsEl.appendChild(opt);
+  });
+}
+
+function selectAnswer(clickedEl,isCorrect,correctShuffledIdx,clickedShuffledIdx,explain,indices){
+  if(answered)return;answered=true;
+  const opts=document.querySelectorAll('.option');
+  opts.forEach((o,i)=>{o.classList.add('disabled');if(i===correctShuffledIdx)o.classList.add('correct');});
+  if(isCorrect){clickedEl.classList.add('correct');score++;}else{clickedEl.classList.add('wrong');}
+  document.getElementById('score-label').textContent=`${score} correct`;
+  const fb=document.getElementById('feedback');
+  fb.className=`feedback ${isCorrect?'correct':'wrong'} show`;
+  fb.textContent=isCorrect?`✓ Correct. ${explain}`:`✗ ${explain}`;
+  const btn=document.getElementById('btn-next');
+  btn.className='btn-next show';
+  btn.textContent=current===14?'See Results →':'Next Question →';
+}
+
+window.nextQuestion=function(){current++;if(current>=15)showResults();else renderQuestion();}
+
+async function showResults(){
+  document.getElementById('quiz-section').style.display='none';
+  document.getElementById('result-section').style.display='block';
+  const passed=score>=11;
+  const pct=Math.round((score/15)*100);
+  document.getElementById('result-icon').textContent=passed?'🏆':'📚';
+  document.getElementById('result-title').textContent=passed?'Assessment Passed':'Not Quite Yet';
+  document.getElementById('result-score').className=`result-score ${passed?'pass':'fail'}`;
+  document.getElementById('result-score').textContent=`${score} / 15`;
+  if(passed){
+    document.getElementById('result-message').textContent=`You scored ${pct}% — above the 70% threshold. Your Mastering ChatGPT certificate is being generated.`;
+    if(currentUser){
+      try{
+        const certId=currentUser.uid+'-chatgpt';
+        const completedDate=new Date();
+        await updateDoc(doc(db,'users',currentUser.uid),{completedModules:arrayUnion('chatgpt-complete'),certificatesEarned:arrayUnion('chatgpt'),chatgptCompletedAt:completedDate,chatgptCertId:certId});
+        await setDoc(doc(db,'certificates',certId),{name:currentUser.displayName||'Meridian Student',email:currentUser.email,course:'Mastering ChatGPT',issuedAt:completedDate,certId:certId,valid:true});
+        document.getElementById('result-actions').innerHTML=`<a href="certificate.html?id=${certId}" class="btn-result btn-primary" target="_blank">View Certificate →</a><a href="dashboard.html" class="btn-result btn-ghost">Go to Dashboard</a>`;
+      }catch(e){document.getElementById('result-actions').innerHTML=`<a href="dashboard.html" class="btn-result btn-primary">Go to Dashboard</a>`;}
+    }
+  }else{
+    document.getElementById('result-message').textContent=`You scored ${pct}% — you need 70% to pass. Review the modules and try again.`;
+    document.getElementById('result-actions').innerHTML=`<a href="chatgpt-module-1.html" class="btn-result btn-primary">Review from Module 1</a><button class="btn-result btn-ghost" onclick="location.reload()">Try Again</button>`;
+  }
+}
+
+window.toggleTheme=function(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='☾'):(h.setAttribute('data-theme','dark'),i.textContent='☀');}
+</script>
+</body>
+</html>

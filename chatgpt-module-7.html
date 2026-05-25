@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 7: ChatGPT vs The Field — Mastering ChatGPT — Meridian Institute of AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#10a37f;--accent-dim:rgba(16,163,127,0.1);--nav-bg:rgba(8,8,8,0.9);--callout-bg:rgba(16,163,127,0.07);--callout-border:rgba(16,163,127,0.25);--good-bg:rgba(34,197,94,0.07);--good-border:rgba(34,197,94,0.2);--warn-bg:rgba(251,146,60,0.07);--warn-border:rgba(251,146,60,0.2);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#0d9370;--accent-dim:rgba(13,147,112,0.08);--nav-bg:rgba(250,250,248,0.9);--callout-bg:rgba(13,147,112,0.05);--callout-border:rgba(13,147,112,0.2);--good-bg:rgba(22,163,74,0.06);--good-border:rgba(22,163,74,0.2);--warn-bg:rgba(234,88,12,0.05);--warn-border:rgba(234,88,12,0.2);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;overflow-x:hidden;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.7;overflow-x:hidden;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}
+  .nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}
+  .nav-back{font-size:13px;color:var(--text-2);text-decoration:none;}
+  .nav-back:hover{color:var(--text);}
+  .nav-label{font-size:13px;color:var(--text-3);}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;}
+  .progress-bar{position:fixed;top:60px;left:0;right:0;z-index:99;height:2px;background:var(--border);}
+  .progress-fill{height:100%;background:var(--accent);width:0%;}
+  .page-wrapper{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:100vh;padding-top:62px;}
+  .sidebar{position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto;border-right:1px solid var(--border);padding:32px 24px;background:var(--bg-2);}
+  .sidebar-course{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;}
+  .sidebar-course-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+  .sidebar-module{margin-bottom:4px;}
+  .sidebar-module-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:13px;color:var(--text-2);text-decoration:none;transition:all 0.2s;line-height:1.4;}
+  .sidebar-module-link:hover{background:var(--bg-3);color:var(--text);}
+  .sidebar-module-link.active{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-num{font-size:11px;font-weight:500;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--bg-4);color:var(--text-3);}
+  .sidebar-module-link.active .sidebar-num{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-divider{height:1px;background:var(--border);margin:20px 0;}
+  .sidebar-progress-label{font-size:12px;color:var(--text-3);margin-bottom:8px;display:flex;justify-content:space-between;}
+  .sidebar-progress-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sidebar-progress-fill{height:100%;width:100%;background:#22c55e;border-radius:2px;}
+  main{display:block;min-width:0;}
+  .content{max-width:760px;width:100%;padding:60px 64px 140px;margin:0 auto;}
+  .module-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+  .module-tag{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(16,163,127,0.2);padding:4px 12px;border-radius:100px;}
+  .module-meta{font-size:12px;color:var(--text-3);}
+  h1{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1.05;letter-spacing:-0.02em;color:var(--text);margin-bottom:24px;}
+  .intro-text{font-size:19px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+  h2{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:400;color:var(--text);margin:52px 0 18px;line-height:1.2;}
+  h3{font-size:16px;font-weight:500;color:var(--text);margin:32px 0 12px;}
+  p{font-size:16px;font-weight:300;color:var(--text-2);line-height:1.8;margin-bottom:20px;}
+  strong{font-weight:500;color:var(--text);}
+  .callout{background:var(--callout-bg);border:1px solid var(--callout-border);border-radius:12px;padding:24px 28px;margin:32px 0;}
+  .callout-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+  .callout p{margin:0;font-size:15px;color:var(--text-2);}
+  .good{background:var(--good-bg);border:1px solid var(--good-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .good-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#22c55e;margin-bottom:10px;}
+  .good p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn{background:var(--warn-bg);border:1px solid var(--warn-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .warn-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#fb923c;margin-bottom:10px;}
+  .warn p{margin:0;font-size:15px;color:var(--text-2);}
+  .comparison-wrapper{overflow-x:auto;-webkit-overflow-scrolling:touch;width:100%;margin:28px 0;}
+  table{width:100%;border-collapse:collapse;font-size:14px;min-width:560px;}
+  th{text-align:left;padding:12px 16px;font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-3);border-bottom:1px solid var(--border-2);background:var(--bg-2);}
+  td{padding:14px 16px;border-bottom:1px solid var(--border);color:var(--text-2);line-height:1.5;vertical-align:top;font-size:13px;}
+  tr:last-child td{border-bottom:none;}
+  td:first-child{color:var(--text);font-weight:500;width:22%;}
+  .win{color:#22c55e;font-weight:500;}
+  .lose{color:#ef4444;}
+  .verdict-card{background:var(--bg-2);border:1px solid var(--border);border-radius:14px;padding:24px 28px;margin:16px 0;display:flex;gap:20px;}
+  .verdict-tool{font-size:22px;flex-shrink:0;}
+  .verdict-title{font-size:15px;font-weight:500;color:var(--text);margin-bottom:8px;}
+  .verdict-desc{font-size:14px;color:var(--text-2);line-height:1.65;margin:0;}
+  .complete-banner{background:linear-gradient(135deg,rgba(16,163,127,0.08) 0%,rgba(16,163,127,0.02) 100%);border:1px solid rgba(16,163,127,0.3);border-radius:16px;padding:40px;text-align:center;margin-top:60px;}
+  .complete-icon{font-size:48px;margin-bottom:16px;}
+  .complete-title{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:300;color:var(--text);margin-bottom:12px;}
+  .complete-desc{font-size:15px;color:var(--text-2);line-height:1.7;margin-bottom:28px;}
+  .btn-assessment{display:inline-block;padding:14px 32px;background:var(--accent);color:#fff;border-radius:10px;font-size:15px;font-weight:500;text-decoration:none;transition:opacity 0.2s;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;}
+  .btn-assessment:hover{opacity:0.88;}
+  .sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:var(--bg-2);border-top:1px solid var(--border-2);padding:14px 5%;display:flex;align-items:center;justify-content:space-between;gap:16px;backdrop-filter:blur(12px);}
+  .sticky-bar-track{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sticky-bar-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.2s;width:0%;}
+  .sticky-bar-label{font-size:12px;color:var(--text-3);white-space:nowrap;min-width:60px;text-align:right;}
+  .sticky-bar-btn{padding:10px 20px;border-radius:8px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;background:var(--accent);color:#fff;border:none;cursor:pointer;white-space:nowrap;transition:opacity 0.2s;display:none;}
+  .sticky-bar-reading{font-size:12px;color:var(--text-3);white-space:nowrap;}
+  @media(max-width:900px){.page-wrapper{grid-template-columns:1fr;}.sidebar{display:none;}.content{padding:40px 24px 120px;}h1{font-size:38px;}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="index.html" class="nav-back">🏠 Home</a>
+    <div class="nav-divider"></div>
+    <a href="courses.html" class="nav-back">← Mastering ChatGPT</a>
+    <div class="nav-divider"></div>
+    <span class="nav-label">Module 7</span>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">☀</span></button>
+</nav>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+<div class="page-wrapper">
+<aside class="sidebar">
+  <div class="sidebar-course">Course</div>
+  <div class="sidebar-course-name">Mastering ChatGPT</div>
+  <div class="sidebar-module"><a href="chatgpt-module-1.html" class="sidebar-module-link"><span class="sidebar-num">1</span>Understanding ChatGPT</a></div>
+  <div class="sidebar-module"><a href="chatgpt-module-2.html" class="sidebar-module-link"><span class="sidebar-num">2</span>The GPT Model Lineup</a></div>
+  <div class="sidebar-module"><a href="chatgpt-module-3.html" class="sidebar-module-link"><span class="sidebar-num">3</span>Prompting ChatGPT Effectively</a></div>
+  <div class="sidebar-module"><a href="chatgpt-module-4.html" class="sidebar-module-link"><span class="sidebar-num">4</span>Custom GPTs</a></div>
+  <div class="sidebar-module"><a href="chatgpt-module-5.html" class="sidebar-module-link"><span class="sidebar-num">5</span>Advanced Features</a></div>
+  <div class="sidebar-module"><a href="chatgpt-module-6.html" class="sidebar-module-link"><span class="sidebar-num">6</span>ChatGPT in the Real World</a></div>
+  <div class="sidebar-module"><a href="chatgpt-module-7.html" class="sidebar-module-link active"><span class="sidebar-num">7</span>ChatGPT vs The Field</a></div>
+  <div class="sidebar-module"><a href="quiz-chatgpt.html" class="sidebar-module-link" style="color:var(--accent);margin-top:4px;"><span class="sidebar-num" style="background:var(--accent-dim);color:var(--accent);">✦</span>Final Assessment</a></div>
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-progress-label"><span>Course progress</span><span style="color:#22c55e;">7 / 7 ✓</span></div>
+  <div class="sidebar-progress-track"><div class="sidebar-progress-fill"></div></div>
+</aside>
+<main>
+<div class="content">
+  <div class="module-eyebrow"><span class="module-tag">Module 7</span><span class="module-meta">20 min read · Mastering ChatGPT</span></div>
+  <h1>ChatGPT vs<br>The Field</h1>
+  <p class="intro-text">The honest comparison. Where ChatGPT genuinely wins, where it genuinely doesn't, and how it fits into a multi-tool workflow alongside Claude, Gemini, and Perplexity. Loyalty to any single AI tool is a handicap.</p>
+
+  <div class="callout">
+    <div class="callout-label">Context for this comparison</div>
+    <p>This module is part of the Mastering ChatGPT course — we have an interest in presenting it favorably. We're going to resist that. ChatGPT has real weaknesses. Other tools are genuinely better at specific things. You'll be a more effective user if you know both.</p>
+  </div>
+
+  <h2>Head-to-head by task</h2>
+  <div class="comparison-wrapper">
+    <table>
+      <tr><th>Task</th><th>ChatGPT</th><th>Claude</th><th>Gemini</th><th>Perplexity</th></tr>
+      <tr><td>Image generation</td><td class="win">★ Best (DALL-E 3)</td><td class="lose">None</td><td>Good (Imagen)</td><td class="lose">None</td></tr>
+      <tr><td>Voice conversation</td><td class="win">★ Best (Advanced Voice)</td><td>Limited</td><td>Good</td><td>Limited</td></tr>
+      <tr><td>Hard reasoning/math</td><td class="win">★ Best (o3)</td><td>Very good (Opus)</td><td>Good</td><td>Moderate</td></tr>
+      <tr><td>Nuanced writing</td><td>Good</td><td class="win">★ Best</td><td>Good</td><td>Not its focus</td></tr>
+      <tr><td>Long document analysis</td><td>Good</td><td class="win">★ Best</td><td>Good (1M context)</td><td>Limited</td></tr>
+      <tr><td>Current information</td><td>Good (browsing)</td><td>Limited (cutoff)</td><td>Good (real-time)</td><td class="win">★ Best</td></tr>
+      <tr><td>Honesty & pushback</td><td>Moderate</td><td class="win">★ Best</td><td>Good</td><td>Good</td></tr>
+      <tr><td>Data analysis</td><td class="win">★ Best (Code Interpreter)</td><td>Good</td><td>Good</td><td>Limited</td></tr>
+      <tr><td>Custom assistants</td><td class="win">★ Best (Custom GPTs)</td><td>Good (Projects)</td><td>Good (Gems)</td><td>Limited</td></tr>
+      <tr><td>Google Workspace</td><td>Limited</td><td>Limited</td><td class="win">★ Best (native)</td><td>Limited</td></tr>
+      <tr><td>Ecosystem breadth</td><td class="win">★ Most features</td><td>Focused</td><td>Google-centric</td><td>Search-focused</td></tr>
+      <tr><td>Sycophancy (less = better)</td><td class="lose">Higher tendency</td><td class="win">★ Lowest</td><td>Moderate</td><td>Moderate</td></tr>
+    </table>
+  </div>
+
+  <h2>Where ChatGPT genuinely leads</h2>
+
+  <h3>Image generation</h3>
+  <p>DALL-E 3's native integration is a genuine capability gap. No other major AI assistant generates images natively at ChatGPT's quality level. The conversational iteration — refining images through natural language — makes it more practical than standalone tools like Midjourney for many use cases.</p>
+
+  <h3>Voice conversation</h3>
+  <p>Advanced Voice Mode is the clearest area where ChatGPT has no close competitor. Real-time speech processing, emotional awareness, natural interruption handling — it's a qualitatively different experience from any other AI voice product. For hands-free use cases, this is decisive.</p>
+
+  <h3>Hard reasoning (o3)</h3>
+  <p>o3 is one of the most capable reasoning systems available for competition math, frontier science, and complex code. Claude Opus is competitive, but o3 has demonstrated benchmark performance that places it at or near the frontier on hard reasoning tasks.</p>
+
+  <h3>Data analysis with Code Interpreter</h3>
+  <p>The ability to upload a CSV, have ChatGPT actually run Python against it, and see verified results is genuinely more reliable than asking any model to predict what analysis would show. For data work, this is ChatGPT's most practical advantage.</p>
+
+  <h3>Ecosystem breadth</h3>
+  <p>No other AI assistant does more different things. Image generation, voice, code execution, web browsing, Custom GPTs, file analysis, Microsoft integration — the surface area of what ChatGPT can do is unmatched. For users who want one tool for everything, ChatGPT makes the strongest case.</p>
+
+  <h2>Where ChatGPT genuinely doesn't lead</h2>
+
+  <h3>Nuanced writing and honest feedback</h3>
+  <p>ChatGPT's RLHF training makes it more agreeable and less likely to push back than Claude. For writing feedback, strategic critique, and tasks where you need honest assessment rather than polished validation, Claude produces more useful outputs. This is a real and consistent difference.</p>
+
+  <h3>Long document analysis</h3>
+  <p>Claude's 200K context window and training for long-form coherence give it an edge on document-intensive tasks. ChatGPT's 128K window is substantial, but for very long documents where every detail matters, Claude handles edge-case nuances better.</p>
+
+  <h3>Factual confidence calibration</h3>
+  <p>ChatGPT is more likely to state things confidently even when it should express uncertainty. This is a known consequence of preference-based training. For tasks where calibrated uncertainty matters — factual research, medical information, legal questions — this difference is meaningful.</p>
+
+  <h2>The verdict for each tool</h2>
+
+  <div class="verdict-card">
+    <div class="verdict-tool">💬</div>
+    <div>
+      <div class="verdict-title">Use ChatGPT when</div>
+      <div class="verdict-desc">You need image generation, voice conversation, real data analysis, hard reasoning problems (o3/o4-mini), or maximum feature breadth. It's the Swiss Army knife — more features than any competitor, best-in-class for several of them.</div>
+    </div>
+  </div>
+
+  <div class="verdict-card">
+    <div class="verdict-tool">🤖</div>
+    <div>
+      <div class="verdict-title">Use Claude when</div>
+      <div class="verdict-desc">You need nuanced writing, honest feedback, deep document analysis, or trustworthy uncertainty calibration. Claude is the thinking partner — less flashy, more honest, better for tasks that require genuine depth and intellectual rigor.</div>
+    </div>
+  </div>
+
+  <div class="verdict-card">
+    <div class="verdict-tool">✨</div>
+    <div>
+      <div class="verdict-title">Use Gemini when</div>
+      <div class="verdict-desc">You live in Google's ecosystem or need the longest context window available. Gemini's native integration with Gmail, Docs, and Drive creates workflow advantages neither ChatGPT nor Claude can replicate.</div>
+    </div>
+  </div>
+
+  <div class="verdict-card">
+    <div class="verdict-tool">🔍</div>
+    <div>
+      <div class="verdict-title">Use Perplexity when</div>
+      <div class="verdict-desc">You need current, sourced information fast. Perplexity is the AI-native search engine — synthesized answers with citations, optimized for research that requires up-to-date data.</div>
+    </div>
+  </div>
+
+  <div class="warn">
+    <div class="warn-label">The real limitation of "one tool for everything"</div>
+    <p>ChatGPT's breadth is its greatest strength and its greatest risk. Users who rely on it for everything are using a worse tool for many tasks. The writing that Claude would have made sharper. The research that Perplexity would have sourced better. Knowing when to switch is worth more than mastering any single tool.</p>
+  </div>
+
+  <div class="complete-banner">
+    <div class="complete-icon">🎓</div>
+    <div class="complete-title">You've completed Mastering ChatGPT.</div>
+    <div class="complete-desc">Seven modules covering OpenAI's history, the GPT and o-series model families, prompting techniques, Custom GPTs, DALL-E, voice mode, Code Interpreter, real workflows, and an honest competitive analysis. Take the assessment to earn your certificate.</div>
+    <button class="btn-assessment" onclick="completeAndGoToQuiz()">Take the Final Assessment →</button>
+  </div>
+
+</div>
+</main>
+</div>
+<div class="sticky-bar">
+  <div class="sticky-bar-reading" id="sticky-reading">Read to the end to unlock the assessment</div>
+  <div class="sticky-bar-track"><div class="sticky-bar-fill" id="sticky-fill"></div></div>
+  <div class="sticky-bar-label" id="sticky-label">0%</div>
+  <button class="sticky-bar-btn" id="sticky-btn" onclick="completeAndGoToQuiz()">Take the Final Assessment →</button>
+</div>
+<script>
+  function toggleTheme(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='☾'):(h.setAttribute('data-theme','dark'),i.textContent='☀');}
+  window.addEventListener('scroll',()=>{const d=document.documentElement,s=d.scrollTop||document.body.scrollTop,t=d.scrollHeight-d.clientHeight;document.getElementById('progress').style.width=(s/t*100)+'%';});
+  if(!localStorage.getItem('meridian_chatgpt_m6')){document.body.innerHTML=`<div style="min-height:100vh;display:flex;align-items:center;justify-content:center;background:#080808;font-family:'DM Sans',sans-serif;padding:24px;"><div style="max-width:440px;text-align:center;background:#111;border:1px solid rgba(255,255,255,0.08);border-radius:20px;padding:48px;"><div style="font-size:48px;margin-bottom:20px;">🔒</div><div style="font-size:20px;font-weight:500;color:#f0f0f0;margin-bottom:12px;">Module locked</div><div style="font-size:14px;color:#a0a0a0;margin-bottom:28px;">Complete Module 6 first.</div><a href="chatgpt-module-6.html" style="display:inline-block;padding:12px 24px;background:#10a37f;color:#fff;border-radius:10px;font-size:14px;font-weight:500;text-decoration:none;">← Go to Module 6</a></div></div>`;}
+  let unlocked=false;
+  function updateScrollProgress(){const pct=Math.min(100,Math.round(((window.scrollY+window.innerHeight)/document.documentElement.scrollHeight)*100));document.getElementById('sticky-fill').style.width=pct+'%';document.getElementById('sticky-label').textContent=pct+'%';if(pct>=95&&!unlocked){unlocked=true;document.getElementById('sticky-btn').style.display='block';document.getElementById('sticky-reading').style.display='none';document.getElementById('sticky-fill').style.background='#22c55e';document.getElementById('sticky-label').style.color='#22c55e';}}
+  window.addEventListener('scroll',updateScrollProgress);updateScrollProgress();
+  function completeAndGoToQuiz(){try{localStorage.setItem('meridian_chatgpt_m7','true');localStorage.setItem('meridian_last_chatgpt_module','7');}catch(e){}setTimeout(()=>{window.location.href='quiz-chatgpt.html';},80);}
+</script>
+</body>
+</html>
