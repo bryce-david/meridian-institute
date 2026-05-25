@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Final Assessment — Mastering Perplexity — Meridian Institute of AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#00ADB5;--accent-dim:rgba(0,173,181,0.1);--nav-bg:rgba(8,8,8,0.9);--success:#22c55e;--success-bg:rgba(34,197,94,0.08);--success-border:rgba(34,197,94,0.25);--fail-bg:rgba(239,68,68,0.08);--fail-border:rgba(239,68,68,0.25);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#008891;--accent-dim:rgba(0,136,145,0.08);--nav-bg:rgba(250,250,248,0.9);--success:#16a34a;--success-bg:rgba(22,163,74,0.06);--success-border:rgba(22,163,74,0.25);--fail-bg:rgba(220,38,38,0.06);--fail-border:rgba(220,38,38,0.25);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}
+  .nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}.nav-back{font-size:13px;color:var(--text-2);text-decoration:none;}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;}
+  .page{max-width:680px;margin:0 auto;padding:90px 24px 80px;}
+  .quiz-eyebrow{font-size:11px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:12px;}
+  .quiz-title{font-family:'Cormorant Garamond',serif;font-size:42px;font-weight:300;color:var(--text);line-height:1.1;margin-bottom:12px;}
+  .quiz-sub{font-size:15px;color:var(--text-2);line-height:1.7;}
+  .quiz-rules{background:var(--bg-2);border:1px solid var(--border);border-radius:12px;padding:20px 24px;margin:24px 0;display:flex;gap:24px;flex-wrap:wrap;}
+  .quiz-rule{font-size:13px;color:var(--text-2);display:flex;align-items:center;gap:8px;}
+  .btn-start{display:inline-block;padding:14px 32px;background:var(--accent);color:#fff;border-radius:10px;font-size:15px;font-weight:500;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;transition:opacity 0.2s;margin-top:8px;}
+  #quiz-section{display:none;}
+  .progress-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;}
+  .progress-label{font-size:13px;color:var(--text-3);}
+  .progress-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;margin-bottom:36px;}
+  .progress-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.3s;}
+  .question-num{font-size:11px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:16px;}
+  .question-text{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:400;color:var(--text);line-height:1.35;margin-bottom:32px;}
+  .options{display:flex;flex-direction:column;gap:12px;margin-bottom:32px;}
+  .option{display:flex;align-items:flex-start;gap:14px;padding:16px 20px;border:1px solid var(--border-2);border-radius:12px;cursor:pointer;transition:all 0.2s;background:var(--bg-2);}
+  .option:hover{border-color:var(--accent);background:var(--accent-dim);}
+  .option.selected{border-color:var(--accent);background:var(--accent-dim);}
+  .option.correct{border-color:var(--success);background:var(--success-bg);cursor:default;}
+  .option.wrong{border-color:#ef4444;background:rgba(239,68,68,0.08);cursor:default;}
+  .option.disabled{cursor:default;opacity:0.6;}
+  .option-letter{width:28px;height:28px;border-radius:6px;background:var(--bg-3);border:1px solid var(--border-2);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:500;color:var(--text-3);flex-shrink:0;}
+  .option.selected .option-letter{background:var(--accent);color:#fff;border-color:var(--accent);}
+  .option.correct .option-letter{background:var(--success);color:#fff;border-color:var(--success);}
+  .option.wrong .option-letter{background:#ef4444;color:#fff;border-color:#ef4444;}
+  .option-text{font-size:15px;color:var(--text-2);line-height:1.5;padding-top:4px;}
+  .option.selected .option-text,.option.correct .option-text{color:var(--text);}
+  .feedback{padding:16px 20px;border-radius:10px;font-size:14px;line-height:1.6;margin-bottom:24px;display:none;}
+  .feedback.show{display:block;}
+  .feedback.correct{background:var(--success-bg);border:1px solid var(--success-border);color:var(--success);}
+  .feedback.wrong{background:var(--fail-bg);border:1px solid var(--fail-border);color:#ef4444;}
+  .btn-next{padding:12px 28px;background:var(--accent);color:#fff;border-radius:9px;font-size:14px;font-weight:500;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;transition:opacity 0.2s;display:none;}
+  .btn-next.show{display:inline-block;}
+  #result-section{display:none;text-align:center;padding:20px 0;}
+  .result-icon{font-size:64px;margin-bottom:20px;}
+  .result-title{font-family:'Cormorant Garamond',serif;font-size:42px;font-weight:300;color:var(--text);margin-bottom:12px;}
+  .result-score{font-size:56px;font-weight:300;font-family:'Cormorant Garamond',serif;margin:20px 0;}
+  .result-score.pass{color:var(--success);}.result-score.fail{color:#ef4444;}
+  .result-message{font-size:16px;color:var(--text-2);line-height:1.7;max-width:500px;margin:0 auto 32px;}
+  .result-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
+  .btn-result{padding:13px 28px;border-radius:10px;font-size:14px;font-weight:500;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;text-decoration:none;display:inline-block;}
+  .btn-primary{background:var(--accent);color:#fff;}.btn-ghost{background:transparent;color:var(--text-2);border:1px solid var(--border-2);}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="index.html" class="nav-back">🏠 Home</a>
+    <div class="nav-divider"></div>
+    <a href="perplexity-module-7.html" class="nav-back">← Module 7</a>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">☀</span></button>
+</nav>
+<div class="page">
+  <div id="start-section">
+    <div class="quiz-eyebrow">Final Assessment · Mastering Perplexity</div>
+    <div class="quiz-title">Test Your Knowledge</div>
+    <div class="quiz-sub">15 questions across all seven modules. Demonstrate that you understand what Perplexity is, how it works, and how to use it as the research layer of a professional AI toolkit.</div>
+    <div class="quiz-rules">
+      <div class="quiz-rule">📋 15 questions per attempt</div>
+      <div class="quiz-rule">✅ 70% to pass (11 of 15)</div>
+      <div class="quiz-rule">🔀 Questions randomized</div>
+      <div class="quiz-rule">🏆 Pass to earn your certificate</div>
+    </div>
+    <button class="btn-start" onclick="startQuiz()">Begin Assessment →</button>
+  </div>
+  <div id="quiz-section">
+    <div class="progress-header">
+      <span class="progress-label" id="progress-label">Question 1 of 15</span>
+      <span class="progress-label" id="score-label">0 correct</span>
+    </div>
+    <div class="progress-track"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+    <div class="question-num" id="question-num">Question 1</div>
+    <div class="question-text" id="question-text"></div>
+    <div class="options" id="options"></div>
+    <div class="feedback" id="feedback"></div>
+    <button class="btn-next" id="btn-next" onclick="nextQuestion()">Next Question →</button>
+  </div>
+  <div id="result-section">
+    <div class="result-icon" id="result-icon"></div>
+    <div class="result-title" id="result-title"></div>
+    <div class="result-score" id="result-score"></div>
+    <div class="result-message" id="result-message"></div>
+    <div class="result-actions" id="result-actions"></div>
+  </div>
+</div>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import { getFirestore, doc, updateDoc, setDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+const app=initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+const auth=getAuth(app);const db=getFirestore(app);let currentUser=null;
+onAuthStateChanged(auth,u=>{currentUser=u;});
+
+const ALL_QUESTIONS=[
+  {q:"What is Perplexity best described as?",options:["A general-purpose AI chatbot like Claude or ChatGPT","An AI-native answer engine that searches the live web in real time, synthesizes results, and cites every source","A specialized coding assistant with web access","A productivity tool for writing and document analysis"],answer:1,explain:"Perplexity is an AI-native answer engine — not a chatbot. It searches the live web for every query, synthesizes results from multiple sources, and attaches citations to every claim. This architecture is fundamentally different from language models like Claude or ChatGPT."},
+  {q:"What is the core problem Perplexity solves that traditional search doesn't?",options:["Traditional search is too slow","Traditional search gives you links to visit — Perplexity synthesizes information from those sources into a direct answer","Traditional search doesn't index social media","Traditional search has no AI integration at all"],answer:1,explain:"Traditional search gives you links and makes you do the synthesis work yourself. Perplexity reads the sources and produces a synthesized answer with citations, eliminating the need to open multiple tabs and manually combine what you find."},
+  {q:"Who founded Perplexity and what was their background?",options:["Sam Altman, formerly of Y Combinator","Aravind Srinivas, a former OpenAI researcher, along with Denis Yarats, Johnny Ho, and Andy Konwinski","Demis Hassabis, formerly of DeepMind","Dario Amodei, formerly of OpenAI"],answer:1,explain:"Perplexity was founded in 2022 by Aravind Srinivas (a former OpenAI researcher) along with Denis Yarats, Johnny Ho, and Andy Konwinski. The company reached a multi-billion dollar valuation by 2024 based on genuine utility rather than hype."},
+  {q:"What are the five steps Perplexity performs for every answer?",options:["Login check, subscription verification, search, summarize, display","Query analysis, real-time web search, source reading and ranking, LLM synthesis, citation attachment","Translate query, Google search, Wikipedia lookup, paraphrase, display","Model selection, training data lookup, search, answer, billing"],answer:1,explain:"Perplexity's pipeline: (1) query analysis to understand intent, (2) real-time web search, (3) reading and ranking of retrieved sources, (4) LLM synthesis of a coherent answer, (5) attaching inline citations to every claim. This five-step process distinguishes it from both pure search and pure LLMs."},
+  {q:"What is the key failure mode to watch for in Perplexity's citations?",options:["Citations are always accurate so no verification is needed","Citations only link to paywalled sources","Perplexity can misread sources or sources themselves can be wrong — citations are a starting point for verification, not proof of correctness","Citations only work in the Pro version"],answer:2,explain:"Perplexity's citations make verification possible but don't guarantee accuracy. Sources themselves can be wrong, and Perplexity can misread correct sources during synthesis. For high-stakes claims, always click through and read the original source rather than trusting the synthesis alone."},
+  {q:"What is the biggest mistake Perplexity beginners make with prompting?",options:["Using follow-up questions","Asking about recent topics","Prompting Perplexity like an LLM with elaborate instructions, rather than focused search queries","Using the Academic focus mode incorrectly"],answer:2,explain:"Perplexity works best with focused, specific queries that map directly to something searchable — not with lengthy, context-heavy prompts designed for language models. Save the elaborate prompt engineering for Claude; Perplexity needs precision, not elaboration."},
+  {q:"What is the progressive narrowing technique?",options:["Using filters to narrow search results by date","Switching between focus modes during a session","Starting with a broad query then using follow-up questions to progressively drill down to more specific, actionable answers","Narrowing your subscription tier to save money"],answer:2,explain:"Progressive narrowing is a series of follow-up questions: broad overview → specific aspect → clarification → implication. Each question builds on the previous, and Perplexity understands the conversational context. By the fourth question you have highly specific sourced information that a single broad query couldn't produce."},
+  {q:"What does the Academic focus mode do?",options:["Gives more formal, academic-style writing in answers","Restricts search sources to peer-reviewed databases like PubMed, arXiv, and Semantic Scholar","Makes Perplexity work better for homework assignments","Available on the free tier for all users"],answer:1,explain:"Academic focus mode restricts Perplexity's search to peer-reviewed academic databases. Results are limited to published research and scholarly work. This transforms Perplexity into a literature review tool — getting synthesized answers from actual studies with citations to real papers. It requires Perplexity Pro."},
+  {q:"What is the Reddit focus mode uniquely useful for?",options:["Getting official company announcements","Finding peer-reviewed research","Accessing real user opinions and experiences that don't appear in polished articles","Finding code examples and technical documentation"],answer:2,explain:"Reddit focus surfaces real user experiences, community opinions, and the kind of practical knowledge that doesn't appear in official sources or polished articles. What do actual users think of a product? What problems do people actually encounter? Reddit answers these where corporate sources don't."},
+  {q:"What is a Perplexity Space?",options:["The area around the search bar","A premium subscription tier","A shared workspace where teams can collaborate on research, with persistent history, custom instructions, and a collective library of sourced findings","A feature for saving images from searches"],answer:2,explain:"Spaces are shared research workspaces where multiple collaborators can search together, with shared context and accumulated research over time. The value compounds — a Space a team uses for months becomes a comprehensive knowledge base. This makes Perplexity a team research tool rather than just an individual one."},
+  {q:"What is the most powerful workflow combining Perplexity with other AI tools?",options:["Using Perplexity to generate images for use in Claude","Using Claude to write prompts for Perplexity","Research in Perplexity to establish current sourced facts, then handing that research to Claude for analysis, writing, or strategic reasoning","Using Perplexity to check ChatGPT's outputs"],answer:2,explain:"The Perplexity-to-Claude pipeline is the highest-leverage AI workflow available. Perplexity establishes factual grounding with current, cited sources. Claude provides analytical depth, writing quality, and honest reasoning. Neither alone is as powerful as the combination — research in Perplexity, think and write in Claude."},
+  {q:"What makes Perplexity's hallucination risk lower than Claude or ChatGPT?",options:["Perplexity uses a more accurate language model","Perplexity cannot hallucinate at all","Every claim must be cited from a real source, making purely invented facts much harder to produce and easier to catch","Perplexity has stricter content filters"],answer:2,explain:"Because Perplexity attaches citations to every claim, it structurally cannot produce uncited hallucinations in the way LLMs can. It can still be wrong if sources are wrong or if it misreads a source — but the error is traceable. An uncited hallucination from an LLM is much harder to identify and verify."},
+  {q:"When should you NOT use Perplexity?",options:["When you need information from last week","When you need academic research citations","When you need creative writing, complex analysis, or reasoning about your own documents","When you want to search Reddit opinions"],answer:2,explain:"Perplexity is optimized for finding and synthesizing current, sourced information. For creative writing, Claude produces dramatically better output. For complex analysis and strategic reasoning, Claude and ChatGPT's reasoning models think more deeply. For document analysis, Claude or Gemini handle it better. Know when to switch."},
+  {q:"What is the Code focus mode optimized for?",options:["Writing code from scratch","Searching Stack Overflow, GitHub, and technical documentation for implementation examples, error solutions, and API documentation","Analyzing your own code files","Teaching programming concepts"],answer:1,explain:"Code focus restricts Perplexity's search to developer-focused content — Stack Overflow, GitHub, technical documentation. It optimizes for concrete, implementable solutions. For finding how to implement something specific, debug an error, or understand an API, Code focus produces more targeted results than general web search."},
+  {q:"What is the correct mental model for Perplexity's role in an AI toolkit?",options:["Perplexity should replace Claude and ChatGPT for most tasks","Perplexity is the research layer — the tool you use when you need to know something true and current — while Claude and ChatGPT handle creation and analysis","Perplexity is only useful for journalists and academics","Perplexity is primarily a free alternative to paid AI tools"],answer:1,explain:"The right mental model: Perplexity is your research layer. It tells you what is true and current, with sources. Claude and ChatGPT are your thinking and creation layers — they analyze, write, and reason. These aren't competing tools; they're complementary. Use Perplexity to establish facts, then hand them to Claude to think about."},
+  {q:"How does Perplexity differ from Claude or ChatGPT when using web search?",options:["They are functionally identical when web search is enabled","Perplexity is an answer engine built around real-time search as its core architecture; Claude and ChatGPT are language models that can sometimes access the web as a bolt-on feature","Perplexity's web search is less accurate","ChatGPT always has better web access than Perplexity"],answer:1,explain:"The architectural difference matters. Perplexity is a search system at its core — real-time web access is its fundamental design, not a feature. Claude and ChatGPT are language models where web search is an additional capability. Perplexity always searches the web; Claude and ChatGPT search when they determine it's needed."},
+  {q:"What is a Collection in Perplexity?",options:["A group of team members on a Space","A personal folder for organizing your own searches into named projects","A curated set of academic sources","A premium feature for Pro subscribers only"],answer:1,explain:"Collections are personal organizational folders for your individual searches — separate from the team-focused Spaces feature. Create one Collection per project, save your most useful searches, and revisit them when returning to a project rather than starting research from scratch each time."},
+  {q:"Why is time anchoring important when prompting Perplexity?",options:["It helps Perplexity find older, more reliable sources","Adding time context like 'as of 2024' or 'in the last 6 months' directs Perplexity to weight recent sources and filters out outdated information on fast-moving topics","It's required for the Academic focus mode to work","Time anchoring only matters for news queries"],answer:1,explain:"Perplexity's strength is current information, but without time anchors it may return a mix of recent and old content. Phrases like 'as of [month year]', 'in the last 6 months', or 'current as of 2025' signal Perplexity to prioritize recent sources and filter outdated information — especially important for fast-moving topics like technology, markets, and regulations."},
+  {q:"What is Perplexity's clearest capability gap compared to ChatGPT?",options:["Search quality and citation accuracy","Perplexity cannot do image generation or advanced voice conversation at ChatGPT's level","Perplexity has no Pro tier","Perplexity is slower at all tasks"],answer:1,explain:"Perplexity's image generation is basic compared to ChatGPT's DALL-E 3, and it has no equivalent to ChatGPT's Advanced Voice Mode. Perplexity is optimized for sourced research — not for the breadth of features ChatGPT provides. Use Perplexity for research, ChatGPT for images and voice."},
+  {q:"What happens to a Space's value over time when a team uses it consistently?",options:["It becomes slower as more data accumulates","It depreciates as the information gets older","It compounds — accumulating a library of sourced research that becomes increasingly valuable as a team knowledge base","The value stays constant regardless of usage"],answer:2,explain:"A Space's value compounds with use. Day one it's empty. Month one it's a library of sourced findings. Month three it's a comprehensive knowledge base that new team members can learn from. The accumulated research in a well-maintained Space represents hundreds of search hours that don't have to be repeated."}
+];
+
+let questions=[],current=0,score=0,answered=false;
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+
+window.startQuiz=function(){
+  const req=['meridian_perplexity_m1','meridian_perplexity_m2','meridian_perplexity_m3','meridian_perplexity_m4','meridian_perplexity_m5','meridian_perplexity_m6','meridian_perplexity_m7'];
+  if(req.some(k=>!localStorage.getItem(k))){alert('Please complete all 7 modules first.');window.location.href='perplexity-module-1.html';return;}
+  questions=shuffle([...ALL_QUESTIONS]).slice(0,15);current=0;score=0;
+  document.getElementById('start-section').style.display='none';
+  document.getElementById('quiz-section').style.display='block';
+  renderQuestion();
+}
+
+function renderQuestion(){
+  answered=false;
+  const q=questions[current];
+  document.getElementById('question-num').textContent=`Question ${current+1} of 15`;
+  document.getElementById('question-text').textContent=q.q;
+  document.getElementById('progress-label').textContent=`Question ${current+1} of 15`;
+  document.getElementById('score-label').textContent=`${score} correct`;
+  document.getElementById('progress-fill').style.width=`${(current/15)*100}%`;
+  document.getElementById('feedback').className='feedback';
+  document.getElementById('btn-next').className='btn-next';
+  const letters=['A','B','C','D'];
+  const optionsEl=document.getElementById('options');optionsEl.innerHTML='';
+  const indices=shuffle([0,1,2,3]);
+  indices.forEach((origIdx,displayIdx)=>{
+    const opt=document.createElement('div');opt.className='option';
+    opt.innerHTML=`<div class="option-letter">${letters[displayIdx]}</div><div class="option-text">${q.options[origIdx]}</div>`;
+    opt.onclick=()=>selectAnswer(opt,origIdx===q.answer,indices.indexOf(q.answer),displayIdx,q.explain,indices);
+    optionsEl.appendChild(opt);
+  });
+}
+
+function selectAnswer(clickedEl,isCorrect,correctShuffledIdx,clickedShuffledIdx,explain,indices){
+  if(answered)return;answered=true;
+  const opts=document.querySelectorAll('.option');
+  opts.forEach((o,i)=>{o.classList.add('disabled');if(i===correctShuffledIdx)o.classList.add('correct');});
+  if(isCorrect){clickedEl.classList.add('correct');score++;}else{clickedEl.classList.add('wrong');}
+  document.getElementById('score-label').textContent=`${score} correct`;
+  const fb=document.getElementById('feedback');
+  fb.className=`feedback ${isCorrect?'correct':'wrong'} show`;
+  fb.textContent=isCorrect?`✓ Correct. ${explain}`:`✗ ${explain}`;
+  const btn=document.getElementById('btn-next');btn.className='btn-next show';
+  btn.textContent=current===14?'See Results →':'Next Question →';
+}
+
+window.nextQuestion=function(){current++;if(current>=15)showResults();else renderQuestion();}
+
+async function showResults(){
+  document.getElementById('quiz-section').style.display='none';
+  document.getElementById('result-section').style.display='block';
+  const passed=score>=11;const pct=Math.round((score/15)*100);
+  document.getElementById('result-icon').textContent=passed?'🏆':'📚';
+  document.getElementById('result-title').textContent=passed?'Assessment Passed':'Not Quite Yet';
+  document.getElementById('result-score').className=`result-score ${passed?'pass':'fail'}`;
+  document.getElementById('result-score').textContent=`${score} / 15`;
+  if(passed){
+    document.getElementById('result-message').textContent=`You scored ${pct}% — above the 70% threshold. Your Mastering Perplexity certificate is being generated.`;
+    if(currentUser){
+      try{
+        const certId=currentUser.uid+'-perplexity';
+        const completedDate=new Date();
+        await updateDoc(doc(db,'users',currentUser.uid),{completedModules:arrayUnion('perplexity-complete'),certificatesEarned:arrayUnion('perplexity'),perplexityCompletedAt:completedDate,perplexityCertId:certId});
+        await setDoc(doc(db,'certificates',certId),{name:currentUser.displayName||'Meridian Student',email:currentUser.email,course:'Mastering Perplexity',issuedAt:completedDate,certId:certId,valid:true});
+        document.getElementById('result-actions').innerHTML=`<a href="certificate.html?id=${certId}" class="btn-result btn-primary" target="_blank">View Certificate →</a><a href="dashboard.html" class="btn-result btn-ghost">Go to Dashboard</a>`;
+      }catch(e){document.getElementById('result-actions').innerHTML=`<a href="dashboard.html" class="btn-result btn-primary">Go to Dashboard</a>`;}
+    }
+  }else{
+    document.getElementById('result-message').textContent=`You scored ${pct}% — you need 70% to pass. Review the modules and try again.`;
+    document.getElementById('result-actions').innerHTML=`<a href="perplexity-module-1.html" class="btn-result btn-primary">Review from Module 1</a><button class="btn-result btn-ghost" onclick="location.reload()">Try Again</button>`;
+  }
+}
+window.toggleTheme=function(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='☾'):(h.setAttribute('data-theme','dark'),i.textContent='☀');}
+</script>
+</body>
+</html>

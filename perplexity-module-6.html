@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 6: Perplexity in the Real World — Mastering Perplexity — Meridian Institute of AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#00ADB5;--accent-dim:rgba(0,173,181,0.1);--nav-bg:rgba(8,8,8,0.9);--callout-bg:rgba(0,173,181,0.07);--callout-border:rgba(0,173,181,0.25);--good-bg:rgba(34,197,94,0.07);--good-border:rgba(34,197,94,0.2);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#008891;--accent-dim:rgba(0,136,145,0.08);--nav-bg:rgba(250,250,248,0.9);--callout-bg:rgba(0,136,145,0.05);--callout-border:rgba(0,136,145,0.2);--good-bg:rgba(22,163,74,0.06);--good-border:rgba(22,163,74,0.2);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}html{scroll-behavior:smooth;overflow-x:hidden;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.7;overflow-x:hidden;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}
+  .nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}.nav-back{font-size:13px;color:var(--text-2);text-decoration:none;}.nav-label{font-size:13px;color:var(--text-3);}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;}
+  .progress-bar{position:fixed;top:60px;left:0;right:0;z-index:99;height:2px;background:var(--border);}.progress-fill{height:100%;background:var(--accent);width:0%;}
+  .page-wrapper{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:100vh;padding-top:62px;}
+  .sidebar{position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto;border-right:1px solid var(--border);padding:32px 24px;background:var(--bg-2);}
+  .sidebar-course{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;}
+  .sidebar-course-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+  .sidebar-module{margin-bottom:4px;}
+  .sidebar-module-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:13px;color:var(--text-2);text-decoration:none;transition:all 0.2s;line-height:1.4;}
+  .sidebar-module-link:hover{background:var(--bg-3);color:var(--text);}.sidebar-module-link.active{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-num{font-size:11px;font-weight:500;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--bg-4);color:var(--text-3);}
+  .sidebar-module-link.active .sidebar-num{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-divider{height:1px;background:var(--border);margin:20px 0;}
+  .sidebar-progress-label{font-size:12px;color:var(--text-3);margin-bottom:8px;display:flex;justify-content:space-between;}
+  .sidebar-progress-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sidebar-progress-fill{height:100%;width:85%;background:var(--accent);border-radius:2px;}
+  main{display:block;min-width:0;}.content{max-width:760px;width:100%;padding:60px 64px 140px;margin:0 auto;}
+  .module-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+  .module-tag{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(0,173,181,0.2);padding:4px 12px;border-radius:100px;}
+  .module-meta{font-size:12px;color:var(--text-3);}
+  h1{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1.05;letter-spacing:-0.02em;color:var(--text);margin-bottom:24px;}
+  .intro-text{font-size:19px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+  h2{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:400;color:var(--text);margin:52px 0 18px;line-height:1.2;}
+  h3{font-size:16px;font-weight:500;color:var(--text);margin:32px 0 12px;}
+  p{font-size:16px;font-weight:300;color:var(--text-2);line-height:1.8;margin-bottom:20px;}strong{font-weight:500;color:var(--text);}
+  .callout{background:var(--callout-bg);border:1px solid var(--callout-border);border-radius:12px;padding:24px 28px;margin:32px 0;}
+  .callout-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+  .callout p{margin:0;font-size:15px;color:var(--text-2);}
+  .good{background:var(--good-bg);border:1px solid var(--good-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .good-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#22c55e;margin-bottom:10px;}
+  .good p{margin:0;font-size:15px;color:var(--text-2);}
+  .workflow{background:var(--bg-2);border:1px solid var(--border);border-radius:14px;padding:28px;margin:20px 0;}
+  .workflow-domain{font-size:11px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:8px;}
+  .workflow-title{font-size:17px;font-weight:500;color:var(--text);margin-bottom:12px;}
+  .workflow-prompt{background:var(--bg-3);border-radius:8px;padding:16px 20px;font-size:13px;color:var(--text-2);line-height:1.7;white-space:pre-wrap;font-family:'DM Sans',sans-serif;margin-bottom:12px;}
+  .workflow-why{font-size:13px;color:var(--text-3);line-height:1.6;padding-top:12px;border-top:1px solid var(--border);}
+  .sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:var(--bg-2);border-top:1px solid var(--border-2);padding:14px 5%;display:flex;align-items:center;justify-content:space-between;gap:16px;backdrop-filter:blur(12px);}
+  .sticky-bar-track{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sticky-bar-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.2s;width:0%;}
+  .sticky-bar-label{font-size:12px;color:var(--text-3);white-space:nowrap;min-width:60px;text-align:right;}
+  .sticky-bar-btn{padding:10px 20px;border-radius:8px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;background:var(--accent);color:#fff;border:none;cursor:pointer;white-space:nowrap;transition:opacity 0.2s;display:none;}
+  .sticky-bar-reading{font-size:12px;color:var(--text-3);white-space:nowrap;}
+  @media(max-width:900px){.page-wrapper{grid-template-columns:1fr;}.sidebar{display:none;}.content{padding:40px 24px 120px;}h1{font-size:38px;}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="index.html" class="nav-back">🏠 Home</a>
+    <div class="nav-divider"></div>
+    <a href="courses.html" class="nav-back">← Mastering Perplexity</a>
+    <div class="nav-divider"></div>
+    <span class="nav-label">Module 6</span>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">☀</span></button>
+</nav>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+<div class="page-wrapper">
+<aside class="sidebar">
+  <div class="sidebar-course">Course</div>
+  <div class="sidebar-course-name">Mastering Perplexity</div>
+  <div class="sidebar-module"><a href="perplexity-module-1.html" class="sidebar-module-link"><span class="sidebar-num">1</span>Understanding Perplexity</a></div>
+  <div class="sidebar-module"><a href="perplexity-module-2.html" class="sidebar-module-link"><span class="sidebar-num">2</span>How Perplexity Works</a></div>
+  <div class="sidebar-module"><a href="perplexity-module-3.html" class="sidebar-module-link"><span class="sidebar-num">3</span>Prompting Perplexity Effectively</a></div>
+  <div class="sidebar-module"><a href="perplexity-module-4.html" class="sidebar-module-link"><span class="sidebar-num">4</span>Focus Modes & Pro Features</a></div>
+  <div class="sidebar-module"><a href="perplexity-module-5.html" class="sidebar-module-link"><span class="sidebar-num">5</span>Spaces & Collaboration</a></div>
+  <div class="sidebar-module"><a href="perplexity-module-6.html" class="sidebar-module-link active"><span class="sidebar-num">6</span>Perplexity in the Real World</a></div>
+  <div class="sidebar-module"><a href="perplexity-module-7.html" class="sidebar-module-link"><span class="sidebar-num">7</span>Perplexity vs The Field</a></div>
+  <div class="sidebar-module"><a href="quiz-perplexity.html" class="sidebar-module-link" style="color:var(--accent);margin-top:4px;"><span class="sidebar-num" style="background:var(--accent-dim);color:var(--accent);">✦</span>Final Assessment</a></div>
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-progress-label"><span>Course progress</span><span style="color:var(--accent);">6 / 7</span></div>
+  <div class="sidebar-progress-track"><div class="sidebar-progress-fill"></div></div>
+</aside>
+<main>
+<div class="content">
+  <div class="module-eyebrow"><span class="module-tag">Module 6</span><span class="module-meta">22 min read · Mastering Perplexity</span></div>
+  <h1>Perplexity in the Real World</h1>
+  <p class="intro-text">Tested workflows that take advantage of Perplexity's specific strengths — real-time sourced information, academic search, progressive narrowing, and the combination of Perplexity research feeding into Claude or ChatGPT for deeper work. These are the workflows that make Perplexity indispensable.</p>
+
+  <h2>Research workflows</h2>
+
+  <div class="workflow">
+    <div class="workflow-domain">Research</div>
+    <div class="workflow-title">Field survey before going deep</div>
+    <div class="workflow-prompt">What are the main schools of thought / approaches / competing technologies in [field]? Give me the landscape with the key players, core debates, and what's changed in the last year.</div>
+    <div class="workflow-why">Before investing hours researching a topic, spend five minutes getting a sourced landscape. You'll know which threads to pull, which sources matter, and what questions to ask. This is the first query for any new research project.</div>
+  </div>
+
+  <div class="workflow">
+    <div class="workflow-domain">Academic · Pro</div>
+    <div class="workflow-title">Literature survey on any research question</div>
+    <div class="workflow-prompt">[Switch to Academic focus mode]
+
+What does the research say about [specific question]? Summarize the key findings, note any significant disagreements between studies, and flag what remains understudied or contested.
+
+Follow-up: What are the three most cited papers on this topic and what did each find?</div>
+    <div class="workflow-why">Academic focus restricts sources to peer-reviewed research. You get a synthesized literature survey with real citations to actual papers — in minutes, not hours. This workflow replaces an entire afternoon of Google Scholar browsing for most research questions.</div>
+  </div>
+
+  <div class="workflow">
+    <div class="workflow-domain">Research</div>
+    <div class="workflow-title">Fact-checking claims before you use them</div>
+    <div class="workflow-prompt">I've read that [specific claim]. Is this accurate according to current sources? What's the actual data, and what's the most authoritative source for this?</div>
+    <div class="workflow-why">Perplexity is the fastest fact-checker available. Give it a claim, get back sourced verification or correction. The cited sources let you trace the claim to its origin. Use this before repeating any statistic or assertion in something you're writing or presenting.</div>
+  </div>
+
+  <h2>Professional and business workflows</h2>
+
+  <div class="workflow">
+    <div class="workflow-domain">Business</div>
+    <div class="workflow-title">Competitive intelligence sweep</div>
+    <div class="workflow-prompt">What has [competitor] announced, launched, or changed in the last 3 months? Include pricing changes, product updates, partnerships, hiring signals, and any significant press coverage.
+
+Follow-up: How have their customers responded to [specific change]?
+[Switch to Reddit focus for the follow-up]</div>
+    <div class="workflow-why">The combination is the key: web search for official announcements, Reddit focus for real customer reactions. You get both the signal and the sentiment, sourced and current, in two queries.</div>
+  </div>
+
+  <div class="workflow">
+    <div class="workflow-domain">Professional</div>
+    <div class="workflow-title">Pre-meeting intelligence</div>
+    <div class="workflow-prompt">I'm meeting with [person's name] from [company] tomorrow. What should I know about them, their company's recent activities, and the current state of [their industry]? Focus on the last 6 months.</div>
+    <div class="workflow-why">Five minutes of Perplexity research before a meeting produces more relevant context than 30 minutes of LinkedIn browsing. You walk in knowing what's happened recently at their company, what their industry is dealing with, and what's likely on their mind.</div>
+  </div>
+
+  <div class="workflow">
+    <div class="workflow-domain">Research → Claude</div>
+    <div class="workflow-title">The Perplexity-to-Claude pipeline</div>
+    <div class="workflow-prompt">Step 1 in Perplexity:
+"Give me a comprehensive overview of [topic] with current data and key sources."
+
+Step 2 — copy the Perplexity answer into Claude:
+"Here's research I gathered on [topic]. Based on this information, [analyze / write / argue / strategize about a specific question]."</div>
+    <div class="workflow-why">This is the highest-leverage workflow in your AI toolkit. Perplexity provides current, sourced factual grounding. Claude provides depth of analysis, quality of writing, and honest reasoning. Neither alone is as powerful as the combination. Research in Perplexity, think and write in Claude.</div>
+  </div>
+
+  <h2>Student and learning workflows</h2>
+
+  <div class="workflow">
+    <div class="workflow-domain">Learning</div>
+    <div class="workflow-title">Understanding a complex topic from scratch</div>
+    <div class="workflow-prompt">Explain [concept] as if I'm encountering it for the first time. Start with why it matters, then explain the core idea, then tell me the key debates or misconceptions around it.
+
+Follow-up: What's the most important thing most people get wrong about [concept]?
+
+Follow-up: What should I read first to understand this more deeply?</div>
+    <div class="workflow-why">The progressive follow-ups produce a learning roadmap with sourced recommendations — more reliable than asking an LLM for book recommendations that may be outdated or hallucinated.</div>
+  </div>
+
+  <div class="good">
+    <div class="good-label">The workflow pattern across all of these</div>
+    <p>Notice what every Perplexity workflow has in common: a specific question with time anchoring, progressive follow-ups that drill down, and often a handoff to Claude for analysis or writing. Perplexity establishes the facts. Claude does the thinking. That division of labor is the most powerful AI research workflow available.</p>
+  </div>
+
+</div>
+</main>
+</div>
+<div class="sticky-bar">
+  <div class="sticky-bar-reading" id="sticky-reading">Read to the end to unlock the next module</div>
+  <div class="sticky-bar-track"><div class="sticky-bar-fill" id="sticky-fill"></div></div>
+  <div class="sticky-bar-label" id="sticky-label">0%</div>
+  <button class="sticky-bar-btn" id="sticky-btn" onclick="completeAndNext()">Module 7: Perplexity vs The Field →</button>
+</div>
+<script>
+  function toggleTheme(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='☾'):(h.setAttribute('data-theme','dark'),i.textContent='☀');}
+  window.addEventListener('scroll',()=>{const d=document.documentElement,s=d.scrollTop||document.body.scrollTop,t=d.scrollHeight-d.clientHeight;document.getElementById('progress').style.width=(s/t*100)+'%';});
+  if(!localStorage.getItem('meridian_perplexity_m5')){document.body.innerHTML=`<div style="min-height:100vh;display:flex;align-items:center;justify-content:center;background:#080808;font-family:'DM Sans',sans-serif;padding:24px;"><div style="max-width:440px;text-align:center;background:#111;border:1px solid rgba(255,255,255,0.08);border-radius:20px;padding:48px;"><div style="font-size:48px;margin-bottom:20px;">🔒</div><div style="font-size:20px;font-weight:500;color:#f0f0f0;margin-bottom:12px;">Module locked</div><div style="font-size:14px;color:#a0a0a0;margin-bottom:28px;">Complete Module 5 first.</div><a href="perplexity-module-5.html" style="display:inline-block;padding:12px 24px;background:#00ADB5;color:#fff;border-radius:10px;font-size:14px;font-weight:500;text-decoration:none;">← Go to Module 5</a></div></div>`;}
+  let unlocked=false;
+  function updateScrollProgress(){const pct=Math.min(100,Math.round(((window.scrollY+window.innerHeight)/document.documentElement.scrollHeight)*100));document.getElementById('sticky-fill').style.width=pct+'%';document.getElementById('sticky-label').textContent=pct+'%';if(pct>=95&&!unlocked){unlocked=true;document.getElementById('sticky-btn').style.display='block';document.getElementById('sticky-reading').style.display='none';document.getElementById('sticky-fill').style.background='#22c55e';document.getElementById('sticky-label').style.color='#22c55e';}}
+  window.addEventListener('scroll',updateScrollProgress);updateScrollProgress();
+  function completeAndNext(){try{localStorage.setItem('meridian_perplexity_m6','true');localStorage.setItem('meridian_last_perplexity_module','6');}catch(e){}setTimeout(()=>{window.location.href='perplexity-module-7.html';},80);}
+</script>
+</body>
+</html>
