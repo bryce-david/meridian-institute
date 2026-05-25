@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Final Assessment — Mastering Gemini — Meridian Institute of AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#4285f4;--accent-dim:rgba(66,133,244,0.1);--nav-bg:rgba(8,8,8,0.9);--success:#22c55e;--success-bg:rgba(34,197,94,0.08);--success-border:rgba(34,197,94,0.25);--fail-bg:rgba(239,68,68,0.08);--fail-border:rgba(239,68,68,0.25);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#1a73e8;--accent-dim:rgba(26,115,232,0.08);--nav-bg:rgba(250,250,248,0.9);--success:#16a34a;--success-bg:rgba(22,163,74,0.06);--success-border:rgba(22,163,74,0.25);--fail-bg:rgba(220,38,38,0.06);--fail-border:rgba(220,38,38,0.25);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}
+  .nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}
+  .nav-back{font-size:13px;color:var(--text-2);text-decoration:none;}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;}
+  .page{max-width:680px;margin:0 auto;padding:90px 24px 80px;}
+  .quiz-eyebrow{font-size:11px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:12px;}
+  .quiz-title{font-family:'Cormorant Garamond',serif;font-size:42px;font-weight:300;color:var(--text);line-height:1.1;margin-bottom:12px;}
+  .quiz-sub{font-size:15px;color:var(--text-2);line-height:1.7;}
+  .quiz-rules{background:var(--bg-2);border:1px solid var(--border);border-radius:12px;padding:20px 24px;margin:24px 0;display:flex;gap:24px;flex-wrap:wrap;}
+  .quiz-rule{font-size:13px;color:var(--text-2);display:flex;align-items:center;gap:8px;}
+  .btn-start{display:inline-block;padding:14px 32px;background:var(--accent);color:#fff;border-radius:10px;font-size:15px;font-weight:500;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;transition:opacity 0.2s;margin-top:8px;}
+  .btn-start:hover{opacity:0.88;}
+  #quiz-section{display:none;}
+  .progress-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;}
+  .progress-label{font-size:13px;color:var(--text-3);}
+  .progress-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;margin-bottom:36px;}
+  .progress-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.3s;}
+  .question-num{font-size:11px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:16px;}
+  .question-text{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:400;color:var(--text);line-height:1.35;margin-bottom:32px;}
+  .options{display:flex;flex-direction:column;gap:12px;margin-bottom:32px;}
+  .option{display:flex;align-items:flex-start;gap:14px;padding:16px 20px;border:1px solid var(--border-2);border-radius:12px;cursor:pointer;transition:all 0.2s;background:var(--bg-2);}
+  .option:hover{border-color:var(--accent);background:var(--accent-dim);}
+  .option.selected{border-color:var(--accent);background:var(--accent-dim);}
+  .option.correct{border-color:var(--success);background:var(--success-bg);cursor:default;}
+  .option.wrong{border-color:#ef4444;background:rgba(239,68,68,0.08);cursor:default;}
+  .option.disabled{cursor:default;opacity:0.6;}
+  .option-letter{width:28px;height:28px;border-radius:6px;background:var(--bg-3);border:1px solid var(--border-2);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:500;color:var(--text-3);flex-shrink:0;}
+  .option.selected .option-letter{background:var(--accent);color:#fff;border-color:var(--accent);}
+  .option.correct .option-letter{background:var(--success);color:#fff;border-color:var(--success);}
+  .option.wrong .option-letter{background:#ef4444;color:#fff;border-color:#ef4444;}
+  .option-text{font-size:15px;color:var(--text-2);line-height:1.5;padding-top:4px;}
+  .option.selected .option-text,.option.correct .option-text{color:var(--text);}
+  .feedback{padding:16px 20px;border-radius:10px;font-size:14px;line-height:1.6;margin-bottom:24px;display:none;}
+  .feedback.show{display:block;}
+  .feedback.correct{background:var(--success-bg);border:1px solid var(--success-border);color:var(--success);}
+  .feedback.wrong{background:var(--fail-bg);border:1px solid var(--fail-border);color:#ef4444;}
+  .btn-next{padding:12px 28px;background:var(--accent);color:#fff;border-radius:9px;font-size:14px;font-weight:500;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;transition:opacity 0.2s;display:none;}
+  .btn-next:hover{opacity:0.88;}
+  .btn-next.show{display:inline-block;}
+  #result-section{display:none;text-align:center;padding:20px 0;}
+  .result-icon{font-size:64px;margin-bottom:20px;}
+  .result-title{font-family:'Cormorant Garamond',serif;font-size:42px;font-weight:300;color:var(--text);margin-bottom:12px;}
+  .result-score{font-size:56px;font-weight:300;font-family:'Cormorant Garamond',serif;margin:20px 0;}
+  .result-score.pass{color:var(--success);}
+  .result-score.fail{color:#ef4444;}
+  .result-message{font-size:16px;color:var(--text-2);line-height:1.7;max-width:500px;margin:0 auto 32px;}
+  .result-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
+  .btn-result{padding:13px 28px;border-radius:10px;font-size:14px;font-weight:500;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;text-decoration:none;display:inline-block;}
+  .btn-primary{background:var(--accent);color:#fff;}
+  .btn-ghost{background:transparent;color:var(--text-2);border:1px solid var(--border-2);}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="index.html" class="nav-back">🏠 Home</a>
+    <div class="nav-divider"></div>
+    <a href="gemini-module-7.html" class="nav-back">← Module 7</a>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">☀</span></button>
+</nav>
+<div class="page">
+  <div id="start-section">
+    <div class="quiz-eyebrow">Final Assessment · Mastering Gemini</div>
+    <div class="quiz-title">Test Your Knowledge</div>
+    <div class="quiz-sub">15 questions across all seven modules. Demonstrate that you understand Gemini — the models, the Workspace integration, the multimodal capabilities, and where it genuinely leads and lags.</div>
+    <div class="quiz-rules">
+      <div class="quiz-rule">📋 15 questions per attempt</div>
+      <div class="quiz-rule">✅ 70% to pass (11 of 15)</div>
+      <div class="quiz-rule">🔀 Questions randomized</div>
+      <div class="quiz-rule">🏆 Pass to earn your certificate</div>
+    </div>
+    <button class="btn-start" onclick="startQuiz()">Begin Assessment →</button>
+  </div>
+  <div id="quiz-section">
+    <div class="progress-header">
+      <span class="progress-label" id="progress-label">Question 1 of 15</span>
+      <span class="progress-label" id="score-label">0 correct</span>
+    </div>
+    <div class="progress-track"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+    <div class="question-num" id="question-num">Question 1</div>
+    <div class="question-text" id="question-text"></div>
+    <div class="options" id="options"></div>
+    <div class="feedback" id="feedback"></div>
+    <button class="btn-next" id="btn-next" onclick="nextQuestion()">Next Question →</button>
+  </div>
+  <div id="result-section">
+    <div class="result-icon" id="result-icon"></div>
+    <div class="result-title" id="result-title"></div>
+    <div class="result-score" id="result-score"></div>
+    <div class="result-message" id="result-message"></div>
+    <div class="result-actions" id="result-actions"></div>
+  </div>
+</div>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import { getFirestore, doc, updateDoc, setDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+const app=initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+const auth=getAuth(app);const db=getFirestore(app);let currentUser=null;
+onAuthStateChanged(auth,u=>{currentUser=u;});
+
+const ALL_QUESTIONS=[
+  {q:"What two organizations merged to form Google DeepMind, the team behind Gemini?",options:["Google Search and Google Maps teams","Google Brain and DeepMind","Google Cloud and YouTube","Google Assistant and Bard teams"],answer:1,explain:"Google DeepMind was formed in 2023 by merging Google Brain (responsible for many foundational AI techniques, including the Transformer architecture) with DeepMind (known for AlphaGo, AlphaFold, and fundamental research breakthroughs)."},
+  {q:"What is Gemini's founding philosophy that distinguishes it from OpenAI and Anthropic?",options:["Safety research above all else","Racing to the frontier regardless of safety","AI should be natively multimodal, deeply integrated with real-world information, and embedded into tools people already use","Building the cheapest possible AI for widespread access"],answer:2,explain:"Gemini's philosophy centers on native multimodality across all media types, grounding in real-world information through Google Search, and deep integration into existing productivity tools — a different strategy than OpenAI's capability racing or Anthropic's safety-first approach."},
+  {q:"What happened at Gemini's predecessor (Bard) launch that damaged Google's reputation?",options:["The system crashed immediately","Bard made a factual error in its launch demonstration, wiping $100 billion off Google's market cap","Bard refused to answer any questions","Bard was slower than competitors"],answer:1,explain:"Bard's launch demonstration included a factual error about which telescope first took images of exoplanets. The market reacted sharply, wiping approximately $100 billion from Google's market capitalization in a single day."},
+  {q:"What is Gemini's maximum context window size?",options:["32,000 tokens","200,000 tokens","500,000 tokens","1,000,000 tokens (1 million)"],answer:3,explain:"Gemini supports up to 1 million tokens of context — approximately 750,000 words — the largest context window of any major AI provider. This is roughly 5x Claude's 200K and 8x ChatGPT's 128K."},
+  {q:"What is Gemini Flash designed for?",options:["Maximum reasoning capability","Speed and cost efficiency — fast responses at scale for high-volume applications","Workspace integration tasks only","Video analysis exclusively"],answer:1,explain:"Gemini Flash is the speed-optimized tier designed for real-time interactions, high-volume API use, and cost-sensitive applications. Despite being the speed tier, modern Flash models are competitive with older Pro-tier models from competitors."},
+  {q:"What is the Gemini Advanced subscription and what does it include?",options:["A free tier with limited features","A $20/month subscription powered by Google's best models, including full Workspace integration, Gems, and Deep Research","An enterprise-only offering requiring a Google account","A developer API access plan"],answer:1,explain:"Gemini Advanced ($20/month via Google One AI Premium) gives access to Google's most capable models, full Google Workspace integration across Gmail, Docs, Drive, Sheets, and Meet, Gems custom assistants, and Deep Research."},
+  {q:"What are Gems in Gemini Advanced?",options:["Reward points for using Gemini","Custom AI assistants you configure with specific instructions, equivalent to Custom GPTs or Claude Projects","Premium image generation credits","Advanced reasoning tokens"],answer:1,explain:"Gems are Gemini's custom assistant feature — you configure them with specific instructions and they behave consistently in every conversation within that Gem. Equivalent to ChatGPT's Custom GPTs or Claude's Projects."},
+  {q:"What makes Gemini's multimodality architecturally different from models that added vision capabilities later?",options:["Gemini uses a different programming language","Gemini was trained simultaneously across text, images, audio, video, and code as a single model — not separate models bolted together","Gemini's multimodality is only available on mobile","Gemini uses a bigger training dataset"],answer:1,explain:"Gemini was designed natively multimodal — a single model trained simultaneously across all modalities. This enables more natural cross-modal reasoning compared to models that process images by first translating them into text descriptions."},
+  {q:"How does Gemini's Google Workspace integration differ from Claude or ChatGPT's document capabilities?",options:["Gemini can only read, not write, to Workspace documents","They are functionally equivalent — all require you to paste content","Gemini has permissioned access to your actual Gmail, Drive, and Docs — not copies you paste in, but real data you haven't opened","Gemini only works with Google Docs, not Gmail"],answer:2,explain:"Gemini's native integration reads your actual data — your real inbox, real Drive files, real meeting notes — without you copying anything. Claude and ChatGPT require you to manually copy and paste content. This is a fundamentally different capability level."},
+  {q:"What is Deep Research in Gemini Advanced?",options:["A feature that only searches academic papers","A multi-step research process that runs multiple web searches, reads the sources, and synthesizes a comprehensive cited report — taking several minutes","A tool for searching your own Drive files","A way to compare Gemini models"],answer:1,explain:"Deep Research performs chained web research — multiple searches, reading the results, and synthesizing them into a structured, cited research report. It's designed for tasks that would otherwise require hours of manual research."},
+  {q:"What is Gemini's most unique multimodal capability that no other major AI assistant can match?",options:["Image recognition","Audio transcription","Video understanding — analyzing and reasoning about video content including YouTube videos","Real-time language translation"],answer:2,explain:"Video understanding is Gemini's most distinctive multimodal capability. It can analyze video content, understand what happens across time in a video, identify specific moments, and answer questions about video — including YouTube videos via extension. No other major AI assistant can do this natively."},
+  {q:"When prompting Gemini for the best results with its long context window, what should you do first?",options:["Ask questions one at a time","Ask Gemini to summarize documents before you share them","Load all documents at the start with a clear framing statement before asking any questions","Share only the most important document"],answer:2,explain:"Loading documents at the beginning with framing like 'please read all of these before responding to questions' signals Gemini to fully process all content rather than responding piecemeal. This produces significantly better cross-document analysis."},
+  {q:"What is Gemini's key weakness compared to Claude?",options:["Gemini cannot process images","Gemini lacks a voice feature","Gemini's writing feedback is less direct, less structurally sophisticated, and less honest than Claude's","Gemini's context window is smaller"],answer:2,explain:"Claude's Constitutional AI training produces more direct, more analytically sophisticated, and more honest writing feedback and analysis than Gemini. For tasks requiring genuine depth of writing critique or intellectual pushback, Claude consistently outperforms Gemini."},
+  {q:"For which type of user does Gemini provide the most decisive competitive advantage?",options:["Users who primarily need image generation","Users who work in Microsoft Office daily","Users who live in Google's ecosystem — Gmail, Docs, Drive, Sheets — where native integration transforms their workflow","Users who do competitive math and science"],answer:2,explain:"Google Workspace integration is Gemini's most decisive advantage, and it matters most for users who already rely on Gmail, Docs, Drive, and Sheets daily. The native data access creates workflow efficiency that Claude and ChatGPT structurally cannot replicate for these users."},
+  {q:"What was the significance of the Google Brain and DeepMind merger for Gemini?",options:["It reduced Google's AI research budget","It created a team combining foundational engineering at scale with a track record of fundamental research breakthroughs — one of the most capable AI research organizations in the world","It slowed development by creating internal competition","It had no significant impact on Gemini's capabilities"],answer:1,explain:"The merger combined Google Brain's experience building AI at massive scale (and inventing core techniques like the Transformer) with DeepMind's track record of landmark scientific breakthroughs (AlphaGo, AlphaFold). The resulting team has produced more foundational AI research than arguably any other single group."},
+  {q:"What does Gemini's Search grounding mean for prompting strategy?",options:["You should never mention web searches in your prompts","Gemini automatically searches the web for every query","You can prompt Gemini to use current real-world information by using phrases like 'based on current information' or 'search for the latest' — giving you results beyond the training cutoff","Search grounding only works for English queries"],answer:2,explain:"Search grounding gives Gemini real-time access to Google Search results. Prompting explicitly for current information — 'search for the latest developments' — triggers this capability and produces responses grounded in current data rather than training data alone."},
+  {q:"How does Gemini's approach to coding compare to other AI assistants?",options:["Gemini avoids coding tasks","Gemini 2.5 Pro leads or matches the best available models on coding benchmarks as of 2025","Gemini can only write Python","Gemini is significantly behind Claude and ChatGPT on coding"],answer:1,explain:"Gemini 2.5 Pro leads or matches the best available models on coding benchmarks as of 2025, competing directly with Claude Opus and OpenAI's o-series for software development tasks — a significant improvement from early Bard performance."},
+  {q:"What is a practical use case that only Gemini can do among major AI assistants?",options:["Answering questions about history","Generating marketing copy","Summarizing a YouTube tutorial without watching it — via the YouTube extension","Writing code in Python"],answer:2,explain:"YouTube video analysis via Gemini's extension is a unique capability. No other major AI assistant can analyze YouTube videos natively. A 45-minute tutorial becomes a 2-minute summary, with timestamps for key sections — transforming how you learn from video content."},
+  {q:"What does it mean that Gemini is natively multimodal for cross-modal tasks?",options:["Gemini can only handle one type of input at a time","Gemini translates images to text before reasoning about them","Gemini can reason about relationships between text, images, audio, and video simultaneously at the token level — without converting between modalities","Gemini requires separate API calls for each modality"],answer:2,explain:"Native multimodality means Gemini processes different input types simultaneously rather than translating them sequentially. When given an image and text together, it reasons about both at once rather than first describing the image in text and then reasoning about that description."},
+  {q:"What honest limitation should Gemini users be aware of regarding its verbosity?",options:["Gemini always gives very short responses","Gemini refuses to write long documents","Gemini tends toward verbose responses by default — you need to explicitly specify desired length if you want concision","Gemini cannot produce lists or structured formats"],answer:2,explain:"Gemini is more verbose by default than Claude. If you want concise responses, you need to explicitly specify length constraints — 'answer in 3 sentences' or 'one paragraph maximum' — and enforce them. Otherwise Gemini will produce comprehensive but longer responses than necessary."},
+  {q:"What is Google's strategic advantage with Gemini that no other AI company can easily replicate?",options:["The largest team of AI researchers","The most powerful computing hardware","Integration with tools billions of people already use daily — Gmail, Search, Android, YouTube, Maps","The lowest cost per API call"],answer:2,explain:"Google's ecosystem advantage is structural — it's not just about having a good AI model, it's about embedding AI into products that billions of people already use. This creates a distribution and integration advantage that OpenAI and Anthropic cannot replicate by building better models alone."},
+  {q:"For which task category does Gemini's 1 million token context window unlock qualitatively new workflows?",options:["Simple question answering","Writing short emails","Processing entire codebases, analyzing large document collections, or reasoning across months of meeting transcripts in a single pass","Image generation at higher resolution"],answer:2,explain:"The 1M token context isn't just a bigger version of smaller windows — it enables qualitatively different workflows. Entire codebases, complete legal document sets, months of meeting transcripts — these can be processed simultaneously in a single pass, which is impossible at 128K or 200K tokens."},
+  {q:"What is the honest assessment of Gemini's image generation compared to ChatGPT's DALL-E 3?",options:["Gemini's image generation is superior","They are equivalent in quality","DALL-E 3 in ChatGPT produces higher quality and more reliably prompt-following images","Gemini does not offer any image generation"],answer:2,explain:"For professional-quality image generation, ChatGPT's DALL-E 3 integration outperforms Gemini's image generation in both quality and prompt-following reliability. An honest assessment acknowledges this as a genuine competitive gap."},
+  {q:"What is Gemini's competitive position in voice conversation compared to ChatGPT?",options:["Gemini has the best voice mode available","They are equivalent","Gemini's voice capability is functional but lacks the real-time processing quality and emotional intelligence of ChatGPT's Advanced Voice Mode","Gemini has no voice capability at all"],answer:2,explain:"ChatGPT's Advanced Voice Mode — with real-time speech processing and emotional awareness — is a qualitatively better voice experience than Gemini's current voice capabilities. This is an honest limitation to acknowledge even in a Gemini course."}
+];
+
+let questions=[],current=0,score=0,answered=false;
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+
+window.startQuiz=function(){
+  const req=['meridian_gemini_m1','meridian_gemini_m2','meridian_gemini_m3','meridian_gemini_m4','meridian_gemini_m5','meridian_gemini_m6','meridian_gemini_m7'];
+  if(req.some(k=>!localStorage.getItem(k))){alert('Please complete all 7 modules first.');window.location.href='gemini-module-1.html';return;}
+  questions=shuffle([...ALL_QUESTIONS]).slice(0,15);current=0;score=0;
+  document.getElementById('start-section').style.display='none';
+  document.getElementById('quiz-section').style.display='block';
+  renderQuestion();
+}
+
+function renderQuestion(){
+  answered=false;
+  const q=questions[current];
+  document.getElementById('question-num').textContent=`Question ${current+1} of 15`;
+  document.getElementById('question-text').textContent=q.q;
+  document.getElementById('progress-label').textContent=`Question ${current+1} of 15`;
+  document.getElementById('score-label').textContent=`${score} correct`;
+  document.getElementById('progress-fill').style.width=`${(current/15)*100}%`;
+  document.getElementById('feedback').className='feedback';
+  document.getElementById('btn-next').className='btn-next';
+  const letters=['A','B','C','D'];
+  const optionsEl=document.getElementById('options');
+  optionsEl.innerHTML='';
+  const indices=shuffle([0,1,2,3]);
+  indices.forEach((origIdx,displayIdx)=>{
+    const opt=document.createElement('div');
+    opt.className='option';
+    opt.innerHTML=`<div class="option-letter">${letters[displayIdx]}</div><div class="option-text">${q.options[origIdx]}</div>`;
+    opt.onclick=()=>selectAnswer(opt,origIdx===q.answer,indices.indexOf(q.answer),displayIdx,q.explain,indices);
+    optionsEl.appendChild(opt);
+  });
+}
+
+function selectAnswer(clickedEl,isCorrect,correctShuffledIdx,clickedShuffledIdx,explain,indices){
+  if(answered)return;answered=true;
+  const opts=document.querySelectorAll('.option');
+  opts.forEach((o,i)=>{o.classList.add('disabled');if(i===correctShuffledIdx)o.classList.add('correct');});
+  if(isCorrect){clickedEl.classList.add('correct');score++;}else{clickedEl.classList.add('wrong');}
+  document.getElementById('score-label').textContent=`${score} correct`;
+  const fb=document.getElementById('feedback');
+  fb.className=`feedback ${isCorrect?'correct':'wrong'} show`;
+  fb.textContent=isCorrect?`✓ Correct. ${explain}`:`✗ ${explain}`;
+  const btn=document.getElementById('btn-next');
+  btn.className='btn-next show';
+  btn.textContent=current===14?'See Results →':'Next Question →';
+}
+
+window.nextQuestion=function(){current++;if(current>=15)showResults();else renderQuestion();}
+
+async function showResults(){
+  document.getElementById('quiz-section').style.display='none';
+  document.getElementById('result-section').style.display='block';
+  const passed=score>=11;
+  const pct=Math.round((score/15)*100);
+  document.getElementById('result-icon').textContent=passed?'🏆':'📚';
+  document.getElementById('result-title').textContent=passed?'Assessment Passed':'Not Quite Yet';
+  document.getElementById('result-score').className=`result-score ${passed?'pass':'fail'}`;
+  document.getElementById('result-score').textContent=`${score} / 15`;
+  if(passed){
+    document.getElementById('result-message').textContent=`You scored ${pct}% — above the 70% threshold. Your Mastering Gemini certificate is being generated.`;
+    if(currentUser){
+      try{
+        const certId=currentUser.uid+'-gemini';
+        const completedDate=new Date();
+        await updateDoc(doc(db,'users',currentUser.uid),{completedModules:arrayUnion('gemini-complete'),certificatesEarned:arrayUnion('gemini'),geminiCompletedAt:completedDate,geminiCertId:certId});
+        await setDoc(doc(db,'certificates',certId),{name:currentUser.displayName||'Meridian Student',email:currentUser.email,course:'Mastering Gemini',issuedAt:completedDate,certId:certId,valid:true});
+        document.getElementById('result-actions').innerHTML=`<a href="certificate.html?id=${certId}" class="btn-result btn-primary" target="_blank">View Certificate →</a><a href="dashboard.html" class="btn-result btn-ghost">Go to Dashboard</a>`;
+      }catch(e){document.getElementById('result-actions').innerHTML=`<a href="dashboard.html" class="btn-result btn-primary">Go to Dashboard</a>`;}
+    }
+  }else{
+    document.getElementById('result-message').textContent=`You scored ${pct}% — you need 70% to pass. Review the modules and try again.`;
+    document.getElementById('result-actions').innerHTML=`<a href="gemini-module-1.html" class="btn-result btn-primary">Review from Module 1</a><button class="btn-result btn-ghost" onclick="location.reload()">Try Again</button>`;
+  }
+}
+
+window.toggleTheme=function(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='☾'):(h.setAttribute('data-theme','dark'),i.textContent='☀');}
+</script>
+</body>
+</html>

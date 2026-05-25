@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 2: The Gemini Model Lineup — Mastering Gemini — Meridian Institute of AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#4285f4;--accent-dim:rgba(66,133,244,0.1);--nav-bg:rgba(8,8,8,0.9);--callout-bg:rgba(66,133,244,0.07);--callout-border:rgba(66,133,244,0.25);--good-bg:rgba(34,197,94,0.07);--good-border:rgba(34,197,94,0.2);--warn-bg:rgba(251,146,60,0.07);--warn-border:rgba(251,146,60,0.2);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#1a73e8;--accent-dim:rgba(26,115,232,0.08);--nav-bg:rgba(250,250,248,0.9);--callout-bg:rgba(26,115,232,0.05);--callout-border:rgba(26,115,232,0.2);--good-bg:rgba(22,163,74,0.06);--good-border:rgba(22,163,74,0.2);--warn-bg:rgba(234,88,12,0.05);--warn-border:rgba(234,88,12,0.2);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;overflow-x:hidden;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.7;overflow-x:hidden;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}
+  .nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}
+  .nav-back{font-size:13px;color:var(--text-2);text-decoration:none;transition:color 0.2s;}
+  .nav-back:hover{color:var(--text);}
+  .nav-label{font-size:13px;color:var(--text-3);}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;}
+  .progress-bar{position:fixed;top:60px;left:0;right:0;z-index:99;height:2px;background:var(--border);}
+  .progress-fill{height:100%;background:var(--accent);width:0%;}
+  .page-wrapper{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:100vh;padding-top:62px;}
+  .sidebar{position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto;border-right:1px solid var(--border);padding:32px 24px;background:var(--bg-2);}
+  .sidebar-course{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;}
+  .sidebar-course-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+  .sidebar-module{margin-bottom:4px;}
+  .sidebar-module-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:13px;color:var(--text-2);text-decoration:none;transition:all 0.2s;line-height:1.4;}
+  .sidebar-module-link:hover{background:var(--bg-3);color:var(--text);}
+  .sidebar-module-link.active{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-num{font-size:11px;font-weight:500;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--bg-4);color:var(--text-3);}
+  .sidebar-module-link.active .sidebar-num{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-divider{height:1px;background:var(--border);margin:20px 0;}
+  .sidebar-progress-label{font-size:12px;color:var(--text-3);margin-bottom:8px;display:flex;justify-content:space-between;}
+  .sidebar-progress-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sidebar-progress-fill{height:100%;width:28%;background:var(--accent);border-radius:2px;}
+  main{display:block;min-width:0;}
+  .content{max-width:760px;width:100%;padding:60px 64px 140px;margin:0 auto;}
+  .module-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+  .module-tag{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(66,133,244,0.2);padding:4px 12px;border-radius:100px;}
+  .module-meta{font-size:12px;color:var(--text-3);}
+  h1{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1.05;letter-spacing:-0.02em;color:var(--text);margin-bottom:24px;}
+  .intro-text{font-size:19px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+  h2{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:400;color:var(--text);margin:52px 0 18px;line-height:1.2;}
+  h3{font-size:16px;font-weight:500;color:var(--text);margin:32px 0 12px;}
+  p{font-size:16px;font-weight:300;color:var(--text-2);line-height:1.8;margin-bottom:20px;}
+  strong{font-weight:500;color:var(--text);}
+  .callout{background:var(--callout-bg);border:1px solid var(--callout-border);border-radius:12px;padding:24px 28px;margin:32px 0;}
+  .callout-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+  .callout p{margin:0;font-size:15px;color:var(--text-2);}
+  .callout p+p{margin-top:12px;}
+  .good{background:var(--good-bg);border:1px solid var(--good-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .good-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#22c55e;margin-bottom:10px;}
+  .good p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn{background:var(--warn-bg);border:1px solid var(--warn-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .warn-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#fb923c;margin-bottom:10px;}
+  .warn p{margin:0;font-size:15px;color:var(--text-2);}
+  .model-card{background:var(--bg-2);border:1px solid var(--border);border-radius:16px;padding:32px;margin:20px 0;}
+  .model-card.featured{border-color:rgba(66,133,244,0.4);}
+  .model-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:12px;}
+  .model-name{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:400;color:var(--text);line-height:1;}
+  .model-version{font-size:12px;color:var(--text-3);margin-top:4px;font-family:monospace;}
+  .model-badge{font-size:11px;font-weight:500;padding:5px 12px;border-radius:100px;white-space:nowrap;}
+  .badge-fast{background:rgba(34,197,94,0.1);color:#22c55e;border:1px solid rgba(34,197,94,0.2);}
+  .badge-balanced{background:var(--accent-dim);color:var(--accent);border:1px solid rgba(66,133,244,0.2);}
+  .badge-power{background:rgba(168,85,247,0.1);color:#a855f7;border:1px solid rgba(168,85,247,0.2);}
+  .model-desc{font-size:15px;color:var(--text-2);line-height:1.7;margin-bottom:20px;}
+  .model-specs{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px;}
+  .model-spec{background:var(--bg-3);border-radius:8px;padding:12px 16px;}
+  .model-spec-label{font-size:10px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-3);margin-bottom:4px;}
+  .model-spec-value{font-size:14px;font-weight:500;color:var(--text);}
+  .use-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px;padding-top:16px;border-top:1px solid var(--border);}
+  .use-tag-label{font-size:11px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-3);width:100%;margin-bottom:4px;}
+  .use-tag{font-size:12px;padding:4px 10px;border-radius:6px;background:var(--bg-4);color:var(--text-2);border:1px solid var(--border);}
+  .decision-tree{background:var(--bg-2);border:1px solid var(--border);border-radius:14px;padding:28px;margin:28px 0;}
+  .decision-tree-title{font-size:14px;font-weight:500;color:var(--text);margin-bottom:20px;}
+  .decision-item{display:flex;gap:16px;padding:14px 0;border-bottom:1px solid var(--border);}
+  .decision-item:last-child{border-bottom:none;}
+  .decision-if{font-size:13px;color:var(--text-2);flex:1;line-height:1.5;}
+  .decision-then{font-size:13px;font-weight:500;color:var(--accent);white-space:nowrap;padding-top:1px;}
+  .comparison-wrapper{overflow-x:auto;-webkit-overflow-scrolling:touch;width:100%;margin:28px 0;}
+  table{width:100%;border-collapse:collapse;font-size:14px;min-width:500px;}
+  th{text-align:left;padding:12px 16px;font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-3);border-bottom:1px solid var(--border-2);}
+  td{padding:14px 16px;border-bottom:1px solid var(--border);color:var(--text-2);line-height:1.6;vertical-align:top;}
+  tr:last-child td{border-bottom:none;}
+  td:first-child{color:var(--text);font-weight:500;}
+  .sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:var(--bg-2);border-top:1px solid var(--border-2);padding:14px 5%;display:flex;align-items:center;justify-content:space-between;gap:16px;backdrop-filter:blur(12px);}
+  .sticky-bar-track{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sticky-bar-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.2s;width:0%;}
+  .sticky-bar-label{font-size:12px;color:var(--text-3);white-space:nowrap;min-width:60px;text-align:right;}
+  .sticky-bar-btn{padding:10px 20px;border-radius:8px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;background:var(--accent);color:#fff;border:none;cursor:pointer;white-space:nowrap;transition:opacity 0.2s;display:none;}
+  .sticky-bar-reading{font-size:12px;color:var(--text-3);white-space:nowrap;}
+  @media(max-width:900px){.page-wrapper{grid-template-columns:1fr;}.sidebar{display:none;}.content{padding:40px 24px 120px;}h1{font-size:38px;}.model-specs{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="index.html" class="nav-back">🏠 Home</a>
+    <div class="nav-divider"></div>
+    <a href="courses.html" class="nav-back">← Mastering Gemini</a>
+    <div class="nav-divider"></div>
+    <span class="nav-label">Module 2</span>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">☀</span></button>
+</nav>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+<div class="page-wrapper">
+<aside class="sidebar">
+  <div class="sidebar-course">Course</div>
+  <div class="sidebar-course-name">Mastering Gemini</div>
+  <div class="sidebar-module"><a href="gemini-module-1.html" class="sidebar-module-link"><span class="sidebar-num">1</span>Understanding Gemini</a></div>
+  <div class="sidebar-module"><a href="gemini-module-2.html" class="sidebar-module-link active"><span class="sidebar-num">2</span>The Gemini Model Lineup</a></div>
+  <div class="sidebar-module"><a href="gemini-module-3.html" class="sidebar-module-link"><span class="sidebar-num">3</span>Prompting Gemini Effectively</a></div>
+  <div class="sidebar-module"><a href="gemini-module-4.html" class="sidebar-module-link"><span class="sidebar-num">4</span>Google Workspace Integration</a></div>
+  <div class="sidebar-module"><a href="gemini-module-5.html" class="sidebar-module-link"><span class="sidebar-num">5</span>Multimodal Capabilities</a></div>
+  <div class="sidebar-module"><a href="gemini-module-6.html" class="sidebar-module-link"><span class="sidebar-num">6</span>Gemini in the Real World</a></div>
+  <div class="sidebar-module"><a href="gemini-module-7.html" class="sidebar-module-link"><span class="sidebar-num">7</span>Gemini vs The Field</a></div>
+  <div class="sidebar-module"><a href="quiz-gemini.html" class="sidebar-module-link" style="color:var(--accent);margin-top:4px;"><span class="sidebar-num" style="background:var(--accent-dim);color:var(--accent);">✦</span>Final Assessment</a></div>
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-progress-label"><span>Course progress</span><span style="color:var(--accent);">2 / 7</span></div>
+  <div class="sidebar-progress-track"><div class="sidebar-progress-fill"></div></div>
+</aside>
+<main>
+<div class="content">
+  <div class="module-eyebrow"><span class="module-tag">Module 2</span><span class="module-meta">22 min read · Mastering Gemini</span></div>
+  <h1>The Gemini Model Lineup</h1>
+  <p class="intro-text">Google's Gemini model lineup is organized around three tiers — Flash, Pro, and Advanced — each targeting a different point on the capability-speed-cost spectrum. The naming is simpler than OpenAI's but the decisions behind it are equally important to understand.</p>
+
+  <h2>The three-tier structure</h2>
+  <p>Gemini's lineup is built around three core models, each available in numbered versions indicating the generation:</p>
+
+  <div class="model-card">
+    <div class="model-header">
+      <div>
+        <div class="model-name">Gemini Flash</div>
+        <div class="model-version">gemini-2.0-flash · gemini-2.5-flash-preview</div>
+      </div>
+      <span class="model-badge badge-fast">⚡ Speed & Scale</span>
+    </div>
+    <p class="model-desc">Flash is Google's speed-optimized model — fast, cheap, and capable enough for the vast majority of everyday tasks. Don't underestimate it: Gemini 2.0 Flash is competitive with models from other companies that cost significantly more. For high-volume applications, real-time interactions, and tasks that don't require maximum reasoning depth, Flash is the right choice. It still supports Google's multimodal capabilities and long context window.</p>
+    <div class="model-specs">
+      <div class="model-spec"><div class="model-spec-label">Speed</div><div class="model-spec-value">Fastest in the Gemini family</div></div>
+      <div class="model-spec"><div class="model-spec-label">Context</div><div class="model-spec-value">1M tokens</div></div>
+      <div class="model-spec"><div class="model-spec-label">Cost</div><div class="model-spec-value">Lowest — built for scale</div></div>
+      <div class="model-spec"><div class="model-spec-label">Best for</div><div class="model-spec-value">Speed-critical, high-volume tasks</div></div>
+    </div>
+    <div class="use-tags">
+      <div class="use-tag-label">Use Gemini Flash for</div>
+      <span class="use-tag">Chatbots and real-time apps</span>
+      <span class="use-tag">Quick summaries</span>
+      <span class="use-tag">High-volume API use</span>
+      <span class="use-tag">Content classification</span>
+      <span class="use-tag">Simple Q&A</span>
+    </div>
+  </div>
+
+  <div class="model-card featured">
+    <div class="model-header">
+      <div>
+        <div class="model-name">Gemini Pro</div>
+        <div class="model-version">gemini-2.5-pro-preview · gemini-2.0-pro</div>
+      </div>
+      <span class="model-badge badge-balanced">⚖ Best Balance</span>
+    </div>
+    <p class="model-desc">Pro is the workhorse tier — the right default for serious work. Gemini 2.5 Pro is one of the most capable models available from any company on coding and complex reasoning benchmarks as of 2025. It handles long documents, complex analysis, multimodal tasks, and coding with high quality. For most professional use cases, Gemini Pro is the model you want. It balances capability with reasonable speed and cost.</p>
+    <div class="model-specs">
+      <div class="model-spec"><div class="model-spec-label">Speed</div><div class="model-spec-value">Fast for most tasks</div></div>
+      <div class="model-spec"><div class="model-spec-label">Context</div><div class="model-spec-value">1M tokens</div></div>
+      <div class="model-spec"><div class="model-spec-label">Cost</div><div class="model-spec-value">Moderate — excellent value</div></div>
+      <div class="model-spec"><div class="model-spec-label">Best for</div><div class="model-spec-value">Most serious work — the default</div></div>
+    </div>
+    <div class="use-tags">
+      <div class="use-tag-label">Use Gemini Pro for</div>
+      <span class="use-tag">Complex coding</span>
+      <span class="use-tag">Long document analysis</span>
+      <span class="use-tag">Research synthesis</span>
+      <span class="use-tag">Multimodal tasks</span>
+      <span class="use-tag">Professional writing</span>
+      <span class="use-tag">Most everyday serious work</span>
+    </div>
+  </div>
+
+  <div class="model-card">
+    <div class="model-header">
+      <div>
+        <div class="model-name">Gemini Advanced</div>
+        <div class="model-version">Available via Google One AI Premium subscription</div>
+      </div>
+      <span class="model-badge badge-power">🧠 Most Capable</span>
+    </div>
+    <p class="model-desc">Gemini Advanced refers to the consumer product powered by Google's most capable models — currently Gemini 2.5 Pro. It includes all of Google's premium features: 1 million token context, full multimodal capability, integration with Google Workspace, access to Gemini in Gmail, Docs, Drive, and more. For consumer users who want the best Gemini has to offer, this is the subscription tier to be on.</p>
+    <div class="model-specs">
+      <div class="model-spec"><div class="model-spec-label">Access</div><div class="model-spec-value">Google One AI Premium ($20/mo)</div></div>
+      <div class="model-spec"><div class="model-spec-label">Context</div><div class="model-spec-value">1M tokens</div></div>
+      <div class="model-spec"><div class="model-spec-label">Features</div><div class="model-spec-value">Full Workspace integration included</div></div>
+      <div class="model-spec"><div class="model-spec-label">Best for</div><div class="model-spec-value">Power users in Google's ecosystem</div></div>
+    </div>
+    <div class="use-tags">
+      <div class="use-tag-label">Gemini Advanced includes</div>
+      <span class="use-tag">Gemini in Gmail</span>
+      <span class="use-tag">Gemini in Docs</span>
+      <span class="use-tag">Gemini in Drive</span>
+      <span class="use-tag">1M token context</span>
+      <span class="use-tag">Deep Research</span>
+      <span class="use-tag">Gems (custom assistants)</span>
+    </div>
+  </div>
+
+  <h2>The 1 million token context window — what it actually means</h2>
+  <p>Gemini's context window is the largest available from any major AI provider. 1 million tokens is approximately 750,000 words — the equivalent of roughly 10 full-length novels, or an entire medium-sized codebase, or hours of audio transcript.</p>
+  <p>This isn't just a spec — it unlocks use cases that are impossible with smaller context windows. Analyzing an entire company's legal documents in one pass. Understanding a full software project's architecture without summarization. Reasoning across months of meeting transcripts. These aren't theoretical — they're real workflows that Gemini Pro handles and competitors with 128K or 200K context windows cannot match in a single pass.</p>
+
+  <div class="callout">
+    <div class="callout-label">Context window comparison</div>
+    <p>Claude supports 200K tokens (~150K words). ChatGPT supports 128K tokens (~96K words). Gemini supports 1M tokens (~750K words). For tasks where fitting all your content into a single context matters — and that's more tasks than you'd think — this is a decisive advantage.</p>
+  </div>
+
+  <h2>Gemini's specialized capabilities</h2>
+
+  <h3>Deep Research</h3>
+  <p>Deep Research is a Gemini Advanced feature that performs multi-step research across the web — not just a single search, but a chain of searches, reading, and synthesis that can take several minutes and produce a comprehensive, cited research report. It's designed for tasks where you'd otherwise spend hours doing research manually.</p>
+
+  <h3>Gems — Gemini's Custom Assistants</h3>
+  <p>Gems are Gemini's equivalent of Custom GPTs — specialized AI assistants you configure with specific instructions and capabilities. A Gem you build for writing code reviews, for example, can be accessed from any Gemini conversation. Gems are available on Gemini Advanced.</p>
+
+  <h2>Decision framework</h2>
+  <div class="decision-tree">
+    <div class="decision-tree-title">Which Gemini model should I use?</div>
+    <div class="decision-item">
+      <div class="decision-if">Is this a high-volume application or a quick, simple task?</div>
+      <div class="decision-then">→ Gemini Flash</div>
+    </div>
+    <div class="decision-item">
+      <div class="decision-if">Is this serious professional work — coding, research, long documents?</div>
+      <div class="decision-then">→ Gemini Pro</div>
+    </div>
+    <div class="decision-item">
+      <div class="decision-if">Do I need Google Workspace integration, Gems, or Deep Research?</div>
+      <div class="decision-then">→ Gemini Advanced</div>
+    </div>
+    <div class="decision-item">
+      <div class="decision-if">Do I need to process an extremely long document (200K+ tokens)?</div>
+      <div class="decision-then">→ Any Gemini model (all support 1M)</div>
+    </div>
+  </div>
+
+  <div class="good">
+    <div class="good-label">The model that surprises people most</div>
+    <p>Gemini 2.5 Pro genuinely competes with Claude Opus and GPT-4o on most serious tasks — and leads on coding benchmarks. Users who haven't tried Gemini since the Bard era often underestimate how capable the current Pro model is. It's worth testing on the tasks you care about rather than assuming competitors are stronger.</p>
+  </div>
+
+</div>
+</main>
+</div>
+<div class="sticky-bar">
+  <div class="sticky-bar-reading" id="sticky-reading">Read to the end to unlock the next module</div>
+  <div class="sticky-bar-track"><div class="sticky-bar-fill" id="sticky-fill"></div></div>
+  <div class="sticky-bar-label" id="sticky-label">0%</div>
+  <button class="sticky-bar-btn" id="sticky-btn" onclick="completeAndNext()">Module 3: Prompting Gemini Effectively →</button>
+</div>
+<script>
+  function toggleTheme(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='☾'):(h.setAttribute('data-theme','dark'),i.textContent='☀');}
+  window.addEventListener('scroll',()=>{const d=document.documentElement,s=d.scrollTop||document.body.scrollTop,t=d.scrollHeight-d.clientHeight;document.getElementById('progress').style.width=(s/t*100)+'%';});
+  if(!localStorage.getItem('meridian_gemini_m1')){document.body.innerHTML=`<div style="min-height:100vh;display:flex;align-items:center;justify-content:center;background:#080808;font-family:'DM Sans',sans-serif;padding:24px;"><div style="max-width:440px;text-align:center;background:#111;border:1px solid rgba(255,255,255,0.08);border-radius:20px;padding:48px;"><div style="font-size:48px;margin-bottom:20px;">🔒</div><div style="font-size:20px;font-weight:500;color:#f0f0f0;margin-bottom:12px;">Module locked</div><div style="font-size:14px;color:#a0a0a0;margin-bottom:28px;">Complete Module 1 first.</div><a href="gemini-module-1.html" style="display:inline-block;padding:12px 24px;background:#4285f4;color:#fff;border-radius:10px;font-size:14px;font-weight:500;text-decoration:none;">← Go to Module 1</a></div></div>`;}
+  let unlocked=false;
+  function updateScrollProgress(){const pct=Math.min(100,Math.round(((window.scrollY+window.innerHeight)/document.documentElement.scrollHeight)*100));document.getElementById('sticky-fill').style.width=pct+'%';document.getElementById('sticky-label').textContent=pct+'%';if(pct>=95&&!unlocked){unlocked=true;document.getElementById('sticky-btn').style.display='block';document.getElementById('sticky-reading').style.display='none';document.getElementById('sticky-fill').style.background='#22c55e';document.getElementById('sticky-label').style.color='#22c55e';}}
+  window.addEventListener('scroll',updateScrollProgress);updateScrollProgress();
+  function completeAndNext(){try{localStorage.setItem('meridian_gemini_m2','true');localStorage.setItem('meridian_last_gemini_module','2');}catch(e){}setTimeout(()=>{window.location.href='gemini-module-3.html';},80);}
+</script>
+</body>
+</html>
