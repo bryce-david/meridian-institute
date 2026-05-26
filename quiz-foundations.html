@@ -1,886 +1,266 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Final Assessment — Foundations of AI — Meridian Institute of AI</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-  :root[data-theme="dark"] {
-    --bg: #080808; --bg-2: #111111; --bg-3: #1a1a1a; --bg-4: #222222;
-    --text: #f0f0f0; --text-2: #a0a0a0; --text-3: #606060;
-    --border: rgba(255,255,255,0.08); --border-2: rgba(255,255,255,0.15);
-    --accent: #5b8ff8; --accent-dim: rgba(91,143,248,0.1);
-    --nav-bg: rgba(8,8,8,0.9);
-    --success: #22c55e; --success-bg: rgba(34,197,94,0.08); --success-border: rgba(34,197,94,0.25);
-    --error: #ef4444; --error-bg: rgba(239,68,68,0.08); --error-border: rgba(239,68,68,0.25);
-  }
-  :root[data-theme="light"] {
-    --bg: #fafaf8; --bg-2: #f0f0ec; --bg-3: #e8e8e2; --bg-4: #ddddd6;
-    --text: #0a0a0a; --text-2: #555550; --text-3: #999990;
-    --border: rgba(0,0,0,0.08); --border-2: rgba(0,0,0,0.15);
-    --accent: #2563eb; --accent-dim: rgba(37,99,235,0.08);
-    --nav-bg: rgba(250,250,248,0.9);
-    --success: #16a34a; --success-bg: rgba(22,163,74,0.06); --success-border: rgba(22,163,74,0.25);
-    --error: #dc2626; --error-bg: rgba(220,38,38,0.06); --error-border: rgba(220,38,38,0.25);
-  }
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; overflow-x: hidden; }
-  body {
-    font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text);
-    font-size: 16px; line-height: 1.7; overflow-x: hidden;
-    transition: background 0.3s, color 0.3s;
-  }
-
-  nav {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-    background: var(--nav-bg); backdrop-filter: blur(20px);
-    border-bottom: 1px solid var(--border);
-    padding: 0 5%; height: 60px;
-    display: flex; align-items: center; justify-content: space-between;
-  }
-  .nav-left { display: flex; align-items: center; gap: 16px; }
-  .nav-logo-mark {
-    width: 28px; height: 28px; border: 1.5px solid var(--accent);
-    border-radius: 6px; display: flex; align-items: center; justify-content: center;
-    font-family: 'Cormorant Garamond', serif; font-size: 16px; font-weight: 600; color: var(--accent);
-  }
-  .nav-divider { width: 1px; height: 16px; background: var(--border-2); }
-  .nav-back { font-size: 13px; color: var(--text-2); text-decoration: none; transition: color 0.2s; }
-  .nav-back:hover { color: var(--text); }
-  .nav-label { font-size: 13px; color: var(--text-3); }
-  .theme-toggle {
-    width: 32px; height: 32px; border-radius: 7px;
-    border: 1px solid var(--border-2); background: transparent;
-    cursor: pointer; display: flex; align-items: center; justify-content: center;
-    color: var(--text-2); font-size: 14px; transition: all 0.2s;
-  }
-  .theme-toggle:hover { background: var(--bg-3); color: var(--text); }
-
-  /* INTRO SCREEN */
-  .screen { display: none; }
-  .screen.active { display: block; }
-
-  .intro-page {
-    min-height: 100vh; display: flex; align-items: center; justify-content: center;
-    padding: 100px 24px 60px;
-  }
-  .intro-card {
-    max-width: 640px; width: 100%;
-    background: var(--bg-2); border: 1px solid var(--border);
-    border-radius: 20px; padding: 48px;
-  }
-  .intro-icon {
-    width: 64px; height: 64px; border-radius: 16px;
-    background: var(--accent-dim); border: 1px solid rgba(91,143,248,0.25);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 28px; margin-bottom: 24px;
-  }
-  .intro-eyebrow {
-    font-size: 11px; font-weight: 500; letter-spacing: 0.15em;
-    text-transform: uppercase; color: var(--accent); margin-bottom: 12px;
-  }
-  .intro-title {
-    font-family: 'Cormorant Garamond', serif; font-size: 38px;
-    font-weight: 300; color: var(--text); line-height: 1.1; margin-bottom: 16px;
-  }
-  .intro-desc { font-size: 15px; font-weight: 300; color: var(--text-2); line-height: 1.7; margin-bottom: 32px; }
-  .intro-rules {
-    background: var(--bg-3); border: 1px solid var(--border);
-    border-radius: 12px; padding: 24px; margin-bottom: 32px;
-    display: flex; flex-direction: column; gap: 14px;
-  }
-  .rule-item { display: flex; align-items: flex-start; gap: 12px; font-size: 14px; color: var(--text-2); }
-  .rule-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
-  .btn-start {
-    width: 100%; padding: 15px; border-radius: 12px; font-size: 15px;
-    font-weight: 500; font-family: 'DM Sans', sans-serif;
-    background: var(--accent); color: #fff; border: none; cursor: pointer;
-    transition: opacity 0.2s; letter-spacing: 0.02em;
-  }
-  .btn-start:hover { opacity: 0.88; }
-
-  /* QUIZ SCREEN */
-  .quiz-page {
-    max-width: 720px; margin: 0 auto;
-    padding: 90px 24px 80px;
-  }
-  .quiz-header {
-    display: flex; align-items: center; justify-content: space-between;
-    margin-bottom: 40px; padding-bottom: 24px; border-bottom: 1px solid var(--border);
-  }
-  .quiz-counter {
-    font-size: 13px; color: var(--text-3);
-  }
-  .quiz-counter span { color: var(--text); font-weight: 500; }
-  .quiz-progress-track {
-    flex: 1; height: 4px; background: var(--border);
-    border-radius: 2px; overflow: hidden; margin: 0 20px;
-  }
-  .quiz-progress-fill {
-    height: 100%; background: var(--accent); border-radius: 2px; transition: width 0.4s;
-  }
-  .quiz-score-live {
-    font-size: 13px; color: var(--text-3);
-  }
-  .quiz-score-live span { color: var(--success); font-weight: 500; }
-
-  .question-block { animation: fadeIn 0.35s ease; }
-  @keyframes fadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
-
-  .question-module-tag {
-    font-size: 10px; font-weight: 500; letter-spacing: 0.15em;
-    text-transform: uppercase; color: var(--accent);
-    background: var(--accent-dim); border: 1px solid rgba(91,143,248,0.2);
-    padding: 4px 12px; border-radius: 100px; display: inline-block; margin-bottom: 20px;
-  }
-  .question-text {
-    font-family: 'Cormorant Garamond', serif; font-size: 28px;
-    font-weight: 400; color: var(--text); line-height: 1.3; margin-bottom: 32px;
-  }
-  .options-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 28px; }
-  .option-btn {
-    display: flex; align-items: flex-start; gap: 14px;
-    padding: 16px 20px; border: 1px solid var(--border-2);
-    border-radius: 12px; cursor: pointer; transition: all 0.2s;
-    font-size: 15px; font-weight: 300; color: var(--text-2);
-    background: transparent; text-align: left; width: 100%;
-    font-family: 'DM Sans', sans-serif; line-height: 1.5;
-  }
-  .option-btn:hover:not(.disabled) { border-color: var(--accent); color: var(--text); background: var(--accent-dim); }
-  .option-btn.selected-correct { border-color: var(--success); background: var(--success-bg); color: var(--success); }
-  .option-btn.selected-incorrect { border-color: var(--error); background: var(--error-bg); color: var(--error); }
-  .option-btn.show-correct { border-color: var(--success); background: var(--success-bg); color: var(--success); }
-  .option-btn.disabled { cursor: not-allowed; }
-  .option-letter {
-    width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0;
-    background: var(--bg-4); border: 1px solid var(--border-2);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 12px; font-weight: 500; color: var(--text-3);
-  }
-  .option-btn.selected-correct .option-letter,
-  .option-btn.show-correct .option-letter { background: var(--success-bg); border-color: var(--success); color: var(--success); }
-  .option-btn.selected-incorrect .option-letter { background: var(--error-bg); border-color: var(--error); color: var(--error); }
-
-  .feedback-box {
-    padding: 16px 20px; border-radius: 10px; font-size: 14px;
-    line-height: 1.6; margin-bottom: 24px; display: none;
-  }
-  .feedback-box.show { display: block; }
-  .feedback-correct { background: var(--success-bg); border: 1px solid var(--success-border); color: var(--success); }
-  .feedback-incorrect { background: var(--error-bg); border: 1px solid var(--error-border); color: var(--error); }
-
-  .btn-next-q {
-    padding: 13px 28px; border-radius: 10px; font-size: 14px;
-    font-weight: 500; font-family: 'DM Sans', sans-serif;
-    background: var(--accent); color: #fff; border: none; cursor: pointer;
-    transition: opacity 0.2s; display: none;
-  }
-  .btn-next-q.show { display: inline-block; }
-  .btn-next-q:hover { opacity: 0.88; }
-
-  /* RESULTS SCREEN */
-  .results-page {
-    min-height: 100vh; display: flex; align-items: center; justify-content: center;
-    padding: 100px 24px 60px;
-  }
-  .results-card {
-    max-width: 600px; width: 100%;
-    background: var(--bg-2); border: 1px solid var(--border);
-    border-radius: 20px; padding: 48px; text-align: center;
-  }
-  .results-icon { font-size: 56px; margin-bottom: 20px; }
-  .results-eyebrow {
-    font-size: 11px; font-weight: 500; letter-spacing: 0.15em;
-    text-transform: uppercase; margin-bottom: 12px;
-  }
-  .results-eyebrow.pass { color: var(--success); }
-  .results-eyebrow.fail { color: var(--error); }
-  .results-title {
-    font-family: 'Cormorant Garamond', serif; font-size: 40px;
-    font-weight: 300; color: var(--text); line-height: 1.1; margin-bottom: 16px;
-  }
-  .results-desc { font-size: 15px; font-weight: 300; color: var(--text-2); line-height: 1.7; margin-bottom: 36px; }
-  .results-score-block {
-    background: var(--bg-3); border: 1px solid var(--border);
-    border-radius: 14px; padding: 28px; margin-bottom: 32px;
-    display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px;
-  }
-  .score-stat-label { font-size: 11px; color: var(--text-3); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 8px; }
-  .score-stat-value {
-    font-family: 'Cormorant Garamond', serif; font-size: 36px;
-    font-weight: 400; line-height: 1;
-  }
-  .score-stat-value.pass-color { color: var(--success); }
-  .score-stat-value.fail-color { color: var(--error); }
-  .score-stat-value.neutral { color: var(--text); }
-  .results-breakdown {
-    text-align: left; margin-bottom: 32px;
-    max-height: 280px; overflow-y: auto;
-    display: flex; flex-direction: column; gap: 8px;
-  }
-  .breakdown-item {
-    display: flex; align-items: flex-start; gap: 10px;
-    padding: 12px 16px; border-radius: 9px; font-size: 13px; line-height: 1.5;
-  }
-  .breakdown-item.correct { background: var(--success-bg); border: 1px solid var(--success-border); color: var(--text-2); }
-  .breakdown-item.incorrect { background: var(--error-bg); border: 1px solid var(--error-border); color: var(--text-2); }
-  .breakdown-icon { flex-shrink: 0; font-size: 14px; margin-top: 1px; }
-  .results-actions { display: flex; flex-direction: column; gap: 12px; }
-  .btn-retake {
-    width: 100%; padding: 14px; border-radius: 10px; font-size: 15px;
-    font-weight: 500; font-family: 'DM Sans', sans-serif;
-    background: var(--accent); color: #fff; border: none; cursor: pointer;
-    transition: opacity 0.2s;
-  }
-  .btn-retake:hover { opacity: 0.88; }
-  .btn-dashboard {
-    width: 100%; padding: 13px; border-radius: 10px; font-size: 14px;
-    font-weight: 500; font-family: 'DM Sans', sans-serif;
-    background: transparent; color: var(--text-2);
-    border: 1px solid var(--border-2); cursor: pointer; transition: all 0.2s;
-    text-decoration: none; display: block;
-  }
-  .btn-dashboard:hover { background: var(--bg-3); color: var(--text); }
-
-  /* CERTIFICATE */
-  .cert-badge {
-    background: linear-gradient(135deg, var(--accent-dim) 0%, rgba(91,143,248,0.05) 100%);
-    border: 1px solid rgba(91,143,248,0.3); border-radius: 14px;
-    padding: 20px; margin-bottom: 28px; text-align: center;
-  }
-  .cert-badge-title { font-size: 12px; font-weight: 500; color: var(--accent); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 6px; }
-  .cert-badge-name { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 400; color: var(--text); }
-
-  @media (max-width: 600px) {
-    .intro-card, .results-card { padding: 32px 24px; }
-    .intro-title, .results-title { font-size: 30px; }
-    .question-text { font-size: 22px; }
-    .results-score-block { grid-template-columns: 1fr; gap: 16px; }
-  }
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#5b8ff8;--accent-dim:rgba(91,143,248,0.1);--nav-bg:rgba(8,8,8,0.9);--success:#22c55e;--success-bg:rgba(34,197,94,0.08);--success-border:rgba(34,197,94,0.25);--fail-bg:rgba(239,68,68,0.08);--fail-border:rgba(239,68,68,0.25);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#3b6fd4;--accent-dim:rgba(59,111,212,0.08);--nav-bg:rgba(250,250,248,0.9);--success:#16a34a;--success-bg:rgba(22,163,74,0.06);--success-border:rgba(22,163,74,0.25);--fail-bg:rgba(220,38,38,0.06);--fail-border:rgba(220,38,38,0.25);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}
+  .nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}.nav-back{font-size:13px;color:var(--text-2);text-decoration:none;}.nav-back:hover{color:var(--text);}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;}
+  .page{max-width:680px;margin:0 auto;padding:90px 24px 80px;}
+  .quiz-eyebrow{font-size:11px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:12px;}
+  .quiz-title{font-family:'Cormorant Garamond',serif;font-size:42px;font-weight:300;color:var(--text);line-height:1.1;margin-bottom:12px;}
+  .quiz-sub{font-size:15px;color:var(--text-2);line-height:1.7;margin-bottom:28px;}
+  .quiz-rules{background:var(--bg-2);border:1px solid var(--border);border-radius:12px;padding:20px 24px;margin-bottom:28px;display:flex;gap:24px;flex-wrap:wrap;}
+  .quiz-rule{font-size:13px;color:var(--text-2);display:flex;align-items:center;gap:8px;}
+  .btn-start{padding:14px 32px;background:var(--accent);color:#fff;border-radius:10px;font-size:15px;font-weight:500;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;margin-top:8px;}
+  #quiz-section{display:none;}
+  .progress-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;}
+  .progress-label{font-size:13px;color:var(--text-3);}
+  .progress-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;margin-bottom:36px;}
+  .progress-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.3s;}
+  .question-num{font-size:11px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:16px;}
+  .question-text{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:400;color:var(--text);line-height:1.35;margin-bottom:32px;}
+  .options{display:flex;flex-direction:column;gap:12px;margin-bottom:32px;}
+  .option{display:flex;align-items:flex-start;gap:14px;padding:16px 20px;border:1px solid var(--border-2);border-radius:12px;cursor:pointer;transition:all 0.2s;background:var(--bg-2);}
+  .option:hover{border-color:var(--accent);background:var(--accent-dim);}
+  .option.selected{border-color:var(--accent);background:var(--accent-dim);}
+  .option.correct{border-color:var(--success);background:var(--success-bg);cursor:default;}
+  .option.wrong{border-color:#ef4444;background:var(--fail-bg);cursor:default;}
+  .option.disabled{cursor:default;opacity:0.6;}
+  .option-letter{width:28px;height:28px;border-radius:6px;background:var(--bg-3);border:1px solid var(--border-2);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:500;color:var(--text-3);flex-shrink:0;}
+  .option.selected .option-letter{background:var(--accent);color:#fff;border-color:var(--accent);}
+  .option.correct .option-letter{background:var(--success);color:#fff;border-color:var(--success);}
+  .option.wrong .option-letter{background:#ef4444;color:#fff;border-color:#ef4444;}
+  .option-text{font-size:15px;color:var(--text-2);line-height:1.55;padding-top:3px;}
+  .option.selected .option-text,.option.correct .option-text{color:var(--text);}
+  .feedback{padding:16px 20px;border-radius:10px;font-size:14px;line-height:1.65;margin-bottom:24px;display:none;}
+  .feedback.show{display:block;}
+  .feedback.correct{background:var(--success-bg);border:1px solid var(--success-border);color:var(--success);}
+  .feedback.wrong{background:var(--fail-bg);border:1px solid var(--fail-border);color:#ef4444;}
+  .btn-next{padding:12px 28px;background:var(--accent);color:#fff;border-radius:9px;font-size:14px;font-weight:500;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;display:none;}
+  .btn-next.show{display:inline-block;}
+  #result-section{display:none;text-align:center;padding:20px 0;}
+  .result-icon{font-size:64px;margin-bottom:20px;}
+  .result-title{font-family:'Cormorant Garamond',serif;font-size:42px;font-weight:300;color:var(--text);margin-bottom:12px;}
+  .result-score{font-size:56px;font-weight:300;font-family:'Cormorant Garamond',serif;margin:20px 0;}
+  .result-score.pass{color:var(--success);}.result-score.fail{color:#ef4444;}
+  .result-message{font-size:16px;color:var(--text-2);line-height:1.7;max-width:500px;margin:0 auto 32px;}
+  .result-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
+  .btn-result{padding:13px 28px;border-radius:10px;font-size:14px;font-weight:500;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;text-decoration:none;display:inline-block;}
+  .btn-primary{background:var(--accent);color:#fff;}.btn-ghost{background:transparent;color:var(--text-2);border:1px solid var(--border-2);}
 </style>
 </head>
 <body>
-
 <nav>
   <div class="nav-left">
-    <div class="nav-logo-mark">M</div>
+    <a href="index.html" class="nav-logo-mark">M</a>
     <div class="nav-divider"></div>
-    <a href="module-1-what-ai-actually-is.html" class="nav-back">← Foundations of AI</a>
+    <a href="index.html" class="nav-back">🏠 Home</a>
     <div class="nav-divider"></div>
-    <span class="nav-label">Final Assessment</span>
+    <a href="module-6-your-first-ai-project.html" class="nav-back">← Module 6</a>
   </div>
   <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">☀</span></button>
 </nav>
-
-<!-- INTRO SCREEN -->
-<div class="screen active" id="screen-intro">
-  <div class="intro-page">
-    <div class="intro-card">
-      <div class="intro-icon">📋</div>
-      <div class="intro-eyebrow">Foundations of AI</div>
-      <h1 class="intro-title">Final Assessment</h1>
-      <p class="intro-desc">This assessment covers all six modules of the Foundations of AI course. Pass it and you'll earn your verified Meridian certificate — proof that you understand AI at a level most people don't.</p>
-      <div class="intro-rules">
-        <div class="rule-item"><span class="rule-icon">📝</span><span><strong style="color:var(--text)">15 questions</strong> drawn randomly from a question bank</span></div>
-        <div class="rule-item"><span class="rule-icon">🎯</span><span><strong style="color:var(--text)">70% passing score</strong> — you need 11 out of 15 correct</span></div>
-        <div class="rule-item"><span class="rule-icon">🔄</span><span><strong style="color:var(--text)">Unlimited retakes</strong> — questions reshuffle each time</span></div>
-        <div class="rule-item"><span class="rule-icon">⏱</span><span><strong style="color:var(--text)">No time limit</strong> — read each question carefully</span></div>
-        <div class="rule-item"><span class="rule-icon">🏆</span><span><strong style="color:var(--text)">Certificate awarded</strong> immediately on passing</span></div>
-      </div>
-      <button class="btn-start" onclick="startQuiz()">Begin Assessment →</button>
+<div class="page">
+  <div id="start-section">
+    <div class="quiz-eyebrow">Final Assessment · Foundations of AI</div>
+    <div class="quiz-title">Test Your Knowledge</div>
+    <div class="quiz-sub">15 questions drawn from a pool of 30. Covers what AI actually is, how language models work, tokens and context windows, prompting principles, hallucination, and how to evaluate AI output critically.</div>
+    <div class="quiz-rules">
+      <div class="quiz-rule">📋 15 questions per attempt</div>
+      <div class="quiz-rule">✅ 70% to pass (11 of 15)</div>
+      <div class="quiz-rule">🔀 Randomized each attempt</div>
+      <div class="quiz-rule">🏆 Pass to earn your certificate</div>
     </div>
+    <button class="btn-start" onclick="startQuiz()">Begin Assessment →</button>
+  </div>
+  <div id="quiz-section">
+    <div class="progress-header">
+      <span class="progress-label" id="progress-label">Question 1 of 15</span>
+      <span class="progress-label" id="score-label">0 correct</span>
+    </div>
+    <div class="progress-track"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+    <div class="question-num" id="question-num">Question 1</div>
+    <div class="question-text" id="question-text"></div>
+    <div class="options" id="options"></div>
+    <div class="feedback" id="feedback"></div>
+    <button class="btn-next" id="btn-next" onclick="nextQuestion()">Next Question →</button>
+  </div>
+  <div id="result-section">
+    <div class="result-icon" id="result-icon"></div>
+    <div class="result-title" id="result-title"></div>
+    <div class="result-score" id="result-score"></div>
+    <div class="result-message" id="result-message"></div>
+    <div class="result-actions" id="result-actions"></div>
   </div>
 </div>
-
-<!-- QUIZ SCREEN -->
-<div class="screen" id="screen-quiz">
-  <div class="quiz-page">
-    <div class="quiz-header">
-      <div class="quiz-counter">Question <span id="q-current">1</span> of <span id="q-total">15</span></div>
-      <div class="quiz-progress-track">
-        <div class="quiz-progress-fill" id="q-progress"></div>
-      </div>
-      <div class="quiz-score-live">Correct: <span id="q-score">0</span></div>
-    </div>
-    <div id="question-container"></div>
-  </div>
-</div>
-
-<!-- RESULTS SCREEN -->
-<div class="screen" id="screen-results">
-  <div class="results-page">
-    <div class="results-card">
-      <div class="results-icon" id="results-icon">🏆</div>
-      <div class="results-eyebrow" id="results-eyebrow">Assessment Complete</div>
-      <h2 class="results-title" id="results-title">Well done.</h2>
-      <p class="results-desc" id="results-desc"></p>
-
-      <div class="results-score-block">
-        <div>
-          <div class="score-stat-label">Score</div>
-          <div class="score-stat-value" id="stat-score"></div>
-        </div>
-        <div>
-          <div class="score-stat-label">Percentage</div>
-          <div class="score-stat-value" id="stat-pct"></div>
-        </div>
-        <div>
-          <div class="score-stat-label">Result</div>
-          <div class="score-stat-value" id="stat-result"></div>
-        </div>
-      </div>
-
-      <div id="cert-section" style="display:none;">
-        <div class="cert-badge">
-          <div class="cert-badge-title">🏅 Certificate Earned</div>
-          <div class="cert-badge-name">Foundations of AI — Meridian Institute</div>
-        </div>
-      </div>
-
-      <div class="results-breakdown" id="results-breakdown"></div>
-
-      <div id="fail-redirect" style="display:none;background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.2);border-radius:12px;padding:24px;margin-bottom:24px;text-align:left;">
-        <div style="font-size:11px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#ef4444;margin-bottom:10px;">Course Review Required</div>
-        <div style="font-size:15px;font-weight:500;color:var(--text);margin-bottom:8px;">You'll need to go back through the material.</div>
-        <div style="font-size:14px;color:var(--text-2);line-height:1.6;margin-bottom:16px;">The assessment is designed so that reading each module carefully is the only reliable way to pass it. Review the content, then return here to try again.</div>
-        <a href="module-1-what-ai-actually-is.html" onclick="clearProgress()" style="display:inline-block;padding:11px 22px;background:#ef4444;color:#fff;border-radius:9px;font-size:13px;font-weight:500;text-decoration:none;">Return to Module 1 →</a>
-      </div>
-      <div class="results-actions" id="results-actions-btns">
-        <a href="dashboard.html" class="btn-dashboard">Go to my dashboard</a>
-      </div>
-    </div>
-  </div>
-</div>
-
 <script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-  import { getFirestore, doc, updateDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import{initializeApp}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import{getAuth,onAuthStateChanged}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import{getFirestore,doc,updateDoc,setDoc,arrayUnion}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+const app=initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+const auth=getAuth(app);const db=getFirestore(app);let currentUser=null;
+onAuthStateChanged(auth,u=>{currentUser=u;});
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",
-    authDomain: "meridian-institute.firebaseapp.com",
-    projectId: "meridian-institute",
-    storageBucket: "meridian-institute.firebasestorage.app",
-    messagingSenderId: "355371012929",
-    appId: "1:355371012929:web:244fc2f15ee8ac656887c0",
-    measurementId: "G-ER0EN6DE4N"
-  };
+const ALL_QUESTIONS=[
+  {q:"What does an AI language model actually do when it generates a response?",
+   options:["It searches a database of pre-written answers and selects the most relevant one based on keyword matching","It predicts the most statistically likely next token based on patterns learned from massive amounts of text","It retrieves facts from a structured knowledge graph and assembles them into grammatically correct sentences","It simulates human thought by running symbolic logic rules across a representation of world knowledge"],
+   answer:1,explain:"Language models generate responses by predicting the next token — a word or word-fragment — based on statistical patterns learned from training data. There's no database of pre-written answers, no fact retrieval, and no logical reasoning in the traditional sense. The model is pattern-matching at massive scale."},
+  {q:"What is hallucination in the context of AI language models?",
+   options:["When a model generates visually descriptive language about sensory experiences it has never had","When a model produces confident, plausible-sounding information that is factually incorrect or entirely fabricated","When a model refuses to answer a question because it lacks sufficient training data about the topic","When a model contradicts itself within a single response due to conflicting patterns in its training data"],
+   answer:1,explain:"Hallucination is when AI generates false information with the same confidence it uses for true information. The model isn't lying — it's pattern-matching without a truth-checking mechanism. A hallucinated answer can be internally coherent, grammatically perfect, and completely wrong. This is the core reliability challenge of all LLMs."},
+  {q:"What is a token, and approximately how many tokens make up one word?",
+   options:["A token is a full sentence; one word therefore represents a small fraction of a single token on average","A token is roughly three quarters of a word on average; 100 tokens is approximately 75 words of text","A token is exactly one word; every word in a model's vocabulary corresponds to exactly one token","A token is a paragraph; most language models process documents one paragraph at a time internally"],
+   answer:1,explain:"Tokens are the fundamental unit LLMs process — roughly 3/4 of a word on average in English. 'Unbelievable' might be two tokens; 'the' is one. Understanding this matters because model context windows and pricing are measured in tokens, and knowing the rough conversion helps you estimate capacity and cost."},
+  {q:"What does a model's context window determine in practice?",
+   options:["The maximum length of any single response a model can produce before it stops generating output","How much text — conversation history, documents, instructions — the model can hold in working memory at once","The number of conversations a user can have before the model's performance degrades from memory overload","The number of training examples the model saw for any given topic during its initial pretraining phase"],
+   answer:1,explain:"Context window is the model's working memory — everything it can 'see' and work with simultaneously, measured in tokens. Longer conversation history, uploaded documents, and detailed instructions all consume context. When you exceed the window, the model loses access to earlier parts of the conversation."},
+  {q:"What is RLHF and what does it shape about a model's behavior?",
+   options:["Recursive Learning from Historical Feedback — a technique where models retrain themselves using their own previous outputs","Reinforcement Learning from Human Feedback — human raters score model outputs, training the model toward responses humans prefer","Regularized Language and Heuristic Filtering — a post-processing step that removes harmful content from model outputs","Retrieval-Linked Historical Framework — a method for connecting model responses to verified historical facts"],
+   answer:1,explain:"RLHF trains models using human preference ratings. Raters score outputs, and the model learns to produce responses rated highly. This shapes personality, helpfulness, tone, and safety behavior — but can also produce sycophancy if raters consistently prefer agreeable responses over honest ones. It explains why Claude, ChatGPT, and Gemini behave differently despite similar architectures."},
+  {q:"What is prompt engineering and why does it matter?",
+   options:["The process of training a new AI model from scratch using carefully curated human-written examples as data","The practice of crafting inputs — wording, structure, context — to improve the quality and relevance of AI outputs","Building the technical hardware infrastructure that enables large AI models to run efficiently at scale","Writing the safety rules and content policies that govern what an AI model is allowed to say or refuse"],
+   answer:1,explain:"Prompt engineering is the skill of communicating with AI models effectively. How you phrase a question, what context you include, what format you request, and what constraints you add all dramatically affect output quality. Good prompting is one of the most practical AI skills because it works across all models and tools."},
+  {q:"What is a training cutoff and why does it matter when using AI tools?",
+   options:["The maximum number of training examples a model can process before its learning algorithm stops improving","The date after which a model has no knowledge — events and changes after that point are unknown to the model","A safety filter that prevents the model from discussing topics flagged during quality review of training data","The point at which a model's performance on benchmarks stops improving regardless of additional training data"],
+   answer:1,explain:"Training cutoff is the date when data collection for training ended. The model genuinely doesn't know about events, research, or changes after that date. For any time-sensitive question, this can produce outdated answers stated with full confidence. Knowing a model's cutoff helps you decide when to verify against current sources."},
+  {q:"What is the difference between a generative AI model and a traditional search engine?",
+   options:["Search engines are more accurate; generative AI is faster — the only difference is speed versus reliability","Search engines retrieve and rank existing pages; generative AI creates new text by predicting the most likely response","Search engines require internet access; generative AI works offline using knowledge stored during training","Search engines are free; generative AI always requires payment — the distinction is primarily economic"],
+   answer:1,explain:"Search engines find and rank existing content — they retrieve. Generative AI creates new text by predicting the next token based on training patterns — it generates. Search tells you what exists; AI synthesizes something new. This distinction explains why search is better for finding specific pages and AI is better for drafting and explaining."},
+  {q:"What is the most reliable technique for improving AI output quality across any tool?",
+   options:["Asking the model to try again multiple times and selecting the best result from the pool of generated options","Providing clear context about what you need, specifying the format you want, and giving an example when possible","Using shorter prompts since models perform better with less text and more creative freedom to interpret your needs","Switching to a more expensive AI model, since output quality scales linearly with cost per token for all providers"],
+   answer:1,explain:"Across all AI tools, the most reliable improvement comes from better prompting: clear context about your goal, specification of the format you need, constraints on what to include or avoid, and a concrete example when possible. These techniques work regardless of which model you're using and require no technical knowledge."},
+  {q:"What does it mean for an AI model to be multimodal?",
+   options:["The model can generate responses in multiple languages simultaneously within a single coherent output","The model can process and generate multiple content types — text, images, audio, video — not just text alone","The model uses multiple different AI architectures internally to handle different parts of the same query","The model can be accessed through multiple platforms including web, mobile, and API without separate versions"],
+   answer:1,explain:"Multimodal models work across multiple content types. GPT-4o can see images and hear audio. Gemini can analyze video. Claude can read and reason about images. This extends AI usefulness well beyond text — you can show a model a chart, a photo, a diagram, or a document rather than having to describe it in words."},
+  {q:"What is the key difference between AI that retrieves information and AI that generates it?",
+   options:["Retrieved information is always more accurate; generated information is always more creative and original","Retrieval pulls existing content from a database; generation creates new text that never existed before","Retrieval requires internet access; generation works from parameters stored in the model's weights at inference time","Retrieval is used for facts; generation is used for creative tasks — the distinction maps perfectly to task type"],
+   answer:2,explain:"Retrieval pulls existing content from somewhere — a database, a search index, a document. Generation creates entirely new text by predicting the most statistically likely continuation given the prompt. A retrieval system can show you a document verbatim; a generative model writes something new that may or may not be accurate. Both have distinct use cases and failure modes."},
+  {q:"Why does AI perform differently depending on how a question is phrased?",
+   options:["Different phrasings route queries to different underlying models that specialize in different knowledge domains","Models are pattern-matching systems — different phrasing activates different patterns in training data, producing different outputs","Question phrasing determines which safety filter tier applies, which changes which information the model is allowed to share","Models deliberately vary outputs based on phrasing to avoid appearing too consistent, which could indicate memorization"],
+   answer:1,explain:"Since language models predict based on statistical patterns learned from training, different phrasings activate different patterns. 'Explain X simply' activates different training patterns than 'provide a technical analysis of X' — even if X is identical. This is why prompt engineering produces different quality outputs for the same underlying request."},
+  {q:"What is zero-shot versus few-shot prompting?",
+   options:["Zero-shot means the model has no training data on the topic; few-shot means it has limited relevant training examples","Zero-shot gives the model no examples and expects it to perform from instructions alone; few-shot provides examples of desired input-output pairs","Zero-shot is a free-tier feature; few-shot requires paid access since it uses more tokens and computational resources","Zero-shot uses one AI model; few-shot chains multiple AI models together to verify and improve the initial output"],
+   answer:1,explain:"Zero-shot prompting gives the AI only instructions — no examples. Few-shot prompting includes example input-output pairs showing what you want. Few-shot is more reliable for complex or unusual output formats because showing is more precise than telling. Both are valid; few-shot costs more tokens but produces more consistent formatting."},
+  {q:"What is temperature in AI model settings and what does it control?",
+   options:["Temperature controls how quickly the model generates text — higher temperature means faster but lower quality output","Temperature controls randomness — higher temperature makes outputs more varied and creative; lower temperature makes them more predictable","Temperature determines how many training examples the model considers when generating each response to a query","Temperature controls the model's safety thresholds — higher temperature allows more sensitive content to be generated"],
+   answer:1,explain:"Temperature is a parameter controlling output randomness. At low temperature (near 0), the model almost always picks the most statistically likely next token — deterministic, predictable output good for factual tasks. At high temperature, less likely tokens get selected more often — more varied, creative output but also more prone to errors and inconsistency."},
+  {q:"What is a foundation model and how does it relate to the AI tools you use daily?",
+   options:["Foundation models are outdated AI systems that modern tools like Claude and ChatGPT have replaced entirely","Large models trained on broad data that develop general capabilities; most consumer AI tools are built on top of them","Foundation models are proprietary systems built by government research labs and licensed to private companies","Foundation models handle only the text generation; separate specialized models handle images, code, and reasoning tasks"],
+   answer:1,explain:"Foundation models are trained on massive, diverse datasets to develop broad general capabilities. Claude, GPT-4o, and Gemini are foundation models. Specialized tools are often fine-tuned versions of a foundation model trained further on domain-specific data. Almost every AI product you use is powered by a foundation model underneath."},
+  {q:"How should you verify an AI-generated factual claim before using it in something important?",
+   options:["Ask the AI the same question three times and use whichever answer appears most consistently across all attempts","Trace the claim to a primary source — official data, peer-reviewed research, or authoritative direct reporting","Ask a different AI tool the same question and treat agreement between two models as confirmation of accuracy","Add 'be accurate' to your prompt, since explicit accuracy instructions cause the model to fact-check itself internally"],
+   answer:1,explain:"The only reliable verification is tracing claims to primary sources — the original study, official database, direct reporting, or authoritative document. Asking multiple AI tools produces correlated errors since they share training data. Repeating the question gets the same hallucination. Primary source verification is the only epistemic standard that holds."},
+  {q:"What is the difference between AI that is helpful and AI that is honest?",
+   options:["They are identical qualities — an AI cannot be genuinely helpful while being dishonest about any aspect of its response","A model can be highly helpful in the short term by telling users what they want to hear, while being dishonest about facts","Honesty is a technical property determined by training data quality; helpfulness is a design choice made by the developer","Helpful AI is designed for consumers; honest AI is designed for enterprise users where accuracy is more commercially important"],
+   answer:1,explain:"Helpfulness and honesty can conflict — a model can 'help' by agreeing, validating bad ideas, and avoiding uncomfortable truths. This is sycophancy. Genuinely honest AI sometimes tells users they're wrong, flags uncertainty, or refuses to validate incorrect premises. Anthropic's Constitutional AI is specifically designed to prioritize honesty even when it conflicts with immediate approval."},
+  {q:"What is fine-tuning and when would a company use it?",
+   options:["Fine-tuning replaces the foundation model entirely with a new model trained only on the company's proprietary data","Fine-tuning continues training a foundation model on specialized data to improve performance on specific domain tasks","Fine-tuning reduces a large model's size so it can run efficiently on lower-powered hardware without a cloud connection","Fine-tuning is a prompt engineering technique where system instructions are embedded directly into the model's weights"],
+   answer:1,explain:"Fine-tuning takes a foundation model and continues training it on specialized data — medical records, legal documents, a company's support tickets, code in a specific language. The model retains its general capabilities while improving on the targeted domain. It's used when a general model underperforms on specialized professional tasks."},
+  {q:"What is the practical implication of an AI model having 'emergent capabilities'?",
+   options:["Emergent capabilities are planned features added by engineers; the word 'emergent' is marketing language only","Capabilities that weren't explicitly trained for and weren't predicted by researchers can appear as models scale in size","Emergent capabilities mean the model has learned to teach itself new skills by analyzing its own output patterns","Emergent capabilities refer to safety behaviors that appear unpredictably and can make models refuse unexpected tasks"],
+   answer:1,explain:"Emergent capabilities are abilities that appear in large models without being explicitly trained — like multi-step reasoning, analogy-making, or code generation appearing in models trained primarily on text. They weren't predicted and weren't designed. This makes large AI models difficult to fully characterize — they can do things nobody taught them directly."},
+  {q:"Why is it important to understand which AI tool to use before starting a task?",
+   options:["Using the wrong tool wastes tokens and increases cost, even if the output quality is similar between tools","Different tools are architecturally optimized for different tasks — choosing wrong produces lower quality results than matching tool to task","All AI tools produce equivalent output quality, so the choice only affects cost and interface preference","Tool selection matters only for expert users; beginners should always start with the most popular option available"],
+   answer:1,explain:"Claude, ChatGPT, Gemini, and Perplexity are architecturally different and genuinely better at different things. Research and citation → Perplexity. Nuanced writing and analysis → Claude. Images and voice → ChatGPT. Massive document processing → Gemini. Choosing well produces meaningfully better results; choosing poorly means using the right prompt on the wrong tool."},
+  {q:"What is system prompt vs user prompt and why does the distinction matter?",
+   options:["System prompt and user prompt are identical; the terms refer to the same input field but are named differently by different tools","System prompt sets persistent instructions and context before the conversation; user prompt is what the human types each turn","System prompt is used by developers through the API only; user prompt is what consumer interface users provide to the model","System prompt is processed by a separate AI safety layer; user prompt is processed directly by the main language model"],
+   answer:1,explain:"System prompts are instructions set before the conversation begins — they establish persona, constraints, context, and behavior rules that persist throughout. User prompts are the messages you type turn by turn. In tools like Claude.ai, custom instructions or Project instructions function as system prompts. The distinction matters because system prompts shape the entire conversation."},
+  {q:"What does 'AI alignment' refer to in the context of AI safety research?",
+   options:["The technical process of ensuring different AI models from different companies can communicate and share data","The challenge of training AI systems to pursue goals and values that are actually beneficial to humans rather than misaligned proxies","Ensuring that AI responses are grammatically correct and internally logically consistent across all output types","The regulatory process of ensuring AI companies comply with national laws governing technology products and services"],
+   answer:1,explain:"AI alignment is the research challenge of ensuring AI systems reliably pursue goals that are genuinely beneficial to humans — not just the proxies they were trained to optimize. A model trained to maximize user engagement might pursue engagement at the expense of honesty. Alignment research works on making AI goals match human values more reliably."},
+  {q:"What happens to AI model performance when you ask it to reason step by step?",
+   options:["Step-by-step instructions slow the model down significantly, producing longer but not more accurate responses","Explicitly asking for step-by-step reasoning reduces errors on complex tasks by externalizing the reasoning process","Step-by-step instructions trigger a special reasoning mode that bypasses the model's standard response generation","Step-by-step prompting works for math and logic but actually degrades performance on language and writing tasks"],
+   answer:1,explain:"Asking AI to reason step by step before giving a final answer — chain-of-thought prompting — reduces errors on complex tasks. The intermediate steps become visible, making it easier to spot where reasoning went wrong, and the process of generating steps improves the quality of the final answer. This works across math, logic, analysis, and planning tasks."},
+  {q:"What is the most important thing to do after getting an AI response on a high-stakes topic?",
+   options:["Ask the AI to rate its own confidence on a scale from 1 to 10 and treat the rating as a reliability indicator","Verify key claims against primary sources before acting on the information or sharing it with others","Run the same prompt three times and average the outputs to reduce the effect of any individual response errors","Share the response with another person who can evaluate it using their own knowledge and expertise"],
+   answer:1,explain:"Primary source verification is the only reliable check for AI output on anything consequential. AI tools can generate confident-sounding wrong information; asking the AI to rate itself just produces another AI output; averaging doesn't eliminate systematic errors. For anything you'll act on or repeat, trace claims to authoritative original sources."},
+  {q:"What is the relationship between model size and capability in large language models?",
+   options:["Larger models are always better at every task — model size is the single most important predictor of quality","Larger models generally have stronger capabilities, but smaller specialized models often outperform larger ones on specific domains","Capability scales only with training data volume, not model size — parameter count has no effect on performance","Larger models have more capabilities but are also less safe; there is always a direct tradeoff between power and alignment"],
+   answer:1,explain:"Larger models generally have stronger general capabilities — they show more emergent abilities and handle complex tasks better. But this isn't absolute: a smaller model fine-tuned on medical data may outperform a larger general model on medical tasks. Size is one factor among many; training data quality, fine-tuning, and architectural design also matter significantly."},
+  {q:"What does it mean when an AI says it cannot access real-time information?",
+   options:["The AI's internet connection is temporarily down and will restore the ability to search when it reconnects","The AI's knowledge comes from training data with a cutoff date — it has no ability to access live web content","The AI has access to the internet but has been prohibited from sharing real-time data for privacy reasons","The AI can access real-time data but only from specific approved sources that its developer has whitelisted"],
+   answer:1,explain:"When AI says it can't access real-time information, it means the model's knowledge comes entirely from training data frozen at a cutoff date. The model has no internet connection at inference time — it's generating from patterns in parameters, not fetching live content. This is the default for most AI models without an explicit web search feature enabled."},
+  {q:"What is the most effective way to give AI feedback when its first response misses your intent?",
+   options:["Start a completely new conversation with a fresh prompt, since corrections within a conversation degrade performance","Specify exactly what was wrong and what you wanted instead, then ask for a revised response based on that feedback","Rate the response negatively using any available thumbs-down or feedback button and then ask again identically","Tell the AI it produced an excellent response but ask it to try harder and improve the quality on the next attempt"],
+   answer:1,explain:"The most effective correction is specific: tell the AI exactly what didn't work and precisely what you wanted. 'The tone was too formal — I wanted casual and direct, like explaining to a friend' beats 'make it better.' Specific feedback produces targeted revision; vague feedback produces random variation. The model uses your correction to recalibrate."},
+  {q:"What is the practical significance of an AI model's 'parameters'?",
+   options:["Parameters are the pricing tiers available for a model — higher parameter counts mean higher cost per query","Parameters are the numerical values learned during training that encode the model's patterns, knowledge, and capabilities","Parameters are user-adjustable settings like temperature and context length that control output at inference time","Parameters are the legal terms governing how a model can be used commercially and what outputs can be published"],
+   answer:1,explain:"Parameters are the numerical weights learned during training — billions of numbers that encode every pattern the model discovered in training data. A model with 70 billion parameters has 70 billion such values. More parameters generally means more capacity for complex patterns, but the training data quality and process matter as much as parameter count."},
+  {q:"Why is asking an AI to 'be more accurate' unlikely to significantly improve factual reliability?",
+   options:["AI models interpret accuracy instructions as requests to add more detail, producing longer but not more correct responses","The model generates from statistical patterns and has no internal fact-checking mechanism that accuracy instructions activate","AI models are programmed to ignore accuracy prompts because they cannot self-evaluate their own knowledge reliability","Accuracy instructions trigger conservative mode, causing the model to refuse questions rather than risk giving wrong answers"],
+   answer:1,explain:"'Be accurate' doesn't give the model any new information or a fact-checking capability it didn't already have. It generates from patterns — it has no separate truth-verification system that accuracy instructions unlock. If the model's pattern-matching produces an incorrect response, asking for accuracy doesn't fix the underlying mechanism producing the error."},
+  {q:"What does it mean for AI to be 'helpful, harmless, and honest'?",
+   options:["These are three independent properties that each require separate model architectures to implement correctly","These three principles are the design objectives Anthropic and others use to balance competing goals in AI training","Helpful means fast, harmless means free of typos, and honest means the model doesn't deny being an AI","These properties apply only to enterprise AI products; consumer AI is governed by different design principles entirely"],
+   answer:1,explain:"'Helpful, harmless, and honest' (often called HHH) is a framing from AI safety research describing the competing objectives in AI training. Helpful: gives users what they actually need. Harmless: avoids causing harm to users or others. Honest: doesn't deceive. Balancing these three can create tensions — sometimes being most helpful requires delivering uncomfortable truth, which must be weighed against harmlessness."}
+];
 
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-  const db = getFirestore(app);
-
-  const ALL_QUESTIONS = [
-    // MODULE 1 — What AI Actually Is
-    {
-      module: "Module 1",
-      question: "What most accurately explains why AI can perform tasks that traditional software cannot?",
-      options: ["AI hardware operates at speeds that standard processors cannot match","AI learns statistical patterns from data rather than following explicit programmed rules","AI systems store significantly more information than conventional databases","AI programs are written by larger teams using more sophisticated methods"],
-      correct: 1,
-      explanation: "Traditional software executes rules a programmer wrote. AI learns patterns from examples — that difference lets it handle tasks too complex or ambiguous to program directly."
-    },
-    {
-      module: "Module 1",
-      question: "General AI — a system that reasons across any domain the way humans do — is best described as:",
-      options: ["Operational in limited form within the most advanced current models","Developed privately by major tech companies but withheld from public release","A long-term research goal that does not yet exist in any form","Present only within classified government and military systems"],
-      correct: 2,
-      explanation: "General AI does not exist. Every AI system today — no matter how capable — is narrow, meaning it cannot generalize beyond what it was trained to do."
-    },
-    {
-      module: "Module 1",
-      question: "A spam filter that reliably sorts email but cannot write code or hold a conversation is an example of:",
-      options: ["Narrow AI — capable within one domain but unable to generalize beyond it","General AI operating within a deliberately constrained environment","A system that has reached the upper boundary of machine learning capability","Early-stage Artificial General Intelligence running in a limited deployment"],
-      correct: 0,
-      explanation: "A system that excels at one task but cannot generalize is narrow AI — the category that includes every AI system that exists today."
-    },
-    {
-      module: "Module 1",
-      question: "Why did the 2017 paper 'Attention Is All You Need' become so significant to AI?",
-      options: ["It introduced the first training method that eliminated hallucination in language models","It established the legal framework for AI intellectual property used by companies today","It introduced the Transformer architecture that now underlies virtually all major language models","It demonstrated for the first time that AI could outperform humans on reading comprehension"],
-      correct: 2,
-      explanation: "The Transformer introduced an attention mechanism that lets AI understand context and relationships in language at scale. Claude, GPT, and Gemini are all built on this architecture."
-    },
-    {
-      module: "Module 1",
-      question: "Alan Turing's 1950 paper is significant to AI history primarily because:",
-      options: ["It provided the first working algorithm for machine learning systems","It raised the foundational question of whether machines can think","It demonstrated the first successful computer vision classification system","It established the mathematical framework underlying modern neural networks"],
-      correct: 1,
-      explanation: "Turing's paper asked 'Can machines think?' and proposed the Turing Test — a foundational question that launched the entire field of artificial intelligence research."
-    },
-    {
-      module: "Module 1",
-      question: "The 2012 deep learning breakthrough at the University of Toronto was significant because:",
-      options: ["It produced the first AI system to achieve any form of general intelligence","It dramatically outperformed all other approaches to image recognition by a wide margin","It created the first chatbot capable of passing the Turing Test in formal evaluation","It demonstrated that AI could learn useful representations without any human-labeled data"],
-      correct: 1,
-      explanation: "The breakthrough showed that deep neural networks, given enough data and compute, could crush previous approaches to image recognition — triggering the modern AI era."
-    },
-    {
-      module: "Module 1",
-      question: "ChatGPT reaching 100 million users in two months was significant primarily because:",
-      options: ["It proved AI had achieved human-level intelligence for the first time in history","It made AI more capable than any previous model by a statistically significant margin","It was the first time ordinary people could interact meaningfully with a capable AI system","It demonstrated that AI could generate images as well as coherent natural language text"],
-      correct: 2,
-      explanation: "ChatGPT wasn't the most powerful model — it was the most accessible. It was the first AI that normal people could actually talk to, making the technology impossible to ignore."
-    },
-    {
-      module: "Module 1",
-      question: "Which combination of factors best explains the dramatic acceleration in AI capability over the last decade?",
-      options: ["Government funding, university research programs, and new programming languages","Cheaper and faster hardware, much larger datasets, and algorithmic breakthroughs converging","Open source collaboration, cloud computing infrastructure, and reduced regulatory oversight","Competition between major tech companies, venture capital investment, and global talent migration"],
-      correct: 1,
-      explanation: "Three things converged: compute got cheap, data exploded with the internet, and the Transformer architecture arrived. Each amplified the others."
-    },
-    // MODULE 2 — How AI Models Work
-    {
-      module: "Module 2",
-      question: "At the most fundamental level, what is a language model doing when it generates a response?",
-      options: ["Retrieving pre-written answers from a structured knowledge database it was given","Applying grammatical and logical rules programmed by its developers","Predicting the most statistically likely next token given the preceding context","Searching the web in real time and summarizing the most relevant results found"],
-      correct: 2,
-      explanation: "Language models predict the next most probable token given everything before it. Applied at enormous scale, this simple mechanism produces remarkably coherent output."
-    },
-    {
-      module: "Module 2",
-      question: "Once an AI model finishes training, what happens to its knowledge?",
-      options: ["It updates automatically whenever new information is published online","It becomes fixed — the model cannot learn or update from new conversations","It gradually degrades in accuracy unless the model is periodically retrained on new data","It expands through interactions with users who correct its errors over time"],
-      correct: 1,
-      explanation: "After training, the model's weights are frozen. It does not learn from conversations or absorb new information — which is why every model has a knowledge cutoff date."
-    },
-    {
-      module: "Module 2",
-      question: "AI hallucination — generating confident but factually false statements — most directly results from:",
-      options: ["Insufficient storage preventing models from retaining accurate factual information","Training datasets that contain a high proportion of intentionally misleading content","Engineers not yet developing reliable real-time fact-checking layers for production models","Models being optimized for fluent and coherent text rather than verified factual accuracy"],
-      correct: 3,
-      explanation: "Models optimize for plausible, coherent text — not verified truth. The most statistically likely continuation of a sentence can be completely false."
-    },
-    {
-      module: "Module 2",
-      question: "RLHF — Reinforcement Learning from Human Feedback — shapes AI models by:",
-      options: ["Using human preferences between response pairs to train models toward more helpful behavior","Having engineers manually review and rewrite every model response before it is deployed","Connecting models to live human feedback systems that update their weights in real time","Filtering harmful content from training data before the main training process begins"],
-      correct: 0,
-      explanation: "RLHF uses human raters comparing pairs of responses. Their preferences train a reward model, which then guides the main model toward outputs humans prefer."
-    },
-    {
-      module: "Module 2",
-      question: "During AI training, backpropagation refers to:",
-      options: ["Removing harmful or low-quality content from training data before it is used","Adjusting model parameters based on the difference between predicted and actual outputs","Running the model in reverse to verify its outputs match the original training examples","Feeding the model's outputs back as new inputs to progressively improve response quality"],
-      correct: 1,
-      explanation: "Backpropagation calculates how wrong the model's prediction was, then nudges thousands of parameters in the direction that would have made the right answer more likely."
-    },
-    {
-      module: "Module 2",
-      question: "An AI model's 'context window' determines:",
-      options: ["The geographic regions where the model is permitted to operate under license","The types of content the model's safety filters will decline to generate","How much text the model can process and reference in a single interaction","The maximum number of users who can access the model simultaneously"],
-      correct: 2,
-      explanation: "The context window is how much text the model can 'see' at once — its working memory for a conversation. Longer context windows let models handle longer documents."
-    },
-    {
-      module: "Module 2",
-      question: "Why do Claude and ChatGPT feel noticeably different in tone, caution, and style?",
-      options: ["They run on different hardware architectures that process language in distinct ways","They were designed by engineers with fundamentally different personal communication styles","Different training data, fine-tuning choices, and human feedback shaped each model distinctly","One model was designed for professional users while the other targets general consumers"],
-      correct: 2,
-      explanation: "Different companies, different training philosophies, different human raters. These choices encode different values and behaviors — neither model is objectively better, they're just different."
-    },
-    {
-      module: "Module 2",
-      question: "Why do AI models sometimes struggle with tasks like counting letters in a specific word?",
-      options: ["Language models are fundamentally not designed to process text at the character level","Models process text as tokens rather than individual characters, making letter-level tasks unreliable","Counting tasks require mathematical reasoning capabilities that language models entirely lack","Character-level tasks fall outside the training data that most language models are exposed to"],
-      correct: 1,
-      explanation: "Models tokenize text — chunks that may span multiple characters. 'strawberry' might be two or three tokens. The model never truly 'sees' individual letters the way humans do."
-    },
-    // MODULE 3 — Tools That Exist Right Now
-    {
-      module: "Module 3",
-      question: "What most distinguishes Perplexity AI from general-purpose tools like Claude or ChatGPT?",
-      options: ["It uses a proprietary model architecture not available in any competing AI product","It specializes in real-time web search with sourced and cited answers rather than generation","It is specifically optimized for writing long documents and well-structured reports","It consistently outperforms competing models on standardized reasoning benchmarks"],
-      correct: 1,
-      explanation: "Perplexity's niche is AI-powered search with citations — synthesizing current web sources into direct answers. It functions more like a research tool than a general assistant."
-    },
-    {
-      module: "Module 3",
-      question: "Which tool's primary competitive advantage is its native integration with Gmail, Docs, and Drive?",
-      options: ["Claude, through Anthropic's enterprise data partnership with Google Workspace","Perplexity, through real-time indexing of content across Google's search infrastructure","Gemini, as Google's own model built directly into its productivity ecosystem","ChatGPT, through Microsoft's integration agreements with Google's business tools"],
-      correct: 2,
-      explanation: "Gemini is Google's model and integrates natively with Google Workspace. For users already working inside Gmail, Docs, and Drive, this is a meaningful practical advantage."
-    },
-    {
-      module: "Module 3",
-      question: "A model's 'knowledge cutoff' refers to:",
-      options: ["The date beyond which the model has no training data and may be unaware of events","A daily usage limit on messages that resets when the user's subscription period renews","A content policy that prevents the model from discussing certain restricted topics","The maximum length of input text the model can process in a single conversation"],
-      correct: 0,
-      explanation: "Training data has an end date. Events, research, or changes after that date are unknown to the model unless it has real-time web access or is told directly."
-    },
-    {
-      module: "Module 3",
-      question: "Midjourney is generally preferred over other image generators for professional creative work because:",
-      options: ["It is significantly less expensive than competing image generation tools on the market","It produces more photorealistic images than any other tool currently available","It consistently generates more visually refined and artistically striking outputs","It allows unlimited commercial use without licensing restrictions that competitors impose"],
-      correct: 2,
-      explanation: "Midjourney's reputation is built on visual quality and aesthetic refinement — cinematic, detailed, and dramatically composed outputs that other tools struggle to consistently match."
-    },
-    {
-      module: "Module 3",
-      question: "GitHub Copilot differs from general AI assistants like Claude or ChatGPT primarily because:",
-      options: ["It can only answer questions about existing code rather than writing new code","It operates directly inside code editors, suggesting completions as you type in real time","It is exclusively available to professional software engineers employed at large companies","It uses a specialized model architecture designed only for programming language syntax"],
-      correct: 1,
-      explanation: "Copilot lives inside your editor. As you type, it suggests completions — sometimes lines, sometimes entire functions — without ever leaving your development environment."
-    },
-    {
-      module: "Module 3",
-      question: "For researching a news story that broke yesterday, which tool is most appropriate?",
-      options: ["Claude, because it has the largest and most recent training dataset of available models","ChatGPT, because OpenAI trains its models on a more frequent release schedule than others","Perplexity, because it searches the web in real time and cites its sources directly","Gemini, because Google indexes new content faster than any other company's infrastructure"],
-      correct: 2,
-      explanation: "A language model without web access cannot know about yesterday's news — its training has a cutoff. Perplexity searches the live web and returns sourced results for exactly this use case."
-    },
-    {
-      module: "Module 3",
-      question: "The main practical advantage of a paid AI subscription over a free tier is:",
-      options: ["Paid tiers remove all content restrictions that exist on free accounts permanently","Paid tiers guarantee factually accurate outputs that free tier models cannot produce","Access to more capable models, higher usage limits, and features like file analysis","Paid users receive priority support from the AI company's human engineering team"],
-      correct: 2,
-      explanation: "Free tiers are useful for casual use. Paid tiers unlock the most capable models, remove usage caps, and add features like image generation, web search, and file analysis."
-    },
-    // MODULE 4 — Prompt Engineering
-    {
-      module: "Module 4",
-      question: "Why do vague prompts consistently produce poor AI outputs?",
-      options: ["Vague prompts trigger content filters that limit what the AI is willing to discuss","AI models deprioritize short inputs and allocate less processing capacity to them","The AI can only work with the context it is given — gaps get filled with generic defaults","Vague prompts cause the AI to search a broader range of training data than necessary"],
-      correct: 2,
-      explanation: "AI cannot read your mind. When context is missing, it fills the gap with statistical defaults that rarely match what you actually wanted. Specificity is the single biggest lever."
-    },
-    {
-      module: "Module 4",
-      question: "Chain-of-thought prompting improves AI accuracy on complex problems primarily because:",
-      options: ["It allows the model to access additional training data relevant to the specific problem","It signals to the model that the user wants a longer and more thoroughly detailed response","Generating explicit intermediate reasoning steps leads the model to more accurate conclusions","It reduces the chance the model will decline a difficult or potentially sensitive request"],
-      correct: 2,
-      explanation: "When a model works through a problem step by step rather than jumping to a conclusion, the intermediate reasoning acts as scaffolding that measurably improves accuracy."
-    },
-    {
-      module: "Module 4",
-      question: "Assigning a specific persona — 'You are a ruthlessly honest editor' — primarily affects:",
-      options: ["The technical accuracy of factual information included in the AI's response","The perspective, tone, and frame of reference the model brings to its output","The model's willingness to engage with controversial or sensitive subject matter","The length and structural format of the response the model chooses to produce"],
-      correct: 1,
-      explanation: "A persona shapes which knowledge the model draws on and what perspective it takes. An editor gives different feedback than a cheerleader — the persona is the instruction that creates that difference."
-    },
-    {
-      module: "Module 4",
-      question: "Adding explicit constraints like 'avoid bullet points' or 'keep under 100 words' to a prompt:",
-      options: ["Confuses the model by restricting its natural and preferred response patterns","Is unnecessary because the model automatically calibrates format to match the question","Directly improves output by preventing the model from defaulting to generic formats","Only helps with simple tasks — complex prompts benefit from having fewer constraints"],
-      correct: 2,
-      explanation: "Without constraints the AI fills formatting gaps with defaults that may not match your needs. Explicit instructions about length, format, and structure are just as important as content instructions."
-    },
-    {
-      module: "Module 4",
-      question: "Why are examples often more effective than descriptions when prompting AI?",
-      options: ["Examples bypass content filters that might block certain types of requests","The model extracts patterns from examples more reliably than following verbal instructions","Examples reduce total prompt length which speeds up the model's processing time","Instructions and examples are stored in fundamentally different parts of the model"],
-      correct: 1,
-      explanation: "A model can often infer what you want from a single well-chosen example better than from a paragraph of description. Showing is frequently more precise than telling."
-    },
-    {
-      module: "Module 4",
-      question: "Asking an AI 'what important considerations did I not ask about?' is useful primarily because:",
-      options: ["It forces the model to search a broader and more diverse range of its training data","Models perform better when explicitly given permission to expand beyond the original question","It surfaces gaps and counterarguments the model would not volunteer without being asked","It reduces hallucination risk by giving the model more context to work with before answering"],
-      correct: 2,
-      explanation: "AI models are often better at identifying gaps and counterarguments when explicitly asked than when trying to give a comprehensive answer upfront. It's a powerful underused technique."
-    },
-    {
-      module: "Module 4",
-      question: "After getting an AI response that is accurate but too formal in tone, the best next step is:",
-      options: ["Start a completely new conversation and write a better-constructed initial prompt","Ask the same question again and hope the model produces a different stylistic result","Follow up with a specific instruction about tone and request a targeted rewrite","Switch to a different AI tool that naturally produces more casual conversational output"],
-      correct: 2,
-      explanation: "Iterative refinement is the core of effective AI use. Get a first draft, then refine it with specific follow-up instructions. Each instruction moves the output closer to what you want."
-    },
-    // MODULE 5 — AI Ethics & Real Risks
-    {
-      module: "Module 5",
-      question: "Algorithmic bias in AI systems most commonly originates from:",
-      options: ["Mathematical errors introduced during the optimization phase of model training","Deliberate choices by engineers to favor certain demographic groups in model outputs","Skewed or unrepresentative patterns embedded in the training data itself","Hardware limitations that cause models to process some inputs less accurately than others"],
-      correct: 2,
-      explanation: "AI learns from data. If training data reflects historical inequalities or underrepresents certain groups, the model learns and reproduces those patterns — often without intentional discrimination."
-    },
-    {
-      module: "Module 5",
-      question: "What makes AI-enabled misinformation a qualitatively different problem than pre-AI misinformation?",
-      options: ["AI-generated content is more persuasive because it sounds more authoritative than human writing","AI dramatically lowers the cost and time required to produce convincing false content at scale","AI misinformation is harder to detect because AI-generated text never contains factual errors","Governments currently have fewer legal tools to address AI content than traditional media"],
-      correct: 1,
-      explanation: "What previously required teams and significant resources can now be done by one person in minutes. Scale and speed of production is the core change — not just the content itself."
-    },
-    {
-      module: "Module 5",
-      question: "A biased AI risk-assessment tool used in criminal sentencing is most dangerous specifically because:",
-      options: ["Judges are legally required to follow AI recommendations in most court jurisdictions","The tool's outputs cannot be appealed or reviewed once they enter the official court record","Biased decisions are applied consistently at scale across thousands of cases simultaneously","Defense attorneys do not have legal access to inspect how the tool reaches its conclusions"],
-      correct: 2,
-      explanation: "A biased human makes biased decisions one at a time. A biased algorithm applies that same bias consistently across thousands of cases — scale is what makes a flaw systemic."
-    },
-    {
-      module: "Module 5",
-      question: "Why does removing race from an AI hiring model's input data often fail to eliminate racial bias?",
-      options: ["AI models reconstruct protected attributes from correlated variables like zip code or school name","The model retains a mathematical memory of protected attributes from earlier stages of training","Removing variables causes the model to weight all remaining variables more heavily by default","Bias in hiring outcomes is primarily caused by human reviewers who override AI recommendations"],
-      correct: 0,
-      explanation: "Even without explicit protected attributes, models can infer them from proxies — zip codes, school names, browsing patterns. Removing the variable often doesn't remove the discrimination."
-    },
-    {
-      module: "Module 5",
-      question: "The most accurate description of AI's likely effect on employment is:",
-      options: ["AI will eliminate all knowledge-based jobs within the next decade without creating new ones","AI will create significantly more jobs than it eliminates so no policy intervention is needed","AI will transform many jobs with transition speed being the primary risk factor for workers","AI's employment effects will remain limited to software development and creative industries"],
-      correct: 2,
-      explanation: "The risk isn't that all work disappears — it's that transformation happens faster than education systems and labor markets can adapt, leaving people economically stranded during transition."
-    },
-    {
-      module: "Module 5",
-      question: "The power concentration risk from advanced AI primarily concerns:",
-      options: ["AI systems autonomously accumulating decision-making authority without any human oversight","A small number of companies and governments controlling the most capable AI systems","AI enabling authoritarian governments to monitor all citizens without any possibility of detection","AI companies acquiring enough revenue to directly influence democratic elections worldwide"],
-      correct: 1,
-      explanation: "The most capable AI requires billions to build. If it provides enormous advantages and access stays concentrated, it dramatically amplifies existing power imbalances — regardless of intent."
-    },
-    {
-      module: "Module 5",
-      question: "When using AI to research an important medical question, the most responsible approach is:",
-      options: ["Trust the output if it cites specific medical studies or recognized healthcare organizations","Use AI for medical research only if you already have training to critically evaluate its claims","Treat AI output as a starting point and verify important claims through independent sources","Ask the AI to rate its own confidence level before deciding how much to trust its answer"],
-      correct: 2,
-      explanation: "AI is a thinking and drafting tool, not an oracle. Medical information that matters should always be verified through authoritative independent sources — regardless of how confident the AI sounds."
-    },
-    // MODULE 6 — Your First AI Project
-    {
-      module: "Module 6",
-      question: "A well-written system prompt for a custom AI assistant primarily accomplishes:",
-      options: ["Providing the assistant with a private database of facts relevant to its specific use case","Defining the role, rules, tone, and behavioral boundaries that shape every response it gives","Setting the technical parameters that govern the model's processing speed and memory allocation","Establishing the security permissions that determine what content the assistant can access"],
-      correct: 1,
-      explanation: "The system prompt is the instruction set that transforms a general-purpose AI into a specialized tool. Without it the model defaults to generic behavior. With it every response is shaped by your design."
-    },
-    {
-      module: "Module 6",
-      question: "When selecting what kind of custom AI assistant to build, the most important factor is:",
-      options: ["Choosing the domain where AI models have demonstrated the strongest performance benchmarks","Selecting the assistant type with the most potential users and long-term commercial value","Identifying a specific real problem you actually have that the assistant would genuinely solve","Picking an assistant type that requires the least technical knowledge to build successfully"],
-      correct: 2,
-      explanation: "The most useful custom assistants solve real, specific problems. The more concrete and personal the problem, the more motivated you are to iterate and the more useful the result."
-    },
-    {
-      module: "Module 6",
-      question: "A system prompt saying 'be helpful and friendly' produces worse results than one that:",
-      options: ["Uses technical language that signals to the model you have advanced programming expertise","Specifies exact role, behavioral rules, tone, and examples of ideal responses explicitly","Is longer and more detailed regardless of whether the additional content is actually relevant","Includes names of specific communicators whose style the assistant should attempt to emulate"],
-      correct: 1,
-      explanation: "Vague instructions produce vague behavior. Specific role, rules, tone, and examples give the model everything it needs to behave consistently the way you intended."
-    },
-    {
-      module: "Module 6",
-      question: "The most reliable way to improve a custom AI assistant that is not behaving as intended is:",
-      options: ["Switch to a more powerful AI model that can better interpret your existing instructions","Add more specificity to the system prompt based on exactly where the behavior drifted","Increase the total length of the system prompt until the behavior becomes more consistent","Ask the AI to critique its own system prompt and automatically suggest improvements to it"],
-      correct: 1,
-      explanation: "When output doesn't match expectations, the fix is almost always prompt specificity. Identify where behavior drifted, then add explicit instructions to prevent it."
-    },
-    {
-      module: "Module 6",
-      question: "Why is actually building and using a custom AI assistant more valuable than just reading about prompt engineering?",
-      options: ["The AI performs better when it knows it is being used in a real rather than test scenario","Building provides evidence to employers and admissions committees of practical technical skills","Real use surfaces gaps in understanding and prompt quality that theoretical study cannot reveal","Custom assistants built by individual users can access more recent model training data by default"],
-      correct: 2,
-      explanation: "Application exposes what you don't actually understand. You can read about prompting, but building a real assistant and seeing where it fails — then fixing it — builds competency that reading cannot."
-    },
-    {
-      module: "Module 6",
-      question: "Documenting what you built, what you iterated on, and why creates value primarily because:",
-      options: ["Documentation is required by most AI platforms before a custom assistant can be shared publicly","Written records allow you to restore your assistant if the platform resets your account settings","It demonstrates the thinking process behind the work — which is what evaluators actually assess","Platform terms of service require users to document any AI assistants built for other people"],
-      correct: 2,
-      explanation: "Anyone can copy a result. Documentation shows the thinking, the iteration, the problem-solving. That process is what college admissions, employers, and collaborators actually want to see."
-    },
-    {
-      module: "Module 6",
-      question: "Sharing your custom AI assistant with others who face similar problems is valuable because:",
-      options: ["AI platforms reward users who share their work with improved model access and features","Sharing is required to receive a verified certificate from most AI education providers","It builds credibility and demonstrates initiative — concrete evidence you build real things","Sharing increases your assistant's performance by exposing it to more diverse user inputs"],
-      correct: 2,
-      explanation: "Sharing is a signal. It shows you built something worth sharing, that you thought about who else might benefit, and that you take your work seriously enough to put it in front of others."
+let questions=[],current=0,score=0,answered=false;
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+window.startQuiz=function(){
+  const req=['meridian_m1','meridian_m2','meridian_m3','meridian_m4','meridian_m5','meridian_m6'];
+  if(req.some(k=>!localStorage.getItem(k))){alert('Please complete all 6 modules first.');window.location.href='module-1-what-ai-actually-is.html';return;}
+  questions=shuffle([...ALL_QUESTIONS]).slice(0,15);current=0;score=0;
+  document.getElementById('start-section').style.display='none';document.getElementById('quiz-section').style.display='block';renderQuestion();
+};
+function renderQuestion(){
+  answered=false;const q=questions[current];
+  document.getElementById('question-num').textContent=`Question ${current+1} of 15`;
+  document.getElementById('question-text').textContent=q.q;
+  document.getElementById('progress-label').textContent=`Question ${current+1} of 15`;
+  document.getElementById('score-label').textContent=`${score} correct`;
+  document.getElementById('progress-fill').style.width=`${(current/15)*100}%`;
+  document.getElementById('feedback').className='feedback';document.getElementById('btn-next').className='btn-next';
+  const letters=['A','B','C','D'];const optionsEl=document.getElementById('options');optionsEl.innerHTML='';
+  const indices=shuffle([0,1,2,3]);
+  indices.forEach((origIdx,displayIdx)=>{
+    const opt=document.createElement('div');opt.className='option';
+    opt.innerHTML=`<div class="option-letter">${letters[displayIdx]}</div><div class="option-text">${q.options[origIdx]}</div>`;
+    opt.onclick=()=>selectAnswer(opt,origIdx===q.answer,indices.indexOf(q.answer),q.explain);
+    optionsEl.appendChild(opt);
+  });
+}
+function selectAnswer(clickedEl,isCorrect,correctShuffledIdx,explain){
+  if(answered)return;answered=true;
+  document.querySelectorAll('.option').forEach((o,i)=>{o.classList.add('disabled');if(i===correctShuffledIdx)o.classList.add('correct');});
+  if(isCorrect){clickedEl.classList.add('correct');score++;}else{clickedEl.classList.add('wrong');}
+  document.getElementById('score-label').textContent=`${score} correct`;
+  const fb=document.getElementById('feedback');fb.className=`feedback ${isCorrect?'correct':'wrong'} show`;
+  fb.textContent=isCorrect?`✓ Correct. ${explain}`:`✗ ${explain}`;
+  const btn=document.getElementById('btn-next');btn.className='btn-next show';btn.textContent=current===14?'See Results →':'Next Question →';
+}
+window.nextQuestion=function(){current++;if(current>=15)showResults();else renderQuestion();};
+async function showResults(){
+  document.getElementById('quiz-section').style.display='none';document.getElementById('result-section').style.display='block';
+  const passed=score>=11;const pct=Math.round((score/15)*100);
+  document.getElementById('result-icon').textContent=passed?'🏆':'📚';
+  document.getElementById('result-title').textContent=passed?'Assessment Passed':'Not Quite Yet';
+  document.getElementById('result-score').className=`result-score ${passed?'pass':'fail'}`;
+  document.getElementById('result-score').textContent=`${score} / 15`;
+  if(passed){
+    document.getElementById('result-message').textContent=`You scored ${pct}% — above the 70% threshold. Your Foundations of AI certificate is being issued.`;
+    if(currentUser){
+      try{
+        const certId=currentUser.uid+'-foundations';const completedDate=new Date();
+        await updateDoc(doc(db,'users',currentUser.uid),{completedModules:arrayUnion('foundations-complete'),certificatesEarned:arrayUnion('foundations'),foundationsCompletedAt:completedDate,foundationsCertId:certId});
+        await setDoc(doc(db,'certificates',certId),{name:currentUser.displayName||'Meridian Student',email:currentUser.email,course:'Foundations of AI — Meridian Institute of AI',issuedAt:completedDate,certId:certId,valid:true});
+        document.getElementById('result-actions').innerHTML=`<a href="certificate.html?id=${certId}" class="btn-result btn-primary" target="_blank">View Certificate →</a><a href="dashboard.html" class="btn-result btn-ghost">Dashboard</a>`;
+      }catch(e){document.getElementById('result-actions').innerHTML=`<a href="dashboard.html" class="btn-result btn-primary">Dashboard</a>`;}
     }
-  ];
-
-    let questions = [];
-  let currentQ = 0;
-  let score = 0;
-  let answers = [];
-  let currentUser = null;
-
-  onAuthStateChanged(auth, (user) => { currentUser = user; });
-
-  function shuffle(arr) {
-    const a = [...arr];
-    for (let i = a.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [a[i], a[j]] = [a[j], a[i]];
-    }
-    return a;
+  }else{
+    document.getElementById('result-message').textContent=`You scored ${pct}% — you need 70% to pass. Review the modules and try again.`;
+    document.getElementById('result-actions').innerHTML=`<a href="module-1-what-ai-actually-is.html" class="btn-result btn-primary">Review from Module 1</a><button class="btn-result btn-ghost" onclick="location.reload()">Try Again</button>`;
   }
-
-  window.startQuiz = function() {
-    questions = shuffle(ALL_QUESTIONS).slice(0, 15);
-    currentQ = 0; score = 0; answers = [];
-    document.getElementById('q-total').textContent = questions.length;
-    showScreen('quiz');
-    renderQuestion();
-  }
-
-  function renderQuestion() {
-    const q = questions[currentQ];
-    const pct = ((currentQ) / questions.length) * 100;
-    document.getElementById('q-current').textContent = currentQ + 1;
-    document.getElementById('q-progress').style.width = pct + '%';
-    document.getElementById('q-score').textContent = score;
-
-    const shuffledOptions = q.options.map((text, i) => ({ text, originalIndex: i }));
-    const letters = ['A', 'B', 'C', 'D'];
-
-    document.getElementById('question-container').innerHTML = `
-      <div class="question-block">
-        <div class="question-module-tag">${q.module}</div>
-        <div class="question-text">${q.question}</div>
-        <div class="options-list" id="options-list">
-          ${shuffledOptions.map((opt, i) => `
-            <button class="option-btn" onclick="selectAnswer(${opt.originalIndex}, this)">
-              <span class="option-letter">${letters[i]}</span>
-              <span>${opt.text}</span>
-            </button>
-          `).join('')}
-        </div>
-        <div class="feedback-box" id="feedback-box"></div>
-        <button class="btn-next-q" id="btn-next" onclick="nextQuestion()">
-          ${currentQ < questions.length - 1 ? 'Next Question →' : 'See Results →'}
-        </button>
-      </div>
-    `;
-  }
-
-  window.selectAnswer = function(selectedIndex, btn) {
-    const q = questions[currentQ];
-    const allBtns = document.querySelectorAll('.option-btn');
-    const feedbackBox = document.getElementById('feedback-box');
-    const nextBtn = document.getElementById('btn-next');
-    const isCorrect = selectedIndex === q.correct;
-
-    allBtns.forEach(b => { b.classList.add('disabled'); b.onclick = null; });
-
-    if (isCorrect) {
-      btn.classList.add('selected-correct');
-      score++;
-      feedbackBox.textContent = '✓ Correct — ' + q.explanation;
-      feedbackBox.className = 'feedback-box show feedback-correct';
-    } else {
-      btn.classList.add('selected-incorrect');
-      allBtns.forEach(b => {
-        const optText = b.querySelector('span:last-child').textContent;
-        if (optText === q.options[q.correct]) b.classList.add('show-correct');
-      });
-      feedbackBox.textContent = '✗ Incorrect — ' + q.explanation;
-      feedbackBox.className = 'feedback-box show feedback-incorrect';
-    }
-
-    answers.push({ question: q.question, correct: isCorrect });
-    document.getElementById('q-score').textContent = score;
-    nextBtn.classList.add('show');
-  }
-
-  window.nextQuestion = function() {
-    currentQ++;
-    if (currentQ >= questions.length) {
-      showResults();
-    } else {
-      renderQuestion();
-    }
-  }
-
-  async function showResults() {
-    const total = questions.length;
-    const pct = Math.round((score / total) * 100);
-    const passed = score >= 11;
-
-    showScreen('results');
-
-    document.getElementById('results-icon').textContent = passed ? '🏆' : '📋';
-    document.getElementById('results-eyebrow').textContent = passed ? 'Assessment Passed' : 'Assessment Complete';
-    document.getElementById('results-eyebrow').className = 'results-eyebrow ' + (passed ? 'pass' : 'fail');
-    document.getElementById('results-title').textContent = passed ? 'Congratulations.' : 'Not quite yet.';
-    document.getElementById('results-desc').textContent = passed
-      ? `You scored ${score} out of ${total} — ${pct}%. You've demonstrated genuine understanding of AI across all six modules. Your Meridian certificate has been awarded.`
-      : `You scored ${score} out of ${total} — ${pct}%. You need 14 out of 18 to pass. You'll need to go back through the course materials before retrying.`;
-
-    document.getElementById('stat-score').textContent = `${score}/${total}`;
-    document.getElementById('stat-score').className = 'score-stat-value ' + (passed ? 'pass-color' : 'fail-color');
-    document.getElementById('stat-pct').textContent = `${pct}%`;
-    document.getElementById('stat-pct').className = 'score-stat-value ' + (passed ? 'pass-color' : 'fail-color');
-    document.getElementById('stat-result').textContent = passed ? 'PASS' : 'FAIL';
-    document.getElementById('stat-result').className = 'score-stat-value ' + (passed ? 'pass-color' : 'fail-color');
-
-    if (passed) {
-      document.getElementById('cert-section').style.display = 'block';
-      if (currentUser) {
-        try {
-          const certId = currentUser.uid + '-foundations';
-          const completedDate = new Date();
-          
-          // Update user document
-          await updateDoc(doc(db, 'users', currentUser.uid), {
-            completedModules: arrayUnion('foundations-complete'),
-            certificatesEarned: arrayUnion('foundations'),
-            foundationsCompletedAt: completedDate,
-            foundationsCertId: certId
-          });
-
-          // Write to public certificates collection so anyone can verify
-          await setDoc(doc(db, 'certificates', certId), {
-            name: currentUser.displayName || 'Meridian Student',
-            email: currentUser.email,
-            course: 'Foundations of AI',
-            issuedAt: completedDate,
-            certId: certId,
-            valid: true
-          });
-        } catch(e) { console.log('Could not save completion', e); }
-      }
-    } else {
-      // Show fail redirect section after 3 seconds
-      setTimeout(() => {
-        document.getElementById('fail-redirect').style.display = 'block';
-      }, 3000);
-    }
-
-    const breakdown = document.getElementById('results-breakdown');
-    breakdown.innerHTML = answers.map((a, i) => `
-      <div class="breakdown-item ${a.correct ? 'correct' : 'incorrect'}">
-        <span class="breakdown-icon">${a.correct ? '✓' : '✗'}</span>
-        <span>Q${i+1}: ${a.question.length > 80 ? a.question.substring(0, 80) + '...' : a.question}</span>
-      </div>
-    `).join('');
-  }
-
-  window.retakeQuiz = function() {
-    showScreen('intro');
-  }
-
-  window.clearProgress = function() {
-    const keys = ['meridian_m1','meridian_m2','meridian_m3','meridian_m4','meridian_m5','meridian_m6'];
-    keys.forEach(k => localStorage.removeItem(k));
-  }
-
-  // Check module 6 is complete before allowing quiz
-  if (!localStorage.getItem('meridian_m6')) {
-    document.querySelector('.btn-start').disabled = true;
-    document.querySelector('.btn-start').textContent = 'Complete all 6 modules first';
-    document.querySelector('.btn-start').style.opacity = '0.5';
-    document.querySelector('.btn-start').style.cursor = 'not-allowed';
-    document.querySelector('.intro-desc').textContent = 'You need to complete all six course modules before taking this assessment. Return to the course and work through each module in order.';
-  }
-
-  function showScreen(name) {
-    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-    document.getElementById('screen-' + name).classList.add('active');
-    window.scrollTo(0, 0);
-  }
-
-  window.toggleTheme = function() {
-    const html = document.documentElement;
-    const icon = document.getElementById('theme-icon');
-    if (html.getAttribute('data-theme') === 'dark') {
-      html.setAttribute('data-theme', 'light');
-      icon.textContent = '☾';
-    } else {
-      html.setAttribute('data-theme', 'dark');
-      icon.textContent = '☀';
-    }
-  }
+}
+window.toggleTheme=function(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='☾'):(h.setAttribute('data-theme','dark'),i.textContent='☀');};
 </script>
 </body>
 </html>

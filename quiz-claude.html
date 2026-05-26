@@ -1,34 +1,27 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Final Assessment — Mastering Claude — Meridian Institute of AI</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#5b8ff8;--accent-dim:rgba(91,143,248,0.1);--nav-bg:rgba(8,8,8,0.9);--success:#22c55e;--success-bg:rgba(34,197,94,0.08);--success-border:rgba(34,197,94,0.25);--fail-bg:rgba(239,68,68,0.08);--fail-border:rgba(239,68,68,0.25);}
-  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#2563eb;--accent-dim:rgba(37,99,235,0.08);--nav-bg:rgba(250,250,248,0.9);--success:#16a34a;--success-bg:rgba(22,163,74,0.06);--success-border:rgba(22,163,74,0.25);--fail-bg:rgba(220,38,38,0.06);--fail-border:rgba(220,38,38,0.25);}
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#D97757;--accent-dim:rgba(217,119,87,0.1);--nav-bg:rgba(8,8,8,0.9);--success:#22c55e;--success-bg:rgba(34,197,94,0.08);--success-border:rgba(34,197,94,0.25);--fail-bg:rgba(239,68,68,0.08);--fail-border:rgba(239,68,68,0.25);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#b85c35;--accent-dim:rgba(184,92,53,0.08);--nav-bg:rgba(250,250,248,0.9);--success:#16a34a;--success-bg:rgba(22,163,74,0.06);--success-border:rgba(22,163,74,0.25);--fail-bg:rgba(220,38,38,0.06);--fail-border:rgba(220,38,38,0.25);}
   *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
   body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;transition:background 0.3s,color 0.3s;}
   nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
   .nav-left{display:flex;align-items:center;gap:16px;}
   .nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
-  .nav-divider{width:1px;height:16px;background:var(--border-2);}
-  .nav-back{font-size:13px;color:var(--text-2);text-decoration:none;}
-  .nav-back:hover{color:var(--text);}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}.nav-back{font-size:13px;color:var(--text-2);text-decoration:none;transition:color 0.2s;}.nav-back:hover{color:var(--text);}
   .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;}
   .page{max-width:680px;margin:0 auto;padding:90px 24px 80px;}
-  .quiz-header{margin-bottom:40px;}
   .quiz-eyebrow{font-size:11px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:12px;}
   .quiz-title{font-family:'Cormorant Garamond',serif;font-size:42px;font-weight:300;color:var(--text);line-height:1.1;margin-bottom:12px;}
-  .quiz-sub{font-size:15px;color:var(--text-2);line-height:1.7;}
-  .quiz-rules{background:var(--bg-2);border:1px solid var(--border);border-radius:12px;padding:20px 24px;margin:24px 0;display:flex;gap:24px;flex-wrap:wrap;}
+  .quiz-sub{font-size:15px;color:var(--text-2);line-height:1.7;margin-bottom:28px;}
+  .quiz-rules{background:var(--bg-2);border:1px solid var(--border);border-radius:12px;padding:20px 24px;margin-bottom:28px;display:flex;gap:24px;flex-wrap:wrap;}
   .quiz-rule{font-size:13px;color:var(--text-2);display:flex;align-items:center;gap:8px;}
-  .quiz-rule-icon{font-size:16px;}
-  .btn-start{display:inline-block;padding:14px 32px;background:var(--accent);color:#fff;border-radius:10px;font-size:15px;font-weight:500;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;transition:opacity 0.2s;margin-top:8px;}
+  .btn-start{padding:14px 32px;background:var(--accent);color:#fff;border-radius:10px;font-size:15px;font-weight:500;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;transition:opacity 0.2s;margin-top:8px;}
   .btn-start:hover{opacity:0.88;}
-
-  /* QUIZ */
   #quiz-section{display:none;}
   .progress-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;}
   .progress-label{font-size:13px;color:var(--text-3);}
@@ -41,38 +34,29 @@
   .option:hover{border-color:var(--accent);background:var(--accent-dim);}
   .option.selected{border-color:var(--accent);background:var(--accent-dim);}
   .option.correct{border-color:var(--success);background:var(--success-bg);cursor:default;}
-  .option.wrong{border-color:#ef4444;background:rgba(239,68,68,0.08);cursor:default;}
+  .option.wrong{border-color:#ef4444;background:var(--fail-bg);cursor:default;}
   .option.disabled{cursor:default;opacity:0.6;}
   .option-letter{width:28px;height:28px;border-radius:6px;background:var(--bg-3);border:1px solid var(--border-2);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:500;color:var(--text-3);flex-shrink:0;}
   .option.selected .option-letter{background:var(--accent);color:#fff;border-color:var(--accent);}
   .option.correct .option-letter{background:var(--success);color:#fff;border-color:var(--success);}
   .option.wrong .option-letter{background:#ef4444;color:#fff;border-color:#ef4444;}
-  .option-text{font-size:15px;color:var(--text-2);line-height:1.5;padding-top:4px;}
+  .option-text{font-size:15px;color:var(--text-2);line-height:1.55;padding-top:3px;}
   .option.selected .option-text,.option.correct .option-text{color:var(--text);}
-  .feedback{padding:16px 20px;border-radius:10px;font-size:14px;line-height:1.6;margin-bottom:24px;display:none;}
+  .feedback{padding:16px 20px;border-radius:10px;font-size:14px;line-height:1.65;margin-bottom:24px;display:none;}
   .feedback.show{display:block;}
   .feedback.correct{background:var(--success-bg);border:1px solid var(--success-border);color:var(--success);}
   .feedback.wrong{background:var(--fail-bg);border:1px solid var(--fail-border);color:#ef4444;}
   .btn-next{padding:12px 28px;background:var(--accent);color:#fff;border-radius:9px;font-size:14px;font-weight:500;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;transition:opacity 0.2s;display:none;}
-  .btn-next:hover{opacity:0.88;}
   .btn-next.show{display:inline-block;}
-
-  /* RESULTS */
   #result-section{display:none;text-align:center;padding:20px 0;}
   .result-icon{font-size:64px;margin-bottom:20px;}
   .result-title{font-family:'Cormorant Garamond',serif;font-size:42px;font-weight:300;color:var(--text);margin-bottom:12px;}
   .result-score{font-size:56px;font-weight:300;font-family:'Cormorant Garamond',serif;margin:20px 0;}
-  .result-score.pass{color:var(--success);}
-  .result-score.fail{color:#ef4444;}
+  .result-score.pass{color:var(--success);}.result-score.fail{color:#ef4444;}
   .result-message{font-size:16px;color:var(--text-2);line-height:1.7;max-width:500px;margin:0 auto 32px;}
   .result-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
-  .btn-result{padding:13px 28px;border-radius:10px;font-size:14px;font-weight:500;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;text-decoration:none;display:inline-block;transition:opacity 0.2s;}
-  .btn-primary{background:var(--accent);color:#fff;}
-  .btn-primary:hover{opacity:0.88;}
-  .btn-ghost{background:transparent;color:var(--text-2);border:1px solid var(--border-2);}
-  .btn-ghost:hover{background:var(--bg-3);}
-
-  @media(max-width:600px){.quiz-title{font-size:32px;}.question-text{font-size:22px;}}
+  .btn-result{padding:13px 28px;border-radius:10px;font-size:14px;font-weight:500;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;text-decoration:none;display:inline-block;}
+  .btn-primary{background:var(--accent);color:#fff;}.btn-ghost{background:transparent;color:var(--text-2);border:1px solid var(--border-2);}
 </style>
 </head>
 <body>
@@ -86,25 +70,19 @@
   </div>
   <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">☀</span></button>
 </nav>
-
 <div class="page">
-  <!-- START SCREEN -->
   <div id="start-section">
-    <div class="quiz-header">
-      <div class="quiz-eyebrow">Final Assessment · Mastering Claude</div>
-      <div class="quiz-title">Test Your Knowledge</div>
-      <div class="quiz-sub">15 questions drawn from all seven modules. Demonstrate that you've genuinely mastered Claude — not just skimmed it.</div>
-    </div>
+    <div class="quiz-eyebrow">Final Assessment · Mastering Claude</div>
+    <div class="quiz-title">Test Your Knowledge</div>
+    <div class="quiz-sub">15 questions drawn from a pool of 25. Covers Constitutional AI, Claude's model lineup, prompting techniques, Projects, advanced features, and honest competitive analysis.</div>
     <div class="quiz-rules">
-      <div class="quiz-rule"><span class="quiz-rule-icon">📋</span>15 questions per attempt</div>
-      <div class="quiz-rule"><span class="quiz-rule-icon">✅</span>70% to pass (11 of 15)</div>
-      <div class="quiz-rule"><span class="quiz-rule-icon">🔀</span>Questions randomized each attempt</div>
-      <div class="quiz-rule"><span class="quiz-rule-icon">🏆</span>Pass to earn your certificate</div>
+      <div class="quiz-rule">📋 15 questions per attempt</div>
+      <div class="quiz-rule">✅ 70% to pass (11 of 15)</div>
+      <div class="quiz-rule">🔀 Randomized each attempt</div>
+      <div class="quiz-rule">🏆 Pass to earn your certificate</div>
     </div>
     <button class="btn-start" onclick="startQuiz()">Begin Assessment →</button>
   </div>
-
-  <!-- QUIZ -->
   <div id="quiz-section">
     <div class="progress-header">
       <span class="progress-label" id="progress-label">Question 1 of 15</span>
@@ -117,8 +95,6 @@
     <div class="feedback" id="feedback"></div>
     <button class="btn-next" id="btn-next" onclick="nextQuestion()">Next Question →</button>
   </div>
-
-  <!-- RESULTS -->
   <div id="result-section">
     <div class="result-icon" id="result-icon"></div>
     <div class="result-title" id="result-title"></div>
@@ -127,458 +103,157 @@
     <div class="result-actions" id="result-actions"></div>
   </div>
 </div>
-
 <script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-import { getFirestore, doc, updateDoc, setDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import{initializeApp}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import{getAuth,onAuthStateChanged}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import{getFirestore,doc,updateDoc,setDoc,arrayUnion}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+const app=initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+const auth=getAuth(app);const db=getFirestore(app);let currentUser=null;
+onAuthStateChanged(auth,u=>{currentUser=u;});
 
-const firebaseConfig = {
-  apiKey: "AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",
-  authDomain: "meridian-institute.firebaseapp.com",
-  projectId: "meridian-institute",
-  storageBucket: "meridian-institute.firebasestorage.app",
-  messagingSenderId: "355371012929",
-  appId: "1:355371012929:web:244fc2f15ee8ac656887c0"
-};
-
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
-
-let currentUser = null;
-onAuthStateChanged(auth, u => { currentUser = u; });
-
-// ─── QUESTION BANK (45 questions) ───────────────────────────────────────────
-const ALL_QUESTIONS = [
-  // MODULE 1 — Understanding Claude
-  {
-    q: "What company built Claude, and what was their founding motivation?",
-    options: ["Google, to compete with OpenAI","Anthropic, focused on AI safety and alignment","Meta, to build open-source AI","Microsoft, to power enterprise software"],
-    answer: 1,
-    explain: "Anthropic was founded in 2021 by former OpenAI researchers specifically because they believed AI safety and alignment was the most critical problem to solve."
-  },
-  {
-    q: "What is Constitutional AI (CAI)?",
-    options: ["A method of restricting AI from discussing politics","A training approach where Claude uses a set of principles to evaluate and revise its own responses","A legal framework governing AI development","A technical architecture for faster inference"],
-    answer: 1,
-    explain: "Constitutional AI involves giving Claude a set of principles — a constitution — that it uses to critique and revise its own outputs during training, producing more principled and consistent behavior."
-  },
-  {
-    q: "Claude's context window supports up to how many tokens?",
-    options: ["32,000","100,000","200,000","500,000"],
-    answer: 2,
-    explain: "Claude supports up to 200,000 tokens of context — roughly 150,000 words or about 500 pages of text — enabling it to process entire books or codebases in a single session."
-  },
-  {
-    q: "Which of the following is Claude specifically trained to AVOID?",
-    options: ["Long-form responses","Sycophancy — agreeing with users just to please them","Using technical terminology","Asking clarifying questions"],
-    answer: 1,
-    explain: "Claude is specifically trained to avoid sycophancy — telling people what they want to hear rather than what's accurate. This makes it more trustworthy but sometimes less agreeable."
-  },
-  {
-    q: "Why does Claude sometimes acknowledge uncertainty in its answers?",
-    options: ["It's a technical limitation that Anthropic hasn't fixed yet","It's trained to express calibrated uncertainty rather than false confidence","It's trying to avoid liability","It lacks sufficient training data"],
-    answer: 1,
-    explain: "Calibrated uncertainty is a deliberate design choice. Claude is trained to say it doesn't know something rather than generating a confident-sounding but potentially wrong answer."
-  },
-  {
-    q: "What is a practical advantage of Claude's large context window?",
-    options: ["It can browse the internet faster","It can process entire long documents and reason across all of them simultaneously","It generates images more accurately","It responds faster than other AI models"],
-    answer: 1,
-    explain: "The 200K token context window lets Claude hold an entire book or codebase in memory and answer questions that reference any part of it — something smaller context windows can't do."
-  },
-  {
-    q: "Which of these correctly describes Claude's relationship to honesty?",
-    options: ["Claude prioritizes user satisfaction over accuracy","Claude will push back on ideas it thinks are wrong rather than agreeing to avoid conflict","Claude avoids expressing opinions to remain neutral","Claude only expresses uncertainty about scientific topics"],
-    answer: 1,
-    explain: "Claude's training prioritizes honesty over agreeableness. It will disagree with you, point out flaws in reasoning, and push back — which is a feature, not a bug."
-  },
-
-  // MODULE 2 — Model Lineup
-  {
-    q: "Which Claude tier is optimized for speed and high-volume applications?",
-    options: ["Opus","Pro","Haiku","Sonnet"],
-    answer: 2,
-    explain: "Haiku is Claude's speed-optimized tier, designed for real-time applications, high-volume API use, and tasks where response time matters more than maximum depth."
-  },
-  {
-    q: "For most serious work — complex analysis, professional writing, research — which model is the best default choice?",
-    options: ["Haiku, because it's fastest","Opus, because it's most powerful","Sonnet, because it balances capability, speed, and cost","Claude 3, because it's the most tested"],
-    answer: 2,
-    explain: "Sonnet is the sweet spot for most serious work. It's capable enough for complex tasks while being significantly faster and cheaper than Opus."
-  },
-  {
-    q: "When should you specifically choose Claude Opus over Sonnet?",
-    options: ["For any task involving text","When speed is critical","For frontier reasoning tasks where quality matters more than cost or speed","For customer-facing chatbots"],
-    answer: 2,
-    explain: "Opus is worth the premium for genuinely hard problems — complex research, difficult code, high-stakes writing, deep strategic analysis — where you need maximum capability."
-  },
-  {
-    q: "A newer Haiku model compared to an older Sonnet model will generally:",
-    options: ["Always perform worse because Haiku is the lower tier","Perform better on many tasks because generation improvements outweigh tier differences","Cost more despite being a lower tier","Have a smaller context window"],
-    answer: 1,
-    explain: "Newer generations often outperform older models even in lower tiers. Claude Haiku 4.5 may outperform Claude Sonnet 3 on standard benchmarks because of generational improvements."
-  },
-  {
-    q: "What is extended thinking mode in Claude?",
-    options: ["A way to make Claude write longer responses","A mode where Claude reasons step-by-step through problems internally before answering, producing more accurate results on hard tasks","A feature that gives Claude access to the internet","A setting that increases context window size"],
-    answer: 1,
-    explain: "Extended thinking lets Claude work through problems explicitly before giving a final answer — not just for your benefit, but because the reasoning process itself improves accuracy on complex tasks."
-  },
-  {
-    q: "Which model string would you use in the API to ensure you always get the latest Claude Sonnet 4.5 updates?",
-    options: ["claude-sonnet-latest","claude-sonnet-4-5-latest","claude-4-5-sonnet","sonnet-claude-4-5"],
-    answer: 1,
-    explain: "The pattern is [model-name]-latest to get automatic updates to the newest version of a model tier. Specific version strings like claude-sonnet-4-5 lock you to that exact version."
-  },
-
-  // MODULE 3 — Prompting
-  {
-    q: "Why do XML tags improve Claude's responses to complex prompts?",
-    options: ["They make prompts shorter and easier to process","Claude is specifically trained on structured data and processes XML-organized prompts more cleanly","They bypass Claude's safety training","They increase Claude's processing speed"],
-    answer: 1,
-    explain: "Claude's training involved structured data using XML formatting. Using XML tags in prompts — separating context, task, constraints, and examples — helps Claude parse and respond to each component more accurately."
-  },
-  {
-    q: "In a system prompt, what should you include to get the most useful Claude behavior?",
-    options: ["Only a single sentence describing the task","Role identity, behavioral rules, relevant context, output format, and tone","Just the output format you want","Your name and preferences only"],
-    answer: 1,
-    explain: "Effective system prompts define who Claude is in this context, what it should always and never do, relevant background, how to format responses, and what tone to use."
-  },
-  {
-    q: "When Claude declines a request, the most effective response is:",
-    options: ["Try different phrasings until it complies","Argue that the request is harmless","Provide genuine context about your purpose and address the underlying concern","Report the refusal as a bug"],
-    answer: 2,
-    explain: "Claude's refusals trace back to specific principles. Providing honest context about who you are and why you need something is consistently more effective than trying to find a workaround."
-  },
-  {
-    q: "Which technique measurably improves Claude's accuracy on complex reasoning tasks?",
-    options: ["Asking for a shorter response","Adding 'think through this carefully before answering' to your prompt","Using all capital letters for important instructions","Asking multiple short questions instead of one complex one"],
-    answer: 1,
-    explain: "Explicitly asking Claude to reason through a problem before answering prompts deliberate thinking rather than pattern-matching to the most immediate response — measurably improving accuracy on hard tasks."
-  },
-  {
-    q: "What does 'steelmanning' mean in the context of prompting Claude?",
-    options: ["Asking Claude to give the shortest possible answer","Asking Claude to make the strongest possible case for a position — including one you may disagree with","Asking Claude to use technical language","Asking Claude to verify facts before answering"],
-    answer: 1,
-    explain: "Steelmanning means presenting the strongest version of an argument. Asking Claude to steelman a position — especially one you hold — produces rigorous adversarial analysis rather than weak counterarguments."
-  },
-  {
-    q: "For very long conversations, what is the recommended approach to maintain Claude's focus on key decisions?",
-    options: ["Start a new conversation every 10 messages","Use shorter prompts throughout","Periodically summarize key decisions and established context to keep Claude anchored","Ask Claude to summarize the conversation for you"],
-    answer: 2,
-    explain: "Periodic context refreshes — 'to confirm what we've agreed: X, Y, Z' — keep Claude anchored to your key decisions without requiring it to re-process the full conversation history."
-  },
-
-  // MODULE 4 — Projects & Memory
-  {
-    q: "What are the three components of a Claude Project?",
-    options: ["A title, a description, and a shared link","A system prompt, uploaded knowledge files, and conversation history","A role, a task, and output constraints","An API key, a model selection, and a temperature setting"],
-    answer: 1,
-    explain: "A Project contains a persistent system prompt that runs in every conversation, uploaded knowledge documents Claude can reference, and the conversation history from all sessions in that workspace."
-  },
-  {
-    q: "Why is a well-crafted Project system prompt worth significant time investment?",
-    options: ["It reduces Claude's response length","You write it once and it improves every future conversation in that workspace","It allows Claude to browse the internet","It unlocks features not available in standard conversations"],
-    answer: 1,
-    explain: "The system prompt runs in every Project conversation. A well-calibrated system prompt that took an hour to write might improve hundreds of future sessions — the ROI is exceptional."
-  },
-  {
-    q: "What is the key difference between Claude's Memory feature and Projects?",
-    options: ["Memory is for paying users, Projects are free","Memory stores general facts about you across all conversations; Projects store workspace-specific context for a particular project","Projects are permanent, Memory is temporary","They are the same feature with different names"],
-    answer: 1,
-    explain: "Memory stores persistent facts about you that are relevant across contexts — your role, preferences, background. Projects store specific context for a particular workspace — documents, goals, specialized instructions."
-  },
-  {
-    q: "For a coding Project, what should you upload as knowledge files?",
-    options: ["Every file in your codebase","README, architecture documentation, coding standards, and key files that explain the system","Only the files that have bugs","Your complete git history"],
-    answer: 1,
-    explain: "Knowledge files should give Claude the context it needs to understand the system — README, architecture docs, coding standards, and key files — not necessarily everything."
-  },
-  {
-    q: "How does the value of a Project change over time?",
-    options: ["It decreases as Claude's responses become repetitive","It stays constant","It increases as conversation history accumulates, the system prompt gets refined, and knowledge files become more complete","It resets every 30 days"],
-    answer: 2,
-    explain: "Projects compound in value — more conversation history, a better-refined system prompt, and more complete knowledge files all make each new session in that workspace more useful than the last."
-  },
-
-  // MODULE 5 — Advanced Features
-  {
-    q: "When should you use extended thinking mode?",
-    options: ["For all tasks, as it always improves quality","For creative writing tasks that require imagination","For genuinely hard problems where reasoning quality matters more than speed, and where a wrong answer has real consequences","Only when coding in Python"],
-    answer: 2,
-    explain: "Extended thinking is slower and uses more tokens — it's a premium mode for premium problems. Use it when the reasoning chain matters, the problem is complex, or a wrong answer would be costly."
-  },
-  {
-    q: "What can Claude do with uploaded images?",
-    options: ["Only transcribe text visible in the image","Only identify objects in the image","Understand spatial relationships, interpret charts, read handwriting, analyze UI designs, and reason about what it sees","Generate new images based on what it sees"],
-    answer: 2,
-    explain: "Claude's vision goes beyond OCR. It understands spatial relationships, interprets data in charts, reads handwriting, analyzes UI/UX designs, and can reason about visual content rather than just transcribing it."
-  },
-  {
-    q: "What is an Artifact in Claude?",
-    options: ["An error that Claude makes when generating code","A standalone output — code, document, or web page — rendered in a separate panel that can be executed, edited, and exported","A saved conversation template","A type of Claude memory that persists between sessions"],
-    answer: 1,
-    explain: "Artifacts are standalone outputs rendered separately from the conversation. Code in an artifact can execute and show real output; HTML shows the rendered result. They're interactive rather than just text."
-  },
-  {
-    q: "What is a critical limitation of Claude Artifacts to be aware of?",
-    options: ["They can only be 100 lines long","They cannot include images","They run in a sandboxed environment with no internet access — code that works there may behave differently in production","They expire after 24 hours"],
-    answer: 2,
-    explain: "Artifacts are sandboxed — they have no internet access and limited browser APIs. Always test artifact code in your actual development environment before deploying it."
-  },
-  {
-    q: "When Claude's web search is enabled, what does it do differently from just using its training data?",
-    options: ["It searches faster but with lower accuracy","It can find and synthesize current information from the internet, including events and research after its training cutoff","It only searches Anthropic's documentation","It searches but can only return exact quotes, not summaries"],
-    answer: 1,
-    explain: "Web search lets Claude find current information beyond its training cutoff. It doesn't just return search results — it synthesizes them into coherent answers with citations."
-  },
-
-  // MODULE 6 — Real World Workflows
-  {
-    q: "When asking Claude for feedback on your writing, what framing produces the most useful results?",
-    options: ["'What do you think of my writing?'","'Make this better'","Framing Claude as a direct, honest editor with specific areas to address — opening, argument flow, claims, cuts, and development","'Please review this for grammar'"],
-    answer: 2,
-    explain: "Specific role framing (honest editor) combined with structured feedback areas (opening, momentum, claims, cuts, development) shifts Claude from generic encouragement to actionable, direct feedback."
-  },
-  {
-    q: "Why should you work through your essay topic with Claude before drafting?",
-    options: ["Claude needs to approve your topic before you start","Claude can only write essays, not help plan them","Identifying the core authentic story before drafting prevents the most common essay mistake — writing before knowing what you're actually trying to say","It's required by Claude's content policy"],
-    answer: 2,
-    explain: "The biggest college essay mistake is drafting without clarity on the core story. Having Claude surface your authentic angle first — before writing a word — consistently produces better essays."
-  },
-  {
-    q: "What is the recommended approach when asking Claude to analyze a decision between multiple options?",
-    options: ["Ask which option is best and accept the first answer","Ask Claude to analyze what you're actually optimizing for, what information is missing, best/realistic/worst cases, and what you might regret not considering","List the pros and cons yourself and ask Claude to choose","Ask Claude to make the decision for you without explanation"],
-    answer: 1,
-    explain: "Structured decision analysis — covering real priorities, missing information, scenario ranges, and potential regrets — produces more useful guidance than simply asking which option is best."
-  },
-  {
-    q: "What does giving Claude 'permission to be direct' accomplish?",
-    options: ["Nothing — Claude is always equally direct","It bypasses Claude's safety filters","It activates a special mode called 'Direct Mode'","It shifts Claude's default behavior toward honest pushback rather than soft agreement, producing more useful feedback"],
-    answer: 3,
-    explain: "Claude is trained to be agreeable by default. Explicitly giving it permission to be direct — 'don't tell me what I want to hear' — consistently produces more honest and useful responses."
-  },
-  {
-    q: "When asking Claude for a concrete plan, what request makes the difference between generic and useful output?",
-    options: ["Asking for a longer response","Asking for the first 3 specific actions this week, the biggest obstacle, what you're underestimating, and a 30-day check-in question","Asking Claude to use bullet points","Asking Claude to base the plan on research"],
-    answer: 1,
-    explain: "Specificity and concreteness — 'first 3 things this week,' 'biggest obstacle,' 'what am I underestimating' — forces Claude out of generic framework mode into actionable, personalized guidance."
-  },
-
-  // MODULE 7 — Claude vs The Field
-  {
-    q: "For which task does Perplexity have a clear advantage over Claude?",
-    options: ["Nuanced long-form writing","Coding complex algorithms","Finding current, sourced information quickly — things that happened after Claude's training cutoff","Deep document analysis"],
-    answer: 2,
-    explain: "Perplexity is built specifically for current, cited information retrieval. For research requiring up-to-date data, it consistently outperforms Claude, which is limited by its training cutoff."
-  },
-  {
-    q: "In what area does ChatGPT have a clear capability advantage over Claude?",
-    options: ["Long document analysis","Nuanced writing and editing","Image generation with DALL-E","Expressing calibrated uncertainty"],
-    answer: 2,
-    explain: "Claude cannot generate images. ChatGPT's DALL-E integration is a genuine capability gap — if you need image generation, ChatGPT or Midjourney are your options, not Claude."
-  },
-  {
-    q: "Why does Gemini have an advantage for Google Workspace users?",
-    options: ["It has a larger context window than Claude","Its models are more powerful than Claude Opus","It integrates natively with Gmail, Google Docs, and Google Drive — workflows that require copying and pasting with Claude","It costs less than Claude"],
-    answer: 2,
-    explain: "Gemini's native integration with Google's productivity suite — responding to emails with full thread context, summarizing Drive folders from within Docs — creates workflow advantages Claude can't match."
-  },
-  {
-    q: "According to the course's honest comparison, where does Claude genuinely lead the field?",
-    options: ["Image generation, voice interaction, and real-time information","Long document analysis, nuanced writing, honesty and calibrated uncertainty, and complex instruction following","Cheapest pricing and fastest speeds","Best mobile app and voice mode"],
-    answer: 1,
-    explain: "Claude's genuine advantages are in depth: long document analysis, nuanced writing quality, honesty and uncertainty calibration, and following complex structured instructions across long responses."
-  },
-  {
-    q: "What does a sophisticated multi-tool AI workflow look like in practice?",
-    options: ["Picking the most expensive AI and using it for everything","Using Claude for all tasks because it's the most capable","Using different tools for what each does best — Perplexity for current research, Claude for synthesis and writing, ChatGPT for image generation, Gemini for Google Workspace tasks","Using the same tool consistently to build familiarity"],
-    answer: 2,
-    explain: "The sophistication is in matching tools to tasks. Perplexity for current information, Claude for analysis and writing, ChatGPT for images and voice, Gemini for Google integration — each doing what it does best."
-  },
-  {
-    q: "What is Claude's context window compared to Gemini's maximum?",
-    options: ["Claude's is larger — 500K vs Gemini's 200K","They are identical at 200K tokens","Gemini supports over 1 million tokens, significantly exceeding Claude's 200K","Claude supports 100K, Gemini supports 200K"],
-    answer: 2,
-    explain: "Gemini supports over 1 million tokens of context — significantly more than Claude's 200K. For tasks requiring extremely long context (entire codebases, massive document collections), Gemini has an architectural advantage."
-  },
-  {
-    q: "Claude's Constitutional AI training most directly explains which behavioral trait?",
-    options: ["Its ability to generate images","Its speed compared to other models","Its tendency to push back, acknowledge uncertainty, and maintain consistent values even in edge cases","Its ability to browse the internet"],
-    answer: 2,
-    explain: "Constitutional AI — training Claude with a set of explicit principles it uses to evaluate its own responses — directly produces the consistent values, honest pushback, and calibrated uncertainty that distinguish Claude's behavior."
-  },
-  {
-    q: "If a user needs Claude to act as a specialized tool for a recurring professional task, what feature should they use?",
-    options: ["A very long initial message in each conversation","The Artifacts feature","A Claude Project with a purpose-built system prompt and relevant knowledge files uploaded","Asking Claude to remember instructions at the end of each conversation"],
-    answer: 2,
-    explain: "Projects are designed exactly for this — a persistent workspace with a system prompt defining Claude's role and knowledge files giving it relevant context, improving every future session automatically."
-  },
-  {
-    q: "What is the correct order of steps when setting up a highly effective Claude Project?",
-    options: ["Upload files, start chatting, add a system prompt later when needed","Name the project clearly, write a specific system prompt, upload core knowledge files, then test and refine","Start chatting, then add files if needed","Copy a template system prompt, upload everything you have, never change it"],
-    answer: 1,
-    explain: "Effective Projects require deliberate setup: clear naming, a purpose-built system prompt (the most important step), focused knowledge files, and iteration based on test conversations."
-  }
+const ALL_QUESTIONS=[
+  {q:"What is Constitutional AI, and how does it differ from standard RLHF training?",
+   options:["A government-mandated safety standard that AI companies must meet before releasing models to the public","Anthropic's training method where Claude learns a set of principles and is trained to critique its own outputs against those principles","A filtering layer applied after generation that blocks outputs violating predefined content policies","An industry certification awarded by third-party auditors who test models against safety and accuracy benchmarks"],
+   answer:1,explain:"Constitutional AI trains Claude using a written set of principles. The model learns to evaluate and revise its own outputs against those principles — rather than relying solely on human raters scoring every response. This produces more consistent values and reduces sycophantic behavior."},
+  {q:"What does Claude's 200,000-token context window mean in practical terms?",
+   options:["Claude can generate responses up to 200,000 words long before it stops producing output","Claude can hold roughly a full novel's worth of text in its working memory during a single conversation","Claude has been trained on 200,000 documents and retrieves relevant passages when answering questions","Claude charges users based on token usage, with 200,000 tokens representing the monthly free allowance"],
+   answer:1,explain:"A 200,000-token context window means Claude can process roughly 150,000 words simultaneously — the equivalent of a full-length novel. This enables analysis of entire codebases, long research documents, or extended conversations without losing track of earlier content."},
+  {q:"Why do XML tags improve Claude's output quality on complex prompts?",
+   options:["They trigger a special high-performance mode in Claude that bypasses standard processing","They create clear structure that separates instructions from content, reducing ambiguity about what role each part of the prompt plays","They compress the token count, allowing more information to fit within Claude's context window limits","They are required by Anthropic's API and without them Claude defaults to a reduced-capability mode"],
+   answer:1,explain:"XML tags like <instructions>, <document>, and <example> eliminate ambiguity in complex prompts. They make it unambiguous what is instruction versus content versus example. For multi-part prompts, this structural clarity dramatically reduces misinterpretation and improves output quality."},
+  {q:"What is the key capability that Claude Projects adds over standard conversations?",
+   options:["Projects give Claude access to the internet so it can search for current information during responses","Projects store custom instructions, uploaded documents, and conversation history persistently across multiple sessions","Projects allow multiple users to collaborate in the same Claude conversation simultaneously in real time","Projects enable Claude to execute code and run programs directly on your local computer"],
+   answer:1,explain:"Claude Projects maintain persistent context — custom instructions you write once, documents you upload, and memory of past conversations — across sessions. For ongoing work like coding projects or research, this eliminates the need to re-explain context every time you start a new chat."},
+  {q:"What is Claude's most significant capability advantage over other major AI tools?",
+   options:["Claude generates images and audio content at higher quality than any other AI model currently available","Claude consistently produces higher-quality nuanced writing, analysis, and honest reasoning than other leading models","Claude searches the live web by default and attaches a citation to every factual claim it makes","Claude can execute code in a live environment and return real computational outputs within the chat"],
+   answer:1,explain:"Claude's training on Constitutional AI and calibrated honesty produces the highest quality output for substantive writing, complex analysis, and tasks requiring careful reasoning. When writing and thinking quality matters most, Claude is the strongest tool available."},
+  {q:"How does Claude's approach to honesty differ from models optimized purely through RLHF?",
+   options:["Claude refuses to answer any question where it has less than complete certainty about the correct response","Claude is trained to express calibrated uncertainty and push back when appropriate, rather than telling users what they want to hear","Claude requires users to verify every factual claim independently since it never expresses confidence in its outputs","Claude is programmed to always agree with the user's stated position to maintain a positive interaction"],
+   answer:1,explain:"Models optimized heavily through RLHF tend toward sycophancy — telling users what they prefer to hear to get positive ratings. Claude's Constitutional AI training explicitly pushes against this, producing a model that disagrees when appropriate, flags uncertainty, and maintains calibrated honesty."},
+  {q:"What are Claude Artifacts in the Claude.ai interface?",
+   options:["Stored conversation transcripts that Claude saves automatically for users to review after each session","Standalone content — code, documents, websites — that Claude generates and renders live in a separate panel","External plugins and integrations that extend Claude's capabilities to connect with third-party applications","The citations and source references that Claude attaches to factual claims in research conversations"],
+   answer:1,explain:"Claude Artifacts generate self-contained content that renders alongside the conversation — a React component that actually runs, an HTML page that displays, a document that formats properly. This makes Claude useful for producing immediately usable outputs rather than just text to copy elsewhere."},
+  {q:"What does 'sycophancy' mean in the context of AI models, and why is it a problem?",
+   options:["A technical failure where a model repeats the same phrase multiple times within a single response","When a model tells users what they want to hear rather than what is accurate, prioritizing approval over honesty","A safety issue where a model attempts to access private user data without explicit permission being granted","When a model generates responses that are too long and detailed relative to what the user actually asked"],
+   answer:1,explain:"Sycophancy is when an AI model prioritizes user approval over accuracy — agreeing with wrong premises, validating bad ideas, and softening honest feedback. It's a direct byproduct of RLHF when models learn that agreement generates higher human ratings than truthful disagreement."},
+  {q:"What is Claude Sonnet's position in Anthropic's model lineup?",
+   options:["Sonnet is Anthropic's entry-level model, designed for simple tasks with minimal computational resources","Sonnet is the mid-tier model — strong capability for most professional tasks at faster speed and lower cost than Opus","Sonnet is the most powerful model Anthropic offers, reserved for the most computationally demanding tasks","Sonnet is a deprecated older model that Anthropic maintains only for backward compatibility with existing integrations"],
+   answer:1,explain:"Claude Sonnet sits between Haiku (fastest, lightest) and Opus (most capable, highest cost) in Anthropic's lineup. Sonnet delivers strong capability across most professional tasks at a speed and cost profile that makes it the practical default for the majority of use cases."},
+  {q:"What should you do when prompting Claude for complex, multi-component tasks?",
+   options:["Keep prompts as short as possible — Claude performs better with minimal instructions and maximum creative freedom","Provide detailed context, use XML tags to separate components, specify the output format, and give an example if possible","Always ask Claude to search the web first before attempting to answer any question about your topic","Break every complex task into many separate conversations rather than providing full context in a single prompt"],
+   answer:1,explain:"For complex tasks, Claude benefits from rich context: what you need, what format you want it in, what constraints apply, and an example of a good output if possible. XML tags help separate instructions from content. More specificity consistently produces better results than minimal prompting."},
+  {q:"What is Claude's primary limitation relative to Perplexity for research tasks?",
+   options:["Claude cannot understand or analyze documents longer than a few pages in a single conversation","Claude has a training cutoff and lacks real-time web access by default, making it unreliable for current information","Claude refuses to answer factual questions without first asking the user to provide primary source documentation","Claude's response quality degrades significantly on any topic that involves numbers, statistics, or data analysis"],
+   answer:1,explain:"Claude's training has a knowledge cutoff, and without web search enabled it cannot access current information. For research requiring recent data, live sources, or cited facts, Perplexity's architecture — built around real-time web search — is a better starting point than Claude's training data alone."},
+  {q:"How does Claude handle a prompt where it disagrees with the user's stated premise?",
+   options:["Claude automatically accepts whatever premise the user states and builds its response entirely around that assumption","Claude is trained to flag disagreement or factual errors rather than simply validating incorrect premises","Claude refuses to answer any prompt that contains a factually incorrect claim anywhere in the question","Claude escalates disagreements to Anthropic's moderation team before providing any response to the user"],
+   answer:1,explain:"Claude's training emphasizes honest engagement over approval-seeking. When a user states an incorrect premise or asks Claude to validate something it believes is wrong, Claude is trained to note the disagreement clearly rather than building an elaborate response on a false foundation."},
+  {q:"What is the practical difference between Claude Haiku and Claude Opus?",
+   options:["Haiku and Opus are identical models but marketed to different user segments at different price points","Haiku is optimized for fast, lightweight tasks at low cost; Opus is the most capable model for complex, demanding work","Haiku generates creative writing while Opus specializes in technical and analytical tasks exclusively","Haiku is the API-only model while Opus is exclusively available through the Claude.ai web interface"],
+   answer:1,explain:"Haiku prioritizes speed and cost efficiency for high-volume, simple tasks. Opus is Anthropic's most powerful model — best for the most complex reasoning, analysis, and tasks where maximum capability matters more than speed or cost. Most professional users default to Sonnet as the balance point."},
+  {q:"Why is Claude considered stronger than ChatGPT for most writing and analysis tasks?",
+   options:["Claude has access to more training data and a larger parameter count than any version of ChatGPT","Claude's Constitutional AI training produces more nuanced, honest, and less formulaic writing than RLHF-heavy models","Claude automatically fact-checks every statement it makes against live web sources before including it in a response","Claude has specialized writing modules that activate when it detects creative or analytical tasks in the prompt"],
+   answer:1,explain:"Claude's Constitutional AI training — emphasizing honest, calibrated reasoning and resistance to sycophancy — produces writing that is more nuanced and less generically structured than models optimized primarily through human approval ratings. The quality difference is most visible in substantive analytical and creative work."},
+  {q:"What is the recommended approach when using Claude for a multi-week ongoing project?",
+   options:["Start a fresh conversation each session with no prior context, since Claude performs better without accumulated history","Use Claude Projects to store instructions, relevant documents, and memory so context persists across sessions automatically","Copy and paste the entire previous conversation into each new session to maintain continuity manually","Ask Claude to email you a summary at the end of each session that you can paste back in next time"],
+   answer:1,explain:"Claude Projects are designed exactly for ongoing work. Set up the Project once with custom instructions and relevant uploaded documents. The context persists across sessions, Claude remembers the project's parameters, and you never have to re-explain your goals, constraints, or style preferences."},
+  {q:"When is it most appropriate to switch from Claude to Perplexity for a task?",
+   options:["Whenever the topic involves science or medicine, since Perplexity has specialized training in those domains","When you need current information, live sources, or verifiable citations that Claude's training data cannot provide","Whenever you need a response longer than two paragraphs, since Claude truncates longer outputs automatically","When you need the response in a specific format like a table or numbered list that Claude cannot produce"],
+   answer:1,explain:"Switch to Perplexity when the task requires current information (post-training cutoff events), verifiable sourcing, or real-time data. Perplexity searches the live web and cites every claim. Claude is better for writing, analysis, and reasoning — Perplexity is better for knowing what is true right now."},
+  {q:"What does it mean that Claude's reasoning is 'calibrated'?",
+   options:["Claude measures the exact length of each response to ensure it precisely matches the complexity of the question","Claude expresses appropriate confidence levels — including genuine uncertainty — rather than presenting everything with equal certainty","Claude calibrates its vocabulary and sentence length to match the estimated reading level of each individual user","Claude adjusts its political and ethical positions to match whatever views the user expresses in the conversation"],
+   answer:1,explain:"Calibrated reasoning means Claude's expressed confidence matches its actual epistemic state. It says 'I'm not certain' when it isn't, 'I believe' when it's drawing an inference, and provides confident direct answers when the ground is solid. This is distinct from models that project uniform confidence to sound authoritative."},
+  {q:"What is memory in Claude, and how does it differ from Projects?",
+   options:["Memory and Projects are identical features with different names, offered at different subscription price tiers","Memory stores facts Claude learns about you across conversations; Projects are configured workspaces for specific ongoing work","Memory gives Claude access to past conversations from other users to learn general patterns and improve its responses","Memory is a deprecated feature that Anthropic replaced entirely with Projects in a recent platform update"],
+   answer:1,explain:"Memory passively accumulates facts about you across conversations — your preferences, name, work context — without manual setup. Projects are intentionally configured workspaces: you write the instructions, upload the relevant documents, define the scope. Both solve the context problem differently."},
+  {q:"What makes Claude's outputs on analytical tasks harder to replicate with other models?",
+   options:["Claude uses a proprietary reasoning architecture that no other AI lab has successfully reverse-engineered or reproduced","Claude's training combines honest engagement with sophisticated reasoning, producing analysis that is more nuanced and less formulaic","Claude searches academic databases in real time, giving it access to research that other models do not have","Claude's outputs are protected by copyright, so other models are legally prevented from producing similar analytical content"],
+   answer:1,explain:"Claude's combination of Constitutional AI training and emphasis on honest, calibrated reasoning produces analytical outputs that are substantively different from models trained primarily to maximize approval. The analysis acknowledges complexity, flags uncertainty, and pushes back on weak premises — qualities that emerge from training design, not just scale."},
+  {q:"How should a user interpret Claude saying 'I'm not certain about this'?",
+   options:["As a signal that Claude's response is unreliable and should be entirely disregarded in favor of another source","As accurate epistemic signaling — Claude is flagging that the following claim is an inference rather than a confident fact","As a technical error message indicating that Claude failed to retrieve the relevant information from its training data","As a politeness convention Claude uses regardless of actual certainty, similar to hedging language in formal writing"],
+   answer:1,explain:"When Claude says it's uncertain, that uncertainty is calibrated and meaningful. It reflects the model's actual epistemic state rather than a social convention. A claim flagged as uncertain deserves verification; a claim stated confidently has stronger grounding in Claude's training. This calibration is a designed feature, not hedging."},
+  {q:"What is the best way to get Claude to produce output in a very specific format?",
+   options:["Tell Claude its previous response was wrong and ask it to try again until the format matches your needs","Show Claude an example of the exact format you want and use XML tags to label what role each component plays","Use only single-word commands, since Claude interprets longer prompts as requests for longer, less structured responses","Enable format mode in Claude's settings menu, which unlocks structured output templates for common use cases"],
+   answer:1,explain:"The most reliable way to get a specific format is to show Claude an example of it and use XML tags to make the structure explicit. Claude is excellent at following formatting patterns when given a concrete reference. Describing a format abstractly is far less reliable than demonstrating it directly."},
+  {q:"What was Anthropic's stated reason for developing Claude separately from GPT-based models?",
+   options:["Anthropic wanted to build a competing product to capture market share from OpenAI's dominant position","Anthropic was founded by ex-OpenAI researchers who wanted to prioritize AI safety and develop more interpretable, aligned models","Anthropic received government funding specifically to build an American alternative to foreign AI models","Anthropic needed a model trained on proprietary data that other companies could not access or reproduce"],
+   answer:1,explain:"Anthropic was founded in 2021 by Dario Amodei, Daniela Amodei, and others who left OpenAI over disagreements about AI safety priorities. The company's explicit mission is building AI systems that are safe, interpretable, and aligned with human values — leading to research-first approaches like Constitutional AI."},
+  {q:"What kind of task is Claude most likely to underperform ChatGPT on?",
+   options:["Writing long-form analytical essays that require sustained argument development over multiple paragraphs","Generating images from text descriptions and maintaining natural spoken voice conversation with users","Answering questions about historical events that occurred more than ten years before the training cutoff","Analyzing code for bugs and suggesting specific fixes in languages like Python, JavaScript, and TypeScript"],
+   answer:1,explain:"Claude cannot generate images and lacks ChatGPT's Advanced Voice Mode for natural spoken conversation. ChatGPT's DALL-E 3 integration and multimodal voice capabilities represent genuine gaps in Claude's feature set. For image generation and voice interaction, ChatGPT is the clear choice."},
+  {q:"What is the recommended workflow when combining Claude with Perplexity for research projects?",
+   options:["Use Claude first to generate a hypothesis, then verify it with Perplexity's live web search for confirmation","Research in Perplexity to establish current sourced facts, then bring that research to Claude for analysis and writing","Use both tools simultaneously in separate browser tabs and manually compare their outputs for discrepancies","Always use Perplexity for any topic and only switch to Claude when Perplexity explicitly cannot answer a question"],
+   answer:1,explain:"The Perplexity-to-Claude pipeline is the highest-leverage research workflow. Perplexity establishes what is true and current — with citations. Claude analyzes what it means, builds the argument, and writes the final output. Each tool handles what it does best; the division of labor is the key."},
+  {q:"How does providing Claude with a negative example improve prompt performance?",
+   options:["Negative examples confuse Claude and should always be replaced with additional positive examples instead","Showing Claude what you do not want is often more efficient than describing it abstractly, since examples are unambiguous","Negative examples trigger a special evaluation mode where Claude assigns numerical quality scores to each candidate output","Claude treats negative examples as forbidden phrases and avoids repeating any word that appeared in them"],
+   answer:1,explain:"Negative examples show Claude exactly what to avoid, which is often clearer than describing the problem in words. 'Don't write like this: [example]' is more precise than 'avoid being too formal.' Combined with a positive example showing what you do want, this two-sided demonstration is highly effective."}
 ];
 
-// ─── QUIZ LOGIC ─────────────────────────────────────────────────────────────
-let questions = [];
-let current = 0;
-let score = 0;
-let answered = false;
+let questions=[],current=0,score=0,answered=false;
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
 
-function shuffle(arr) {
-  for (let i = arr.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [arr[i], arr[j]] = [arr[j], arr[i]];
-  }
-  return arr;
-}
-
-window.startQuiz = function() {
-  // Check all modules completed
-  const required = ['meridian_claude_m1','meridian_claude_m2','meridian_claude_m3','meridian_claude_m4','meridian_claude_m5','meridian_claude_m6','meridian_claude_m7'];
-  const missing = required.filter(k => !localStorage.getItem(k));
-  if (missing.length > 0) {
-    alert('Please complete all 7 modules before taking the assessment.');
-    window.location.href = 'claude-module-1.html';
-    return;
-  }
-  questions = shuffle([...ALL_QUESTIONS]).slice(0, 15);
-  current = 0;
-  score = 0;
-  document.getElementById('start-section').style.display = 'none';
-  document.getElementById('quiz-section').style.display = 'block';
+window.startQuiz=function(){
+  const req=['meridian_claude_m1','meridian_claude_m2','meridian_claude_m3','meridian_claude_m4','meridian_claude_m5','meridian_claude_m6','meridian_claude_m7'];
+  if(req.some(k=>!localStorage.getItem(k))){alert('Please complete all 7 modules first.');window.location.href='claude-module-1.html';return;}
+  questions=shuffle([...ALL_QUESTIONS]).slice(0,15);current=0;score=0;
+  document.getElementById('start-section').style.display='none';
+  document.getElementById('quiz-section').style.display='block';
   renderQuestion();
-}
-
-function renderQuestion() {
-  answered = false;
-  const q = questions[current];
-  document.getElementById('question-num').textContent = `Question ${current + 1} of 15`;
-  document.getElementById('question-text').textContent = q.q;
-  document.getElementById('progress-label').textContent = `Question ${current + 1} of 15`;
-  document.getElementById('score-label').textContent = `${score} correct`;
-  document.getElementById('progress-fill').style.width = `${(current / 15) * 100}%`;
-  document.getElementById('feedback').className = 'feedback';
-  document.getElementById('feedback').textContent = '';
-  document.getElementById('btn-next').className = 'btn-next';
-
-  const letters = ['A','B','C','D'];
-  const optionsEl = document.getElementById('options');
-  optionsEl.innerHTML = '';
-
-  // Shuffle option order
-  const indices = shuffle([0,1,2,3]);
-  const correctShuffled = indices.indexOf(q.answer);
-
-  indices.forEach((origIdx, displayIdx) => {
-    const opt = document.createElement('div');
-    opt.className = 'option';
-    opt.innerHTML = `<div class="option-letter">${letters[displayIdx]}</div><div class="option-text">${q.options[origIdx]}</div>`;
-    opt.dataset.orig = origIdx;
-    opt.onclick = () => selectAnswer(opt, origIdx === q.answer, correctShuffled, displayIdx, q.explain, indices);
+};
+function renderQuestion(){
+  answered=false;const q=questions[current];
+  document.getElementById('question-num').textContent=`Question ${current+1} of 15`;
+  document.getElementById('question-text').textContent=q.q;
+  document.getElementById('progress-label').textContent=`Question ${current+1} of 15`;
+  document.getElementById('score-label').textContent=`${score} correct`;
+  document.getElementById('progress-fill').style.width=`${(current/15)*100}%`;
+  document.getElementById('feedback').className='feedback';
+  document.getElementById('btn-next').className='btn-next';
+  const letters=['A','B','C','D'];
+  const optionsEl=document.getElementById('options');optionsEl.innerHTML='';
+  const indices=shuffle([0,1,2,3]);
+  indices.forEach((origIdx,displayIdx)=>{
+    const opt=document.createElement('div');opt.className='option';
+    opt.innerHTML=`<div class="option-letter">${letters[displayIdx]}</div><div class="option-text">${q.options[origIdx]}</div>`;
+    opt.onclick=()=>selectAnswer(opt,origIdx===q.answer,indices.indexOf(q.answer),q.explain);
     optionsEl.appendChild(opt);
   });
 }
-
-function selectAnswer(clickedEl, isCorrect, correctShuffledIdx, clickedShuffledIdx, explain, indices) {
-  if (answered) return;
-  answered = true;
-
-  const opts = document.querySelectorAll('.option');
-  opts.forEach((o, i) => {
-    o.classList.add('disabled');
-    if (i === correctShuffledIdx) o.classList.add('correct');
-  });
-
-  if (isCorrect) {
-    clickedEl.classList.add('correct');
-    score++;
-  } else {
-    clickedEl.classList.add('wrong');
-  }
-
-  document.getElementById('score-label').textContent = `${score} correct`;
-
-  const fb = document.getElementById('feedback');
-  fb.className = `feedback ${isCorrect ? 'correct' : 'wrong'} show`;
-  fb.textContent = isCorrect ? `✓ Correct. ${explain}` : `✗ ${explain}`;
-
-  const btn = document.getElementById('btn-next');
-  btn.className = 'btn-next show';
-  btn.textContent = current === 14 ? 'See Results →' : 'Next Question →';
+function selectAnswer(clickedEl,isCorrect,correctShuffledIdx,explain){
+  if(answered)return;answered=true;
+  document.querySelectorAll('.option').forEach((o,i)=>{o.classList.add('disabled');if(i===correctShuffledIdx)o.classList.add('correct');});
+  if(isCorrect){clickedEl.classList.add('correct');score++;}else{clickedEl.classList.add('wrong');}
+  document.getElementById('score-label').textContent=`${score} correct`;
+  const fb=document.getElementById('feedback');fb.className=`feedback ${isCorrect?'correct':'wrong'} show`;
+  fb.textContent=isCorrect?`✓ Correct. ${explain}`:`✗ ${explain}`;
+  const btn=document.getElementById('btn-next');btn.className='btn-next show';
+  btn.textContent=current===14?'See Results →':'Next Question →';
 }
-
-window.nextQuestion = function() {
-  current++;
-  if (current >= 15) {
-    showResults();
-  } else {
-    renderQuestion();
-  }
-}
-
-async function showResults() {
-  document.getElementById('quiz-section').style.display = 'none';
-  document.getElementById('result-section').style.display = 'block';
-
-  const passed = score >= 11;
-  const pct = Math.round((score / 15) * 100);
-
-  document.getElementById('result-icon').textContent = passed ? '🏆' : '📚';
-  document.getElementById('result-title').textContent = passed ? 'Assessment Passed' : 'Not Quite Yet';
-  document.getElementById('result-score').className = `result-score ${passed ? 'pass' : 'fail'}`;
-  document.getElementById('result-score').textContent = `${score} / 15`;
-
-  if (passed) {
-    document.getElementById('result-message').textContent = `You scored ${pct}% — well above the 70% threshold. You've demonstrated genuine mastery of Claude. Your certificate is being generated now.`;
-
-    if (currentUser) {
-      try {
-        const certId = currentUser.uid + '-claude';
-        const completedDate = new Date();
-
-        await updateDoc(doc(db, 'users', currentUser.uid), {
-          completedModules: arrayUnion('claude-complete'),
-          certificatesEarned: arrayUnion('claude'),
-          claudeCompletedAt: completedDate,
-          claudeCertId: certId
-        });
-
-        await setDoc(doc(db, 'certificates', certId), {
-          name: currentUser.displayName || 'Meridian Student',
-          email: currentUser.email,
-          course: 'Mastering Claude',
-          issuedAt: completedDate,
-          certId: certId,
-          valid: true
-        });
-
-        document.getElementById('result-actions').innerHTML = `
-          <a href="certificate.html?id=${certId}" class="btn-result btn-primary" target="_blank">View Certificate →</a>
-          <a href="dashboard.html" class="btn-result btn-ghost">Go to Dashboard</a>
-        `;
-      } catch(e) {
-        document.getElementById('result-actions').innerHTML = `<a href="dashboard.html" class="btn-result btn-primary">Go to Dashboard</a>`;
-      }
+window.nextQuestion=function(){current++;if(current>=15)showResults();else renderQuestion();};
+async function showResults(){
+  document.getElementById('quiz-section').style.display='none';document.getElementById('result-section').style.display='block';
+  const passed=score>=11;const pct=Math.round((score/15)*100);
+  document.getElementById('result-icon').textContent=passed?'🏆':'📚';
+  document.getElementById('result-title').textContent=passed?'Assessment Passed':'Not Quite Yet';
+  document.getElementById('result-score').className=`result-score ${passed?'pass':'fail'}`;
+  document.getElementById('result-score').textContent=`${score} / 15`;
+  if(passed){
+    document.getElementById('result-message').textContent=`You scored ${pct}% — above the 70% threshold. Your Mastering Claude certificate is being issued.`;
+    if(currentUser){
+      try{
+        const certId=currentUser.uid+'-claude';
+        const completedDate=new Date();
+        await updateDoc(doc(db,'users',currentUser.uid),{completedModules:arrayUnion('claude-complete'),certificatesEarned:arrayUnion('claude'),claudeCompletedAt:completedDate,claudeCertId:certId});
+        await setDoc(doc(db,'certificates',certId),{name:currentUser.displayName||'Meridian Student',email:currentUser.email,course:'Mastering Claude — Meridian Institute of AI',issuedAt:completedDate,certId:certId,valid:true});
+        document.getElementById('result-actions').innerHTML=`<a href="certificate.html?id=${certId}" class="btn-result btn-primary" target="_blank">View Certificate →</a><a href="dashboard.html" class="btn-result btn-ghost">Dashboard</a>`;
+      }catch(e){document.getElementById('result-actions').innerHTML=`<a href="dashboard.html" class="btn-result btn-primary">Dashboard</a>`;}
     }
-  } else {
-    document.getElementById('result-message').textContent = `You scored ${pct}% — you need 70% (11 of 15) to pass. Review the modules and try again. The questions are randomized each attempt.`;
-    document.getElementById('result-actions').innerHTML = `
-      <a href="claude-module-1.html" class="btn-result btn-primary">Review from Module 1</a>
-      <button class="btn-result btn-ghost" onclick="location.reload()">Try Again</button>
-    `;
+  }else{
+    document.getElementById('result-message').textContent=`You scored ${pct}% — you need 70% to pass. Review the modules and try again.`;
+    document.getElementById('result-actions').innerHTML=`<a href="claude-module-1.html" class="btn-result btn-primary">Review from Module 1</a><button class="btn-result btn-ghost" onclick="location.reload()">Try Again</button>`;
   }
 }
-
-window.toggleTheme = function() {
-  const h = document.documentElement, i = document.getElementById('theme-icon');
-  h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='☾'):(h.setAttribute('data-theme','dark'),i.textContent='☀');
-}
+window.toggleTheme=function(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='☾'):(h.setAttribute('data-theme','dark'),i.textContent='☀');};
 </script>
 </body>
 </html>

@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Systems Proficiency Assessment — Meridian Institute of AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#F0B429;--accent-dim:rgba(240,180,41,0.1);--nav-bg:rgba(8,8,8,0.9);--success:#22c55e;--success-bg:rgba(34,197,94,0.08);--success-border:rgba(34,197,94,0.25);--fail-bg:rgba(239,68,68,0.08);--fail-border:rgba(239,68,68,0.25);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#B8860B;--accent-dim:rgba(184,134,11,0.08);--nav-bg:rgba(250,250,248,0.9);--success:#16a34a;--success-bg:rgba(22,163,74,0.06);--success-border:rgba(22,163,74,0.25);--fail-bg:rgba(220,38,38,0.06);--fail-border:rgba(220,38,38,0.25);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}
+  .nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}
+  .nav-back{font-size:13px;color:var(--text-2);text-decoration:none;transition:color 0.2s;}.nav-back:hover{color:var(--text);}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;}
+  .page{max-width:700px;margin:0 auto;padding:90px 24px 80px;}
+
+  /* Start screen */
+  .start-eyebrow{font-size:11px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:12px;}
+  .start-title{font-family:'Cormorant Garamond',serif;font-size:48px;font-weight:300;color:var(--text);line-height:1.05;margin-bottom:16px;}
+  .start-sub{font-size:16px;color:var(--text-2);line-height:1.75;margin-bottom:32px;}
+  .cert-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:28px;}
+  .cert-item{background:var(--bg-2);border:1px solid var(--border);border-radius:10px;padding:14px 16px;display:flex;align-items:center;gap:10px;}
+  .cert-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
+  .cert-label{font-size:13px;color:var(--text-2);}
+  .cert-status{margin-left:auto;font-size:11px;font-weight:500;padding:3px 8px;border-radius:4px;}
+  .cert-status.earned{background:rgba(34,197,94,0.12);color:#22c55e;}
+  .cert-status.missing{background:rgba(239,68,68,0.1);color:#ef4444;}
+  .quiz-rules{background:var(--bg-2);border:1px solid var(--border);border-radius:12px;padding:20px 24px;margin-bottom:28px;display:flex;gap:20px;flex-wrap:wrap;}
+  .quiz-rule{font-size:13px;color:var(--text-2);display:flex;align-items:center;gap:8px;}
+  .btn-start{display:inline-block;padding:14px 32px;background:var(--accent);color:#080808;border-radius:10px;font-size:15px;font-weight:500;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;transition:opacity 0.2s;margin-top:4px;}
+  .btn-start:hover{opacity:0.88;}
+  .btn-start:disabled{opacity:0.4;cursor:not-allowed;}
+
+  /* Locked screen */
+  .locked-banner{background:var(--bg-2);border:1px solid var(--border);border-radius:16px;padding:40px;text-align:center;margin-top:20px;}
+  .locked-icon{font-size:56px;margin-bottom:20px;}
+  .locked-title{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:300;color:var(--text);margin-bottom:12px;}
+  .locked-desc{font-size:15px;color:var(--text-2);line-height:1.7;margin-bottom:28px;}
+
+  /* Quiz */
+  #quiz-section{display:none;}
+  .quiz-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;}
+  .quiz-progress-label{font-size:13px;color:var(--text-3);}
+  .quiz-score-label{font-size:13px;color:var(--text-3);}
+  .progress-track{height:3px;background:var(--border);border-radius:2px;overflow:hidden;margin-bottom:40px;}
+  .progress-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.3s;}
+  .question-num{font-size:11px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:14px;}
+  .question-text{font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:400;color:var(--text);line-height:1.35;margin-bottom:32px;}
+  .question-tag{display:inline-block;font-size:10px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;padding:3px 10px;border-radius:100px;margin-bottom:16px;}
+  .options{display:flex;flex-direction:column;gap:10px;margin-bottom:28px;}
+  .option{display:flex;align-items:flex-start;gap:14px;padding:15px 18px;border:1px solid var(--border-2);border-radius:12px;cursor:pointer;transition:all 0.18s;background:var(--bg-2);}
+  .option:hover{border-color:var(--accent);background:var(--accent-dim);}
+  .option.selected{border-color:var(--accent);background:var(--accent-dim);}
+  .option.correct{border-color:var(--success);background:var(--success-bg);cursor:default;}
+  .option.wrong{border-color:#ef4444;background:var(--fail-bg);cursor:default;}
+  .option.disabled{cursor:default;opacity:0.55;}
+  .option-letter{width:26px;height:26px;border-radius:6px;background:var(--bg-3);border:1px solid var(--border-2);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:500;color:var(--text-3);flex-shrink:0;margin-top:1px;}
+  .option.selected .option-letter{background:var(--accent);color:#080808;border-color:var(--accent);}
+  .option.correct .option-letter{background:var(--success);color:#fff;border-color:var(--success);}
+  .option.wrong .option-letter{background:#ef4444;color:#fff;border-color:#ef4444;}
+  .option-text{font-size:15px;color:var(--text-2);line-height:1.55;}
+  .option.selected .option-text,.option.correct .option-text{color:var(--text);}
+  .feedback{padding:16px 20px;border-radius:10px;font-size:14px;line-height:1.65;margin-bottom:24px;display:none;}
+  .feedback.show{display:block;}
+  .feedback.correct{background:var(--success-bg);border:1px solid var(--success-border);color:var(--success);}
+  .feedback.wrong{background:var(--fail-bg);border:1px solid var(--fail-border);color:#ef4444;}
+  .btn-next{padding:12px 28px;background:var(--accent);color:#080808;border-radius:9px;font-size:14px;font-weight:500;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;transition:opacity 0.2s;display:none;}
+  .btn-next.show{display:inline-block;}
+
+  /* Results */
+  #result-section{display:none;text-align:center;padding:20px 0;}
+  .result-icon{font-size:72px;margin-bottom:20px;}
+  .result-title{font-family:'Cormorant Garamond',serif;font-size:44px;font-weight:300;color:var(--text);margin-bottom:16px;line-height:1.1;}
+  .result-score{font-size:60px;font-weight:300;font-family:'Cormorant Garamond',serif;margin:20px 0;}
+  .result-score.pass{color:#F0B429;}.result-score.fail{color:#ef4444;}
+  .result-message{font-size:16px;color:var(--text-2);line-height:1.75;max-width:520px;margin:0 auto 36px;}
+  .result-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
+  .btn-result{padding:13px 28px;border-radius:10px;font-size:14px;font-weight:500;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;text-decoration:none;display:inline-block;transition:opacity 0.2s;}
+  .btn-result:hover{opacity:0.88;}
+  .btn-primary{background:var(--accent);color:#080808;}
+  .btn-ghost{background:transparent;color:var(--text-2);border:1px solid var(--border-2);}
+  @media(max-width:600px){.cert-grid{grid-template-columns:1fr;}.start-title{font-size:36px;}.question-text{font-size:24px;}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="index.html" class="nav-back">🏠 Home</a>
+    <div class="nav-divider"></div>
+    <a href="dashboard.html" class="nav-back">← Dashboard</a>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">☀</span></button>
+</nav>
+
+<div class="page">
+  <!-- START SCREEN -->
+  <div id="start-section">
+    <div class="start-eyebrow">Capstone Assessment · Meridian Institute of AI</div>
+    <div class="start-title">AI Systems Proficiency Certification</div>
+    <div class="start-sub">The capstone credential that proves you don't just know one AI tool — you know the landscape. This assessment draws from all five courses and tests your ability to reason across tools, not just recall facts about each one.</div>
+    <div class="cert-grid" id="cert-grid">
+      <div class="cert-item"><div class="cert-dot" style="background:#5b8ff8"></div><div class="cert-label">Foundations of AI</div><div class="cert-status missing" id="s-foundations">Checking...</div></div>
+      <div class="cert-item"><div class="cert-dot" style="background:#D97757"></div><div class="cert-label">Mastering Claude</div><div class="cert-status missing" id="s-claude">Checking...</div></div>
+      <div class="cert-item"><div class="cert-dot" style="background:#10a37f"></div><div class="cert-label">Mastering ChatGPT</div><div class="cert-status missing" id="s-chatgpt">Checking...</div></div>
+      <div class="cert-item"><div class="cert-dot" style="background:#4285f4"></div><div class="cert-label">Mastering Gemini</div><div class="cert-status missing" id="s-gemini">Checking...</div></div>
+      <div class="cert-item" style="grid-column:1/-1"><div class="cert-dot" style="background:#00ADB5"></div><div class="cert-label">Mastering Perplexity</div><div class="cert-status missing" id="s-perplexity">Checking...</div></div>
+    </div>
+    <div class="quiz-rules">
+      <div class="quiz-rule">📋 25 of 50 questions per attempt</div>
+      <div class="quiz-rule">✅ 70% to pass (18 of 25)</div>
+      <div class="quiz-rule">🔀 Randomized every attempt</div>
+      <div class="quiz-rule">🏆 The Meridian capstone credential</div>
+    </div>
+    <button class="btn-start" id="btn-start" onclick="startQuiz()" disabled>Begin Assessment →</button>
+    <div id="locked-msg" style="margin-top:16px;font-size:13px;color:var(--text-3);">Complete all five courses to unlock this assessment.</div>
+  </div>
+
+  <!-- QUIZ -->
+  <div id="quiz-section">
+    <div class="quiz-header">
+      <span class="quiz-progress-label" id="progress-label">Question 1 of 25</span>
+      <span class="quiz-score-label" id="score-label">0 correct</span>
+    </div>
+    <div class="progress-track"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+    <div class="question-num" id="question-num">Question 1</div>
+    <div class="question-text" id="question-text"></div>
+    <div class="options" id="options"></div>
+    <div class="feedback" id="feedback"></div>
+    <button class="btn-next" id="btn-next" onclick="nextQuestion()">Next Question →</button>
+  </div>
+
+  <!-- RESULT -->
+  <div id="result-section">
+    <div class="result-icon" id="result-icon"></div>
+    <div class="result-title" id="result-title"></div>
+    <div class="result-score" id="result-score"></div>
+    <div class="result-message" id="result-message"></div>
+    <div class="result-actions" id="result-actions"></div>
+  </div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import { getFirestore, doc, getDoc, updateDoc, setDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+const app=initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+const auth=getAuth(app);const db=getFirestore(app);
+let currentUser=null,allUnlocked=false;
+
+onAuthStateChanged(auth, async u=>{
+  currentUser=u;
+  if(!u){window.location.href='login.html';return;}
+  const snap=await getDoc(doc(db,'users',u.uid));
+  const data=snap.exists()?snap.data():{};
+  const checks={foundations:'foundationsCertId',claude:'claudeCertId',chatgpt:'chatgptCertId',gemini:'geminiCertId',perplexity:'perplexityCertId'};
+  let earned=0;
+  for(const[key,field] of Object.entries(checks)){
+    const el=document.getElementById('s-'+key);
+    if(data[field]){el.textContent='Earned';el.className='cert-status earned';earned++;}
+    else{el.textContent='Missing';el.className='cert-status missing';}
+  }
+  if(earned===5){
+    allUnlocked=true;
+    document.getElementById('btn-start').disabled=false;
+    document.getElementById('locked-msg').style.display='none';
+    if(data.proficiencyCertId){
+      document.getElementById('locked-msg').style.display='block';
+      document.getElementById('locked-msg').textContent='You\'ve already earned this certification. Retake for practice.';
+    }
+  }
+});
+
+const ALL_QUESTIONS=[
+  // ─── FOUNDATIONS ───
+  {tag:'Foundations',q:"What does 'hallucination' mean in the context of AI language models?",options:["The model generates vivid imagery instead of text","The model produces confident, plausible-sounding information that is factually incorrect","The model refuses to answer questions it doesn't know","The model confuses different languages mid-response"],answer:1,explain:"Hallucination refers to AI generating false information presented with the same confidence as true information. The model doesn't 'know' it's wrong — it's pattern-matching rather than fact-retrieving. This is the core reliability challenge of all LLMs."},
+  {tag:'Foundations',q:"What is a training cutoff in the context of large language models?",options:["The maximum number of words a model can process","The date after which a model has no knowledge, because its training data didn't include events after that point","A safety filter that prevents harmful outputs","The point at which a model stops improving during training"],answer:1,explain:"Training cutoff is the date when a model's training data collection ended. Events, research, or changes after that date are unknown to the model. This is why tools like Perplexity (with live web search) are valuable for current information."},
+  {tag:'Foundations',q:"What is a token, and why does it matter for understanding AI model limits?",options:["A unit of currency for accessing AI APIs","Roughly a word or word-fragment that LLMs process; models have maximum context windows measured in tokens","A security credential required to use AI tools","A unit of time measuring how long a model takes to respond"],answer:1,explain:"Tokens are the fundamental unit LLMs process — roughly 3/4 of a word on average. Every model has a maximum context window measured in tokens, limiting how much input and conversation history it can process at once. Understanding this explains why very long documents or conversations can exceed model limits."},
+  {tag:'Foundations',q:"What is RLHF and why does it shape AI behavior?",options:["Recursive Learning from Human Feedback — a method of making AI self-improve without human input","Reinforcement Learning from Human Feedback — a training technique where human raters score outputs, teaching the model what humans prefer","Real-time Learning from Historical Facts — the method AI uses to access current information","Restricted Language for Human Filtering — content moderation applied after training"],answer:1,explain:"RLHF (Reinforcement Learning from Human Feedback) is a training technique where human raters score model outputs, and the model is reinforced toward producing responses humans rate highly. This shapes personality, tone, safety behavior, and what the model 'tries' to do — explaining why Claude, ChatGPT, and Gemini have different personalities despite similar architectures."},
+  {tag:'Foundations',q:"What is a multimodal AI model?",options:["A model that can perform tasks in multiple languages simultaneously","A model that can process and generate multiple types of content — text, images, audio, video — not just text alone","A model that combines outputs from multiple separate AI systems","A model trained on more than one dataset"],answer:1,explain:"Multimodal models can work across multiple content types. GPT-4o processes text, images, and audio. Gemini can analyze images, audio, and video. Claude processes text and images. This multimodal capability expands what AI can do beyond text-to-text conversations."},
+  {tag:'Foundations',q:"What is prompt engineering?",options:["The process of training a new AI model from scratch","The practice of crafting inputs to AI models — the wording, structure, and context of what you ask — to improve the quality of outputs","Building the hardware infrastructure that runs AI models","Coding the instructions that define an AI's safety rules"],answer:1,explain:"Prompt engineering is the skill of communicating with AI models effectively. How you phrase a question, what context you provide, what format you request, and what constraints you impose all dramatically affect output quality. Each AI tool has different prompting patterns that work best with its architecture."},
+  {tag:'Foundations',q:"What is the difference between a foundation model and a fine-tuned model?",options:["Foundation models are free; fine-tuned models require payment","Foundation models are trained on broad data and learn general capabilities; fine-tuned models are further trained on specific data to specialize them for a particular domain or task","Foundation models are older; fine-tuned models are newer","Foundation models run in the cloud; fine-tuned models run locally"],answer:1,explain:"Foundation models (GPT-4o, Claude, Gemini) are trained on massive general datasets and develop broad capabilities. Fine-tuned models take a foundation model and continue training on specialized data — medical records, legal documents, code — to improve performance on specific tasks. Most consumer AI tools are foundation models."},
+  {tag:'Foundations',q:"What does 'context window' mean and why does it matter practically?",options:["The visual area of the screen where AI responses appear","The amount of text — conversation history, documents, instructions — an AI can 'see' and work with at once, measured in tokens","The period of time during which AI can remember past conversations","The geographic region where AI servers are located"],answer:1,explain:"Context window is how much an AI can hold in working memory at once. A 200,000-token context window (Claude) means it can read an entire book. A small context window means older parts of long conversations get forgotten. For document analysis, long research sessions, and complex projects, context window size directly impacts capability."},
+
+  // ─── CLAUDE ───
+  {tag:'Claude',q:"What is Constitutional AI, and why does it make Claude different?",options:["A set of laws regulating how AI companies must operate","Anthropic's training approach where Claude is taught a set of principles and learns to critique and revise its own outputs against those principles — rather than just following human preference ratings","A technical architecture that prevents Claude from accessing the internet","A government certification program for AI safety"],answer:1,explain:"Constitutional AI is Anthropic's method of training Claude. Instead of only using human raters to score every output (RLHF), Claude is trained with a written 'constitution' of principles. Claude learns to evaluate its own responses against those principles. This produces more consistent values and less sycophantic behavior than pure RLHF."},
+  {tag:'Claude',q:"What are XML tags used for in Claude prompting, and when should you use them?",options:["They format Claude's output as a webpage","They are used to structure complex prompts — separating instructions from content, labeling different inputs, and making it unambiguous what role each part of the prompt plays","They are required to unlock Claude's API","They prevent Claude from using certain restricted capabilities"],answer:1,explain:"XML tags like <instructions>, <document>, <example> create clear structure in complex prompts. They eliminate ambiguity about what's instruction vs content vs example. For any prompt with multiple distinct components — a document to analyze, specific instructions, output format requirements — XML tags dramatically improve Claude's ability to follow your intent."},
+  {tag:'Claude',q:"What makes Claude Projects valuable for ongoing work?",options:["Projects let Claude browse the internet automatically","Projects maintain persistent context — custom instructions, uploaded documents, and conversation history — across multiple sessions, so you don't have to re-explain context every time you start a new chat","Projects allow Claude to run code on your computer","Projects connect Claude directly to your email and calendar"],answer:1,explain:"Claude Projects store custom instructions, uploaded files, and memory between sessions. For ongoing work — a research project, a writing task, a coding project — this means Claude maintains context of the project, your preferences, and relevant documents across days and weeks. This eliminates the constant re-explaining that makes AI assistants frustrating for sustained work."},
+  {tag:'Claude',q:"In what type of task does Claude most decisively outperform other AI tools?",options:["Real-time information retrieval with current sources","Generating and editing images from text descriptions","Nuanced long-form writing, complex analysis, and tasks requiring honest, calibrated reasoning","Executing multi-step automated workflows"],answer:2,explain:"Claude's training emphasis on honesty, nuance, and careful reasoning makes it the strongest tool for substantive writing and complex analysis. When the quality of thinking and writing matters — essays, analysis, strategy documents, editorial feedback — Claude produces outputs that are harder for other models to match."},
+  {tag:'Claude',q:"What is unique about Claude's approach to honesty compared to models trained primarily via RLHF?",options:["Claude refuses more questions than other models","Claude is trained to be calibrated — expressing appropriate uncertainty rather than confident-sounding answers when it doesn't actually know something","Claude always agrees with whatever the user says","Claude never acknowledges when it makes mistakes"],answer:1,explain:"Claude's Constitutional AI training emphasizes calibrated honesty — including saying 'I don't know' or 'I'm uncertain' when appropriate. Models heavily optimized via RLHF can become sycophantic, telling users what they want to hear. Claude's training pushes against this, making it more likely to disagree, flag uncertainty, and push back when it should."},
+  {tag:'Claude',q:"What are Claude Artifacts?",options:["Files Claude secretly stores about your conversations","A feature where Claude generates standalone content — code, documents, websites, data visualizations — that renders in a separate panel alongside the conversation","External plugins that extend Claude's capabilities","The citations Claude uses when answering research questions"],answer:1,explain:"Claude Artifacts is a feature in Claude.ai where Claude generates self-contained content that renders live alongside the conversation. A React component renders and runs. An HTML page displays. A document formats properly. This makes Claude useful not just for explaining things but for producing immediately usable outputs."},
+
+  // ─── CHATGPT ───
+  {tag:'ChatGPT',q:"What is the fundamental difference between GPT-4o and OpenAI's o1/o3 reasoning models?",options:["GPT-4o is free; o1/o3 require payment","GPT-4o is a fast, broad-capable model optimized for conversation and most tasks; o1/o3 are 'slow thinking' models that spend extra compute reasoning step-by-step before answering — better for hard math, science, and complex logic","GPT-4o can browse the web; o1/o3 cannot","GPT-4o generates images; o1/o3 only generate text"],answer:1,explain:"The key difference is reasoning depth vs speed. GPT-4o is optimized for fast, high-quality responses across a huge range of tasks. The o-series models (o1, o3, o4-mini) use 'chain-of-thought' reasoning internally, spending more time thinking before responding. This makes them significantly better at complex math, science problems, and multi-step logic — but slower and more expensive."},
+  {tag:'ChatGPT',q:"What are Custom GPTs and what makes them useful?",options:["Secretly fine-tuned versions of GPT-4o trained on private data","User-created GPT configurations with custom instructions, uploaded knowledge, specific capabilities enabled, and optional API connections — shareable as specialized AI tools","Custom keyboard shortcuts for faster ChatGPT use","A premium feature that makes ChatGPT more creative"],answer:1,explain:"Custom GPTs let anyone configure a version of ChatGPT with a specific personality, knowledge base (uploaded documents), enabled tools (code execution, image generation, web search), and API integrations. They can be shared publicly in the GPT Store. This turns ChatGPT from a general assistant into a specialized tool — a coding assistant, a research bot, a customer service agent."},
+  {tag:'ChatGPT',q:"What is Advanced Data Analysis (formerly Code Interpreter) in ChatGPT?",options:["A feature that explains other people's code","A sandboxed Python environment where ChatGPT can write and execute code, analyze uploaded files, create charts, run statistical analysis, and process data — all within the conversation","A feature that checks your code for security vulnerabilities","A tool for generating code documentation"],answer:1,explain:"Advanced Data Analysis gives ChatGPT a real Python execution environment. It can analyze uploaded spreadsheets and CSVs, create matplotlib visualizations, run statistical analyses, process and clean datasets, and generate downloadable outputs. For data-heavy tasks, this makes ChatGPT a genuine data analysis tool rather than just a code explainer."},
+  {tag:'ChatGPT',q:"For which type of task is ChatGPT's o3 model most clearly the right choice over GPT-4o?",options:["Writing a persuasive essay","Having a quick conversational exchange","Solving a complex competition-level math or science problem that requires extended multi-step reasoning","Generating images from text descriptions"],answer:2,explain:"o3 and the reasoning model family excel at problems that require extended, careful thinking — competition math, complex logic puzzles, hard science problems, and any task where being systematic and thinking through every step matters more than speed. For most everyday tasks, GPT-4o is better (faster, cheaper). Use o3 when the problem genuinely requires deep reasoning."},
+  {tag:'ChatGPT',q:"What is ChatGPT's clearest capability advantage over Claude?",options:["Better writing quality and analytical depth","Image generation via DALL-E 3, voice conversation via Advanced Voice Mode, and the breadth of integrations available through the GPT ecosystem","More reliable citations and fact-checking","Longer context window for document analysis"],answer:1,explain:"ChatGPT's clearest advantages over Claude are its image generation (DALL-E 3 is the best AI image generation in a consumer tool), its Advanced Voice Mode for natural spoken conversation, and the breadth of its ecosystem — Custom GPTs, the GPT Store, and extensive third-party integrations. Claude's writing and reasoning quality is higher, but ChatGPT offers capabilities Claude simply doesn't have."},
+  {tag:'ChatGPT',q:"What does ChatGPT's memory feature do, and how does it differ from Claude Projects?",options:["They are functionally identical","ChatGPT memory stores facts the model learns about you across conversations automatically; Claude Projects are manually configured persistent workspaces for specific ongoing projects","ChatGPT memory is more powerful and replaces the need for Claude Projects","ChatGPT memory only works within a single conversation"],answer:1,explain:"ChatGPT memory learns and stores facts about you automatically across conversations — your preferences, projects, and context accumulate over time. Claude Projects are manually set up workspaces with specific instructions and documents for a defined project. Both solve the context problem but differently: ChatGPT memory is passive accumulation, Claude Projects are intentional configuration."},
+
+  // ─── GEMINI ───
+  {tag:'Gemini',q:"What is Gemini's most technically distinctive capability compared to Claude and ChatGPT?",options:["The highest quality image generation","The best code execution environment","A context window of up to 1 million tokens — the largest available in any consumer AI tool — enabling it to process book-length documents in a single prompt","The fastest response time across all tasks"],answer:2,explain:"Gemini's 1 million token context window is its most technically distinctive capability. Claude's context window is 200,000 tokens. ChatGPT's is 128,000. Gemini can process entire books, full codebases, or hours of meeting transcripts in a single prompt. For tasks that require holding enormous amounts of information in context simultaneously, nothing else competes."},
+  {tag:'Gemini',q:"What is Deep Research in Gemini Advanced?",options:["A feature that restricts Gemini to only peer-reviewed academic sources","A multi-step agentic research feature where Gemini plans a research strategy, searches the web across multiple queries, synthesizes findings from many sources, and produces a comprehensive structured report","A tool that analyzes your own uploaded research documents","A faster version of standard web search"],answer:1,explain:"Deep Research is Gemini's most powerful research feature. Unlike a single web search with synthesis, Deep Research operates more like an agent: it creates a multi-step research plan, runs many searches across different angles of your question, reads many sources, and synthesizes a comprehensive report. It can take several minutes and produces much more thorough output than a standard query."},
+  {tag:'Gemini',q:"Which Gemini tier is designed for everyday tasks and offers the best speed-to-quality ratio?",options:["Gemini Ultra","Gemini Flash","Gemini Advanced","Gemini Pro"],answer:1,explain:"Gemini Flash is Google's most efficient model — optimized for fast, high-quality responses on everyday tasks at lower cost. Gemini Pro offers more capability for complex tasks. Gemini Advanced (which uses Gemini Pro) is the premium tier with Deep Research and expanded context. Flash is the everyday workhorse."},
+  {tag:'Gemini',q:"What makes Gemini uniquely valuable for users who work heavily in Google Workspace?",options:["Gemini is the only AI that can read Google Docs","Gemini is natively integrated into Gmail, Google Docs, Drive, Sheets, and Meet — enabling AI assistance inside the tools people already use rather than requiring a context switch","Gemini has better writing quality than Claude for business documents","Google Workspace users get Gemini for free with any plan"],answer:1,explain:"Gemini's Google Workspace integration is unique — it lives inside Gmail (draft emails, summarize threads), Google Docs (rewrite, expand, summarize), Drive (search and summarize documents), Sheets (generate formulas, analyze data), and Google Meet (generate meeting notes). No other AI assistant is natively integrated at this depth into a productivity suite this widely used."},
+  {tag:'Gemini',q:"For which specific task does Gemini's 1M context window create the clearest advantage over other tools?",options:["Writing a short email","Generating images from text","Analyzing an entire novel, full codebase, or large document collection in a single prompt — tasks where the relevant information exceeds what other models can hold at once","Real-time web research with citations"],answer:2,explain:"The 1M token context advantage is decisive when you need to work with enormous amounts of information simultaneously — analyzing all of a company's quarterly reports at once, processing a full codebase for architecture understanding, reading an entire research corpus. For tasks where the relevant context fits in 128K tokens or less, the advantage disappears."},
+
+  // ─── PERPLEXITY ───
+  {tag:'Perplexity',q:"What makes Perplexity architecturally different from Claude and ChatGPT when both have web search enabled?",options:["Perplexity is faster at everything","Perplexity is a search engine at its core — real-time web access is its fundamental design, not a bolt-on feature. Claude and ChatGPT are language models that sometimes access the web. Perplexity always searches; the others search when they decide to","Perplexity uses a more powerful AI model","Perplexity is free while the others charge for web search"],answer:1,explain:"Architecture matters. Perplexity's entire system is built around retrieving and synthesizing live web content — every query triggers real web search by design. Claude and ChatGPT with web search are LLMs that can optionally call a search tool. This means Perplexity's search is more reliable, more consistent, and more thoroughly integrated into its output pipeline."},
+  {tag:'Perplexity',q:"What is the progressive narrowing technique in Perplexity and why is it more effective than a single broad query?",options:["A filter that narrows search results by publication date","Using the Focus mode selector to narrow your source domain","Starting with a broad overview query and using follow-up questions to drill progressively deeper — each question building on the previous sourced answer — producing highly specific information that a single broad query couldn't deliver","Limiting the length of each Perplexity query to improve accuracy"],answer:2,explain:"Progressive narrowing uses Perplexity's conversational memory across a session. A broad opening question establishes the landscape. Follow-up questions reference the previous answer and drill into specific aspects. By the fourth question, you're asking something highly specific that builds on three layers of prior sourced research — something a single query couldn't reach because the specificity requires the context that develops through the conversation."},
+  {tag:'Perplexity',q:"What is the Academic focus mode and who benefits most from it?",options:["A mode that makes Perplexity's answers more formal and academic-sounding","A Pro feature that restricts search to peer-reviewed databases like PubMed, arXiv, and Semantic Scholar — producing synthesized answers with citations to actual published research","A feature that allows professors to use Perplexity in educational settings","A mode that generates APA and MLA citations for web sources"],answer:1,explain:"Academic focus mode is Perplexity Pro's most powerful specialized capability. It searches only peer-reviewed academic databases, returning synthesized answers grounded in published research with citations to actual papers you can read. For students, researchers, healthcare professionals, and anyone who needs evidence-based answers rather than general web content, it replaces hours of Google Scholar searching."},
+  {tag:'Perplexity',q:"What is a Perplexity Space and how does it compound in value over time?",options:["The empty area around the search bar in the interface","A Pro feature that speeds up search queries","A shared team workspace where multiple collaborators research together, accumulating a library of sourced findings, shared context, and custom instructions — growing more valuable as a knowledge base the longer the team uses it","A personal note-taking system connected to Perplexity searches"],answer:2,explain:"Spaces are collaborative research workspaces. Their value compounds because each search adds to the team's shared knowledge base. Week one it's empty. Month three it's a comprehensive library of sourced research that new team members can reference immediately. This transforms Perplexity from an individual research tool into a team intelligence system."},
+  {tag:'Perplexity',q:"What is Perplexity's most important limitation, and how should it affect how you use citations?",options:["Perplexity's citations are always accurate so no verification is needed","Perplexity can misread sources, and sources themselves can be wrong — citations make verification easy but don't guarantee accuracy. For high-stakes claims, clicking through to the original source is essential","Perplexity's citations only link to free articles","Perplexity only cites government and academic sources"],answer:1,explain:"Citations create accountability but not infallibility. Perplexity can synthesize a source incorrectly, and the source itself can be wrong or biased. The citation system is a starting point for verification — it tells you where to check, not that checking isn't needed. For anything consequential, treat citations as the path to the source, not as proof that the synthesis is correct."},
+
+  // ─── CROSS-TOOL ───
+  {tag:'Cross-Tool',q:"A journalist needs to verify a claim about something that happened last week. Which tool is most appropriate and why?",options:["Claude, because it has the best analytical reasoning","ChatGPT, because its o3 model can reason carefully about facts","Perplexity, because it searches the live web and attaches citations to every claim — making verification both fast and traceable","Gemini, because its long context window can process many sources at once"],answer:2,explain:"For verifying a recent factual claim, Perplexity wins on both dimensions that matter: recency (live web search, no training cutoff) and verifiability (every claim cited, sources clickable). Claude and ChatGPT may not have information about last week. Google Search would give links to visit. Perplexity gives the synthesized answer with sources in one place."},
+  {tag:'Cross-Tool',q:"A novelist needs help writing a psychologically complex climactic scene. Which tool should they use?",options:["Perplexity, for researching real examples of similar scenes","ChatGPT, because its image generation can help visualize scenes","Gemini, because its long context window can hold the entire novel for reference","Claude, because its training emphasis on nuanced, honest reasoning produces the highest quality creative writing among major AI tools"],answer:3,explain:"For nuanced creative writing, Claude consistently produces the highest quality output. Its training emphasis on honest, calibrated expression carries into creative work — producing prose with more authentic psychology and less generic AI-sounding writing than other models. Gemini's long context is useful for keeping the whole novel in view, but Claude's writing quality is the deciding factor."},
+  {tag:'Cross-Tool',q:"A data analyst has a 200MB dataset and needs AI to run statistical analysis and create visualizations. Which tool is best?",options:["Claude, for its analytical reasoning","Perplexity, for finding research on the topic","ChatGPT with Advanced Data Analysis, which provides a real Python execution environment for data processing, statistical analysis, and chart generation","Gemini, for its long context window"],answer:2,explain:"ChatGPT's Advanced Data Analysis (Code Interpreter) provides a sandboxed Python environment that can actually execute code on uploaded data. Claude can analyze data described to it, but ChatGPT can run real pandas, matplotlib, and scipy operations on actual files — producing real statistical outputs and downloadable visualizations. For hands-on data analysis, this capability is decisive."},
+  {tag:'Cross-Tool',q:"A researcher needs to analyze an entire 400-page academic book along with 50 related papers in a single session. Which tool is best positioned for this?",options:["ChatGPT, because its reasoning models are most thorough","Claude, because of its analytical writing quality","Perplexity in Academic mode, for peer-reviewed sources","Gemini, because its 1M token context window can hold book-length documents and large document collections that would exceed other models' context limits"],answer:3,explain:"Context window size is the decisive factor here. A 400-page book is roughly 200,000+ tokens. Add 50 papers and you're approaching or exceeding Claude's and ChatGPT's limits. Gemini's 1M token context can hold all of this simultaneously, enabling analysis across the full corpus at once rather than having to work in chunks or summarize parts."},
+  {tag:'Cross-Tool',q:"What is the highest-leverage workflow combining Perplexity and Claude?",options:["Using Claude to write prompts that you then paste into Perplexity","Using Perplexity to check Claude's outputs for accuracy","Research in Perplexity to establish current, sourced factual grounding — then passing that research to Claude for analysis, argument, strategy, or writing","Using Claude to summarize Perplexity's source list"],answer:2,explain:"The Perplexity-to-Claude pipeline is the most powerful AI workflow: Perplexity establishes what is true and current (with sources), Claude analyzes and articulates what it means. Perplexity's job is the research layer. Claude's job is the thinking and writing layer. Neither alone is as powerful as the combination — this is the division of labor that separates sophisticated AI users from everyone else."},
+  {tag:'Cross-Tool',q:"A team of 6 people is tracking a competitor's market moves over several months. Which tool is best suited for this ongoing collaborative research?",options:["Claude Projects, with a shared system prompt","ChatGPT with team memory enabled","Perplexity Spaces, where the team's sourced research accumulates in a shared library that grows more valuable over months","Gemini Workspace, connected to Google Drive"],answer:2,explain:"Perplexity Spaces is purpose-built for this use case: ongoing collaborative research that accumulates over time. The team's searches are saved in a shared library, each adding to the collective intelligence. After months, the Space contains a comprehensive sourced history of the competitor's moves that new team members can reference immediately. No other tool combines live sourcing with team accumulation this effectively."},
+  {tag:'Cross-Tool',q:"Which AI tool should you use when you genuinely don't know which tool to use for a given task?",options:["Always default to Claude","Always default to ChatGPT, since it has the most features","Ask: does this task primarily require knowing something current and true (→ Perplexity), creating or analyzing something (→ Claude), handling data/images/voice (→ ChatGPT), or processing enormous documents (→ Gemini)","Always start with the cheapest free option"],answer:2,explain:"The decision framework: research and fact-finding → Perplexity (current, sourced). Writing, analysis, reasoning → Claude (quality, honesty). Data, images, voice, integrations → ChatGPT (breadth, tools). Enormous document processing → Gemini (context). These aren't rigid rules — but asking what the task fundamentally requires points you to the right starting tool."},
+  {tag:'Cross-Tool',q:"A medical professional needs to find current peer-reviewed research on a drug interaction. Which tool and mode is most appropriate?",options:["Claude, for its nuanced analytical reasoning","ChatGPT o3, for its deep reasoning capabilities","Perplexity with Academic focus mode, which restricts results to peer-reviewed medical databases with full citations to actual studies","Gemini Deep Research, for its comprehensive multi-source synthesis"],answer:2,explain:"Medical research requires peer-reviewed sources, not general web synthesis. Perplexity's Academic focus mode searches PubMed and similar medical databases specifically, citing actual published studies. The professional can click every citation and verify every claim against the original research. This is the correct epistemic standard for consequential medical decisions — general web synthesis from any tool is insufficient."},
+  {tag:'Cross-Tool',q:"Why is it accurate to say these AI tools are complementary rather than competitive?",options:["They're made by different companies, so they can't compete","They each charge different prices, targeting different market segments","Each tool is architecturally optimized for a different core task — research, writing, data/images, massive context — and the best workflows deliberately combine multiple tools for different phases of the same project","They all have the same capabilities, just different interfaces"],answer:2,explain:"Claude, ChatGPT, Gemini, and Perplexity are each genuinely better at different things due to their different architectures and training objectives. A professional workflow might research in Perplexity, analyze and write in Claude, generate supporting visuals in ChatGPT, and process large reference documents in Gemini. Treating any one tool as 'the best' misses the value of the full stack."},
+  {tag:'Cross-Tool',q:"What is the honest limitation shared by ALL four major AI tools covered in this curriculum?",options:["They all require a paid subscription to be useful","None of them can process documents","They all can be wrong — producing confident-sounding errors — and for any high-stakes decision, verification against primary sources remains essential regardless of which tool you use","They are all owned by the same parent company"],answer:2,explain:"Regardless of which AI tool you use, AI can be wrong with confidence. Perplexity cites sources but can misread them. Claude reasons carefully but can reach wrong conclusions. ChatGPT can hallucinate. Gemini can synthesize inaccurately. The shared responsibility of the AI-literate professional is to verify important claims against primary sources, understand each tool's failure modes, and use AI as a powerful assistant rather than an infallible authority."},
+  {tag:'Cross-Tool',q:"You need to send an email to a client, research their company's recent news, write a follow-up proposal, and analyze a spreadsheet they sent. In what order should you deploy AI tools?",options:["Use only Claude for everything","Use ChatGPT for everything — it has the most features","Perplexity for company research, Claude for drafting the email and proposal, ChatGPT Advanced Data Analysis for the spreadsheet","Gemini for everything since it's integrated with Gmail"],answer:2,explain:"This workflow maps to each tool's strength: Perplexity surfaces current sourced information about the client's recent news. Claude writes the email and proposal with quality and nuance. ChatGPT Advanced Data Analysis runs actual analysis on the spreadsheet. Deploying each tool for what it's genuinely best at is the mark of AI proficiency — not loyalty to a single tool."},
+];
+
+let questions=[],current=0,score=0,answered=false;
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+
+window.startQuiz=function(){
+  if(!allUnlocked){alert('Complete all five courses first.');return;}
+  questions=shuffle([...ALL_QUESTIONS]).slice(0,25);
+  current=0;score=0;
+  document.getElementById('start-section').style.display='none';
+  document.getElementById('quiz-section').style.display='block';
+  renderQuestion();
+};
+
+const TAG_COLORS={
+  'Foundations':'rgba(91,143,248,0.15)',
+  'Claude':'rgba(217,119,87,0.15)',
+  'ChatGPT':'rgba(16,163,127,0.15)',
+  'Gemini':'rgba(66,133,244,0.15)',
+  'Perplexity':'rgba(0,173,181,0.15)',
+  'Cross-Tool':'rgba(240,180,41,0.15)'
+};
+const TAG_TEXT={
+  'Foundations':'#5b8ff8','Claude':'#D97757','ChatGPT':'#10a37f',
+  'Gemini':'#4285f4','Perplexity':'#00ADB5','Cross-Tool':'#F0B429'
+};
+
+function renderQuestion(){
+  answered=false;
+  const q=questions[current];
+  document.getElementById('question-num').textContent=`Question ${current+1} of 25`;
+  document.getElementById('question-text').textContent=q.q;
+  document.getElementById('progress-label').textContent=`Question ${current+1} of 25`;
+  document.getElementById('score-label').textContent=`${score} correct`;
+  document.getElementById('progress-fill').style.width=`${(current/25)*100}%`;
+  document.getElementById('feedback').className='feedback';
+  document.getElementById('btn-next').className='btn-next';
+  const letters=['A','B','C','D'];
+  const optionsEl=document.getElementById('options');optionsEl.innerHTML='';
+  const indices=shuffle([0,1,2,3]);
+  indices.forEach((origIdx,displayIdx)=>{
+    const opt=document.createElement('div');opt.className='option';
+    opt.innerHTML=`<div class="option-letter">${letters[displayIdx]}</div><div class="option-text">${q.options[origIdx]}</div>`;
+    opt.onclick=()=>selectAnswer(opt,origIdx===q.answer,indices.indexOf(q.answer),q.explain);
+    optionsEl.appendChild(opt);
+  });
+}
+
+function selectAnswer(clickedEl,isCorrect,correctShuffledIdx,explain){
+  if(answered)return;answered=true;
+  const opts=document.querySelectorAll('.option');
+  opts.forEach((o,i)=>{o.classList.add('disabled');if(i===correctShuffledIdx)o.classList.add('correct');});
+  if(isCorrect){clickedEl.classList.add('correct');score++;}else{clickedEl.classList.add('wrong');}
+  document.getElementById('score-label').textContent=`${score} correct`;
+  const fb=document.getElementById('feedback');
+  fb.className=`feedback ${isCorrect?'correct':'wrong'} show`;
+  fb.textContent=isCorrect?`✓ Correct. ${explain}`:`✗ ${explain}`;
+  const btn=document.getElementById('btn-next');btn.className='btn-next show';
+  btn.textContent=current===24?'See Results →':'Next Question →';
+}
+
+window.nextQuestion=function(){current++;if(current>=25)showResults();else renderQuestion();};
+
+async function showResults(){
+  document.getElementById('quiz-section').style.display='none';
+  document.getElementById('result-section').style.display='block';
+  const passed=score>=18;const pct=Math.round((score/25)*100);
+  document.getElementById('result-icon').textContent=passed?'🏆':'📚';
+  document.getElementById('result-title').textContent=passed?'AI Systems Proficiency Achieved':'Keep Studying';
+  document.getElementById('result-score').className=`result-score ${passed?'pass':'fail'}`;
+  document.getElementById('result-score').textContent=`${score} / 25`;
+  if(passed){
+    document.getElementById('result-message').innerHTML=`You scored ${pct}% across all five AI tools — above the 70% threshold. You've demonstrated the ability to reason across the AI landscape, not just within a single tool. Your AI Systems Proficiency Certificate is being issued.`;
+    if(currentUser){
+      try{
+        const certId=currentUser.uid+'-proficiency';
+        const completedDate=new Date();
+        await updateDoc(doc(db,'users',currentUser.uid),{completedModules:arrayUnion('proficiency-complete'),certificatesEarned:arrayUnion('proficiency'),proficiencyCompletedAt:completedDate,proficiencyCertId:certId});
+        await setDoc(doc(db,'certificates',certId),{name:currentUser.displayName||'Meridian Student',email:currentUser.email,course:'AI Systems Proficiency Certification',issuedAt:completedDate,certId:certId,valid:true});
+        document.getElementById('result-actions').innerHTML=`<a href="certificate.html?id=${certId}" class="btn-result btn-primary" target="_blank">View Certificate →</a><a href="dashboard.html" class="btn-result btn-ghost">Dashboard</a>`;
+      }catch(e){document.getElementById('result-actions').innerHTML=`<a href="dashboard.html" class="btn-result btn-primary">Dashboard</a>`;}
+    }
+  }else{
+    document.getElementById('result-message').innerHTML=`You scored ${pct}% — you need 70% (18 of 25) to earn the certification. The questions you missed point to the modules worth reviewing.`;
+    document.getElementById('result-actions').innerHTML=`<a href="courses.html" class="btn-result btn-primary">Review Courses</a><button class="btn-result btn-ghost" onclick="location.reload()">Retake Assessment</button>`;
+  }
+}
+window.toggleTheme=function(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='☾'):(h.setAttribute('data-theme','dark'),i.textContent='☀');};
+</script>
+</body>
+</html>
