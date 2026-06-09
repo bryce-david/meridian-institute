@@ -13,47 +13,72 @@
   .nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;}
   .nav-logo-mark{width:30px;height:30px;border:1.5px solid #5b8ff8;border-radius:7px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:600;color:#5b8ff8;}
   .nav-logo-text{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:400;color:var(--text);}
-  .nav-links{display:flex;align-items:center;gap:8px;}
-  .nav-link{font-size:13px;color:var(--text-2);text-decoration:none;padding:7px 14px;border-radius:8px;transition:all 0.2s;}
+  .nav-links{display:flex;align-items:center;gap:4px;}
+  .nav-link{font-size:13px;color:var(--text-2);text-decoration:none;padding:7px 12px;border-radius:8px;transition:all 0.2s;}
   .nav-link:hover,.nav-link.active{background:var(--bg-3);color:var(--text);}
-  .nav-btn{font-size:13px;font-weight:500;color:var(--text);background:var(--bg-3);border:1px solid var(--border-2);padding:7px 16px;border-radius:8px;text-decoration:none;}
-  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;margin-left:8px;}
-  .page{max-width:1100px;margin:0 auto;padding:100px 5% 80px;}
-  .hero{text-align:center;margin-bottom:72px;}
-  .hero-eyebrow{font-size:11px;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;color:var(--text-3);margin-bottom:16px;}
-  .hero-title{font-family:'Cormorant Garamond',serif;font-size:58px;font-weight:300;line-height:1.05;color:var(--text);margin-bottom:20px;}
-  .hero-sub{font-size:18px;font-weight:300;color:var(--text-2);line-height:1.7;max-width:600px;margin:0 auto;}
-  .section-label{font-size:10px;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;color:var(--text-3);margin-bottom:20px;padding-bottom:12px;border-bottom:1px solid var(--border);}
-  .course-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px;margin-bottom:60px;}
-  .course-card{background:var(--bg-2);border:1px solid var(--border);border-radius:16px;overflow:hidden;transition:border-color 0.2s,transform 0.2s;text-decoration:none;display:flex;flex-direction:column;}
+  .nav-btn{font-size:13px;font-weight:500;color:var(--text);background:var(--bg-3);border:1px solid var(--border-2);padding:7px 16px;border-radius:8px;text-decoration:none;margin-left:4px;}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;color:var(--text-2);font-size:14px;margin-left:8px;}
+
+  .page{max-width:1060px;margin:0 auto;padding:80px 5% 80px;}
+
+  /* Anchor nav */
+  .anchor-nav{display:flex;align-items:center;gap:6px;margin-bottom:48px;padding:10px 0;border-bottom:1px solid var(--border);flex-wrap:wrap;}
+  .anchor-link{font-size:12px;font-weight:500;color:var(--text-3);text-decoration:none;padding:5px 12px;border-radius:6px;transition:all 0.2s;border:1px solid transparent;}
+  .anchor-link:hover{color:var(--text);background:var(--bg-2);border-color:var(--border);}
+  .anchor-sep{color:var(--border-2);font-size:12px;}
+
+  /* Hero */
+  .hero{margin-bottom:48px;}
+  .hero-eyebrow{font-size:11px;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;color:var(--text-3);margin-bottom:12px;}
+  .hero-title{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1.05;color:var(--text);margin-bottom:14px;}
+  .hero-sub{font-size:16px;font-weight:300;color:var(--text-2);line-height:1.7;max-width:560px;}
+
+  /* Section */
+  .section{margin-bottom:52px;}
+  .section-header{display:flex;align-items:baseline;gap:16px;margin-bottom:20px;padding-bottom:10px;border-bottom:1px solid var(--border);}
+  .section-label{font-size:10px;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;color:var(--text-3);}
+  .section-desc{font-size:13px;color:var(--text-3);}
+
+  /* Course cards */
+  .course-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;}
+  .course-card{background:var(--bg-2);border:1px solid var(--border);border-radius:14px;overflow:hidden;text-decoration:none;display:flex;flex-direction:column;transition:border-color 0.2s,transform 0.2s;}
   .course-card:hover{transform:translateY(-2px);}
-  .course-card-top{padding:28px 28px 20px;flex:1;}
-  .course-card-accent{width:32px;height:3px;border-radius:2px;margin-bottom:20px;}
-  .course-card-tag{font-size:10px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;padding:4px 10px;border-radius:100px;display:inline-block;margin-bottom:16px;}
-  .course-card-title{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:300;color:var(--text);line-height:1.15;margin-bottom:10px;}
-  .course-card-desc{font-size:14px;color:var(--text-2);line-height:1.65;}
-  .course-card-modules{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text-3);margin-top:16px;padding-top:16px;border-top:1px solid var(--border);}
-  .course-card-bottom{padding:18px 28px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
-  .course-card-cta{font-size:13px;font-weight:500;}
-  .course-card-level{font-size:11px;color:var(--text-3);}
-  .capstone-card{background:var(--bg-2);border:1px solid rgba(240,180,41,0.25);border-radius:20px;padding:40px;position:relative;overflow:hidden;margin-bottom:60px;background:linear-gradient(135deg,rgba(240,180,41,0.04) 0%,transparent 60%),var(--bg-2);}
-  .capstone-glow{position:absolute;top:-60px;right:-60px;width:200px;height:200px;background:radial-gradient(circle,rgba(240,180,41,0.08) 0%,transparent 70%);pointer-events:none;}
-  .capstone-inner{display:grid;grid-template-columns:1fr auto;gap:40px;align-items:center;}
-  .capstone-eyebrow{font-size:10px;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;color:#F0B429;margin-bottom:12px;}
-  .capstone-title{font-family:'Cormorant Garamond',serif;font-size:38px;font-weight:300;color:var(--text);line-height:1.1;margin-bottom:12px;}
-  .capstone-desc{font-size:15px;color:var(--text-2);line-height:1.7;margin-bottom:24px;}
-  .capstone-prereqs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:28px;}
-  .prereq-chip{font-size:11px;font-weight:500;padding:5px 12px;border-radius:100px;display:flex;align-items:center;gap:6px;}
-  .prereq-dot{width:6px;height:6px;border-radius:50%;}
-  .capstone-btn{display:inline-block;padding:13px 28px;background:#F0B429;color:#080808;border-radius:10px;font-size:14px;font-weight:500;text-decoration:none;transition:opacity 0.2s;}
+  .course-card-body{padding:22px 22px 16px;flex:1;}
+  .course-accent{width:28px;height:3px;border-radius:2px;margin-bottom:14px;}
+  .course-tag{font-size:10px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;padding:3px 9px;border-radius:100px;display:inline-block;margin-bottom:12px;}
+  .course-title{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:300;color:var(--text);line-height:1.15;margin-bottom:8px;}
+  .course-desc{font-size:13px;color:var(--text-2);line-height:1.6;}
+  .course-meta{font-size:11px;color:var(--text-3);margin-top:12px;padding-top:12px;border-top:1px solid var(--border);}
+  .course-footer{padding:14px 22px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+  .course-cta{font-size:13px;font-weight:500;}
+  .course-level{font-size:11px;color:var(--text-3);}
+
+  /* Foundations full-width variant */
+  .course-card.wide{grid-column:1/-1;flex-direction:row;align-items:center;}
+  .course-card.wide .course-card-body{padding:24px 28px;}
+  .course-card.wide .course-footer{border-top:none;border-left:1px solid var(--border);padding:24px 28px;flex-direction:column;align-items:flex-start;gap:8px;min-width:160px;}
+
+  /* Capstone */
+  .capstone-card{background:linear-gradient(135deg,rgba(240,180,41,0.05) 0%,var(--bg-2) 60%);border:1px solid rgba(240,180,41,0.2);border-radius:16px;padding:28px 32px;display:flex;align-items:center;justify-content:space-between;gap:32px;}
+  .capstone-left{}
+  .capstone-eyebrow{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#F0B429;margin-bottom:10px;}
+  .capstone-title{font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:300;color:var(--text);margin-bottom:8px;}
+  .capstone-desc{font-size:14px;color:var(--text-2);line-height:1.65;margin-bottom:18px;max-width:480px;}
+  .prereqs{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:20px;}
+  .prereq{font-size:11px;font-weight:500;padding:4px 10px;border-radius:100px;display:flex;align-items:center;gap:5px;}
+  .prereq-dot{width:5px;height:5px;border-radius:50%;}
+  .capstone-btn{display:inline-block;padding:11px 24px;background:#F0B429;color:#080808;border-radius:9px;font-size:13px;font-weight:500;text-decoration:none;transition:opacity 0.2s;}
   .capstone-btn:hover{opacity:0.88;}
-  .capstone-icon{font-size:72px;text-align:center;}
-  .coming-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;}
-  .coming-card{background:var(--bg-2);border:1px solid var(--border);border-radius:14px;padding:24px;opacity:0.55;}
-  .coming-tag{font-size:10px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-3);background:var(--bg-3);padding:4px 10px;border-radius:100px;display:inline-block;margin-bottom:12px;}
-  .coming-title{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:300;color:var(--text);margin-bottom:8px;}
-  .coming-desc{font-size:13px;color:var(--text-3);line-height:1.6;}
-  @media(max-width:700px){.hero-title{font-size:38px;}.capstone-inner{grid-template-columns:1fr;}.capstone-icon{display:none;}.course-grid{grid-template-columns:1fr;}}
+  .capstone-icon{font-size:56px;flex-shrink:0;}
+
+  /* Coming soon */
+  .coming-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px;}
+  .coming-card{background:var(--bg-2);border:1px solid var(--border);border-radius:12px;padding:20px;opacity:0.5;}
+  .coming-tag{font-size:10px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-3);background:var(--bg-3);padding:3px 9px;border-radius:100px;display:inline-block;margin-bottom:10px;}
+  .coming-title{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:300;color:var(--text);margin-bottom:6px;}
+  .coming-desc{font-size:13px;color:var(--text-3);line-height:1.55;}
+
+  @media(max-width:700px){.hero-title{font-size:38px;}.course-card.wide{flex-direction:column;}.course-card.wide .course-footer{border-left:none;border-top:1px solid var(--border);flex-direction:row;min-width:auto;}.capstone-card{flex-direction:column;}.capstone-icon{display:none;}}
 </style>
 </head>
 <body>
@@ -70,121 +95,158 @@
     <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">☀</span></button>
   </div>
 </nav>
+
 <div class="page">
+
+  <!-- Anchor nav -->
+  <div class="anchor-nav">
+    <a href="#beginner" class="anchor-link">Beginner</a>
+    <span class="anchor-sep">·</span>
+    <a href="#intermediate" class="anchor-link">Intermediate</a>
+    <span class="anchor-sep">·</span>
+    <a href="#capstone" class="anchor-link">Capstone</a>
+    <span class="anchor-sep">·</span>
+    <a href="#advanced" class="anchor-link">Advanced</a>
+  </div>
+
+  <!-- Hero -->
   <div class="hero">
     <div class="hero-eyebrow">Meridian Institute of AI — Curriculum</div>
     <div class="hero-title">The full AI<br>education stack.</div>
-    <div class="hero-sub">From understanding what AI actually is to mastering the four tools that define modern professional work. Build a credential stack that means something.</div>
+    <div class="hero-sub">From understanding what AI is to mastering the four tools that define modern professional work. Build a credential stack that means something.</div>
   </div>
 
-  <div class="section-label">Track 1 — Foundations</div>
-  <div class="course-grid" style="margin-bottom:60px;">
-    <a href="module-1-what-ai-actually-is.html" class="course-card" style="border-color:rgba(91,143,248,0.2);">
-      <div class="course-card-top">
-        <div class="course-card-accent" style="background:#5b8ff8;"></div>
-        <div class="course-card-tag" style="background:rgba(91,143,248,0.1);color:#5b8ff8;">Foundations</div>
-        <div class="course-card-title">Foundations of AI</div>
-        <div class="course-card-desc">What AI actually is, how large language models work, what makes a good prompt, how to evaluate AI outputs, and your first real AI project. The base layer everything else is built on.</div>
-        <div class="course-card-modules">📚 6 modules · Quiz · Certificate</div>
-      </div>
-      <div class="course-card-bottom">
-        <div class="course-card-cta" style="color:#5b8ff8;">Start course →</div>
-        <div class="course-card-level">Beginner</div>
-      </div>
-    </a>
-  </div>
-
-  <div class="section-label">Track 2 — Tool Mastery</div>
-  <div class="course-grid">
-    <a href="claude-module-1.html" class="course-card" style="border-color:rgba(217,119,87,0.15);">
-      <div class="course-card-top">
-        <div class="course-card-accent" style="background:#D97757;"></div>
-        <div class="course-card-tag" style="background:rgba(217,119,87,0.1);color:#D97757;">Tool Mastery</div>
-        <div class="course-card-title">Mastering Claude</div>
-        <div class="course-card-desc">Constitutional AI, the model lineup, XML prompting, Projects & memory, advanced features, real workflows, and an honest competitive comparison.</div>
-        <div class="course-card-modules">📚 7 modules · Quiz · Certificate</div>
-      </div>
-      <div class="course-card-bottom">
-        <div class="course-card-cta" style="color:#D97757;">Start course →</div>
-        <div class="course-card-level">Intermediate</div>
-      </div>
-    </a>
-    <a href="chatgpt-module-1.html" class="course-card" style="border-color:rgba(16,163,127,0.15);">
-      <div class="course-card-top">
-        <div class="course-card-accent" style="background:#10a37f;"></div>
-        <div class="course-card-tag" style="background:rgba(16,163,127,0.1);color:#10a37f;">Tool Mastery</div>
-        <div class="course-card-title">Mastering ChatGPT</div>
-        <div class="course-card-desc">GPT-4o vs o1/o3 reasoning models, RLHF prompting differences, Custom GPTs, DALL-E 3, Code Interpreter, real workflows, and honest comparison.</div>
-        <div class="course-card-modules">📚 7 modules · Quiz · Certificate</div>
-      </div>
-      <div class="course-card-bottom">
-        <div class="course-card-cta" style="color:#10a37f;">Start course →</div>
-        <div class="course-card-level">Intermediate</div>
-      </div>
-    </a>
-    <a href="gemini-module-1.html" class="course-card" style="border-color:rgba(66,133,244,0.15);">
-      <div class="course-card-top">
-        <div class="course-card-accent" style="background:#4285f4;"></div>
-        <div class="course-card-tag" style="background:rgba(66,133,244,0.1);color:#4285f4;">Tool Mastery</div>
-        <div class="course-card-title">Mastering Gemini</div>
-        <div class="course-card-desc">The DeepMind merger, Flash/Pro/Advanced lineup, 1M token context, Deep Research, Google Workspace integration, and multimodal capabilities.</div>
-        <div class="course-card-modules">📚 7 modules · Quiz · Certificate</div>
-      </div>
-      <div class="course-card-bottom">
-        <div class="course-card-cta" style="color:#4285f4;">Start course →</div>
-        <div class="course-card-level">Intermediate</div>
-      </div>
-    </a>
-    <a href="perplexity-module-1.html" class="course-card" style="border-color:rgba(0,173,181,0.15);">
-      <div class="course-card-top">
-        <div class="course-card-accent" style="background:#00ADB5;"></div>
-        <div class="course-card-tag" style="background:rgba(0,173,181,0.1);color:#00ADB5;">Tool Mastery</div>
-        <div class="course-card-title">Mastering Perplexity</div>
-        <div class="course-card-desc">Answer engine vs chatbot, the 5-step pipeline, citation system, Focus modes, Spaces for team research, real workflows, and the Perplexity-to-Claude pipeline.</div>
-        <div class="course-card-modules">📚 7 modules · Quiz · Certificate</div>
-      </div>
-      <div class="course-card-bottom">
-        <div class="course-card-cta" style="color:#00ADB5;">Start course →</div>
-        <div class="course-card-level">Intermediate</div>
-      </div>
-    </a>
-  </div>
-
-  <div class="section-label">Capstone Certification</div>
-  <div class="capstone-card">
-    <div class="capstone-glow"></div>
-    <div class="capstone-inner">
-      <div>
-        <div class="capstone-eyebrow">★ Capstone — Requires all 5 certificates</div>
-        <div class="capstone-title">AI Systems Proficiency<br>Certification</div>
-        <div class="capstone-desc">The resume-level credential. Unlocked only after earning all five individual certificates — then you take a 25-question cross-tool assessment that tests your ability to reason across the AI landscape. Passing proves you know not just the tools, but how to deploy the right one at the right moment.</div>
-        <div class="capstone-prereqs">
-          <div class="prereq-chip" style="background:rgba(91,143,248,0.1);color:#5b8ff8;"><div class="prereq-dot" style="background:#5b8ff8;"></div>Foundations of AI</div>
-          <div class="prereq-chip" style="background:rgba(217,119,87,0.1);color:#D97757;"><div class="prereq-dot" style="background:#D97757;"></div>Mastering Claude</div>
-          <div class="prereq-chip" style="background:rgba(16,163,127,0.1);color:#10a37f;"><div class="prereq-dot" style="background:#10a37f;"></div>Mastering ChatGPT</div>
-          <div class="prereq-chip" style="background:rgba(66,133,244,0.1);color:#4285f4;"><div class="prereq-dot" style="background:#4285f4;"></div>Mastering Gemini</div>
-          <div class="prereq-chip" style="background:rgba(0,173,181,0.1);color:#00ADB5;"><div class="prereq-dot" style="background:#00ADB5;"></div>Mastering Perplexity</div>
+  <!-- BEGINNER -->
+  <div class="section" id="beginner">
+    <div class="section-header">
+      <div class="section-label">Beginner — Track 1</div>
+      <div class="section-desc">Start here. No prior knowledge required.</div>
+    </div>
+    <div class="course-grid">
+      <a href="module-1-what-ai-actually-is.html" class="course-card wide" style="border-color:rgba(91,143,248,0.2);">
+        <div class="course-card-body">
+          <div class="course-accent" style="background:#5b8ff8;"></div>
+          <div class="course-tag" style="background:rgba(91,143,248,0.1);color:#5b8ff8;">Foundations</div>
+          <div class="course-title">Foundations of AI</div>
+          <div class="course-desc">What AI actually is, how language models work, prompting principles, how to evaluate outputs critically, and your first real AI project.</div>
+          <div class="course-meta">6 modules · Final quiz · Certificate</div>
         </div>
-        <a href="quiz-proficiency.html" class="capstone-btn">Check My Eligibility →</a>
+        <div class="course-footer">
+          <div class="course-cta" style="color:#5b8ff8;">Start →</div>
+          <div class="course-level">Beginner</div>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <!-- INTERMEDIATE -->
+  <div class="section" id="intermediate">
+    <div class="section-header">
+      <div class="section-label">Intermediate — Track 2 · Tool Mastery</div>
+      <div class="section-desc">Master the four tools that define professional AI work. Each earns its own certificate.</div>
+    </div>
+    <div class="course-grid">
+      <a href="claude-module-1.html" class="course-card" style="border-color:rgba(217,119,87,0.15);">
+        <div class="course-card-body">
+          <div class="course-accent" style="background:#D97757;"></div>
+          <div class="course-tag" style="background:rgba(217,119,87,0.1);color:#D97757;">Tool Mastery</div>
+          <div class="course-title">Mastering Claude</div>
+          <div class="course-desc">Constitutional AI, model lineup, XML prompting, Projects, advanced features, and honest competitive analysis.</div>
+          <div class="course-meta">7 modules · Final quiz · Certificate</div>
+        </div>
+        <div class="course-footer">
+          <div class="course-cta" style="color:#D97757;">Start →</div>
+          <div class="course-level">Intermediate</div>
+        </div>
+      </a>
+      <a href="chatgpt-module-1.html" class="course-card" style="border-color:rgba(16,163,127,0.15);">
+        <div class="course-card-body">
+          <div class="course-accent" style="background:#10a37f;"></div>
+          <div class="course-tag" style="background:rgba(16,163,127,0.1);color:#10a37f;">Tool Mastery</div>
+          <div class="course-title">Mastering ChatGPT</div>
+          <div class="course-desc">GPT-4o vs o-series reasoning models, RLHF prompting, Custom GPTs, DALL-E 3, Code Interpreter, and real workflows.</div>
+          <div class="course-meta">7 modules · Final quiz · Certificate</div>
+        </div>
+        <div class="course-footer">
+          <div class="course-cta" style="color:#10a37f;">Start →</div>
+          <div class="course-level">Intermediate</div>
+        </div>
+      </a>
+      <a href="gemini-module-1.html" class="course-card" style="border-color:rgba(66,133,244,0.15);">
+        <div class="course-card-body">
+          <div class="course-accent" style="background:#4285f4;"></div>
+          <div class="course-tag" style="background:rgba(66,133,244,0.1);color:#4285f4;">Tool Mastery</div>
+          <div class="course-title">Mastering Gemini</div>
+          <div class="course-desc">DeepMind merger, Flash/Pro/Advanced lineup, 1M token context, Deep Research, and Google Workspace integration.</div>
+          <div class="course-meta">7 modules · Final quiz · Certificate</div>
+        </div>
+        <div class="course-footer">
+          <div class="course-cta" style="color:#4285f4;">Start →</div>
+          <div class="course-level">Intermediate</div>
+        </div>
+      </a>
+      <a href="perplexity-module-1.html" class="course-card" style="border-color:rgba(0,173,181,0.15);">
+        <div class="course-card-body">
+          <div class="course-accent" style="background:#00ADB5;"></div>
+          <div class="course-tag" style="background:rgba(0,173,181,0.1);color:#00ADB5;">Tool Mastery</div>
+          <div class="course-title">Mastering Perplexity</div>
+          <div class="course-desc">Answer engine architecture, the 5-step pipeline, Focus modes, Spaces for team research, and the Perplexity-to-Claude workflow.</div>
+          <div class="course-meta">7 modules · Final quiz · Certificate</div>
+        </div>
+        <div class="course-footer">
+          <div class="course-cta" style="color:#00ADB5;">Start →</div>
+          <div class="course-level">Intermediate</div>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <!-- CAPSTONE -->
+  <div class="section" id="capstone">
+    <div class="section-header">
+      <div class="section-label">Capstone Certification</div>
+      <div class="section-desc">Requires all 5 course certificates.</div>
+    </div>
+    <div class="capstone-card">
+      <div class="capstone-left">
+        <div class="capstone-eyebrow">★ Capstone — Unlocked after all 5 certificates</div>
+        <div class="capstone-title">AI Systems Proficiency Certification</div>
+        <div class="capstone-desc">The resume-level credential. A 25-question cross-tool assessment that proves you can reason across the AI landscape — not just recall facts about a single tool.</div>
+        <div class="prereqs">
+          <div class="prereq" style="background:rgba(91,143,248,0.1);color:#5b8ff8;"><div class="prereq-dot" style="background:#5b8ff8;"></div>Foundations</div>
+          <div class="prereq" style="background:rgba(217,119,87,0.1);color:#D97757;"><div class="prereq-dot" style="background:#D97757;"></div>Claude</div>
+          <div class="prereq" style="background:rgba(16,163,127,0.1);color:#10a37f;"><div class="prereq-dot" style="background:#10a37f;"></div>ChatGPT</div>
+          <div class="prereq" style="background:rgba(66,133,244,0.1);color:#4285f4;"><div class="prereq-dot" style="background:#4285f4;"></div>Gemini</div>
+          <div class="prereq" style="background:rgba(0,173,181,0.1);color:#00ADB5;"><div class="prereq-dot" style="background:#00ADB5;"></div>Perplexity</div>
+        </div>
+        <a href="quiz-proficiency.html" class="capstone-btn">Check Eligibility →</a>
       </div>
       <div class="capstone-icon">🏆</div>
     </div>
   </div>
 
-  <div class="section-label">Coming Soon — Intermediate Tracks</div>
-  <div class="coming-grid">
-    <div class="coming-card">
-      <div class="coming-tag">Coming Soon</div>
-      <div class="coming-title">AI in Finance</div>
-      <div class="coming-desc">Financial modeling, market research workflows, earnings analysis, risk assessment, and AI-powered investment research tools.</div>
+  <!-- ADVANCED -->
+  <div class="section" id="advanced">
+    <div class="section-header">
+      <div class="section-label">Advanced — Coming Soon</div>
+      <div class="section-desc">Domain-specific AI tracks for professional fields.</div>
     </div>
-    <div class="coming-card">
-      <div class="coming-tag">Coming Soon</div>
-      <div class="coming-title">AI in Law</div>
-      <div class="coming-desc">Contract analysis, legal research automation, document review, case preparation, and the limits of AI in legal practice.</div>
+    <div class="coming-grid">
+      <div class="coming-card">
+        <div class="coming-tag">Coming Soon</div>
+        <div class="coming-title">AI in Finance</div>
+        <div class="coming-desc">Financial modeling, market research workflows, earnings analysis, and AI-powered investment research tools.</div>
+      </div>
+      <div class="coming-card">
+        <div class="coming-tag">Coming Soon</div>
+        <div class="coming-title">AI in Law</div>
+        <div class="coming-desc">Contract analysis, legal research automation, document review, and the limits of AI in legal practice.</div>
+      </div>
     </div>
   </div>
+
 </div>
+
 <script type="module">
   import{initializeApp}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
   import{getAuth,onAuthStateChanged}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";

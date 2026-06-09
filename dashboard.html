@@ -1,327 +1,364 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Dashboard — Meridian Institute of AI</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#5b8ff8;--accent-dim:rgba(91,143,248,0.1);--nav-bg:rgba(8,8,8,0.9);--success:#22c55e;--success-bg:rgba(34,197,94,0.08);--success-border:rgba(34,197,94,0.2);}
-  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#2563eb;--accent-dim:rgba(37,99,235,0.08);--nav-bg:rgba(250,250,248,0.9);--success:#16a34a;--success-bg:rgba(22,163,74,0.06);--success-border:rgba(22,163,74,0.2);}
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--nav-bg:rgba(8,8,8,0.95);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--nav-bg:rgba(250,250,248,0.95);}
   *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
   body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;transition:background 0.3s,color 0.3s;}
   nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
   .nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;}
-  .nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);}
-  .nav-logo-text{font-size:13px;font-weight:500;color:var(--text);}
-  .nav-right{display:flex;align-items:center;gap:12px;}
-  .nav-user{font-size:13px;color:var(--text-2);display:flex;align-items:center;gap:8px;}
-  .nav-avatar{width:30px;height:30px;border-radius:50%;background:var(--accent-dim);border:1px solid rgba(91,143,248,0.3);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:500;color:var(--accent);}
-  .btn-signout{padding:7px 14px;border-radius:8px;font-size:12px;font-weight:500;font-family:'DM Sans',sans-serif;background:transparent;color:var(--text-3);border:1px solid var(--border-2);cursor:pointer;transition:all 0.2s;}
-  .btn-signout:hover{background:var(--bg-3);color:var(--text);}
-  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;transition:all 0.2s;}
-  .theme-toggle:hover{background:var(--bg-3);color:var(--text);}
-  .page{padding:88px 5% 80px;max-width:1000px;margin:0 auto;}
-  .welcome-bar{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:40px;padding-bottom:32px;border-bottom:1px solid var(--border);}
-  .welcome-eyebrow{font-size:11px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:8px;}
-  .welcome-title{font-family:'Cormorant Garamond',serif;font-size:38px;font-weight:300;color:var(--text);line-height:1.1;}
-  .stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:48px;}
-  .stat-card{background:var(--bg-2);border:1px solid var(--border);border-radius:14px;padding:24px;}
-  .stat-label{font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-3);margin-bottom:10px;}
-  .stat-value{font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:400;color:var(--text);line-height:1;}
-  .stat-sub{font-size:12px;color:var(--text-3);margin-top:6px;}
-  .section-title{font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-2);margin-bottom:20px;}
+  .nav-logo-mark{width:30px;height:30px;border:1.5px solid #5b8ff8;border-radius:7px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:600;color:#5b8ff8;}
+  .nav-logo-text{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:400;color:var(--text);}
+  .nav-links{display:flex;align-items:center;gap:4px;}
+  .nav-link{font-size:13px;color:var(--text-2);text-decoration:none;padding:7px 12px;border-radius:8px;transition:all 0.2s;}
+  .nav-link:hover,.nav-link.active{background:var(--bg-3);color:var(--text);}
+  .nav-btn-signout{font-size:13px;font-weight:500;color:#ef4444;background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.15);padding:7px 14px;border-radius:8px;cursor:pointer;font-family:'DM Sans',sans-serif;margin-left:4px;}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;color:var(--text-2);font-size:14px;margin-left:6px;}
+  .page{max-width:960px;margin:0 auto;padding:80px 5% 80px;}
 
-  /* COURSE CARD */
-  .course-card{background:var(--bg-2);border:1px solid var(--border);border-radius:16px;padding:28px;margin-bottom:16px;transition:all 0.2s;}
-  .course-card.completed{border-color:var(--success-border);background:linear-gradient(135deg,var(--bg-2) 0%,rgba(34,197,94,0.04) 100%);}
-  .course-card-header{display:flex;align-items:center;justify-content:space-between;cursor:pointer;}
-  .course-card-left{display:flex;align-items:center;gap:16px;}
-  .course-icon-wrap{width:48px;height:48px;border-radius:12px;background:var(--bg-3);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;}
-  .course-icon-wrap.done{background:var(--success-bg);border:1px solid var(--success-border);}
-  .course-name{font-size:16px;font-weight:500;color:var(--text);margin-bottom:4px;}
-  .course-status{font-size:12px;color:var(--text-3);}
-  .course-status.done{color:var(--success);}
-  .course-badge{font-size:11px;font-weight:500;padding:5px 12px;border-radius:100px;white-space:nowrap;}
-  .badge-done{background:var(--success-bg);color:var(--success);border:1px solid var(--success-border);}
-  .badge-progress{background:var(--accent-dim);color:var(--accent);border:1px solid rgba(91,143,248,0.2);}
-  .badge-locked{background:var(--bg-4);color:var(--text-3);border:1px solid var(--border-2);}
-  .course-expand{margin-top:20px;padding-top:20px;border-top:1px solid var(--border);display:none;}
-  .course-expand.open{display:block;}
-  .module-list{display:flex;flex-direction:column;gap:8px;margin-bottom:20px;}
-  .module-item{display:flex;align-items:center;gap:12px;padding:12px 16px;background:var(--bg-3);border-radius:10px;font-size:13px;text-decoration:none;transition:all 0.2s;}
-  .module-item:hover{background:var(--bg-4);}
-  .module-check{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0;}
-  .check-done{background:var(--success-bg);color:var(--success);border:1px solid var(--success-border);}
-  .check-pending{background:var(--bg-4);color:var(--text-3);border:1px solid var(--border-2);}
-  .module-name{color:var(--text-2);flex:1;}
-  .module-item.done .module-name{color:var(--text);}
-  .btn-continue{display:inline-block;padding:11px 22px;background:var(--accent);color:#fff;border-radius:9px;font-size:13px;font-weight:500;text-decoration:none;transition:opacity 0.2s;}
-  .btn-continue:hover{opacity:0.88;}
-  .btn-review{display:inline-block;padding:11px 22px;background:transparent;color:var(--text-2);border:1px solid var(--border-2);border-radius:9px;font-size:13px;font-weight:500;text-decoration:none;transition:all 0.2s;margin-left:10px;}
-  .btn-review:hover{background:var(--bg-3);color:var(--text);}
+  /* Welcome */
+  .welcome{margin-bottom:36px;}
+  .welcome-eyebrow{font-size:11px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-3);margin-bottom:8px;}
+  .welcome-name{font-family:'Cormorant Garamond',serif;font-size:42px;font-weight:300;color:var(--text);margin-bottom:4px;}
+  .welcome-sub{font-size:14px;color:var(--text-3);}
 
-  /* CERTIFICATE */
-  .cert-card{background:linear-gradient(135deg,rgba(91,143,248,0.08) 0%,rgba(91,143,248,0.02) 100%);border:1px solid rgba(91,143,248,0.3);border-radius:16px;padding:28px;margin-bottom:16px;}
-  .cert-header{display:flex;align-items:center;gap:16px;margin-bottom:16px;}
-  .cert-icon{font-size:32px;}
-  .cert-title{font-size:16px;font-weight:500;color:var(--text);margin-bottom:4px;}
-  .cert-subtitle{font-size:12px;color:var(--text-3);}
-  .cert-actions{display:flex;gap:10px;flex-wrap:wrap;}
-  .btn-cert{padding:10px 20px;border-radius:9px;font-size:13px;font-weight:500;text-decoration:none;transition:all 0.2s;cursor:pointer;border:none;font-family:'DM Sans',sans-serif;}
-  .btn-cert-primary{background:var(--accent);color:#fff;}
-  .btn-cert-primary:hover{opacity:0.88;}
-  .btn-cert-ghost{background:transparent;color:var(--text-2);border:1px solid var(--border-2);}
-  .btn-cert-ghost:hover{background:var(--bg-3);color:var(--text);}
+  /* Capstone banner */
+  .capstone-banner{background:linear-gradient(135deg,rgba(240,180,41,0.06) 0%,transparent 60%),var(--bg-2);border:1px solid rgba(240,180,41,0.2);border-radius:14px;padding:22px 28px;display:flex;align-items:center;justify-content:space-between;gap:20px;margin-bottom:36px;}
+  .capstone-banner-text{}
+  .capstone-banner-eyebrow{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#F0B429;margin-bottom:6px;}
+  .capstone-banner-title{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:300;color:var(--text);margin-bottom:4px;}
+  .capstone-banner-sub{font-size:13px;color:var(--text-2);}
+  .capstone-banner-btn{padding:10px 20px;border-radius:9px;font-size:13px;font-weight:500;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;white-space:nowrap;text-decoration:none;display:inline-block;flex-shrink:0;}
+  .capstone-banner-btn.locked{background:var(--bg-3);color:var(--text-3);border:1px solid var(--border-2);cursor:default;}
+  .capstone-banner-btn.ready{background:#F0B429;color:#080808;}
+  .capstone-banner-btn.earned{background:rgba(34,197,94,0.12);color:#22c55e;border:1px solid rgba(34,197,94,0.25);}
 
-  .loading{display:flex;align-items:center;justify-content:center;min-height:60vh;font-size:14px;color:var(--text-3);}
-  @media(max-width:700px){.stats-row{grid-template-columns:1fr;}.welcome-bar{flex-direction:column;align-items:flex-start;gap:16px;}}
+  /* Section label */
+  .section-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-3);margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid var(--border);}
+
+  /* Course rows */
+  .course-list{display:flex;flex-direction:column;gap:10px;margin-bottom:36px;}
+  .course-row{background:var(--bg-2);border:1px solid var(--border);border-radius:12px;padding:16px 20px;display:flex;align-items:center;gap:16px;text-decoration:none;transition:border-color 0.2s;}
+  .course-row:hover{border-color:var(--border-2);}
+  .course-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
+  .course-info{flex:1;min-width:0;}
+  .course-title{font-size:14px;font-weight:500;color:var(--text);margin-bottom:2px;}
+  .course-sub{font-size:12px;color:var(--text-3);}
+  .course-continue{font-size:12px;font-weight:500;margin-top:2px;}
+  .progress-wrap{min-width:130px;}
+  .progress-track{height:3px;background:var(--bg-4);border-radius:2px;overflow:hidden;margin-bottom:4px;}
+  .progress-fill{height:100%;border-radius:2px;transition:width 0.5s;}
+  .progress-label{font-size:11px;color:var(--text-3);text-align:right;}
+  .cert-badge{padding:4px 10px;border-radius:100px;font-size:11px;font-weight:500;white-space:nowrap;flex-shrink:0;}
+  .cert-badge.earned{background:rgba(34,197,94,0.1);color:#22c55e;border:1px solid rgba(34,197,94,0.2);}
+  .cert-badge.not-earned{background:var(--bg-3);color:var(--text-3);border:1px solid var(--border);}
+  .cert-badge.in-progress{background:rgba(240,180,41,0.08);color:#F0B429;border:1px solid rgba(240,180,41,0.2);}
+
+  /* Certificate cards */
+  .cert-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;}
+  .cert-card{background:var(--bg-2);border:1px solid var(--border);border-radius:12px;padding:18px;}
+  .cert-card.earned{border-color:rgba(34,197,94,0.2);}
+  .cert-card.capstone-earned{border-color:rgba(240,180,41,0.25);background:linear-gradient(135deg,rgba(240,180,41,0.04),var(--bg-2));}
+  .cert-card-dot{width:8px;height:8px;border-radius:50%;margin-bottom:10px;}
+  .cert-card-title{font-size:13px;font-weight:500;color:var(--text);line-height:1.35;margin-bottom:6px;}
+  .cert-card-status{font-size:12px;color:var(--text-3);}
+  .cert-card-link{font-size:12px;font-weight:500;text-decoration:none;display:inline-block;margin-top:6px;}
+  .cert-card-link:hover{text-decoration:underline;}
+
+  @media(max-width:640px){.capstone-banner{flex-direction:column;align-items:flex-start;}.course-row{flex-wrap:wrap;}.progress-wrap{min-width:100%;order:5;}}
 </style>
 </head>
 <body>
 <nav>
   <a href="index.html" class="nav-logo">
     <div class="nav-logo-mark">M</div>
-    <span class="nav-logo-text">Meridian Institute of AI</span>
+    <span class="nav-logo-text">Meridian</span>
   </a>
-  <div class="nav-right">
-    <div class="nav-user">
-      <div class="nav-avatar" id="nav-avatar">?</div>
-      <span id="nav-name" style="font-size:13px;color:var(--text-2);">Loading...</span>
-    </div>
-    <button class="btn-signout" onclick="handleSignOut()">Sign out</button>
+  <div class="nav-links">
+    <a href="courses.html" class="nav-link">Courses</a>
+    <a href="dashboard.html" class="nav-link active">Dashboard</a>
+    <button class="nav-btn-signout" onclick="signOut()">Sign Out</button>
     <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">☀</span></button>
   </div>
 </nav>
 
-<div class="page" id="page-content">
-  <div class="loading">Loading your dashboard...</div>
+<div class="page">
+  <div class="welcome">
+    <div class="welcome-eyebrow">Your learning hub</div>
+    <div class="welcome-name" id="welcome-name">Welcome back.</div>
+    <div class="welcome-sub" id="welcome-sub">Loading your progress...</div>
+  </div>
+
+  <!-- Capstone banner -->
+  <div class="capstone-banner">
+    <div class="capstone-banner-text">
+      <div class="capstone-banner-eyebrow" id="cap-eyebrow">★ Capstone Certification</div>
+      <div class="capstone-banner-title">AI Systems Proficiency Certification</div>
+      <div class="capstone-banner-sub" id="cap-sub">Complete all 5 courses to unlock.</div>
+    </div>
+    <a href="quiz-proficiency.html" class="capstone-banner-btn locked" id="cap-btn">🔒 Locked</a>
+  </div>
+
+  <!-- Courses -->
+  <div class="section-label">Your Courses</div>
+  <div class="course-list" id="course-list">
+
+    <a href="module-1-what-ai-actually-is.html" class="course-row" id="row-foundations">
+      <div class="course-dot" style="background:#5b8ff8;"></div>
+      <div class="course-info">
+        <div class="course-title">Foundations of AI</div>
+        <div class="course-sub">6 modules · Beginner</div>
+        <div class="course-continue" id="continue-foundations" style="display:none;color:#5b8ff8;"></div>
+      </div>
+      <div class="progress-wrap">
+        <div class="progress-track"><div class="progress-fill" id="prog-foundations" style="width:0%;background:#5b8ff8;"></div></div>
+        <div class="progress-label" id="prog-label-foundations">Not started</div>
+      </div>
+      <div class="cert-badge not-earned" id="badge-foundations">Certificate</div>
+    </a>
+
+    <a href="claude-module-1.html" class="course-row" id="row-claude">
+      <div class="course-dot" style="background:#D97757;"></div>
+      <div class="course-info">
+        <div class="course-title">Mastering Claude</div>
+        <div class="course-sub">7 modules · Intermediate</div>
+        <div class="course-continue" id="continue-claude" style="display:none;color:#D97757;"></div>
+      </div>
+      <div class="progress-wrap">
+        <div class="progress-track"><div class="progress-fill" id="prog-claude" style="width:0%;background:#D97757;"></div></div>
+        <div class="progress-label" id="prog-label-claude">Not started</div>
+      </div>
+      <div class="cert-badge not-earned" id="badge-claude">Certificate</div>
+    </a>
+
+    <a href="chatgpt-module-1.html" class="course-row" id="row-chatgpt">
+      <div class="course-dot" style="background:#10a37f;"></div>
+      <div class="course-info">
+        <div class="course-title">Mastering ChatGPT</div>
+        <div class="course-sub">7 modules · Intermediate</div>
+        <div class="course-continue" id="continue-chatgpt" style="display:none;color:#10a37f;"></div>
+      </div>
+      <div class="progress-wrap">
+        <div class="progress-track"><div class="progress-fill" id="prog-chatgpt" style="width:0%;background:#10a37f;"></div></div>
+        <div class="progress-label" id="prog-label-chatgpt">Not started</div>
+      </div>
+      <div class="cert-badge not-earned" id="badge-chatgpt">Certificate</div>
+    </a>
+
+    <a href="gemini-module-1.html" class="course-row" id="row-gemini">
+      <div class="course-dot" style="background:#4285f4;"></div>
+      <div class="course-info">
+        <div class="course-title">Mastering Gemini</div>
+        <div class="course-sub">7 modules · Intermediate</div>
+        <div class="course-continue" id="continue-gemini" style="display:none;color:#4285f4;"></div>
+      </div>
+      <div class="progress-wrap">
+        <div class="progress-track"><div class="progress-fill" id="prog-gemini" style="width:0%;background:#4285f4;"></div></div>
+        <div class="progress-label" id="prog-label-gemini">Not started</div>
+      </div>
+      <div class="cert-badge not-earned" id="badge-gemini">Certificate</div>
+    </a>
+
+    <a href="perplexity-module-1.html" class="course-row" id="row-perplexity">
+      <div class="course-dot" style="background:#00ADB5;"></div>
+      <div class="course-info">
+        <div class="course-title">Mastering Perplexity</div>
+        <div class="course-sub">7 modules · Intermediate</div>
+        <div class="course-continue" id="continue-perplexity" style="display:none;color:#00ADB5;"></div>
+      </div>
+      <div class="progress-wrap">
+        <div class="progress-track"><div class="progress-fill" id="prog-perplexity" style="width:0%;background:#00ADB5;"></div></div>
+        <div class="progress-label" id="prog-label-perplexity">Not started</div>
+      </div>
+      <div class="cert-badge not-earned" id="badge-perplexity">Certificate</div>
+    </a>
+
+  </div>
+
+  <!-- Certificates -->
+  <div class="section-label">Your Certificates</div>
+  <div class="cert-grid">
+    <div class="cert-card" id="cc-foundations"><div class="cert-card-dot" style="background:#5b8ff8;"></div><div class="cert-card-title">Foundations of AI</div><div class="cert-card-status" id="cs-foundations">Not yet earned</div></div>
+    <div class="cert-card" id="cc-claude"><div class="cert-card-dot" style="background:#D97757;"></div><div class="cert-card-title">Mastering Claude</div><div class="cert-card-status" id="cs-claude">Not yet earned</div></div>
+    <div class="cert-card" id="cc-chatgpt"><div class="cert-card-dot" style="background:#10a37f;"></div><div class="cert-card-title">Mastering ChatGPT</div><div class="cert-card-status" id="cs-chatgpt">Not yet earned</div></div>
+    <div class="cert-card" id="cc-gemini"><div class="cert-card-dot" style="background:#4285f4;"></div><div class="cert-card-title">Mastering Gemini</div><div class="cert-card-status" id="cs-gemini">Not yet earned</div></div>
+    <div class="cert-card" id="cc-perplexity"><div class="cert-card-dot" style="background:#00ADB5;"></div><div class="cert-card-title">Mastering Perplexity</div><div class="cert-card-status" id="cs-perplexity">Not yet earned</div></div>
+    <div class="cert-card" id="cc-proficiency"><div class="cert-card-dot" style="background:#F0B429;"></div><div class="cert-card-title">AI Systems Proficiency Certification</div><div class="cert-card-status" id="cs-proficiency">🔒 Complete all 5 courses</div></div>
+  </div>
 </div>
 
 <script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-  import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-  import { getFirestore, doc, getDoc, updateDoc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import{initializeApp}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import{getAuth,onAuthStateChanged,signOut as fbSignOut}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import{getFirestore,doc,getDoc}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+const app=initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+const auth=getAuth(app);const db=getFirestore(app);
+window.signOut=async()=>{await fbSignOut(auth);window.location.href='login.html';};
+window.toggleTheme=function(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='☾'):(h.setAttribute('data-theme','dark'),i.textContent='☀');};
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",
-    authDomain: "meridian-institute.firebaseapp.com",
-    projectId: "meridian-institute",
-    storageBucket: "meridian-institute.firebasestorage.app",
-    messagingSenderId: "355371012929",
-    appId: "1:355371012929:web:244fc2f15ee8ac656887c0",
-    measurementId: "G-ER0EN6DE4N"
-  };
+// Course config — localStorage keys + continue URL builder
+const COURSES={
+  foundations:{
+    moduleKeys:['meridian_m1','meridian_m2','meridian_m3','meridian_m4','meridian_m5','meridian_m6'],
+    lastKey:'meridian_last_module',
+    total:6,
+    certField:'foundationsCertId',
+    // foundations module filenames are irregular — link to quiz when done, else module 1
+    continueUrl:(n)=>n>=6?'quiz-foundations.html':`module-${n+1}-${['','what-ai-actually-is','how-llms-work','tokens-and-context','prompt-engineering','evaluating-ai-output','your-first-ai-project'][n+1]||'next'}.html`,
+    startUrl:'module-1-what-ai-actually-is.html',
+    quizUrl:'quiz-foundations.html',
+    color:'#5b8ff8'
+  },
+  claude:{
+    moduleKeys:['meridian_claude_m1','meridian_claude_m2','meridian_claude_m3','meridian_claude_m4','meridian_claude_m5','meridian_claude_m6','meridian_claude_m7'],
+    lastKey:'meridian_last_claude_module',
+    total:7,
+    certField:'claudeCertId',
+    continueUrl:(n)=>n>=7?'quiz-claude.html':`claude-module-${n+1}.html`,
+    startUrl:'claude-module-1.html',
+    quizUrl:'quiz-claude.html',
+    color:'#D97757'
+  },
+  chatgpt:{
+    moduleKeys:['meridian_chatgpt_m1','meridian_chatgpt_m2','meridian_chatgpt_m3','meridian_chatgpt_m4','meridian_chatgpt_m5','meridian_chatgpt_m6','meridian_chatgpt_m7'],
+    lastKey:'meridian_last_chatgpt_module',
+    total:7,
+    certField:'chatgptCertId',
+    continueUrl:(n)=>n>=7?'quiz-chatgpt.html':`chatgpt-module-${n+1}.html`,
+    startUrl:'chatgpt-module-1.html',
+    quizUrl:'quiz-chatgpt.html',
+    color:'#10a37f'
+  },
+  gemini:{
+    moduleKeys:['meridian_gemini_m1','meridian_gemini_m2','meridian_gemini_m3','meridian_gemini_m4','meridian_gemini_m5','meridian_gemini_m6','meridian_gemini_m7'],
+    lastKey:'meridian_last_gemini_module',
+    total:7,
+    certField:'geminiCertId',
+    continueUrl:(n)=>n>=7?'quiz-gemini.html':`gemini-module-${n+1}.html`,
+    startUrl:'gemini-module-1.html',
+    quizUrl:'quiz-gemini.html',
+    color:'#4285f4'
+  },
+  perplexity:{
+    moduleKeys:['meridian_perplexity_m1','meridian_perplexity_m2','meridian_perplexity_m3','meridian_perplexity_m4','meridian_perplexity_m5','meridian_perplexity_m6','meridian_perplexity_m7'],
+    lastKey:'meridian_last_perplexity_module',
+    total:7,
+    certField:'perplexityCertId',
+    continueUrl:(n)=>n>=7?'quiz-perplexity.html':`perplexity-module-${n+1}.html`,
+    startUrl:'perplexity-module-1.html',
+    quizUrl:'quiz-perplexity.html',
+    color:'#00ADB5'
+  }
+};
 
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-  const db = getFirestore(app);
-
-  const MODULE_LIST = [
-    {id:'module-1', name:'What AI Actually Is', file:'module-1-what-ai-actually-is.html', lsKey:'meridian_m1'},
-    {id:'module-2', name:'How AI Models Work', file:'module-2-how-ai-models-work.html', lsKey:'meridian_m2'},
-    {id:'module-3', name:'Tools That Exist Right Now', file:'module-3-tools-that-exist.html', lsKey:'meridian_m3'},
-    {id:'module-4', name:'Prompt Engineering', file:'module-4-prompt-engineering.html', lsKey:'meridian_m4'},
-    {id:'module-5', name:'AI Ethics & Real Risks', file:'module-5-ai-ethics.html', lsKey:'meridian_m5'},
-    {id:'module-6', name:'Your First AI Project', file:'module-6-your-first-ai-project.html', lsKey:'meridian_m6'},
-  ];
-
-  onAuthStateChanged(auth, async (user) => {
-    if (!user) { window.location.href = 'login.html'; return; }
-
-    const firstName = user.displayName ? user.displayName.split(' ')[0] : 'Learner';
-    document.getElementById('nav-name').textContent = firstName;
-    document.getElementById('nav-avatar').textContent = firstName.charAt(0).toUpperCase();
-
-    // Load from Firebase
-    let completedModules = [];
-    let certificates = [];
-    let certId = null;
-
-    try {
-      const userDoc = await getDoc(doc(db, 'users', user.uid));
-      if (userDoc.exists()) {
-        const data = userDoc.data();
-        completedModules = data.completedModules || [];
-        certificates = data.certificatesEarned || [];
-        certId = data.foundationsCertId || null;
-
-        // Also check localStorage and merge
-        MODULE_LIST.forEach(m => {
-          if (localStorage.getItem(m.lsKey) && !completedModules.includes(m.id)) {
-            completedModules.push(m.id);
-          }
-        });
-
-        // Sync merged data back
-        const moduleMap = {'meridian_m1':'module-1','meridian_m2':'module-2','meridian_m3':'module-3','meridian_m4':'module-4','meridian_m5':'module-5','meridian_m6':'module-6'};
-        MODULE_LIST.forEach(m => { if(localStorage.getItem(m.lsKey)) completedModules = [...new Set([...completedModules, m.id])]; });
-      }
-    } catch(e) { console.log('Firebase read failed', e); }
-
-    // Also check localStorage as fallback and normalize IDs
-    MODULE_LIST.forEach((m, i) => {
-      const lsDone = localStorage.getItem(m.lsKey);
-      const fbDone = completedModules.includes(m.id) ||
-                     completedModules.includes('module-' + (i+1)) ||
-                     completedModules.includes(m.id.replace('module-', 'module-'));
-      if ((lsDone || fbDone) && !completedModules.includes(m.id)) {
-        completedModules.push(m.id);
-      }
-    });
-
-    // If foundations-complete is saved, mark all modules done
-    if (completedModules.includes('foundations-complete') || certificates.includes('foundations')) {
-      MODULE_LIST.forEach(m => {
-        if (!completedModules.includes(m.id)) completedModules.push(m.id);
-      });
+function applyLocalProgress(){
+  let totalModules=0;
+  for(const[id,cfg]of Object.entries(COURSES)){
+    const completed=cfg.moduleKeys.filter(k=>localStorage.getItem(k)).length;
+    const last=parseInt(localStorage.getItem(cfg.lastKey)||'0');
+    totalModules+=completed;
+    if(completed===0)continue;
+    // Progress bar
+    const pct=Math.round((completed/cfg.total)*100);
+    document.getElementById('prog-'+id).style.width=pct+'%';
+    document.getElementById('prog-label-'+id).textContent=`${completed} / ${cfg.total} modules`;
+    // Badge
+    const badge=document.getElementById('badge-'+id);
+    if(completed>0&&completed<cfg.total){badge.className='cert-badge in-progress';badge.textContent='In Progress';}
+    // Continue link — update row href and show continue text
+    const row=document.getElementById('row-'+id);
+    const continueEl=document.getElementById('continue-'+id);
+    if(completed>=cfg.total){
+      // All modules done — go to quiz
+      row.href=cfg.quizUrl;
+      continueEl.style.display='block';
+      continueEl.textContent='→ Take the final quiz';
+    } else if(last>0){
+      // In progress — go to next module
+      const nextUrl=cfg.continueUrl(last);
+      row.href=nextUrl;
+      continueEl.style.display='block';
+      continueEl.textContent=`→ Continue: Module ${last+1}`;
     }
-
-    const completedCount = MODULE_LIST.filter(m => completedModules.includes(m.id)).length;
-    const allDone = completedCount === MODULE_LIST.length;
-    const hasCert = certificates.includes('foundations') || completedModules.includes('foundations-complete');
-
-    // Find next module
-    const nextModule = MODULE_LIST.find(m => !completedModules.includes(m.id));
-
-    document.getElementById('page-content').innerHTML = `
-      <div class="welcome-bar">
-        <div>
-          <div class="welcome-eyebrow">Your dashboard</div>
-          <div class="welcome-title">Welcome back,<br>${firstName}.</div>
-        </div>
-        ${nextModule
-          ? `<a href="${nextModule.file}" class="btn-continue">Continue Learning →</a>`
-          : hasCert
-            ? `<a href="courses.html" class="btn-continue">Browse More Courses →</a>`
-            : `<a href="quiz-foundations.html" class="btn-continue">🏆 Take Final Assessment →</a>`
-        }
-      </div>
-
-      <div class="stats-row">
-        <div class="stat-card">
-          <div class="stat-label">Modules completed</div>
-          <div class="stat-value">${completedCount}<span style="font-size:20px;color:var(--text-3);"> / 6</span></div>
-          <div class="stat-sub">Foundations of AI</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-label">Progress</div>
-          <div class="stat-value" style="color:${allDone?'var(--success)':'var(--text)'}">${Math.round((completedCount/6)*100)}<span style="font-size:20px;color:var(--text-3);">%</span></div>
-          <div class="stat-sub">${allDone ? 'Course complete' : completedCount === 0 ? 'Just getting started' : 'Keep going'}</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-label">Certificates earned</div>
-          <div class="stat-value" style="color:${hasCert?'var(--success)':'var(--text)'}">${hasCert ? '1' : '0'}</div>
-          <div class="stat-sub">${hasCert ? 'Foundations of AI' : 'Complete the course to earn yours'}</div>
-        </div>
-      </div>
-
-      ${hasCert ? `
-      <div class="section-title" style="margin-bottom:16px;">Your Certificates</div>
-      <div class="cert-card" style="margin-bottom:32px;">
-        <div class="cert-header">
-          <div class="cert-icon">🏆</div>
-          <div>
-            <div class="cert-title">Foundations of AI</div>
-            <div class="cert-subtitle">Meridian Institute of AI · Verified Certificate</div>
-          </div>
-        </div>
-        <div class="cert-actions">
-          <a href="certificate.html?id=${certId || user.uid + '-foundations'}" class="btn-cert btn-cert-primary" target="_blank">View Certificate</a>
-          <button class="btn-cert btn-cert-ghost" onclick="copyCertLink('${certId || user.uid + '-foundations'}')">Copy Verification Link</button>
-        </div>
-      </div>
-      ` : ''}
-
-      <div class="section-title">My Courses</div>
-
-      <div class="course-card ${allDone ? 'completed' : ''}" id="foundations-card">
-        <div class="course-card-header" onclick="toggleExpand()">
-          <div class="course-card-left">
-            <div class="course-icon-wrap ${allDone ? 'done' : ''}">
-              ${allDone ? '✓' : '🧠'}
-            </div>
-            <div>
-              <div class="course-name">Foundations of AI</div>
-              <div class="course-status ${allDone ? 'done' : ''}">${allDone ? '✓ Completed · 6 of 6 modules' : `${completedCount} of 6 modules complete`}</div>
-            </div>
-          </div>
-          <div style="display:flex;align-items:center;gap:12px;">
-            <span class="course-badge ${allDone ? 'badge-done' : completedCount > 0 ? 'badge-progress' : 'badge-locked'}">${allDone ? 'Completed' : completedCount > 0 ? 'In Progress' : 'Not Started'}</span>
-            <span style="color:var(--text-3);font-size:18px;" id="expand-arrow">▾</span>
-          </div>
-        </div>
-
-        <div class="course-expand ${!allDone ? 'open' : ''}" id="course-expand">
-          <div class="module-list">
-            ${MODULE_LIST.map((m, i) => {
-              const done = completedModules.includes(m.id);
-              return `<a href="${m.file}" class="module-item ${done ? 'done' : ''}">
-                <div class="module-check ${done ? 'check-done' : 'check-pending'}">${done ? '✓' : i+1}</div>
-                <span class="module-name">Module ${i+1}: ${m.name}</span>
-                <span style="font-size:12px;color:${done ? 'var(--success)' : 'var(--text-3)'};">${done ? 'Complete' : 'Not started'}</span>
-              </a>`;
-            }).join('')}
-          </div>
-          <div>
-            ${allDone
-              ? `<a href="module-1-what-ai-actually-is.html" class="btn-review">Review Course</a><a href="quiz-foundations.html" class="btn-continue" style="margin-left:10px;">View Assessment →</a>`
-              : nextModule
-                ? `<a href="${nextModule.file}" class="btn-continue">Continue: ${nextModule.name} →</a>`
-                : `<a href="quiz-foundations.html" class="btn-continue">Take Final Assessment →</a>`
-            }
-          </div>
-        </div>
-      </div>
-
-      <div class="course-card" style="opacity:0.5;">
-        <div class="course-card-left" style="display:flex;align-items:center;gap:16px;">
-          <div class="course-icon-wrap">📈</div>
-          <div>
-            <div class="course-name">AI in Finance</div>
-            <div class="course-status">Coming soon · Intermediate</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="course-card" style="opacity:0.5;margin-top:16px;">
-        <div class="course-card-left" style="display:flex;align-items:center;gap:16px;">
-          <div class="course-icon-wrap">⚖️</div>
-          <div>
-            <div class="course-name">AI in Law</div>
-            <div class="course-status">Coming soon · Intermediate</div>
-          </div>
-        </div>
-      </div>
-    `;
-  });
-
-  window.toggleExpand = function() {
-    const expand = document.getElementById('course-expand');
-    const arrow = document.getElementById('expand-arrow');
-    expand.classList.toggle('open');
-    arrow.textContent = expand.classList.contains('open') ? '▴' : '▾';
   }
+  return totalModules;
+}
 
-  window.copyCertLink = function(id) {
-    const url = `${window.location.origin}/certificate.html?id=${id}`;
-    navigator.clipboard.writeText(url).then(() => {
-      alert('Verification link copied to clipboard!');
-    });
+function markCertEarned(id,certId,color){
+  // Progress bar to 100%
+  const prog=document.getElementById('prog-'+id);
+  if(prog){prog.style.width='100%';}
+  const lbl=document.getElementById('prog-label-'+id);
+  const cfg=COURSES[id];
+  if(lbl&&cfg)lbl.textContent=`${cfg.total} / ${cfg.total} modules`;
+  // Badge
+  const badge=document.getElementById('badge-'+id);
+  if(badge){badge.className='cert-badge earned';badge.textContent='✓ Certified';}
+  // Row — link to quiz to retake or just mark done
+  const row=document.getElementById('row-'+id);
+  const continueEl=document.getElementById('continue-'+id);
+  if(continueEl){continueEl.style.display='none';}
+  // Cert card
+  const card=document.getElementById('cc-'+id);
+  if(card)card.classList.add('earned');
+  const status=document.getElementById('cs-'+id);
+  if(status){status.style.color='#22c55e';status.textContent='✓ Earned';}
+  if(certId){
+    const link=document.createElement('a');
+    link.href='certificate.html?id='+certId;
+    link.target='_blank';
+    link.className='cert-card-link';
+    link.style.color=color||'#22c55e';
+    link.textContent='View certificate →';
+    if(card)card.appendChild(link);
   }
+}
 
-  window.handleSignOut = async function() {
-    const lsKeys = ['meridian_m1','meridian_m2','meridian_m3','meridian_m4','meridian_m5','meridian_m6','meridian_last_module'];
-    lsKeys.forEach(k => localStorage.removeItem(k));
-    await signOut(auth);
-    window.location.href = 'index.html';
-  }
+onAuthStateChanged(auth,async u=>{
+  if(!u){window.location.href='login.html';return;}
+  document.getElementById('welcome-name').textContent='Welcome back, '+(u.displayName||'there')+'.';
 
-  window.toggleTheme = function() {
-    const html = document.documentElement;
-    const icon = document.getElementById('theme-icon');
-    html.getAttribute('data-theme')==='dark' ? (html.setAttribute('data-theme','light'),icon.textContent='☾') : (html.setAttribute('data-theme','dark'),icon.textContent='☀');
+  // Apply localStorage progress first (instant)
+  const localModules=applyLocalProgress();
+
+  // Then load Firebase cert data
+  try{
+    const snap=await getDoc(doc(db,'users',u.uid));
+    if(!snap.exists()){
+      document.getElementById('welcome-sub').textContent=localModules>0?`${localModules} of 32 modules completed`:'Start a course below.';
+      return;
+    }
+    const data=snap.data();
+    const certFields={foundations:'foundationsCertId',claude:'claudeCertId',chatgpt:'chatgptCertId',gemini:'geminiCertId',perplexity:'perplexityCertId'};
+    const certColors={foundations:'#5b8ff8',claude:'#D97757',chatgpt:'#10a37f',gemini:'#4285f4',perplexity:'#00ADB5'};
+    let earnedCount=0;
+    for(const[id,field]of Object.entries(certFields)){
+      if(data[field]){markCertEarned(id,data[field],certColors[id]);earnedCount++;}
+    }
+    // Capstone
+    if(data.proficiencyCertId){
+      document.getElementById('cap-eyebrow').textContent='★ Capstone — Earned';
+      document.getElementById('cap-sub').textContent='Congratulations. You hold the full Meridian credential stack.';
+      const btn=document.getElementById('cap-btn');btn.className='capstone-banner-btn earned';btn.textContent='✓ View Certificate';btn.href='certificate.html?id='+data.proficiencyCertId;
+      const card=document.getElementById('cc-proficiency');card.classList.add('capstone-earned');
+      const status=document.getElementById('cs-proficiency');status.style.color='#F0B429';status.textContent='✓ Earned';
+      const link=document.createElement('a');link.href='certificate.html?id='+data.proficiencyCertId;link.target='_blank';link.className='cert-card-link';link.style.color='#F0B429';link.textContent='View certificate →';card.appendChild(link);
+    } else if(earnedCount===5){
+      document.getElementById('cap-sub').textContent='All 5 courses complete — take the assessment now.';
+      const btn=document.getElementById('cap-btn');btn.className='capstone-banner-btn ready';btn.textContent='Take Assessment →';
+      document.getElementById('cs-proficiency').textContent='Eligible — take the assessment';document.getElementById('cs-proficiency').style.color='#F0B429';
+    } else {
+      document.getElementById('cap-sub').textContent=`${earnedCount} of 5 certificates earned. Finish the remaining courses to unlock.`;
+    }
+    document.getElementById('welcome-sub').textContent=`${earnedCount} of 5 certificates earned · ${localModules} of 32 modules completed`;
+  }catch(e){
+    document.getElementById('welcome-sub').textContent=localModules>0?`${localModules} of 32 modules completed`:'Start a course below.';
   }
+});
 </script>
 </body>
 </html>
