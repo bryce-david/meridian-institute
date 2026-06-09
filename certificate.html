@@ -175,9 +175,12 @@ function formatDate(ts){
 }
 function shortId(id){
   if(!id)return'—';
-  // Show last 16 chars uppercased
-  const parts=id.split('-');
-  return parts[0].toUpperCase().slice(0,16);
+  // uid is everything before the last hyphen; course is after the last hyphen
+  const lastDash=id.lastIndexOf('-');
+  if(lastDash===-1)return id.toUpperCase().slice(0,16);
+  const uid=id.slice(0,lastDash).toUpperCase().slice(0,10);
+  const course=id.slice(lastDash+1).toUpperCase();
+  return uid+'...'+'-'+course;
 }
 
 async function loadCert(){
