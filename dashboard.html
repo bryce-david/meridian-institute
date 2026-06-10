@@ -177,6 +177,36 @@
       <div class="cert-badge not-earned" id="badge-perplexity">Certificate</div>
     </a>
 
+    <div class="section-label" style="margin-top:36px;">Advanced — Domain Mastery</div>
+
+    <a href="finance-module-1.html" class="course-row" id="row-finance">
+      <div class="course-dot" style="background:#2D7D46;"></div>
+      <div class="course-info">
+        <div class="course-title">AI in Finance</div>
+        <div class="course-sub">10 modules · Advanced</div>
+        <div class="course-continue" id="continue-finance" style="display:none;color:#2D7D46;"></div>
+      </div>
+      <div class="progress-wrap">
+        <div class="progress-track"><div class="progress-fill" id="prog-finance" style="width:0%;background:#2D7D46;"></div></div>
+        <div class="progress-label" id="prog-label-finance">Not started</div>
+      </div>
+      <div class="cert-badge not-earned" id="badge-finance">Certificate</div>
+    </a>
+
+    <a href="law-module-1.html" class="course-row" id="row-law">
+      <div class="course-dot" style="background:#8B2E3C;"></div>
+      <div class="course-info">
+        <div class="course-title">AI in Law</div>
+        <div class="course-sub">10 modules · Advanced</div>
+        <div class="course-continue" id="continue-law" style="display:none;color:#8B2E3C;"></div>
+      </div>
+      <div class="progress-wrap">
+        <div class="progress-track"><div class="progress-fill" id="prog-law" style="width:0%;background:#8B2E3C;"></div></div>
+        <div class="progress-label" id="prog-label-law">Not started</div>
+      </div>
+      <div class="cert-badge not-earned" id="badge-law">Certificate</div>
+    </a>
+
   </div>
 
   <!-- Certificates -->
@@ -187,6 +217,8 @@
     <div class="cert-card" id="cc-chatgpt"><div class="cert-card-dot" style="background:#10a37f;"></div><div class="cert-card-title">Mastering ChatGPT</div><div class="cert-card-status" id="cs-chatgpt">Not yet earned</div></div>
     <div class="cert-card" id="cc-gemini"><div class="cert-card-dot" style="background:#4285f4;"></div><div class="cert-card-title">Mastering Gemini</div><div class="cert-card-status" id="cs-gemini">Not yet earned</div></div>
     <div class="cert-card" id="cc-perplexity"><div class="cert-card-dot" style="background:#00ADB5;"></div><div class="cert-card-title">Mastering Perplexity</div><div class="cert-card-status" id="cs-perplexity">Not yet earned</div></div>
+    <div class="cert-card" id="cc-finance"><div class="cert-card-dot" style="background:#2D7D46;"></div><div class="cert-card-title">AI in Finance</div><div class="cert-card-status" id="cs-finance">Not yet earned</div></div>
+    <div class="cert-card" id="cc-law"><div class="cert-card-dot" style="background:#8B2E3C;"></div><div class="cert-card-title">AI in Law</div><div class="cert-card-status" id="cs-law">Not yet earned</div></div>
     <div class="cert-card" id="cc-proficiency"><div class="cert-card-dot" style="background:#F0B429;"></div><div class="cert-card-title">AI Systems Proficiency Certification</div><div class="cert-card-status" id="cs-proficiency">🔒 Complete all 5 courses</div></div>
   </div>
 </div>
@@ -255,6 +287,55 @@ const COURSES={
   }
 };
 
+// Advanced courses use FIRESTORE for progress (no localStorage) — cross-device
+const FIRESTORE_COURSES={
+  finance:{
+    total:10,
+    arrayField:'financeModules',     // array of 'm1'..'m10' written by modules
+    certField:'financeCertId',
+    continueUrl:(n)=>n>=10?'quiz-finance.html':`finance-module-${n+1}.html`,
+    quizUrl:'quiz-finance.html',
+    color:'#2D7D46'
+  },
+  law:{
+    total:10,
+    arrayField:'lawModules',
+    certField:'lawCertId',
+    continueUrl:(n)=>n>=10?'quiz-law.html':`law-module-${n+1}.html`,
+    quizUrl:'quiz-law.html',
+    color:'#8B2E3C'
+  }
+};
+
+// Apply Firestore-based progress for the advanced courses. Returns modules completed.
+function applyFirestoreProgress(data){
+  let total=0;
+  for(const[id,cfg]of Object.entries(FIRESTORE_COURSES)){
+    const arr=Array.isArray(data[cfg.arrayField])?data[cfg.arrayField]:[];
+    // unique m# count, capped at total
+    const completed=Math.min(new Set(arr).size,cfg.total);
+    total+=completed;
+    if(completed===0)continue;
+    const pct=Math.round((completed/cfg.total)*100);
+    const prog=document.getElementById('prog-'+id);if(prog)prog.style.width=pct+'%';
+    const lbl=document.getElementById('prog-label-'+id);if(lbl)lbl.textContent=`${completed} / ${cfg.total} modules`;
+    const badge=document.getElementById('badge-'+id);
+    if(badge&&completed<cfg.total){badge.className='cert-badge in-progress';badge.textContent='In Progress';}
+    const row=document.getElementById('row-'+id);
+    const continueEl=document.getElementById('continue-'+id);
+    if(completed>=cfg.total){
+      if(row)row.href=cfg.quizUrl;
+      if(continueEl){continueEl.style.display='block';continueEl.textContent='→ Take the final quiz';}
+    } else {
+      // next module = highest completed + 1; derive from count as a simple heuristic
+      const nextUrl=cfg.continueUrl(completed);
+      if(row)row.href=nextUrl;
+      if(continueEl){continueEl.style.display='block';continueEl.textContent=`→ Continue: Module ${completed+1}`;}
+    }
+  }
+  return total;
+}
+
 function applyLocalProgress(){
   let totalModules=0;
   for(const[id,cfg]of Object.entries(COURSES)){
@@ -293,7 +374,7 @@ function markCertEarned(id,certId,color){
   const prog=document.getElementById('prog-'+id);
   if(prog){prog.style.width='100%';}
   const lbl=document.getElementById('prog-label-'+id);
-  const cfg=COURSES[id];
+  const cfg=COURSES[id]||FIRESTORE_COURSES[id];
   if(lbl&&cfg)lbl.textContent=`${cfg.total} / ${cfg.total} modules`;
   // Badge
   const badge=document.getElementById('badge-'+id);
@@ -329,15 +410,23 @@ onAuthStateChanged(auth,async u=>{
   try{
     const snap=await getDoc(doc(db,'users',u.uid));
     if(!snap.exists()){
-      document.getElementById('welcome-sub').textContent=localModules>0?`${localModules} of 32 modules completed`:'Start a course below.';
+      document.getElementById('welcome-sub').textContent=localModules>0?`${localModules} of 52 modules completed`:'Start a course below.';
       return;
     }
     const data=snap.data();
+    // Apply Firestore-based progress for advanced courses (finance, law)
+    const advancedModules=applyFirestoreProgress(data);
     const certFields={foundations:'foundationsCertId',claude:'claudeCertId',chatgpt:'chatgptCertId',gemini:'geminiCertId',perplexity:'perplexityCertId'};
     const certColors={foundations:'#5b8ff8',claude:'#D97757',chatgpt:'#10a37f',gemini:'#4285f4',perplexity:'#00ADB5'};
     let earnedCount=0;
     for(const[id,field]of Object.entries(certFields)){
       if(data[field]){markCertEarned(id,data[field],certColors[id]);earnedCount++;}
+    }
+    // Advanced course certs (finance, law) — tracked separately from the 5-course capstone requirement
+    const advancedCerts={finance:{field:'financeCertId',color:'#2D7D46'},law:{field:'lawCertId',color:'#8B2E3C'}};
+    let advancedEarned=0;
+    for(const[id,info]of Object.entries(advancedCerts)){
+      if(data[info.field]){markCertEarned(id,data[info.field],info.color);advancedEarned++;}
     }
     // Capstone
     if(data.proficiencyCertId){
@@ -354,9 +443,9 @@ onAuthStateChanged(auth,async u=>{
     } else {
       document.getElementById('cap-sub').textContent=`${earnedCount} of 5 certificates earned. Finish the remaining courses to unlock.`;
     }
-    document.getElementById('welcome-sub').textContent=`${earnedCount} of 5 certificates earned · ${localModules} of 32 modules completed`;
+    document.getElementById('welcome-sub').textContent=`${earnedCount} of 5 core certificates · ${localModules+advancedModules} of 52 modules completed`;
   }catch(e){
-    document.getElementById('welcome-sub').textContent=localModules>0?`${localModules} of 32 modules completed`:'Start a course below.';
+    document.getElementById('welcome-sub').textContent=localModules>0?`${localModules} of 52 modules completed`:'Start a course below.';
   }
 });
 </script>
