@@ -291,7 +291,7 @@ If my goal is unrealistic given my constraints, tell me that directly and sugges
 <script>
   function toggleTheme(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='☾'):(h.setAttribute('data-theme','dark'),i.textContent='☀');}
   window.addEventListener('scroll',()=>{const d=document.documentElement,s=d.scrollTop||document.body.scrollTop,t=d.scrollHeight-d.clientHeight;document.getElementById('progress').style.width=(s/t*100)+'%';});
-  if (!localStorage.getItem('meridian_claude_m5')) {
+  if (!null) {
     document.body.innerHTML = `<div style="min-height:100vh;display:flex;align-items:center;justify-content:center;background:#080808;font-family:'DM Sans',sans-serif;padding:24px;"><div style="max-width:440px;text-align:center;background:#111;border:1px solid rgba(255,255,255,0.08);border-radius:20px;padding:48px;"><div style="font-size:48px;margin-bottom:20px;">🔒</div><div style="font-size:20px;font-weight:500;color:#f0f0f0;margin-bottom:12px;">Module locked</div><div style="font-size:14px;color:#a0a0a0;margin-bottom:28px;line-height:1.6;">Complete Module 5 before continuing.</div><a href="claude-module-5.html" style="display:inline-block;padding:12px 24px;background:#5b8ff8;color:#fff;border-radius:10px;font-size:14px;font-weight:500;text-decoration:none;">← Go to Module 5</a></div></div>`;
   }
   let unlocked = false;
@@ -315,10 +315,23 @@ If my goal is unrealistic given my constraints, tell me that directly and sugges
   }
   window.addEventListener('scroll', updateScrollProgress);
   updateScrollProgress();
-  function completeAndNext() {
-    try { localStorage.setItem('meridian_claude_m6', 'true'); localStorage.setItem('meridian_last_claude_module', '6'); } catch(e) {}
-    setTimeout(() => { window.location.href = 'claude-module-7.html'; }, 80);
+  function completeAndNext(){
+    if(window.__meridianSaveProgress){ try{ window.__meridianSaveProgress("m6"); }catch(e){} }
+    setTimeout(function(){ window.location.href="claude-module-7.html"; }, 120);
   }
+</script>
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import { getFirestore, doc, setDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  const app = initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+  const auth = getAuth(app); const db = getFirestore(app);
+  let meridianUser = null;
+  onAuthStateChanged(auth, u => { meridianUser = u; });
+  window.__meridianSaveProgress = async function(mValue){
+    if(!meridianUser) return;
+    try { await setDoc(doc(db,"users",meridianUser.uid), { claudeModules: arrayUnion(mValue) }, { merge: true }); } catch(e) {}
+  };
 </script>
 </body>
 </html>

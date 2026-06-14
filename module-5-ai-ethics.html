@@ -125,9 +125,13 @@
 <body>
 <nav>
   <div class="nav-left">
-    <div class="nav-logo-mark">M</div>
+    <a href="index.html" style="display:flex;align-items:center;text-decoration:none;">
+      <div class="nav-logo-mark">M</div>
+    </a>
     <div class="nav-divider"></div>
-    <a href="module-1-what-ai-actually-is.html" class="nav-back">← Foundations of AI</a>
+    <a href="index.html" class="nav-back" style="font-size:12px;">🏠 Home</a>
+    <div class="nav-divider"></div>
+    <a href="courses.html" class="nav-back">← Foundations of AI</a>
     <div class="nav-divider"></div>
     <span class="nav-label">Module 5</span>
   </div>
@@ -226,7 +230,7 @@
 
 
   // Progression check — must complete previous module
-  if (!localStorage.getItem('meridian_m4')) {
+  if (!null) {
     document.body.innerHTML = `
       <div style="min-height:100vh;display:flex;align-items:center;justify-content:center;background:#080808;font-family:'DM Sans',sans-serif;padding:24px;">
         <div style="max-width:440px;text-align:center;">
@@ -255,9 +259,9 @@
   window.addEventListener('scroll', checkScrollBottom);
   checkScrollBottom();
 
-  function completeAndNext() {
-    localStorage.setItem('meridian_m5', 'true');
-    window.location.href = 'module-6-your-first-ai-project.html';
+  function completeAndNext(){
+    if(window.__meridianSaveProgress){ try{ window.__meridianSaveProgress("m5"); }catch(e){} }
+    setTimeout(function(){ window.location.href="module-6-your-first-ai-project.html"; }, 120);
   }
 
   function toggleTheme(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='☾'):(h.setAttribute('data-theme','dark'),i.textContent='☀');}
@@ -265,9 +269,9 @@
 
 
   // Linear progression check
-  if (!localStorage.getItem('meridian_m4')) {
+  if (!null) {
     document.querySelector('.page-wrapper') && (document.querySelector('.page-wrapper').style.display = 'none');
-    const lastMod = parseInt(localStorage.getItem('meridian_last_module') || '0');
+    const lastMod = parseInt(null || '0');
     const resumeFiles = {'0':'module-1-what-ai-actually-is.html','1':'module-1-what-ai-actually-is.html','2':'module-2-how-ai-models-work.html','3':'module-3-tools-that-exist.html','4':'module-4-prompt-engineering.html','5':'module-5-ai-ethics.html','6':'module-6-your-first-ai-project.html'};
     const resumeFile = resumeFiles[lastMod] || 'module-1-what-ai-actually-is.html';
     const resumeLabel = lastMod > 0 ? 'Resume Module ' + (lastMod + 1) : 'Start from Module 1';
@@ -313,31 +317,10 @@
 
   function completeAndNext() {
     try {
-      localStorage.setItem('meridian_m5', 'true');
-      localStorage.setItem('meridian_last_module', '5');
-      // Try to sync with Firebase if user is logged in
-      syncProgressToFirebase('5');
     } catch(e) {}
     setTimeout(() => { window.location.href = 'module-6-your-first-ai-project.html'; }, 100);
   }
 
-  function syncProgressToFirebase(moduleNum) {
-    try {
-      const script = document.createElement('script');
-      script.type = 'module';
-      script.textContent = `
-        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
-        import { getAuth } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
-        import { getFirestore, doc, updateDoc, arrayUnion } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
-        const app = initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
-        const auth = getAuth(app);
-        const db = getFirestore(app);
-        if (auth.currentUser) {
-          updateDoc(doc(db, 'users', auth.currentUser.uid), {
-            completedModules: arrayUnion('module-${moduleNum}'),
-            lastModule: ${moduleNum}
-          }).catch(() => {});
-        }
       `;
       document.head.appendChild(script);
     } catch(e) {}
@@ -358,5 +341,22 @@
   </button>
 </div>
 
+
+
+
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import { getFirestore, doc, setDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  const app = initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+  const auth = getAuth(app); const db = getFirestore(app);
+  let meridianUser = null;
+  onAuthStateChanged(auth, u => { meridianUser = u; });
+  window.__meridianSaveProgress = async function(mValue){
+    if(!meridianUser) return;
+    try { await setDoc(doc(db,"users",meridianUser.uid), { foundationsModules: arrayUnion(mValue) }, { merge: true }); } catch(e) {}
+  };
+</script>
 </body>
 </html>

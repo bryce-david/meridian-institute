@@ -232,87 +232,31 @@ const auth=getAuth(app);const db=getFirestore(app);
 window.signOut=async()=>{await fbSignOut(auth);window.location.href='login.html';};
 window.toggleTheme=function(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='☾'):(h.setAttribute('data-theme','dark'),i.textContent='☀');};
 
-// Course config — localStorage keys + continue URL builder
-const COURSES={
-  foundations:{
-    moduleKeys:['meridian_m1','meridian_m2','meridian_m3','meridian_m4','meridian_m5','meridian_m6'],
-    lastKey:'meridian_last_module',
-    total:6,
-    certField:'foundationsCertId',
-    // foundations module filenames are irregular — link to quiz when done, else module 1
-    continueUrl:(n)=>n>=6?'quiz-foundations.html':`module-${n+1}-${['','what-ai-actually-is','how-llms-work','tokens-and-context','prompt-engineering','evaluating-ai-output','your-first-ai-project'][n+1]||'next'}.html`,
-    startUrl:'module-1-what-ai-actually-is.html',
-    quizUrl:'quiz-foundations.html',
-    color:'#5b8ff8'
-  },
-  claude:{
-    moduleKeys:['meridian_claude_m1','meridian_claude_m2','meridian_claude_m3','meridian_claude_m4','meridian_claude_m5','meridian_claude_m6','meridian_claude_m7'],
-    lastKey:'meridian_last_claude_module',
-    total:7,
-    certField:'claudeCertId',
-    continueUrl:(n)=>n>=7?'quiz-claude.html':`claude-module-${n+1}.html`,
-    startUrl:'claude-module-1.html',
-    quizUrl:'quiz-claude.html',
-    color:'#D97757'
-  },
-  chatgpt:{
-    moduleKeys:['meridian_chatgpt_m1','meridian_chatgpt_m2','meridian_chatgpt_m3','meridian_chatgpt_m4','meridian_chatgpt_m5','meridian_chatgpt_m6','meridian_chatgpt_m7'],
-    lastKey:'meridian_last_chatgpt_module',
-    total:7,
-    certField:'chatgptCertId',
-    continueUrl:(n)=>n>=7?'quiz-chatgpt.html':`chatgpt-module-${n+1}.html`,
-    startUrl:'chatgpt-module-1.html',
-    quizUrl:'quiz-chatgpt.html',
-    color:'#10a37f'
-  },
-  gemini:{
-    moduleKeys:['meridian_gemini_m1','meridian_gemini_m2','meridian_gemini_m3','meridian_gemini_m4','meridian_gemini_m5','meridian_gemini_m6','meridian_gemini_m7'],
-    lastKey:'meridian_last_gemini_module',
-    total:7,
-    certField:'geminiCertId',
-    continueUrl:(n)=>n>=7?'quiz-gemini.html':`gemini-module-${n+1}.html`,
-    startUrl:'gemini-module-1.html',
-    quizUrl:'quiz-gemini.html',
-    color:'#4285f4'
-  },
-  perplexity:{
-    moduleKeys:['meridian_perplexity_m1','meridian_perplexity_m2','meridian_perplexity_m3','meridian_perplexity_m4','meridian_perplexity_m5','meridian_perplexity_m6','meridian_perplexity_m7'],
-    lastKey:'meridian_last_perplexity_module',
-    total:7,
-    certField:'perplexityCertId',
-    continueUrl:(n)=>n>=7?'quiz-perplexity.html':`perplexity-module-${n+1}.html`,
-    startUrl:'perplexity-module-1.html',
-    quizUrl:'quiz-perplexity.html',
-    color:'#00ADB5'
-  }
-};
-
-// Advanced courses use FIRESTORE for progress (no localStorage) — cross-device
+// All courses now use FIRESTORE for progress — cross-device, no browser storage.
+// Each course writes a `{course}Modules` array of 'm1','m2',... via setDoc+arrayUnion.
 const FIRESTORE_COURSES={
-  finance:{
-    total:10,
-    arrayField:'financeModules',     // array of 'm1'..'m10' written by modules
-    certField:'financeCertId',
-    continueUrl:(n)=>n>=10?'quiz-finance.html':`finance-module-${n+1}.html`,
-    quizUrl:'quiz-finance.html',
-    color:'#2D7D46'
-  },
-  law:{
-    total:10,
-    arrayField:'lawModules',
-    certField:'lawCertId',
-    continueUrl:(n)=>n>=10?'quiz-law.html':`law-module-${n+1}.html`,
-    quizUrl:'quiz-law.html',
-    color:'#8B2E3C'
-  }
+  foundations:{total:6, arrayField:'foundationsModules', certField:'foundationsCertId',
+    moduleUrl:(n)=>['module-1-what-ai-actually-is.html','module-2-how-ai-models-work.html','module-3-tools-that-exist.html','module-4-prompt-engineering.html','module-5-ai-ethics.html','module-6-your-first-ai-project.html'][n]||'module-1-what-ai-actually-is.html',
+    quizUrl:'quiz-foundations.html', color:'#5b8ff8'},
+  claude:{total:7, arrayField:'claudeModules', certField:'claudeCertId',
+    moduleUrl:(n)=>`claude-module-${n+1}.html`, quizUrl:'quiz-claude.html', color:'#D97757'},
+  chatgpt:{total:7, arrayField:'chatgptModules', certField:'chatgptCertId',
+    moduleUrl:(n)=>`chatgpt-module-${n+1}.html`, quizUrl:'quiz-chatgpt.html', color:'#10a37f'},
+  gemini:{total:7, arrayField:'geminiModules', certField:'geminiCertId',
+    moduleUrl:(n)=>`gemini-module-${n+1}.html`, quizUrl:'quiz-gemini.html', color:'#4285f4'},
+  perplexity:{total:7, arrayField:'perplexityModules', certField:'perplexityCertId',
+    moduleUrl:(n)=>`perplexity-module-${n+1}.html`, quizUrl:'quiz-perplexity.html', color:'#00ADB5'},
+  finance:{total:10, arrayField:'financeModules', certField:'financeCertId',
+    moduleUrl:(n)=>`finance-module-${n+1}.html`, quizUrl:'quiz-finance.html', color:'#2D7D46'},
+  law:{total:10, arrayField:'lawModules', certField:'lawCertId',
+    moduleUrl:(n)=>`law-module-${n+1}.html`, quizUrl:'quiz-law.html', color:'#8B2E3C'}
 };
 
-// Apply Firestore-based progress for the advanced courses. Returns modules completed.
+// Apply Firestore-based progress for ALL courses. Returns total modules completed.
 function applyFirestoreProgress(data){
   let total=0;
   for(const[id,cfg]of Object.entries(FIRESTORE_COURSES)){
     const arr=Array.isArray(data[cfg.arrayField])?data[cfg.arrayField]:[];
-    // unique m# count, capped at total
     const completed=Math.min(new Set(arr).size,cfg.total);
     total+=completed;
     if(completed===0)continue;
@@ -327,8 +271,8 @@ function applyFirestoreProgress(data){
       if(row)row.href=cfg.quizUrl;
       if(continueEl){continueEl.style.display='block';continueEl.textContent='→ Take the final quiz';}
     } else {
-      // next module = highest completed + 1; derive from count as a simple heuristic
-      const nextUrl=cfg.continueUrl(completed);
+      // next module = (count of completed) since modules are done in order
+      const nextUrl=cfg.moduleUrl(completed);
       if(row)row.href=nextUrl;
       if(continueEl){continueEl.style.display='block';continueEl.textContent=`→ Continue: Module ${completed+1}`;}
     }
@@ -336,45 +280,12 @@ function applyFirestoreProgress(data){
   return total;
 }
 
-function applyLocalProgress(){
-  let totalModules=0;
-  for(const[id,cfg]of Object.entries(COURSES)){
-    const completed=cfg.moduleKeys.filter(k=>localStorage.getItem(k)).length;
-    const last=parseInt(localStorage.getItem(cfg.lastKey)||'0');
-    totalModules+=completed;
-    if(completed===0)continue;
-    // Progress bar
-    const pct=Math.round((completed/cfg.total)*100);
-    document.getElementById('prog-'+id).style.width=pct+'%';
-    document.getElementById('prog-label-'+id).textContent=`${completed} / ${cfg.total} modules`;
-    // Badge
-    const badge=document.getElementById('badge-'+id);
-    if(completed>0&&completed<cfg.total){badge.className='cert-badge in-progress';badge.textContent='In Progress';}
-    // Continue link — update row href and show continue text
-    const row=document.getElementById('row-'+id);
-    const continueEl=document.getElementById('continue-'+id);
-    if(completed>=cfg.total){
-      // All modules done — go to quiz
-      row.href=cfg.quizUrl;
-      continueEl.style.display='block';
-      continueEl.textContent='→ Take the final quiz';
-    } else if(last>0){
-      // In progress — go to next module
-      const nextUrl=cfg.continueUrl(last);
-      row.href=nextUrl;
-      continueEl.style.display='block';
-      continueEl.textContent=`→ Continue: Module ${last+1}`;
-    }
-  }
-  return totalModules;
-}
-
 function markCertEarned(id,certId,color){
   // Progress bar to 100%
   const prog=document.getElementById('prog-'+id);
   if(prog){prog.style.width='100%';}
   const lbl=document.getElementById('prog-label-'+id);
-  const cfg=COURSES[id]||FIRESTORE_COURSES[id];
+  const cfg=FIRESTORE_COURSES[id];
   if(lbl&&cfg)lbl.textContent=`${cfg.total} / ${cfg.total} modules`;
   // Badge
   const badge=document.getElementById('badge-'+id);
@@ -403,19 +314,16 @@ onAuthStateChanged(auth,async u=>{
   if(!u){window.location.href='login.html';return;}
   document.getElementById('welcome-name').textContent='Welcome back, '+(u.displayName||'there')+'.';
 
-  // Apply localStorage progress first (instant)
-  const localModules=applyLocalProgress();
-
-  // Then load Firebase cert data
   try{
     const snap=await getDoc(doc(db,'users',u.uid));
     if(!snap.exists()){
-      document.getElementById('welcome-sub').textContent=localModules>0?`${localModules} of 52 modules completed`:'Start a course below.';
+      document.getElementById('welcome-sub').textContent='Start a course below.';
       return;
     }
     const data=snap.data();
-    // Apply Firestore-based progress for advanced courses (finance, law)
-    const advancedModules=applyFirestoreProgress(data);
+    // Unified Firestore progress for ALL courses
+    const totalModules=applyFirestoreProgress(data);
+    // Core 5 certificates (count toward the capstone)
     const certFields={foundations:'foundationsCertId',claude:'claudeCertId',chatgpt:'chatgptCertId',gemini:'geminiCertId',perplexity:'perplexityCertId'};
     const certColors={foundations:'#5b8ff8',claude:'#D97757',chatgpt:'#10a37f',gemini:'#4285f4',perplexity:'#00ADB5'};
     let earnedCount=0;
@@ -443,9 +351,10 @@ onAuthStateChanged(auth,async u=>{
     } else {
       document.getElementById('cap-sub').textContent=`${earnedCount} of 5 certificates earned. Finish the remaining courses to unlock.`;
     }
-    document.getElementById('welcome-sub').textContent=`${earnedCount} of 5 core certificates · ${localModules+advancedModules} of 52 modules completed`;
+    const totalCerts=earnedCount+advancedEarned;
+    document.getElementById('welcome-sub').textContent=`${totalCerts} certificate${totalCerts===1?'':'s'} earned · ${totalModules} of 52 modules completed`;
   }catch(e){
-    document.getElementById('welcome-sub').textContent=localModules>0?`${localModules} of 52 modules completed`:'Start a course below.';
+    document.getElementById('welcome-sub').textContent='Start a course below.';
   }
 });
 </script>

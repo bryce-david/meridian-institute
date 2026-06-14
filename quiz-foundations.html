@@ -206,8 +206,6 @@ const ALL_QUESTIONS=[
 let questions=[],current=0,score=0,answered=false;
 function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
 window.startQuiz=function(){
-  const req=['meridian_m1','meridian_m2','meridian_m3','meridian_m4','meridian_m5','meridian_m6'];
-  if(req.some(k=>!localStorage.getItem(k))){alert('Please complete all 6 modules first.');window.location.href='module-1-what-ai-actually-is.html';return;}
   questions=shuffle([...ALL_QUESTIONS]).slice(0,15);current=0;score=0;
   document.getElementById('start-section').style.display='none';document.getElementById('quiz-section').style.display='block';renderQuestion();
 };

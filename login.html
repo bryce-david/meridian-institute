@@ -196,9 +196,6 @@
 
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      // Clear any previous user's localStorage before loading new user's data
-      const lsKeys = ['meridian_m1','meridian_m2','meridian_m3','meridian_m4','meridian_m5','meridian_m6','meridian_last_module'];
-      lsKeys.forEach(k => localStorage.removeItem(k));
       successMsg.textContent = 'Signed in. Taking you to your dashboard...';
       successMsg.classList.add('show');
       setTimeout(() => { window.location.href = 'dashboard.html'; }, 1200);

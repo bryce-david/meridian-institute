@@ -260,13 +260,23 @@
   window.addEventListener('scroll', updateScrollProgress);
   updateScrollProgress();
 
-  function completeAndNext() {
-    try {
-      localStorage.setItem('meridian_claude_m1', 'true');
-      localStorage.setItem('meridian_last_claude_module', '1');
-    } catch(e) {}
-    setTimeout(() => { window.location.href = 'claude-module-2.html'; }, 80);
+  function completeAndNext(){
+    if(window.__meridianSaveProgress){ try{ window.__meridianSaveProgress("m1"); }catch(e){} }
+    setTimeout(function(){ window.location.href="claude-module-2.html"; }, 120);
   }
+</script>
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import { getFirestore, doc, setDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  const app = initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+  const auth = getAuth(app); const db = getFirestore(app);
+  let meridianUser = null;
+  onAuthStateChanged(auth, u => { meridianUser = u; });
+  window.__meridianSaveProgress = async function(mValue){
+    if(!meridianUser) return;
+    try { await setDoc(doc(db,"users",meridianUser.uid), { claudeModules: arrayUnion(mValue) }, { merge: true }); } catch(e) {}
+  };
 </script>
 </body>
 </html>
