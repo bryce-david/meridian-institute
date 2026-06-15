@@ -294,6 +294,16 @@ The goal: Build the kind of deep, transferable understanding that shows up on te
 </div>
 </main>
 </div>
+<div class="sticky-bar" id="sticky-bar">
+  <div class="sticky-bar-reading" id="sticky-reading">Read to the end to unlock the next module</div>
+  <div class="sticky-bar-track">
+    <div class="sticky-bar-fill" id="sticky-fill"></div>
+  </div>
+  <div class="sticky-bar-label" id="sticky-label">0%</div>
+  <button class="sticky-bar-btn" id="sticky-btn" onclick="completeAndNext()">
+    Take the Final Assessment &#8594;
+  </button>
+</div>
 <script>
   function toggleTheme(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='☾'):(h.setAttribute('data-theme','dark'),i.textContent='☀');}
   window.addEventListener('scroll',()=>{const d=document.documentElement,s=d.scrollTop||document.body.scrollTop,t=d.scrollHeight-d.clientHeight;const p=document.getElementById('progress');if(p)p.style.width=(s/t*100)+'%';});
