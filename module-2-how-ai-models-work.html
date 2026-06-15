@@ -291,136 +291,49 @@
 </main>
 </div>
 <script>
-
-
-  // Progression check — must complete previous module
-  if (!null) {
-    document.body.innerHTML = `
-      <div style="min-height:100vh;display:flex;align-items:center;justify-content:center;background:#080808;font-family:'DM Sans',sans-serif;padding:24px;">
-        <div style="max-width:440px;text-align:center;">
-          <div style="font-size:48px;margin-bottom:20px;">🔒</div>
-          <div style="font-size:20px;font-weight:500;color:#f0f0f0;margin-bottom:12px;">Module locked</div>
-          <div style="font-size:15px;color:#a0a0a0;margin-bottom:28px;line-height:1.6;">You need to complete the previous module before accessing this one.</div>
-          <a href="module-1-what-ai-actually-is.html" style="display:inline-block;padding:12px 24px;background:#5b8ff8;color:#fff;border-radius:10px;font-size:14px;font-weight:500;text-decoration:none;">Go to previous module →</a>
-        </div>
-      </div>`;
-    throw new Error('locked');
+  function toggleTheme(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='☾'):(h.setAttribute('data-theme','dark'),i.textContent='☀');}
+  window.addEventListener('scroll',()=>{const d=document.documentElement,s=d.scrollTop||document.body.scrollTop,t=d.scrollHeight-d.clientHeight;const p=document.getElementById('progress');if(p)p.style.width=(s/t*100)+'%';});
+  let unlocked=false;
+  function updateScrollProgress(){
+    const scrolled=window.scrollY+window.innerHeight;
+    const total=document.documentElement.scrollHeight;
+    const pct=Math.min(100,Math.round((scrolled/total)*100));
+    const fill=document.getElementById('sticky-fill');
+    const label=document.getElementById('sticky-label');
+    const btn=document.getElementById('sticky-btn');
+    const reading=document.getElementById('sticky-reading');
+    if(fill)fill.style.width=pct+'%';
+    if(label)label.textContent=pct+'%';
+    if(pct>=95&&!unlocked){unlocked=true;if(btn)btn.style.display='block';if(reading)reading.style.display='none';if(fill)fill.style.background='#22c55e';if(label)label.style.color='#22c55e';}
   }
-
-  // Scroll lock — show next button only when user reaches the bottom
-  const nextBtn = document.getElementById('scroll-next-btn');
-  const scrollHint = document.getElementById('scroll-hint');
-
-  function checkScrollBottom() {
-    const scrolled = window.scrollY + window.innerHeight;
-    const total = document.documentElement.scrollHeight;
-    if (scrolled >= total - 120) {
-      if (nextBtn) nextBtn.style.display = 'inline-flex';
-      if (scrollHint) scrollHint.style.display = 'none';
-      window.removeEventListener('scroll', checkScrollBottom);
-    }
-  }
-  window.addEventListener('scroll', checkScrollBottom);
-  checkScrollBottom();
-
+  window.addEventListener('scroll',updateScrollProgress);
+  updateScrollProgress();
   function completeAndNext(){
     if(window.__meridianSaveProgress){ try{ window.__meridianSaveProgress("m2"); }catch(e){} }
     setTimeout(function(){ window.location.href="module-3-tools-that-exist.html"; }, 120);
   }
-
-  function toggleTheme(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='☾'):(h.setAttribute('data-theme','dark'),i.textContent='☀');}
-  window.addEventListener('scroll',()=>{const d=document.documentElement,s=d.scrollTop||document.body.scrollTop,t=d.scrollHeight-d.clientHeight;document.getElementById('progress').style.width=(s/t*100)+'%';});
-
-
-  // Linear progression check
-  if (!null) {
-    document.querySelector('.page-wrapper') && (document.querySelector('.page-wrapper').style.display = 'none');
-    const lastMod = parseInt(null || '0');
-    const resumeFiles = {'0':'module-1-what-ai-actually-is.html','1':'module-1-what-ai-actually-is.html','2':'module-2-how-ai-models-work.html','3':'module-3-tools-that-exist.html','4':'module-4-prompt-engineering.html','5':'module-5-ai-ethics.html','6':'module-6-your-first-ai-project.html'};
-    const resumeFile = resumeFiles[lastMod] || 'module-1-what-ai-actually-is.html';
-    const resumeLabel = lastMod > 0 ? 'Resume Module ' + (lastMod + 1) : 'Start from Module 1';
-    document.body.insertAdjacentHTML('beforeend', `
-      <div style="min-height:100vh;display:flex;align-items:center;justify-content:center;background:var(--bg);font-family:'DM Sans',sans-serif;padding:24px;position:fixed;inset:0;z-index:9999;">
-        <div style="max-width:440px;text-align:center;background:var(--bg-2);border:1px solid var(--border);border-radius:20px;padding:48px;">
-          <div style="font-size:48px;margin-bottom:20px;">🔒</div>
-          <div style="font-size:20px;font-weight:500;color:var(--text);margin-bottom:12px;">Module locked</div>
-          <div style="font-size:14px;color:var(--text-2);margin-bottom:28px;line-height:1.6;">Complete the previous modules in order first. Each module builds on the last.</div>
-          <a href="${resumeFile}" style="display:inline-block;padding:12px 24px;background:#5b8ff8;color:#fff;border-radius:10px;font-size:14px;font-weight:500;text-decoration:none;margin-bottom:12px;">${resumeLabel} →</a>
-          <br>
-          <a href="courses.html" style="display:inline-block;margin-top:8px;font-size:13px;color:var(--text-3);text-decoration:underline;">Back to courses</a>
-        </div>
-      </div>
-    `);
-  } else {
-
-  // Scroll progress tracking
-  let unlocked = false;
-  function updateScrollProgress() {
-    const scrolled = window.scrollY + window.innerHeight;
-    const total = document.documentElement.scrollHeight;
-    const pct = Math.min(100, Math.round((scrolled / total) * 100));
-
-    const fill = document.getElementById('sticky-fill');
-    const label = document.getElementById('sticky-label');
-    const btn = document.getElementById('sticky-btn');
-    const reading = document.getElementById('sticky-reading');
-
-    if (fill) fill.style.width = pct + '%';
-    if (label) label.textContent = pct + '%';
-
-    if (pct >= 95 && !unlocked) {
-      unlocked = true;
-      if (btn) btn.style.display = 'block';
-      if (reading) reading.style.display = 'none';
-      if (fill) fill.style.background = '#22c55e';
-      if (label) label.style.color = '#22c55e';
-    }
-  }
-  window.addEventListener('scroll', updateScrollProgress);
-  updateScrollProgress();
-
-  function completeAndNext() {
-    try {
-    } catch(e) {}
-    setTimeout(() => { window.location.href = 'module-3-tools-that-exist.html'; }, 100);
-  }
-
-      `;
-      document.head.appendChild(script);
-    } catch(e) {}
-  }
-  }
-
 </script>
-
-<!-- STICKY PROGRESS BAR -->
-<div class="sticky-bar" id="sticky-bar">
-  <div class="sticky-bar-reading" id="sticky-reading">Read to the end to unlock the next module</div>
-  <div class="sticky-bar-track">
-    <div class="sticky-bar-fill" id="sticky-fill"></div>
-  </div>
-  <div class="sticky-bar-label" id="sticky-label">0%</div>
-  <button class="sticky-bar-btn" id="sticky-btn" onclick="completeAndNext()">
-    Module 3: Tools That Exist Right Now →
-  </button>
-</div>
-
-
-
-
-
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
   import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-  import { getFirestore, doc, setDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  import { getFirestore, doc, getDoc, setDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
   const app = initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
   const auth = getAuth(app); const db = getFirestore(app);
   let meridianUser = null;
-  onAuthStateChanged(auth, u => { meridianUser = u; });
   window.__meridianSaveProgress = async function(mValue){
     if(!meridianUser) return;
     try { await setDoc(doc(db,"users",meridianUser.uid), { foundationsModules: arrayUnion(mValue) }, { merge: true }); } catch(e) {}
   };
+  onAuthStateChanged(auth, async (u) => {
+    meridianUser = u;
+    if (!u) return;
+    try {
+      const snap = await getDoc(doc(db, "users", u.uid));
+      const data = snap.exists() ? snap.data() : {};
+      const done = Array.isArray(data.foundationsModules) ? data.foundationsModules : [];
+      if (!done.includes("m1")) { document.body.innerHTML = `<div style=\"min-height:100vh;display:flex;align-items:center;justify-content:center;background:#080808;font-family:DM Sans,sans-serif;padding:24px;\"><div style=\"max-width:440px;text-align:center;background:#111;border:1px solid rgba(255,255,255,0.08);border-radius:20px;padding:48px;\"><div style=\"font-size:48px;margin-bottom:20px;\">&#128274;</div><div style=\"font-size:20px;font-weight:500;color:#f0f0f0;margin-bottom:12px;\">Module locked</div><div style=\"font-size:14px;color:#a0a0a0;margin-bottom:28px;line-height:1.6;\">Complete the previous module before continuing. Each module builds on the last.</div><a href=\"module-1-what-ai-actually-is.html\" style=\"display:inline-block;padding:12px 24px;background:#5b8ff8;color:#fff;border-radius:10px;font-size:14px;font-weight:500;text-decoration:none;\">&#8592; Back to the course</a></div></div>`; }
+    } catch(e) {}
+  });
 </script>
 </body>
 </html>
