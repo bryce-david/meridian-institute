@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 4: Focus Modes & Pro Features — Mastering Perplexity — Meridian Institute of AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#00ADB5;--accent-dim:rgba(0,173,181,0.1);--nav-bg:rgba(8,8,8,0.9);--callout-bg:rgba(0,173,181,0.07);--callout-border:rgba(0,173,181,0.25);--good-bg:rgba(34,197,94,0.07);--good-border:rgba(34,197,94,0.2);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#008891;--accent-dim:rgba(0,136,145,0.08);--nav-bg:rgba(250,250,248,0.9);--callout-bg:rgba(0,136,145,0.05);--callout-border:rgba(0,136,145,0.2);--good-bg:rgba(22,163,74,0.06);--good-border:rgba(22,163,74,0.2);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}html{scroll-behavior:smooth;overflow-x:hidden;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.7;overflow-x:hidden;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}
+  .nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}.nav-back{font-size:13px;color:var(--text-2);text-decoration:none;}.nav-label{font-size:13px;color:var(--text-3);}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;}
+  .progress-bar{position:fixed;top:60px;left:0;right:0;z-index:99;height:2px;background:var(--border);}.progress-fill{height:100%;background:var(--accent);width:0%;}
+  .page-wrapper{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:100vh;padding-top:62px;}
+  .sidebar{position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto;border-right:1px solid var(--border);padding:32px 24px;background:var(--bg-2);}
+  .sidebar-course{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;}
+  .sidebar-course-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+  .sidebar-module{margin-bottom:4px;}
+  .sidebar-module-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:13px;color:var(--text-2);text-decoration:none;transition:all 0.2s;line-height:1.4;}
+  .sidebar-module-link:hover{background:var(--bg-3);color:var(--text);}.sidebar-module-link.active{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-num{font-size:11px;font-weight:500;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--bg-4);color:var(--text-3);}
+  .sidebar-module-link.active .sidebar-num{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-divider{height:1px;background:var(--border);margin:20px 0;}
+  .sidebar-progress-label{font-size:12px;color:var(--text-3);margin-bottom:8px;display:flex;justify-content:space-between;}
+  .sidebar-progress-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sidebar-progress-fill{height:100%;width:57%;background:var(--accent);border-radius:2px;}
+  main{display:block;min-width:0;}.content{max-width:760px;width:100%;padding:60px 64px 140px;margin:0 auto;}
+  .module-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+  .module-tag{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(0,173,181,0.2);padding:4px 12px;border-radius:100px;}
+  .module-meta{font-size:12px;color:var(--text-3);}
+  h1{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1.05;letter-spacing:-0.02em;color:var(--text);margin-bottom:24px;}
+  .intro-text{font-size:19px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+  h2{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:400;color:var(--text);margin:52px 0 18px;line-height:1.2;}
+  h3{font-size:16px;font-weight:500;color:var(--text);margin:32px 0 12px;}
+  p{font-size:16px;font-weight:300;color:var(--text-2);line-height:1.8;margin-bottom:20px;}strong{font-weight:500;color:var(--text);}
+  .callout{background:var(--callout-bg);border:1px solid var(--callout-border);border-radius:12px;padding:24px 28px;margin:32px 0;}
+  .callout-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+  .callout p{margin:0;font-size:15px;color:var(--text-2);}.callout p+p{margin-top:12px;}
+  .good{background:var(--good-bg);border:1px solid var(--good-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .good-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#22c55e;margin-bottom:10px;}
+  .good p{margin:0;font-size:15px;color:var(--text-2);}
+  .focus-card{background:var(--bg-2);border:1px solid var(--border);border-radius:14px;padding:24px;margin:16px 0;}
+  .focus-icon{font-size:28px;margin-bottom:12px;}.focus-name{font-size:17px;font-weight:500;color:var(--text);margin-bottom:8px;}
+  .focus-desc{font-size:14px;color:var(--text-2);line-height:1.7;margin-bottom:0;}
+  .focus-use{font-size:13px;color:var(--text-3);padding-top:14px;margin-top:14px;border-top:1px solid var(--border);}
+  .focus-use strong{color:var(--text-2);font-size:11px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;display:block;margin-bottom:6px;}
+  .pro-badge{display:inline-block;font-size:10px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;padding:3px 8px;border-radius:4px;background:rgba(0,173,181,0.15);color:var(--accent);border:1px solid rgba(0,173,181,0.2);margin-left:8px;vertical-align:middle;}
+  .sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:var(--bg-2);border-top:1px solid var(--border-2);padding:14px 5%;display:flex;align-items:center;justify-content:space-between;gap:16px;backdrop-filter:blur(12px);}
+  .sticky-bar-track{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sticky-bar-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.2s;width:0%;}
+  .sticky-bar-label{font-size:12px;color:var(--text-3);white-space:nowrap;min-width:60px;text-align:right;}
+  .sticky-bar-btn{padding:10px 20px;border-radius:8px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;background:var(--accent);color:#fff;border:none;cursor:pointer;white-space:nowrap;transition:opacity 0.2s;display:none;}
+  .sticky-bar-reading{font-size:12px;color:var(--text-3);white-space:nowrap;}
+  @media(max-width:900px){.page-wrapper{grid-template-columns:1fr;}.sidebar{display:none;}.content{padding:40px 24px 120px;}h1{font-size:38px;}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="../../index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="../../index.html" class="nav-back">🏠 Home</a>
+    <div class="nav-divider"></div>
+    <a href="../../courses.html" class="nav-back">← Mastering Perplexity</a>
+    <div class="nav-divider"></div>
+    <span class="nav-label">Module 4</span>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">☀</span></button>
+</nav>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+<div class="page-wrapper">
+<aside class="sidebar">
+  <div class="sidebar-course">Course</div>
+  <div class="sidebar-course-name">Mastering Perplexity</div>
+  <div class="sidebar-module"><a href="module-1.html" class="sidebar-module-link"><span class="sidebar-num">1</span>Understanding Perplexity</a></div>
+  <div class="sidebar-module"><a href="module-2.html" class="sidebar-module-link"><span class="sidebar-num">2</span>How Perplexity Works</a></div>
+  <div class="sidebar-module"><a href="module-3.html" class="sidebar-module-link"><span class="sidebar-num">3</span>Prompting Perplexity Effectively</a></div>
+  <div class="sidebar-module"><a href="module-4.html" class="sidebar-module-link active"><span class="sidebar-num">4</span>Focus Modes & Pro Features</a></div>
+  <div class="sidebar-module"><a href="module-5.html" class="sidebar-module-link"><span class="sidebar-num">5</span>Spaces & Collaboration</a></div>
+  <div class="sidebar-module"><a href="module-6.html" class="sidebar-module-link"><span class="sidebar-num">6</span>Perplexity in the Real World</a></div>
+  <div class="sidebar-module"><a href="module-7.html" class="sidebar-module-link"><span class="sidebar-num">7</span>Perplexity vs The Field</a></div>
+  <div class="sidebar-module"><a href="quiz.html" class="sidebar-module-link" style="color:var(--accent);margin-top:4px;"><span class="sidebar-num" style="background:var(--accent-dim);color:var(--accent);">✦</span>Final Assessment</a></div>
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-progress-label"><span>Course progress</span><span style="color:var(--accent);">4 / 7</span></div>
+  <div class="sidebar-progress-track"><div class="sidebar-progress-fill"></div></div>
+</aside>
+<main>
+<div class="content">
+  <div class="module-eyebrow"><span class="module-tag">Module 4</span><span class="module-meta">22 min read · Mastering Perplexity</span></div>
+  <h1>Focus Modes &amp; Pro Features</h1>
+  <p class="intro-text">Focus modes are Perplexity's most underused capability. By default, Perplexity searches the entire web — which is usually what you want. But when you know the type of source that will best answer your question, restricting search to that source type dramatically improves result quality. This module covers every Focus mode and the Pro features that unlock deeper research.</p>
+
+  <h2>Focus modes — restricting your search source</h2>
+  <p>Focus modes appear as icons below the search bar. Selecting one tells Perplexity to search only within that domain of content rather than the full web. The difference in output quality for specialized queries is significant.</p>
+
+  <div class="focus-card">
+    <div class="focus-icon">🌐</div>
+    <div class="focus-name">Web <span style="font-size:12px;color:var(--text-3);font-weight:400;">(default)</span></div>
+    <div class="focus-desc">Searches the full web. The right default for most queries — current news, general information, product research, factual questions. Use this unless you have a specific reason to narrow the source domain.</div>
+    <div class="focus-use"><strong>Best for</strong>General research, current events, product comparisons, factual questions about publicly known topics</div>
+  </div>
+
+  <div class="focus-card">
+    <div class="focus-icon">🎓</div>
+    <div class="focus-name">Academic <span class="pro-badge">Pro</span></div>
+    <div class="focus-desc">Searches academic databases — PubMed, arXiv, Semantic Scholar, and similar peer-reviewed sources. Results are limited to published research and scholarly work. This is the mode that transforms Perplexity into a legitimate research tool for students and researchers — getting peer-reviewed sources rather than general web content.</div>
+    <div class="focus-use"><strong>Best for</strong>Literature reviews, fact-checking scientific claims, finding studies on specific health or science topics, academic research projects, understanding the evidence base for any claim</div>
+  </div>
+
+  <div class="focus-card">
+    <div class="focus-icon">💻</div>
+    <div class="focus-name">Code</div>
+    <div class="focus-desc">Searches Stack Overflow, GitHub, technical documentation, and developer-focused content. Optimizes for code examples, error solutions, library documentation, and technical explanations. The synthesized answers lean toward concrete, implementable solutions rather than conceptual overviews.</div>
+    <div class="focus-use"><strong>Best for</strong>Debugging errors, finding implementation examples, understanding library APIs, looking up syntax, finding solutions to specific technical problems</div>
+  </div>
+
+  <div class="focus-card">
+    <div class="focus-icon">▶️</div>
+    <div class="focus-name">YouTube</div>
+    <div class="focus-desc">Searches YouTube specifically and returns relevant videos with timestamps and summaries. Rather than just finding videos, it synthesizes what those videos contain — letting you understand video content without watching. Particularly useful for tutorials, reviews, and how-to content.</div>
+    <div class="focus-use"><strong>Best for</strong>Finding tutorials on specific topics, comparing product review videos, understanding what's been covered on YouTube about a topic, finding visual explanations</div>
+  </div>
+
+  <div class="focus-card">
+    <div class="focus-icon">💬</div>
+    <div class="focus-name">Reddit</div>
+    <div class="focus-desc">Searches Reddit discussions specifically. This is uniquely valuable for real user opinions, experiences, and community knowledge that doesn't appear in polished articles. What do actual users think of X product? What problems do people actually encounter with Y? Reddit answers these where official sources don't.</div>
+    <div class="focus-use"><strong>Best for</strong>Real user opinions on products, community knowledge, personal experience with services, understanding what problems people actually encounter, niche hobby and interest topics</div>
+  </div>
+
+  <h2>Pro features worth knowing</h2>
+
+  <h3>Model selection</h3>
+  <p>Perplexity Pro lets you choose the underlying language model used for synthesis. Options typically include GPT-4o, Claude Sonnet, Gemini Pro, and Perplexity's own models. The search layer is the same regardless — the model choice affects synthesis quality, writing style, and reasoning depth.</p>
+  <p><strong>When to switch models:</strong> Claude Sonnet tends to produce better-written, more nuanced synthesis. GPT-4o tends toward comprehensive coverage. For most research queries, the default Perplexity model is fine — switch when you need a specific writing style or deeper reasoning on a complex topic.</p>
+
+  <h3>File upload and analysis</h3>
+  <p>Pro users can upload documents (PDFs, Word files, spreadsheets) and ask Perplexity to analyze them — often combined with web research. Upload a report and ask Perplexity to compare its claims against current data. Upload a contract and ask it to flag unusual clauses relative to industry standards. The combination of your document plus live web context is powerful.</p>
+
+  <h3>Image generation</h3>
+  <p>Pro includes basic image generation via DALL-E or Stable Diffusion. This is a convenience feature rather than a serious image generation capability — for professional image work, ChatGPT's DALL-E 3 integration is stronger. But having it available within Perplexity means you can research a topic and generate related visuals without switching tools.</p>
+
+  <div class="callout">
+    <div class="callout-label">The Academic focus is a game-changer for students</div>
+    <p>If you're in school and need to find peer-reviewed sources, Academic focus mode does in seconds what used to take hours in Google Scholar. Ask a research question, switch to Academic, and get synthesized answers from actual published studies with full citations. The citations link directly to the papers. This is the most academically legitimate AI research tool available.</p>
+  </div>
+
+  <div class="good">
+    <div class="good-label">The Focus mode decision rule</div>
+    <p>Ask yourself: "What type of source would give me the best answer to this specific question?" If it's peer-reviewed research — Academic. If it's real user experience — Reddit. If it's code examples — Code. If it's video tutorials — YouTube. If you're not sure — Web. Matching your query to the right source domain is the difference between a mediocre answer and a great one.</p>
+  </div>
+
+</div>
+</main>
+</div>
+<div class="sticky-bar">
+  <div class="sticky-bar-reading" id="sticky-reading">Read to the end to unlock the next module</div>
+  <div class="sticky-bar-track"><div class="sticky-bar-fill" id="sticky-fill"></div></div>
+  <div class="sticky-bar-label" id="sticky-label">0%</div>
+  <button class="sticky-bar-btn" id="sticky-btn" onclick="completeAndNext()">Module 5: Spaces & Collaboration →</button>
+</div>
+<script>
+  function toggleTheme(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='☾'):(h.setAttribute('data-theme','dark'),i.textContent='☀');}
+  window.addEventListener('scroll',()=>{const d=document.documentElement,s=d.scrollTop||document.body.scrollTop,t=d.scrollHeight-d.clientHeight;document.getElementById('progress').style.width=(s/t*100)+'%';});
+  
+  let unlocked=false;
+  function updateScrollProgress(){const pct=Math.min(100,Math.round(((window.scrollY+window.innerHeight)/document.documentElement.scrollHeight)*100));document.getElementById('sticky-fill').style.width=pct+'%';document.getElementById('sticky-label').textContent=pct+'%';if(pct>=95&&!unlocked){unlocked=true;document.getElementById('sticky-btn').style.display='block';document.getElementById('sticky-reading').style.display='none';document.getElementById('sticky-fill').style.background='#22c55e';document.getElementById('sticky-label').style.color='#22c55e';}}
+  window.addEventListener('scroll',updateScrollProgress);updateScrollProgress();
+  function completeAndNext(){
+    if(window.__meridianSaveProgress){ try{ window.__meridianSaveProgress("m4"); }catch(e){} }
+    setTimeout(function(){ window.location.href="module-5.html"; }, 120);
+  }
+</script>
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import { getFirestore, doc, setDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  const app = initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+  const auth = getAuth(app); const db = getFirestore(app);
+  let meridianUser = null;
+  onAuthStateChanged(auth, u => { meridianUser = u; });
+  window.__meridianSaveProgress = async function(mValue){
+    if(!meridianUser) return;
+    try { await setDoc(doc(db,"users",meridianUser.uid), { perplexityModules: arrayUnion(mValue) }, { merge: true }); } catch(e) {}
+  };
+</script>
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  const _gapp = initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+  const _gauth = getAuth(_gapp); const _gdb = getFirestore(_gapp);
+  onAuthStateChanged(_gauth, async (u) => {
+    if (!u) return;
+    try {
+      const snap = await getDoc(doc(_gdb, "users", u.uid));
+      const data = snap.exists() ? snap.data() : {};
+      const done = Array.isArray(data.perplexityModules) ? data.perplexityModules : [];
+      if (!done.includes("m3")) {
+        document.body.innerHTML = `<div style=\"min-height:100vh;display:flex;align-items:center;justify-content:center;background:#080808;font-family:DM Sans,sans-serif;padding:24px;\"><div style=\"max-width:440px;text-align:center;background:#111;border:1px solid rgba(255,255,255,0.08);border-radius:20px;padding:48px;\"><div style=\"font-size:48px;margin-bottom:20px;\">&#128274;</div><div style=\"font-size:20px;font-weight:500;color:#f0f0f0;margin-bottom:12px;\">Module locked</div><div style=\"font-size:14px;color:#a0a0a0;margin-bottom:28px;line-height:1.6;\">Complete the previous module before continuing.</div><a href=\"perplexity-module-1.html\" style=\"display:inline-block;padding:12px 24px;background:#00ADB5;color:#fff;border-radius:10px;font-size:14px;font-weight:500;text-decoration:none;\">&#8592; Back to the course</a></div></div>`;
+      }
+    } catch(e) {}
+  });
+</script>
+</body>
+</html>

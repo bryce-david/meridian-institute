@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 3: Prompting ChatGPT Effectively — Mastering ChatGPT — Meridian Institute of AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#10a37f;--accent-dim:rgba(16,163,127,0.1);--nav-bg:rgba(8,8,8,0.9);--callout-bg:rgba(16,163,127,0.07);--callout-border:rgba(16,163,127,0.25);--good-bg:rgba(34,197,94,0.07);--good-border:rgba(34,197,94,0.2);--bad-bg:rgba(239,68,68,0.07);--bad-border:rgba(239,68,68,0.2);--warn-bg:rgba(251,146,60,0.07);--warn-border:rgba(251,146,60,0.2);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#0d9370;--accent-dim:rgba(13,147,112,0.08);--nav-bg:rgba(250,250,248,0.9);--callout-bg:rgba(13,147,112,0.05);--callout-border:rgba(13,147,112,0.2);--good-bg:rgba(22,163,74,0.06);--good-border:rgba(22,163,74,0.2);--bad-bg:rgba(220,38,38,0.05);--bad-border:rgba(220,38,38,0.2);--warn-bg:rgba(234,88,12,0.05);--warn-border:rgba(234,88,12,0.2);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;overflow-x:hidden;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.7;overflow-x:hidden;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}
+  .nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}
+  .nav-back{font-size:13px;color:var(--text-2);text-decoration:none;transition:color 0.2s;}
+  .nav-back:hover{color:var(--text);}
+  .nav-label{font-size:13px;color:var(--text-3);}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;}
+  .progress-bar{position:fixed;top:60px;left:0;right:0;z-index:99;height:2px;background:var(--border);}
+  .progress-fill{height:100%;background:var(--accent);width:0%;}
+  .page-wrapper{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:100vh;padding-top:62px;}
+  .sidebar{position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto;border-right:1px solid var(--border);padding:32px 24px;background:var(--bg-2);}
+  .sidebar-course{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;}
+  .sidebar-course-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+  .sidebar-module{margin-bottom:4px;}
+  .sidebar-module-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:13px;color:var(--text-2);text-decoration:none;transition:all 0.2s;line-height:1.4;}
+  .sidebar-module-link:hover{background:var(--bg-3);color:var(--text);}
+  .sidebar-module-link.active{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-num{font-size:11px;font-weight:500;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--bg-4);color:var(--text-3);}
+  .sidebar-module-link.active .sidebar-num{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-divider{height:1px;background:var(--border);margin:20px 0;}
+  .sidebar-progress-label{font-size:12px;color:var(--text-3);margin-bottom:8px;display:flex;justify-content:space-between;}
+  .sidebar-progress-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sidebar-progress-fill{height:100%;width:42%;background:var(--accent);border-radius:2px;}
+  main{display:block;min-width:0;}
+  .content{max-width:760px;width:100%;padding:60px 64px 140px;margin:0 auto;}
+  .module-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+  .module-tag{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(16,163,127,0.2);padding:4px 12px;border-radius:100px;}
+  .module-meta{font-size:12px;color:var(--text-3);}
+  h1{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1.05;letter-spacing:-0.02em;color:var(--text);margin-bottom:24px;}
+  .intro-text{font-size:19px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+  h2{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:400;color:var(--text);margin:52px 0 18px;line-height:1.2;}
+  h3{font-size:16px;font-weight:500;color:var(--text);margin:32px 0 12px;}
+  p{font-size:16px;font-weight:300;color:var(--text-2);line-height:1.8;margin-bottom:20px;}
+  strong{font-weight:500;color:var(--text);}
+  .callout{background:var(--callout-bg);border:1px solid var(--callout-border);border-radius:12px;padding:24px 28px;margin:32px 0;}
+  .callout-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+  .callout p{margin:0;font-size:15px;color:var(--text-2);}
+  .callout p+p{margin-top:12px;}
+  .good{background:var(--good-bg);border:1px solid var(--good-border);border-radius:12px;padding:20px 24px;margin:12px 0;}
+  .good-label{font-size:10px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:#22c55e;margin-bottom:10px;}
+  .bad{background:var(--bad-bg);border:1px solid var(--bad-border);border-radius:12px;padding:20px 24px;margin:12px 0;}
+  .bad-label{font-size:10px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:#ef4444;margin-bottom:10px;}
+  .warn{background:var(--warn-bg);border:1px solid var(--warn-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .warn-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#fb923c;margin-bottom:10px;}
+  .warn p,.good p,.bad p{margin:0;font-size:15px;color:var(--text-2);}
+  .prompt-text{font-size:14px;color:var(--text-2);line-height:1.7;white-space:pre-wrap;font-family:'DM Sans',sans-serif;}
+  .technique{background:var(--bg-2);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:0 12px 12px 0;padding:20px 24px;margin:16px 0;}
+  .technique-title{font-size:15px;font-weight:500;color:var(--text);margin-bottom:8px;}
+  .technique-desc{font-size:14px;color:var(--text-2);line-height:1.65;margin:0;}
+  .sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:var(--bg-2);border-top:1px solid var(--border-2);padding:14px 5%;display:flex;align-items:center;justify-content:space-between;gap:16px;backdrop-filter:blur(12px);}
+  .sticky-bar-track{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sticky-bar-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.2s;width:0%;}
+  .sticky-bar-label{font-size:12px;color:var(--text-3);white-space:nowrap;min-width:60px;text-align:right;}
+  .sticky-bar-btn{padding:10px 20px;border-radius:8px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;background:var(--accent);color:#fff;border:none;cursor:pointer;white-space:nowrap;transition:opacity 0.2s;display:none;}
+  .sticky-bar-btn:hover{opacity:0.88;}
+  .sticky-bar-reading{font-size:12px;color:var(--text-3);white-space:nowrap;}
+  @media(max-width:900px){.page-wrapper{grid-template-columns:1fr;}.sidebar{display:none;}.content{padding:40px 24px 120px;}h1{font-size:38px;}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="../../index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="../../index.html" class="nav-back">🏠 Home</a>
+    <div class="nav-divider"></div>
+    <a href="../../courses.html" class="nav-back">← Mastering ChatGPT</a>
+    <div class="nav-divider"></div>
+    <span class="nav-label">Module 3</span>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">☀</span></button>
+</nav>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+<div class="page-wrapper">
+<aside class="sidebar">
+  <div class="sidebar-course">Course</div>
+  <div class="sidebar-course-name">Mastering ChatGPT</div>
+  <div class="sidebar-module"><a href="module-1.html" class="sidebar-module-link"><span class="sidebar-num">1</span>Understanding ChatGPT</a></div>
+  <div class="sidebar-module"><a href="module-2.html" class="sidebar-module-link"><span class="sidebar-num">2</span>The GPT Model Lineup</a></div>
+  <div class="sidebar-module"><a href="module-3.html" class="sidebar-module-link active"><span class="sidebar-num">3</span>Prompting ChatGPT Effectively</a></div>
+  <div class="sidebar-module"><a href="module-4.html" class="sidebar-module-link"><span class="sidebar-num">4</span>Custom GPTs</a></div>
+  <div class="sidebar-module"><a href="module-5.html" class="sidebar-module-link"><span class="sidebar-num">5</span>Advanced Features</a></div>
+  <div class="sidebar-module"><a href="module-6.html" class="sidebar-module-link"><span class="sidebar-num">6</span>ChatGPT in the Real World</a></div>
+  <div class="sidebar-module"><a href="module-7.html" class="sidebar-module-link"><span class="sidebar-num">7</span>ChatGPT vs The Field</a></div>
+  <div class="sidebar-module"><a href="quiz.html" class="sidebar-module-link" style="color:var(--accent);margin-top:4px;"><span class="sidebar-num" style="background:var(--accent-dim);color:var(--accent);">✦</span>Final Assessment</a></div>
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-progress-label"><span>Course progress</span><span style="color:var(--accent);">3 / 7</span></div>
+  <div class="sidebar-progress-track"><div class="sidebar-progress-fill"></div></div>
+</aside>
+<main>
+<div class="content">
+  <div class="module-eyebrow"><span class="module-tag">Module 3</span><span class="module-meta">22 min read · Mastering ChatGPT</span></div>
+  <h1>Prompting ChatGPT Effectively</h1>
+  <p class="intro-text">Most prompting advice is generic. This module is specifically about what works differently in ChatGPT compared to other AI tools — how its RLHF training shapes what it responds well to, where it needs guardrails, and the techniques that unlock significantly better output. If you've done Mastering Claude, you'll notice some meaningful differences here.</p>
+
+  <h2>How ChatGPT's training affects your prompts</h2>
+  <p>ChatGPT is trained heavily on human preference data — humans rating responses and the model learning what gets high ratings. This shapes its behavior in specific ways that you should prompt around rather than against.</p>
+  <p><strong>It defaults to comprehensive answers.</strong> Humans rate thorough responses highly, so ChatGPT tends toward length even when concision would serve better. Counter this by explicitly specifying length: "Answer in 3 sentences" or "Give me a one-paragraph summary."</p>
+  <p><strong>It tends toward agreeableness.</strong> ChatGPT is more likely than Claude to validate your ideas rather than challenge them. If you want honest critique, you need to explicitly ask for it and frame it so pushback is clearly what you want.</p>
+  <p><strong>It responds well to persona framing.</strong> Assigning ChatGPT a clear expert role consistently improves output quality. "You are a senior product manager" produces more targeted, practical advice than the same question without persona framing.</p>
+
+  <h2>The anatomy of a strong ChatGPT prompt</h2>
+  <p>Strong ChatGPT prompts have four components. You don't always need all four, but knowing them lets you add what's missing when results feel generic.</p>
+
+  <div class="technique">
+    <div class="technique-title">1. Role — who ChatGPT is for this task</div>
+    <div class="technique-desc">"You are a senior financial analyst" / "Act as an experienced UX researcher" / "You are a direct, no-nonsense editor." Role framing activates different knowledge and communication styles. Be specific — "senior financial analyst" produces better output than "finance expert."</div>
+  </div>
+  <div class="technique">
+    <div class="technique-title">2. Context — what ChatGPT needs to know</div>
+    <div class="technique-desc">Background information, constraints, the situation you're in, who the audience is, what's been tried before. The more relevant context you provide, the less generic the output. ChatGPT cannot read your mind — tell it what it needs to know.</div>
+  </div>
+  <div class="technique">
+    <div class="technique-title">3. Task — exactly what you want done</div>
+    <div class="technique-desc">Be specific and use action verbs. "Analyze," "rewrite," "list," "compare," "argue for," "identify flaws in." Vague tasks produce vague outputs. "Help me with my presentation" produces less than "Identify the three weakest slides in this deck and explain why."</div>
+  </div>
+  <div class="technique">
+    <div class="technique-title">4. Format — how you want the output structured</div>
+    <div class="technique-desc">Bullet points, numbered list, table, flowing prose, a specific length, a particular structure. ChatGPT will default to whatever format it thinks is most common for similar tasks. Override that default when you have a specific need.</div>
+  </div>
+
+  <h2>Getting honest feedback from ChatGPT</h2>
+  <p>This is one of the most important skills to develop, because ChatGPT's default is to be agreeable — which produces useless feedback. Here's how to counter it.</p>
+
+  <div class="bad">
+    <div class="bad-label">❌ What not to do</div>
+    <div class="prompt-text">What do you think of my business idea? I want to start a subscription box for AI tools and tutorials.</div>
+  </div>
+
+  <p>This will produce a polished validation of your idea with a few gentle suggestions. It won't tell you the real problems.</p>
+
+  <div class="good">
+    <div class="good-label">✓ How to get honest feedback</div>
+    <div class="prompt-text">I'm going to describe a business idea. Your job is NOT to encourage me. Your job is to be a skeptical investor who has seen hundreds of these pitches fail. Tell me:
+1. The three biggest reasons this will likely fail
+2. The assumptions I'm making that may be wrong
+3. The competitive dynamics that make this hard
+4. One thing that could make it work despite all of that
+
+Here's the idea: subscription box for AI tools and tutorials targeting professionals.</div>
+  </div>
+
+  <h2>The role of memory in ChatGPT</h2>
+  <p>ChatGPT has a memory feature that saves facts about you across conversations — your job, your preferences, ongoing projects. Unlike Claude's Projects, ChatGPT's memory is more automatic and less structured. It saves things organically rather than requiring you to explicitly set up a workspace.</p>
+  <p>This creates both an opportunity and a risk. The opportunity: ChatGPT builds up context about you over time without extra work. The risk: outdated memories can create subtle errors — ChatGPT working from old context without flagging that it's doing so.</p>
+
+  <div class="callout">
+    <div class="callout-label">Managing ChatGPT's memory</div>
+    <p>Go to Settings → Personalization → Memory to see everything ChatGPT has stored about you. Review this periodically — especially if you've changed jobs, projects, or preferences. You can delete individual memories or clear all of them. You can also explicitly tell ChatGPT to remember something: "Remember that I prefer tables over bullet points" or "Forget that I mentioned working at X."</p>
+  </div>
+
+  <h2>Working with Custom Instructions</h2>
+  <p>Custom Instructions are ChatGPT's equivalent of a persistent system prompt — text that runs in the background of every conversation. You set them once in Settings → Personalization → Custom Instructions. There are two fields:</p>
+  <p><strong>"What would you like ChatGPT to know about you?"</strong> — Your background, role, context that's always relevant. "I'm a 17-year-old entrepreneur building an AI education platform. I prefer direct, no-fluff responses."</p>
+  <p><strong>"How would you like ChatGPT to respond?"</strong> — Format, tone, length preferences. "Always lead with the direct answer before explaining. Use bullet points for lists. If something isn't working, say so directly rather than softening it."</p>
+  <p>Well-written Custom Instructions improve every ChatGPT conversation without any extra effort. This is one of the highest-ROI setup investments you can make.</p>
+
+  <h2>Prompting the o-series models differently</h2>
+  <p>Reasoning models (o1, o3, o4-mini) require a different prompting approach than GPT-4o. This is one of the most common mistakes ChatGPT users make when switching between model families.</p>
+
+  <div class="warn">
+    <div class="warn-label">What NOT to do with o-series models</div>
+    <p>Don't add "think step by step" or "reason carefully" — reasoning models already do this internally and these instructions can interfere. Don't write elaborate system prompts — o-series models handle them differently and may not respect complex formatting instructions. Don't expect them to follow detailed stylistic constraints as reliably as GPT-4o.</p>
+  </div>
+
+  <div class="good">
+    <div class="good-label">✓ How to prompt o-series models</div>
+    <p>Be direct and problem-focused. State the problem clearly with all necessary context and let the model reason its way to an answer. Trust the process — o-series models work best when you give them the full picture and get out of the way rather than over-specifying how to think about it.</p>
+  </div>
+
+  <h2>Iterating effectively</h2>
+  <p>ChatGPT's conversational memory within a session is one of its genuine strengths. Use it. Instead of trying to write the perfect prompt on the first attempt, treat the conversation as a collaborative refinement process.</p>
+  <p><strong>Start broad, then narrow.</strong> Get a first draft, then give specific feedback: "The second paragraph is too general — give me a concrete example instead."</p>
+  <p><strong>Ask for alternatives.</strong> "Give me three different approaches to this opening sentence." Then pick the strongest elements from each.</p>
+  <p><strong>Have ChatGPT critique its own output.</strong> "What are the weaknesses in the answer you just gave me?" ChatGPT is often surprisingly candid about its own limitations when directly asked.</p>
+
+  <div class="good">
+    <div class="good-label">The most underused prompting technique in ChatGPT</div>
+    <p>Ask ChatGPT to ask you questions before answering. "Before you respond, ask me the three questions that would most help you give a better answer." This surfaces what context you forgot to provide and almost always leads to a significantly better final output. It's especially useful for creative, strategic, and advice-seeking tasks.</p>
+  </div>
+
+</div>
+</main>
+</div>
+<div class="sticky-bar">
+  <div class="sticky-bar-reading" id="sticky-reading">Read to the end to unlock the next module</div>
+  <div class="sticky-bar-track"><div class="sticky-bar-fill" id="sticky-fill"></div></div>
+  <div class="sticky-bar-label" id="sticky-label">0%</div>
+  <button class="sticky-bar-btn" id="sticky-btn" onclick="completeAndNext()">Module 4: Custom GPTs →</button>
+</div>
+<script>
+  function toggleTheme(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='☾'):(h.setAttribute('data-theme','dark'),i.textContent='☀');}
+  window.addEventListener('scroll',()=>{const d=document.documentElement,s=d.scrollTop||document.body.scrollTop,t=d.scrollHeight-d.clientHeight;document.getElementById('progress').style.width=(s/t*100)+'%';});
+  
+  let unlocked=false;
+  function updateScrollProgress(){const pct=Math.min(100,Math.round(((window.scrollY+window.innerHeight)/document.documentElement.scrollHeight)*100));document.getElementById('sticky-fill').style.width=pct+'%';document.getElementById('sticky-label').textContent=pct+'%';if(pct>=95&&!unlocked){unlocked=true;document.getElementById('sticky-btn').style.display='block';document.getElementById('sticky-reading').style.display='none';document.getElementById('sticky-fill').style.background='#22c55e';document.getElementById('sticky-label').style.color='#22c55e';}}
+  window.addEventListener('scroll',updateScrollProgress);updateScrollProgress();
+  function completeAndNext(){
+    if(window.__meridianSaveProgress){ try{ window.__meridianSaveProgress("m3"); }catch(e){} }
+    setTimeout(function(){ window.location.href="module-4.html"; }, 120);
+  }
+</script>
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import { getFirestore, doc, setDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  const app = initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+  const auth = getAuth(app); const db = getFirestore(app);
+  let meridianUser = null;
+  onAuthStateChanged(auth, u => { meridianUser = u; });
+  window.__meridianSaveProgress = async function(mValue){
+    if(!meridianUser) return;
+    try { await setDoc(doc(db,"users",meridianUser.uid), { chatgptModules: arrayUnion(mValue) }, { merge: true }); } catch(e) {}
+  };
+</script>
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  const _gapp = initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+  const _gauth = getAuth(_gapp); const _gdb = getFirestore(_gapp);
+  onAuthStateChanged(_gauth, async (u) => {
+    if (!u) return;
+    try {
+      const snap = await getDoc(doc(_gdb, "users", u.uid));
+      const data = snap.exists() ? snap.data() : {};
+      const done = Array.isArray(data.chatgptModules) ? data.chatgptModules : [];
+      if (!done.includes("m2")) {
+        document.body.innerHTML = `<div style=\"min-height:100vh;display:flex;align-items:center;justify-content:center;background:#080808;font-family:DM Sans,sans-serif;padding:24px;\"><div style=\"max-width:440px;text-align:center;background:#111;border:1px solid rgba(255,255,255,0.08);border-radius:20px;padding:48px;\"><div style=\"font-size:48px;margin-bottom:20px;\">&#128274;</div><div style=\"font-size:20px;font-weight:500;color:#f0f0f0;margin-bottom:12px;\">Module locked</div><div style=\"font-size:14px;color:#a0a0a0;margin-bottom:28px;line-height:1.6;\">Complete the previous module before continuing.</div><a href=\"chatgpt-module-1.html\" style=\"display:inline-block;padding:12px 24px;background:#10a37f;color:#fff;border-radius:10px;font-size:14px;font-weight:500;text-decoration:none;\">&#8592; Back to the course</a></div></div>`;
+      }
+    } catch(e) {}
+  });
+</script>
+</body>
+</html>

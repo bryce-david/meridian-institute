@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 5: AI Ethics & Real Risks — Meridian Institute of AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#5b8ff8;--accent-dim:rgba(91,143,248,0.1);--nav-bg:rgba(8,8,8,0.9);--callout-bg:rgba(91,143,248,0.07);--callout-border:rgba(91,143,248,0.25);--highlight-bg:rgba(91,143,248,0.08);--warn-bg:rgba(251,146,60,0.07);--warn-border:rgba(251,146,60,0.25);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#2563eb;--accent-dim:rgba(37,99,235,0.08);--nav-bg:rgba(250,250,248,0.9);--callout-bg:rgba(37,99,235,0.05);--callout-border:rgba(37,99,235,0.2);--highlight-bg:rgba(37,99,235,0.06);--warn-bg:rgba(234,88,12,0.05);--warn-border:rgba(234,88,12,0.2);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;overflow-x:hidden;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.7;overflow-x:hidden;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}
+  .nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}
+  .nav-back{font-size:13px;color:var(--text-2);text-decoration:none;transition:color 0.2s;}
+  .nav-back:hover{color:var(--text);}
+  .nav-label{font-size:13px;color:var(--text-3);}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;transition:all 0.2s;}
+  .theme-toggle:hover{background:var(--bg-3);color:var(--text);}
+  .progress-bar{position:fixed;top:60px;left:0;right:0;z-index:99;height:2px;background:var(--border);}
+  .progress-fill{height:100%;background:var(--accent);width:0%;transition:width 0.1s;}
+  .page-wrapper{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:100vh;padding-top:62px;overflow:hidden;}
+  .sidebar{position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto;border-right:1px solid var(--border);padding:32px 24px;background:var(--bg-2);}
+  .sidebar-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-3);margin-bottom:16px;}
+  .sidebar-module{margin-bottom:4px;}
+  .sidebar-module-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:13px;color:var(--text-2);text-decoration:none;transition:all 0.2s;line-height:1.4;}
+  .sidebar-module-link:hover{background:var(--bg-3);color:var(--text);}
+  .sidebar-module-link.active{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-num{font-size:11px;font-weight:500;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--bg-4);color:var(--text-3);}
+  .sidebar-module-link.active .sidebar-num{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-divider{height:1px;background:var(--border);margin:20px 0;}
+  .sidebar-progress-label{font-size:12px;color:var(--text-3);margin-bottom:8px;display:flex;justify-content:space-between;}
+  .sidebar-progress-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sidebar-progress-fill{height:100%;width:83%;background:var(--accent);border-radius:2px;}
+  main{display:block;min-width:0;overflow:hidden;}
+  .content{max-width:760px;width:100%;padding:60px 64px 120px;margin:0 auto;}
+  .module-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+  .module-tag{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(91,143,248,0.2);padding:4px 12px;border-radius:100px;}
+  .module-meta{font-size:12px;color:var(--text-3);}
+  h1{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1.05;letter-spacing:-0.02em;color:var(--text);margin-bottom:24px;}
+  .intro-text{font-size:19px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+  h2{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:400;color:var(--text);margin:52px 0 18px;line-height:1.2;}
+  h3{font-size:16px;font-weight:500;color:var(--text);margin:32px 0 12px;}
+  p{font-size:16px;font-weight:300;color:var(--text-2);line-height:1.8;margin-bottom:20px;}
+  strong{font-weight:500;color:var(--text);}
+  .callout{background:var(--callout-bg);border:1px solid var(--callout-border);border-radius:12px;padding:24px 28px;margin:32px 0;}
+  .callout-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+  .callout p{margin:0;font-size:15px;color:var(--text-2);}
+  .callout p+p{margin-top:12px;}
+  .warn{background:var(--warn-bg);border:1px solid var(--warn-border);border-radius:12px;padding:24px 28px;margin:32px 0;}
+  .warn-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#fb923c;margin-bottom:10px;}
+  .warn p{margin:0;font-size:15px;color:var(--text-2);}
+  .risk-card{background:var(--bg-2);border:1px solid var(--border);border-radius:14px;padding:28px;margin:16px 0;border-left:3px solid var(--accent);}
+  .risk-title{font-size:16px;font-weight:500;color:var(--text);margin-bottom:10px;}
+  .risk-desc{font-size:14px;color:var(--text-2);line-height:1.7;margin:0;}
+  .lesson-nav{display:flex;justify-content:space-between;align-items:center;margin-top:60px;padding-top:40px;border-top:1px solid var(--border);}
+  .btn-lesson{display:flex;align-items:center;gap:8px;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:500;text-decoration:none;transition:all 0.2s;cursor:pointer;border:none;font-family:'DM Sans',sans-serif;}
+  .btn-next{background:var(--accent);color:#fff;}
+  .btn-next:hover{opacity:0.88;}
+  .btn-prev{background:transparent;color:var(--text-2);border:1px solid var(--border-2)!important;}
+  .btn-prev:hover{background:var(--bg-3);color:var(--text);}
+  @media(max-width:900px){.page-wrapper{grid-template-columns:1fr;}.sidebar{display:none;}.content{padding:40px 24px 80px;}h1{font-size:38px;}}
+  @media(max-width:600px){.content{padding:28px 16px 80px;}h1{font-size:30px;}h2{font-size:24px;}}
+
+  .sticky-bar {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    z-index: 200;
+    background: var(--bg-2);
+    border-top: 1px solid var(--border-2);
+    padding: 14px 5%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    backdrop-filter: blur(12px);
+    transition: all 0.3s;
+  }
+  .sticky-bar-track {
+    flex: 1;
+    height: 4px;
+    background: var(--border);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .sticky-bar-fill {
+    height: 100%;
+    background: var(--accent);
+    border-radius: 2px;
+    transition: width 0.2s;
+    width: 0%;
+  }
+  .sticky-bar-label {
+    font-size: 12px;
+    color: var(--text-3);
+    white-space: nowrap;
+    min-width: 60px;
+    text-align: right;
+  }
+  .sticky-bar-btn {
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    font-family: 'DM Sans', sans-serif;
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: opacity 0.2s;
+    display: none;
+  }
+  .sticky-bar-btn:hover { opacity: 0.88; }
+  .sticky-bar-reading {
+    font-size: 12px;
+    color: var(--text-3);
+    white-space: nowrap;
+  }
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="../../index.html" style="display:flex;align-items:center;text-decoration:none;">
+      <div class="nav-logo-mark">M</div>
+    </a>
+    <div class="nav-divider"></div>
+    <a href="../../index.html" class="nav-back" style="font-size:12px;">🏠 Home</a>
+    <div class="nav-divider"></div>
+    <a href="../../courses.html" class="nav-back">← Foundations of AI</a>
+    <div class="nav-divider"></div>
+    <span class="nav-label">Module 5</span>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">☀</span></button>
+</nav>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+<div class="page-wrapper">
+<aside class="sidebar">
+  <div class="sidebar-label">Foundations of AI</div>
+  <div class="sidebar-module"><a href="module-1.html" class="sidebar-module-link"><span class="sidebar-num">1</span>What AI Actually Is</a></div>
+  <div class="sidebar-module"><a href="module-2.html" class="sidebar-module-link"><span class="sidebar-num">2</span>How AI Models Work</a></div>
+  <div class="sidebar-module"><a href="module-3.html" class="sidebar-module-link"><span class="sidebar-num">3</span>Tools That Exist Right Now</a></div>
+  <div class="sidebar-module"><a href="module-4.html" class="sidebar-module-link"><span class="sidebar-num">4</span>Prompt Engineering</a></div>
+  <div class="sidebar-module"><a href="module-5.html" class="sidebar-module-link active"><span class="sidebar-num">5</span>AI Ethics & Real Risks</a></div>
+  <div class="sidebar-module"><a href="module-6.html" class="sidebar-module-link"><span class="sidebar-num">6</span>Your First AI Project</a></div>
+  <div class="sidebar-module"><a href="quiz.html" class="sidebar-module-link" style="color:var(--accent);margin-top:4px;"><span class="sidebar-num" style="background:var(--accent-dim);color:var(--accent);">✦</span>Final Assessment</a></div>
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-progress-label"><span>Course progress</span><span style="color:var(--accent);">5 / 6</span></div>
+  <div class="sidebar-progress-track"><div class="sidebar-progress-fill"></div></div>
+</aside>
+<main>
+<div class="content">
+  <div class="module-eyebrow"><span class="module-tag">Module 5</span><span class="module-meta">20 min read · Foundations</span></div>
+  <h1>AI Ethics &<br>Real Risks</h1>
+  <p class="intro-text">Most conversations about AI risk fall into one of two traps: either dismissing all concerns as science fiction, or catastrophizing about robots taking over. Neither is useful. This module is about the actual risks — the ones happening now, the ones coming soon, and what they mean for anyone who wants to use AI responsibly.</p>
+
+  <h2>The risks worth worrying about</h2>
+  <p>The most dangerous AI risk isn't a superintelligent system deciding to harm humanity. It's people using powerful but imperfect AI systems in ways that cause real harm — at a scale and speed that wasn't previously possible.</p>
+  <p>Here are the risks that deserve your attention:</p>
+
+  <div class="risk-card">
+    <div class="risk-title">Misinformation at scale</div>
+    <div class="risk-desc">AI makes it dramatically cheaper and faster to generate convincing false content — fake news articles, synthetic images, deepfake videos, and coordinated disinformation campaigns. What used to require a team of people can now be done by one person in minutes. The 2024 election cycles globally showed what this looks like in practice: AI-generated audio clips of candidates saying things they never said, synthetic images of events that never happened, and automated social media accounts amplifying falsehoods at scale.</div>
+  </div>
+
+  <div class="risk-card">
+    <div class="risk-title">Algorithmic bias and automated discrimination</div>
+    <div class="risk-desc">When AI systems are used to make decisions about people — loan approvals, hiring, medical diagnosis, parole recommendations, insurance pricing — the biases in their training data get encoded into those decisions and applied at scale. A biased human makes biased decisions one at a time. A biased algorithm makes them millions of times simultaneously, consistently, and often invisibly. Several real-world cases have shown AI hiring tools systematically downranking women's resumes, and risk assessment tools used in courts that assigned higher recidivism risk scores to Black defendants.</div>
+  </div>
+
+  <div class="risk-card">
+    <div class="risk-title">Power concentration</div>
+    <div class="risk-desc">The most capable AI systems require billions of dollars to build and run. This means they are controlled by a small number of companies and governments. If AI continues to provide massive economic and strategic advantages, and access remains concentrated, the result is a dramatic amplification of existing power imbalances. This is one of the most serious structural risks — not because AI is malicious, but because it's a powerful tool in the hands of a small number of actors.</div>
+  </div>
+
+  <div class="risk-card">
+    <div class="risk-title">Job displacement without transition support</div>
+    <div class="risk-desc">AI will automate significant portions of many jobs — not necessarily eliminating them entirely, but changing what skills matter. The risk isn't that all work disappears. It's that the transition happens faster than education systems, labor markets, and social safety nets can adapt — leaving large numbers of people economically stranded. The historical precedent from previous waves of automation is that new jobs do emerge, but the transition period is painful and unevenly distributed.</div>
+  </div>
+
+  <div class="risk-card">
+    <div class="risk-title">Erosion of human judgment and skill</div>
+    <div class="risk-desc">When people outsource thinking to AI systems without understanding how they work or checking their outputs, two things happen. First, humans stop developing and maintaining skills that matter. Second, errors propagate without anyone catching them. A doctor who relies on AI diagnosis without understanding medicine, a lawyer who submits AI-written briefs without reading them, a student who uses AI for every assignment without engaging with the material — all of these create real risks, both individual and systemic.</div>
+  </div>
+
+  <h2>Algorithmic bias: going deeper</h2>
+  <p>Bias in AI deserves more than a bullet point because it's widely misunderstood. People often assume that if humans aren't intentionally encoding discrimination, the system will be fair. This is wrong for several reasons.</p>
+
+  <h3>Bias in training data</h3>
+  <p>If a model is trained on historical hiring data from a company that systematically underpromoted women, the model learns that pattern. It doesn't "know" it's discriminating — it's reproducing what was there. The data reflects the past, and the past was often unjust.</p>
+
+  <h3>Feedback loops</h3>
+  <p>If a biased model is deployed and its outputs are fed back into future training data, the bias compounds. A criminal justice risk model that overestimates recidivism for a certain group leads to longer sentences, which means more time in the system, which means more data confirming the original prediction. The model becomes more confident in a prediction that was wrong to begin with.</p>
+
+  <h3>Proxy discrimination</h3>
+  <p>Even if protected characteristics like race or gender are removed from the data, AI systems can infer them from proxy variables — zip codes, names, schools attended, browsing history. Removing the explicit variable often doesn't remove the discrimination.</p>
+
+  <div class="callout">
+    <div class="callout-label">The uncomfortable truth</div>
+    <p>There is no such thing as a neutral AI system. Every model reflects choices made by its builders — what data to train on, what to optimize for, whose feedback to use, which outputs to filter. These choices encode values, whether or not they're made consciously. "The algorithm decided" is never a complete explanation.</p>
+  </div>
+
+  <h2>What responsible AI use looks like</h2>
+  <p>Understanding these risks isn't just academic. It shapes how you should use AI tools in your own life and how you should think about AI systems that affect others.</p>
+
+  <h3>Verify important outputs</h3>
+  <p>AI is a starting point, not an endpoint. Anything that matters — facts, analysis, code, medical information, legal interpretation — should be verified through independent sources. Confidence in the output is not evidence of accuracy.</p>
+
+  <h3>Maintain your own skills</h3>
+  <p>Use AI to extend your capabilities, not replace them. If you use AI to write all your emails, you stop developing the ability to write clearly. If you use AI to do all your analysis, you stop developing judgment. The goal is augmentation, not dependence.</p>
+
+  <h3>Be transparent about AI use</h3>
+  <p>In professional and academic contexts, passing off AI-generated work as entirely your own raises serious ethical questions — and increasingly, legal ones. The norms around this are still developing, but the principle is straightforward: be honest about how you produced something.</p>
+
+  <h3>Think about downstream effects</h3>
+  <p>When you build systems that use AI to make decisions about people, you take on responsibility for those decisions. Understanding bias, testing for it, and building in human oversight aren't optional extras — they're baseline requirements for responsible development.</p>
+
+  <div class="warn">
+    <div class="warn-label">The bigger picture</div>
+    <p>AI is genuinely one of the most consequential technologies in human history. The people who understand it — really understand it, not just the hype — are in a position to shape how it develops and who it benefits. That's part of why this course exists, and part of why the governance and policy questions around AI are among the most important that this generation will have to answer.</p>
+  </div>
+</div>
+</main>
+</div>
+<div class="sticky-bar" id="sticky-bar">
+  <div class="sticky-bar-reading" id="sticky-reading">Read to the end to unlock the next module</div>
+  <div class="sticky-bar-track">
+    <div class="sticky-bar-fill" id="sticky-fill"></div>
+  </div>
+  <div class="sticky-bar-label" id="sticky-label">0%</div>
+  <button class="sticky-bar-btn" id="sticky-btn" onclick="completeAndNext()">
+    Module 6: Your First AI Project &#8594;
+  </button>
+</div>
+<script>
+  function toggleTheme(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='☾'):(h.setAttribute('data-theme','dark'),i.textContent='☀');}
+  window.addEventListener('scroll',()=>{const d=document.documentElement,s=d.scrollTop||document.body.scrollTop,t=d.scrollHeight-d.clientHeight;const p=document.getElementById('progress');if(p)p.style.width=(s/t*100)+'%';});
+  let unlocked=false;
+  function updateScrollProgress(){
+    const scrolled=window.scrollY+window.innerHeight;
+    const total=document.documentElement.scrollHeight;
+    const pct=Math.min(100,Math.round((scrolled/total)*100));
+    const fill=document.getElementById('sticky-fill');
+    const label=document.getElementById('sticky-label');
+    const btn=document.getElementById('sticky-btn');
+    const reading=document.getElementById('sticky-reading');
+    if(fill)fill.style.width=pct+'%';
+    if(label)label.textContent=pct+'%';
+    if(pct>=95&&!unlocked){unlocked=true;if(btn)btn.style.display='block';if(reading)reading.style.display='none';if(fill)fill.style.background='#22c55e';if(label)label.style.color='#22c55e';}
+  }
+  window.addEventListener('scroll',updateScrollProgress);
+  updateScrollProgress();
+  function completeAndNext(){
+    if(window.__meridianSaveProgress){ try{ window.__meridianSaveProgress("m5"); }catch(e){} }
+    setTimeout(function(){ window.location.href="module-6.html"; }, 120);
+  }
+</script>
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import { getFirestore, doc, getDoc, setDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  const app = initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+  const auth = getAuth(app); const db = getFirestore(app);
+  let meridianUser = null;
+  window.__meridianSaveProgress = async function(mValue){
+    if(!meridianUser) return;
+    try { await setDoc(doc(db,"users",meridianUser.uid), { foundationsModules: arrayUnion(mValue) }, { merge: true }); } catch(e) {}
+  };
+  onAuthStateChanged(auth, async (u) => {
+    meridianUser = u;
+    if (!u) return;
+    try {
+      const snap = await getDoc(doc(db, "users", u.uid));
+      const data = snap.exists() ? snap.data() : {};
+      const done = Array.isArray(data.foundationsModules) ? data.foundationsModules : [];
+      if (!done.includes("m4")) { document.body.innerHTML = `<div style=\"min-height:100vh;display:flex;align-items:center;justify-content:center;background:#080808;font-family:DM Sans,sans-serif;padding:24px;\"><div style=\"max-width:440px;text-align:center;background:#111;border:1px solid rgba(255,255,255,0.08);border-radius:20px;padding:48px;\"><div style=\"font-size:48px;margin-bottom:20px;\">&#128274;</div><div style=\"font-size:20px;font-weight:500;color:#f0f0f0;margin-bottom:12px;\">Module locked</div><div style=\"font-size:14px;color:#a0a0a0;margin-bottom:28px;line-height:1.6;\">Complete the previous module before continuing. Each module builds on the last.</div><a href=\"module-1-what-ai-actually-is.html\" style=\"display:inline-block;padding:12px 24px;background:#5b8ff8;color:#fff;border-radius:10px;font-size:14px;font-weight:500;text-decoration:none;\">&#8592; Back to the course</a></div></div>`; }
+    } catch(e) {}
+  });
+</script>
+</body>
+</html>

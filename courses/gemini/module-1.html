@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 1: Understanding Gemini — Mastering Gemini — Meridian Institute of AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#4285f4;--accent-dim:rgba(66,133,244,0.1);--nav-bg:rgba(8,8,8,0.9);--callout-bg:rgba(66,133,244,0.07);--callout-border:rgba(66,133,244,0.25);--good-bg:rgba(34,197,94,0.07);--good-border:rgba(34,197,94,0.2);--warn-bg:rgba(251,146,60,0.07);--warn-border:rgba(251,146,60,0.2);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#1a73e8;--accent-dim:rgba(26,115,232,0.08);--nav-bg:rgba(250,250,248,0.9);--callout-bg:rgba(26,115,232,0.05);--callout-border:rgba(26,115,232,0.2);--good-bg:rgba(22,163,74,0.06);--good-border:rgba(22,163,74,0.2);--warn-bg:rgba(234,88,12,0.05);--warn-border:rgba(234,88,12,0.2);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;overflow-x:hidden;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.7;overflow-x:hidden;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}
+  .nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}
+  .nav-back{font-size:13px;color:var(--text-2);text-decoration:none;transition:color 0.2s;}
+  .nav-back:hover{color:var(--text);}
+  .nav-label{font-size:13px;color:var(--text-3);}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;}
+  .progress-bar{position:fixed;top:60px;left:0;right:0;z-index:99;height:2px;background:var(--border);}
+  .progress-fill{height:100%;background:var(--accent);width:0%;transition:width 0.1s;}
+  .page-wrapper{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:100vh;padding-top:62px;}
+  .sidebar{position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto;border-right:1px solid var(--border);padding:32px 24px;background:var(--bg-2);}
+  .sidebar-course{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;}
+  .sidebar-course-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+  .sidebar-module{margin-bottom:4px;}
+  .sidebar-module-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:13px;color:var(--text-2);text-decoration:none;transition:all 0.2s;line-height:1.4;}
+  .sidebar-module-link:hover{background:var(--bg-3);color:var(--text);}
+  .sidebar-module-link.active{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-num{font-size:11px;font-weight:500;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--bg-4);color:var(--text-3);}
+  .sidebar-module-link.active .sidebar-num{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-divider{height:1px;background:var(--border);margin:20px 0;}
+  .sidebar-progress-label{font-size:12px;color:var(--text-3);margin-bottom:8px;display:flex;justify-content:space-between;}
+  .sidebar-progress-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sidebar-progress-fill{height:100%;width:14%;background:var(--accent);border-radius:2px;}
+  main{display:block;min-width:0;}
+  .content{max-width:760px;width:100%;padding:60px 64px 140px;margin:0 auto;}
+  .module-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+  .module-tag{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(66,133,244,0.2);padding:4px 12px;border-radius:100px;}
+  .module-meta{font-size:12px;color:var(--text-3);}
+  h1{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1.05;letter-spacing:-0.02em;color:var(--text);margin-bottom:24px;}
+  .intro-text{font-size:19px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+  h2{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:400;color:var(--text);margin:52px 0 18px;line-height:1.2;}
+  h3{font-size:16px;font-weight:500;color:var(--text);margin:32px 0 12px;}
+  p{font-size:16px;font-weight:300;color:var(--text-2);line-height:1.8;margin-bottom:20px;}
+  strong{font-weight:500;color:var(--text);}
+  .callout{background:var(--callout-bg);border:1px solid var(--callout-border);border-radius:12px;padding:24px 28px;margin:32px 0;}
+  .callout-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+  .callout p{margin:0;font-size:15px;color:var(--text-2);}
+  .callout p+p{margin-top:12px;}
+  .good{background:var(--good-bg);border:1px solid var(--good-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .good-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#22c55e;margin-bottom:10px;}
+  .good p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn{background:var(--warn-bg);border:1px solid var(--warn-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .warn-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#fb923c;margin-bottom:10px;}
+  .warn p{margin:0;font-size:15px;color:var(--text-2);}
+  .principle-list{display:flex;flex-direction:column;gap:12px;margin:24px 0;}
+  .principle{background:var(--bg-2);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:0 12px 12px 0;padding:20px 24px;}
+  .principle-title{font-size:15px;font-weight:500;color:var(--text);margin-bottom:6px;}
+  .principle-desc{font-size:14px;color:var(--text-2);line-height:1.65;margin:0;}
+  .comparison-wrapper{overflow-x:auto;-webkit-overflow-scrolling:touch;width:100%;margin:28px 0;}
+  table{width:100%;border-collapse:collapse;font-size:14px;min-width:480px;}
+  th{text-align:left;padding:12px 16px;font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-3);border-bottom:1px solid var(--border-2);}
+  td{padding:14px 16px;border-bottom:1px solid var(--border);color:var(--text-2);line-height:1.6;vertical-align:top;}
+  tr:last-child td{border-bottom:none;}
+  td:first-child{color:var(--text);font-weight:500;}
+  .sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:var(--bg-2);border-top:1px solid var(--border-2);padding:14px 5%;display:flex;align-items:center;justify-content:space-between;gap:16px;backdrop-filter:blur(12px);}
+  .sticky-bar-track{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sticky-bar-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.2s;width:0%;}
+  .sticky-bar-label{font-size:12px;color:var(--text-3);white-space:nowrap;min-width:60px;text-align:right;}
+  .sticky-bar-btn{padding:10px 20px;border-radius:8px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;background:var(--accent);color:#fff;border:none;cursor:pointer;white-space:nowrap;transition:opacity 0.2s;display:none;}
+  .sticky-bar-btn:hover{opacity:0.88;}
+  .sticky-bar-reading{font-size:12px;color:var(--text-3);white-space:nowrap;}
+  @media(max-width:900px){.page-wrapper{grid-template-columns:1fr;}.sidebar{display:none;}.content{padding:40px 24px 120px;}h1{font-size:38px;}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="../../index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="../../index.html" class="nav-back">🏠 Home</a>
+    <div class="nav-divider"></div>
+    <a href="../../courses.html" class="nav-back">← Mastering Gemini</a>
+    <div class="nav-divider"></div>
+    <span class="nav-label">Module 1</span>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">☀</span></button>
+</nav>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+<div class="page-wrapper">
+<aside class="sidebar">
+  <div class="sidebar-course">Course</div>
+  <div class="sidebar-course-name">Mastering Gemini</div>
+  <div class="sidebar-module"><a href="module-1.html" class="sidebar-module-link active"><span class="sidebar-num">1</span>Understanding Gemini</a></div>
+  <div class="sidebar-module"><a href="module-2.html" class="sidebar-module-link"><span class="sidebar-num">2</span>The Gemini Model Lineup</a></div>
+  <div class="sidebar-module"><a href="module-3.html" class="sidebar-module-link"><span class="sidebar-num">3</span>Prompting Gemini Effectively</a></div>
+  <div class="sidebar-module"><a href="module-4.html" class="sidebar-module-link"><span class="sidebar-num">4</span>Google Workspace Integration</a></div>
+  <div class="sidebar-module"><a href="module-5.html" class="sidebar-module-link"><span class="sidebar-num">5</span>Multimodal Capabilities</a></div>
+  <div class="sidebar-module"><a href="module-6.html" class="sidebar-module-link"><span class="sidebar-num">6</span>Gemini in the Real World</a></div>
+  <div class="sidebar-module"><a href="module-7.html" class="sidebar-module-link"><span class="sidebar-num">7</span>Gemini vs The Field</a></div>
+  <div class="sidebar-module"><a href="quiz.html" class="sidebar-module-link" style="color:var(--accent);margin-top:4px;"><span class="sidebar-num" style="background:var(--accent-dim);color:var(--accent);">✦</span>Final Assessment</a></div>
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-progress-label"><span>Course progress</span><span style="color:var(--accent);">1 / 7</span></div>
+  <div class="sidebar-progress-track"><div class="sidebar-progress-fill"></div></div>
+</aside>
+<main>
+<div class="content">
+  <div class="module-eyebrow"><span class="module-tag">Module 1</span><span class="module-meta">20 min read · Mastering Gemini</span></div>
+  <h1>Understanding Gemini</h1>
+  <p class="intro-text">Gemini is Google's AI — which means it carries the weight of the world's largest search engine, the most-used productivity suite, the biggest mobile platform, and decades of AI research. To use Gemini well you need to understand what Google is actually trying to do with it, how it differs from OpenAI and Anthropic's approaches, and what that means for when and why to reach for it over other tools.</p>
+
+  <h2>Google DeepMind — the research engine behind Gemini</h2>
+  <p>Gemini is built by <strong>Google DeepMind</strong>, formed in 2023 when Google merged its two leading AI research organizations: Google Brain (which built many of the foundational techniques behind modern AI, including the Transformer architecture) and DeepMind (the London-based lab behind AlphaGo, AlphaFold, and a string of landmark scientific AI breakthroughs).</p>
+  <p>This merger created one of the most formidable AI research organizations in the world — combining Google Brain's engineering at scale with DeepMind's track record of fundamental research breakthroughs. The combined team has published more foundational AI research than arguably any other single group.</p>
+  <p>Understanding this background matters because it explains Gemini's genuine research depth. This isn't a company that decided to build an AI product — it's a company whose researchers invented much of what makes modern AI possible, now building a consumer product on that foundation.</p>
+
+  <div class="callout">
+    <div class="callout-label">What Google's position means for Gemini</div>
+    <p>Google has something no other AI company has: integration with tools that billions of people already use daily. Gmail, Google Docs, Google Drive, Google Search, Android, YouTube, Google Maps, Google Meet. Gemini isn't competing as a standalone AI assistant — it's weaving AI into an existing ecosystem that defines how much of the world works. That's a fundamentally different competitive strategy than OpenAI or Anthropic's.</p>
+  </div>
+
+  <h2>Gemini's founding philosophy</h2>
+  <p>Where Anthropic prioritizes safety research and OpenAI prioritizes racing to the frontier, Google DeepMind's philosophy with Gemini is closer to: <strong>AI should be natively multimodal, deeply integrated with real-world information, and embedded into the tools people already use.</strong></p>
+
+  <div class="principle-list">
+    <div class="principle">
+      <div class="principle-title">Multimodal from the ground up</div>
+      <div class="principle-desc">Gemini was designed from the start to understand and generate text, images, audio, video, and code — not as separate models bolted together, but as a single model trained across all modalities simultaneously. This native multimodality is a genuine architectural advantage that affects how naturally it handles cross-modal tasks.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Grounded in real-world information</div>
+      <div class="principle-desc">Google's core competency is organizing the world's information. Gemini has real-time access to Google Search and is designed to provide grounded, sourced responses. Unlike models with static training cutoffs, Gemini can reference current information as a first-class capability rather than a bolt-on feature.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Ecosystem integration as the moat</div>
+      <div class="principle-desc">Rather than competing as a standalone product, Gemini is designed to be the AI layer across Google's entire product suite. Gemini in Gmail, Gemini in Docs, Gemini in Drive, Gemini in Meet — the competitive strategy is making AI indispensable within tools people already rely on rather than convincing them to adopt a new tool.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Scale advantage</div>
+      <div class="principle-desc">Google's compute infrastructure — the TPUs, the data centers, the engineering teams — is larger than any AI competitor. Gemini is trained on and deployed through infrastructure that most companies cannot replicate. This creates advantages in training larger models and serving them to more users simultaneously.</div>
+    </div>
+  </div>
+
+  <h2>From Bard to Gemini — the rebrand that mattered</h2>
+  <p>Google's AI assistant launched in 2023 as <strong>Bard</strong>, widely criticized as a reactive response to ChatGPT's launch. Bard's early performance was unimpressive — including a factual error in its launch demonstration that wiped $100 billion off Google's market cap.</p>
+  <p>In February 2024, Google rebranded Bard to <strong>Gemini</strong>, accompanied by the release of the Gemini model family. The rebrand wasn't just cosmetic — it represented a genuine architectural shift. Bard had been a product built on top of existing language models. Gemini was a purpose-built multimodal model family designed from scratch to be the foundation of Google's AI strategy.</p>
+  <p>The distinction matters because it explains why early impressions of Bard may not reflect Gemini's current capabilities. The product has changed substantially. Users who dismissed Google's AI assistant in 2023 should reassess it against the Gemini 2.0 and 2.5 model family.</p>
+
+  <h2>What Gemini does that others don't — or can't</h2>
+  <div class="comparison-wrapper">
+    <table>
+      <tr><th>Capability</th><th>Gemini's approach</th><th>Why it's distinctive</th></tr>
+      <tr><td>Context window</td><td>Up to 1 million tokens (Gemini 1.5/2.0)</td><td>Longest available — entire codebases, long video content</td></tr>
+      <tr><td>Google Workspace</td><td>Native integration — Docs, Gmail, Drive, Sheets</td><td>AI inside tools you already use daily</td></tr>
+      <tr><td>Real-time information</td><td>Google Search grounding by default</td><td>Current information as a first-class feature</td></tr>
+      <tr><td>Video understanding</td><td>Analyze and reason about video content</td><td>Only major AI with real video comprehension</td></tr>
+      <tr><td>Multimodal native</td><td>Single model trained across all modalities</td><td>More coherent cross-modal reasoning than bolt-on approaches</td></tr>
+      <tr><td>Android integration</td><td>Default assistant on billions of Android devices</td><td>AI embedded in the most-used mobile OS</td></tr>
+      <tr><td>Google Search</td><td>AI Overviews in search results</td><td>AI assistance at the point of search intent</td></tr>
+    </table>
+  </div>
+
+  <h2>The honest current state</h2>
+  <p>Gemini's trajectory has been upward — the gap between Bard's early stumbles and Gemini 2.5 Pro's current performance is substantial. But honesty requires acknowledging what remains true: for pure text reasoning quality, Claude still has an edge. For raw reasoning on hard problems, o3 from OpenAI competes at or above Gemini's best models.</p>
+  <p>Where Gemini is genuinely in a class of its own is the combination of: the longest context window, native multimodality across video, the deepest Google Workspace integration, and real-time information access. These aren't marginal advantages — for users whose work lives in Google's ecosystem, they're decisive.</p>
+
+  <div class="good">
+    <div class="good-label">The user who gets the most from Gemini</div>
+    <p>If you use Gmail, Google Docs, Google Drive, and Google Sheets daily — Gemini's advantages compound in a way that Claude and ChatGPT simply cannot match. The workflow integration, the ability to reference your actual emails and documents, the real-time search grounding — this combination makes Gemini dramatically more useful for Google-ecosystem users than any standalone AI assistant.</p>
+  </div>
+
+  <h2>What's coming in this course</h2>
+  <p><strong>Module 2</strong> breaks down the Gemini model lineup — Flash, Pro, Advanced — and exactly when to use each.</p>
+  <p><strong>Module 3</strong> covers prompting specifically for Gemini — what works differently here than in Claude or ChatGPT.</p>
+  <p><strong>Module 4</strong> is dedicated to Google Workspace integration — the deepest and most distinctive capability Gemini has. This module alone justifies the course for heavy Google users.</p>
+  <p><strong>Module 5</strong> covers Gemini's multimodal capabilities — what it can actually do with images, audio, and video that other models can't.</p>
+  <p><strong>Module 6</strong> gives you real workflows tested specifically in Gemini.</p>
+  <p><strong>Module 7</strong> is the honest comparison — where Gemini leads, where it doesn't, and how it fits into a smart multi-tool AI strategy.</p>
+
+</div>
+</main>
+</div>
+<div class="sticky-bar">
+  <div class="sticky-bar-reading" id="sticky-reading">Read to the end to unlock the next module</div>
+  <div class="sticky-bar-track"><div class="sticky-bar-fill" id="sticky-fill"></div></div>
+  <div class="sticky-bar-label" id="sticky-label">0%</div>
+  <button class="sticky-bar-btn" id="sticky-btn" onclick="completeAndNext()">Module 2: The Gemini Model Lineup →</button>
+</div>
+<script>
+  function toggleTheme(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='☾'):(h.setAttribute('data-theme','dark'),i.textContent='☀');}
+  window.addEventListener('scroll',()=>{const d=document.documentElement,s=d.scrollTop||document.body.scrollTop,t=d.scrollHeight-d.clientHeight;document.getElementById('progress').style.width=(s/t*100)+'%';});
+  let unlocked=false;
+  function updateScrollProgress(){const pct=Math.min(100,Math.round(((window.scrollY+window.innerHeight)/document.documentElement.scrollHeight)*100));document.getElementById('sticky-fill').style.width=pct+'%';document.getElementById('sticky-label').textContent=pct+'%';if(pct>=95&&!unlocked){unlocked=true;document.getElementById('sticky-btn').style.display='block';document.getElementById('sticky-reading').style.display='none';document.getElementById('sticky-fill').style.background='#22c55e';document.getElementById('sticky-label').style.color='#22c55e';}}
+  window.addEventListener('scroll',updateScrollProgress);updateScrollProgress();
+  function completeAndNext(){
+    if(window.__meridianSaveProgress){ try{ window.__meridianSaveProgress("m1"); }catch(e){} }
+    setTimeout(function(){ window.location.href="module-2.html"; }, 120);
+  }
+</script>
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import { getFirestore, doc, setDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  const app = initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+  const auth = getAuth(app); const db = getFirestore(app);
+  let meridianUser = null;
+  onAuthStateChanged(auth, u => { meridianUser = u; });
+  window.__meridianSaveProgress = async function(mValue){
+    if(!meridianUser) return;
+    try { await setDoc(doc(db,"users",meridianUser.uid), { geminiModules: arrayUnion(mValue) }, { merge: true }); } catch(e) {}
+  };
+</script>
+</body>
+</html>

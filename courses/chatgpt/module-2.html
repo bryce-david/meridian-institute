@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 2: The GPT Model Lineup — Mastering ChatGPT — Meridian Institute of AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#10a37f;--accent-dim:rgba(16,163,127,0.1);--nav-bg:rgba(8,8,8,0.9);--callout-bg:rgba(16,163,127,0.07);--callout-border:rgba(16,163,127,0.25);--good-bg:rgba(34,197,94,0.07);--good-border:rgba(34,197,94,0.2);--warn-bg:rgba(251,146,60,0.07);--warn-border:rgba(251,146,60,0.2);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#0d9370;--accent-dim:rgba(13,147,112,0.08);--nav-bg:rgba(250,250,248,0.9);--callout-bg:rgba(13,147,112,0.05);--callout-border:rgba(13,147,112,0.2);--good-bg:rgba(22,163,74,0.06);--good-border:rgba(22,163,74,0.2);--warn-bg:rgba(234,88,12,0.05);--warn-border:rgba(234,88,12,0.2);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;overflow-x:hidden;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.7;overflow-x:hidden;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}
+  .nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}
+  .nav-back{font-size:13px;color:var(--text-2);text-decoration:none;transition:color 0.2s;}
+  .nav-back:hover{color:var(--text);}
+  .nav-label{font-size:13px;color:var(--text-3);}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;}
+  .progress-bar{position:fixed;top:60px;left:0;right:0;z-index:99;height:2px;background:var(--border);}
+  .progress-fill{height:100%;background:var(--accent);width:0%;transition:width 0.1s;}
+  .page-wrapper{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:100vh;padding-top:62px;}
+  .sidebar{position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto;border-right:1px solid var(--border);padding:32px 24px;background:var(--bg-2);}
+  .sidebar-course{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;}
+  .sidebar-course-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+  .sidebar-module{margin-bottom:4px;}
+  .sidebar-module-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:13px;color:var(--text-2);text-decoration:none;transition:all 0.2s;line-height:1.4;}
+  .sidebar-module-link:hover{background:var(--bg-3);color:var(--text);}
+  .sidebar-module-link.active{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-num{font-size:11px;font-weight:500;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--bg-4);color:var(--text-3);}
+  .sidebar-module-link.active .sidebar-num{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-divider{height:1px;background:var(--border);margin:20px 0;}
+  .sidebar-progress-label{font-size:12px;color:var(--text-3);margin-bottom:8px;display:flex;justify-content:space-between;}
+  .sidebar-progress-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sidebar-progress-fill{height:100%;width:28%;background:var(--accent);border-radius:2px;}
+  main{display:block;min-width:0;}
+  .content{max-width:760px;width:100%;padding:60px 64px 140px;margin:0 auto;}
+  .module-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+  .module-tag{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(16,163,127,0.2);padding:4px 12px;border-radius:100px;}
+  .module-meta{font-size:12px;color:var(--text-3);}
+  h1{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1.05;letter-spacing:-0.02em;color:var(--text);margin-bottom:24px;}
+  .intro-text{font-size:19px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+  h2{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:400;color:var(--text);margin:52px 0 18px;line-height:1.2;}
+  h3{font-size:16px;font-weight:500;color:var(--text);margin:32px 0 12px;}
+  p{font-size:16px;font-weight:300;color:var(--text-2);line-height:1.8;margin-bottom:20px;}
+  strong{font-weight:500;color:var(--text);}
+  .callout{background:var(--callout-bg);border:1px solid var(--callout-border);border-radius:12px;padding:24px 28px;margin:32px 0;}
+  .callout-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+  .callout p{margin:0;font-size:15px;color:var(--text-2);}
+  .callout p+p{margin-top:12px;}
+  .good{background:var(--good-bg);border:1px solid var(--good-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .good-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#22c55e;margin-bottom:10px;}
+  .good p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn{background:var(--warn-bg);border:1px solid var(--warn-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .warn-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#fb923c;margin-bottom:10px;}
+  .warn p{margin:0;font-size:15px;color:var(--text-2);}
+  .model-card{background:var(--bg-2);border:1px solid var(--border);border-radius:16px;padding:32px;margin:20px 0;position:relative;overflow:hidden;}
+  .model-card.featured{border-color:rgba(16,163,127,0.4);}
+  .model-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:12px;}
+  .model-name{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:400;color:var(--text);line-height:1;}
+  .model-version{font-size:12px;color:var(--text-3);margin-top:4px;font-family:monospace;}
+  .model-badge{font-size:11px;font-weight:500;padding:5px 12px;border-radius:100px;white-space:nowrap;}
+  .badge-fast{background:rgba(34,197,94,0.1);color:#22c55e;border:1px solid rgba(34,197,94,0.2);}
+  .badge-balanced{background:var(--accent-dim);color:var(--accent);border:1px solid rgba(16,163,127,0.2);}
+  .badge-reason{background:rgba(168,85,247,0.1);color:#a855f7;border:1px solid rgba(168,85,247,0.2);}
+  .badge-frontier{background:rgba(251,146,60,0.1);color:#fb923c;border:1px solid rgba(251,146,60,0.2);}
+  .model-desc{font-size:15px;color:var(--text-2);line-height:1.7;margin-bottom:20px;}
+  .model-specs{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px;}
+  .model-spec{background:var(--bg-3);border-radius:8px;padding:12px 16px;}
+  .model-spec-label{font-size:10px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-3);margin-bottom:4px;}
+  .model-spec-value{font-size:14px;font-weight:500;color:var(--text);}
+  .use-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px;padding-top:16px;border-top:1px solid var(--border);}
+  .use-tag-label{font-size:11px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-3);width:100%;margin-bottom:4px;}
+  .use-tag{font-size:12px;padding:4px 10px;border-radius:6px;background:var(--bg-4);color:var(--text-2);border:1px solid var(--border);}
+  .decision-tree{background:var(--bg-2);border:1px solid var(--border);border-radius:14px;padding:28px;margin:28px 0;}
+  .decision-tree-title{font-size:14px;font-weight:500;color:var(--text);margin-bottom:20px;}
+  .decision-item{display:flex;gap:16px;padding:14px 0;border-bottom:1px solid var(--border);}
+  .decision-item:last-child{border-bottom:none;}
+  .decision-if{font-size:13px;color:var(--text-2);flex:1;line-height:1.5;}
+  .decision-then{font-size:13px;font-weight:500;color:var(--accent);white-space:nowrap;padding-top:1px;}
+  .comparison-wrapper{overflow-x:auto;-webkit-overflow-scrolling:touch;width:100%;margin:28px 0;}
+  table{width:100%;border-collapse:collapse;font-size:14px;min-width:500px;}
+  th{text-align:left;padding:12px 16px;font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-3);border-bottom:1px solid var(--border-2);}
+  td{padding:14px 16px;border-bottom:1px solid var(--border);color:var(--text-2);line-height:1.6;vertical-align:top;}
+  tr:last-child td{border-bottom:none;}
+  td:first-child{color:var(--text);font-weight:500;}
+  .sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:var(--bg-2);border-top:1px solid var(--border-2);padding:14px 5%;display:flex;align-items:center;justify-content:space-between;gap:16px;backdrop-filter:blur(12px);}
+  .sticky-bar-track{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sticky-bar-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.2s;width:0%;}
+  .sticky-bar-label{font-size:12px;color:var(--text-3);white-space:nowrap;min-width:60px;text-align:right;}
+  .sticky-bar-btn{padding:10px 20px;border-radius:8px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;background:var(--accent);color:#fff;border:none;cursor:pointer;white-space:nowrap;transition:opacity 0.2s;display:none;}
+  .sticky-bar-btn:hover{opacity:0.88;}
+  .sticky-bar-reading{font-size:12px;color:var(--text-3);white-space:nowrap;}
+  @media(max-width:900px){.page-wrapper{grid-template-columns:1fr;}.sidebar{display:none;}.content{padding:40px 24px 120px;}h1{font-size:38px;}.model-specs{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="../../index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="../../index.html" class="nav-back">🏠 Home</a>
+    <div class="nav-divider"></div>
+    <a href="../../courses.html" class="nav-back">← Mastering ChatGPT</a>
+    <div class="nav-divider"></div>
+    <span class="nav-label">Module 2</span>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">☀</span></button>
+</nav>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+<div class="page-wrapper">
+<aside class="sidebar">
+  <div class="sidebar-course">Course</div>
+  <div class="sidebar-course-name">Mastering ChatGPT</div>
+  <div class="sidebar-module"><a href="module-1.html" class="sidebar-module-link"><span class="sidebar-num">1</span>Understanding ChatGPT</a></div>
+  <div class="sidebar-module"><a href="module-2.html" class="sidebar-module-link active"><span class="sidebar-num">2</span>The GPT Model Lineup</a></div>
+  <div class="sidebar-module"><a href="module-3.html" class="sidebar-module-link"><span class="sidebar-num">3</span>Prompting ChatGPT Effectively</a></div>
+  <div class="sidebar-module"><a href="module-4.html" class="sidebar-module-link"><span class="sidebar-num">4</span>Custom GPTs</a></div>
+  <div class="sidebar-module"><a href="module-5.html" class="sidebar-module-link"><span class="sidebar-num">5</span>Advanced Features</a></div>
+  <div class="sidebar-module"><a href="module-6.html" class="sidebar-module-link"><span class="sidebar-num">6</span>ChatGPT in the Real World</a></div>
+  <div class="sidebar-module"><a href="module-7.html" class="sidebar-module-link"><span class="sidebar-num">7</span>ChatGPT vs The Field</a></div>
+  <div class="sidebar-module"><a href="quiz.html" class="sidebar-module-link" style="color:var(--accent);margin-top:4px;"><span class="sidebar-num" style="background:var(--accent-dim);color:var(--accent);">✦</span>Final Assessment</a></div>
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-progress-label"><span>Course progress</span><span style="color:var(--accent);">2 / 7</span></div>
+  <div class="sidebar-progress-track"><div class="sidebar-progress-fill"></div></div>
+</aside>
+<main>
+<div class="content">
+  <div class="module-eyebrow"><span class="module-tag">Module 2</span><span class="module-meta">25 min read · Mastering ChatGPT</span></div>
+  <h1>The GPT Model Lineup</h1>
+  <p class="intro-text">OpenAI's model lineup is more complex than any other AI company's — and most people use the wrong model most of the time. GPT-4o, o1, o3, and GPT-4o mini serve fundamentally different purposes. Getting this right dramatically changes what you can do with ChatGPT.</p>
+
+  <h2>Two fundamentally different model families</h2>
+  <p>OpenAI has two distinct product lines that work differently at an architectural level — not just different sizes of the same thing. Understanding this distinction is the key to using ChatGPT effectively.</p>
+  <p><strong>GPT models</strong> (GPT-4o, GPT-4o mini) are standard large language models optimized for speed, versatility, and cost efficiency. They generate responses quickly and handle the vast majority of tasks well.</p>
+  <p><strong>Reasoning models</strong> (o1, o3, o4-mini) use a different approach called chain-of-thought reasoning. They think through problems step by step — spending more time reasoning before responding. They're slower, significantly more expensive, but substantially more capable on hard problems involving math, logic, science, and code.</p>
+
+  <div class="callout">
+    <div class="callout-label">The fundamental choice</div>
+    <p>Before picking a specific model, ask yourself: is this task about speed and versatility (GPT family) or is this a genuinely hard reasoning problem that needs deep thought (o-series)? That single question routes most decisions correctly.</p>
+  </div>
+
+  <h2>The GPT family</h2>
+
+  <div class="model-card featured">
+    <div class="model-header">
+      <div>
+        <div class="model-name">GPT-4o</div>
+        <div class="model-version">gpt-4o · gpt-4o-2024-11-20</div>
+      </div>
+      <span class="model-badge badge-balanced">⚖ Best All-Rounder</span>
+    </div>
+    <p class="model-desc">GPT-4o (the "o" stands for "omni") is the flagship versatile model and the right default for most tasks. It's fast, capable, multimodal — handling text, images, and audio natively — and represents the best balance of capability and speed in OpenAI's lineup. When you open ChatGPT and start a conversation without selecting a specific model, you're typically using GPT-4o. It handles writing, analysis, coding, summarization, and creative tasks with high reliability.</p>
+    <div class="model-specs">
+      <div class="model-spec"><div class="model-spec-label">Speed</div><div class="model-spec-value">Fast — seconds per response</div></div>
+      <div class="model-spec"><div class="model-spec-label">Modalities</div><div class="model-spec-value">Text, image, audio (omni)</div></div>
+      <div class="model-spec"><div class="model-spec-label">Context window</div><div class="model-spec-value">128K tokens</div></div>
+      <div class="model-spec"><div class="model-spec-label">Best for</div><div class="model-spec-value">Most everyday tasks — the default</div></div>
+    </div>
+    <div class="use-tags">
+      <div class="use-tag-label">Use GPT-4o for</div>
+      <span class="use-tag">Writing and editing</span>
+      <span class="use-tag">Image analysis</span>
+      <span class="use-tag">Voice conversations</span>
+      <span class="use-tag">Research summaries</span>
+      <span class="use-tag">Code generation</span>
+      <span class="use-tag">Most everyday tasks</span>
+    </div>
+  </div>
+
+  <div class="model-card">
+    <div class="model-header">
+      <div>
+        <div class="model-name">GPT-4o mini</div>
+        <div class="model-version">gpt-4o-mini</div>
+      </div>
+      <span class="model-badge badge-fast">⚡ Speed & Cost</span>
+    </div>
+    <p class="model-desc">GPT-4o mini is OpenAI's fast, cheap workhorse — equivalent to Claude's Haiku tier. It handles simple tasks at high speed and very low cost. For most conversational tasks, quick questions, and high-volume API use, mini performs well enough that you'd struggle to notice the difference from GPT-4o. Where it falls short is on tasks requiring nuanced reasoning or complex instruction following.</p>
+    <div class="model-specs">
+      <div class="model-spec"><div class="model-spec-label">Speed</div><div class="model-spec-value">Fastest in the GPT family</div></div>
+      <div class="model-spec"><div class="model-spec-label">Cost</div><div class="model-spec-value">Lowest — ideal for high volume</div></div>
+      <div class="model-spec"><div class="model-spec-label">Context window</div><div class="model-spec-value">128K tokens</div></div>
+      <div class="model-spec"><div class="model-spec-label">Best for</div><div class="model-spec-value">Simple tasks, chatbots, high-volume API</div></div>
+    </div>
+    <div class="use-tags">
+      <div class="use-tag-label">Use GPT-4o mini for</div>
+      <span class="use-tag">Customer support bots</span>
+      <span class="use-tag">Simple Q&A</span>
+      <span class="use-tag">Content classification</span>
+      <span class="use-tag">Quick lookups</span>
+      <span class="use-tag">High-volume applications</span>
+    </div>
+  </div>
+
+  <h2>The reasoning model family (o-series)</h2>
+
+  <div class="model-card">
+    <div class="model-header">
+      <div>
+        <div class="model-name">o3</div>
+        <div class="model-version">o3 · o3-2025-04-16</div>
+      </div>
+      <span class="model-badge badge-frontier">🧠 Frontier Reasoning</span>
+    </div>
+    <p class="model-desc">o3 is OpenAI's most powerful reasoning model and one of the most capable AI systems available as of 2025. It achieves near-expert performance on hard science, math, and coding benchmarks. o3 doesn't just generate plausible responses — it works through problems methodically, catching its own errors and reconsidering approaches before committing to an answer. It's slow and expensive, but for genuinely hard problems, it's in a different league.</p>
+    <div class="model-specs">
+      <div class="model-spec"><div class="model-spec-label">Speed</div><div class="model-spec-value">Slow — minutes for hard problems</div></div>
+      <div class="model-spec"><div class="model-spec-label">Cost</div><div class="model-spec-value">Highest — use selectively</div></div>
+      <div class="model-spec"><div class="model-spec-label">Reasoning</div><div class="model-spec-value">Deep chain-of-thought</div></div>
+      <div class="model-spec"><div class="model-spec-label">Best for</div><div class="model-spec-value">Frontier hard problems</div></div>
+    </div>
+    <div class="use-tags">
+      <div class="use-tag-label">Use o3 for</div>
+      <span class="use-tag">Competition math</span>
+      <span class="use-tag">Complex code architecture</span>
+      <span class="use-tag">Scientific reasoning</span>
+      <span class="use-tag">Hard logic puzzles</span>
+      <span class="use-tag">PhD-level analysis</span>
+    </div>
+  </div>
+
+  <div class="model-card">
+    <div class="model-header">
+      <div>
+        <div class="model-name">o4-mini</div>
+        <div class="model-version">o4-mini · o4-mini-2025-04-16</div>
+      </div>
+      <span class="model-badge badge-reason">⚡ Fast Reasoning</span>
+    </div>
+    <p class="model-desc">o4-mini is OpenAI's most useful model for many technical users. It applies chain-of-thought reasoning at much lower cost and higher speed than o3, while still dramatically outperforming GPT-4o on hard reasoning tasks. For coding problems, math, and structured analysis, o4-mini often provides 80% of o3's capability at a fraction of the cost. It's the practical default for technical work.</p>
+    <div class="model-specs">
+      <div class="model-spec"><div class="model-spec-label">Speed</div><div class="model-spec-value">Faster than o3</div></div>
+      <div class="model-spec"><div class="model-spec-label">Cost</div><div class="model-spec-value">Much cheaper than o3</div></div>
+      <div class="model-spec"><div class="model-spec-label">Reasoning</div><div class="model-spec-value">Chain-of-thought, efficient</div></div>
+      <div class="model-spec"><div class="model-spec-label">Best for</div><div class="model-spec-value">Technical work — best value reasoning</div></div>
+    </div>
+    <div class="use-tags">
+      <div class="use-tag-label">Use o4-mini for</div>
+      <span class="use-tag">Coding problems</span>
+      <span class="use-tag">Math and calculations</span>
+      <span class="use-tag">Structured analysis</span>
+      <span class="use-tag">Technical debugging</span>
+      <span class="use-tag">Data interpretation</span>
+    </div>
+  </div>
+
+  <h2>Model selection decision framework</h2>
+
+  <div class="decision-tree">
+    <div class="decision-tree-title">Which ChatGPT model should I use?</div>
+    <div class="decision-item">
+      <div class="decision-if">Is this a simple task — writing, summarizing, quick questions, image analysis?</div>
+      <div class="decision-then">→ GPT-4o</div>
+    </div>
+    <div class="decision-item">
+      <div class="decision-if">Am I building a high-volume app or chatbot where cost and speed matter most?</div>
+      <div class="decision-then">→ GPT-4o mini</div>
+    </div>
+    <div class="decision-item">
+      <div class="decision-if">Is this a coding problem, math problem, or structured technical analysis?</div>
+      <div class="decision-then">→ o4-mini</div>
+    </div>
+    <div class="decision-item">
+      <div class="decision-if">Is this a genuinely frontier-hard problem — competition math, complex architecture, scientific reasoning?</div>
+      <div class="decision-then">→ o3</div>
+    </div>
+    <div class="decision-item">
+      <div class="decision-if">Am I unsure? Default to:</div>
+      <div class="decision-then">→ GPT-4o</div>
+    </div>
+  </div>
+
+  <h2>Full model comparison</h2>
+  <div class="comparison-wrapper">
+    <table>
+      <tr><th>Model</th><th>Family</th><th>Speed</th><th>Best use</th></tr>
+      <tr><td>GPT-4o</td><td>GPT</td><td>Fast</td><td>Most everyday tasks — the default</td></tr>
+      <tr><td>GPT-4o mini</td><td>GPT</td><td>Fastest</td><td>High volume, simple tasks, cost-sensitive apps</td></tr>
+      <tr><td>o4-mini</td><td>Reasoning</td><td>Moderate</td><td>Technical work — best reasoning value</td></tr>
+      <tr><td>o3</td><td>Reasoning</td><td>Slow</td><td>Frontier hard problems — maximum capability</td></tr>
+    </table>
+  </div>
+
+  <div class="warn">
+    <div class="warn-label">Important: o-series models behave differently</div>
+    <p>Reasoning models don't respond well to "think step by step" instructions — they already do this internally. They also don't support system prompts the same way GPT models do, and they may ignore certain formatting instructions. Adjust your prompting approach when switching between GPT and o-series models.</p>
+  </div>
+
+  <div class="good">
+    <div class="good-label">The practical takeaway</div>
+    <p>For 80% of what you do with ChatGPT, GPT-4o is the right choice. For technical work involving code or math where you need better reasoning, use o4-mini. Only reach for o3 when you've got a problem that's genuinely hard — one where GPT-4o gave you an unsatisfying answer and you need to bring out the heavy machinery.</p>
+  </div>
+
+</div>
+</main>
+</div>
+<div class="sticky-bar">
+  <div class="sticky-bar-reading" id="sticky-reading">Read to the end to unlock the next module</div>
+  <div class="sticky-bar-track"><div class="sticky-bar-fill" id="sticky-fill"></div></div>
+  <div class="sticky-bar-label" id="sticky-label">0%</div>
+  <button class="sticky-bar-btn" id="sticky-btn" onclick="completeAndNext()">Module 3: Prompting ChatGPT Effectively →</button>
+</div>
+<script>
+  function toggleTheme(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='☾'):(h.setAttribute('data-theme','dark'),i.textContent='☀');}
+  window.addEventListener('scroll',()=>{const d=document.documentElement,s=d.scrollTop||document.body.scrollTop,t=d.scrollHeight-d.clientHeight;document.getElementById('progress').style.width=(s/t*100)+'%';});
+  
+  let unlocked=false;
+  function updateScrollProgress(){const pct=Math.min(100,Math.round(((window.scrollY+window.innerHeight)/document.documentElement.scrollHeight)*100));document.getElementById('sticky-fill').style.width=pct+'%';document.getElementById('sticky-label').textContent=pct+'%';if(pct>=95&&!unlocked){unlocked=true;document.getElementById('sticky-btn').style.display='block';document.getElementById('sticky-reading').style.display='none';document.getElementById('sticky-fill').style.background='#22c55e';document.getElementById('sticky-label').style.color='#22c55e';}}
+  window.addEventListener('scroll',updateScrollProgress);updateScrollProgress();
+  function completeAndNext(){
+    if(window.__meridianSaveProgress){ try{ window.__meridianSaveProgress("m2"); }catch(e){} }
+    setTimeout(function(){ window.location.href="module-3.html"; }, 120);
+  }
+</script>
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import { getFirestore, doc, setDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  const app = initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+  const auth = getAuth(app); const db = getFirestore(app);
+  let meridianUser = null;
+  onAuthStateChanged(auth, u => { meridianUser = u; });
+  window.__meridianSaveProgress = async function(mValue){
+    if(!meridianUser) return;
+    try { await setDoc(doc(db,"users",meridianUser.uid), { chatgptModules: arrayUnion(mValue) }, { merge: true }); } catch(e) {}
+  };
+</script>
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  const _gapp = initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+  const _gauth = getAuth(_gapp); const _gdb = getFirestore(_gapp);
+  onAuthStateChanged(_gauth, async (u) => {
+    if (!u) return;
+    try {
+      const snap = await getDoc(doc(_gdb, "users", u.uid));
+      const data = snap.exists() ? snap.data() : {};
+      const done = Array.isArray(data.chatgptModules) ? data.chatgptModules : [];
+      if (!done.includes("m1")) {
+        document.body.innerHTML = `<div style=\"min-height:100vh;display:flex;align-items:center;justify-content:center;background:#080808;font-family:DM Sans,sans-serif;padding:24px;\"><div style=\"max-width:440px;text-align:center;background:#111;border:1px solid rgba(255,255,255,0.08);border-radius:20px;padding:48px;\"><div style=\"font-size:48px;margin-bottom:20px;\">&#128274;</div><div style=\"font-size:20px;font-weight:500;color:#f0f0f0;margin-bottom:12px;\">Module locked</div><div style=\"font-size:14px;color:#a0a0a0;margin-bottom:28px;line-height:1.6;\">Complete the previous module before continuing.</div><a href=\"chatgpt-module-1.html\" style=\"display:inline-block;padding:12px 24px;background:#10a37f;color:#fff;border-radius:10px;font-size:14px;font-weight:500;text-decoration:none;\">&#8592; Back to the course</a></div></div>`;
+      }
+    } catch(e) {}
+  });
+</script>
+</body>
+</html>
