@@ -3,7 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Module 1: What AI Actually Is — Meridian Institute of AI</title>
+<title>What AI Actually Is — AI Foundations — Meridian Institute of AI</title>
+<meta name="description" content="Free AI foundations course — module 1. Learn what artificial intelligence actually is, beyond the hype. No prerequisites required. Start free at Meridian.">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="What AI Actually Is — AI Foundations — Meridian Institute of AI">
+<meta property="og:description" content="Free AI foundations course — module 1. Learn what artificial intelligence actually is, beyond the hype. No prerequisites required. Start free at Meridian.">
+<meta property="og:url" content="https://meridianinstituteai.com/courses/foundations/module-1.html">
+<meta property="og:type" content="website">
+<link rel="canonical" href="https://meridianinstituteai.com/courses/foundations/module-1.html">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   :root[data-theme="dark"] {
@@ -516,6 +523,7 @@
     white-space: nowrap;
   }
 </style>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
 </head>
 <body>
 
@@ -930,6 +938,24 @@
     if(!meridianUser) return;
     try { await setDoc(doc(db,"users",meridianUser.uid), { foundationsModules: arrayUnion(mValue) }, { merge: true }); } catch(e) {}
   };
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Course",
+  "name": "AI Foundations",
+  "description": "A free, comprehensive introduction to artificial intelligence — covering how AI works, the landscape of modern AI tools, practical prompting skills, and how to apply AI effectively in everyday life and work.",
+  "provider": {
+    "@type": "Organization",
+    "name": "Meridian Institute of AI",
+    "url": "https://meridianinstituteai.com"
+  },
+  "url": "https://meridianinstituteai.com/courses/foundations/module-1.html",
+  "isAccessibleForFree": true,
+  "educationalLevel": "Beginner",
+  "inLanguage": "en",
+  "teaches": "AI fundamentals, how large language models work, prompting basics, and navigating the modern AI landscape"
+}
 </script>
 </body>
 </html>

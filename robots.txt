@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://meridianinstituteai.com/sitemap.xml

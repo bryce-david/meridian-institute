@@ -2,7 +2,14 @@
 <html lang="en" data-theme="dark">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Module 1: Understanding Perplexity — Mastering Perplexity — Meridian Institute of AI</title>
+<title>Understanding Perplexity AI — Mastering Perplexity — Meridian Institute of AI</title>
+<meta name="description" content="Free Perplexity AI course — module 1. Learn to use Perplexity for real-time research, source verification, and knowledge workflows. Free at Meridian.">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="Understanding Perplexity AI — Mastering Perplexity — Meridian Institute of AI">
+<meta property="og:description" content="Free Perplexity AI course — module 1. Learn to use Perplexity for real-time research, source verification, and knowledge workflows. Free at Meridian.">
+<meta property="og:url" content="https://meridianinstituteai.com/courses/perplexity/module-1.html">
+<meta property="og:type" content="website">
+<link rel="canonical" href="https://meridianinstituteai.com/courses/perplexity/module-1.html">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#00ADB5;--accent-dim:rgba(0,173,181,0.1);--nav-bg:rgba(8,8,8,0.9);--callout-bg:rgba(0,173,181,0.07);--callout-border:rgba(0,173,181,0.25);--good-bg:rgba(34,197,94,0.07);--good-border:rgba(34,197,94,0.2);--warn-bg:rgba(251,146,60,0.07);--warn-border:rgba(251,146,60,0.2);}
@@ -73,6 +80,7 @@
   .sticky-bar-reading{font-size:12px;color:var(--text-3);white-space:nowrap;}
   @media(max-width:900px){.page-wrapper{grid-template-columns:1fr;}.sidebar{display:none;}.content{padding:40px 24px 120px;}h1{font-size:38px;}}
 </style>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
 </head>
 <body>
 <nav>
@@ -200,6 +208,24 @@
     if(!meridianUser) return;
     try { await setDoc(doc(db,"users",meridianUser.uid), { perplexityModules: arrayUnion(mValue) }, { merge: true }); } catch(e) {}
   };
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Course",
+  "name": "Mastering Perplexity",
+  "description": "A free, comprehensive course on mastering Perplexity AI — covering AI-powered search, source evaluation, research workflows, and how to use Perplexity for deep research and real-time information retrieval.",
+  "provider": {
+    "@type": "Organization",
+    "name": "Meridian Institute of AI",
+    "url": "https://meridianinstituteai.com"
+  },
+  "url": "https://meridianinstituteai.com/courses/perplexity/module-1.html",
+  "isAccessibleForFree": true,
+  "educationalLevel": "Beginner",
+  "inLanguage": "en",
+  "teaches": "Perplexity AI search, source evaluation, research workflows, and real-time AI-powered information retrieval"
+}
 </script>
 </body>
 </html>
