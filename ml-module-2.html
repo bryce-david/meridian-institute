@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 2: Data: The Foundation of Every ML System — Machine Learning Explained — Meridian Institute of AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#065F46;--accent-dim:rgba(6,95,70,0.1);--accent-dim2:rgba(6,95,70,0.05);--nav-bg:rgba(8,8,8,0.9);--callout-bg:rgba(6,95,70,0.07);--callout-border:rgba(6,95,70,0.25);--good-bg:rgba(34,197,94,0.07);--good-border:rgba(34,197,94,0.2);--warn-bg:rgba(251,146,60,0.07);--warn-border:rgba(251,146,60,0.2);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#064E3B;--accent-dim:rgba(6,78,59,0.08);--accent-dim2:rgba(6,78,59,0.04);--nav-bg:rgba(250,250,248,0.9);--callout-bg:rgba(6,78,59,0.05);--callout-border:rgba(6,78,59,0.2);--good-bg:rgba(22,163,74,0.06);--good-border:rgba(22,163,74,0.2);--warn-bg:rgba(234,88,12,0.05);--warn-border:rgba(234,88,12,0.2);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;overflow-x:hidden;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.7;overflow-x:hidden;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}
+  .nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}
+  .nav-back{font-size:13px;color:var(--text-2);text-decoration:none;transition:color 0.2s;}
+  .nav-back:hover{color:var(--text);}
+  .nav-label{font-size:13px;color:var(--text-3);}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;transition:all 0.2s;}
+  .theme-toggle:hover{background:var(--bg-3);color:var(--text);}
+  .progress-bar{position:fixed;top:60px;left:0;right:0;z-index:99;height:2px;background:var(--border);}
+  .progress-fill{height:100%;background:var(--accent);width:0%;transition:width 0.1s;}
+  .page-wrapper{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:100vh;padding-top:62px;overflow:hidden;}
+  .sidebar{position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto;border-right:1px solid var(--border);padding:32px 24px;background:var(--bg-2);}
+  .sidebar-course{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;}
+  .sidebar-course-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+  .sidebar-module{margin-bottom:4px;}
+  .sidebar-module-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:13px;color:var(--text-2);text-decoration:none;transition:all 0.2s;line-height:1.4;}
+  .sidebar-module-link:hover{background:var(--bg-3);color:var(--text);}
+  .sidebar-module-link.active{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-num{font-size:11px;font-weight:500;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--bg-4);color:var(--text-3);}
+  .sidebar-module-link.active .sidebar-num{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-divider{height:1px;background:var(--border);margin:20px 0;}
+  .sidebar-progress-label{font-size:12px;color:var(--text-3);margin-bottom:8px;display:flex;justify-content:space-between;}
+  .sidebar-progress-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sidebar-progress-fill{height:100%;width:20%;background:var(--accent);border-radius:2px;}
+  main{display:block;min-width:0;overflow:hidden;}
+  .content{max-width:760px;width:100%;padding:60px 64px 140px;margin:0 auto;}
+  .module-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+  .module-tag{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(6,95,70,0.2);padding:4px 12px;border-radius:100px;}
+  .module-meta{font-size:12px;color:var(--text-3);}
+  h1{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1.05;letter-spacing:-0.02em;color:var(--text);margin-bottom:24px;}
+  .intro-text{font-size:19px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+  h2{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:400;color:var(--text);margin:52px 0 18px;line-height:1.2;}
+  h3{font-size:16px;font-weight:500;color:var(--text);margin:32px 0 12px;}
+  p{font-size:16px;font-weight:300;color:var(--text-2);line-height:1.8;margin-bottom:20px;}
+  strong{font-weight:500;color:var(--text);}
+  em{font-style:italic;}
+  ul,ol{margin:0 0 20px 22px;color:var(--text-2);}
+  li{font-size:16px;font-weight:300;line-height:1.8;margin-bottom:8px;}
+  .callout{background:var(--callout-bg);border:1px solid var(--callout-border);border-radius:12px;padding:24px 28px;margin:32px 0;}
+  .callout-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+  .callout p{margin:0;font-size:15px;color:var(--text-2);}
+  .callout p+p{margin-top:12px;}
+  .good{background:var(--good-bg);border:1px solid var(--good-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .good-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#22c55e;margin-bottom:10px;}
+  .good p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn{background:var(--warn-bg);border:1px solid var(--warn-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .warn-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#fb923c;margin-bottom:10px;}
+  .warn p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn p+p{margin-top:12px;}
+  .analogy{background:var(--bg-2);border:1px solid var(--border);border-radius:12px;padding:28px;margin:28px 0;}
+  .analogy-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-3);margin-bottom:12px;}
+  .analogy p{margin:0;font-size:15px;color:var(--text-2);}
+  .principle-list{display:flex;flex-direction:column;gap:12px;margin:24px 0;}
+  .principle{background:var(--bg-2);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:0 12px 12px 0;padding:20px 24px;}
+  .principle-title{font-size:15px;font-weight:500;color:var(--text);margin-bottom:6px;}
+  .principle-desc{font-size:14px;color:var(--text-2);line-height:1.65;margin:0;}
+  .sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:var(--bg-2);border-top:1px solid var(--border-2);padding:14px 5%;display:flex;align-items:center;justify-content:space-between;gap:16px;backdrop-filter:blur(12px);}
+  .sticky-bar-track{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sticky-bar-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.2s;width:0%;}
+  .sticky-bar-label{font-size:12px;color:var(--text-3);white-space:nowrap;min-width:60px;text-align:right;}
+  .sticky-bar-btn{padding:10px 20px;border-radius:8px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;background:var(--accent);color:#fff;border:none;cursor:pointer;white-space:nowrap;transition:opacity 0.2s;display:none;}
+  .sticky-bar-btn:hover{opacity:0.88;}
+  .sticky-bar-reading{font-size:12px;color:var(--text-3);white-space:nowrap;}
+  @media(max-width:900px){.page-wrapper{grid-template-columns:1fr;}.sidebar{display:none;}.content{padding:40px 24px 120px;}h1{font-size:38px;}}
+  @media(max-width:600px){.content{padding:28px 16px 120px;}h1{font-size:30px;}h2{font-size:24px;}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="courses.html" class="nav-back">← Machine Learning Explained</a>
+    <div class="nav-divider"></div>
+    <span class="nav-label">Module 2</span>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">☀</span></button>
+</nav>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+
+<div class="page-wrapper">
+<aside class="sidebar">
+  <div class="sidebar-course">Expert Track</div>
+  <div class="sidebar-course-name">Machine Learning Explained</div>
+  <div class="sidebar-module"><a href="ml-module-1.html" class="sidebar-module-link"><span class="sidebar-num">1</span>How Machines Learn</a></div>
+  <div class="sidebar-module"><a href="ml-module-2.html" class="sidebar-module-link active"><span class="sidebar-num">2</span>Data: The ML Foundation</a></div>
+  <div class="sidebar-module"><a href="ml-module-3.html" class="sidebar-module-link"><span class="sidebar-num">3</span>Supervised Learning Demystified</a></div>
+  <div class="sidebar-module"><a href="ml-module-4.html" class="sidebar-module-link"><span class="sidebar-num">4</span>Unsupervised Learning</a></div>
+  <div class="sidebar-module"><a href="ml-module-5.html" class="sidebar-module-link"><span class="sidebar-num">5</span>Neural Networks and Deep Learning</a></div>
+  <div class="sidebar-module"><a href="ml-module-6.html" class="sidebar-module-link"><span class="sidebar-num">6</span>NLP and Transformers</a></div>
+  <div class="sidebar-module"><a href="ml-module-7.html" class="sidebar-module-link"><span class="sidebar-num">7</span>Computer Vision</a></div>
+  <div class="sidebar-module"><a href="ml-module-8.html" class="sidebar-module-link"><span class="sidebar-num">8</span>Model Evaluation</a></div>
+  <div class="sidebar-module"><a href="ml-module-9.html" class="sidebar-module-link"><span class="sidebar-num">9</span>ML in Production</a></div>
+  <div class="sidebar-module"><a href="ml-module-10.html" class="sidebar-module-link"><span class="sidebar-num">10</span>Foundation Models and the Frontier</a></div>
+  <div class="sidebar-module"><a href="quiz-ml.html" class="sidebar-module-link" style="color:var(--accent);margin-top:4px;"><span class="sidebar-num" style="background:var(--accent-dim);color:var(--accent);">✦</span>Final Assessment</a></div>
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-progress-label"><span>Course progress</span><span style="color:var(--accent);">2 / 10</span></div>
+  <div class="sidebar-progress-track"><div class="sidebar-progress-fill"></div></div>
+</aside>
+
+<main>
+<div class="content">
+  <div class="module-eyebrow"><span class="module-tag">Module 2 · Expert Track</span><span class="module-meta">22 min read · Machine Learning Explained</span></div>
+  <h1>Data: The Foundation of Every ML System</h1>
+
+  <p class="intro-text">Every machine learning system is only as good as the data it learns from. The most sophisticated neural network architecture, trained on flawed or insufficient data, will produce flawed predictions. Conversely, a simple algorithm trained on excellent, comprehensive data can outperform complex models trained on poor data. Data is not just an input to ML — it is the raw material from which all intelligence is manufactured.</p>
+
+  <h2>Why data quality beats model sophistication</h2>
+  <p>A persistent myth in organizations beginning their ML journey is that the algorithm is the most important choice. Teams spend weeks debating whether to use a random forest or a gradient boosting tree, while their data sits in twelve different formats across four systems with inconsistent naming conventions, missing values everywhere, and labels that were defined differently in 2018 versus 2022.</p>
+  <p>The ML research community has a saying: "Garbage in, garbage out." But the reality is subtler than that phrase suggests. Garbage data doesn't just produce garbage outputs — it can produce outputs that look plausible and are confidently wrong. A model trained on systematically biased data will be systematically biased in ways that aren't obvious from its performance metrics on the same biased dataset. It passes every internal test and fails on the real world.</p>
+  <p>Consider what Google found when they built their famous flu trends predictor in 2008: a model that predicted flu outbreaks from search query volumes. It initially worked brilliantly. Then it started dramatically overpredicting. The problem wasn't the algorithm — it was data drift. Media coverage of flu outbreaks changed search behavior in ways that decoupled searches from actual infection rates. The data relationship the model had learned stopped holding.</p>
+
+  <div class="callout">
+    <div class="callout-label">The practical reality</div>
+    <p>Experienced ML practitioners spend roughly 60–80% of their time on data work: collecting it, cleaning it, transforming it, labeling it, debugging data pipelines, and investigating data quality issues. The model training step — the part that gets all the attention in academic papers — is often a small fraction of the total effort.</p>
+  </div>
+
+  <h2>The data pipeline: from raw to ready</h2>
+  <p>Raw data is rarely usable directly. Before a model can learn from it, data must pass through a transformation pipeline that normalizes, cleans, and structures it into a form the algorithm expects.</p>
+  <p>The pipeline typically begins with <strong>ingestion</strong>: pulling data from its various sources — databases, APIs, CSV files, sensor streams, web scrapes — and bringing it into a unified environment. Even this step surfaces problems: schemas change, APIs go down, file formats vary between data producers. A robust data pipeline handles these failures gracefully.</p>
+  <p>Next comes <strong>cleaning</strong>: identifying and addressing quality problems. Missing values need decisions — do you delete those rows, fill in a reasonable default, or model the missingness itself? Duplicate records need deduplication. Outliers need investigation — are they errors, or genuinely unusual data points that the model should learn from? String fields need standardization (is it "New York," "NY," "new york," or "New York City"?).</p>
+  <p>Then comes <strong>transformation</strong>: converting data into the numerical representations that ML algorithms require. Text becomes sequences of tokens or vectors. Categorical variables become numerical encodings. Dates become components (day of week, hour, month) that capture the patterns that matter. Images become pixel arrays. Audio becomes frequency spectrogram representations. The choices made at this stage encode implicit assumptions about what information matters.</p>
+
+  <h2>Feature engineering: the art within the science</h2>
+  <p>Features are the individual pieces of information the model uses to make predictions. Feature engineering is the process of selecting, constructing, and transforming the raw variables in your data into the most informative possible representation of the problem.</p>
+  <p>Good feature engineering requires domain knowledge. A raw timestamp tells a fraud detection model very little. But "transaction was at 3am on a weekend" is a powerful fraud signal. "Transaction location is 400 miles from the last transaction 30 minutes ago" is even more powerful. A domain expert knows what patterns matter; a feature engineer translates those patterns into model-readable form.</p>
+  <p>Consider credit scoring. Your raw data might include: account age, number of missed payments, current debt level, credit inquiries, and types of credit. But the most predictive feature might be the ratio of credit utilization to credit limit, or whether payment behavior changed in the last 6 months compared to the prior 12. These derived features require thinking carefully about what combination of raw information signals the outcome you're trying to predict.</p>
+
+  <div class="analogy">
+    <div class="analogy-label">An analogy for feature engineering</div>
+    <p>Imagine teaching someone to spot counterfeit bills just by showing them photos. If you give them only pixel values, they'll struggle. But if you highlight the security thread, the watermark, the color-shifting ink — you've given them the features that actually matter. Feature engineering is doing this for machine learning: distilling raw data into the representations that make the signal visible.</p>
+  </div>
+
+  <h2>The train/validation/test split and why it matters</h2>
+  <p>One of the most important methodological practices in ML is the disciplined separation of data into distinct sets with distinct purposes. Confusing these sets is one of the most common — and most expensive — mistakes in applied ML.</p>
+  <p>The <strong>training set</strong> is what the model learns from. It's the examples the optimization algorithm uses to adjust model parameters. The model sees this data during training and adapts to it.</p>
+  <p>The <strong>validation set</strong> is held back from training. During development, you evaluate your model on the validation set to guide choices about model architecture, hyperparameters, and features. The key insight: every time you check validation performance and make a change, you're indirectly using that information to influence your model. Over many iterations, you can "overfit to the validation set" — making choices that happen to work on validation but won't generalize to new data.</p>
+  <p>The <strong>test set</strong> is the final safeguard. It's held completely separate until you have a model you're ready to evaluate honestly — and then you use it only once. The test set gives you an unbiased estimate of how your model will actually perform in the real world. If you use it repeatedly to guide development, it becomes another validation set and loses its value.</p>
+
+  <div class="warn">
+    <div class="warn-label">Data leakage: the silent killer</div>
+    <p>Data leakage occurs when information from outside the training period — information that wouldn't actually be available at prediction time — contaminates your training data. For example: a model predicting whether a patient will be readmitted to the hospital, trained on data that includes the number of follow-up appointments they attended. At prediction time, you wouldn't know how many appointments they'll attend yet. The model appears to work brilliantly on historical data, then completely fails when deployed.</p>
+    <p>Leakage can be subtle. It might come from a feature calculated on the entire dataset before the train/test split. It might come from a row ID that correlates with the label. It might come from timestamps that encode the outcome. The result is always the same: optimistic metrics during development, disappointing performance in production.</p>
+  </div>
+
+  <h2>The class imbalance problem</h2>
+  <p>Real-world classification problems are rarely balanced. Fraud is rare relative to legitimate transactions — perhaps 1 in 10,000. Cancer is rare relative to healthy tissue. Equipment failures are rare relative to normal operating periods. When one class appears in 0.01% of your data and another in 99.99%, naive models learn to predict the majority class always and still achieve 99.99% accuracy.</p>
+  <p>This is a fundamental problem because the minority class is usually the interesting one. You don't care about correctly identifying legitimate transactions — you care about catching fraud. A model that's right 99.99% of the time but misses 90% of fraud cases is worse than useless for the actual task.</p>
+  <p>Practitioners address class imbalance through several strategies: oversampling the minority class (showing those examples more frequently), undersampling the majority class, generating synthetic minority examples, or adjusting the model's decision threshold and loss function to penalize minority-class errors more heavily. Which strategy works best depends on the problem, the degree of imbalance, and how much the minority-class examples cluster together in feature space.</p>
+
+  <div class="principle-list">
+    <div class="principle">
+      <div class="principle-title">Oversampling minority examples</div>
+      <div class="principle-desc">Present examples from the rare class more frequently during training, or create synthetic examples using techniques like SMOTE (Synthetic Minority Oversampling Technique). This helps the model learn the minority class boundary even with few real examples.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Adjusting class weights</div>
+      <div class="principle-desc">Tell the model that errors on the minority class cost more than errors on the majority class. The optimization process then pays proportionally more attention to getting minority-class examples right.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Choosing the right evaluation metric</div>
+      <div class="principle-desc">Stop using accuracy for imbalanced problems. Use precision, recall, F1 score, or area under the ROC curve instead — metrics that surface how well you're actually detecting the minority class. Module 8 covers these in detail.</div>
+    </div>
+  </div>
+
+  <h2>Missing data: decisions with consequences</h2>
+  <p>Almost every real dataset has missing values. A sensor went offline. A patient skipped a lab test. A user didn't fill in a field. How you handle missingness profoundly affects model behavior — and the choice that seems most expedient often isn't the right one.</p>
+  <p>The simplest approach is to delete rows with missing values. This is fine if the data is missing randomly and you have enough data that you can afford to lose rows. But if the data is missing for a reason — older patients are less likely to complete a specific test because it's hard to administer — then deleting those rows biases your model against the group for which the test is hard. You've systematically removed the population that most needs accurate predictions.</p>
+  <p>A more sophisticated approach is imputation: filling in missing values with estimates. Simple imputation replaces missing values with the mean or median of the non-missing values. More sophisticated approaches model the missing value as a function of other features. The key insight is that the right approach depends on why values are missing — and answering that question requires domain knowledge, not just statistics.</p>
+
+  <h2>The practical work of labeling</h2>
+  <p>Supervised learning requires labeled data, and generating high-quality labels at scale is one of the most underappreciated challenges in applied ML. Labeling isn't just tedious — it's difficult to do consistently, and inconsistent labels directly degrade model quality.</p>
+  <p>Consider labeling medical images for a cancer detection model. Two experienced radiologists looking at the same image may disagree on the diagnosis — not because one is wrong, but because the image is genuinely ambiguous. When this happens, which label do you use? You could take the majority vote across multiple annotators. You could try to model annotator disagreement explicitly. You could exclude ambiguous cases from training. Each choice has tradeoffs for model behavior.</p>
+  <p>At scale, organizations use crowdsourcing platforms like Amazon Mechanical Turk for labeling tasks that don't require expert judgment. But crowdsourced labels have their own quality challenges: workers vary in skill, attention, and reliability. Managing annotation quality, designing clear labeling guidelines, and auditing label consistency are all specialized skills that sit at the intersection of ML and human factors engineering.</p>
+
+  <div class="good">
+    <div class="good-label">Semi-supervised and self-supervised learning</div>
+    <p>The labeling bottleneck has driven enormous research investment into approaches that reduce label requirements. Semi-supervised learning uses a small labeled dataset alongside a large unlabeled dataset, propagating labels through regions of similar examples. Self-supervised learning generates labels automatically from the structure of the data itself — predicting masked words in a sentence, predicting the next frame in a video — creating enormous training datasets without human annotation. This is how models like GPT learned from the internet without any human-labeled data.</p>
+  </div>
+
+  <h2>Data drift and the staleness problem</h2>
+  <p>A model trained today encodes the patterns present in today's data. The world changes — user behavior shifts, market conditions change, products evolve, regulations alter business processes. As the real world diverges from the training data, model performance degrades. This is called data drift or distribution shift.</p>
+  <p>Drift can be subtle and gradual, making it hard to detect. Performance metrics may decline slowly, below the threshold of alarm, until the model is significantly worse than it was at launch. This is why monitoring isn't optional for production ML systems — it's how you detect drift before it causes real harm.</p>
+  <p>The appropriate response to drift depends on its severity and cause. Minor drift may be addressable by periodically retraining on fresh data. Significant drift may require fundamental changes to features or architecture. Sudden, large drift — such as what happened to many models when COVID-19 changed human behavior overnight in 2020 — may require taking the model offline until you can retrain on data from the new regime.</p>
+
+  <div class="callout">
+    <div class="callout-label">COVID-19 and model collapse</div>
+    <p>When the pandemic hit in March 2020, virtually every model trained on pre-pandemic human behavior data became unreliable simultaneously. Demand forecasting models, traffic prediction models, credit risk models, inventory optimization models — all of them had learned patterns from a world that had abruptly ceased to exist. Organizations that had invested in rapid retraining capabilities and robust monitoring were able to adapt; those that had not were making consequential decisions from models that had essentially become guesswork.</p>
+  </div>
+
+  <h2>Data as a source of systemic bias</h2>
+  <p>If your training data reflects historical patterns of human behavior, and those patterns reflect historical discrimination, your model will learn to replicate that discrimination — often with greater efficiency and consistency than the humans whose decisions generated the data.</p>
+  <p>Amazon discovered this when they built an ML tool to screen resumes. Trained on historical hiring decisions — which, in their engineering organization, heavily favored male candidates — the model learned to penalize resumes that mentioned "women's" organizations or that came from all-women's colleges. It was doing exactly what it was designed to do: replicate past hiring patterns. The past patterns were discriminatory. The model automated that discrimination at scale.</p>
+  <p>This is not a problem you can solve with a better algorithm. It's a problem rooted in the data itself — and ultimately in the history that generated the data. Addressing it requires proactive intervention: auditing training data for demographic representation, using evaluation metrics stratified by sensitive attributes, holding models to fairness constraints as well as accuracy constraints, and involving domain experts and affected communities in the design process.</p>
+
+  <div class="warn">
+    <div class="warn-label">The representation problem</div>
+    <p>If certain groups are underrepresented in your training data, the model will perform worse on members of those groups. This is both a fairness problem and a technical problem. Medical AI trained predominantly on data from white male patients shows systematically lower accuracy for women and people of color. Facial recognition systems trained on predominantly light-skinned faces have higher error rates for darker-skinned faces. Representation in training data is not just an ethical concern — it directly determines who the model works for.</p>
+  </div>
+
+</div>
+</main>
+</div>
+
+<div class="sticky-bar" id="sticky-bar">
+  <div class="sticky-bar-reading" id="sticky-reading">Read to the end to unlock the next module</div>
+  <div class="sticky-bar-track"><div class="sticky-bar-fill" id="sticky-fill"></div></div>
+  <div class="sticky-bar-label" id="sticky-label">0%</div>
+  <button class="sticky-bar-btn" id="sticky-btn" onclick="completeAndNext()">Module 3: Supervised Learning Demystified →</button>
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import { getFirestore, doc, setDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  const app=initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+  const auth=getAuth(app);const db=getFirestore(app);
+  let currentUser=null;
+  onAuthStateChanged(auth,u=>{currentUser=u;});
+  window.toggleTheme=function(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='☾'):(h.setAttribute('data-theme','dark'),i.textContent='☀');};
+  window.addEventListener('scroll',()=>{const d=document.documentElement,s=d.scrollTop||document.body.scrollTop,t=d.scrollHeight-d.clientHeight;document.getElementById('progress').style.width=(s/t*100)+'%';});
+  let unlocked=false;
+  function updateScrollProgress(){
+    const pct=Math.min(100,Math.round(((window.scrollY+window.innerHeight)/document.documentElement.scrollHeight)*100));
+    const fill=document.getElementById('sticky-fill'),label=document.getElementById('sticky-label'),btn=document.getElementById('sticky-btn'),reading=document.getElementById('sticky-reading');
+    if(fill)fill.style.width=pct+'%';if(label)label.textContent=pct+'%';
+    if(pct>=95&&!unlocked){unlocked=true;if(btn)btn.style.display='block';if(reading)reading.style.display='none';if(fill)fill.style.background='#22c55e';if(label)label.style.color='#22c55e';}
+  }
+  window.addEventListener('scroll',updateScrollProgress);updateScrollProgress();
+  window.completeAndNext=async function(){
+    if(currentUser){try{await setDoc(doc(db,'users',currentUser.uid),{mlModules:arrayUnion('m2')},{merge:true});}catch(e){}}
+    window.location.href='ml-module-3.html';
+  };
+</script>
+</body>
+</html>

@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 8: AI Risk Management — AI Strategy for Leaders — Meridian Institute of AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#1E40AF;--accent-dim:rgba(30,64,175,0.1);--accent-dim2:rgba(30,64,175,0.05);--nav-bg:rgba(8,8,8,0.9);--callout-bg:rgba(30,64,175,0.07);--callout-border:rgba(30,64,175,0.25);--good-bg:rgba(34,197,94,0.07);--good-border:rgba(34,197,94,0.2);--warn-bg:rgba(251,146,60,0.07);--warn-border:rgba(251,146,60,0.2);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#1E3A8A;--accent-dim:rgba(30,58,138,0.08);--accent-dim2:rgba(30,58,138,0.04);--nav-bg:rgba(250,250,248,0.9);--callout-bg:rgba(30,58,138,0.05);--callout-border:rgba(30,58,138,0.2);--good-bg:rgba(22,163,74,0.06);--good-border:rgba(22,163,74,0.2);--warn-bg:rgba(234,88,12,0.05);--warn-border:rgba(234,88,12,0.2);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;overflow-x:hidden;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.7;overflow-x:hidden;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}
+  .nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}
+  .nav-back{font-size:13px;color:var(--text-2);text-decoration:none;transition:color 0.2s;}
+  .nav-back:hover{color:var(--text);}
+  .nav-label{font-size:13px;color:var(--text-3);}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;transition:all 0.2s;}
+  .theme-toggle:hover{background:var(--bg-3);color:var(--text);}
+  .progress-bar{position:fixed;top:60px;left:0;right:0;z-index:99;height:2px;background:var(--border);}
+  .progress-fill{height:100%;background:var(--accent);width:0%;transition:width 0.1s;}
+  .page-wrapper{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:100vh;padding-top:62px;overflow:hidden;}
+  .sidebar{position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto;border-right:1px solid var(--border);padding:32px 24px;background:var(--bg-2);}
+  .sidebar-course{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;}
+  .sidebar-course-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+  .sidebar-module{margin-bottom:4px;}
+  .sidebar-module-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:13px;color:var(--text-2);text-decoration:none;transition:all 0.2s;line-height:1.4;}
+  .sidebar-module-link:hover{background:var(--bg-3);color:var(--text);}
+  .sidebar-module-link.active{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-num{font-size:11px;font-weight:500;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--bg-4);color:var(--text-3);}
+  .sidebar-module-link.active .sidebar-num{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-divider{height:1px;background:var(--border);margin:20px 0;}
+  .sidebar-progress-label{font-size:12px;color:var(--text-3);margin-bottom:8px;display:flex;justify-content:space-between;}
+  .sidebar-progress-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sidebar-progress-fill{height:100%;width:80%;background:var(--accent);border-radius:2px;}
+  main{display:block;min-width:0;overflow:hidden;}
+  .content{max-width:760px;width:100%;padding:60px 64px 140px;margin:0 auto;}
+  .module-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+  .module-tag{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(30,64,175,0.2);padding:4px 12px;border-radius:100px;}
+  .module-meta{font-size:12px;color:var(--text-3);}
+  h1{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1.05;letter-spacing:-0.02em;color:var(--text);margin-bottom:24px;}
+  .intro-text{font-size:19px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+  h2{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:400;color:var(--text);margin:52px 0 18px;line-height:1.2;}
+  h3{font-size:16px;font-weight:500;color:var(--text);margin:32px 0 12px;}
+  p{font-size:16px;font-weight:300;color:var(--text-2);line-height:1.8;margin-bottom:20px;}
+  strong{font-weight:500;color:var(--text);}
+  ul,ol{margin:0 0 20px 22px;color:var(--text-2);}
+  li{font-size:16px;font-weight:300;line-height:1.8;margin-bottom:8px;}
+  .callout{background:var(--callout-bg);border:1px solid var(--callout-border);border-radius:12px;padding:24px 28px;margin:32px 0;}
+  .callout-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+  .callout p{margin:0;font-size:15px;color:var(--text-2);}
+  .callout p+p{margin-top:12px;}
+  .good{background:var(--good-bg);border:1px solid var(--good-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .good-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#22c55e;margin-bottom:10px;}
+  .good p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn{background:var(--warn-bg);border:1px solid var(--warn-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .warn-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#fb923c;margin-bottom:10px;}
+  .warn p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn p+p{margin-top:12px;}
+  .principle-list{display:flex;flex-direction:column;gap:12px;margin:24px 0;}
+  .principle{background:var(--bg-2);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:0 12px 12px 0;padding:20px 24px;}
+  .principle-title{font-size:15px;font-weight:500;color:var(--text);margin-bottom:6px;}
+  .principle-desc{font-size:14px;color:var(--text-2);line-height:1.65;margin:0;}
+  .sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:var(--bg-2);border-top:1px solid var(--border-2);padding:14px 5%;display:flex;align-items:center;justify-content:space-between;gap:16px;backdrop-filter:blur(12px);}
+  .sticky-bar-track{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sticky-bar-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.2s;width:0%;}
+  .sticky-bar-label{font-size:12px;color:var(--text-3);white-space:nowrap;min-width:60px;text-align:right;}
+  .sticky-bar-btn{padding:10px 20px;border-radius:8px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;background:var(--accent);color:#fff;border:none;cursor:pointer;white-space:nowrap;transition:opacity 0.2s;display:none;}
+  .sticky-bar-btn:hover{opacity:0.88;}
+  .sticky-bar-reading{font-size:12px;color:var(--text-3);white-space:nowrap;}
+  @media(max-width:900px){.page-wrapper{grid-template-columns:1fr;}.sidebar{display:none;}.content{padding:40px 24px 120px;}h1{font-size:38px;}}
+  @media(max-width:600px){.content{padding:28px 16px 120px;}h1{font-size:30px;}h2{font-size:24px;}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="courses.html" class="nav-back">&#8592; AI Strategy for Leaders</a>
+    <div class="nav-divider"></div>
+    <span class="nav-label">Module 8</span>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">&#9728;</span></button>
+</nav>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+<div class="page-wrapper">
+<aside class="sidebar">
+  <div class="sidebar-course">Expert Track</div>
+  <div class="sidebar-course-name">AI Strategy for Leaders</div>
+  <div class="sidebar-module"><a href="strategy-module-1.html" class="sidebar-module-link"><span class="sidebar-num">1</span>The AI Strategic Landscape</a></div>
+  <div class="sidebar-module"><a href="strategy-module-2.html" class="sidebar-module-link"><span class="sidebar-num">2</span>Identifying AI Opportunities</a></div>
+  <div class="sidebar-module"><a href="strategy-module-3.html" class="sidebar-module-link"><span class="sidebar-num">3</span>Build vs. Buy vs. Partner</a></div>
+  <div class="sidebar-module"><a href="strategy-module-4.html" class="sidebar-module-link"><span class="sidebar-num">4</span>Data Strategy as Competitive Advantage</a></div>
+  <div class="sidebar-module"><a href="strategy-module-5.html" class="sidebar-module-link"><span class="sidebar-num">5</span>AI Talent and Organizational Design</a></div>
+  <div class="sidebar-module"><a href="strategy-module-6.html" class="sidebar-module-link"><span class="sidebar-num">6</span>Managing AI Projects and Vendors</a></div>
+  <div class="sidebar-module"><a href="strategy-module-7.html" class="sidebar-module-link"><span class="sidebar-num">7</span>Measuring AI ROI</a></div>
+  <div class="sidebar-module"><a href="strategy-module-8.html" class="sidebar-module-link active"><span class="sidebar-num">8</span>AI Risk Management</a></div>
+  <div class="sidebar-module"><a href="strategy-module-9.html" class="sidebar-module-link"><span class="sidebar-num">9</span>Change Management for AI</a></div>
+  <div class="sidebar-module"><a href="strategy-module-10.html" class="sidebar-module-link"><span class="sidebar-num">10</span>Building an AI-First Culture</a></div>
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-module"><a href="quiz-strategy.html" class="sidebar-module-link"><span class="sidebar-num">&#10003;</span>Final Assessment</a></div>
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-progress-label"><span>Course progress</span><span style="color:var(--accent);">8 / 10</span></div>
+  <div class="sidebar-progress-track"><div class="sidebar-progress-fill" style="width:80%;"></div></div>
+</aside>
+<main><div class="content">
+  <div class="module-eyebrow"><span class="module-tag">Module 8 · Expert Track</span><span class="module-meta">19 min read · AI Strategy for Leaders</span></div>
+  <h1>AI Risk Management</h1>
+  <p class="intro-text">AI introduces a distinct and in many ways more complex risk profile than previous generations of enterprise technology. The risks are not merely larger versions of familiar IT risks — they include new categories of failure, new mechanisms of harm, and new governance challenges that traditional risk management frameworks are not designed to address. Executives who apply conventional IT risk thinking to AI consistently underestimate the risks that matter most and over-invest in mitigating risks that are relatively manageable. This module provides a systematic framework for understanding and managing AI risk.</p>
+
+  <h2>The AI Risk Landscape</h2>
+  <p>AI risks can be organized into six major categories, each with distinct characteristics, manifestation patterns, and mitigation approaches. Understanding the full landscape — rather than focusing narrowly on the risk category most familiar from IT or regulatory experience — is the starting point for effective AI risk governance.</p>
+
+  <h3>Accuracy and Reliability Risk</h3>
+  <p>AI systems make errors. This is not a defect to be eliminated — it is a structural property of probabilistic systems. The risk management question is not "how do we achieve zero errors" but "what error rates are acceptable for what applications, and what happens when errors occur?" A 95% accurate fraud detection system operating on a billion transactions will generate 50 million false positives annually. Whether that is acceptable depends on the cost of false positives, the alternatives, and the harm of the true positives it catches. These tradeoffs must be explicitly analyzed, not assumed.</p>
+  <p>Reliability risk extends beyond error rates to system stability: does the model perform consistently over time, across different input distributions, under different loads? AI systems can fail in ways that are more subtle and harder to detect than conventional software failures. A model can degrade gradually — performing worse and worse as the world it was trained on diverges from the world it is operating in — without any error occurring in the conventional sense. Production monitoring systems specifically designed to detect performance drift are a necessary component of AI reliability management, not optional.</p>
+
+  <h3>Bias and Fairness Risk</h3>
+  <p>AI systems trained on historical data can encode, replicate, and in some cases amplify historical patterns of discrimination. This is not a hypothetical concern: there are well-documented cases of AI systems producing biased outcomes in consequential domains including hiring (Amazon's discontinued resume screening tool), lending (the Consumer Financial Protection Bureau's investigations of algorithmic credit scoring), healthcare (a widely studied algorithm that systematically underestimated care needs for Black patients), and criminal justice (the COMPAS recidivism scoring system).</p>
+  <p>The mechanism of algorithmic bias typically involves one of three patterns. First, training data bias: if historical hiring decisions were biased against women, a model trained on those decisions will learn to discriminate against women. Second, proxy variable bias: even if protected characteristics (race, gender) are excluded from the model, the model can learn to use correlated variables (zip code as a proxy for race, name as a proxy for gender) to achieve similar discriminatory effects. Third, measurement bias: if the outcome variable used to train the model is itself measured differently for different groups, the model will reflect that measurement inequality.</p>
+  <p>Bias risk management requires proactive evaluation — testing AI system outputs for differential impact across protected groups before deployment, not reactively after harm has occurred. It also requires ongoing monitoring: a model that is fair at deployment can develop unfair patterns over time as the world changes or as the model is exposed to different operational distributions.</p>
+
+  <div class="callout">
+    <div class="callout-label">The Fairness Tradeoff Problem</div>
+    <p>One of the most important and underappreciated insights from the technical fairness literature is that multiple definitions of algorithmic fairness are mathematically incompatible — you cannot simultaneously optimize for demographic parity (equal positive rates across groups), equalized odds (equal error rates across groups), and calibration (probabilities that accurately reflect actual outcomes). This is not a limitation of current technology that will eventually be overcome; it is a mathematical impossibility proven by researchers including Chouldechova and Kleinberg. The implication for practitioners is that fairness choices involve genuine value tradeoffs that must be made explicitly by decision-makers — not implicitly by technical teams.</p>
+  </div>
+
+  <h3>Security and Adversarial Risk</h3>
+  <p>AI systems introduce new attack surfaces that did not exist in conventional software. Three categories of adversarial AI attack are most practically relevant for enterprise risk management.</p>
+  <p><strong>Adversarial inputs</strong> are carefully crafted inputs designed to cause AI systems to produce incorrect outputs. In computer vision, minimal perturbations to an image that are invisible to the human eye can cause image classifiers to confidently misclassify the image. In natural language processing, carefully crafted prompts can cause large language models to bypass safety filters or produce outputs they were designed not to produce. For AI systems deployed in security-critical contexts — fraud detection, malware identification, content moderation — adversarial robustness is a primary design requirement.</p>
+  <p><strong>Data poisoning</strong> attacks involve injecting malicious data into training datasets to cause the resulting model to behave incorrectly in specific, attacker-defined ways. This is particularly concerning for systems that continuously learn from operational data — a model that updates itself based on user interactions can be poisoned by an adversary who manipulates those interactions.</p>
+  <p><strong>Model extraction and inversion</strong> attacks allow adversaries to reconstruct either the model itself or the training data from which it was derived, through repeated queries to the model's API. This can expose proprietary intellectual property (the model architecture and weights) or sensitive training data (private information about individuals who appeared in the training set).</p>
+
+  <h3>Regulatory and Compliance Risk</h3>
+  <p>The regulatory landscape for AI is evolving rapidly, and the trajectory is clearly toward more, not less, regulation. The EU AI Act — the most comprehensive AI regulatory framework currently in force — creates binding requirements for AI systems in high-risk categories including credit scoring, hiring, educational evaluation, law enforcement, and critical infrastructure. US federal agencies have issued sector-specific AI guidance across financial services (OCC, CFPB), healthcare (FDA), and other regulated industries. The UK's sector-based approach is producing similar requirements through existing regulators.</p>
+  <p>The compliance risk for AI is amplified by two factors. First, many organizations have deployed AI systems without conducting the formal risk assessments, documentation, and testing that emerging regulations require — creating retroactive compliance exposure. Second, the regulatory requirements for AI systems are more process-oriented than most technology regulations: they require not just that the system produces certain outcomes, but that it was developed, tested, and monitored using defined governance processes. Organizations that lack the documentation of their AI development and testing processes face significant remediation costs as regulations take effect.</p>
+
+  <h3>Reputational Risk</h3>
+  <p>AI failures generate reputational consequences that are disproportionate to their operational impact, for two structural reasons. First, AI failures often involve harms to identifiable individuals that are easy to narrate compellingly — an AI hiring system that discriminates against a specific candidate, an AI lending tool that denies a loan to a specific small business owner, an AI content moderation system that silences a specific voice. These individual stories generate public and media attention that aggregate statistical harms (affecting many people less severely) often do not. Second, AI failures are perceived as intentional in a way that conventional software failures are not — the organization is seen as having made an affirmative choice to deploy a system that caused harm, rather than having experienced a technical accident.</p>
+  <p>The reputational risk calculus requires scenario planning for plausible failure modes in your specific AI applications. What is the worst-case story a journalist or regulator could write about your AI system's behavior? What evidence would be cited? What would the organizational response be? Organizations that have thought through these scenarios — and that have governance structures capable of responding rapidly — handle reputational incidents dramatically better than those that encounter them unprepared.</p>
+
+  <h3>Operational Dependency Risk</h3>
+  <p>As organizations integrate AI more deeply into critical processes, they create new forms of operational dependency that introduce concentration and fragility risks. A financial services firm that deploys AI-assisted trading across multiple strategies becomes dependent on that system's continued correct functioning. A healthcare organization that integrates AI diagnostic support into clinical workflows creates a dependency that must be managed if the AI system is unavailable or performing unreliably. An organization whose customer service is substantially AI-powered must plan for scenarios in which the AI system is unavailable, performing poorly, or subject to adversarial attack.</p>
+  <p>Operational dependency risk management requires explicit continuity planning: what is the fallback if the AI system fails? Can processes revert to pre-AI approaches? Are the human capabilities required for those fallbacks being maintained, or has the organization allowed them to atrophy? The organizations most exposed to operational dependency risk are those that have reduced human capacity in processes where AI is deployed without maintaining adequate fallback capability.</p>
+
+  <h2>Risk Assessment Frameworks</h2>
+  <p>The NIST AI Risk Management Framework (AI RMF), published in 2023, has emerged as the most widely adopted voluntary framework for enterprise AI risk assessment in the United States. Its four core functions — Govern, Map, Measure, Manage — provide a practical structure for building organizational AI risk management capability.</p>
+  <p>The EU AI Act's risk-tiering approach provides a complementary framework particularly relevant for organizations with EU market exposure: categorizing AI applications by risk level (unacceptable, high, limited, minimal) and applying proportionate governance requirements accordingly. The practical value of this framework for non-EU organizations is in forcing explicit risk categorization of AI applications — a discipline that many organizations lack even when they are not subject to the regulation directly.</p>
+  <p>For organizations seeking a more quantitative risk assessment approach, the ISO 31000 risk management standard adapted for AI provides a framework for estimating probability and impact of AI risks across the categories described above, enabling portfolio-level risk prioritization.</p>
+
+  <h2>Governance Structures for AI Risk</h2>
+  <p>Effective AI risk governance requires clear accountability structures. In practice, AI risk governance involves three tiers.</p>
+
+  <div class="principle-list">
+    <div class="principle">
+      <div class="principle-title">Board-Level Oversight</div>
+      <div class="principle-desc">Boards need enough AI literacy to oversee AI risk at a strategic level: understanding the categories of risk the organization faces, reviewing the organizational risk appetite for AI, receiving regular reporting on significant AI incidents and near-misses, and ensuring that executive accountability for AI risk is clearly assigned. Many boards are currently underprepared for this role; building board AI literacy — through education, advisory relationships, or board composition — is itself an organizational risk management priority.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Executive-Level Risk Ownership</div>
+      <div class="principle-desc">Clear C-suite ownership of AI risk — whether in a Chief AI Officer, Chief Risk Officer, or Chief Data Officer role — with defined authority and accountability. The risk ownership must be matched with the organizational power to enforce standards: a CAIO or CRO who cannot block deployment of AI systems that fail to meet risk standards is a governance ornament, not a governance control.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">AI Ethics and Risk Review Processes</div>
+      <div class="principle-desc">Operational review processes that assess each significant AI system for risk before deployment and periodically throughout its operating life. These processes should include cross-functional review — legal, compliance, privacy, technology, and business stakeholders — not just technical evaluation. The review should assess bias, accuracy, explainability, data governance, regulatory compliance, and operational dependency against defined organizational standards.</div>
+    </div>
+  </div>
+
+  <h2>Policies Every AI-Deploying Organization Needs</h2>
+  <p>A minimum viable AI governance policy framework includes the following documents, each with clear ownership, defined scope, and regular review cycles.</p>
+  <ul>
+    <li><strong>AI Use Policy</strong> — defines acceptable and unacceptable uses of AI within the organization, including both internally built systems and commercially procured AI tools used by employees.</li>
+    <li><strong>AI Development Standards</strong> — defines required practices for AI systems built internally: data governance requirements, bias testing standards, documentation requirements, performance benchmarks, and monitoring obligations.</li>
+    <li><strong>AI Procurement Policy</strong> — defines required vendor due diligence, contract provisions, and ongoing vendor management standards for commercially procured AI systems.</li>
+    <li><strong>AI Incident Response Plan</strong> — defines how the organization detects, escalates, investigates, and responds to AI system failures, with clear escalation thresholds, defined response teams, communication protocols, and regulatory notification obligations.</li>
+    <li><strong>AI Acceptable Use Policy for Employees</strong> — defines what AI tools employees are authorized to use, what data can be input into external AI systems, and what human review is required before AI-generated content is used in consequential decisions or external communications.</li>
+  </ul>
+
+  <h2>Incident Response for AI Failures</h2>
+  <p>When an AI system produces a significant failure — incorrect outputs that cause material harm, biased behavior that generates legal or reputational exposure, security incident, or unexpected operational impact — the response quality depends entirely on preparation. Organizations that are encountering their first significant AI incident for the first time, without a practiced response plan, consistently perform worse than those that have planned and rehearsed.</p>
+  <p>Effective AI incident response has five phases: detection (systematic monitoring that identifies failures before they cause significant harm, rather than learning about them from external parties), containment (defining the scope of the failure and limiting further harm, including potential system suspension), investigation (understanding the root cause — data problem, model failure, deployment issue, adversarial attack), remediation (addressing the root cause, not just the immediate symptom), and communication (transparent communication with affected parties, regulators, and the public according to defined protocols).</p>
+
+  <div class="warn">
+    <div class="warn-label">The Cover-Up Trap</div>
+    <p>The organizational temptation when an AI system fails in ways that cause harm is to minimize, delay disclosure, and manage the incident internally as long as possible. This approach consistently produces worse outcomes — greater reputational damage, larger regulatory penalties, more extended legal exposure — than rapid, transparent response. The organizations that have navigated AI failures most effectively — including technology companies that have publicly acknowledged and addressed significant model behavior problems — have been those that moved quickly to contain harm, investigate root causes, communicate transparently, and implement credible remediation.</p>
+  </div>
+
+</div></main>
+</div>
+<div class="sticky-bar">
+  <div class="sticky-bar-reading" id="sticky-reading">Read to the end to unlock the next module</div>
+  <div class="sticky-bar-track"><div class="sticky-bar-fill" id="sticky-fill"></div></div>
+  <div class="sticky-bar-label" id="sticky-label">0%</div>
+  <button class="sticky-bar-btn" id="sticky-btn" onclick="completeAndNext()">Module 9: Change Management for AI &#8594;</button>
+</div>
+<script type="module">
+  import{initializeApp}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import{getAuth,onAuthStateChanged}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import{getFirestore,doc,setDoc,arrayUnion}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  const app=initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+  const auth=getAuth(app);const db=getFirestore(app);
+  let currentUser=null;
+  onAuthStateChanged(auth,u=>{currentUser=u;});
+  window.toggleTheme=function(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='&#9790;'):(h.setAttribute('data-theme','dark'),i.textContent='&#9728;');};
+  window.addEventListener('scroll',()=>{const d=document.documentElement,s=d.scrollTop||document.body.scrollTop,t=d.scrollHeight-d.clientHeight;document.getElementById('progress').style.width=(s/t*100)+'%';});
+  let unlocked=false;
+  function updateScrollProgress(){
+    const scrolled=window.scrollY+window.innerHeight;const total=document.documentElement.scrollHeight;
+    const pct=Math.min(100,Math.round((scrolled/total)*100));
+    const fill=document.getElementById('sticky-fill');const label=document.getElementById('sticky-fill');const label2=document.getElementById('sticky-label');
+    const btn=document.getElementById('sticky-btn');const reading=document.getElementById('sticky-reading');
+    if(fill)fill.style.width=pct+'%';if(label2)label2.textContent=pct+'%';
+    if(pct>=95&&!unlocked){unlocked=true;if(btn)btn.style.display='block';if(reading)reading.style.display='none';if(fill)fill.style.background='#22c55e';if(label2)label2.style.color='#22c55e';}
+  }
+  window.addEventListener('scroll',updateScrollProgress);updateScrollProgress();
+  window.completeAndNext=async function(){
+    if(currentUser){try{await setDoc(doc(db,'users',currentUser.uid),{strategyModules:arrayUnion('m8')},{merge:true});}catch(e){}}
+    window.location.href='strategy-module-9.html';
+  };
+</script>
+</body>
+</html>

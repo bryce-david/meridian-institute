@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 4: Surveillance, Power, and Civil Liberties — AI in Politics — Meridian Institute of AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#9D174D;--accent-dim:rgba(157,23,77,0.1);--nav-bg:rgba(8,8,8,0.9);--callout-bg:rgba(157,23,77,0.07);--callout-border:rgba(157,23,77,0.25);--good-bg:rgba(34,197,94,0.07);--good-border:rgba(34,197,94,0.2);--warn-bg:rgba(251,146,60,0.07);--warn-border:rgba(251,146,60,0.2);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#831843;--accent-dim:rgba(131,24,67,0.08);--nav-bg:rgba(250,250,248,0.9);--callout-bg:rgba(131,24,67,0.05);--callout-border:rgba(131,24,67,0.2);--good-bg:rgba(22,163,74,0.06);--good-border:rgba(22,163,74,0.2);--warn-bg:rgba(234,88,12,0.05);--warn-border:rgba(234,88,12,0.2);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}html{scroll-behavior:smooth;}body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.7;overflow-x:hidden;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}.nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}.nav-back{font-size:13px;color:var(--text-2);text-decoration:none;transition:color 0.2s;}.nav-back:hover{color:var(--text);}.nav-label{font-size:13px;color:var(--text-3);}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;}
+  .progress-bar{position:fixed;top:60px;left:0;right:0;z-index:99;height:2px;background:var(--border);}.progress-fill{height:100%;background:var(--accent);width:0%;transition:width 0.1s;}
+  .page-wrapper{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:100vh;padding-top:62px;}
+  .sidebar{position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto;border-right:1px solid var(--border);padding:32px 24px;background:var(--bg-2);}
+  .sidebar-course{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;}.sidebar-course-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+  .sidebar-module{margin-bottom:4px;}.sidebar-module-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:13px;color:var(--text-2);text-decoration:none;transition:all 0.2s;line-height:1.4;}
+  .sidebar-module-link:hover{background:var(--bg-3);color:var(--text);}.sidebar-module-link.active{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-num{font-size:11px;font-weight:500;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--bg-4);color:var(--text-3);}
+  .sidebar-module-link.active .sidebar-num{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-divider{height:1px;background:var(--border);margin:20px 0;}
+  .sidebar-progress-label{font-size:12px;color:var(--text-3);margin-bottom:8px;display:flex;justify-content:space-between;}
+  .sidebar-progress-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}.sidebar-progress-fill{height:100%;width:40%;background:var(--accent);border-radius:2px;}
+  main{display:block;min-width:0;}.content{max-width:760px;width:100%;padding:60px 64px 140px;margin:0 auto;}
+  .module-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+  .module-tag{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(157,23,77,0.2);padding:4px 12px;border-radius:100px;}
+  .module-meta{font-size:12px;color:var(--text-3);}
+  h1{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1.05;letter-spacing:-0.02em;margin-bottom:24px;}
+  .intro-text{font-size:19px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+  h2{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:400;color:var(--text);margin:52px 0 18px;line-height:1.2;}
+  h3{font-size:16px;font-weight:500;color:var(--text);margin:32px 0 12px;}
+  p{font-size:16px;font-weight:300;color:var(--text-2);line-height:1.8;margin-bottom:20px;}strong{font-weight:500;color:var(--text);}
+  ul,ol{margin:0 0 20px 22px;color:var(--text-2);}li{font-size:16px;font-weight:300;line-height:1.8;margin-bottom:8px;}
+  .callout{background:var(--callout-bg);border:1px solid var(--callout-border);border-radius:12px;padding:24px 28px;margin:32px 0;}.callout-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}.callout p{margin:0;font-size:15px;color:var(--text-2);}.callout p+p{margin-top:12px;}
+  .good{background:var(--good-bg);border:1px solid var(--good-border);border-radius:12px;padding:24px 28px;margin:24px 0;}.good-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#22c55e;margin-bottom:10px;}.good p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn{background:var(--warn-bg);border:1px solid var(--warn-border);border-radius:12px;padding:24px 28px;margin:24px 0;}.warn-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#fb923c;margin-bottom:10px;}.warn p{margin:0;font-size:15px;color:var(--text-2);}.warn p+p{margin-top:12px;}
+  .principle-list{display:flex;flex-direction:column;gap:12px;margin:24px 0;}.principle{background:var(--bg-2);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:0 12px 12px 0;padding:20px 24px;}.principle-title{font-size:15px;font-weight:500;color:var(--text);margin-bottom:6px;}.principle-desc{font-size:14px;color:var(--text-2);line-height:1.65;margin:0;}
+  .sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:var(--bg-2);border-top:1px solid var(--border-2);padding:14px 5%;display:flex;align-items:center;justify-content:space-between;gap:16px;backdrop-filter:blur(12px);}
+  .sticky-bar-track{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}.sticky-bar-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.2s;width:0%;}
+  .sticky-bar-label{font-size:12px;color:var(--text-3);white-space:nowrap;}
+  .sticky-bar-btn{padding:10px 20px;border-radius:8px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;background:var(--accent);color:#fff;border:none;cursor:pointer;white-space:nowrap;transition:opacity 0.2s;display:none;}.sticky-bar-btn:hover{opacity:0.88;}
+  .sticky-bar-reading{font-size:12px;color:var(--text-3);white-space:nowrap;}
+  @media(max-width:900px){.page-wrapper{grid-template-columns:1fr;}.sidebar{display:none;}.content{padding:40px 24px 120px;}h1{font-size:38px;}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="courses.html" class="nav-back">← AI in Politics</a>
+    <div class="nav-divider"></div>
+    <span class="nav-label">Module 4</span>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">☀</span></button>
+</nav>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+
+<div class="page-wrapper">
+<aside class="sidebar">
+  <div class="sidebar-course">Course</div>
+  <div class="sidebar-course-name">AI in Politics</div>
+  <div class="sidebar-module"><a href="politics-module-1.html" class="sidebar-module-link"><span class="sidebar-num">1</span>AI and Modern Political Campaigns</a></div>
+  <div class="sidebar-module"><a href="politics-module-2.html" class="sidebar-module-link"><span class="sidebar-num">2</span>Disinformation, Deepfakes, and Democratic Discourse</a></div>
+  <div class="sidebar-module"><a href="politics-module-3.html" class="sidebar-module-link"><span class="sidebar-num">3</span>AI in Policy Making and Legislative Analysis</a></div>
+  <div class="sidebar-module"><a href="politics-module-4.html" class="sidebar-module-link active"><span class="sidebar-num">4</span>Surveillance, Power, and Civil Liberties</a></div>
+  <div class="sidebar-module"><a href="politics-module-5.html" class="sidebar-module-link"><span class="sidebar-num">5</span>Algorithmic Bias in Voting and Representation</a></div>
+  <div class="sidebar-module"><a href="politics-module-6.html" class="sidebar-module-link"><span class="sidebar-num">6</span>AI and International Relations</a></div>
+  <div class="sidebar-module"><a href="politics-module-7.html" class="sidebar-module-link"><span class="sidebar-num">7</span>Political Polarization and Social Algorithms</a></div>
+  <div class="sidebar-module"><a href="politics-module-8.html" class="sidebar-module-link"><span class="sidebar-num">8</span>Regulating AI: A Political Science Perspective</a></div>
+  <div class="sidebar-module"><a href="politics-module-9.html" class="sidebar-module-link"><span class="sidebar-num">9</span>AI and National Security</a></div>
+  <div class="sidebar-module"><a href="politics-module-10.html" class="sidebar-module-link"><span class="sidebar-num">10</span>The Future of Democracy in an AI World</a></div>
+  <div class="sidebar-module"><a href="quiz-politics.html" class="sidebar-module-link" style="color:var(--accent);margin-top:4px;"><span class="sidebar-num" style="background:var(--accent-dim);color:var(--accent);">✦</span>Final Assessment</a></div>
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-progress-label"><span>Course progress</span><span style="color:var(--accent);">4 / 10</span></div>
+  <div class="sidebar-progress-track"><div class="sidebar-progress-fill"></div></div>
+</aside>
+
+<main>
+<div class="content">
+  <div class="module-eyebrow"><span class="module-tag">Module 4</span><span class="module-meta">19 min read · AI in Politics</span></div>
+  <h1>Surveillance, Power, and Civil Liberties</h1>
+  <p class="intro-text">Surveillance is the exercise of power through information. Governments have always sought to monitor those they govern; citizens have always sought limits on that monitoring as a condition of their freedom. AI dramatically expands the state's capacity to surveil — making observation cheaper, more comprehensive, more predictive, and harder to detect or contest. The political question is not whether surveillance exists, but who controls it, what it enables, and what rights it forecloses.</p>
+
+  <h2>The surveillance state and its historical context</h2>
+  <p>Modern democracies have always existed in tension with surveillance impulses. Intelligence agencies, police departments, and administrative bureaucracies have gathered information on citizens throughout the democratic era. What constrained this surveillance was practical: observation was expensive, records were siloed, analysis required human labor. These practical limits functioned as de facto civil liberties protections even absent explicit legal constraints.</p>
+  <p>AI eliminates most of these practical constraints. Facial recognition systems can identify individuals in real time from camera networks without human review of individual images. Natural language processing tools can monitor social media at scale for political dissent, activist organizing, or criminalized speech. Predictive policing algorithms identify locations and individuals for proactive intervention before any crime occurs. Location data from mobile devices allows precise reconstruction of an individual's movements and associations. Each capability individually raises serious civil liberties questions; their integration into comprehensive surveillance architectures poses threats to freedom of a different order entirely.</p>
+
+  <div class="callout">
+    <div class="callout-label">The chilling effect</div>
+    <p>Mass surveillance does not need to be used against someone to constrain their behavior. The knowledge that one is being observed changes behavior — producing self-censorship, avoidance of association with controversial people or causes, and withdrawal from political participation. Surveillance chills democratic participation most severely among those who most need protection: political minorities, activists, dissidents, and marginalized communities already distrustful of government institutions.</p>
+  </div>
+
+  <h2>Facial recognition and biometric surveillance</h2>
+  <p>Facial recognition technology illustrates both the power and the risks of AI surveillance. Deployed across networks of cameras — in public spaces, transportation hubs, at protests, and in commercial environments — facial recognition can identify individuals at scale without their knowledge or consent. Law enforcement agencies in multiple countries have adopted the technology for suspect identification, crowd monitoring, and tracking of persons of interest.</p>
+  <p>The accuracy of facial recognition systems varies dramatically across demographic groups. Studies have consistently found higher error rates for darker-skinned individuals and women, creating a documented pattern of disparate impact. In law enforcement contexts, false positive identifications have led to wrongful arrests of innocent people — with documented cases in the United States involving Black men wrongly arrested based on facial recognition matches.</p>
+
+  <div class="warn">
+    <div class="warn-label">Disparate impact of surveillance technology</div>
+    <p>AI surveillance tools that perform with different accuracy rates across demographic groups do not merely make technical errors — they encode discrimination into automated systems. When a facial recognition system misidentifies a Black man as a criminal suspect at higher rates than a white man, it is not a neutral technical failure. It is an allocation of policing burden along racial lines, with consequences that include wrongful detention, traumatic encounters with law enforcement, and reinforcement of unjust patterns of surveillance and control.</p>
+  </div>
+
+  <h2>Predictive policing and pre-crime intervention</h2>
+  <p>Predictive policing algorithms attempt to identify locations or individuals likely to be involved in criminal activity before any crime occurs. The appeal to law enforcement is obvious: more efficient deployment of limited policing resources. The civil liberties implications are profound: individuals are subjected to heightened police attention based on algorithmic predictions derived from historical data rather than their own conduct.</p>
+  <p>These systems typically train on historical arrest and crime data — which reflects not only actual criminal behavior but also the biases of prior policing decisions. Communities that have historically been over-policed produce more arrest data, which causes predictive systems to direct more police attention toward them, which produces more arrests, in a feedback loop that can entrench and amplify historical inequities rather than reflect objective risk.</p>
+
+  <div class="principle-list">
+    <div class="principle">
+      <div class="principle-title">Location surveillance</div>
+      <div class="principle-desc">Tracking of individuals' physical movements through mobile device data, license plate readers, GPS monitoring, and public camera networks — creating comprehensive records of association and activity.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Social media monitoring</div>
+      <div class="principle-desc">Automated monitoring of public and sometimes non-public social media for designated keywords, associations, or behavior patterns — used by law enforcement, immigration authorities, and intelligence agencies.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Financial surveillance</div>
+      <div class="principle-desc">AI analysis of financial transactions for patterns associated with money laundering, terrorism financing, or other designated concerns — with significant risks of false positives affecting ordinary citizens.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Mass communication interception</div>
+      <div class="principle-desc">Intelligence agency collection and analysis of digital communications at scale, using AI to identify signals of interest within volumes of data that would be impossible to review by human analysts.</div>
+    </div>
+  </div>
+
+  <h2>Authoritarian applications and the export problem</h2>
+  <p>The most extreme deployments of AI surveillance infrastructure have occurred in authoritarian states. China's social credit system, Xinjiang surveillance apparatus, and citywide facial recognition networks represent a model of comprehensive social control through AI-enabled surveillance that has no democratic analogue — and is actively being exported to authoritarian governments worldwide through both commercial sales and diplomatic relationships.</p>
+  <p>The global export of surveillance technology from both democratic and authoritarian producers means that the capabilities developed and commercially deployed in democratic contexts become available to governments with no civil liberties constraints on their use. Surveillance AI export policy is therefore a human rights issue with implications that extend far beyond the borders of producing countries.</p>
+
+  <div class="good">
+    <div class="good-label">Legal and democratic safeguards</div>
+    <p>Several jurisdictions have imposed meaningful limits on AI surveillance: bans or moratoria on government use of facial recognition in public spaces; requirements for transparency about what surveillance tools agencies use; prohibitions on predictive policing systems; and statutory rights to know whether one has been subject to AI-driven surveillance decisions. These legal frameworks demonstrate that democratic societies can retain meaningful civil liberties protections in the AI era — but only through deliberate political choices to prioritize those protections over surveillance efficiency.</p>
+  </div>
+
+  <h2>The political economy of surveillance</h2>
+  <p>Surveillance infrastructure, once built, creates its own political economy. Law enforcement agencies that deploy AI surveillance tools develop institutional dependencies on them. Vendors that supply surveillance technology have commercial incentives to expand deployment. The existence of comprehensive surveillance capability creates pressure to use it. Civil liberties protections require constant, organized political effort to maintain against these institutional pressures — while the expansion of surveillance can occur quietly, through procurement decisions and administrative practices that attract little democratic scrutiny.</p>
+</div>
+</main>
+</div>
+
+<div class="sticky-bar" id="sticky-bar">
+  <div class="sticky-bar-reading" id="sticky-reading">Read to the end to unlock the next module</div>
+  <div class="sticky-bar-track"><div class="sticky-bar-fill" id="sticky-fill"></div></div>
+  <div class="sticky-bar-label" id="sticky-label">0%</div>
+  <button class="sticky-bar-btn" id="sticky-btn" onclick="completeAndNext()">Module 5: Algorithmic Bias in Voting and Representation →</button>
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import { getFirestore, doc, setDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  const app = initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+  const auth = getAuth(app); const db = getFirestore(app);
+  let currentUser = null;
+  onAuthStateChanged(auth, u => { currentUser = u; });
+  window.toggleTheme=function(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='☾'):(h.setAttribute('data-theme','dark'),i.textContent='☀');};
+  window.addEventListener('scroll',()=>{const d=document.documentElement,s=d.scrollTop||document.body.scrollTop,t=d.scrollHeight-d.clientHeight;document.getElementById('progress').style.width=(s/t*100)+'%';});
+  let unlocked=false;
+  function updateScrollProgress(){
+    const scrolled=window.scrollY+window.innerHeight;const total=document.documentElement.scrollHeight;
+    const pct=Math.min(100,Math.round((scrolled/total)*100));
+    const fill=document.getElementById('sticky-fill');const label=document.getElementById('sticky-label');
+    const btn=document.getElementById('sticky-btn');const reading=document.getElementById('sticky-reading');
+    if(fill)fill.style.width=pct+'%';if(label)label.textContent=pct+'%';
+    if(pct>=95&&!unlocked){unlocked=true;if(btn)btn.style.display='block';if(reading)reading.style.display='none';if(fill)fill.style.background='#22c55e';if(label)label.style.color='#22c55e';}
+  }
+  window.addEventListener('scroll',updateScrollProgress);updateScrollProgress();
+  window.completeAndNext=async function(){
+    if(currentUser){try{await setDoc(doc(db,'users',currentUser.uid),{politicsModules:arrayUnion('m4')},{merge:true});}catch(e){}}
+    window.location.href='politics-module-5.html';
+  };
+</script>
+</body>
+</html>

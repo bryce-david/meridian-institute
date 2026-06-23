@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 8: Prompting for Code and Technical Tasks — Prompt Engineering Mastery — Meridian Institute of AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#B45309;--accent-dim:rgba(180,83,9,0.1);--nav-bg:rgba(8,8,8,0.9);--callout-bg:rgba(180,83,9,0.07);--callout-border:rgba(180,83,9,0.25);--good-bg:rgba(34,197,94,0.07);--good-border:rgba(34,197,94,0.2);--warn-bg:rgba(251,146,60,0.07);--warn-border:rgba(251,146,60,0.2);}
+:root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#92400E;--accent-dim:rgba(146,64,14,0.08);--nav-bg:rgba(250,250,248,0.9);--callout-bg:rgba(146,64,14,0.05);--callout-border:rgba(146,64,14,0.2);--good-bg:rgba(22,163,74,0.06);--good-border:rgba(22,163,74,0.2);--warn-bg:rgba(234,88,12,0.05);--warn-border:rgba(234,88,12,0.2);}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}html{scroll-behavior:smooth;}body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.7;overflow-x:hidden;transition:background 0.3s,color 0.3s;}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+.nav-left{display:flex;align-items:center;gap:16px;}.nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+.nav-divider{width:1px;height:16px;background:var(--border-2);}.nav-back{font-size:13px;color:var(--text-2);text-decoration:none;}.nav-label{font-size:13px;color:var(--text-3);}
+.theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;}
+.progress-bar{position:fixed;top:60px;left:0;right:0;z-index:99;height:2px;background:var(--border);}.progress-fill{height:100%;background:var(--accent);width:0%;}
+.page-wrapper{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:100vh;padding-top:62px;}
+.sidebar{position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto;border-right:1px solid var(--border);padding:32px 24px;background:var(--bg-2);}
+.sidebar-course{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;}.sidebar-course-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+.sidebar-module{margin-bottom:4px;}.sidebar-module-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:13px;color:var(--text-2);text-decoration:none;transition:all 0.2s;line-height:1.4;}
+.sidebar-module-link:hover{background:var(--bg-3);color:var(--text);}.sidebar-module-link.active{background:var(--accent-dim);color:var(--accent);}
+.sidebar-num{font-size:11px;font-weight:500;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--bg-4);color:var(--text-3);}
+.sidebar-module-link.active .sidebar-num{background:var(--accent-dim);color:var(--accent);}
+.sidebar-divider{height:1px;background:var(--border);margin:20px 0;}
+.sidebar-progress-label{font-size:12px;color:var(--text-3);margin-bottom:8px;display:flex;justify-content:space-between;}
+.sidebar-progress-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}.sidebar-progress-fill{height:100%;background:var(--accent);border-radius:2px;}
+main{display:block;min-width:0;}.content{max-width:760px;width:100%;padding:60px 64px 140px;margin:0 auto;}
+.module-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+.module-tag{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(180,83,9,0.2);padding:4px 12px;border-radius:100px;}
+.module-meta{font-size:12px;color:var(--text-3);}
+h1{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1.05;letter-spacing:-0.02em;margin-bottom:24px;}
+.intro-text{font-size:19px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+h2{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:400;color:var(--text);margin:52px 0 18px;line-height:1.2;}
+p{font-size:16px;font-weight:300;color:var(--text-2);line-height:1.8;margin-bottom:20px;}strong{font-weight:500;color:var(--text);}
+ul,ol{margin:0 0 20px 22px;color:var(--text-2);}li{font-size:16px;font-weight:300;line-height:1.8;margin-bottom:8px;}
+.callout{background:var(--callout-bg);border:1px solid var(--callout-border);border-radius:12px;padding:24px 28px;margin:32px 0;}.callout-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}.callout p{margin:0;font-size:15px;color:var(--text-2);}.callout p+p{margin-top:12px;}
+.good{background:var(--good-bg);border:1px solid var(--good-border);border-radius:12px;padding:24px 28px;margin:24px 0;}.good-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#22c55e;margin-bottom:10px;}.good p{margin:0;font-size:15px;color:var(--text-2);}
+.warn{background:var(--warn-bg);border:1px solid var(--warn-border);border-radius:12px;padding:24px 28px;margin:24px 0;}.warn-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#fb923c;margin-bottom:10px;}.warn p{margin:0;font-size:15px;color:var(--text-2);}
+.principle-list{display:flex;flex-direction:column;gap:12px;margin:24px 0;}.principle{background:var(--bg-2);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:0 12px 12px 0;padding:20px 24px;}.principle-title{font-size:15px;font-weight:500;color:var(--text);margin-bottom:6px;}.principle-desc{font-size:14px;color:var(--text-2);line-height:1.65;margin:0;}
+.code-block{background:#0d1117;border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:20px 24px;margin:24px 0;font-family:monospace;font-size:13px;color:#e6edf3;overflow-x:auto;line-height:1.7;white-space:pre;}
+.sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:var(--bg-2);border-top:1px solid var(--border-2);padding:14px 5%;display:flex;align-items:center;justify-content:space-between;gap:16px;backdrop-filter:blur(12px);}
+.sticky-bar-track{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}.sticky-bar-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.2s;width:0%;}
+.sticky-bar-label{font-size:12px;color:var(--text-3);white-space:nowrap;}
+.sticky-bar-btn{padding:10px 20px;border-radius:8px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;background:var(--accent);color:#fff;border:none;cursor:pointer;white-space:nowrap;transition:opacity 0.2s;display:none;}.sticky-bar-btn:hover{opacity:0.88;}
+.sticky-bar-reading{font-size:12px;color:var(--text-3);white-space:nowrap;}
+@media(max-width:900px){.page-wrapper{grid-template-columns:1fr;}.sidebar{display:none;}.content{padding:40px 24px 120px;}h1{font-size:38px;}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="courses.html" class="nav-back">← Prompt Engineering Mastery</a>
+    <div class="nav-divider"></div>
+    <span class="nav-label">Module 8</span>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">&#9728;</span></button>
+</nav>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+<div class="page-wrapper">
+<aside class="sidebar">
+  <div class="sidebar-course">Expert Track</div>
+  <div class="sidebar-course-name">Prompt Engineering Mastery</div>
+  <div class="sidebar-module"><a href="prompt-module-1.html" class="sidebar-module-link"><span class="sidebar-num">1</span>The Art and Science of Prompting</a></div>
+  <div class="sidebar-module"><a href="prompt-module-2.html" class="sidebar-module-link"><span class="sidebar-num">2</span>Instruction Clarity and Specificity</a></div>
+  <div class="sidebar-module"><a href="prompt-module-3.html" class="sidebar-module-link"><span class="sidebar-num">3</span>Role Assignment and Context Setting</a></div>
+  <div class="sidebar-module"><a href="prompt-module-4.html" class="sidebar-module-link"><span class="sidebar-num">4</span>Few-Shot and Chain-of-Thought</a></div>
+  <div class="sidebar-module"><a href="prompt-module-5.html" class="sidebar-module-link"><span class="sidebar-num">5</span>System Prompts and Meta-Instructions</a></div>
+  <div class="sidebar-module"><a href="prompt-module-6.html" class="sidebar-module-link"><span class="sidebar-num">6</span>Advanced Reasoning Techniques</a></div>
+  <div class="sidebar-module"><a href="prompt-module-7.html" class="sidebar-module-link"><span class="sidebar-num">7</span>Prompt Chaining and Decomposition</a></div>
+  <div class="sidebar-module"><a href="prompt-module-8.html" class="sidebar-module-link active"><span class="sidebar-num">8</span>Prompting for Code and Technical Tasks</a></div>
+  <div class="sidebar-module"><a href="prompt-module-9.html" class="sidebar-module-link"><span class="sidebar-num">9</span>Adversarial Prompting and Red-Teaming</a></div>
+  <div class="sidebar-module"><a href="prompt-module-10.html" class="sidebar-module-link"><span class="sidebar-num">10</span>Building Prompt Libraries</a></div>
+  <div class="sidebar-module"><a href="quiz-prompt.html" class="sidebar-module-link" style="color:var(--accent);margin-top:4px;"><span class="sidebar-num" style="background:var(--accent-dim);color:var(--accent);">&#10022;</span>Final Assessment</a></div>
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-progress-label"><span>Course progress</span><span style="color:var(--accent);">8 / 10</span></div>
+  <div class="sidebar-progress-track"><div class="sidebar-progress-fill" style="width:80%;"></div></div>
+</aside>
+<main>
+<div class="content">
+  <div class="module-eyebrow"><span class="module-tag">Module 8 · Expert Track</span><span class="module-meta">15 min read · Prompt Engineering Mastery</span></div>
+  <h1>Prompting for Code and Technical Tasks</h1>
+  <p class="intro-text">Code generation is where prompt engineering meets the highest-stakes domain of AI-assisted work — bad outputs in a document are an inconvenience, but bad code can be a silent bug in production. The techniques in this module transform AI from an unreliable autocomplete into a disciplined technical collaborator.</p>
+
+  <h2>The Anatomy of a Great Code Generation Prompt</h2>
+  <p>Most people ask for code the same way they would ask a search engine: "Python function to parse CSV." This produces generic, untestable code that rarely fits the actual context. Expert code prompting provides the model with the complete specification a professional engineer would need before writing a single line.</p>
+  <p>A complete code generation prompt includes: the programming language and version, the runtime environment and constraints, the function signature or interface you need, edge cases that must be handled, what should happen on failure, and any existing code or APIs it must integrate with. Think of it as writing a ticket in a well-run engineering team.</p>
+
+  <div class="code-block">Write a Python 3.11 function with this exact signature:
+
+def parse_webhook_payload(
+    raw_body: bytes,
+    signature: str,
+    secret: str,
+    tolerance_seconds: int = 300
+) -> dict:
+
+Requirements:
+- Verify the HMAC-SHA256 signature using the secret
+- Reject payloads where the timestamp is older than
+  tolerance_seconds (use the 't' field in the payload)
+- Parse and return the JSON body as a dict on success
+- Raise ValueError with descriptive messages on:
+  * Invalid signature
+  * Expired timestamp
+  * Malformed JSON
+  * Missing required fields ('t', 'data')
+
+Do NOT use any external libraries beyond hashlib and json.
+Include type hints throughout.
+After the function, write pytest unit tests covering:
+- Happy path with valid signature and fresh timestamp
+- Expired timestamp rejection
+- Invalid signature rejection
+- Missing 't' field rejection</div>
+
+  <p>Notice what this prompt does: it specifies the exact signature (no ambiguity about interface), the exact error conditions (no guessing about edge cases), the constraints (no external libraries), and it requests tests alongside the implementation. This prompt is closer to a specification document than a question.</p>
+
+  <h2>Test-Driven Prompting</h2>
+  <p>One of the most powerful code prompting techniques is to provide the tests first and ask the model to write code that passes them. This flips the typical AI coding workflow and has several profound advantages: you define the contract explicitly, the model has an objective success criterion to optimize against, and you immediately have a test suite regardless of how the implementation looks.</p>
+
+  <div class="code-block">Write a Python function called `merge_sorted_arrays` that makes
+all of the following tests pass. Do not modify the tests.
+
+import pytest
+
+def test_basic_merge():
+    assert merge_sorted_arrays([1,3,5], [2,4,6]) == [1,2,3,4,5,6]
+
+def test_empty_arrays():
+    assert merge_sorted_arrays([], []) == []
+    assert merge_sorted_arrays([1,2,3], []) == [1,2,3]
+    assert merge_sorted_arrays([], [1,2,3]) == [1,2,3]
+
+def test_duplicates():
+    assert merge_sorted_arrays([1,2,2,3], [2,3,4]) == [1,2,2,2,3,3,4]
+
+def test_single_elements():
+    assert merge_sorted_arrays([5], [3]) == [3,5]
+
+def test_already_sorted():
+    assert merge_sorted_arrays([1,2,3], [4,5,6]) == [1,2,3,4,5,6]
+
+def test_large_arrays():
+    a = list(range(0, 1000, 2))
+    b = list(range(1, 1001, 2))
+    result = merge_sorted_arrays(a, b)
+    assert result == list(range(1000))
+    assert len(result) == 1000
+
+Implement the most efficient algorithm and state its
+time and space complexity after the code.</div>
+
+  <div class="good">
+    <div class="good-label">Why Test-Driven Prompting Works</div>
+    <p>When you provide tests, you eliminate an entire category of misunderstanding. The model cannot produce technically valid but semantically wrong code because the tests define semantics precisely. The model also cannot take shortcuts on edge cases — they are all enumerated in the test suite.</p>
+  </div>
+
+  <h2>Debugging Prompts</h2>
+  <p>Debugging is one of the highest-leverage uses of AI assistance, but generic "what's wrong with this code?" prompts waste the model's ability. Effective debugging prompts provide: the code, the exact error message or unexpected behavior, the expected behavior, what you have already tried, and the relevant environment information.</p>
+
+  <div class="code-block">I have a bug I cannot figure out. Here is the context:
+
+LANGUAGE: Python 3.10
+ENVIRONMENT: FastAPI 0.104, running in Docker on Linux
+
+THE CODE:
+[paste the relevant function or module]
+
+THE ERROR (exact output from terminal):
+Traceback (most recent call last):
+  File "/app/api/routes.py", line 47, in process_request
+    result = await service.transform(data)
+  File "/app/services/transform.py", line 23, in transform
+    return {k: float(v) for k, v in data.items()}
+ValueError: could not convert string to float: 'N/A'
+
+EXPECTED BEHAVIOR:
+The transform function should skip or substitute 0.0 for any
+values that cannot be converted to float.
+
+WHAT I HAVE TRIED:
+- Checked that the data dict looks correct before the call
+- Confirmed the error is always on 'N/A' strings from the
+  upstream API
+
+Please: (1) explain the root cause, (2) provide a fix,
+(3) suggest any defensive improvements to make this more
+robust against other non-numeric strings in future.</div>
+
+  <h2>Code Review Prompts</h2>
+  <p>AI code review is most valuable when you structure it as a multi-dimensional analysis rather than a generic "review this code" request. Different review dimensions require different mental modes: security analysis requires adversarial thinking, performance requires measurement orientation, readability requires empathy for future maintainers. Combining them in one prompt produces shallow treatment of each.</p>
+
+  <div class="code-block">Review the following Python function for SECURITY vulnerabilities
+only. Do not comment on style, performance, or logic unless
+the issue is security-relevant.
+
+For each vulnerability found:
+1. Name the vulnerability class (e.g., SQL injection, path
+   traversal, SSRF)
+2. Quote the exact line(s) containing the vulnerability
+3. Explain the exploit scenario in plain language
+4. Provide a corrected version of those specific lines
+
+If you find no security vulnerabilities, say so explicitly
+and briefly explain why the main risk areas appear safe.
+
+CODE TO REVIEW:
+[paste code here]</div>
+
+  <p>Run separate review passes for security, performance, and readability. Each pass produces actionable, focused feedback rather than a diluted overview of everything.</p>
+
+  <h2>Documentation Generation</h2>
+  <p>Documentation generation is an underutilized application of prompt engineering. Models can produce docstrings, README sections, API reference documentation, and architectural explanations — but only if you specify the audience, format, and depth precisely.</p>
+
+  <div class="code-block">Generate complete documentation for the following Python module.
+
+TARGET AUDIENCE: Junior engineers who understand basic Python
+but are new to this codebase.
+
+REQUIRED SECTIONS:
+1. Module Overview (2-3 sentences: what it does, when to use it)
+2. Installation / Dependencies (list any non-stdlib dependencies)
+3. Quick Start (a minimal working example in a code block)
+4. Function Reference (for every public function: purpose,
+   parameters with types, return value, exceptions raised,
+   and one example call)
+5. Common Gotchas (edge cases or non-obvious behaviors that
+   junior engineers frequently get wrong)
+
+FORMAT: GitHub-flavored Markdown
+
+MODULE CODE:
+[paste module here]</div>
+
+  <h2>Explaining Complex Codebases</h2>
+  <p>When onboarding to an unfamiliar codebase or trying to understand inherited legacy code, prompt engineering turns what would take days of archaeology into hours of structured analysis. The key is to request a hierarchical explanation: architecture first, then modules, then specific functions — never the other way around.</p>
+
+  <div class="code-block">I am a new engineer joining this project. Explain this codebase
+to me at three levels:
+
+LEVEL 1 — ARCHITECTURE (200 words)
+What does this system do overall? What are its main components?
+What is the data flow from input to output?
+
+LEVEL 2 — KEY MODULES (bullet list)
+For each major file or module in the code I've pasted:
+- What is its single responsibility?
+- What does it depend on?
+- What depends on it?
+
+LEVEL 3 — NON-OBVIOUS PATTERNS
+What design patterns, conventions, or architectural decisions
+would confuse a competent engineer who hasn't seen this specific
+codebase before? What do I need to know to avoid breaking things?
+
+CODEBASE:
+[paste relevant files]</div>
+
+  <h2>Domain-Specific Technical Prompting</h2>
+  <p>Technical prompting extends beyond general-purpose code into domain-specific contexts: data engineering, ML pipelines, infrastructure-as-code, database query optimization, and more. Each domain has its own vocabulary, failure modes, and performance considerations that a well-crafted prompt can activate.</p>
+  <p>The principle is the same: give the model enough domain context to reason like a specialist, not just write syntactically valid code. For SQL optimization, include the execution plan. For ML prompts, include the dataset shape and target metric. For infrastructure code, include the cloud provider, region constraints, and cost sensitivity.</p>
+
+  <div class="code-block">Optimize this PostgreSQL query for a table with 50 million rows.
+The query currently takes 8-12 seconds. Target: under 500ms.
+
+CURRENT QUERY:
+SELECT u.email, COUNT(o.id) as order_count,
+       SUM(o.total_cents) as lifetime_value
+FROM users u
+LEFT JOIN orders o ON o.user_id = u.id
+WHERE u.created_at > '2022-01-01'
+  AND o.status = 'completed'
+GROUP BY u.id, u.email
+ORDER BY lifetime_value DESC
+LIMIT 100;
+
+CURRENT INDEXES:
+- users: primary key (id), index on created_at
+- orders: primary key (id), index on user_id
+
+EXPLAIN ANALYZE OUTPUT:
+[paste output here]
+
+Please:
+1. Explain what is causing the slow performance
+2. Suggest index changes with exact CREATE INDEX statements
+3. Suggest query rewrites if applicable
+4. Estimate the expected improvement for each suggestion</div>
+
+  <div class="callout">
+    <div class="callout-label">Summary</div>
+    <p>Code prompting rewards specificity above all else. Provide the language, version, constraints, signature, and edge cases upfront. Use test-driven prompting to define the contract precisely. Structure debugging prompts with the full error context. Run code reviews as focused single-dimension passes. For documentation and explanation tasks, specify audience, format, and depth explicitly. In domain-specific contexts, include the technical metadata (execution plans, dataset shapes, infrastructure constraints) that a specialist would need to reason correctly.</p>
+  </div>
+</div>
+</main>
+</div>
+<div class="sticky-bar">
+  <div class="sticky-bar-reading" id="sticky-reading">Read to the end to unlock the next module</div>
+  <div class="sticky-bar-track"><div class="sticky-bar-fill" id="sticky-fill"></div></div>
+  <div class="sticky-bar-label" id="sticky-label">0%</div>
+  <button class="sticky-bar-btn" id="sticky-btn" onclick="completeAndNext()">Module 9: Adversarial Prompting and Red-Teaming &rarr;</button>
+</div>
+<script type="module">
+import{initializeApp}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import{getAuth,onAuthStateChanged}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import{getFirestore,doc,setDoc,arrayUnion}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+const app=initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+const auth=getAuth(app);const db=getFirestore(app);let currentUser=null;
+onAuthStateChanged(auth,u=>{currentUser=u;});
+window.toggleTheme=function(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='&#9790;'):(h.setAttribute('data-theme','dark'),i.textContent='&#9728;');};
+window.addEventListener('scroll',()=>{const d=document.documentElement,s=d.scrollTop||document.body.scrollTop,t=d.scrollHeight-d.clientHeight;document.getElementById('progress').style.width=(s/t*100)+'%';});
+let unlocked=false;
+function updateScroll(){const pct=Math.min(100,Math.round(((window.scrollY+window.innerHeight)/document.documentElement.scrollHeight)*100));const fill=document.getElementById('sticky-fill'),label=document.getElementById('sticky-label'),btn=document.getElementById('sticky-btn'),reading=document.getElementById('sticky-reading');if(fill)fill.style.width=pct+'%';if(label)label.textContent=pct+'%';if(pct>=95&&!unlocked){unlocked=true;if(btn)btn.style.display='block';if(reading)reading.style.display='none';if(fill)fill.style.background='#22c55e';if(label)label.style.color='#22c55e';}}
+window.addEventListener('scroll',updateScroll);updateScroll();
+window.completeAndNext=async function(){if(currentUser){try{await setDoc(doc(db,'users',currentUser.uid),{promptModules:arrayUnion('m8')},{merge:true});}catch(e){}}window.location.href='prompt-module-9.html';};
+</script>
+</body>
+</html>

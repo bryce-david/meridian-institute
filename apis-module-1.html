@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 1: API Fundamentals for AI Builders — Building with AI APIs — Meridian Institute of AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#0F4C81;--accent-dim:rgba(15,76,129,0.1);--accent-dim2:rgba(15,76,129,0.05);--nav-bg:rgba(8,8,8,0.9);--callout-bg:rgba(15,76,129,0.07);--callout-border:rgba(15,76,129,0.25);--good-bg:rgba(34,197,94,0.07);--good-border:rgba(34,197,94,0.2);--warn-bg:rgba(251,146,60,0.07);--warn-border:rgba(251,146,60,0.2);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#1E40AF;--accent-dim:rgba(30,64,175,0.08);--accent-dim2:rgba(30,64,175,0.04);--nav-bg:rgba(250,250,248,0.9);--callout-bg:rgba(30,64,175,0.05);--callout-border:rgba(30,64,175,0.2);--good-bg:rgba(22,163,74,0.06);--good-border:rgba(22,163,74,0.2);--warn-bg:rgba(234,88,12,0.05);--warn-border:rgba(234,88,12,0.2);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;overflow-x:hidden;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.7;overflow-x:hidden;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}
+  .nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}
+  .nav-back{font-size:13px;color:var(--text-2);text-decoration:none;transition:color 0.2s;}
+  .nav-back:hover{color:var(--text);}
+  .nav-label{font-size:13px;color:var(--text-3);}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;transition:all 0.2s;}
+  .theme-toggle:hover{background:var(--bg-3);color:var(--text);}
+  .progress-bar{position:fixed;top:60px;left:0;right:0;z-index:99;height:2px;background:var(--border);}
+  .progress-fill{height:100%;background:var(--accent);width:0%;transition:width 0.1s;}
+  .page-wrapper{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:100vh;padding-top:62px;overflow:hidden;}
+  .sidebar{position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto;border-right:1px solid var(--border);padding:32px 24px;background:var(--bg-2);}
+  .sidebar-course{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;}
+  .sidebar-course-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+  .sidebar-module{margin-bottom:4px;}
+  .sidebar-module-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:13px;color:var(--text-2);text-decoration:none;transition:all 0.2s;line-height:1.4;}
+  .sidebar-module-link:hover{background:var(--bg-3);color:var(--text);}
+  .sidebar-module-link.active{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-num{font-size:11px;font-weight:500;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--bg-4);color:var(--text-3);}
+  .sidebar-module-link.active .sidebar-num{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-divider{height:1px;background:var(--border);margin:20px 0;}
+  .sidebar-progress-label{font-size:12px;color:var(--text-3);margin-bottom:8px;display:flex;justify-content:space-between;}
+  .sidebar-progress-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sidebar-progress-fill{height:100%;width:10%;background:var(--accent);border-radius:2px;}
+  main{display:block;min-width:0;overflow:hidden;}
+  .content{max-width:760px;width:100%;padding:60px 64px 140px;margin:0 auto;}
+  .module-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+  .module-tag{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(15,76,129,0.2);padding:4px 12px;border-radius:100px;}
+  .module-meta{font-size:12px;color:var(--text-3);}
+  h1{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1.05;letter-spacing:-0.02em;color:var(--text);margin-bottom:24px;}
+  .intro-text{font-size:19px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+  h2{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:400;color:var(--text);margin:52px 0 18px;line-height:1.2;}
+  h3{font-size:16px;font-weight:500;color:var(--text);margin:32px 0 12px;}
+  p{font-size:16px;font-weight:300;color:var(--text-2);line-height:1.8;margin-bottom:20px;}
+  strong{font-weight:500;color:var(--text);}
+  em{font-style:italic;}
+  ul,ol{margin:0 0 20px 22px;color:var(--text-2);}
+  li{font-size:16px;font-weight:300;line-height:1.8;margin-bottom:8px;}
+  .callout{background:var(--callout-bg);border:1px solid var(--callout-border);border-radius:12px;padding:24px 28px;margin:32px 0;}
+  .callout-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+  .callout p{margin:0;font-size:15px;color:var(--text-2);}
+  .callout p+p{margin-top:12px;}
+  .good{background:var(--good-bg);border:1px solid var(--good-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .good-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#22c55e;margin-bottom:10px;}
+  .good p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn{background:var(--warn-bg);border:1px solid var(--warn-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .warn-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#fb923c;margin-bottom:10px;}
+  .warn p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn p+p{margin-top:12px;}
+  .analogy{background:var(--bg-2);border:1px solid var(--border);border-radius:12px;padding:28px;margin:28px 0;}
+  .analogy-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-3);margin-bottom:12px;}
+  .analogy p{margin:0;font-size:15px;color:var(--text-2);}
+  .principle-list{display:flex;flex-direction:column;gap:12px;margin:24px 0;}
+  .principle{background:var(--bg-2);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:0 12px 12px 0;padding:20px 24px;}
+  .principle-title{font-size:15px;font-weight:500;color:var(--text);margin-bottom:6px;}
+  .principle-desc{font-size:14px;color:var(--text-2);line-height:1.65;margin:0;}
+  .code-block{background:#0d1117;border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:20px 24px;margin:24px 0;font-family:monospace;font-size:13px;color:#e6edf3;overflow-x:auto;line-height:1.7;white-space:pre;}
+  .comparison-wrapper{overflow-x:auto;-webkit-overflow-scrolling:touch;width:100%;margin:28px 0;}
+  table{width:100%;border-collapse:collapse;font-size:14px;min-width:480px;}
+  th{text-align:left;padding:12px 16px;font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-3);border-bottom:1px solid var(--border-2);}
+  td{padding:14px 16px;border-bottom:1px solid var(--border);color:var(--text-2);line-height:1.6;vertical-align:top;}
+  tr:last-child td{border-bottom:none;}
+  td:first-child{color:var(--text);font-weight:500;width:30%;}
+  .sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:var(--bg-2);border-top:1px solid var(--border-2);padding:14px 5%;display:flex;align-items:center;justify-content:space-between;gap:16px;backdrop-filter:blur(12px);}
+  .sticky-bar-track{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sticky-bar-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.2s;width:0%;}
+  .sticky-bar-label{font-size:12px;color:var(--text-3);white-space:nowrap;min-width:60px;text-align:right;}
+  .sticky-bar-btn{padding:10px 20px;border-radius:8px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;background:var(--accent);color:#fff;border:none;cursor:pointer;white-space:nowrap;transition:opacity 0.2s;display:none;}
+  .sticky-bar-btn:hover{opacity:0.88;}
+  .sticky-bar-reading{font-size:12px;color:var(--text-3);white-space:nowrap;}
+  @media(max-width:900px){.page-wrapper{grid-template-columns:1fr;}.sidebar{display:none;}.content{padding:40px 24px 120px;}h1{font-size:38px;}}
+  @media(max-width:600px){.content{padding:28px 16px 120px;}h1{font-size:30px;}h2{font-size:24px;}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="courses.html" class="nav-back">← Building with AI APIs</a>
+    <div class="nav-divider"></div>
+    <span class="nav-label">Module 1</span>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">☀</span></button>
+</nav>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+
+<div class="page-wrapper">
+<aside class="sidebar">
+  <div class="sidebar-course">Expert Track</div>
+  <div class="sidebar-course-name">Building with AI APIs</div>
+  <div class="sidebar-module"><a href="apis-module-1.html" class="sidebar-module-link active"><span class="sidebar-num">1</span>API Fundamentals</a></div>
+  <div class="sidebar-module"><a href="apis-module-2.html" class="sidebar-module-link"><span class="sidebar-num">2</span>Your First API Call</a></div>
+  <div class="sidebar-module"><a href="apis-module-3.html" class="sidebar-module-link"><span class="sidebar-num">3</span>Chat Completions in Depth</a></div>
+  <div class="sidebar-module"><a href="apis-module-4.html" class="sidebar-module-link"><span class="sidebar-num">4</span>Tokens and Cost Optimization</a></div>
+  <div class="sidebar-module"><a href="apis-module-5.html" class="sidebar-module-link"><span class="sidebar-num">5</span>Structured Outputs</a></div>
+  <div class="sidebar-module"><a href="apis-module-6.html" class="sidebar-module-link"><span class="sidebar-num">6</span>Streaming Responses</a></div>
+  <div class="sidebar-module"><a href="apis-module-7.html" class="sidebar-module-link"><span class="sidebar-num">7</span>Embeddings and Semantic Search</a></div>
+  <div class="sidebar-module"><a href="apis-module-8.html" class="sidebar-module-link"><span class="sidebar-num">8</span>Function Calling and Tool Use</a></div>
+  <div class="sidebar-module"><a href="apis-module-9.html" class="sidebar-module-link"><span class="sidebar-num">9</span>Production-Ready AI Apps</a></div>
+  <div class="sidebar-module"><a href="apis-module-10.html" class="sidebar-module-link"><span class="sidebar-num">10</span>Multi-Provider Strategies</a></div>
+  <div class="sidebar-module"><a href="quiz-apis.html" class="sidebar-module-link" style="color:var(--accent);margin-top:4px;"><span class="sidebar-num" style="background:var(--accent-dim);color:var(--accent);">✦</span>Final Assessment</a></div>
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-progress-label"><span>Course progress</span><span style="color:var(--accent);">1 / 10</span></div>
+  <div class="sidebar-progress-track"><div class="sidebar-progress-fill"></div></div>
+</aside>
+
+<main>
+<div class="content">
+  <div class="module-eyebrow"><span class="module-tag">Module 1</span><span class="module-meta">22 min read · Building with AI APIs</span></div>
+  <h1>API Fundamentals for AI Builders</h1>
+
+  <p class="intro-text">Every AI application you will ever build rests on the same foundation: the ability to send a request to a remote system and receive a structured response. Understanding that foundation deeply — not just at the surface level of "paste API key, get output" — is what separates builders who can debug, optimize, and scale their applications from those who are permanently confused when things go wrong. This module covers everything from HTTP basics to the full landscape of AI API providers.</p>
+
+  <h2>What is an API?</h2>
+  <p>An <strong>Application Programming Interface</strong> is a defined contract between two software systems. One system (the client) makes requests in a specified format; the other system (the server) processes those requests and returns responses in a specified format. The contract defines what requests are valid, what parameters they accept, and what responses look like. Everything outside that contract is the server's internal business — the client doesn't need to know how the computation is performed, only that it returns the right result.</p>
+  <p>Think of an API as a restaurant menu. The menu defines exactly what you can order and what you will receive. You don't need to know how the kitchen works to order effectively. The chef doesn't need to explain their techniques — they just need to deliver what the menu promises. If you order outside the menu (an invalid API request), you get rejected, not a creative improvisation.</p>
+  <p>AI APIs follow this same pattern but with a specific focus: they expose the capabilities of large machine learning models over the network, so you can use billion-parameter models without running them yourself. The model computation happens on the provider's servers — you simply send your input and receive the model's output.</p>
+
+  <h2>How HTTP and REST work</h2>
+  <p><strong>HTTP</strong> (HyperText Transfer Protocol) is the language of the web and the foundation of nearly every AI API. When you make an API call, you're sending an HTTP message from your program to a server somewhere. HTTP defines how messages are structured and what verbs describe the type of operation you're performing.</p>
+  <p>The core HTTP verbs are: <strong>GET</strong> (retrieve a resource), <strong>POST</strong> (create or process something), <strong>PUT</strong> (replace a resource), <strong>PATCH</strong> (partially update a resource), and <strong>DELETE</strong> (remove a resource). AI API calls are almost always POST requests — you're sending data to be processed and receiving a result.</p>
+  <p><strong>REST</strong> (Representational State Transfer) is a set of architectural conventions layered on top of HTTP. RESTful APIs use URLs to identify resources, HTTP verbs to describe operations, and HTTP status codes to indicate outcomes. For example, a REST AI API might have a URL like <code>https://api.openai.com/v1/chat/completions</code> — the URL identifies what you're requesting (a chat completion), and POST is the verb used to submit the request body.</p>
+
+  <div class="callout">
+    <div class="callout-label">The Request-Response Model</div>
+    <p>Every API interaction follows the same cycle: your program builds a request (method + URL + headers + body), sends it to the server, and waits. The server processes the request and sends back a response (status code + headers + body). Your program reads the response and acts on it. Everything in AI API development is a variation of this cycle.</p>
+  </div>
+
+  <h2>The anatomy of an HTTP request</h2>
+  <p>An HTTP request has four components that matter for AI API work:</p>
+  <p><strong>1. The URL (endpoint):</strong> Where to send the request. For OpenAI's chat API, this is <code>https://api.openai.com/v1/chat/completions</code>. The URL encodes which service and which specific capability you're calling.</p>
+  <p><strong>2. The HTTP method:</strong> POST for AI completions. This tells the server what kind of operation you're performing.</p>
+  <p><strong>3. Headers:</strong> Metadata attached to the request. For AI APIs, the two most important headers are <code>Authorization</code> (carrying your API key) and <code>Content-Type: application/json</code> (telling the server your body is JSON).</p>
+  <p><strong>4. The body:</strong> The actual payload. For AI APIs, this is a JSON object describing your request — the model to use, the messages, and any configuration parameters.</p>
+
+  <h2>JSON as the universal language</h2>
+  <p><strong>JSON</strong> (JavaScript Object Notation) is the format that virtually every AI API uses for both request bodies and response bodies. It's a human-readable text format that represents structured data as key-value pairs and arrays. You don't need to know JavaScript to use JSON — it's just a data format.</p>
+  <p>JSON has six data types: strings (text in double quotes), numbers, booleans (true/false), null, objects (key-value pairs in curly braces), and arrays (ordered lists in square brackets). AI API requests and responses are deeply nested JSON objects that combine all of these types.</p>
+  <p>A minimal OpenAI chat completion request body looks like this:</p>
+
+  <div class="code-block">{
+  "model": "gpt-4o",
+  "messages": [
+    {
+      "role": "user",
+      "content": "Explain what an API is in one sentence."
+    }
+  ],
+  "temperature": 0.7,
+  "max_tokens": 150
+}</div>
+
+  <p>Every key is a string. The value of "messages" is an array of objects. The value of "temperature" is a number. This structure is consistent across all providers, though the specific keys differ. Once you understand JSON deeply, learning any AI provider's API becomes much faster.</p>
+
+  <h2>Authentication patterns</h2>
+  <p>AI APIs need to know who is making requests for two reasons: billing (they need to charge you) and rate limiting (they need to enforce fair use). Authentication is how they verify your identity. There are several patterns used across the AI API landscape.</p>
+
+  <h3>API Keys</h3>
+  <p>The most common pattern. You register for a provider, they issue you a long random string (the API key), and you include it in every request. The server looks up the key in its database to identify you. API keys are typically sent in the Authorization header:</p>
+  <div class="code-block">Authorization: Bearer sk-proj-abc123yourApiKeyHere...</div>
+  <p>The word "Bearer" is part of the HTTP Bearer Token standard — it tells the server that what follows is a credential that "bears" authority. OpenAI, Anthropic, Google Gemini, and most other AI providers use this pattern.</p>
+
+  <h3>OAuth 2.0</h3>
+  <p>A more complex protocol used when applications need to act on behalf of users, not just themselves. OAuth involves a multi-step flow where users grant your application specific permissions. For simple AI API integrations where you're calling the API with your own credentials (not on behalf of end users), you don't need OAuth — API keys suffice.</p>
+
+  <div class="warn">
+    <div class="warn-label">Never expose API keys in client-side code</div>
+    <p><strong>API keys are secrets.</strong> Anyone who has your API key can make requests billed to your account. Never put API keys in browser-side JavaScript, mobile app binaries, or public repositories. We'll cover secure key management in depth in the next module, but the rule is simple: API keys belong on your server, in environment variables, not anywhere a user could extract them.</p>
+  </div>
+
+  <h2>Rate limits and quotas</h2>
+  <p>AI providers enforce limits on how much you can use their APIs, for two practical reasons: protecting their infrastructure from abuse and ensuring fair access across customers. Understanding rate limits is essential for building reliable applications.</p>
+  <p>There are typically two types of limits. <strong>Rate limits</strong> cap how many requests you can make per unit of time (requests per minute, tokens per minute). If you hit them, the server returns a 429 error and you must wait before retrying. <strong>Quotas</strong> cap your total usage per billing period — you might have a monthly token limit before you need to upgrade your plan.</p>
+  <p>Rate limits are almost always expressed in two dimensions simultaneously: <strong>Requests Per Minute (RPM)</strong> and <strong>Tokens Per Minute (TPM)</strong>. Even if you're well under your RPM limit, if you're sending very long prompts and receiving very long responses, you might hit your TPM limit. Both matter.</p>
+
+  <div class="comparison-wrapper">
+  <table>
+    <tr><th>Provider Tier</th><th>Typical RPM</th><th>Typical TPM</th><th>Behavior at Limit</th></tr>
+    <tr><td>Free / Starter</td><td>3–60 RPM</td><td>40K–60K TPM</td><td>HTTP 429, retry-after header</td></tr>
+    <tr><td>Pay-as-you-go Tier 1</td><td>500–3,500 RPM</td><td>90K–200K TPM</td><td>HTTP 429, exponential backoff</td></tr>
+    <tr><td>Higher Tiers</td><td>5,000–10,000 RPM</td><td>800K–2M+ TPM</td><td>Same, limits negotiable</td></tr>
+  </table>
+  </div>
+
+  <h2>HTTP status codes and error handling</h2>
+  <p>HTTP status codes are 3-digit numbers that summarize the outcome of your request. Understanding them is crucial for handling errors gracefully in production applications.</p>
+  <p>The major categories: <strong>2xx</strong> (success — your request worked), <strong>4xx</strong> (client error — something wrong with your request), <strong>5xx</strong> (server error — the provider's system had a problem).</p>
+
+  <div class="principle-list">
+    <div class="principle">
+      <div class="principle-title">200 OK</div>
+      <div class="principle-desc">Your request was successful. The response body contains the model's output. This is the happy path.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">400 Bad Request</div>
+      <div class="principle-desc">Your request was malformed — missing a required field, invalid parameter value, or malformed JSON. Fix your request before retrying.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">401 Unauthorized</div>
+      <div class="principle-desc">Your API key is missing, invalid, or expired. Check your authentication headers. Don't retry automatically — this won't fix itself.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">429 Too Many Requests</div>
+      <div class="principle-desc">You've hit a rate limit. The response usually includes a Retry-After header. Use exponential backoff — wait, then retry with increasing delays.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">500 / 503 Server Error</div>
+      <div class="principle-desc">The provider's infrastructure has a problem. These are usually transient. Implement retry logic with backoff for 5xx errors.</div>
+    </div>
+  </div>
+
+  <h2>The AI API landscape</h2>
+  <p>Multiple providers offer powerful language model APIs, each with different strengths, pricing models, and capabilities. Understanding the landscape helps you make informed decisions about which provider to use for which use case — and the multi-provider strategies we'll cover in Module 10 become much more tractable when you understand what each provider offers.</p>
+
+  <h3>OpenAI</h3>
+  <p>The pioneering provider and market leader. OpenAI's API powers GPT-4o, o1, and o3 models. Their API design has become the de facto standard that most other providers have adopted or are compatible with. Strong ecosystem, excellent documentation, and the largest community means the most available examples and tooling. Most expensive among the major providers at the frontier tier.</p>
+
+  <h3>Anthropic</h3>
+  <p>Maker of the Claude model family. Claude models are known for strong reasoning, long context windows (up to 200K tokens), and following complex instructions carefully. Anthropic offers the Messages API, which has a slightly different structure from OpenAI's but covers the same functionality. Strong emphasis on safety and predictable behavior makes it popular for enterprise applications.</p>
+
+  <h3>Google Gemini</h3>
+  <p>Google's AI API offering, based on the Gemini model family. Gemini 1.5 Pro offers extremely long context windows (up to 1M tokens) and strong multimodal capabilities (text, image, video, audio). Available through Google AI Studio (simpler) or Vertex AI (enterprise-grade). Competitive pricing especially for output tokens.</p>
+
+  <h3>Open-source alternatives via Ollama and Together</h3>
+  <p>Not every use case requires paying a cloud provider. Open-source models — Llama 3, Mistral, Qwen, Phi-3 — have closed much of the capability gap with frontier commercial models and can be run several ways:</p>
+  <ul>
+    <li><strong>Ollama:</strong> Runs models locally on your machine. Free after hardware cost, great for development and privacy-sensitive use cases. Point it at localhost and use the OpenAI-compatible API.</li>
+    <li><strong>Together AI:</strong> Hosts open-source models in the cloud with an API. Often cheaper than OpenAI for models of similar capability tier. OpenAI-compatible endpoint makes switching easy.</li>
+    <li><strong>Groq:</strong> Custom LPU hardware delivers extremely fast inference for open-source models. Great for latency-sensitive applications.</li>
+  </ul>
+
+  <div class="good">
+    <div class="good-label">Choosing a starting provider</div>
+    <p>For learning and prototyping, start with OpenAI or Anthropic — their documentation is excellent and the community support is largest. Once you understand the patterns, migrating to alternative providers or open-source models is straightforward. This course focuses on concepts that apply across providers, using OpenAI examples for familiarity.</p>
+  </div>
+
+  <h2>The request-response cycle in detail</h2>
+  <p>Let's trace what actually happens when you make an AI API call, step by step. This mental model will serve you whenever you're debugging unexpected behavior.</p>
+  <p><strong>Step 1: Your code builds a request.</strong> It assembles the URL, headers (including your API key), and a JSON body describing your parameters — model name, messages, temperature, max tokens.</p>
+  <p><strong>Step 2: Your HTTP client sends the request.</strong> Under the hood, it opens a TCP connection to the server, sends the HTTP request over TLS (encrypted), and waits for a response.</p>
+  <p><strong>Step 3: The API server authenticates you.</strong> It checks your API key against its database, verifies you're within your rate limits, and validates the request body against its schema.</p>
+  <p><strong>Step 4: The model generates a response.</strong> The server routes your request to the model inference infrastructure. The model processes your input and generates output tokens one at a time. For non-streaming requests, the server accumulates all tokens before responding.</p>
+  <p><strong>Step 5: The server sends the response.</strong> A JSON object arrives with the completion text, token usage counts, finish reason, and other metadata.</p>
+  <p><strong>Step 6: Your code parses and uses the response.</strong> You extract the text from the nested JSON, check the finish reason, and use the output in your application.</p>
+
+  <div class="callout">
+    <div class="callout-label">Latency characteristics</div>
+    <p>AI API calls are slow compared to most web API calls — typically 1-10 seconds for non-streaming completions, depending on output length. This is dominated by model inference time, not network latency. Plan your UX accordingly: loading states, streaming (Module 6), and async processing are all important tools for managing this inherent latency.</p>
+  </div>
+
+  <h2>Versioning and API stability</h2>
+  <p>AI APIs evolve rapidly. Providers deprecate old models, introduce new ones, and occasionally change API schemas. The "v1" in most AI API URLs (e.g., <code>/v1/chat/completions</code>) is a versioning mechanism — it promises that requests to this version of the API will continue to work even as the provider introduces changes in future versions.</p>
+  <p>However, model behavior is not as stable as the API schema. Even with the same model name and parameters, model responses can change when providers update a model. Build your applications to handle variation in AI outputs rather than expecting deterministic consistency. Test regularly against production prompts and monitor output quality over time.</p>
+  <p>Best practices for API versioning: pin specific model versions where output consistency matters (e.g., <code>gpt-4o-2024-08-06</code> rather than just <code>gpt-4o</code>), read provider changelogs and deprecation notices, and build your integration layer to make model switching easy.</p>
+
+  <h2>API keys across providers: a practical overview</h2>
+  <p>Each provider issues API keys through their developer portal. Here's how to get started with the main providers:</p>
+  <ul>
+    <li><strong>OpenAI:</strong> platform.openai.com → API keys section. Keys start with <code>sk-</code></li>
+    <li><strong>Anthropic:</strong> console.anthropic.com → API keys. Keys start with <code>sk-ant-</code></li>
+    <li><strong>Google Gemini:</strong> aistudio.google.com → "Get API key". For Vertex AI, use service account credentials.</li>
+    <li><strong>Together AI:</strong> api.together.xyz → Settings → API Keys</li>
+    <li><strong>Groq:</strong> console.groq.com → API Keys</li>
+  </ul>
+  <p>You can and should get API keys from multiple providers. As you'll see in Module 10, a multi-provider strategy offers resilience, cost optimization, and model capability diversity. Getting keys now (most providers have free tiers) lets you follow along with examples across the course.</p>
+
+  <div class="analogy">
+    <div class="analogy-label">Mental model</div>
+    <p>Think of AI API providers as different cloud services for compute. Just as you might use AWS for some infrastructure and GCP for others based on pricing and features, you'll likely use different AI providers for different tasks. The good news: the underlying protocol (HTTP + JSON) and the conceptual model (request messages, receive completion) are the same across providers. Learning one deeply makes all others immediately accessible.</p>
+  </div>
+
+  <h2>What you need to know before module 2</h2>
+  <p>With the foundation in place, here's the conceptual checklist you should feel confident about:</p>
+  <ul>
+    <li>An API is a contract between client and server, defining valid requests and responses</li>
+    <li>AI APIs use HTTP POST requests with JSON bodies to send prompts and receive completions</li>
+    <li>Authentication is handled via API keys sent in the Authorization header as Bearer tokens</li>
+    <li>Rate limits (RPM and TPM) are enforced by all providers — 429 errors require backoff and retry</li>
+    <li>HTTP status codes indicate what went wrong: 4xx = your fault, 5xx = their fault</li>
+    <li>The major providers are OpenAI, Anthropic, Google Gemini, and open-source options via Ollama/Together</li>
+  </ul>
+
+  <div class="good">
+    <div class="good-label">Up next: writing your first real API call</div>
+    <p>In Module 2, you'll go from theory to working code. You'll set up your Python environment, securely manage your API key, and make your first real completion request — seeing exactly what the response object looks like and how to use it.</p>
+  </div>
+
+</div>
+</main>
+</div>
+
+<div class="sticky-bar" id="sticky-bar">
+  <div class="sticky-bar-reading" id="sticky-reading">Read to the end to unlock the next module</div>
+  <div class="sticky-bar-track"><div class="sticky-bar-fill" id="sticky-fill"></div></div>
+  <div class="sticky-bar-label" id="sticky-label">0%</div>
+  <button class="sticky-bar-btn" id="sticky-btn" onclick="completeAndNext()">Module 2: Your First API Call →</button>
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import { getFirestore, doc, setDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  const app=initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+  const auth = getAuth(app); const db = getFirestore(app);
+  let currentUser = null;
+  onAuthStateChanged(auth, u => { currentUser = u; });
+
+  window.toggleTheme=function(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='☾'):(h.setAttribute('data-theme','dark'),i.textContent='☀');};
+  window.addEventListener('scroll',()=>{const d=document.documentElement,s=d.scrollTop||document.body.scrollTop,t=d.scrollHeight-d.clientHeight;document.getElementById('progress').style.width=(s/t*100)+'%';});
+
+  let unlocked=false;
+  function updateScrollProgress(){
+    const scrolled=window.scrollY+window.innerHeight;
+    const total=document.documentElement.scrollHeight;
+    const pct=Math.min(100,Math.round((scrolled/total)*100));
+    const fill=document.getElementById('sticky-fill');
+    const label=document.getElementById('sticky-label');
+    const btn=document.getElementById('sticky-btn');
+    const reading=document.getElementById('sticky-reading');
+    if(fill)fill.style.width=pct+'%';
+    if(label)label.textContent=pct+'%';
+    if(pct>=95&&!unlocked){
+      unlocked=true;
+      if(btn)btn.style.display='block';
+      if(reading)reading.style.display='none';
+      if(fill)fill.style.background='#22c55e';
+      if(label)label.style.color='#22c55e';
+    }
+  }
+  window.addEventListener('scroll',updateScrollProgress);
+  updateScrollProgress();
+
+  window.completeAndNext=async function(){
+    if(currentUser){
+      try{
+        await setDoc(doc(db,'users',currentUser.uid),{
+          apisModules: arrayUnion('m1')
+        }, { merge: true });
+      }catch(e){ /* progress save best-effort */ }
+    }
+    window.location.href='apis-module-2.html';
+  };
+</script>
+</body>
+</html>

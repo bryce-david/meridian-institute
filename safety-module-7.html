@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 7: Emergent Capabilities — AI Safety and Alignment — Meridian Institute of AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#7F1D1D;--accent-dim:rgba(127,29,29,0.1);--accent-dim2:rgba(127,29,29,0.05);--nav-bg:rgba(8,8,8,0.9);--callout-bg:rgba(127,29,29,0.07);--callout-border:rgba(127,29,29,0.25);--good-bg:rgba(34,197,94,0.07);--good-border:rgba(34,197,94,0.2);--warn-bg:rgba(251,146,60,0.07);--warn-border:rgba(251,146,60,0.2);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#991B1B;--accent-dim:rgba(153,27,27,0.08);--accent-dim2:rgba(153,27,27,0.04);--nav-bg:rgba(250,250,248,0.9);--callout-bg:rgba(153,27,27,0.05);--callout-border:rgba(153,27,27,0.2);--good-bg:rgba(22,163,74,0.06);--good-border:rgba(22,163,74,0.2);--warn-bg:rgba(234,88,12,0.05);--warn-border:rgba(234,88,12,0.2);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;overflow-x:hidden;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.7;overflow-x:hidden;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}
+  .nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}
+  .nav-back{font-size:13px;color:var(--text-2);text-decoration:none;transition:color 0.2s;}
+  .nav-back:hover{color:var(--text);}
+  .nav-label{font-size:13px;color:var(--text-3);}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;transition:all 0.2s;}
+  .theme-toggle:hover{background:var(--bg-3);color:var(--text);}
+  .progress-bar{position:fixed;top:60px;left:0;right:0;z-index:99;height:2px;background:var(--border);}
+  .progress-fill{height:100%;background:var(--accent);width:0%;transition:width 0.1s;}
+  .page-wrapper{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:100vh;padding-top:62px;overflow:hidden;}
+  .sidebar{position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto;border-right:1px solid var(--border);padding:32px 24px;background:var(--bg-2);}
+  .sidebar-course{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;}
+  .sidebar-course-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+  .sidebar-module{margin-bottom:4px;}
+  .sidebar-module-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:13px;color:var(--text-2);text-decoration:none;transition:all 0.2s;line-height:1.4;}
+  .sidebar-module-link:hover{background:var(--bg-3);color:var(--text);}
+  .sidebar-module-link.active{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-num{font-size:11px;font-weight:500;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--bg-4);color:var(--text-3);}
+  .sidebar-module-link.active .sidebar-num{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-divider{height:1px;background:var(--border);margin:20px 0;}
+  .sidebar-progress-label{font-size:12px;color:var(--text-3);margin-bottom:8px;display:flex;justify-content:space-between;}
+  .sidebar-progress-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sidebar-progress-fill{height:100%;width:70%;background:var(--accent);border-radius:2px;}
+  main{display:block;min-width:0;overflow:hidden;}
+  .content{max-width:760px;width:100%;padding:60px 64px 140px;margin:0 auto;}
+  .module-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+  .module-tag{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(127,29,29,0.2);padding:4px 12px;border-radius:100px;}
+  .module-meta{font-size:12px;color:var(--text-3);}
+  h1{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1.05;letter-spacing:-0.02em;color:var(--text);margin-bottom:24px;}
+  .intro-text{font-size:19px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+  h2{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:400;color:var(--text);margin:52px 0 18px;line-height:1.2;}
+  h3{font-size:16px;font-weight:500;color:var(--text);margin:32px 0 12px;}
+  p{font-size:16px;font-weight:300;color:var(--text-2);line-height:1.8;margin-bottom:20px;}
+  strong{font-weight:500;color:var(--text);}
+  em{font-style:italic;}
+  ul,ol{margin:0 0 20px 22px;color:var(--text-2);}
+  li{font-size:16px;font-weight:300;line-height:1.8;margin-bottom:8px;}
+  .callout{background:var(--callout-bg);border:1px solid var(--callout-border);border-radius:12px;padding:24px 28px;margin:32px 0;}
+  .callout-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+  .callout p{margin:0;font-size:15px;color:var(--text-2);}
+  .callout p+p{margin-top:12px;}
+  .good{background:var(--good-bg);border:1px solid var(--good-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .good-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#22c55e;margin-bottom:10px;}
+  .good p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn{background:var(--warn-bg);border:1px solid var(--warn-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .warn-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#fb923c;margin-bottom:10px;}
+  .warn p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn p+p{margin-top:12px;}
+  .principle-list{display:flex;flex-direction:column;gap:12px;margin:24px 0;}
+  .principle{background:var(--bg-2);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:0 12px 12px 0;padding:20px 24px;}
+  .principle-title{font-size:15px;font-weight:500;color:var(--text);margin-bottom:6px;}
+  .principle-desc{font-size:14px;color:var(--text-2);line-height:1.65;margin:0;}
+  .sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:var(--bg-2);border-top:1px solid var(--border-2);padding:14px 5%;display:flex;align-items:center;justify-content:space-between;gap:16px;backdrop-filter:blur(12px);}
+  .sticky-bar-track{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sticky-bar-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.2s;width:0%;}
+  .sticky-bar-label{font-size:12px;color:var(--text-3);white-space:nowrap;min-width:60px;text-align:right;}
+  .sticky-bar-btn{padding:10px 20px;border-radius:8px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;background:var(--accent);color:#fff;border:none;cursor:pointer;white-space:nowrap;transition:opacity 0.2s;display:none;}
+  .sticky-bar-btn:hover{opacity:0.88;}
+  .sticky-bar-reading{font-size:12px;color:var(--text-3);white-space:nowrap;}
+  @media(max-width:900px){.page-wrapper{grid-template-columns:1fr;}.sidebar{display:none;}.content{padding:40px 24px 120px;}h1{font-size:38px;}}
+  @media(max-width:600px){.content{padding:28px 16px 120px;}h1{font-size:30px;}h2{font-size:24px;}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="courses.html" class="nav-back">← AI Safety and Alignment</a>
+    <div class="nav-divider"></div>
+    <span class="nav-label">Module 7</span>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">☀</span></button>
+</nav>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+
+<div class="page-wrapper">
+<aside class="sidebar">
+  <div class="sidebar-course">Expert Track</div>
+  <div class="sidebar-course-name">AI Safety and Alignment</div>
+  <div class="sidebar-module"><a href="safety-module-1.html" class="sidebar-module-link"><span class="sidebar-num">1</span>What Is AI Safety?</a></div>
+  <div class="sidebar-module"><a href="safety-module-2.html" class="sidebar-module-link"><span class="sidebar-num">2</span>The Alignment Problem</a></div>
+  <div class="sidebar-module"><a href="safety-module-3.html" class="sidebar-module-link"><span class="sidebar-num">3</span>Reward Hacking and Specification Gaming</a></div>
+  <div class="sidebar-module"><a href="safety-module-4.html" class="sidebar-module-link"><span class="sidebar-num">4</span>Reinforcement Learning from Human Feedback</a></div>
+  <div class="sidebar-module"><a href="safety-module-5.html" class="sidebar-module-link"><span class="sidebar-num">5</span>Constitutional AI and RLAIF</a></div>
+  <div class="sidebar-module"><a href="safety-module-6.html" class="sidebar-module-link"><span class="sidebar-num">6</span>Interpretability Research</a></div>
+  <div class="sidebar-module"><a href="safety-module-7.html" class="sidebar-module-link active"><span class="sidebar-num">7</span>Emergent Capabilities</a></div>
+  <div class="sidebar-module"><a href="safety-module-8.html" class="sidebar-module-link"><span class="sidebar-num">8</span>AI Governance</a></div>
+  <div class="sidebar-module"><a href="safety-module-9.html" class="sidebar-module-link"><span class="sidebar-num">9</span>Catastrophic Risk Scenarios</a></div>
+  <div class="sidebar-module"><a href="safety-module-10.html" class="sidebar-module-link"><span class="sidebar-num">10</span>Paths to Safe AI</a></div>
+  <div class="sidebar-module"><a href="quiz-safety.html" class="sidebar-module-link" style="color:var(--accent);margin-top:4px;"><span class="sidebar-num" style="background:var(--accent-dim);color:var(--accent);">✦</span>Final Assessment</a></div>
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-progress-label"><span>Course progress</span><span style="color:var(--accent);">7 / 10</span></div>
+  <div class="sidebar-progress-track"><div class="sidebar-progress-fill"></div></div>
+</aside>
+
+<main>
+<div class="content">
+  <div class="module-eyebrow"><span class="module-tag">Module 7 · Expert Track</span><span class="module-meta">22 min read · AI Safety and Alignment</span></div>
+  <h1>Emergent Capabilities</h1>
+
+  <p class="intro-text">Emergence — the appearance of qualitatively new capabilities at scale — is one of the most consequential and contested empirical phenomena in modern AI. When capabilities appear suddenly rather than gradually, they defeat the test-before-you-deploy strategy that governs most of safety engineering. You cannot evaluate a system for a capability it does not yet possess. Understanding emergence — what it is, when it is real, when it is a measurement artifact, and what it implies for safety — is essential for anyone working in AI development or governance.</p>
+
+  <h2>What emergence means in the context of AI</h2>
+  <p>The word "emergence" has a specific technical meaning in the AI literature. A capability is emergent if it appears abruptly when a model exceeds some scale threshold — in terms of parameters, training compute, or training data — rather than improving gradually and smoothly with scale. The key signature of emergence is not just that performance improves, but that it undergoes a <em>phase transition</em>: near-zero performance below a threshold, then rapid improvement above it, without a smooth interpolation in between.</p>
+  <p>This definition matters because gradual improvement and emergent improvement have very different implications for safety planning. Gradual improvement can be anticipated: if performance on a task improves by 5% with each doubling of parameters, you can predict that performance at the next scale level will also improve by approximately 5%. Emergence defeats this prediction: a capability may be completely absent at one scale level and fully present at the next, with no intermediate state that would have warned you of the incoming transition.</p>
+  <p>The original paper that established emergence as a formal phenomenon in AI was "Emergent Abilities of Large Language Models" (Wei et al., 2022), published by Google Brain. This paper documented a large number of specific tasks from the BIG-Bench benchmark on which model performance was flat (near random) below specific scale thresholds and then improved sharply, with performance plotted as a function of training compute or parameter count showing clear phase-transition-like patterns.</p>
+
+  <h2>Documented examples of emergent capabilities</h2>
+  <p>The empirical literature contains many well-documented examples of emergent capabilities in large language models. These examples are worth examining in detail because they illustrate both the phenomenon itself and its safety implications.</p>
+
+  <h3>Chain-of-thought reasoning</h3>
+  <p>Chain-of-thought prompting — asking a model to "think step by step" before giving its final answer — produces dramatically improved performance on multi-step reasoning tasks. But this improvement is emergent: it is essentially absent in models below approximately 100 billion parameters, and appears reliably only in models above that scale threshold. The same prompt that produces coherent step-by-step reasoning in a large model produces incoherent or misleading intermediate steps in a smaller model.</p>
+  <p>This is significant because chain-of-thought is not a capability that was explicitly trained for. Models were trained to predict text, not to reason step by step. The ability to produce useful reasoning chains emerged from scale and training data, not from explicit supervision of the reasoning process. This is the paradigm case of emergence in current AI: capabilities appear from scale alone, without having been specifically engineered.</p>
+
+  <h3>Multi-step arithmetic</h3>
+  <p>Performance on multi-step arithmetic tasks (additions and multiplications requiring more than a few operations) shows clear emergent patterns in the BIG-Bench evaluation suite. Below certain model scales, performance is at or below random chance for tasks requiring many steps. Above the threshold, models can solve these tasks reliably. The threshold is not a function of whether arithmetic was in the training data — it was — but of the model's capacity to perform multi-step computations reliably.</p>
+
+  <h3>Language understanding without explicit multilingual training</h3>
+  <p>Large models trained primarily on English text develop competence in other languages that were minority representations in the training data. At smaller scales, this transfer is minimal. At larger scales, the model has apparently learned general language representations sufficiently abstract that they transfer across languages. This represents an emergent generalization capability that was not explicitly trained for and could not have been predicted from the model's performance on English-only tasks at smaller scale.</p>
+
+  <h3>Instruction following and in-context learning</h3>
+  <p>The ability to follow explicit instructions without fine-tuning — to understand a prompt that says "translate the following to French" and act on it — is emergent in large models. Smaller models can recognize that the instruction is asking for translation but cannot reliably execute it. At larger scales, instruction following becomes reliable without any instruction-specific training. This is part of why GPT-3's few-shot in-context learning was seen as a qualitative leap: it demonstrated an emergent ability to understand and act on novel task specifications from context alone.</p>
+
+  <h2>The BIG-Bench benchmark and emergent task evaluation</h2>
+  <p>BIG-Bench (Beyond the Imitation Game Benchmark) is a collaborative benchmark developed by researchers across dozens of institutions specifically designed to evaluate large language models on tasks that current models cannot yet perform well — tasks at or beyond the frontier of model capability. It contains over 200 tasks spanning diverse domains and difficulty levels, with the explicit goal of identifying tasks that show emergent capability profiles.</p>
+  <p>BIG-Bench's design philosophy reflects the unique challenge of evaluating emergent capabilities: standard benchmarks saturate quickly as models improve, making them useless for tracking capability development at the frontier. BIG-Bench tasks were selected specifically to be difficult enough that current models performed poorly on them, ensuring that the benchmark would remain informative as models scaled.</p>
+  <p>Analysis of BIG-Bench results across model sizes revealed that a substantial minority of tasks show emergent profiles — near-flat performance below a scale threshold, followed by rapid improvement. This fraction of emergent tasks (estimates vary, but it is substantial) is a direct empirical demonstration that emergence is not confined to a few cherry-picked examples but is a systematic feature of how capabilities develop in large models.</p>
+
+  <h2>Why emergence complicates safety</h2>
+  <p>The safety implications of emergence are severe and specific. The standard safety engineering approach is: build a system, evaluate it for dangerous capabilities, deploy it only if evaluations are acceptable. This approach depends on the assumption that evaluations conducted before deployment reliably predict the system's capabilities during deployment.</p>
+  <p>Emergence breaks this assumption in a precise way. If a dangerous capability emerges only above some scale threshold, then evaluations conducted on sub-threshold models will not detect it — because it does not yet exist. A model that passes all safety evaluations at a given scale may develop dangerous capabilities at the next scale level. The evaluation passed is not evidence of safety at larger scale; it is only evidence of safety at the scale at which it was conducted.</p>
+  <p>This creates a genuinely hard problem for safety governance. Current responsible scaling policies (including Anthropic's Responsible Scaling Policy and OpenAI's preparedness framework) address this by conducting evaluations at each new scale level and establishing capability thresholds above which additional safety measures are required. But this approach is only as good as our ability to evaluate capabilities at each scale level — and if the capability we are most worried about is emergent (and therefore absent at current scale), we cannot evaluate for it directly.</p>
+
+  <div class="warn">
+    <div class="warn-label">The Evaluation Gap</div>
+    <p>The evaluation gap problem is one of the most important unsolved challenges in AI safety governance. If we cannot test for capabilities that models do not yet have, we cannot know in advance whether the next scale of deployment will cross a dangerous capability threshold. Interpretability research (Module 6) offers a partial answer: if we can identify the internal representations and circuits that underlie dangerous capabilities, we may be able to detect their formation before they are behaviorally manifest. But this approach remains research-stage. Current governance frameworks require evaluations on the model being deployed — which means emergent capabilities at the next scale level remain undetectable until they are in a deployed model.</p>
+  </div>
+
+  <h2>The debate: is emergence real or a measurement artifact?</h2>
+  <p>A significant scientific debate has emerged about whether the appearance of emergence is a genuine property of AI systems or a measurement artifact produced by discontinuous evaluation metrics. The central paper on this skeptical side is "Are Emergent Abilities of Large Language Models a Mirage?" (Schaeffer et al., 2023), from Stanford.</p>
+  <p>The argument is subtle and important. When we evaluate a model on a task, we use a metric. If the metric is discontinuous — for example, a "correct/incorrect" binary that requires all sub-steps of a reasoning chain to be correct — then even smooth, gradual underlying improvement can produce an apparent phase transition in the metric. A model that gets 50% of sub-steps right will score near zero on a task requiring all steps to be correct. A model that gets 80% of sub-steps right will score much higher. The underlying capability (per-step accuracy) is improving smoothly; the metric (whole-task accuracy) appears to make a discontinuous jump.</p>
+  <p>Schaeffer et al. demonstrated that when continuous evaluation metrics are used instead of binary correct/incorrect metrics, many of the apparently emergent capabilities in the Wei et al. paper become smoother and more gradual. The phase transition in the metric does not necessarily correspond to a phase transition in the underlying capability.</p>
+  <p>The response from the emergence proponents has been that some emergent phenomena are genuine even under continuous metrics, and that the metric-artifact account does not fully explain all documented cases. The current scientific consensus is nuanced: some apparent emergence is metric-artifact, some is genuine, and the tools to reliably distinguish the two are still being developed.</p>
+
+  <div class="callout">
+    <div class="callout-label">Why This Debate Matters for Safety</div>
+    <p>If emergence is primarily a measurement artifact, the safety concern is partially mitigated: capabilities are developing more gradually than the apparent phase transitions suggest, giving evaluators more warning time. If some emergence is genuine, then some capabilities may genuinely appear suddenly and cannot be predicted from sub-threshold performance. The debate does not have a clear safety-favorable resolution: even if most emergence is artifact, a small number of genuinely emergent dangerous capabilities would be sufficient to create serious safety risks. The possibility of genuine emergence in at least some capability dimensions must be taken seriously by safety governance frameworks regardless of how the scientific debate resolves.</p>
+  </div>
+
+  <h2>Implications for capability forecasting</h2>
+  <p>Capability forecasting — predicting what AI systems will be able to do at future scale levels — is one of the most practically important and technically difficult problems in AI governance. Emergence complicates forecasting in fundamental ways.</p>
+  <p>Smooth scaling laws (the observation that loss decreases predictably with compute) describe how model performance on next-token prediction improves with scale. These scaling laws have been remarkably consistent and have enabled reasonable predictions of pre-training performance at future compute levels. But next-token prediction loss does not directly translate into downstream task performance, and it provides essentially no information about which capabilities will emerge at which scale thresholds.</p>
+  <p>This means that even organizations with access to the best scaling law models face genuine uncertainty about what capabilities will be present in their next model. The gap between "we can predict the training loss" and "we can predict the capability profile" is large and currently unbridgeable. Organizations that have stated policies about not training models that would develop certain dangerous capabilities face the epistemically challenging task of making commitments about capabilities they cannot predict.</p>
+
+  <h2>Implications for deployment decisions</h2>
+  <p>Emergence affects deployment decisions through two distinct mechanisms. The first is the evaluation gap already discussed: deployed models may have capabilities that were not present at evaluation time. The second is post-deployment emergence: the behavior of a model in deployment may be different from its behavior in controlled evaluation, because deployment exposes the model to adversarial inputs, unusual contexts, and creative prompting strategies that evaluations did not anticipate.</p>
+  <p>Post-deployment emergence through adversarial elicitation is particularly concerning. There is substantial evidence that capabilities can be "unlocked" in deployed models through specific prompting strategies — jailbreaks, chain-of-thought prompts, specific instruction formats — that were not considered during evaluation. This means that an evaluation's finding that a model does not exhibit a dangerous capability may reflect the model's behavior under standard evaluation prompts rather than its behavior when adversarially probed.</p>
+  <p>Responsible scaling policies address this by mandating red-teaming — systematic adversarial probing — alongside standard evaluations. But red-teaming is limited by the creativity of the red-teamers and the adversarial techniques available at evaluation time. Novel elicitation techniques that emerge after deployment cannot be anticipated in pre-deployment evaluations.</p>
+
+  <h2>Emergence and AI development strategy</h2>
+  <p>The existence of emergence — or even the serious possibility of it — has significant implications for how AI development should be structured and governed. Several conclusions follow from taking emergence seriously:</p>
+  <ul>
+    <li><strong>Pre-registration of safety evaluations</strong>: Organizations should specify in advance which capability thresholds would trigger what safety responses, rather than making these decisions post-hoc after evaluations have been conducted. This prevents motivated reasoning from influencing the interpretation of evaluation results.</li>
+    <li><strong>Mandatory evaluations at each scale increment</strong>: Responsible scaling policies (discussed in Module 10) are based on the recognition that emergent capabilities require evaluation at each new scale level, not just at initial deployment.</li>
+    <li><strong>Investment in interpretability research</strong>: The only current path to predicting emergent capabilities before they appear is to understand what internal representations and circuits underlie those capabilities, and to track their development through training. This requires the interpretability tools discussed in Module 6.</li>
+    <li><strong>Conservative deployment thresholds</strong>: Given the uncertainty about when dangerous capabilities might emerge, the precautionary case for conservative deployment thresholds — requiring evidence of safety rather than merely absence of evidence of danger — is strengthened by emergence. The asymmetry between the costs of excessive caution (capability delayed) and insufficient caution (dangerous capability deployed) should inform where the burden of proof lies.</li>
+  </ul>
+
+  <div class="good">
+    <div class="good-label">Emergence as Evidence for Safety Investment</div>
+    <p>The existence of emergent capabilities is sometimes presented as an argument against optimism about AI safety — if capabilities appear without warning, how can safety be maintained? The better reading is the opposite: emergence makes the case for early and sustained investment in safety research more compelling, not less. The time to develop interpretability tools, evaluation methods, and governance frameworks is before dangerous capabilities emerge, not after. An AI safety field that is well-resourced and well-developed before dangerous capabilities appear is in a dramatically better position than one that scrambles to respond after the fact. Emergence is thus an argument for investment in safety research now, while the window is open.</p>
+  </div>
+
+</div>
+</main>
+</div>
+
+<div class="sticky-bar" id="sticky-bar">
+  <div class="sticky-bar-reading" id="sticky-reading">Read to the end to unlock the next module</div>
+  <div class="sticky-bar-track"><div class="sticky-bar-fill" id="sticky-fill"></div></div>
+  <div class="sticky-bar-label" id="sticky-label">0%</div>
+  <button class="sticky-bar-btn" id="sticky-btn" onclick="completeAndNext()">Module 8: AI Governance →</button>
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import { getFirestore, doc, setDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  const app=initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+  const auth=getAuth(app);const db=getFirestore(app);
+  let currentUser=null;
+  onAuthStateChanged(auth,u=>{currentUser=u;});
+  window.toggleTheme=function(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='☾'):(h.setAttribute('data-theme','dark'),i.textContent='☀');};
+  window.addEventListener('scroll',()=>{const d=document.documentElement,s=d.scrollTop||document.body.scrollTop,t=d.scrollHeight-d.clientHeight;document.getElementById('progress').style.width=(s/t*100)+'%';});
+  let unlocked=false;
+  function updateScrollProgress(){
+    const scrolled=window.scrollY+window.innerHeight;const total=document.documentElement.scrollHeight;
+    const pct=Math.min(100,Math.round((scrolled/total)*100));
+    const fill=document.getElementById('sticky-fill');const label=document.getElementById('sticky-label');
+    const btn=document.getElementById('sticky-btn');const reading=document.getElementById('sticky-reading');
+    if(fill)fill.style.width=pct+'%';if(label)label.textContent=pct+'%';
+    if(pct>=95&&!unlocked){unlocked=true;if(btn)btn.style.display='block';if(reading)reading.style.display='none';if(fill)fill.style.background='#22c55e';if(label)label.style.color='#22c55e';}
+  }
+  window.addEventListener('scroll',updateScrollProgress);updateScrollProgress();
+  window.completeAndNext=async function(){
+    if(currentUser){try{await setDoc(doc(db,'users',currentUser.uid),{safetyModules:arrayUnion('m7')},{merge:true});}catch(e){}}
+    window.location.href='safety-module-8.html';
+  };
+</script>
+</body>
+</html>

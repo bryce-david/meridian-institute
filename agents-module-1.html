@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 1: What Are AI Agents? — Agentic AI and Autonomous Systems — Meridian Institute of AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#6B21A8;--accent-dim:rgba(107,33,168,0.1);--accent-dim2:rgba(107,33,168,0.05);--nav-bg:rgba(8,8,8,0.9);--callout-bg:rgba(107,33,168,0.07);--callout-border:rgba(107,33,168,0.25);--good-bg:rgba(34,197,94,0.07);--good-border:rgba(34,197,94,0.2);--warn-bg:rgba(251,146,60,0.07);--warn-border:rgba(251,146,60,0.2);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#581C87;--accent-dim:rgba(88,28,135,0.08);--accent-dim2:rgba(88,28,135,0.04);--nav-bg:rgba(250,250,248,0.9);--callout-bg:rgba(88,28,135,0.05);--callout-border:rgba(88,28,135,0.2);--good-bg:rgba(22,163,74,0.06);--good-border:rgba(22,163,74,0.2);--warn-bg:rgba(234,88,12,0.05);--warn-border:rgba(234,88,12,0.2);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;overflow-x:hidden;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.7;overflow-x:hidden;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}
+  .nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}
+  .nav-back{font-size:13px;color:var(--text-2);text-decoration:none;transition:color 0.2s;}
+  .nav-back:hover{color:var(--text);}
+  .nav-label{font-size:13px;color:var(--text-3);}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;transition:all 0.2s;}
+  .theme-toggle:hover{background:var(--bg-3);color:var(--text);}
+  .progress-bar{position:fixed;top:60px;left:0;right:0;z-index:99;height:2px;background:var(--border);}
+  .progress-fill{height:100%;background:var(--accent);width:0%;transition:width 0.1s;}
+  .page-wrapper{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:100vh;padding-top:62px;overflow:hidden;}
+  .sidebar{position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto;border-right:1px solid var(--border);padding:32px 24px;background:var(--bg-2);}
+  .sidebar-course{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;}
+  .sidebar-course-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+  .sidebar-module{margin-bottom:4px;}
+  .sidebar-module-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:13px;color:var(--text-2);text-decoration:none;transition:all 0.2s;line-height:1.4;}
+  .sidebar-module-link:hover{background:var(--bg-3);color:var(--text);}
+  .sidebar-module-link.active{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-num{font-size:11px;font-weight:500;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--bg-4);color:var(--text-3);}
+  .sidebar-module-link.active .sidebar-num{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-divider{height:1px;background:var(--border);margin:20px 0;}
+  .sidebar-progress-label{font-size:12px;color:var(--text-3);margin-bottom:8px;display:flex;justify-content:space-between;}
+  .sidebar-progress-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sidebar-progress-fill{height:100%;width:10%;background:var(--accent);border-radius:2px;}
+  main{display:block;min-width:0;overflow:hidden;}
+  .content{max-width:760px;width:100%;padding:60px 64px 140px;margin:0 auto;}
+  .module-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+  .module-tag{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(107,33,168,0.2);padding:4px 12px;border-radius:100px;}
+  .module-meta{font-size:12px;color:var(--text-3);}
+  h1{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1.05;letter-spacing:-0.02em;color:var(--text);margin-bottom:24px;}
+  .intro-text{font-size:19px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+  h2{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:400;color:var(--text);margin:52px 0 18px;line-height:1.2;}
+  h3{font-size:16px;font-weight:500;color:var(--text);margin:32px 0 12px;}
+  p{font-size:16px;font-weight:300;color:var(--text-2);line-height:1.8;margin-bottom:20px;}
+  strong{font-weight:500;color:var(--text);}
+  em{font-style:italic;}
+  ul,ol{margin:0 0 20px 22px;color:var(--text-2);}
+  li{font-size:16px;font-weight:300;line-height:1.8;margin-bottom:8px;}
+  .callout{background:var(--callout-bg);border:1px solid var(--callout-border);border-radius:12px;padding:24px 28px;margin:32px 0;}
+  .callout-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+  .callout p{margin:0;font-size:15px;color:var(--text-2);}
+  .callout p+p{margin-top:12px;}
+  .good{background:var(--good-bg);border:1px solid var(--good-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .good-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#22c55e;margin-bottom:10px;}
+  .good p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn{background:var(--warn-bg);border:1px solid var(--warn-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .warn-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#fb923c;margin-bottom:10px;}
+  .warn p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn p+p{margin-top:12px;}
+  .analogy{background:var(--bg-2);border:1px solid var(--border);border-radius:12px;padding:28px;margin:28px 0;}
+  .analogy-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-3);margin-bottom:12px;}
+  .analogy p{margin:0;font-size:15px;color:var(--text-2);}
+  .comparison-wrapper{overflow-x:auto;-webkit-overflow-scrolling:touch;width:100%;margin:28px 0;}
+  table{width:100%;border-collapse:collapse;font-size:14px;min-width:480px;}
+  th{text-align:left;padding:12px 16px;font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-3);border-bottom:1px solid var(--border-2);}
+  td{padding:14px 16px;border-bottom:1px solid var(--border);color:var(--text-2);line-height:1.6;vertical-align:top;}
+  tr:last-child td{border-bottom:none;}
+  td:first-child{color:var(--text);font-weight:500;width:30%;}
+  .principle-list{display:flex;flex-direction:column;gap:12px;margin:24px 0;}
+  .principle{background:var(--bg-2);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:0 12px 12px 0;padding:20px 24px;}
+  .principle-title{font-size:15px;font-weight:500;color:var(--text);margin-bottom:6px;}
+  .principle-desc{font-size:14px;color:var(--text-2);line-height:1.65;margin:0;}
+  .sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:var(--bg-2);border-top:1px solid var(--border-2);padding:14px 5%;display:flex;align-items:center;justify-content:space-between;gap:16px;backdrop-filter:blur(12px);}
+  .sticky-bar-track{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sticky-bar-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.2s;width:0%;}
+  .sticky-bar-label{font-size:12px;color:var(--text-3);white-space:nowrap;min-width:60px;text-align:right;}
+  .sticky-bar-btn{padding:10px 20px;border-radius:8px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;background:var(--accent);color:#fff;border:none;cursor:pointer;white-space:nowrap;transition:opacity 0.2s;display:none;}
+  .sticky-bar-btn:hover{opacity:0.88;}
+  .sticky-bar-reading{font-size:12px;color:var(--text-3);white-space:nowrap;}
+  @media(max-width:900px){.page-wrapper{grid-template-columns:1fr;}.sidebar{display:none;}.content{padding:40px 24px 120px;}h1{font-size:38px;}}
+  @media(max-width:600px){.content{padding:28px 16px 120px;}h1{font-size:30px;}h2{font-size:24px;}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="courses.html" class="nav-back">← Agentic AI and Autonomous Systems</a>
+    <div class="nav-divider"></div>
+    <span class="nav-label">Module 1</span>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">☀</span></button>
+</nav>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+
+<div class="page-wrapper">
+<aside class="sidebar">
+  <div class="sidebar-course">Expert Track</div>
+  <div class="sidebar-course-name">Agentic AI and Autonomous Systems</div>
+  <div class="sidebar-module"><a href="agents-module-1.html" class="sidebar-module-link active"><span class="sidebar-num">1</span>What Are AI Agents?</a></div>
+  <div class="sidebar-module"><a href="agents-module-2.html" class="sidebar-module-link"><span class="sidebar-num">2</span>The Agent Loop: Perceive, Reason, Act</a></div>
+  <div class="sidebar-module"><a href="agents-module-3.html" class="sidebar-module-link"><span class="sidebar-num">3</span>Tool Use and Function Calling</a></div>
+  <div class="sidebar-module"><a href="agents-module-4.html" class="sidebar-module-link"><span class="sidebar-num">4</span>Memory Systems in AI Agents</a></div>
+  <div class="sidebar-module"><a href="agents-module-5.html" class="sidebar-module-link"><span class="sidebar-num">5</span>Multi-Agent Architectures</a></div>
+  <div class="sidebar-module"><a href="agents-module-6.html" class="sidebar-module-link"><span class="sidebar-num">6</span>Planning and Task Decomposition</a></div>
+  <div class="sidebar-module"><a href="agents-module-7.html" class="sidebar-module-link"><span class="sidebar-num">7</span>Retrieval-Augmented Generation</a></div>
+  <div class="sidebar-module"><a href="agents-module-8.html" class="sidebar-module-link"><span class="sidebar-num">8</span>Agent Safety and Reliability</a></div>
+  <div class="sidebar-module"><a href="agents-module-9.html" class="sidebar-module-link"><span class="sidebar-num">9</span>Building with Agent Frameworks</a></div>
+  <div class="sidebar-module"><a href="agents-module-10.html" class="sidebar-module-link"><span class="sidebar-num">10</span>The Future of Autonomous AI</a></div>
+  <div class="sidebar-module"><a href="quiz-agents.html" class="sidebar-module-link" style="color:var(--accent);margin-top:4px;"><span class="sidebar-num" style="background:var(--accent-dim);color:var(--accent);">✦</span>Final Assessment</a></div>
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-progress-label"><span>Course progress</span><span style="color:var(--accent);">1 / 10</span></div>
+  <div class="sidebar-progress-track"><div class="sidebar-progress-fill"></div></div>
+</aside>
+
+<main>
+<div class="content">
+  <div class="module-eyebrow"><span class="module-tag">Module 1</span><span class="module-meta">22 min read · Agentic AI and Autonomous Systems</span></div>
+  <h1>What Are AI Agents?</h1>
+
+  <p class="intro-text">Something fundamental shifted in AI around 2023. Models that had previously answered questions in isolation began taking actions in the world — browsing websites, writing and executing code, sending emails, booking calendar events, and completing multi-step tasks with minimal human involvement. This shift from model to agent represents one of the most significant transitions in the history of artificial intelligence, with implications that reach far beyond any individual technology product. Understanding what an AI agent actually is — and how it differs from everything that came before — is the prerequisite to everything else in this course.</p>
+
+  <h2>The problem with the word "agent"</h2>
+  <p>Before we can define what an AI agent is, we need to clear away some conceptual debris. The term "agent" is used loosely in popular discourse to describe everything from a simple chatbot with a friendly persona to a fully autonomous system that can complete week-long tasks without human input. This ambiguity is not just semantic; it causes real confusion when organizations try to evaluate what agentic AI can and cannot do for them today.</p>
+  <p>In the technical literature, the definition is more precise. An <strong>AI agent</strong> is a system that perceives its environment, reasons about what to do, takes actions to affect that environment, and continues this cycle autonomously toward a goal. The key distinguishing elements are: perception of state, autonomous reasoning, action-taking capability, and goal-directedness across multiple steps. Each of these elements is necessary; none alone is sufficient.</p>
+  <p>By this definition, a large language model accessed via API is not an agent. It is a model — a sophisticated function that maps inputs to outputs. It perceives nothing independently, takes no actions, and operates on a single turn. When you add the scaffolding to let that model perceive state, choose tools, and iterate toward a goal, you have built an agent. The model is the brain; the agent is the body plus the brain operating in an environment.</p>
+
+  <div class="callout">
+    <div class="callout-label">Working Definition</div>
+    <p>An AI agent is a system that perceives inputs from an environment, uses an AI model to reason about those inputs, selects and executes actions (including tool calls), observes the results, and repeats this loop autonomously until a goal condition is met or a stopping criterion is reached.</p>
+    <p>The key word is <em>autonomously</em>. An agent is not being told what to do at each step by a human. It decides its own next action based on its current state and goal.</p>
+  </div>
+
+  <h2>The spectrum from model call to full autonomy</h2>
+  <p>It is most useful to think of agentic capability as a spectrum rather than a binary. At one end sit simple, single-turn model API calls — you send a prompt, you receive a response, the interaction ends. These are immensely useful but strictly non-agentic. At the other end sit fully autonomous long-horizon agents that operate for days or weeks, managing complex multi-step workflows across many tools and environments with minimal human oversight.</p>
+  <p>Between these poles lies most of the interesting territory. <strong>Multi-turn conversational systems</strong> like ChatGPT maintain state across turns but are still largely reactive — they do not initiate actions without human prompting. <strong>Tool-augmented assistants</strong> can call functions like web search or code execution, but only when a human requests it and only for one step at a time. <strong>ReAct-style agents</strong> (Reasoning plus Acting) can chain multiple tool calls autonomously to answer a question, but still terminate when they produce a final answer. <strong>Task agents</strong> can work through complex, multi-step tasks with limited human checkpoints. <strong>Autonomous agents</strong> at the far end can self-assign subtasks, manage their own memory, spawn other agents, and operate continuously.</p>
+
+  <div class="comparison-wrapper">
+  <table>
+    <tr><th>System Type</th><th>Autonomy</th><th>Actions</th><th>Examples</th></tr>
+    <tr><td>Model API call</td><td>None</td><td>Text generation only</td><td>Raw GPT-4 API, Claude API</td></tr>
+    <tr><td>Chatbot</td><td>Conversational</td><td>Multi-turn text</td><td>ChatGPT, Claude.ai</td></tr>
+    <tr><td>Tool-augmented assistant</td><td>Step-wise</td><td>Single tool calls on request</td><td>ChatGPT with browsing</td></tr>
+    <tr><td>ReAct agent</td><td>Chain of tools</td><td>Multi-tool reasoning loops</td><td>LangChain agents</td></tr>
+    <tr><td>Task agent</td><td>Goal-directed</td><td>Multi-step autonomous work</td><td>Devin, Claude computer use</td></tr>
+    <tr><td>Autonomous agent</td><td>Full</td><td>Self-directed long-horizon operation</td><td>AutoGPT, OpenAI Operator</td></tr>
+  </table>
+  </div>
+
+  <h2>Why agents represent a new paradigm</h2>
+  <p>The shift from single-turn inference to agentic operation is not merely quantitative — it is qualitative. When a model makes a single inference, the scope of possible error is bounded and the consequences are easily reversed: you read the output, decide it is wrong, and try again. When an agent executes a sequence of actions in the world, each action can have real consequences that may be difficult or impossible to undo. An agent that sends an email, makes a purchase, modifies a file, or executes code has changed the state of the world, not just produced text about it.</p>
+  <p>This distinction changes what "reliability" means. A language model that is right 95% of the time is excellent. An agent that executes 20 steps and is right at each step with 95% probability has only a 36% chance of completing the entire task correctly without any error — because errors compound multiplicatively. Understanding this compounding property of agent reliability is one of the most important conceptual shifts for practitioners moving from model deployment to agent deployment.</p>
+  <p>The paradigm shift also changes the nature of the interface between AI and humans. With a model API, the human is always in the loop — they read each response and decide the next step. With an agent, the human defines a goal and the agent handles the intermediary steps. This is enormously more powerful and enormously more risky. The interface design problem — when to ask for human clarification, when to proceed autonomously, how to handle ambiguity — becomes a first-class engineering concern, not an afterthought.</p>
+
+  <h2>The current state of agentic AI</h2>
+  <p>As of mid-2020s, agentic AI is genuinely capable but also genuinely limited. This is important to understand clearly, because both the hype and the dismissal surrounding AI agents tend to be wrong in characteristic ways.</p>
+  <p>What agents do well today: <strong>well-defined, bounded tasks</strong> with clear success criteria and recoverable failure modes. An agent tasked with "research the top 5 competitors of company X and summarize their pricing strategies" can do this reliably. An agent tasked with "write all the unit tests for this Python module" can handle it with strong results. An agent given access to a browser and asked to "fill out this form on this website" will usually succeed. These are tasks that are hard for humans to scale but easy to define and verify.</p>
+  <p>What agents struggle with: <strong>long-horizon tasks requiring persistent coherent strategy</strong> across many steps, tasks that require understanding of nuanced human social context, tasks where small mistakes early cascade into large failures later, and tasks that require genuinely novel problem-solving rather than sophisticated recombination of known patterns.</p>
+
+  <div class="warn">
+    <div class="warn-label">Common Misconception</div>
+    <p>AI agents today are not general-purpose autonomous workers that can be given any task and left to complete it. They are powerful tools for specific categories of structured, semi-structured, and information-processing tasks. The gap between "impressive demo" and "reliably deployed at scale in production" is real and substantial. Practitioners who paper over this gap with optimism will be disappointed; those who understand it will build systems that work.</p>
+    <p>Current state-of-the-art agents succeed on roughly 15–50% of complex real-world software engineering benchmarks (like SWE-Bench), depending on the task type and scaffolding. The best agents on the best benchmarks approach 50%; most deployed agents are lower. This is genuinely impressive — and genuinely limited.</p>
+  </div>
+
+  <h2>Real systems: Devin, Claude computer use, AutoGPT, and Operator</h2>
+  <p><strong>Devin</strong>, released by Cognition AI in early 2024, was the first AI system marketed explicitly as an "AI software engineer." Devin has access to a code editor, terminal, and browser. Given a software task, it plans an approach, writes code, runs tests, reads error messages, and iterates. It can complete tasks spanning multiple hours. Devin highlighted both the genuine capability of agentic coding systems and their current limitations — it handles routine coding tasks well, but struggles with novel architectural decisions and long-horizon consistency.</p>
+  <p><strong>Claude computer use</strong>, released by Anthropic in late 2024, allows Claude to control a computer — literally moving the cursor, clicking, typing, taking screenshots, and observing the results. This is the most literal form of agentic operation: an AI navigating real software interfaces the same way a human would. Computer use is powerful precisely because it requires no API integration — any software with a GUI becomes available to the agent. It is slow and error-prone compared to API-based tool use, but it unlocks legacy systems and complex interfaces that have no programmatic access.</p>
+  <p><strong>AutoGPT</strong>, released as an open-source project in 2023, was one of the earliest demonstrations of a fully autonomous looping agent. AutoGPT could spawn sub-agents, manage its own memory, browse the web, write and execute code, and continue working toward a goal without human input. It became a viral phenomenon and also a lesson in the limits of unconstrained autonomy — AutoGPT frequently lost coherent track of its goals over long runs, generated substantial token costs, and produced mixed results on real tasks. It was, however, enormously important as an early demonstration of what the agentic paradigm looked like in practice.</p>
+  <p><strong>OpenAI Operator</strong> represents the commercial productization of agentic capability: an agent that can use web browsers to complete tasks on behalf of users — making reservations, filling out forms, navigating e-commerce flows. Operator illustrates where the commercial application of agents is headed: not general research assistants, but specialized agents with narrow but reliable capabilities embedded in specific workflows.</p>
+
+  <h2>Comparing agents to chatbots and raw model calls</h2>
+  <p>Understanding what makes an agent different from a chatbot requires examining the role of state and action. A chatbot like the standard ChatGPT interface maintains conversational state (what was said before) but takes no independent actions in the world. Every response is the terminal output of one conversation turn. The chatbot does not search the web unless told to, does not write to files, does not make decisions about what to do next — it only responds.</p>
+  <p>A raw model API call is even more stripped down. There is no persistent state, no memory of previous interactions. You send a prompt, the model returns a completion. The model has no concept of "what it should do next" because there is no "next" — each call is independent and atomic.</p>
+  <p>The agent, by contrast, has a goal that persists across multiple reasoning cycles. It has memory of what it has done. It has the ability to take actions that change its environment. And it has a loop — a mechanism to observe the results of its actions, update its understanding, and decide what to do next. This loop is the essential architectural difference between a model and an agent.</p>
+
+  <div class="analogy">
+    <div class="analogy-label">Analogy</div>
+    <p>A model API call is like asking someone a question and receiving an answer. A chatbot is like a sustained conversation. An agent is like hiring a contractor: you describe what you want built, and they plan the work, acquire the materials, execute the construction, handle unexpected problems, and report back when done — or when they need a decision from you.</p>
+  </div>
+
+  <h2>The building blocks of any agent</h2>
+  <p>Every agent system, regardless of sophistication, is built from a small set of core components. Understanding these components makes it possible to analyze any agentic system clearly:</p>
+
+  <div class="principle-list">
+    <div class="principle">
+      <div class="principle-title">The model (brain)</div>
+      <div class="principle-desc">The language model that does the reasoning. This is typically a frontier model — GPT-4o, Claude 3.5 Sonnet, Gemini 1.5 Pro — though smaller models are increasingly used for specific subtasks. The model reads the current state, reasons about it, and decides what to do next.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">The context window (working memory)</div>
+      <div class="principle-desc">Everything the model can "see" at one time: the system prompt defining its role and capabilities, the conversation history, tool call results, retrieved documents, and any other information it needs to reason about the current state. Context windows in frontier models now range from 128K to over 1M tokens.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Tools (actions)</div>
+      <div class="principle-desc">The set of functions the agent can call to interact with the world. These might include web search, code execution, file read/write, database queries, API calls, email sending, or browser automation. Tool use is the mechanism by which agents change the state of their environment.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">The orchestration loop (control flow)</div>
+      <div class="principle-desc">The scaffolding code that runs the agent: send state to model, receive response, parse any tool calls, execute those tools, add results to context, repeat. This loop can be simple (a basic while loop) or complex (branching, parallel execution, handoffs to sub-agents).</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Memory systems (persistence)</div>
+      <div class="principle-desc">Mechanisms for storing and retrieving information beyond what fits in the context window — vector databases, conversation summaries, file systems, databases. Memory allows agents to work on tasks longer than a single context window and to learn from past interactions.</div>
+    </div>
+  </div>
+
+  <h2>Capabilities and limits today</h2>
+  <p>The honest assessment of agentic AI capability in the current moment requires acknowledging both what is genuinely impressive and where the walls are. Practitioners who build with agents quickly discover that the failure modes are specific and consistent — they are not random noise but predictable categories of limitation that good design can partially mitigate.</p>
+  <p>Current agents excel at: web research and synthesis, code generation and execution, document processing and analysis, structured data extraction, form-filling and interface navigation, and coordination of multi-step information workflows. These capabilities, while bounded, are commercially valuable and practically useful today.</p>
+  <p>Current agents struggle with: maintaining coherent strategy across very long task horizons (more than ~50 steps), tasks requiring deep world knowledge or physical intuition, complex social and organizational navigation, tasks where the right answer requires genuine creativity rather than sophisticated recombination, and any task where a mistake early on is catastrophic and unrecoverable.</p>
+
+  <div class="good">
+    <div class="good-label">The Practitioner's Orientation</div>
+    <p>The most productive stance toward current agentic AI is: bounded autonomy with human oversight. Design agents to handle well-defined subtasks reliably, build in checkpoints where humans can review and correct before proceeding to consequential actions, and build recovery mechanisms for the inevitable failures. Agents deployed with this philosophy outperform both fully manual workflows (because the agent handles the tedious steps) and fully autonomous agents (because humans catch the agent's mistakes before they compound). The goal is not to remove humans from the loop — it is to put humans in the right parts of the loop.</p>
+  </div>
+
+  <h2>Why this matters now</h2>
+  <p>The reason to care about agentic AI right now — not in five years, not when the technology is more mature — is that the transition from single-turn to agentic operation is happening in production systems across every industry. Organizations that understand the paradigm now are building the competencies to deploy agents safely and effectively. Those that wait will find the conceptual gap harder to close as systems grow more complex and the competitive landscape shifts.</p>
+  <p>The rest of this course builds the technical foundation for working with agents seriously: the perception-reasoning-action loop, tool use, memory systems, multi-agent architectures, planning and task decomposition, retrieval-augmented generation, safety and reliability, major frameworks, and the trajectory of the field. By the end, you will have the conceptual vocabulary and technical understanding to build, evaluate, and deploy agentic systems in production — and to make informed decisions about when agents are the right tool and when they are not.</p>
+
+</div>
+</main>
+</div>
+
+<div class="sticky-bar" id="sticky-bar">
+  <div class="sticky-bar-reading" id="sticky-reading">Read to the end to unlock the next module</div>
+  <div class="sticky-bar-track"><div class="sticky-bar-fill" id="sticky-fill"></div></div>
+  <div class="sticky-bar-label" id="sticky-label">0%</div>
+  <button class="sticky-bar-btn" id="sticky-btn" onclick="completeAndNext()">Module 2: The Agent Loop →</button>
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import { getFirestore, doc, setDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  const app=initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+  const auth=getAuth(app);const db=getFirestore(app);
+  let currentUser=null;
+  onAuthStateChanged(auth,u=>{currentUser=u;});
+
+  window.toggleTheme=function(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='☾'):(h.setAttribute('data-theme','dark'),i.textContent='☀');};
+  window.addEventListener('scroll',()=>{const d=document.documentElement,s=d.scrollTop||document.body.scrollTop,t=d.scrollHeight-d.clientHeight;document.getElementById('progress').style.width=(s/t*100)+'%';});
+
+  let unlocked=false;
+  function updateScrollProgress(){
+    const scrolled=window.scrollY+window.innerHeight;
+    const total=document.documentElement.scrollHeight;
+    const pct=Math.min(100,Math.round((scrolled/total)*100));
+    const fill=document.getElementById('sticky-fill');
+    const label=document.getElementById('sticky-label');
+    const btn=document.getElementById('sticky-btn');
+    const reading=document.getElementById('sticky-reading');
+    if(fill)fill.style.width=pct+'%';
+    if(label)label.textContent=pct+'%';
+    if(pct>=95&&!unlocked){
+      unlocked=true;
+      if(btn)btn.style.display='block';
+      if(reading)reading.style.display='none';
+      if(fill)fill.style.background='#22c55e';
+      if(label)label.style.color='#22c55e';
+    }
+  }
+  window.addEventListener('scroll',updateScrollProgress);
+  updateScrollProgress();
+
+  window.completeAndNext=async function(){
+    if(currentUser){
+      try{
+        await setDoc(doc(db,'users',currentUser.uid),{
+          agentsModules: arrayUnion('m1')
+        },{merge:true});
+      }catch(e){}
+    }
+    window.location.href='agents-module-2.html';
+  };
+</script>
+</body>
+</html>

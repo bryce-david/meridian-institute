@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 4: Algorithmic Bias and Social Justice — AI and Society — Meridian Institute of AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#7C3AED;--accent-dim:rgba(124,58,237,0.1);--accent-dim2:rgba(124,58,237,0.05);--nav-bg:rgba(8,8,8,0.9);--callout-bg:rgba(124,58,237,0.07);--callout-border:rgba(124,58,237,0.25);--good-bg:rgba(34,197,94,0.07);--good-border:rgba(34,197,94,0.2);--warn-bg:rgba(251,146,60,0.07);--warn-border:rgba(251,146,60,0.2);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#6D28D9;--accent-dim:rgba(109,40,217,0.08);--accent-dim2:rgba(109,40,217,0.04);--nav-bg:rgba(250,250,248,0.9);--callout-bg:rgba(109,40,217,0.05);--callout-border:rgba(109,40,217,0.2);--good-bg:rgba(22,163,74,0.06);--good-border:rgba(22,163,74,0.2);--warn-bg:rgba(234,88,12,0.05);--warn-border:rgba(234,88,12,0.2);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;overflow-x:hidden;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.7;overflow-x:hidden;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}
+  .nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}
+  .nav-back{font-size:13px;color:var(--text-2);text-decoration:none;transition:color 0.2s;}
+  .nav-back:hover{color:var(--text);}
+  .nav-label{font-size:13px;color:var(--text-3);}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;transition:all 0.2s;}
+  .theme-toggle:hover{background:var(--bg-3);color:var(--text);}
+  .progress-bar{position:fixed;top:60px;left:0;right:0;z-index:99;height:2px;background:var(--border);}
+  .progress-fill{height:100%;background:var(--accent);width:0%;transition:width 0.1s;}
+  .page-wrapper{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:100vh;padding-top:62px;overflow:hidden;}
+  .sidebar{position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto;border-right:1px solid var(--border);padding:32px 24px;background:var(--bg-2);}
+  .sidebar-course{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;}
+  .sidebar-course-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+  .sidebar-module{margin-bottom:4px;}
+  .sidebar-module-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:13px;color:var(--text-2);text-decoration:none;transition:all 0.2s;line-height:1.4;}
+  .sidebar-module-link:hover{background:var(--bg-3);color:var(--text);}
+  .sidebar-module-link.active{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-num{font-size:11px;font-weight:500;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--bg-4);color:var(--text-3);}
+  .sidebar-module-link.active .sidebar-num{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-divider{height:1px;background:var(--border);margin:20px 0;}
+  .sidebar-progress-label{font-size:12px;color:var(--text-3);margin-bottom:8px;display:flex;justify-content:space-between;}
+  .sidebar-progress-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sidebar-progress-fill{height:100%;width:40%;background:var(--accent);border-radius:2px;}
+  main{display:block;min-width:0;overflow:hidden;}
+  .content{max-width:760px;width:100%;padding:60px 64px 140px;margin:0 auto;}
+  .module-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+  .module-tag{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(124,58,237,0.2);padding:4px 12px;border-radius:100px;}
+  .module-meta{font-size:12px;color:var(--text-3);}
+  h1{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1.05;letter-spacing:-0.02em;color:var(--text);margin-bottom:24px;}
+  .intro-text{font-size:19px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+  h2{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:400;color:var(--text);margin:52px 0 18px;line-height:1.2;}
+  h3{font-size:16px;font-weight:500;color:var(--text);margin:32px 0 12px;}
+  p{font-size:16px;font-weight:300;color:var(--text-2);line-height:1.8;margin-bottom:20px;}
+  strong{font-weight:500;color:var(--text);}
+  em{font-style:italic;}
+  ul,ol{margin:0 0 20px 22px;color:var(--text-2);}
+  li{font-size:16px;font-weight:300;line-height:1.8;margin-bottom:8px;}
+  .callout{background:var(--callout-bg);border:1px solid var(--callout-border);border-radius:12px;padding:24px 28px;margin:32px 0;}
+  .callout-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+  .callout p{margin:0;font-size:15px;color:var(--text-2);}
+  .callout p+p{margin-top:12px;}
+  .warn{background:var(--warn-bg);border:1px solid var(--warn-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .warn-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#fb923c;margin-bottom:10px;}
+  .warn p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn p+p{margin-top:12px;}
+  .good{background:var(--good-bg);border:1px solid var(--good-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .good-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#22c55e;margin-bottom:10px;}
+  .good p{margin:0;font-size:15px;color:var(--text-2);}
+  .principle-list{display:flex;flex-direction:column;gap:12px;margin:24px 0;}
+  .principle{background:var(--bg-2);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:0 12px 12px 0;padding:20px 24px;}
+  .principle-title{font-size:15px;font-weight:500;color:var(--text);margin-bottom:6px;}
+  .principle-desc{font-size:14px;color:var(--text-2);line-height:1.65;margin:0;}
+  .sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:var(--bg-2);border-top:1px solid var(--border-2);padding:14px 5%;display:flex;align-items:center;justify-content:space-between;gap:16px;backdrop-filter:blur(12px);}
+  .sticky-bar-track{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sticky-bar-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.2s;width:0%;}
+  .sticky-bar-label{font-size:12px;color:var(--text-3);white-space:nowrap;min-width:60px;text-align:right;}
+  .sticky-bar-btn{padding:10px 20px;border-radius:8px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;background:var(--accent);color:#fff;border:none;cursor:pointer;white-space:nowrap;transition:opacity 0.2s;display:none;}
+  .sticky-bar-btn:hover{opacity:0.88;}
+  .sticky-bar-reading{font-size:12px;color:var(--text-3);white-space:nowrap;}
+  @media(max-width:900px){.page-wrapper{grid-template-columns:1fr;}.sidebar{display:none;}.content{padding:40px 24px 120px;}h1{font-size:38px;}}
+  @media(max-width:600px){.content{padding:28px 16px 120px;}h1{font-size:30px;}h2{font-size:24px;}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="index.html" class="nav-back">&#127968; Home</a>
+    <div class="nav-divider"></div>
+    <a href="courses.html" class="nav-back">&#8592; AI and Society</a>
+    <div class="nav-divider"></div>
+    <span class="nav-label">Module 4</span>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">&#9728;</span></button>
+</nav>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+
+<div class="page-wrapper">
+<aside class="sidebar">
+  <div class="sidebar-course">Course</div>
+  <div class="sidebar-course-name">AI and Society</div>
+  <div class="sidebar-module"><a href="society-module-1.html" class="sidebar-module-link"><span class="sidebar-num">1</span>The Social Impact of AI</a></div>
+  <div class="sidebar-module"><a href="society-module-2.html" class="sidebar-module-link"><span class="sidebar-num">2</span>Labor Markets and Automation</a></div>
+  <div class="sidebar-module"><a href="society-module-3.html" class="sidebar-module-link"><span class="sidebar-num">3</span>AI and Economic Inequality</a></div>
+  <div class="sidebar-module"><a href="society-module-4.html" class="sidebar-module-link active"><span class="sidebar-num">4</span>Algorithmic Bias and Justice</a></div>
+  <div class="sidebar-module"><a href="society-module-5.html" class="sidebar-module-link"><span class="sidebar-num">5</span>AI and Human Relationships</a></div>
+  <div class="sidebar-module"><a href="society-module-6.html" class="sidebar-module-link"><span class="sidebar-num">6</span>AI in Media Ecosystems</a></div>
+  <div class="sidebar-module"><a href="society-module-7.html" class="sidebar-module-link"><span class="sidebar-num">7</span>The Environmental Cost of AI</a></div>
+  <div class="sidebar-module"><a href="society-module-8.html" class="sidebar-module-link"><span class="sidebar-num">8</span>Global Perspectives on AI</a></div>
+  <div class="sidebar-module"><a href="society-module-9.html" class="sidebar-module-link"><span class="sidebar-num">9</span>AI Ethics and Human Values</a></div>
+  <div class="sidebar-module"><a href="society-module-10.html" class="sidebar-module-link"><span class="sidebar-num">10</span>An Equitable AI Future</a></div>
+  <div class="sidebar-module"><a href="quiz-society.html" class="sidebar-module-link" style="color:var(--accent);margin-top:4px;"><span class="sidebar-num" style="background:var(--accent-dim);color:var(--accent);">&#10022;</span>Final Assessment</a></div>
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-progress-label"><span>Course progress</span><span style="color:var(--accent);">4 / 10</span></div>
+  <div class="sidebar-progress-track"><div class="sidebar-progress-fill"></div></div>
+</aside>
+
+<main>
+<div class="content">
+  <div class="module-eyebrow"><span class="module-tag">Module 4</span><span class="module-meta">21 min read · AI and Society</span></div>
+  <h1>Algorithmic Bias and Social Justice</h1>
+
+  <p class="intro-text">One of the most consequential findings in the study of AI systems is that they reliably encode and often amplify the biases present in their training data and the social contexts of their design. These are not marginal edge cases. Documented algorithmic biases affect who receives loans, who is flagged by police surveillance, who gets job interviews, and who is denied healthcare — with particular harm falling on those who already face structural disadvantage. Understanding the mechanisms and stakes of algorithmic bias is essential for any serious engagement with AI's social implications.</p>
+
+  <h2>What algorithmic bias is and is not</h2>
+  <p>It is important to distinguish algorithmic bias from simple algorithmic error. Every AI system makes mistakes — that is unavoidable. Algorithmic bias refers specifically to systematic, patterned errors that fall disproportionately on certain groups, typically groups that are already disadvantaged by race, gender, age, disability, or class. When a system is more likely to misidentify Black faces than white ones, or to recommend men for senior job listings and women for junior ones, that is bias in the relevant sense — not random error but structured error that reproduces social inequality.</p>
+  <p>Bias can enter AI systems at multiple points. Training data that reflects historical patterns of discrimination will produce systems that discriminate in similar ways — a hiring algorithm trained on historical hiring decisions from a company that historically discriminated will learn to discriminate. The choice of what to optimize for matters: optimizing a recidivism prediction tool for overall accuracy may produce a system that is far more accurate for white defendants than for Black defendants while appearing accurate in aggregate. The features included in a model can encode protected characteristics indirectly: zip code correlates with race; type of car with income; frequency of emergency room visits with disability status.</p>
+
+  <div class="callout">
+    <div class="callout-label">The COMPAS case</div>
+    <p>The COMPAS recidivism prediction tool, widely used in US criminal sentencing and parole decisions, was the subject of a landmark 2016 ProPublica investigation that found Black defendants were nearly twice as likely as white defendants to be falsely flagged as high risk. The company responded that the tool was "fair" by a different statistical definition of fairness — overall accuracy rates were similar across racial groups. This dispute illustrated a fundamental mathematical reality: different statistical definitions of fairness are sometimes mutually incompatible. You cannot always simultaneously achieve equal false positive rates, equal false negative rates, and equal predictive accuracy across groups. This is not a technical problem awaiting a technical fix; it is a value choice about which kind of error is more harmful.</p>
+  </div>
+
+  <h2>Facial recognition and the surveillance state</h2>
+  <p>Facial recognition technology has become one of the most contested arenas of AI bias and civil liberties. Comprehensive research by Joy Buolamwini and Timnit Gebru at MIT — part of the "Gender Shades" project — found that commercial facial recognition systems from major technology companies misidentified the gender of darker-skinned women at error rates as high as 34%, compared to less than 1% for lighter-skinned men. The disparities correlated with both skin tone and gender, with Black women facing the highest error rates in most systems tested.</p>
+  <p>These accuracy disparities have immediate social justice implications. Law enforcement agencies in multiple countries have used facial recognition to identify criminal suspects — and multiple cases have been documented in which Black men were wrongly identified and arrested based on false facial recognition matches. In the United States, Robert Williams, Michael Oliver, and Nijeer Parks were among those arrested based on erroneous facial recognition identifications.</p>
+  <p>Beyond accuracy, the use of facial recognition in public spaces raises broader civil liberties questions. Mass facial recognition surveillance enables identification and tracking of individuals at a scale previously impossible, with particular implications for political organizing, religious practice, and lawful protest. Cities including San Francisco, Boston, and Portland have enacted bans on government use of facial recognition. The European Union's AI Act restricts its use in public spaces. The debate is far from settled, and different societies are arriving at different balances between security claims and liberty concerns.</p>
+
+  <h2>Bias in hiring, credit, and healthcare</h2>
+  <p>Algorithmic bias extends well beyond criminal justice. In hiring, multiple audits of AI recruitment tools have found patterns of gender and racial bias. Amazon developed and then abandoned an AI recruiting tool that downgraded resumes containing the word "women's" (as in "women's chess club") and systematically preferred candidates from predominantly male universities. Research using resume audit methods has documented that AI screening tools exhibit racial name discrimination similar to or exceeding that found in human screeners.</p>
+  <p>In consumer credit, algorithmic credit scoring raises complex fairness questions. Credit scores incorporate variables — employment history, address, credit history length — that correlate with race and historical discrimination. This can produce race-disparate outcomes even without intentional discrimination. Research by the National Community Reinvestment Coalition has found that AI mortgage lending tools continue to deny applications from Black and Latino applicants at higher rates than white applicants with comparable financial profiles.</p>
+  <p>In healthcare, algorithmic tools that guide treatment decisions have shown troubling patterns. A widely used commercial algorithm that predicted healthcare needs for hospital patients was found by research published in Science in 2019 to systematically underestimate the health needs of Black patients relative to equally sick white patients — because it used healthcare expenditure as a proxy for health need, and Black patients had historically spent less on healthcare, a pattern driven by access barriers rather than need. The algorithm was effectively penalizing patients for the consequences of past discrimination in healthcare access.</p>
+
+  <div class="warn">
+    <div class="warn-label">The automation objectivity myth</div>
+    <p>A persistent misconception is that algorithmic decision-making is inherently more objective and fair than human decision-making because it is not subject to conscious prejudice. The evidence does not support this. Algorithms encode the biases in their training data, the objectives chosen by their designers, and the social contexts into which they are deployed. They often make discriminatory decisions more rapidly, at greater scale, and with less visibility or recourse than human decision-makers. The veneer of technical objectivity can in some cases make discriminatory outcomes harder to challenge, not easier.</p>
+  </div>
+
+  <h2>Fairness: competing definitions and genuine trade-offs</h2>
+  <p>The field of algorithmic fairness has developed multiple formal definitions of what it means for an algorithm to treat people fairly. These include demographic parity (equal rates of positive outcomes across groups), equalized odds (equal true positive and false positive rates across groups), calibration (equal accuracy of probability estimates across groups), and individual fairness (similar individuals receive similar treatment). A central finding of the field is that these definitions are often mathematically incompatible — satisfying one frequently makes it impossible to satisfy others.</p>
+  <p>This is not merely an abstract mathematical curiosity. It reflects genuine value disagreements about what fairness requires. Is a bail algorithm fair if it produces equal false positive rates across racial groups, even if it jails more people? Is it fair if it produces equal accuracy across groups even if one group's false positives disproportionately affect them? These are not questions that mathematics can answer. They are questions about how we value liberty, safety, and equality — questions that are fundamentally political and ethical rather than technical.</p>
+
+  <h2>Accountability and structural responses</h2>
+  <p>Addressing algorithmic bias requires both technical and structural responses. Technically, bias auditing — systematic testing of AI systems for disparate impact across demographic groups — is increasingly recognized as a necessary component of responsible AI deployment. Explainable AI research aims to make algorithmic decisions more interpretable and subject to meaningful human review. Data practices that attend to representativeness and historical bias in training data can reduce some bias at the source.</p>
+  <p>Structurally, legal frameworks governing discrimination — the US Fair Housing Act, Equal Credit Opportunity Act, Civil Rights Act Title VII — provide some coverage for algorithmic discrimination but were not designed with automated decision systems in mind and have significant enforcement gaps. The EU AI Act classifies certain high-risk AI applications, including those affecting employment, education, and essential services, as requiring conformity assessments and transparency obligations. Data protection regulations like GDPR provide rights to explanation and challenge in automated decisions. Regulatory frameworks are evolving, but enforcement capacity and technical sophistication in regulatory agencies remain limited.</p>
+
+  <div class="good">
+    <div class="good-label">The value of auditing and disclosure</div>
+    <p>One of the most practically actionable responses to algorithmic bias is mandatory algorithmic auditing and impact disclosure. When organizations are required to test their AI systems for disparate impact and to disclose the results, the combination of transparency and accountability creates genuine pressure to address bias. Civil society organizations, journalists, and researchers can then engage with the findings. The absence of such requirements allows harmful bias to persist invisibly — which is often the more comfortable outcome for those deploying the systems.</p>
+  </div>
+
+</div>
+</main>
+</div>
+
+<div class="sticky-bar" id="sticky-bar">
+  <div class="sticky-bar-reading" id="sticky-reading">Read to the end to unlock the next module</div>
+  <div class="sticky-bar-track"><div class="sticky-bar-fill" id="sticky-fill"></div></div>
+  <div class="sticky-bar-label" id="sticky-label">0%</div>
+  <button class="sticky-bar-btn" id="sticky-btn" onclick="completeAndNext()">Module 5: AI and Human Relationships &#8594;</button>
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import { getFirestore, doc, setDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  const app = initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+  const auth = getAuth(app); const db = getFirestore(app);
+  let currentUser = null;
+  onAuthStateChanged(auth, u => { currentUser = u; });
+
+  window.toggleTheme=function(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='&#9790;'):(h.setAttribute('data-theme','dark'),i.textContent='&#9728;');};
+  window.addEventListener('scroll',()=>{const d=document.documentElement,s=d.scrollTop||document.body.scrollTop,t=d.scrollHeight-d.clientHeight;document.getElementById('progress').style.width=(s/t*100)+'%';});
+
+  let unlocked=false;
+  function updateScrollProgress(){
+    const scrolled=window.scrollY+window.innerHeight;
+    const total=document.documentElement.scrollHeight;
+    const pct=Math.min(100,Math.round((scrolled/total)*100));
+    const fill=document.getElementById('sticky-fill');
+    const label=document.getElementById('sticky-label');
+    const btn=document.getElementById('sticky-btn');
+    const reading=document.getElementById('sticky-reading');
+    if(fill)fill.style.width=pct+'%';
+    if(label)label.textContent=pct+'%';
+    if(pct>=95&&!unlocked){
+      unlocked=true;
+      if(btn)btn.style.display='block';
+      if(reading)reading.style.display='none';
+      if(fill)fill.style.background='#22c55e';
+      if(label)label.style.color='#22c55e';
+    }
+  }
+  window.addEventListener('scroll',updateScrollProgress);
+  updateScrollProgress();
+
+  window.completeAndNext=async function(){
+    if(currentUser){
+      try{
+        await setDoc(doc(db,'users',currentUser.uid),{societyModules:arrayUnion('m4')},{merge:true});
+      }catch(e){}
+    }
+    window.location.href='society-module-5.html';
+  };
+</script>
+</body>
+</html>

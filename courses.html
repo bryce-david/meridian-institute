@@ -2,14 +2,7 @@
 <html lang="en" data-theme="dark">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>All Courses — Meridian Institute of AI</title>
-<meta name="description" content="Browse 7 free AI courses. Start with AI Foundations or go straight to ChatGPT, Claude, Gemini, Perplexity, Finance, or Law. All courses free at Meridian.">
-<meta name="robots" content="index, follow">
-<meta property="og:title" content="All Courses — Meridian Institute of AI">
-<meta property="og:description" content="Browse 7 free AI courses. Start with AI Foundations or go straight to ChatGPT, Claude, Gemini, Perplexity, Finance, or Law. All courses free at Meridian.">
-<meta property="og:url" content="https://meridianinstituteai.com/courses.html">
-<meta property="og:type" content="website">
-<link rel="canonical" href="https://meridianinstituteai.com/courses.html">
+<title>Courses — Meridian Institute of AI</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--nav-bg:rgba(8,8,8,0.95);}
@@ -25,28 +18,19 @@
   .nav-link:hover,.nav-link.active{background:var(--bg-3);color:var(--text);}
   .nav-btn{font-size:13px;font-weight:500;color:var(--text);background:var(--bg-3);border:1px solid var(--border-2);padding:7px 16px;border-radius:8px;text-decoration:none;margin-left:4px;}
   .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;color:var(--text-2);font-size:14px;margin-left:8px;}
-
   .page{max-width:1060px;margin:0 auto;padding:80px 5% 80px;}
-
-  /* Anchor nav */
   .anchor-nav{display:flex;align-items:center;gap:6px;margin-bottom:48px;padding:10px 0;border-bottom:1px solid var(--border);flex-wrap:wrap;}
   .anchor-link{font-size:12px;font-weight:500;color:var(--text-3);text-decoration:none;padding:5px 12px;border-radius:6px;transition:all 0.2s;border:1px solid transparent;}
   .anchor-link:hover{color:var(--text);background:var(--bg-2);border-color:var(--border);}
   .anchor-sep{color:var(--border-2);font-size:12px;}
-
-  /* Hero */
   .hero{margin-bottom:48px;}
   .hero-eyebrow{font-size:11px;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;color:var(--text-3);margin-bottom:12px;}
   .hero-title{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1.05;color:var(--text);margin-bottom:14px;}
   .hero-sub{font-size:16px;font-weight:300;color:var(--text-2);line-height:1.7;max-width:560px;}
-
-  /* Section */
   .section{margin-bottom:52px;}
   .section-header{display:flex;align-items:baseline;gap:16px;margin-bottom:20px;padding-bottom:10px;border-bottom:1px solid var(--border);}
   .section-label{font-size:10px;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;color:var(--text-3);}
   .section-desc{font-size:13px;color:var(--text-3);}
-
-  /* Course cards */
   .course-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;}
   .course-card{background:var(--bg-2);border:1px solid var(--border);border-radius:14px;overflow:hidden;text-decoration:none;display:flex;flex-direction:column;transition:border-color 0.2s,transform 0.2s;}
   .course-card:hover{transform:translateY(-2px);}
@@ -59,15 +43,10 @@
   .course-footer{padding:14px 22px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
   .course-cta{font-size:13px;font-weight:500;}
   .course-level{font-size:11px;color:var(--text-3);}
-
-  /* Foundations full-width variant */
   .course-card.wide{grid-column:1/-1;flex-direction:row;align-items:center;}
   .course-card.wide .course-card-body{padding:24px 28px;}
   .course-card.wide .course-footer{border-top:none;border-left:1px solid var(--border);padding:24px 28px;flex-direction:column;align-items:flex-start;gap:8px;min-width:160px;}
-
-  /* Capstone */
   .capstone-card{background:linear-gradient(135deg,rgba(240,180,41,0.05) 0%,var(--bg-2) 60%);border:1px solid rgba(240,180,41,0.2);border-radius:16px;padding:28px 32px;display:flex;align-items:center;justify-content:space-between;gap:32px;}
-  .capstone-left{}
   .capstone-eyebrow{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#F0B429;margin-bottom:10px;}
   .capstone-title{font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:300;color:var(--text);margin-bottom:8px;}
   .capstone-desc{font-size:14px;color:var(--text-2);line-height:1.65;margin-bottom:18px;max-width:480px;}
@@ -77,24 +56,12 @@
   .capstone-btn{display:inline-block;padding:11px 24px;background:#F0B429;color:#080808;border-radius:9px;font-size:13px;font-weight:500;text-decoration:none;transition:opacity 0.2s;}
   .capstone-btn:hover{opacity:0.88;}
   .capstone-icon{font-size:56px;flex-shrink:0;}
-
-  /* Coming soon */
-  .coming-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px;}
-  .coming-card{background:var(--bg-2);border:1px solid var(--border);border-radius:12px;padding:20px;opacity:0.5;}
-  .coming-tag{font-size:10px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-3);background:var(--bg-3);padding:3px 9px;border-radius:100px;display:inline-block;margin-bottom:10px;}
-  .coming-title{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:300;color:var(--text);margin-bottom:6px;}
-  .coming-desc{font-size:13px;color:var(--text-3);line-height:1.55;}
-
   @media(max-width:700px){.hero-title{font-size:38px;}.course-card.wide{flex-direction:column;}.course-card.wide .course-footer{border-left:none;border-top:1px solid var(--border);flex-direction:row;min-width:auto;}.capstone-card{flex-direction:column;}.capstone-icon{display:none;}}
 </style>
-<link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="shortcut icon" href="/favicon.ico">
 </head>
 <body>
 <nav>
-  <a href="index.html" class="nav-logo">
-    <div class="nav-logo-mark">M</div>
-    <span class="nav-logo-text">Meridian</span>
-  </a>
+  <a href="index.html" class="nav-logo"><div class="nav-logo-mark">M</div><span class="nav-logo-text">Meridian</span></a>
   <div class="nav-links">
     <a href="index.html" class="nav-link">Home</a>
     <a href="courses.html" class="nav-link active">Courses</a>
@@ -103,25 +70,18 @@
     <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">☀</span></button>
   </div>
 </nav>
-
 <div class="page">
-
-  <!-- Anchor nav -->
   <div class="anchor-nav">
-    <a href="#beginner" class="anchor-link">Beginner</a>
-    <span class="anchor-sep">·</span>
-    <a href="#intermediate" class="anchor-link">Intermediate</a>
-    <span class="anchor-sep">·</span>
-    <a href="#capstone" class="anchor-link">Capstone</a>
-    <span class="anchor-sep">·</span>
-    <a href="#advanced" class="anchor-link">Advanced</a>
+    <a href="#beginner" class="anchor-link">Beginner</a><span class="anchor-sep">·</span>
+    <a href="#intermediate" class="anchor-link">Intermediate</a><span class="anchor-sep">·</span>
+    <a href="#capstone" class="anchor-link">Capstone</a><span class="anchor-sep">·</span>
+    <a href="#advanced" class="anchor-link">Advanced</a><span class="anchor-sep">·</span>
+    <a href="#expert" class="anchor-link">Expert</a>
   </div>
-
-  <!-- Hero -->
   <div class="hero">
     <div class="hero-eyebrow">Meridian Institute of AI — Curriculum</div>
     <div class="hero-title">The full AI<br>education stack.</div>
-    <div class="hero-sub">From understanding what AI is, to mastering the tools that define modern professional work, to applying AI in specialized fields like finance and law. Build a credential stack that means something.</div>
+    <div class="hero-sub">From understanding what AI is, to mastering the tools that define modern professional work, to applying AI in specialized fields like finance, law, healthcare, and beyond. Build a credential stack that means something.</div>
   </div>
 
   <!-- BEGINNER -->
@@ -131,7 +91,7 @@
       <div class="section-desc">Start here. No prior knowledge required.</div>
     </div>
     <div class="course-grid">
-      <a href="courses/foundations/module-1.html" class="course-card wide" style="border-color:rgba(91,143,248,0.2);">
+      <a href="module-1-what-ai-actually-is.html" class="course-card wide" style="border-color:rgba(91,143,248,0.2);">
         <div class="course-card-body">
           <div class="course-accent" style="background:#5b8ff8;"></div>
           <div class="course-tag" style="background:rgba(91,143,248,0.1);color:#5b8ff8;">Foundations</div>
@@ -141,7 +101,7 @@
         </div>
         <div class="course-footer">
           <div class="course-cta" style="color:#5b8ff8;">Start →</div>
-          <div class="course-level">Beginner</div>
+          <div class="course-level">Beginner · Free</div>
         </div>
       </a>
     </div>
@@ -154,7 +114,7 @@
       <div class="section-desc">Master the four tools that define professional AI work. Each earns its own certificate.</div>
     </div>
     <div class="course-grid">
-      <a href="courses/claude/module-1.html" class="course-card" style="border-color:rgba(217,119,87,0.15);">
+      <a href="claude-module-1.html" class="course-card" style="border-color:rgba(217,119,87,0.15);">
         <div class="course-card-body">
           <div class="course-accent" style="background:#D97757;"></div>
           <div class="course-tag" style="background:rgba(217,119,87,0.1);color:#D97757;">Tool Mastery</div>
@@ -162,12 +122,9 @@
           <div class="course-desc">Constitutional AI, model lineup, XML prompting, Projects, advanced features, and honest competitive analysis.</div>
           <div class="course-meta">7 modules · Final quiz · Certificate</div>
         </div>
-        <div class="course-footer">
-          <div class="course-cta" style="color:#D97757;">Start →</div>
-          <div class="course-level">Intermediate</div>
-        </div>
+        <div class="course-footer"><div class="course-cta" style="color:#D97757;">Start →</div><div class="course-level">Intermediate</div></div>
       </a>
-      <a href="courses/chatgpt/module-1.html" class="course-card" style="border-color:rgba(16,163,127,0.15);">
+      <a href="chatgpt-module-1.html" class="course-card" style="border-color:rgba(16,163,127,0.15);">
         <div class="course-card-body">
           <div class="course-accent" style="background:#10a37f;"></div>
           <div class="course-tag" style="background:rgba(16,163,127,0.1);color:#10a37f;">Tool Mastery</div>
@@ -175,12 +132,9 @@
           <div class="course-desc">GPT-4o vs o-series reasoning models, RLHF prompting, Custom GPTs, DALL-E 3, Code Interpreter, and real workflows.</div>
           <div class="course-meta">7 modules · Final quiz · Certificate</div>
         </div>
-        <div class="course-footer">
-          <div class="course-cta" style="color:#10a37f;">Start →</div>
-          <div class="course-level">Intermediate</div>
-        </div>
+        <div class="course-footer"><div class="course-cta" style="color:#10a37f;">Start →</div><div class="course-level">Intermediate</div></div>
       </a>
-      <a href="courses/gemini/module-1.html" class="course-card" style="border-color:rgba(66,133,244,0.15);">
+      <a href="gemini-module-1.html" class="course-card" style="border-color:rgba(66,133,244,0.15);">
         <div class="course-card-body">
           <div class="course-accent" style="background:#4285f4;"></div>
           <div class="course-tag" style="background:rgba(66,133,244,0.1);color:#4285f4;">Tool Mastery</div>
@@ -188,12 +142,9 @@
           <div class="course-desc">DeepMind merger, Flash/Pro/Advanced lineup, 1M token context, Deep Research, and Google Workspace integration.</div>
           <div class="course-meta">7 modules · Final quiz · Certificate</div>
         </div>
-        <div class="course-footer">
-          <div class="course-cta" style="color:#4285f4;">Start →</div>
-          <div class="course-level">Intermediate</div>
-        </div>
+        <div class="course-footer"><div class="course-cta" style="color:#4285f4;">Start →</div><div class="course-level">Intermediate</div></div>
       </a>
-      <a href="courses/perplexity/module-1.html" class="course-card" style="border-color:rgba(0,173,181,0.15);">
+      <a href="perplexity-module-1.html" class="course-card" style="border-color:rgba(0,173,181,0.15);">
         <div class="course-card-body">
           <div class="course-accent" style="background:#00ADB5;"></div>
           <div class="course-tag" style="background:rgba(0,173,181,0.1);color:#00ADB5;">Tool Mastery</div>
@@ -201,10 +152,7 @@
           <div class="course-desc">Answer engine architecture, the 5-step pipeline, Focus modes, Spaces for team research, and the Perplexity-to-Claude workflow.</div>
           <div class="course-meta">7 modules · Final quiz · Certificate</div>
         </div>
-        <div class="course-footer">
-          <div class="course-cta" style="color:#00ADB5;">Start →</div>
-          <div class="course-level">Intermediate</div>
-        </div>
+        <div class="course-footer"><div class="course-cta" style="color:#00ADB5;">Start →</div><div class="course-level">Intermediate</div></div>
       </a>
     </div>
   </div>
@@ -213,7 +161,7 @@
   <div class="section" id="capstone">
     <div class="section-header">
       <div class="section-label">Capstone Certification</div>
-      <div class="section-desc">Requires all 5 course certificates.</div>
+      <div class="section-desc">Requires all 5 core course certificates.</div>
     </div>
     <div class="capstone-card">
       <div class="capstone-left">
@@ -233,42 +181,184 @@
     </div>
   </div>
 
-  <!-- ADVANCED / DOMAIN TRACKS -->
+  <!-- ADVANCED -->
   <div class="section" id="advanced">
     <div class="section-header">
       <div class="section-label">Advanced — Track 3 · Domain Mastery</div>
       <div class="section-desc">Deep, professional-grade AI tracks for specific fields. Each is 10 modules and earns its own certificate.</div>
     </div>
     <div class="course-grid">
-      <a href="courses/finance/module-1.html" class="course-card" style="border-color:rgba(45,125,70,0.15);">
+      <a href="students-module-1.html" class="course-card" style="border-color:rgba(109,74,255,0.15);">
+        <div class="course-card-body">
+          <div class="course-accent" style="background:#6D4AFF;"></div>
+          <div class="course-tag" style="background:rgba(109,74,255,0.1);color:#6D4AFF;">Domain Mastery</div>
+          <div class="course-title">AI for Students</div>
+          <div class="course-desc">Research, writing, studying, math, creative projects, academic integrity, and building your personal AI toolkit as a student.</div>
+          <div class="course-meta">10 modules · 50-question final · Certificate</div>
+        </div>
+        <div class="course-footer"><div class="course-cta" style="color:#6D4AFF;">Start →</div><div class="course-level">Advanced</div></div>
+      </a>
+      <a href="finance-module-1.html" class="course-card" style="border-color:rgba(45,125,70,0.15);">
         <div class="course-card-body">
           <div class="course-accent" style="background:#2D7D46;"></div>
           <div class="course-tag" style="background:rgba(45,125,70,0.1);color:#2D7D46;">Domain Mastery</div>
           <div class="course-title">AI in Finance</div>
-          <div class="course-desc">How LLMs handle numbers, market and company research, statement analysis, modeling, valuation, filings, risk, compliance, and building a research workflow.</div>
+          <div class="course-desc">Market research, statement analysis, modeling, valuation, filings, risk, compliance, and building a professional research workflow.</div>
           <div class="course-meta">10 modules · 50-question final · Certificate</div>
         </div>
-        <div class="course-footer">
-          <div class="course-cta" style="color:#2D7D46;">Start →</div>
-          <div class="course-level">Advanced</div>
-        </div>
+        <div class="course-footer"><div class="course-cta" style="color:#2D7D46;">Start →</div><div class="course-level">Advanced</div></div>
       </a>
-      <a href="courses/law/module-1.html" class="course-card" style="border-color:rgba(139,46,60,0.15);">
+      <a href="law-module-1.html" class="course-card" style="border-color:rgba(139,46,60,0.15);">
         <div class="course-card-body">
           <div class="course-accent" style="background:#8B2E3C;"></div>
           <div class="course-tag" style="background:rgba(139,46,60,0.1);color:#8B2E3C;">Domain Mastery</div>
           <div class="course-title">AI in Law</div>
-          <div class="course-desc">Why hallucination is a legal emergency, legal research, contract review, discovery, drafting, case strategy, confidentiality and ethics, and the limits of AI.</div>
+          <div class="course-desc">Legal research, contract review, discovery, drafting, case strategy, confidentiality, ethics, and the limits of AI in legal practice.</div>
           <div class="course-meta">10 modules · 50-question final · Certificate</div>
         </div>
-        <div class="course-footer">
-          <div class="course-cta" style="color:#8B2E3C;">Start →</div>
-          <div class="course-level">Advanced</div>
+        <div class="course-footer"><div class="course-cta" style="color:#8B2E3C;">Start →</div><div class="course-level">Advanced</div></div>
+      </a>
+      <a href="healthcare-module-1.html" class="course-card" style="border-color:rgba(190,24,93,0.15);">
+        <div class="course-card-body">
+          <div class="course-accent" style="background:#BE185D;"></div>
+          <div class="course-tag" style="background:rgba(190,24,93,0.1);color:#BE185D;">Domain Mastery</div>
+          <div class="course-title">AI in Healthcare</div>
+          <div class="course-desc">Diagnostic AI, drug discovery, clinical research, patient data analytics, mental health applications, and the ethics of AI in medicine.</div>
+          <div class="course-meta">10 modules · 50-question final · Certificate</div>
         </div>
+        <div class="course-footer"><div class="course-cta" style="color:#BE185D;">Start →</div><div class="course-level">Advanced</div></div>
+      </a>
+      <a href="cybersecurity-module-1.html" class="course-card" style="border-color:rgba(14,116,144,0.15);">
+        <div class="course-card-body">
+          <div class="course-accent" style="background:#0E7490;"></div>
+          <div class="course-tag" style="background:rgba(14,116,144,0.1);color:#0E7490;">Domain Mastery</div>
+          <div class="course-title">AI in Cybersecurity</div>
+          <div class="course-desc">Threat detection, AI-powered attacks, vulnerability analysis, incident response, adversarial AI, and the future of security operations.</div>
+          <div class="course-meta">10 modules · 50-question final · Certificate</div>
+        </div>
+        <div class="course-footer"><div class="course-cta" style="color:#0E7490;">Start →</div><div class="course-level">Advanced</div></div>
+      </a>
+      <a href="education-module-1.html" class="course-card" style="border-color:rgba(2,132,199,0.15);">
+        <div class="course-card-body">
+          <div class="course-accent" style="background:#0284C7;"></div>
+          <div class="course-tag" style="background:rgba(2,132,199,0.1);color:#0284C7;">Domain Mastery</div>
+          <div class="course-title">AI in Education</div>
+          <div class="course-desc">Personalized learning, curriculum design, adaptive assessment, accessibility, and implementing AI across educational institutions.</div>
+          <div class="course-meta">10 modules · 50-question final · Certificate</div>
+        </div>
+        <div class="course-footer"><div class="course-cta" style="color:#0284C7;">Start →</div><div class="course-level">Advanced</div></div>
+      </a>
+      <a href="politics-module-1.html" class="course-card" style="border-color:rgba(157,23,77,0.15);">
+        <div class="course-card-body">
+          <div class="course-accent" style="background:#9D174D;"></div>
+          <div class="course-tag" style="background:rgba(157,23,77,0.1);color:#9D174D;">Domain Mastery</div>
+          <div class="course-title">AI in Politics</div>
+          <div class="course-desc">Disinformation, electoral targeting, policy analysis, national security, surveillance, and the future of democratic governance.</div>
+          <div class="course-meta">10 modules · 50-question final · Certificate</div>
+        </div>
+        <div class="course-footer"><div class="course-cta" style="color:#9D174D;">Start →</div><div class="course-level">Advanced</div></div>
+      </a>
+      <a href="governance-module-1.html" class="course-card" style="border-color:rgba(146,64,14,0.15);">
+        <div class="course-card-body">
+          <div class="course-accent" style="background:#92400E;"></div>
+          <div class="course-tag" style="background:rgba(146,64,14,0.1);color:#92400E;">Domain Mastery</div>
+          <div class="course-title">AI in Governance</div>
+          <div class="course-desc">Regulatory frameworks, algorithmic accountability, public sector AI, international policy, and building responsible governance structures.</div>
+          <div class="course-meta">10 modules · 50-question final · Certificate</div>
+        </div>
+        <div class="course-footer"><div class="course-cta" style="color:#92400E;">Start →</div><div class="course-level">Advanced</div></div>
+      </a>
+      <a href="society-module-1.html" class="course-card" style="border-color:rgba(124,58,237,0.15);">
+        <div class="course-card-body">
+          <div class="course-accent" style="background:#7C3AED;"></div>
+          <div class="course-tag" style="background:rgba(124,58,237,0.1);color:#7C3AED;">Domain Mastery</div>
+          <div class="course-title">AI and Society</div>
+          <div class="course-desc">Labor, inequality, privacy, identity, media ecosystems, criminal justice, environmental impact, and the long-term human implications of AI.</div>
+          <div class="course-meta">10 modules · 50-question final · Certificate</div>
+        </div>
+        <div class="course-footer"><div class="course-cta" style="color:#7C3AED;">Start →</div><div class="course-level">Advanced</div></div>
       </a>
     </div>
   </div>
 
+  <div class="section" id="expert">
+    <div class="section-header">
+      <div class="section-label">Expert — Track 4 · Mastery Specializations</div>
+      <div class="section-desc">Deep technical and strategic tracks. Each is 10 modules, draws from a 50-question pool, and earns its own certificate.</div>
+    </div>
+    <div class="course-grid">
+      <a href="prompt-module-1.html" class="course-card" style="border-color:rgba(180,83,9,0.15);">
+        <div class="course-card-body">
+          <div class="course-accent" style="background:#B45309;"></div>
+          <div class="course-tag" style="background:rgba(180,83,9,0.1);color:#B45309;">Expert</div>
+          <div class="course-title">Prompt Engineering Mastery</div>
+          <div class="course-desc">Chain-of-thought, few-shot, system prompts, adversarial testing, prompt chaining, and building production-grade prompt frameworks.</div>
+          <div class="course-meta">10 modules · 50-question final · Certificate</div>
+        </div>
+        <div class="course-footer"><div class="course-cta" style="color:#B45309;">Start →</div><div class="course-level">Expert</div></div>
+      </a>
+      <a href="strategy-module-1.html" class="course-card" style="border-color:rgba(30,64,175,0.15);">
+        <div class="course-card-body">
+          <div class="course-accent" style="background:#1E40AF;"></div>
+          <div class="course-tag" style="background:rgba(30,64,175,0.1);color:#1E40AF;">Expert</div>
+          <div class="course-title">AI Strategy for Leaders</div>
+          <div class="course-desc">Build vs. buy vs. partner decisions, data strategy, AI talent, ROI measurement, risk governance, and building an AI-first organization.</div>
+          <div class="course-meta">10 modules · 50-question final · Certificate</div>
+        </div>
+        <div class="course-footer"><div class="course-cta" style="color:#1E40AF;">Start →</div><div class="course-level">Expert</div></div>
+      </a>
+      <a href="ml-module-1.html" class="course-card" style="border-color:rgba(6,95,70,0.15);">
+        <div class="course-card-body">
+          <div class="course-accent" style="background:#065F46;"></div>
+          <div class="course-tag" style="background:rgba(6,95,70,0.1);color:#065F46;">Expert</div>
+          <div class="course-title">Machine Learning Explained</div>
+          <div class="course-desc">Supervised learning, neural networks, transformers, model evaluation, MLOps, and foundation models — no math degree required.</div>
+          <div class="course-meta">10 modules · 50-question final · Certificate</div>
+        </div>
+        <div class="course-footer"><div class="course-cta" style="color:#065F46;">Start →</div><div class="course-level">Expert</div></div>
+      </a>
+      <a href="agents-module-1.html" class="course-card" style="border-color:rgba(107,33,168,0.15);">
+        <div class="course-card-body">
+          <div class="course-accent" style="background:#6B21A8;"></div>
+          <div class="course-tag" style="background:rgba(107,33,168,0.1);color:#6B21A8;">Expert</div>
+          <div class="course-title">Agentic AI and Autonomous Systems</div>
+          <div class="course-desc">The agent loop, tool use, memory systems, multi-agent architectures, RAG, agent safety, and building with real frameworks.</div>
+          <div class="course-meta">10 modules · 50-question final · Certificate</div>
+        </div>
+        <div class="course-footer"><div class="course-cta" style="color:#6B21A8;">Start →</div><div class="course-level">Expert</div></div>
+      </a>
+      <a href="safety-module-1.html" class="course-card" style="border-color:rgba(127,29,29,0.15);">
+        <div class="course-card-body">
+          <div class="course-accent" style="background:#7F1D1D;"></div>
+          <div class="course-tag" style="background:rgba(127,29,29,0.1);color:#7F1D1D;">Expert</div>
+          <div class="course-title">AI Safety and Alignment</div>
+          <div class="course-desc">The alignment problem, RLHF, Constitutional AI, interpretability research, emergent capabilities, governance, and paths to safe AI.</div>
+          <div class="course-meta">10 modules · 50-question final · Certificate</div>
+        </div>
+        <div class="course-footer"><div class="course-cta" style="color:#7F1D1D;">Start →</div><div class="course-level">Expert</div></div>
+      </a>
+      <a href="apis-module-1.html" class="course-card" style="border-color:rgba(15,76,129,0.15);">
+        <div class="course-card-body">
+          <div class="course-accent" style="background:#0F4C81;"></div>
+          <div class="course-tag" style="background:rgba(15,76,129,0.1);color:#0F4C81;">Expert</div>
+          <div class="course-title">Building with AI APIs</div>
+          <div class="course-desc">Chat completions, streaming, embeddings, function calling, structured outputs, production reliability, and multi-provider architecture.</div>
+          <div class="course-meta">10 modules · 50-question final · Certificate</div>
+        </div>
+        <div class="course-footer"><div class="course-cta" style="color:#0F4C81;">Start →</div><div class="course-level">Expert</div></div>
+      </a>
+      <a href="research-module-1.html" class="course-card" style="border-color:rgba(6,78,59,0.15);">
+        <div class="course-card-body">
+          <div class="course-accent" style="background:#064E3B;"></div>
+          <div class="course-tag" style="background:rgba(6,78,59,0.1);color:#064E3B;">Expert</div>
+          <div class="course-title">AI for Research and Academia</div>
+          <div class="course-desc">Literature discovery, research writing, data analysis, hypothesis generation, peer review integrity, and the future of AI-augmented science.</div>
+          <div class="course-meta">10 modules · 50-question final · Certificate</div>
+        </div>
+        <div class="course-footer"><div class="course-cta" style="color:#064E3B;">Start →</div><div class="course-level">Expert</div></div>
+      </a>
+    </div>
+  </div>
 </div>
 
 <script type="module">

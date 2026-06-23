@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 4: Data Analysis and Visualization — AI for Research and Academia — Meridian Institute of AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#064E3B;--accent-dim:rgba(6,78,59,0.1);--accent-dim2:rgba(6,78,59,0.05);--nav-bg:rgba(8,8,8,0.9);--callout-bg:rgba(6,78,59,0.07);--callout-border:rgba(6,78,59,0.25);--good-bg:rgba(34,197,94,0.07);--good-border:rgba(34,197,94,0.2);--warn-bg:rgba(251,146,60,0.07);--warn-border:rgba(251,146,60,0.2);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#065F46;--accent-dim:rgba(6,95,70,0.08);--accent-dim2:rgba(6,95,70,0.04);--nav-bg:rgba(250,250,248,0.9);--callout-bg:rgba(6,95,70,0.05);--callout-border:rgba(6,95,70,0.2);--good-bg:rgba(22,163,74,0.06);--good-border:rgba(22,163,74,0.2);--warn-bg:rgba(234,88,12,0.05);--warn-border:rgba(234,88,12,0.2);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;overflow-x:hidden;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.7;overflow-x:hidden;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}
+  .nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}
+  .nav-back{font-size:13px;color:var(--text-2);text-decoration:none;transition:color 0.2s;}
+  .nav-back:hover{color:var(--text);}
+  .nav-label{font-size:13px;color:var(--text-3);}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;transition:all 0.2s;}
+  .theme-toggle:hover{background:var(--bg-3);color:var(--text);}
+  .progress-bar{position:fixed;top:60px;left:0;right:0;z-index:99;height:2px;background:var(--border);}
+  .progress-fill{height:100%;background:var(--accent);width:0%;transition:width 0.1s;}
+  .page-wrapper{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:100vh;padding-top:62px;overflow:hidden;}
+  .sidebar{position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto;border-right:1px solid var(--border);padding:32px 24px;background:var(--bg-2);}
+  .sidebar-course{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;}
+  .sidebar-course-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+  .sidebar-module{margin-bottom:4px;}
+  .sidebar-module-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:13px;color:var(--text-2);text-decoration:none;transition:all 0.2s;line-height:1.4;}
+  .sidebar-module-link:hover{background:var(--bg-3);color:var(--text);}
+  .sidebar-module-link.active{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-num{font-size:11px;font-weight:500;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--bg-4);color:var(--text-3);}
+  .sidebar-module-link.active .sidebar-num{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-divider{height:1px;background:var(--border);margin:20px 0;}
+  .sidebar-progress-label{font-size:12px;color:var(--text-3);margin-bottom:8px;display:flex;justify-content:space-between;}
+  .sidebar-progress-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sidebar-progress-fill{height:100%;width:40%;background:var(--accent);border-radius:2px;}
+  main{display:block;min-width:0;overflow:hidden;}
+  .content{max-width:760px;width:100%;padding:60px 64px 140px;margin:0 auto;}
+  .module-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+  .module-tag{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(6,78,59,0.2);padding:4px 12px;border-radius:100px;}
+  .module-meta{font-size:12px;color:var(--text-3);}
+  h1{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1.05;letter-spacing:-0.02em;color:var(--text);margin-bottom:24px;}
+  .intro-text{font-size:19px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+  h2{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:400;color:var(--text);margin:52px 0 18px;line-height:1.2;}
+  h3{font-size:16px;font-weight:500;color:var(--text);margin:32px 0 12px;}
+  p{font-size:16px;font-weight:300;color:var(--text-2);line-height:1.8;margin-bottom:20px;}
+  strong{font-weight:500;color:var(--text);}
+  em{font-style:italic;}
+  ul,ol{margin:0 0 20px 22px;color:var(--text-2);}
+  li{font-size:16px;font-weight:300;line-height:1.8;margin-bottom:8px;}
+  .callout{background:var(--callout-bg);border:1px solid var(--callout-border);border-radius:12px;padding:24px 28px;margin:32px 0;}
+  .callout-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+  .callout p{margin:0;font-size:15px;color:var(--text-2);}
+  .callout p+p{margin-top:12px;}
+  .good{background:var(--good-bg);border:1px solid var(--good-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .good-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#22c55e;margin-bottom:10px;}
+  .good p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn{background:var(--warn-bg);border:1px solid var(--warn-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .warn-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#fb923c;margin-bottom:10px;}
+  .warn p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn p+p{margin-top:12px;}
+  .principle-list{display:flex;flex-direction:column;gap:12px;margin:24px 0;}
+  .principle{background:var(--bg-2);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:0 12px 12px 0;padding:20px 24px;}
+  .principle-title{font-size:15px;font-weight:500;color:var(--text);margin-bottom:6px;}
+  .principle-desc{font-size:14px;color:var(--text-2);line-height:1.65;margin:0;}
+  .sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:var(--bg-2);border-top:1px solid var(--border-2);padding:14px 5%;display:flex;align-items:center;justify-content:space-between;gap:16px;backdrop-filter:blur(12px);}
+  .sticky-bar-track{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sticky-bar-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.2s;width:0%;}
+  .sticky-bar-label{font-size:12px;color:var(--text-3);white-space:nowrap;min-width:60px;text-align:right;}
+  .sticky-bar-btn{padding:10px 20px;border-radius:8px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;background:var(--accent);color:#fff;border:none;cursor:pointer;white-space:nowrap;transition:opacity 0.2s;display:none;}
+  .sticky-bar-btn:hover{opacity:0.88;}
+  .sticky-bar-reading{font-size:12px;color:var(--text-3);white-space:nowrap;}
+  @media(max-width:900px){.page-wrapper{grid-template-columns:1fr;}.sidebar{display:none;}.content{padding:40px 24px 120px;}h1{font-size:38px;}}
+  @media(max-width:600px){.content{padding:28px 16px 120px;}h1{font-size:30px;}h2{font-size:24px;}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="courses.html" class="nav-back">← AI for Research and Academia</a>
+    <div class="nav-divider"></div>
+    <span class="nav-label">Module 4</span>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">☀</span></button>
+</nav>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+
+<div class="page-wrapper">
+<aside class="sidebar">
+  <div class="sidebar-course">Expert Track</div>
+  <div class="sidebar-course-name">AI for Research and Academia</div>
+  <div class="sidebar-module"><a href="research-module-1.html" class="sidebar-module-link"><span class="sidebar-num">1</span>AI as a Research Partner</a></div>
+  <div class="sidebar-module"><a href="research-module-2.html" class="sidebar-module-link"><span class="sidebar-num">2</span>Literature Discovery and Synthesis</a></div>
+  <div class="sidebar-module"><a href="research-module-3.html" class="sidebar-module-link"><span class="sidebar-num">3</span>Research Writing with AI</a></div>
+  <div class="sidebar-module"><a href="research-module-4.html" class="sidebar-module-link active"><span class="sidebar-num">4</span>Data Analysis and Visualization</a></div>
+  <div class="sidebar-module"><a href="research-module-5.html" class="sidebar-module-link"><span class="sidebar-num">5</span>Hypothesis Generation</a></div>
+  <div class="sidebar-module"><a href="research-module-6.html" class="sidebar-module-link"><span class="sidebar-num">6</span>Peer Review and Integrity</a></div>
+  <div class="sidebar-module"><a href="research-module-7.html" class="sidebar-module-link"><span class="sidebar-num">7</span>Citation Management</a></div>
+  <div class="sidebar-module"><a href="research-module-8.html" class="sidebar-module-link"><span class="sidebar-num">8</span>Communicating Research</a></div>
+  <div class="sidebar-module"><a href="research-module-9.html" class="sidebar-module-link"><span class="sidebar-num">9</span>Collaborative Research</a></div>
+  <div class="sidebar-module"><a href="research-module-10.html" class="sidebar-module-link"><span class="sidebar-num">10</span>The Future of AI-Augmented Science</a></div>
+  <div class="sidebar-module"><a href="quiz-research.html" class="sidebar-module-link" style="color:var(--accent);margin-top:4px;"><span class="sidebar-num" style="background:var(--accent-dim);color:var(--accent);">✦</span>Final Assessment</a></div>
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-progress-label"><span>Course progress</span><span style="color:var(--accent);">4 / 10</span></div>
+  <div class="sidebar-progress-track"><div class="sidebar-progress-fill"></div></div>
+</aside>
+
+<main>
+<div class="content">
+  <div class="module-eyebrow"><span class="module-tag">Module 4 · Expert Track</span><span class="module-meta">24 min read · AI for Research and Academia</span></div>
+  <h1>Data Analysis and Visualization</h1>
+
+  <p class="intro-text">AI has emerged as a capable coding partner for researchers who need to analyse data but are not professional software developers. The ability to generate, explain, and debug Python and R code has made statistical computing more accessible than at any previous point in the history of science. What has not changed — and what AI cannot substitute for — is the statistical judgment required to choose the right analysis, interpret its outputs correctly, and recognise when results are spurious. This module teaches you to leverage AI's genuine capability while keeping your expert judgment in control.</p>
+
+  <h2>AI as a coding partner for data analysis</h2>
+  <p>The dominant paradigm that has emerged among researchers using AI for data work is the coding partner model: you provide the scientific question, the data structure, and the analytical intent; AI translates that intent into executable code that you then review, test, and modify. This is importantly different from asking AI to "analyse my data and tell me the results" — the latter delegates the analytical judgment that is irreplaceable, while the former preserves it.</p>
+  <p>Both <strong>Claude</strong> and <strong>ChatGPT</strong> (with Advanced Data Analysis / Code Interpreter enabled) are effective partners for Python and R code generation. Claude is often preferred for long, complex scripts where maintaining a coherent structure across many functions matters; ChatGPT's Code Interpreter is particularly useful when you want to execute code in real time and see the output directly in the chat interface. For most routine analytical tasks, the choice between them is less important than learning to prompt effectively.</p>
+  <p>The key to effective code generation prompts is specificity about your data structure. Before asking for analysis code, describe your dataframe: the variables it contains, their types (continuous, categorical, ordinal), the unit of observation, any relevant groupings, and sample size. An AI that knows it is working with a wide-format dataframe of 847 participants across 12 repeated-measures time points in a 2x3 factorial design will generate substantially more useful code than one that receives a vague description of "my dataset."</p>
+
+  <h3>Prompt patterns that work</h3>
+  <p>Effective prompting for data analysis code follows a consistent pattern. Start by describing the data, then the question, then any specific requirements for the output:</p>
+  <p><em>"I have a pandas dataframe called df with columns: participant_id (string), condition (categorical: 'control', 'treatment_a', 'treatment_b'), timepoint (integer 1–4), score (continuous float). I want to run a mixed ANOVA with condition as a between-subjects factor and timepoint as a within-subjects factor. Please write Python code using pingouin that will run this analysis and print the results table, then test the assumption of sphericity and apply the Greenhouse-Geisser correction if it's violated."</em></p>
+  <p>This level of specificity produces code that is immediately useful rather than generic, and it surfaces assumptions in the AI's response that you can then verify. Contrast this with "how do I run a mixed ANOVA in Python?" — which produces a generic tutorial that may not match your data structure at all.</p>
+
+  <h2>Generating visualization code</h2>
+  <p>Data visualization is one of the highest-value applications of AI in research workflows, because the cognitive overhead of matplotlib customization in particular is disproportionate to the intellectual content of the task. Writing the code to produce a correctly formatted, publication-ready figure in matplotlib is tedious and error-prone; it is exactly the kind of task that benefits from AI assistance where the output is immediately verifiable.</p>
+
+  <h3>Matplotlib and seaborn for Python users</h3>
+  <p><strong>Matplotlib</strong> is the foundational visualization library and is required for any fine-grained control over figure appearance. The challenge is its verbose, low-level API — producing a properly formatted figure with custom tick labels, appropriate font sizes, and a clean legend requires many lines of boilerplate code that AI generates well. Ask AI to produce a figure with your exact specifications (axes labels, color scheme, font family, figure size in inches at a specific DPI) and you will typically get code that produces the figure you want with minor tweaks rather than starting from scratch.</p>
+  <p><strong>Seaborn</strong> builds on matplotlib with higher-level functions for statistical visualization. Its default aesthetics are considerably better than matplotlib's defaults for most research purposes, and its API for grouped plots (stripplots, boxplots with overlaid points, violin plots) is substantially simpler. AI prompts for seaborn visualization tend to produce more immediately usable results with fewer iterations, particularly for visualizing distributions and group comparisons. A useful prompt structure: "Using seaborn, create a figure with two panels side by side. Left panel: a violin plot of [variable] by [group], with individual data points overlaid using stripplot. Right panel: a heatmap of the correlation matrix of [variables]. Use the 'ticks' style and a colorblind-friendly palette."</p>
+
+  <h3>ggplot2 for R users</h3>
+  <p>R users working with <strong>ggplot2</strong> have a particularly good experience with AI code generation because ggplot2's grammar-of-graphics structure makes prompts map naturally to code layers. Describe your desired visualization using ggplot2 layer language — geom_point, geom_smooth, facet_wrap, scale_color_brewer — and AI will generate code that is easy to read and modify. A useful pattern: ask AI to generate the basic plot, then ask it to add layers progressively ("now add a facet by condition," "add a custom theme that matches journal specifications for the Journal of Experimental Psychology").</p>
+
+  <div class="callout">
+    <div class="callout-label">Exploratory Data Analysis Prompts</div>
+    <p>EDA is a natural fit for AI assistance. A complete EDA prompt: "Given a dataframe df with the columns listed above, write Python code that: (1) prints the shape, dtypes, and missing value counts; (2) plots a histogram for each continuous variable; (3) plots a correlation heatmap of all numeric variables; (4) for each categorical variable, plots a bar chart of value counts; (5) plots boxplots of each continuous variable broken down by [key grouping variable]. Arrange all figures in a grid with seaborn and save as a single PDF." This produces a complete initial exploration in one code block.</p>
+  </div>
+
+  <h2>Using AI to explain statistical outputs</h2>
+  <p>One of the genuinely undervalued uses of AI in data analysis is explaining statistical output in plain language. Researchers whose primary expertise is not statistics — biologists, clinical researchers, psychologists running their first multilevel models — sometimes produce correct output from correctly specified models but are uncertain about how to interpret the specific numbers in the results table. AI can bridge this gap, but with an important caveat: the explanation is only as good as the output you provide, and AI can generate confident but wrong interpretations if the question is ambiguous or the output is unusual.</p>
+  <p>The most reliable use of AI for interpretation is asking it to translate standard output — a regression table, an ANOVA table, a model summary from lme4 — into plain language that describes the findings without technical jargon. Paste the output into your conversation with a description of what the model was testing, and ask: "Explain what this output tells me about the relationship between [predictor] and [outcome], in language suitable for a results section aimed at a general academic audience." The result will typically be a reasonable draft of plain-language interpretation that you then verify against your own understanding of the analysis.</p>
+
+  <div class="warn">
+    <div class="warn-label">AI Makes Statistical Mistakes</div>
+    <p>This is not a theoretical risk — it is a documented, recurring problem. AI systems make specific categories of statistical errors: choosing the wrong test for data distributions, ignoring assumption violations, misinterpreting interaction effects, confusing statistical significance with practical significance, and generating incorrect code for edge cases. A model specification that looks syntactically correct may be statistically wrong for your data structure. Never submit AI-generated analyses without manually checking that the code actually does what you intended, that assumptions are met, and that the results are plausible given your understanding of the data.</p>
+    <p>The most dangerous scenario: AI generates analysis code, you run it, the output looks reasonable, and you report results that are in fact the product of a miscoded model. This has happened in published research and has required corrections and retractions. Validation is not optional.</p>
+  </div>
+
+  <h2>Data cleaning prompts</h2>
+  <p>Data cleaning is tedious, repetitive, and highly amenable to AI code generation. Common tasks — recoding variables, handling missing values, reshaping from wide to long format, merging dataframes, standardizing string columns — all follow predictable patterns that AI generates reliably. The key is describing your data structure precisely and specifying exactly what transformation you need.</p>
+  <p>Effective data cleaning prompts describe the before and after states: "I have a column 'age' that contains values like '25 years', '30', 'twenty-eight', and NaN. I want to convert it to an integer column with NaN for any values that cannot be cleanly converted to a number. Write Python code using pandas to do this and print a count of the values before and after."</p>
+  <p>AI is particularly useful for handling the idiosyncratic problems that appear in real research data: inconsistent date formats across entries from different data collectors, categorical variables with slight spelling variations, merge keys that match on most but not all records. These problems have no general solution that works across all datasets — they require case-by-case code — and AI is well-suited to generating that code from a precise description of the problem.</p>
+
+  <h2>When to trust AI code vs. verify manually</h2>
+  <p>Not all statistical code carries equal risk of error, and calibrating your verification effort appropriately is a professional skill. A heuristic framework:</p>
+
+  <div class="principle-list">
+    <div class="principle">
+      <div class="principle-title">High confidence, lighter verification</div>
+      <div class="principle-desc">Standard data manipulation (sorting, filtering, reshaping, merging), basic descriptive statistics (mean, SD, counts), and simple univariate plots (histograms, scatterplots, bar charts). AI generates these reliably; verify that the code runs and produces plausible output.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Moderate confidence, verify assumptions</div>
+      <div class="principle-desc">Common inferential tests (t-tests, one-way ANOVA, linear regression, chi-square). AI generates these correctly for typical cases. Verify that the test is appropriate for your data structure, check that assumptions are tested and addressed in the code, and spot-check the output against a hand calculation or reference implementation.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Lower confidence, verify carefully</div>
+      <div class="principle-desc">Complex models (mixed effects models, multilevel models, SEM, survival analysis, Bayesian estimation), interaction interpretations, post-hoc correction procedures, and anything involving custom contrasts or non-default model specifications. These are where AI errors cluster. Have a statistician review the code or run a comparison implementation in a different package.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Do not rely on AI</div>
+      <div class="principle-desc">Novel analytical approaches being published for the first time, methods that require discipline-specific expertise to implement correctly (e.g., specific neuroimaging pipelines, field-specific measurement models), and the interpretation of unexpected or counterintuitive results. AI has no way to know when its suggestion is wrong for your specific methodological context.</div>
+    </div>
+  </div>
+
+  <h2>No-code AI analysis tools</h2>
+  <p>Not all researchers want to write code, and a growing ecosystem of no-code AI analysis tools has emerged for quantitative research. Two platforms worth knowing:</p>
+  <p><strong>Julius AI</strong> (julius.ai) allows you to upload a dataset and ask analytical questions in natural language: "What are the correlations between all numeric variables?", "Show me a regression predicting Y from X1, X2, and X3", "Are there significant group differences between conditions A and B on the primary outcome?" It generates both the analysis and a visualization, and shows the code it used, which you can inspect. It is not a substitute for statistical expertise, but for researchers doing routine analyses who want to move quickly, it reduces the gap between question and output substantially.</p>
+  <p><strong>DataChat</strong> (datachat.ai) offers a similar natural language interface for data analysis with a stronger focus on collaborative team workflows and auditability of the analytical path. Its design philosophy emphasizes showing users exactly what operations were performed on the data, which aligns well with reproducibility requirements.</p>
+
+  <h2>Reproducibility requirements when using AI</h2>
+  <p>Reproducibility is a foundational norm of science, and AI-assisted analysis introduces new reproducibility challenges that the field is still working through. The central issue is that AI-generated code may rely on specific library versions, random seeds, or default behaviors that change across versions — meaning that rerunning the same AI-generated code in a different environment may produce different results.</p>
+  <p>The professional standard that is emerging: treat AI-generated analysis code the same way you would treat any analysis code — document it, version-control it, specify your computing environment (language version, package versions), and include it in your supplementary materials when you publish. The fact that AI generated the initial version of the code does not change your obligation to understand it, document it, and make it available for inspection.</p>
+  <p>Additionally, disclose AI tool use in your methods section. A brief statement: "Initial data cleaning and visualization scripts were generated using [tool name] and subsequently reviewed and validated by the authors" is accurate, informative, and increasingly expected. The scientific community's trust in your analysis depends on transparency about your process, not just your results.</p>
+
+  <div class="good">
+    <div class="good-label">The Validated Analysis Workflow</div>
+    <p>The most defensible workflow for AI-assisted data analysis: (1) Describe your data structure and analytical question to AI in precise terms. (2) Review the generated code before running it — does the model specification match your intended design? Does the code test assumptions? (3) Run the code on a subset of your data first and verify that the output looks plausible. (4) Check assumption tests embedded in the output — are any violated? Does the code address violations? (5) Cross-validate critical results using an independent implementation in a different library or language. (6) Document the code, the AI tool used, and your validation steps. (7) Make the code available with your data upon publication. This workflow takes longer than accepting AI output uncritically but produces results you can defend.</p>
+  </div>
+
+</div>
+</main>
+</div>
+
+<div class="sticky-bar" id="sticky-bar">
+  <div class="sticky-bar-reading" id="sticky-reading">Read to the end to unlock the next module</div>
+  <div class="sticky-bar-track"><div class="sticky-bar-fill" id="sticky-fill"></div></div>
+  <div class="sticky-bar-label" id="sticky-label">0%</div>
+  <button class="sticky-bar-btn" id="sticky-btn" onclick="completeAndNext()">Module 5: Hypothesis Generation →</button>
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import { getFirestore, doc, setDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  const app=initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+  const auth=getAuth(app);const db=getFirestore(app);
+  let currentUser=null;
+  onAuthStateChanged(auth,u=>{currentUser=u;});
+  window.toggleTheme=function(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='☾'):(h.setAttribute('data-theme','dark'),i.textContent='☀');};
+  window.addEventListener('scroll',()=>{const d=document.documentElement,s=d.scrollTop||document.body.scrollTop,t=d.scrollHeight-d.clientHeight;document.getElementById('progress').style.width=(s/t*100)+'%';});
+  let unlocked=false;
+  function updateScrollProgress(){
+    const scrolled=window.scrollY+window.innerHeight;const total=document.documentElement.scrollHeight;
+    const pct=Math.min(100,Math.round((scrolled/total)*100));
+    const fill=document.getElementById('sticky-fill');const label=document.getElementById('sticky-label');
+    const btn=document.getElementById('sticky-btn');const reading=document.getElementById('sticky-reading');
+    if(fill)fill.style.width=pct+'%';if(label)label.textContent=pct+'%';
+    if(pct>=95&&!unlocked){unlocked=true;if(btn)btn.style.display='block';if(reading)reading.style.display='none';if(fill)fill.style.background='#22c55e';if(label)label.style.color='#22c55e';}
+  }
+  window.addEventListener('scroll',updateScrollProgress);updateScrollProgress();
+  window.completeAndNext=async function(){
+    if(currentUser){try{await setDoc(doc(db,'users',currentUser.uid),{researchModules:arrayUnion('m4')},{merge:true});}catch(e){}}
+    window.location.href='research-module-5.html';
+  };
+</script>
+</body>
+</html>

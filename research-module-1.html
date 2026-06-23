@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 1: AI as a Research Partner — AI for Research and Academia — Meridian Institute of AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#064E3B;--accent-dim:rgba(6,78,59,0.1);--accent-dim2:rgba(6,78,59,0.05);--nav-bg:rgba(8,8,8,0.9);--callout-bg:rgba(6,78,59,0.07);--callout-border:rgba(6,78,59,0.25);--good-bg:rgba(34,197,94,0.07);--good-border:rgba(34,197,94,0.2);--warn-bg:rgba(251,146,60,0.07);--warn-border:rgba(251,146,60,0.2);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#065F46;--accent-dim:rgba(6,95,70,0.08);--accent-dim2:rgba(6,95,70,0.04);--nav-bg:rgba(250,250,248,0.9);--callout-bg:rgba(6,95,70,0.05);--callout-border:rgba(6,95,70,0.2);--good-bg:rgba(22,163,74,0.06);--good-border:rgba(22,163,74,0.2);--warn-bg:rgba(234,88,12,0.05);--warn-border:rgba(234,88,12,0.2);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;overflow-x:hidden;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.7;overflow-x:hidden;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}
+  .nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}
+  .nav-back{font-size:13px;color:var(--text-2);text-decoration:none;transition:color 0.2s;}
+  .nav-back:hover{color:var(--text);}
+  .nav-label{font-size:13px;color:var(--text-3);}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;transition:all 0.2s;}
+  .theme-toggle:hover{background:var(--bg-3);color:var(--text);}
+  .progress-bar{position:fixed;top:60px;left:0;right:0;z-index:99;height:2px;background:var(--border);}
+  .progress-fill{height:100%;background:var(--accent);width:0%;transition:width 0.1s;}
+  .page-wrapper{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:100vh;padding-top:62px;overflow:hidden;}
+  .sidebar{position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto;border-right:1px solid var(--border);padding:32px 24px;background:var(--bg-2);}
+  .sidebar-course{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;}
+  .sidebar-course-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+  .sidebar-module{margin-bottom:4px;}
+  .sidebar-module-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:13px;color:var(--text-2);text-decoration:none;transition:all 0.2s;line-height:1.4;}
+  .sidebar-module-link:hover{background:var(--bg-3);color:var(--text);}
+  .sidebar-module-link.active{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-num{font-size:11px;font-weight:500;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--bg-4);color:var(--text-3);}
+  .sidebar-module-link.active .sidebar-num{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-divider{height:1px;background:var(--border);margin:20px 0;}
+  .sidebar-progress-label{font-size:12px;color:var(--text-3);margin-bottom:8px;display:flex;justify-content:space-between;}
+  .sidebar-progress-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sidebar-progress-fill{height:100%;width:10%;background:var(--accent);border-radius:2px;}
+  main{display:block;min-width:0;overflow:hidden;}
+  .content{max-width:760px;width:100%;padding:60px 64px 140px;margin:0 auto;}
+  .module-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+  .module-tag{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(6,78,59,0.2);padding:4px 12px;border-radius:100px;}
+  .module-meta{font-size:12px;color:var(--text-3);}
+  h1{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1.05;letter-spacing:-0.02em;color:var(--text);margin-bottom:24px;}
+  .intro-text{font-size:19px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+  h2{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:400;color:var(--text);margin:52px 0 18px;line-height:1.2;}
+  h3{font-size:16px;font-weight:500;color:var(--text);margin:32px 0 12px;}
+  p{font-size:16px;font-weight:300;color:var(--text-2);line-height:1.8;margin-bottom:20px;}
+  strong{font-weight:500;color:var(--text);}
+  em{font-style:italic;}
+  ul,ol{margin:0 0 20px 22px;color:var(--text-2);}
+  li{font-size:16px;font-weight:300;line-height:1.8;margin-bottom:8px;}
+  .callout{background:var(--callout-bg);border:1px solid var(--callout-border);border-radius:12px;padding:24px 28px;margin:32px 0;}
+  .callout-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+  .callout p{margin:0;font-size:15px;color:var(--text-2);}
+  .callout p+p{margin-top:12px;}
+  .good{background:var(--good-bg);border:1px solid var(--good-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .good-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#22c55e;margin-bottom:10px;}
+  .good p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn{background:var(--warn-bg);border:1px solid var(--warn-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .warn-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#fb923c;margin-bottom:10px;}
+  .warn p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn p+p{margin-top:12px;}
+  .analogy{background:var(--bg-2);border:1px solid var(--border);border-radius:12px;padding:28px;margin:28px 0;}
+  .analogy-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-3);margin-bottom:12px;}
+  .analogy p{margin:0;font-size:15px;color:var(--text-2);}
+  .comparison-wrapper{overflow-x:auto;-webkit-overflow-scrolling:touch;width:100%;margin:28px 0;}
+  table{width:100%;border-collapse:collapse;font-size:14px;min-width:480px;}
+  th{text-align:left;padding:12px 16px;font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-3);border-bottom:1px solid var(--border-2);}
+  td{padding:14px 16px;border-bottom:1px solid var(--border);color:var(--text-2);line-height:1.6;vertical-align:top;}
+  tr:last-child td{border-bottom:none;}
+  td:first-child{color:var(--text);font-weight:500;width:30%;}
+  .principle-list{display:flex;flex-direction:column;gap:12px;margin:24px 0;}
+  .principle{background:var(--bg-2);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:0 12px 12px 0;padding:20px 24px;}
+  .principle-title{font-size:15px;font-weight:500;color:var(--text);margin-bottom:6px;}
+  .principle-desc{font-size:14px;color:var(--text-2);line-height:1.65;margin:0;}
+  .sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:var(--bg-2);border-top:1px solid var(--border-2);padding:14px 5%;display:flex;align-items:center;justify-content:space-between;gap:16px;backdrop-filter:blur(12px);}
+  .sticky-bar-track{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sticky-bar-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.2s;width:0%;}
+  .sticky-bar-label{font-size:12px;color:var(--text-3);white-space:nowrap;min-width:60px;text-align:right;}
+  .sticky-bar-btn{padding:10px 20px;border-radius:8px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;background:var(--accent);color:#fff;border:none;cursor:pointer;white-space:nowrap;transition:opacity 0.2s;display:none;}
+  .sticky-bar-btn:hover{opacity:0.88;}
+  .sticky-bar-reading{font-size:12px;color:var(--text-3);white-space:nowrap;}
+  @media(max-width:900px){.page-wrapper{grid-template-columns:1fr;}.sidebar{display:none;}.content{padding:40px 24px 120px;}h1{font-size:38px;}}
+  @media(max-width:600px){.content{padding:28px 16px 120px;}h1{font-size:30px;}h2{font-size:24px;}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="courses.html" class="nav-back">← AI for Research and Academia</a>
+    <div class="nav-divider"></div>
+    <span class="nav-label">Module 1</span>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">☀</span></button>
+</nav>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+
+<div class="page-wrapper">
+<aside class="sidebar">
+  <div class="sidebar-course">Expert Track</div>
+  <div class="sidebar-course-name">AI for Research and Academia</div>
+  <div class="sidebar-module"><a href="research-module-1.html" class="sidebar-module-link active"><span class="sidebar-num">1</span>AI as a Research Partner</a></div>
+  <div class="sidebar-module"><a href="research-module-2.html" class="sidebar-module-link"><span class="sidebar-num">2</span>Literature Discovery and Synthesis</a></div>
+  <div class="sidebar-module"><a href="research-module-3.html" class="sidebar-module-link"><span class="sidebar-num">3</span>Research Writing with AI</a></div>
+  <div class="sidebar-module"><a href="research-module-4.html" class="sidebar-module-link"><span class="sidebar-num">4</span>Data Analysis and Visualization</a></div>
+  <div class="sidebar-module"><a href="research-module-5.html" class="sidebar-module-link"><span class="sidebar-num">5</span>Hypothesis Generation</a></div>
+  <div class="sidebar-module"><a href="research-module-6.html" class="sidebar-module-link"><span class="sidebar-num">6</span>Peer Review and Integrity</a></div>
+  <div class="sidebar-module"><a href="research-module-7.html" class="sidebar-module-link"><span class="sidebar-num">7</span>Citation Management</a></div>
+  <div class="sidebar-module"><a href="research-module-8.html" class="sidebar-module-link"><span class="sidebar-num">8</span>Communicating Research</a></div>
+  <div class="sidebar-module"><a href="research-module-9.html" class="sidebar-module-link"><span class="sidebar-num">9</span>Collaborative Research</a></div>
+  <div class="sidebar-module"><a href="research-module-10.html" class="sidebar-module-link"><span class="sidebar-num">10</span>The Future of AI-Augmented Science</a></div>
+  <div class="sidebar-module"><a href="quiz-research.html" class="sidebar-module-link" style="color:var(--accent);margin-top:4px;"><span class="sidebar-num" style="background:var(--accent-dim);color:var(--accent);">✦</span>Final Assessment</a></div>
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-progress-label"><span>Course progress</span><span style="color:var(--accent);">1 / 10</span></div>
+  <div class="sidebar-progress-track"><div class="sidebar-progress-fill"></div></div>
+</aside>
+
+<main>
+<div class="content">
+  <div class="module-eyebrow"><span class="module-tag">Module 1 · Expert Track</span><span class="module-meta">20 min read · AI for Research and Academia</span></div>
+  <h1>AI as a Research Partner</h1>
+
+  <p class="intro-text">The scientific enterprise is being restructured around a new set of tools. Researchers who understand what AI can and cannot do — and who approach it as a collaborator rather than an oracle — are finding meaningful acceleration in their work. Those who approach it uncritically are generating new categories of error. This module maps the territory honestly: the landscape that has changed, the capabilities that are genuinely useful, and the limits that are genuinely dangerous.</p>
+
+  <h2>The researcher's new landscape</h2>
+  <p>Something significant happened across disciplines around 2022 and 2023. Researchers at bench and desk began widely adopting large language models not as curiosities but as everyday tools integrated into their workflows. The shift was not driven by a single breakthrough but by a threshold crossing: the models became good enough at enough tasks that the friction of integration became worthwhile. A biologist drafting a grant introduction, a political scientist synthesizing a literature, a chemist explaining a reaction mechanism to a collaborator in another discipline — all of these found something genuinely useful in the new tools.</p>
+  <p>The adoption, however, outpaced understanding. Surveys of graduate students at research universities show adoption rates for AI writing assistance exceeding 70%, while the same surveys reveal substantial misunderstanding of how these tools work, what they know, and critically — what they can fabricate. The gap between adoption and understanding is where the most consequential errors live. This course exists to close that gap for researchers working at the level where errors matter most.</p>
+  <p>The landscape change is also institutional. Major journals — Nature, Science, Cell, PLOS ONE, and hundreds of others — have issued AI disclosure policies. Funding agencies including NIH and NSF have begun requiring AI use statements in grant applications. Universities are updating their academic integrity policies. The infrastructure around research is adapting to the reality that AI is now embedded in the scientific process, whether or not any given institution has formally acknowledged it.</p>
+
+  <div class="callout">
+    <div class="callout-label">The Disclosure Reality</div>
+    <p>As of 2024, most major journals require disclosure of AI tool use in manuscript preparation. The practical question is not whether to disclose, but how to document AI use accurately and completely. Developing a personal documentation practice — noting which tools you used, for what tasks, and how you verified the outputs — is now a professional requirement, not a nicety.</p>
+  </div>
+
+  <h2>What AI can and cannot do in research contexts</h2>
+  <p>The confusion about AI in research stems largely from conflating very different capabilities under a single umbrella label. "AI" in research contexts encompasses tools with radically different strengths: large language models trained on text corpora, specialized retrieval systems that search academic databases, code interpreters that execute analytical scripts, and multimodal systems that reason about figures and data tables. Understanding which tool to reach for requires understanding what each one actually does.</p>
+  <p>Large language models like Claude, ChatGPT (GPT-4), and Gemini are extraordinarily capable at tasks involving language: explaining concepts clearly, restructuring arguments, improving prose clarity, identifying logical gaps in reasoning, generating code, and synthesizing ideas. They have broad knowledge of established scientific concepts up to their training cutoff. They are <strong>genuinely useful</strong> for understanding a field you are entering, getting an explanation of a technique you haven't encountered before, or getting feedback on the clarity of your writing.</p>
+  <p>What these models cannot reliably do — and where the most dangerous errors live — is accurately report specific empirical facts, recent findings, or specific citations. The mechanism matters here: language models generate text by predicting what words come next given their training. They are not retrieving stored facts from a database; they are producing fluent text that sounds like it should be accurate. When asked for a specific citation, a language model will often produce author names, journal names, and titles that sound plausible but are entirely fabricated. This phenomenon — called <strong>hallucination</strong> — is not a bug being fixed; it is a fundamental property of how these systems work.</p>
+
+  <div class="warn">
+    <div class="warn-label">Citation Hallucination: A Career Risk</div>
+    <p><strong>Never cite a source that you have not personally verified exists.</strong> Researchers across every discipline have submitted manuscripts, grant applications, and conference papers citing AI-generated references that do not exist. When reviewers or editors check these citations — and they do — the consequences range from manuscript rejection to formal misconduct investigations. No AI tool that generates text, including the most advanced models available today, is a reliable source of specific citations. Verify every reference independently.</p>
+    <p>The safer workflow: use AI to identify <em>topics</em> and <em>authors</em> to search for, then perform the actual search through Google Scholar, PubMed, Semantic Scholar, or your institution's library database. Only cite what you have read.</p>
+  </div>
+
+  <h2>The collaboration mindset vs. the delegation mindset</h2>
+  <p>The most important conceptual distinction for researchers using AI is between collaboration and delegation. <strong>Delegation</strong> means handing a task to AI and accepting its output: asking ChatGPT to write your literature review, asking it to identify the key papers in a field, asking it to analyze your data and tell you the results. Delegation treats AI as an autonomous agent whose outputs can be trusted with minimal verification. For research work, this mindset produces errors at scale.</p>
+  <p><strong>Collaboration</strong> means engaging with AI as a tool that extends your own capacity, but where your judgment, domain expertise, and critical evaluation remain the final authority on every output. You use AI to help you think through a problem — to generate options you might not have considered, to identify weaknesses in an argument, to draft a section that you then revise extensively based on your own expert knowledge. The outputs are starting points, not endpoints. Errors are caught because you, the domain expert, evaluate everything.</p>
+  <p>The collaboration mindset is more cognitively demanding than delegation. It requires maintaining engagement rather than offloading work. But it is the only mindset compatible with research integrity, because research outputs carry your name and reputation, and the standard of accuracy in research — especially empirical claims and citations — is substantially higher than AI tools can reliably meet without expert human oversight.</p>
+
+  <div class="analogy">
+    <div class="analogy-label">A useful frame</div>
+    <p>Think of AI as a very well-read but unreliable graduate student who has read everything and can discuss it fluently, but who sometimes confidently invents facts when their knowledge has gaps. You would never submit their draft without careful review. You would absolutely use their facility with the literature to explore ideas and get a first draft on the page. That calibration — use the capability, verify the specifics — is the professional workflow.</p>
+  </div>
+
+  <h2>Calibrated expectations</h2>
+  <p>Calibrated expectations require understanding not just what AI gets wrong, but the pattern of its errors. AI errors in research contexts cluster in predictable ways, and knowing the patterns allows you to apply scrutiny precisely where it is needed.</p>
+  <p><strong>Specific empirical claims are the highest-risk category.</strong> Statements like "a 2022 meta-analysis found effect sizes ranging from 0.4 to 0.7" or "the largest study to date enrolled 47,000 participants" — these are exactly the kinds of statements that LLMs will generate fluently and that may be entirely fabricated. Any specific number, date, sample size, effect size, or percentage in AI-generated text should be treated as unverified until you have located the source yourself.</p>
+  <p><strong>Recent developments are the second highest-risk category.</strong> LLMs have training cutoffs, typically 12-24 months before their public release. Fields that move quickly — machine learning, genomics, clinical trials — may look very different from what a model knows. AI is an unreliable narrator about recent science.</p>
+  <p><strong>Interdisciplinary connections are generally safer.</strong> AI is often quite good at drawing conceptual connections across fields, suggesting analogies, and explaining how a method used in one field might apply to another. These are generative, exploratory suggestions that you will evaluate yourself — so the lower reliability of specific facts matters less.</p>
+  <p><strong>Writing, structure, and clarity are the safest categories.</strong> Using AI to improve the clarity of a paragraph you have already written, to suggest an alternative structure for an argument, or to identify jargon that needs defining for a general audience — these tasks leverage what LLMs are genuinely good at, with minimal risk of propagating errors into your scientific record.</p>
+
+  <h2>How top researchers are actually using AI today</h2>
+  <p>Across disciplines, a set of high-value AI use patterns has emerged among researchers who are both enthusiastic adopters and rigorous scientists. These workflows share a common structure: AI is used to extend capacity in well-defined tasks where human verification is tractable, rather than to replace judgment in tasks where the stakes of error are high.</p>
+
+  <div class="principle-list">
+    <div class="principle">
+      <div class="principle-title">Rapid field orientation</div>
+      <div class="principle-desc">Researchers entering a new subfield use AI to get oriented quickly: asking for explanations of key concepts, the major debates, the landmark papers (which they then verify and read), and the methodological approaches used. AI dramatically reduces the time to baseline competence, though it does not replace reading the actual literature.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Writing acceleration</div>
+      <div class="principle-desc">Getting past the blank page is one of the highest-value uses. Researchers dictate their thinking to AI and ask it to produce a structured draft, which they then heavily revise. The cognitive shift from creation to revision is significant — editing a draft is often faster than writing from scratch, even when the draft requires substantial rewriting.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Code generation and debugging</div>
+      <div class="principle-desc">Researchers who are not primarily programmers — biologists, psychologists, social scientists — are using AI to write data analysis scripts in Python and R that they then validate and modify. This is a high-value workflow because the outputs are empirically verifiable: does the code run? Does it produce the expected output on test data?</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Argument stress-testing</div>
+      <div class="principle-desc">Before submitting, researchers present their main argument to AI and ask it to identify weaknesses, anticipate reviewer objections, and suggest counterarguments. Used well, this is like having an informed critic review a draft before it goes to actual reviewers — reducing the probability of fundamental objections surviving to peer review.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Explanation and translation</div>
+      <div class="principle-desc">Explaining complex methods to collaborators in other disciplines, or adapting technical content for grant sections aimed at non-specialists. AI is consistently good at generating multiple explanations of the same concept at different levels of technicality.</div>
+    </div>
+  </div>
+
+  <h2>The research AI toolkit</h2>
+  <p>The landscape of AI tools for research has differentiated significantly. Different tools are optimized for different tasks, and using the right tool for each task matters considerably. Here is an honest assessment of the major tools as of 2024-2025, organized by primary use case.</p>
+
+  <h3>Literature and evidence retrieval</h3>
+  <p><strong>Elicit</strong> (elicit.org) is purpose-built for research synthesis. Unlike general LLMs, Elicit actually searches the academic literature — primarily sourced from Semantic Scholar's database of over 200 million papers. It extracts structured information from papers: population, methods, outcomes, sample sizes. For systematic review-adjacent work, it is substantially more reliable than asking a general LLM about the literature, because it retrieves actual papers and extracts from their actual text. It has limitations (coverage of non-English literature and very recent papers is imperfect) but it is the most trustworthy AI tool for literature questions.</p>
+  <p><strong>Consensus</strong> (consensus.app) focuses specifically on scientific consensus questions: "Does X intervention work?" or "What does the evidence say about Y?" It searches peer-reviewed literature and attempts to surface the direction of evidence across multiple studies. Best used for well-studied questions where substantial literature exists.</p>
+  <p><strong>Semantic Scholar</strong> (semanticscholar.org) is an AI-powered academic search engine developed by the Allen Institute for AI. Its AI features include citation context analysis (why papers cite each other) and research recommendation. The underlying database is one of the largest and most comprehensive available for free.</p>
+  <p><strong>Perplexity</strong> (perplexity.ai) is a general-purpose AI search assistant that cites its sources inline. It is faster and more transparent than asking ChatGPT about a topic, because you can see exactly where claims come from. Still requires verification but provides a starting point for verification.</p>
+
+  <h3>General-purpose AI assistants</h3>
+  <p><strong>Claude</strong> (Anthropic) is consistently rated highly for long-context tasks — reading and analyzing entire papers, synthesizing multiple documents, careful reasoning about complex arguments. Its extended context window (up to 200,000 tokens in some versions) makes it well-suited for tasks that require holding large amounts of text in context simultaneously.</p>
+  <p><strong>ChatGPT</strong> (OpenAI, GPT-4 and later) is the most widely used and has the broadest ecosystem of plugins and integrations. The Code Interpreter (now Advanced Data Analysis) feature can execute Python code, making it useful for data analysis tasks where you want to see the computation run in real time.</p>
+
+  <div class="comparison-wrapper">
+  <table>
+    <tr><th>Tool</th><th>Best for</th><th>Key limitation</th></tr>
+    <tr><td>Elicit</td><td>Systematic literature synthesis, extracting data from papers</td><td>Coverage limited; recent papers may be missing</td></tr>
+    <tr><td>Consensus</td><td>Directional evidence questions on well-studied topics</td><td>Struggles with contested or emerging fields</td></tr>
+    <tr><td>Semantic Scholar</td><td>Citation network exploration, finding related papers</td><td>AI features still developing; search, not synthesis</td></tr>
+    <tr><td>Perplexity</td><td>Quick exploratory questions with cited sources</td><td>Source quality varies; still requires verification</td></tr>
+    <tr><td>Claude</td><td>Long documents, careful reasoning, writing feedback</td><td>Training cutoff; cannot browse live academic databases</td></tr>
+    <tr><td>ChatGPT</td><td>Code generation, data analysis, broad tasks</td><td>Citation hallucination; training cutoff</td></tr>
+  </table>
+  </div>
+
+  <h2>Developing an AI research workflow</h2>
+  <p>The researchers who get the most value from AI tools are those who have developed explicit, documented workflows — not ad hoc approaches where they reach for AI when they feel like it. An explicit workflow has three advantages: it allows you to identify where AI is and isn't adding value for your specific work; it creates documentation of AI use that satisfies disclosure requirements; and it prevents the gradual creep toward over-reliance that undermines the critical judgment that makes the workflow work.</p>
+  <p>A basic research workflow might designate specific AI-appropriate tasks at each stage of a project: orientation (using AI to get oriented in a literature before doing structured searches), drafting (using AI to produce initial drafts of sections for which you already have the evidence), analysis (using AI to write and debug code for analysis you then validate), and review preparation (using AI to simulate reviewer objections before submission). Within each designated task, document which tool you used and how you verified outputs.</p>
+  <p>The workflow should also designate AI-inappropriate tasks where AI is explicitly not part of the process: identifying which papers to cite (you do this yourself, through literature search), drawing empirical conclusions (you draw these from your own reading of primary sources), and making interpretive claims about the meaning of your findings (this requires your own expert judgment and cannot be outsourced).</p>
+
+  <div class="good">
+    <div class="good-label">The Productive Researcher's Practice</div>
+    <p>The researchers who are most effectively using AI are those who treat it as a tool that extends their reach without replacing their judgment. They use AI heavily in low-stakes, high-volume tasks (drafting, orienting, code generation) and use it minimally or not at all in high-stakes, hard-to-verify tasks (empirical claims, citation selection). They verify everything that will appear in a final document. Their work is faster and the quality of their thinking is arguably sharper — because having a capable interlocutor surfaces questions they might not otherwise have considered. That productive relationship requires maintaining the expert judgment that makes you able to evaluate the AI's outputs critically.</p>
+  </div>
+
+</div>
+</main>
+</div>
+
+<div class="sticky-bar" id="sticky-bar">
+  <div class="sticky-bar-reading" id="sticky-reading">Read to the end to unlock the next module</div>
+  <div class="sticky-bar-track"><div class="sticky-bar-fill" id="sticky-fill"></div></div>
+  <div class="sticky-bar-label" id="sticky-label">0%</div>
+  <button class="sticky-bar-btn" id="sticky-btn" onclick="completeAndNext()">Module 2: Literature Discovery and Synthesis →</button>
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import { getFirestore, doc, setDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  const app=initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+  const auth=getAuth(app);const db=getFirestore(app);
+  let currentUser=null;
+  onAuthStateChanged(auth,u=>{currentUser=u;});
+  window.toggleTheme=function(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='☾'):(h.setAttribute('data-theme','dark'),i.textContent='☀');};
+  window.addEventListener('scroll',()=>{const d=document.documentElement,s=d.scrollTop||document.body.scrollTop,t=d.scrollHeight-d.clientHeight;document.getElementById('progress').style.width=(s/t*100)+'%';});
+  let unlocked=false;
+  function updateScrollProgress(){
+    const scrolled=window.scrollY+window.innerHeight;const total=document.documentElement.scrollHeight;
+    const pct=Math.min(100,Math.round((scrolled/total)*100));
+    const fill=document.getElementById('sticky-fill');const label=document.getElementById('sticky-label');
+    const btn=document.getElementById('sticky-btn');const reading=document.getElementById('sticky-reading');
+    if(fill)fill.style.width=pct+'%';if(label)label.textContent=pct+'%';
+    if(pct>=95&&!unlocked){unlocked=true;if(btn)btn.style.display='block';if(reading)reading.style.display='none';if(fill)fill.style.background='#22c55e';if(label)label.style.color='#22c55e';}
+  }
+  window.addEventListener('scroll',updateScrollProgress);updateScrollProgress();
+  window.completeAndNext=async function(){
+    if(currentUser){try{await setDoc(doc(db,'users',currentUser.uid),{researchModules:arrayUnion('m1')},{merge:true});}catch(e){}}
+    window.location.href='research-module-2.html';
+  };
+</script>
+</body>
+</html>

@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 5: AI in Mental Health — AI in Healthcare — Meridian Institute of AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#BE185D;--accent-dim:rgba(190,24,93,0.1);--accent-dim2:rgba(190,24,93,0.05);--nav-bg:rgba(8,8,8,0.9);--callout-bg:rgba(190,24,93,0.07);--callout-border:rgba(190,24,93,0.25);--good-bg:rgba(34,197,94,0.07);--good-border:rgba(34,197,94,0.2);--warn-bg:rgba(251,146,60,0.07);--warn-border:rgba(251,146,60,0.2);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#9D174D;--accent-dim:rgba(157,23,77,0.08);--accent-dim2:rgba(157,23,77,0.04);--nav-bg:rgba(250,250,248,0.9);--callout-bg:rgba(157,23,77,0.05);--callout-border:rgba(157,23,77,0.2);--good-bg:rgba(22,163,74,0.06);--good-border:rgba(22,163,74,0.2);--warn-bg:rgba(234,88,12,0.05);--warn-border:rgba(234,88,12,0.2);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;overflow-x:hidden;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.7;overflow-x:hidden;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}
+  .nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}
+  .nav-back{font-size:13px;color:var(--text-2);text-decoration:none;transition:color 0.2s;}
+  .nav-back:hover{color:var(--text);}
+  .nav-label{font-size:13px;color:var(--text-3);}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;transition:all 0.2s;}
+  .theme-toggle:hover{background:var(--bg-3);color:var(--text);}
+  .progress-bar{position:fixed;top:60px;left:0;right:0;z-index:99;height:2px;background:var(--border);}
+  .progress-fill{height:100%;background:var(--accent);width:0%;transition:width 0.1s;}
+  .page-wrapper{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:100vh;padding-top:62px;overflow:hidden;}
+  .sidebar{position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto;border-right:1px solid var(--border);padding:32px 24px;background:var(--bg-2);}
+  .sidebar-course{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;}
+  .sidebar-course-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+  .sidebar-module{margin-bottom:4px;}
+  .sidebar-module-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:13px;color:var(--text-2);text-decoration:none;transition:all 0.2s;line-height:1.4;}
+  .sidebar-module-link:hover{background:var(--bg-3);color:var(--text);}
+  .sidebar-module-link.active{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-num{font-size:11px;font-weight:500;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--bg-4);color:var(--text-3);}
+  .sidebar-module-link.active .sidebar-num{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-divider{height:1px;background:var(--border);margin:20px 0;}
+  .sidebar-progress-label{font-size:12px;color:var(--text-3);margin-bottom:8px;display:flex;justify-content:space-between;}
+  .sidebar-progress-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sidebar-progress-fill{height:100%;width:50%;background:var(--accent);border-radius:2px;}
+  main{display:block;min-width:0;overflow:hidden;}
+  .content{max-width:760px;width:100%;padding:60px 64px 140px;margin:0 auto;}
+  .module-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+  .module-tag{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(190,24,93,0.2);padding:4px 12px;border-radius:100px;}
+  .module-meta{font-size:12px;color:var(--text-3);}
+  h1{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1.05;letter-spacing:-0.02em;color:var(--text);margin-bottom:24px;}
+  .intro-text{font-size:19px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+  h2{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:400;color:var(--text);margin:52px 0 18px;line-height:1.2;}
+  h3{font-size:16px;font-weight:500;color:var(--text);margin:32px 0 12px;}
+  p{font-size:16px;font-weight:300;color:var(--text-2);line-height:1.8;margin-bottom:20px;}
+  strong{font-weight:500;color:var(--text);}
+  em{font-style:italic;}
+  ul,ol{margin:0 0 20px 22px;color:var(--text-2);}
+  li{font-size:16px;font-weight:300;line-height:1.8;margin-bottom:8px;}
+  .callout{background:var(--callout-bg);border:1px solid var(--callout-border);border-radius:12px;padding:24px 28px;margin:32px 0;}
+  .callout-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+  .callout p{margin:0;font-size:15px;color:var(--text-2);}
+  .callout p+p{margin-top:12px;}
+  .good{background:var(--good-bg);border:1px solid var(--good-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .good-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#22c55e;margin-bottom:10px;}
+  .good p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn{background:var(--warn-bg);border:1px solid var(--warn-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .warn-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#fb923c;margin-bottom:10px;}
+  .warn p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn p+p{margin-top:12px;}
+  .analogy{background:var(--bg-2);border:1px solid var(--border);border-radius:12px;padding:28px;margin:28px 0;}
+  .analogy-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-3);margin-bottom:12px;}
+  .analogy p{margin:0;font-size:15px;color:var(--text-2);}
+  .disclaimer{background:rgba(251,146,60,0.07);border:1px solid rgba(251,146,60,0.3);border-radius:12px;padding:24px 28px;margin:0 0 40px;}
+  .disclaimer-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#fb923c;margin-bottom:10px;}
+  .disclaimer p{margin:0;font-size:14px;color:var(--text-2);line-height:1.7;}
+  .disclaimer p+p{margin-top:10px;}
+  .comparison-wrapper{overflow-x:auto;-webkit-overflow-scrolling:touch;width:100%;margin:28px 0;}
+  table{width:100%;border-collapse:collapse;font-size:14px;min-width:480px;}
+  th{text-align:left;padding:12px 16px;font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-3);border-bottom:1px solid var(--border-2);}
+  td{padding:14px 16px;border-bottom:1px solid var(--border);color:var(--text-2);line-height:1.6;vertical-align:top;}
+  tr:last-child td{border-bottom:none;}
+  td:first-child{color:var(--text);font-weight:500;width:30%;}
+  .key-stat{background:var(--bg-2);border:1px solid var(--border);border-radius:12px;padding:20px 24px;margin:16px 0;display:flex;align-items:center;gap:20px;}
+  .key-stat-num{font-family:'Cormorant Garamond',serif;font-size:40px;font-weight:400;color:var(--accent);line-height:1;flex-shrink:0;}
+  .key-stat-label{font-size:14px;color:var(--text-2);line-height:1.6;}
+  .key-stat-label strong{display:block;font-size:15px;color:var(--text);margin-bottom:4px;}
+  .principle-list{display:flex;flex-direction:column;gap:12px;margin:24px 0;}
+  .principle{background:var(--bg-2);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:0 12px 12px 0;padding:20px 24px;}
+  .principle-title{font-size:15px;font-weight:500;color:var(--text);margin-bottom:6px;}
+  .principle-desc{font-size:14px;color:var(--text-2);line-height:1.65;margin:0;}
+  .sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:var(--bg-2);border-top:1px solid var(--border-2);padding:14px 5%;display:flex;align-items:center;justify-content:space-between;gap:16px;backdrop-filter:blur(12px);}
+  .sticky-bar-track{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sticky-bar-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.2s;width:0%;}
+  .sticky-bar-label{font-size:12px;color:var(--text-3);white-space:nowrap;min-width:60px;text-align:right;}
+  .sticky-bar-btn{padding:10px 20px;border-radius:8px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;background:var(--accent);color:#fff;border:none;cursor:pointer;white-space:nowrap;transition:opacity 0.2s;display:none;}
+  .sticky-bar-btn:hover{opacity:0.88;}
+  .sticky-bar-reading{font-size:12px;color:var(--text-3);white-space:nowrap;}
+  @media(max-width:900px){.page-wrapper{grid-template-columns:1fr;}.sidebar{display:none;}.content{padding:40px 24px 120px;}h1{font-size:38px;}}
+  @media(max-width:600px){.content{padding:28px 16px 120px;}h1{font-size:30px;}h2{font-size:24px;}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="index.html" class="nav-back">🏠 Home</a>
+    <div class="nav-divider"></div>
+    <a href="courses.html" class="nav-back">← AI in Healthcare</a>
+    <div class="nav-divider"></div>
+    <span class="nav-label">Module 5</span>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">☀</span></button>
+</nav>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+
+<div class="page-wrapper">
+<aside class="sidebar">
+  <div class="sidebar-course">Course</div>
+  <div class="sidebar-course-name">AI in Healthcare</div>
+  <div class="sidebar-module"><a href="healthcare-module-1.html" class="sidebar-module-link "><span class="sidebar-num">1</span>AI in Clinical Diagnosis</a></div>
+  <div class="sidebar-module"><a href="healthcare-module-2.html" class="sidebar-module-link "><span class="sidebar-num">2</span>Medical Imaging and AI</a></div>
+  <div class="sidebar-module"><a href="healthcare-module-3.html" class="sidebar-module-link "><span class="sidebar-num">3</span>AI in Drug Discovery</a></div>
+  <div class="sidebar-module"><a href="healthcare-module-4.html" class="sidebar-module-link "><span class="sidebar-num">4</span>EHR and Predictive Analytics</a></div>
+  <div class="sidebar-module"><a href="healthcare-module-5.html" class="sidebar-module-link active"><span class="sidebar-num">5</span>AI in Mental Health</a></div>
+  <div class="sidebar-module"><a href="healthcare-module-6.html" class="sidebar-module-link "><span class="sidebar-num">6</span>Robotic Surgery and Precision Medicine</a></div>
+  <div class="sidebar-module"><a href="healthcare-module-7.html" class="sidebar-module-link "><span class="sidebar-num">7</span>Patient Data and Privacy</a></div>
+  <div class="sidebar-module"><a href="healthcare-module-8.html" class="sidebar-module-link "><span class="sidebar-num">8</span>AI and Public Health</a></div>
+  <div class="sidebar-module"><a href="healthcare-module-9.html" class="sidebar-module-link "><span class="sidebar-num">9</span>Medical AI Regulation</a></div>
+  <div class="sidebar-module"><a href="healthcare-module-10.html" class="sidebar-module-link "><span class="sidebar-num">10</span>The Future of Healthcare AI</a></div>
+  <div class="sidebar-module"><a href="quiz-healthcare.html" class="sidebar-module-link" style="color:var(--accent);margin-top:4px;"><span class="sidebar-num" style="background:var(--accent-dim);color:var(--accent);">✦</span>Final Assessment</a></div>
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-progress-label"><span>Course progress</span><span style="color:var(--accent);">5 / 10</span></div>
+  <div class="sidebar-progress-track"><div class="sidebar-progress-fill"></div></div>
+</aside>
+
+<main>
+<div class="content">
+  <div class="module-eyebrow"><span class="module-tag">Module 5</span><span class="module-meta">22 min read · AI in Healthcare</span></div>
+  <h1>AI in Mental Health and Behavioral Medicine</h1>
+
+  <p class="intro-text">Mental health is facing a global crisis of access and stigma — AI offers tools that could extend reach dramatically, but the ethical stakes are higher here than almost anywhere else in healthcare.</p>
+
+  <h2>The Global Mental Health Treatment Gap</h2>
+  <p>The scale of unmet mental health need worldwide is staggering. The World Health Organization estimates that <strong>more than 970 million people</strong> globally live with a mental disorder, making mental health conditions the leading cause of disability worldwide. Yet across low- and middle-income countries, more than 75% of people with mental health conditions receive no treatment at all. Even in high-income nations — where resources are ostensibly available — treatment gaps remain large: the United States, for instance, had a shortage of more than 6,000 mental health providers as of the mid-2020s, with wait times for psychiatry appointments stretching to months in many regions.</p>
+  <p>The barriers are multiple and mutually reinforcing. Stigma prevents people from seeking care. Cost and insurance coverage restrict access. Geographic maldistribution concentrates mental health professionals in urban centers while rural and underserved communities go without. Cultural and linguistic mismatches between providers and patients reduce engagement. And the sheer workforce arithmetic is daunting: the global ratio of mental health workers to population in many countries is fewer than one per 100,000 people.</p>
+  <p>This treatment gap is the backdrop against which AI-based mental health tools must be evaluated. The question is not whether AI can fully replicate the therapeutic relationship — it cannot — but whether it can extend support, triage need, and augment the limited human workforce in ways that meaningfully reduce suffering at scale.</p>
+
+  <div class="callout">
+    <div class="callout-label">Scale of the crisis</div>
+    <p>Depression alone affects more than 280 million people worldwide and is the single leading cause of disability globally. Anxiety disorders affect another 284 million. The combined burden vastly exceeds the capacity of any realistic expansion of the human mental health workforce — making technology-assisted solutions not merely convenient but potentially necessary.</p>
+  </div>
+
+  <h2>Conversational AI in Therapeutic Support</h2>
+  <p>The most widely deployed AI tools in mental health are <strong>conversational chatbots</strong> designed to deliver elements of therapeutic support — particularly techniques drawn from cognitive behavioral therapy (CBT), which is among the most evidence-based and structured of the major psychotherapy modalities.</p>
+  <p><strong>Woebot</strong>, launched in 2017 out of Stanford research, was one of the pioneering platforms in this space. Built on rule-based dialogue with increasingly sophisticated natural language capabilities, Woebot guides users through CBT exercises, mood tracking, and psychoeducation. A randomized controlled trial published in <em>JMIR Mental Health</em> found that Woebot users showed significant reductions in depression and anxiety symptoms compared to a control group over two weeks — a striking result, though the short duration and self-selected sample limit its generalizability.</p>
+  <p><strong>Wysa</strong>, a UK-based mental health chatbot used across more than 65 countries, similarly delivers evidence-based techniques through a conversational AI interface with an optional layer of human coaching. Both platforms explicitly position themselves as supplements to — not replacements for — human mental health care, with escalation pathways to human providers and crisis resources.</p>
+  <p>The evidence base for these tools is growing but remains limited in important ways. Most studies are small, short-duration, and conducted on self-selected populations who are motivated to engage. The patients who stand to benefit most from AI augmentation — those with severe, complex presentations — are often precisely those for whom digital-first approaches may be least appropriate. The "worried well" and those with mild-to-moderate anxiety and depression may benefit significantly; those in acute psychiatric crisis need human intervention that no current AI system can provide.</p>
+
+  <h2>Suicide and Self-Harm Risk Prediction</h2>
+  <p>Suicide is a leading cause of death among young people worldwide, and identifying individuals at acute risk before a crisis event is one of the highest-stakes problems in all of medicine. Traditional clinical risk assessment tools — questionnaires, clinician judgment — have poor predictive validity for the specific timing of suicidal behavior. Machine learning offers the possibility of combining far more data signals than any clinician assessment can integrate.</p>
+  <p>EHR-based suicide risk models draw on diagnosis history, prior emergency department visits, medication prescriptions (particularly patterns suggesting psychiatric comorbidity), and documented risk factors from clinical notes. Some of the most rigorous work in this domain has been conducted at Vanderbilt University Medical Center, where researchers developed models that significantly outperformed existing clinical tools at identifying patients who would die by suicide within the following 90 days.</p>
+  <p>Social media data presents a more controversial frontier. Researchers have demonstrated that linguistic patterns in social media posts — particularly features like increased use of first-person singular pronouns, negative emotion words, and references to hopelessness — are associated with subsequent suicidal behavior. Platforms including Facebook and Instagram have implemented AI-based content moderation systems designed to detect suicide-related language and trigger wellness check prompts or referrals to crisis resources.</p>
+
+  <div class="warn">
+    <div class="warn-label">The ethical minefield of risk prediction</div>
+    <p><strong>False positives have serious consequences.</strong> A model that incorrectly flags someone as high suicide risk may trigger involuntary psychiatric holds, disrupt employment and family relationships, and create trauma that paradoxically worsens mental health outcomes. The cost of false positives in mental health risk prediction is not just inconvenience — it can be deeply harmful.</p>
+    <p><strong>Social media surveillance raises profound consent issues.</strong> Most users of social media platforms have not consented to AI analysis of their posts for mental health risk prediction. The use of passively generated data for high-stakes clinical-adjacent decisions without explicit consent represents a significant ethical challenge that the field has not resolved.</p>
+  </div>
+
+  <h2>Digital Phenotyping: Sensing Mental State from Smartphone Data</h2>
+  <p>Every smartphone generates a continuous stream of passive data: GPS location patterns, physical activity (via accelerometer), screen time, app usage patterns, communication frequency (calls and texts sent and received), typing speed and error rates, and even ambient sound characteristics. <strong>Digital phenotyping</strong> is the practice of using this passively collected behavioral data to infer mental state — detecting changes that may signal depression onset, manic episodes, anxiety escalation, or psychotic relapse.</p>
+  <p>The scientific basis is plausible: depression typically involves social withdrawal (fewer communications, fewer locations visited), psychomotor slowing (less physical activity, slower typing), sleep disruption (unusual screen activity patterns at night), and anhedonia (changes in activities and routines). Bipolar mania produces opposite patterns in several domains. These behavioral signatures are precisely the kind of high-frequency, objective data that passive smartphone sensing can capture.</p>
+  <p>Research groups at Harvard, MIT, and Dartmouth, among others, have demonstrated that machine learning models trained on smartphone passive data can predict mood episodes, depression severity, and psychiatric hospitalization with meaningful accuracy. The Mindstrong platform, backed by significant venture capital before its closure, was built on the premise that typing dynamics alone — the rhythm and patterns of how people type on their phones — contained diagnostic signal for depression and cognitive impairment.</p>
+  <p>The potential clinical applications are significant: continuous monitoring for patients with serious mental illness who are between clinical appointments, early detection of prodromal symptoms before full relapse, and objective behavioral data to supplement subjective patient self-report. But the privacy implications are profound, and the regulatory and ethical frameworks governing this type of data collection remain underdeveloped.</p>
+
+  <h2>Language and Speech Analysis for Mental Health Assessment</h2>
+  <p>Human language — both its content and its acoustic properties — carries diagnostic information about mental state that clinicians have long recognized intuitively. Depressed individuals speak more slowly, use more absolute language ("always," "never"), employ more negative emotion words, and produce more disorganized narrative structure. Patients with schizophrenia demonstrate measurable disruptions in the semantic coherence of their speech — a phenomenon captured in the concept of "derailment" or "loose associations."</p>
+  <p>Computational linguistics and machine learning have now made it possible to quantify these patterns at scale. <strong>Natural language processing applied to speech and text</strong> can extract acoustic features (speech rate, pause duration, pitch variability, vocal tremor), lexical features (word choice, sentiment, abstraction level), and semantic features (coherence, topic continuity) from clinical interviews, recorded phone calls, or even social media text.</p>
+  <p>Research groups have demonstrated that these features can distinguish between depressed and non-depressed individuals, track treatment response over time, and even predict future depression onset in currently well individuals. For psychosis screening, automated analysis of brief speech samples has shown performance approaching that of trained clinicians in identifying individuals at clinical high risk. IBM Research's work on using speech features to predict Alzheimer's disease progression demonstrated that language-based biomarkers could detect cognitive change years before clinical diagnosis.</p>
+
+  <h2>Crisis Intervention and Triage Augmentation</h2>
+  <p>Mental health crisis lines receive millions of contacts annually, and the humans who staff them face an extraordinarily difficult task: rapidly assessing risk, providing support, and directing people to appropriate resources while managing dozens of concurrent interactions. AI can augment this work in several ways without replacing the human connection that makes crisis support effective.</p>
+  <p>Real-time NLP analysis of crisis line conversations can flag escalating distress markers, prompt counselors with evidence-based response suggestions, and ensure that risk assessment protocols are consistently applied across all contacts. Automated systems can handle initial triage and routing — determining whether a contact needs immediate emergency services, warm transfer to a crisis counselor, or linkage to community resources — reducing wait times and ensuring no contact goes unresponded to during surge periods.</p>
+  <p>Text-based crisis services (like the Crisis Text Line in the United States) generate large volumes of structured data that have been used to train models predicting which contacts are at immediate versus longer-term risk, enabling more effective allocation of counselor attention. Research published using Crisis Text Line data has identified linguistic markers in the first few messages that predict whether a texter will disclose active suicidal ideation — enabling earlier, more targeted intervention.</p>
+
+  <h2>Ethical Tensions in Mental Health AI</h2>
+  <p>Mental health occupies a uniquely sensitive position in the landscape of medical AI ethics. The data involved — mental illness diagnoses, crisis disclosures, therapy session content, psychiatric medication history — carries profound stigma risk. Exposure of mental health data can cost people jobs, custody of children, security clearances, and social relationships in ways that other medical data typically does not.</p>
+
+  <div class="principle-list">
+    <div class="principle">
+      <div class="principle-title">Privacy as a clinical value, not a compliance checkbox</div>
+      <div class="principle-desc">Mental health AI applications must treat privacy protection as a fundamental clinical commitment, not merely a regulatory requirement. This means minimizing data collection, using differential privacy and federated learning architectures where possible, and being radically transparent with users about what data is collected and how it is used.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">The therapeutic relationship cannot be automated</div>
+      <div class="principle-desc">Decades of psychotherapy research demonstrate that the quality of the therapeutic alliance — the sense of trust, collaboration, and genuine human connection between therapist and patient — is the single strongest predictor of treatment outcome, more powerful than any specific technique. AI can deliver techniques; it cannot form a therapeutic relationship.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Algorithmic risk labels carry social consequences</div>
+      <div class="principle-desc">When an AI system labels someone as "high risk for suicide" or "positive for depression," that label can follow the person through healthcare systems and, in contexts with poor data governance, into insurance and employment contexts. The consequences of false positives — or of accurate labels inappropriately disclosed — can be severe and long-lasting.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Vulnerable populations demand heightened safeguards</div>
+      <div class="principle-desc">People in mental health crisis are among the most vulnerable individuals a technology system might interact with. Design choices that would be acceptable in other contexts — aggressive engagement mechanics, data collection by default, limited opt-out — become ethically unacceptable when applied to people experiencing acute psychiatric distress.</div>
+    </div>
+  </div>
+
+  <h2>Limitations and the Indispensable Role of Human Oversight</h2>
+  <p>No serious researcher or clinician in this field argues that AI should replace human mental health care. The limitations are fundamental, not merely technical. Current AI systems lack the capacity for genuine empathy — the felt sense of being understood by another human being that is often itself therapeutic. They cannot form the longitudinal relationships within which therapeutic change typically occurs. They cannot exercise the nuanced clinical judgment required when a patient's presentation is complex, their history is unclear, or their risk is ambiguous.</p>
+  <p>The most dangerous failure mode is not that AI tools will perform poorly — it is that they will perform well enough to create false confidence, leading systems to substitute them for human care in contexts where human care is genuinely necessary. A chatbot that reduces mild anxiety in a motivated college student is a genuine contribution. The same chatbot positioned as a substitute for psychiatric care for a patient with treatment-resistant depression and active suicidal ideation is potentially lethal.</p>
+
+  <div class="good">
+    <div class="good-label">The right framework for mental health AI</div>
+    <p>The most defensible and effective use of AI in mental health extends human capacity without replacing human judgment. This means: AI for screening and triage that connects more people to human care faster; AI for between-session support that complements ongoing human therapy; AI for augmenting crisis counselors with real-time information and protocol reminders; and AI for population-level monitoring that identifies individuals who need outreach. In every case, the human clinician remains the decision-maker, relationship holder, and accountable party.</p>
+  </div>
+
+  <p>Mental health AI is not a solved problem, and the ethical frameworks governing its development and deployment are still being written. What is clear is that the scale of unmet mental health need demands innovation — and that the vulnerability of the populations involved demands that this innovation be pursued with more rigor, humility, and ethical seriousness than any other domain in health AI.</p>
+
+</div>
+</main>
+</div>
+
+<div class="sticky-bar" id="sticky-bar">
+  <div class="sticky-bar-reading" id="sticky-reading">Read to the end to unlock the next module</div>
+  <div class="sticky-bar-track"><div class="sticky-bar-fill" id="sticky-fill"></div></div>
+  <div class="sticky-bar-label" id="sticky-label">0%</div>
+  <button class="sticky-bar-btn" id="sticky-btn" onclick="completeAndNext()">Module 6: Robotic Surgery and Precision Medicine →</button>
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import { getFirestore, doc, setDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  const app = initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+  const auth = getAuth(app); const db = getFirestore(app);
+  let currentUser = null;
+  onAuthStateChanged(auth, u => { currentUser = u; });
+
+  window.toggleTheme=function(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='☾'):(h.setAttribute('data-theme','dark'),i.textContent='☀');};
+  window.addEventListener('scroll',()=>{const d=document.documentElement,s=d.scrollTop||document.body.scrollTop,t=d.scrollHeight-d.clientHeight;document.getElementById('progress').style.width=(s/t*100)+'%';});
+
+  let unlocked=false;
+  function updateScrollProgress(){
+    const scrolled=window.scrollY+window.innerHeight;
+    const total=document.documentElement.scrollHeight;
+    const pct=Math.min(100,Math.round((scrolled/total)*100));
+    const fill=document.getElementById('sticky-fill');
+    const label=document.getElementById('sticky-label');
+    const btn=document.getElementById('sticky-btn');
+    const reading=document.getElementById('sticky-reading');
+    if(fill)fill.style.width=pct+'%';
+    if(label)label.textContent=pct+'%';
+    if(pct>=95&&!unlocked){
+      unlocked=true;
+      if(btn)btn.style.display='block';
+      if(reading)reading.style.display='none';
+      if(fill)fill.style.background='#22c55e';
+      if(label)label.style.color='#22c55e';
+    }
+  }
+  window.addEventListener('scroll',updateScrollProgress);
+  updateScrollProgress();
+
+  window.completeAndNext=async function(){
+    if(currentUser){
+      try{
+        await setDoc(doc(db,'users',currentUser.uid),{
+          healthcareModules: arrayUnion('m5')
+        }, { merge: true });
+      }catch(e){ /* progress save best-effort */ }
+    }
+    window.location.href='healthcare-module-6.html';
+  };
+</script>
+</body>
+</html>

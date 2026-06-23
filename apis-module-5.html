@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 5: Structured Outputs — Building with AI APIs — Meridian Institute of AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#0F4C81;--accent-dim:rgba(15,76,129,0.1);--accent-dim2:rgba(15,76,129,0.05);--nav-bg:rgba(8,8,8,0.9);--callout-bg:rgba(15,76,129,0.07);--callout-border:rgba(15,76,129,0.25);--good-bg:rgba(34,197,94,0.07);--good-border:rgba(34,197,94,0.2);--warn-bg:rgba(251,146,60,0.07);--warn-border:rgba(251,146,60,0.2);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#1E40AF;--accent-dim:rgba(30,64,175,0.08);--accent-dim2:rgba(30,64,175,0.04);--nav-bg:rgba(250,250,248,0.9);--callout-bg:rgba(30,64,175,0.05);--callout-border:rgba(30,64,175,0.2);--good-bg:rgba(22,163,74,0.06);--good-border:rgba(22,163,74,0.2);--warn-bg:rgba(234,88,12,0.05);--warn-border:rgba(234,88,12,0.2);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;overflow-x:hidden;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.7;overflow-x:hidden;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}
+  .nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}
+  .nav-back{font-size:13px;color:var(--text-2);text-decoration:none;transition:color 0.2s;}
+  .nav-back:hover{color:var(--text);}
+  .nav-label{font-size:13px;color:var(--text-3);}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;transition:all 0.2s;}
+  .theme-toggle:hover{background:var(--bg-3);color:var(--text);}
+  .progress-bar{position:fixed;top:60px;left:0;right:0;z-index:99;height:2px;background:var(--border);}
+  .progress-fill{height:100%;background:var(--accent);width:0%;transition:width 0.1s;}
+  .page-wrapper{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:100vh;padding-top:62px;overflow:hidden;}
+  .sidebar{position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto;border-right:1px solid var(--border);padding:32px 24px;background:var(--bg-2);}
+  .sidebar-course{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;}
+  .sidebar-course-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+  .sidebar-module{margin-bottom:4px;}
+  .sidebar-module-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:13px;color:var(--text-2);text-decoration:none;transition:all 0.2s;line-height:1.4;}
+  .sidebar-module-link:hover{background:var(--bg-3);color:var(--text);}
+  .sidebar-module-link.active{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-num{font-size:11px;font-weight:500;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--bg-4);color:var(--text-3);}
+  .sidebar-module-link.active .sidebar-num{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-divider{height:1px;background:var(--border);margin:20px 0;}
+  .sidebar-progress-label{font-size:12px;color:var(--text-3);margin-bottom:8px;display:flex;justify-content:space-between;}
+  .sidebar-progress-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sidebar-progress-fill{height:100%;width:50%;background:var(--accent);border-radius:2px;}
+  main{display:block;min-width:0;overflow:hidden;}
+  .content{max-width:760px;width:100%;padding:60px 64px 140px;margin:0 auto;}
+  .module-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+  .module-tag{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(15,76,129,0.2);padding:4px 12px;border-radius:100px;}
+  .module-meta{font-size:12px;color:var(--text-3);}
+  h1{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1.05;letter-spacing:-0.02em;color:var(--text);margin-bottom:24px;}
+  .intro-text{font-size:19px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+  h2{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:400;color:var(--text);margin:52px 0 18px;line-height:1.2;}
+  h3{font-size:16px;font-weight:500;color:var(--text);margin:32px 0 12px;}
+  p{font-size:16px;font-weight:300;color:var(--text-2);line-height:1.8;margin-bottom:20px;}
+  strong{font-weight:500;color:var(--text);}
+  em{font-style:italic;}
+  ul,ol{margin:0 0 20px 22px;color:var(--text-2);}
+  li{font-size:16px;font-weight:300;line-height:1.8;margin-bottom:8px;}
+  .callout{background:var(--callout-bg);border:1px solid var(--callout-border);border-radius:12px;padding:24px 28px;margin:32px 0;}
+  .callout-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+  .callout p{margin:0;font-size:15px;color:var(--text-2);}
+  .callout p+p{margin-top:12px;}
+  .good{background:var(--good-bg);border:1px solid var(--good-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .good-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#22c55e;margin-bottom:10px;}
+  .good p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn{background:var(--warn-bg);border:1px solid var(--warn-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .warn-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#fb923c;margin-bottom:10px;}
+  .warn p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn p+p{margin-top:12px;}
+  .principle-list{display:flex;flex-direction:column;gap:12px;margin:24px 0;}
+  .principle{background:var(--bg-2);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:0 12px 12px 0;padding:20px 24px;}
+  .principle-title{font-size:15px;font-weight:500;color:var(--text);margin-bottom:6px;}
+  .principle-desc{font-size:14px;color:var(--text-2);line-height:1.65;margin:0;}
+  .code-block{background:#0d1117;border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:20px 24px;margin:24px 0;font-family:monospace;font-size:13px;color:#e6edf3;overflow-x:auto;line-height:1.7;white-space:pre;}
+  .sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:var(--bg-2);border-top:1px solid var(--border-2);padding:14px 5%;display:flex;align-items:center;justify-content:space-between;gap:16px;backdrop-filter:blur(12px);}
+  .sticky-bar-track{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sticky-bar-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.2s;width:0%;}
+  .sticky-bar-label{font-size:12px;color:var(--text-3);white-space:nowrap;min-width:60px;text-align:right;}
+  .sticky-bar-btn{padding:10px 20px;border-radius:8px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;background:var(--accent);color:#fff;border:none;cursor:pointer;white-space:nowrap;transition:opacity 0.2s;display:none;}
+  .sticky-bar-btn:hover{opacity:0.88;}
+  .sticky-bar-reading{font-size:12px;color:var(--text-3);white-space:nowrap;}
+  @media(max-width:900px){.page-wrapper{grid-template-columns:1fr;}.sidebar{display:none;}.content{padding:40px 24px 120px;}h1{font-size:38px;}}
+  @media(max-width:600px){.content{padding:28px 16px 120px;}h1{font-size:30px;}h2{font-size:24px;}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="courses.html" class="nav-back">← Building with AI APIs</a>
+    <div class="nav-divider"></div>
+    <span class="nav-label">Module 5</span>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">☀</span></button>
+</nav>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+
+<div class="page-wrapper">
+<aside class="sidebar">
+  <div class="sidebar-course">Expert Track</div>
+  <div class="sidebar-course-name">Building with AI APIs</div>
+  <div class="sidebar-module"><a href="apis-module-1.html" class="sidebar-module-link"><span class="sidebar-num">1</span>API Fundamentals</a></div>
+  <div class="sidebar-module"><a href="apis-module-2.html" class="sidebar-module-link"><span class="sidebar-num">2</span>Your First API Call</a></div>
+  <div class="sidebar-module"><a href="apis-module-3.html" class="sidebar-module-link"><span class="sidebar-num">3</span>Chat Completions in Depth</a></div>
+  <div class="sidebar-module"><a href="apis-module-4.html" class="sidebar-module-link"><span class="sidebar-num">4</span>Tokens and Cost Optimization</a></div>
+  <div class="sidebar-module"><a href="apis-module-5.html" class="sidebar-module-link active"><span class="sidebar-num">5</span>Structured Outputs</a></div>
+  <div class="sidebar-module"><a href="apis-module-6.html" class="sidebar-module-link"><span class="sidebar-num">6</span>Streaming Responses</a></div>
+  <div class="sidebar-module"><a href="apis-module-7.html" class="sidebar-module-link"><span class="sidebar-num">7</span>Embeddings and Semantic Search</a></div>
+  <div class="sidebar-module"><a href="apis-module-8.html" class="sidebar-module-link"><span class="sidebar-num">8</span>Function Calling and Tool Use</a></div>
+  <div class="sidebar-module"><a href="apis-module-9.html" class="sidebar-module-link"><span class="sidebar-num">9</span>Production-Ready AI Apps</a></div>
+  <div class="sidebar-module"><a href="apis-module-10.html" class="sidebar-module-link"><span class="sidebar-num">10</span>Multi-Provider Strategies</a></div>
+  <div class="sidebar-module"><a href="quiz-apis.html" class="sidebar-module-link" style="color:var(--accent);margin-top:4px;"><span class="sidebar-num" style="background:var(--accent-dim);color:var(--accent);">✦</span>Final Assessment</a></div>
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-progress-label"><span>Course progress</span><span style="color:var(--accent);">5 / 10</span></div>
+  <div class="sidebar-progress-track"><div class="sidebar-progress-fill"></div></div>
+</aside>
+
+<main>
+<div class="content">
+  <div class="module-eyebrow"><span class="module-tag">Module 5</span><span class="module-meta">30 min read · Building with AI APIs</span></div>
+  <h1>Structured Outputs</h1>
+
+  <p class="intro-text">Free-form text output breaks production pipelines. When your application needs to parse the model's response — extract fields, populate a database, drive UI components, or chain into another system — you need structured, reliable output. This module covers how to guarantee the model returns data in the exact shape your code expects.</p>
+
+  <h2>Why unstructured output breaks production apps</h2>
+  <p>Asking a model to "return JSON" with a plain text instruction is fragile. The model might prepend explanation text ("Here is the JSON you requested:"), wrap it in a markdown code fence, include trailing commentary, use slightly different field names than specified, or sometimes just refuse and return prose. Any of these breaks a <code>json.loads()</code> call.</p>
+
+  <p>The failure modes are insidious because they often work 95% of the time in testing and break on edge cases or slightly different phrasings in production. A production-grade structured output system needs to be close to 100% reliable — not "usually works."</p>
+
+  <div class="warn">
+    <div class="warn-label">The naive approach fails silently</div>
+    <p>The pattern of "tell the model to return JSON in the prompt and hope it does" produces code that works in demos and breaks in production. A single malformed response can crash an automated pipeline, corrupt a database, or silently return null values that propagate downstream.</p>
+  </div>
+
+  <h2>JSON mode: a safety net</h2>
+  <p>The simplest structured output technique is JSON mode. Pass <code>response_format={"type": "json_object"}</code> to OpenAI and the model is constrained to produce valid JSON — guaranteed. You still need to specify in your prompt what fields you want, but the parse will always succeed.</p>
+
+  <div class="code-block">from openai import OpenAI
+import json
+
+client = OpenAI()
+
+response = client.chat.completions.create(
+    model="gpt-4o-mini",
+    messages=[
+        {
+            "role": "system",
+            "content": (
+                "Extract the requested information and return ONLY a JSON object. "
+                "Do not include any other text."
+            )
+        },
+        {
+            "role": "user",
+            "content": (
+                "Extract: company_name, revenue_usd (number), fiscal_quarter (string), "
+                "year (integer) from this text:\n\n"
+                "Apple Inc. reported Q2 2025 revenue of $95.4 billion."
+            )
+        }
+    ],
+    response_format={"type": "json_object"},  # guarantees valid JSON output
+    temperature=0
+)
+
+# This will always parse — JSON mode guarantees valid JSON
+data = json.loads(response.choices[0].message.content)
+print(data)
+# {"company_name": "Apple Inc.", "revenue_usd": 95400000000, "fiscal_quarter": "Q2", "year": 2025}</div>
+
+  <p>JSON mode guarantees syntactically valid JSON but not semantic correctness — the model can still produce wrong field names, wrong types, or hallucinate values. For full schema enforcement, use structured outputs with a schema.</p>
+
+  <h2>Structured outputs with JSON schema (OpenAI)</h2>
+  <p>OpenAI's structured outputs feature takes this further: you provide a JSON Schema describing the exact structure you want, and the model is constrained by the decoding algorithm to produce output that matches that schema. This is enforced at the token level, not just requested — it is mathematically guaranteed.</p>
+
+  <div class="code-block">from openai import OpenAI
+import json
+
+client = OpenAI()
+
+# Define the exact schema for the output
+extraction_schema = {
+    "type": "object",
+    "properties": {
+        "company_name": {
+            "type": "string",
+            "description": "Full legal name of the company"
+        },
+        "revenue_usd": {
+            "type": "number",
+            "description": "Revenue in USD dollars (not billions)"
+        },
+        "fiscal_quarter": {
+            "type": "string",
+            "enum": ["Q1", "Q2", "Q3", "Q4"],
+            "description": "Fiscal quarter"
+        },
+        "year": {
+            "type": "integer",
+            "description": "Fiscal year as 4-digit integer"
+        },
+        "confidence": {
+            "type": "string",
+            "enum": ["high", "medium", "low"],
+            "description": "Confidence level in the extraction"
+        }
+    },
+    "required": ["company_name", "revenue_usd", "fiscal_quarter", "year", "confidence"],
+    "additionalProperties": False
+}
+
+response = client.chat.completions.create(
+    model="gpt-4o-2024-08-06",  # structured outputs require this model or later
+    messages=[
+        {"role": "system", "content": "Extract financial data from the provided text."},
+        {"role": "user", "content": "Apple Inc. reported Q2 2025 revenue of $95.4 billion."}
+    ],
+    response_format={
+        "type": "json_schema",
+        "json_schema": {
+            "name": "financial_extraction",
+            "schema": extraction_schema,
+            "strict": True  # enforce schema strictly
+        }
+    },
+    temperature=0
+)
+
+data = json.loads(response.choices[0].message.content)
+print(data["company_name"])    # "Apple Inc."
+print(data["fiscal_quarter"])  # always one of: Q1, Q2, Q3, Q4 — enum enforced
+print(data["confidence"])      # always one of: high, medium, low</div>
+
+  <h2>Pydantic models for type-safe structured outputs</h2>
+  <p>Pydantic is a Python library for data validation using type annotations. Combined with structured outputs, it gives you a complete pipeline: define the shape once in Python, get it enforced by the API, and parse the result directly into a typed Python object. This is the pattern used in most production systems.</p>
+
+  <div class="code-block">pip install pydantic openai</div>
+
+  <div class="code-block">from openai import OpenAI
+from pydantic import BaseModel, Field
+from typing import Literal, Optional
+import json
+
+client = OpenAI()
+
+# Define your output schema as a Pydantic model
+class FinancialExtraction(BaseModel):
+    company_name: str = Field(description="Full legal name of the company")
+    revenue_usd: float = Field(description="Revenue in USD (not billions or millions)")
+    fiscal_quarter: Literal["Q1", "Q2", "Q3", "Q4"]
+    year: int = Field(ge=1900, le=2100, description="Fiscal year")
+    currency: Literal["USD", "EUR", "GBP", "JPY"] = "USD"
+    source_confidence: Literal["high", "medium", "low"]
+    notes: Optional[str] = Field(default=None, description="Any caveats about the extraction")
+
+class NewsArticleEntities(BaseModel):
+    """Entities extracted from a news article."""
+    companies: list[str]
+    people: list[str]
+    locations: list[str]
+    key_dates: list[str]
+    sentiment: Literal["positive", "negative", "neutral", "mixed"]
+
+def extract_with_schema(text: str, schema_class: type[BaseModel]) -> BaseModel:
+    """
+    Extract structured data using Pydantic schema validation.
+    Uses OpenAI's parse() helper for clean Pydantic integration.
+    """
+    response = client.beta.chat.completions.parse(
+        model="gpt-4o-2024-08-06",
+        messages=[
+            {
+                "role": "system",
+                "content": "Extract the requested structured data from the provided text."
+            },
+            {"role": "user", "content": text}
+        ],
+        response_format=schema_class,
+        temperature=0
+    )
+
+    # .parse() returns a parsed Pydantic object directly
+    parsed = response.choices[0].message.parsed
+    if parsed is None:
+        raise ValueError("Model refused to return structured output")
+    return parsed
+
+# Usage
+text = "Apple Inc. reported Q2 2025 revenue of $95.4 billion dollars, beating analyst estimates."
+result = extract_with_schema(text, FinancialExtraction)
+
+# result is a fully typed Python object — no dict access, no parsing
+print(result.company_name)         # str: "Apple Inc."
+print(result.revenue_usd)          # float: 95400000000.0
+print(result.fiscal_quarter)       # Literal: "Q2"
+print(result.source_confidence)    # Literal: "high"
+print(result.model_dump_json())    # serialize back to JSON
+
+# News entity extraction
+news = "Elon Musk and Jensen Huang met in Austin, Texas on March 14, 2025 to discuss AI chip supply chains."
+entities = extract_with_schema(news, NewsArticleEntities)
+print(entities.companies)   # ["Tesla", "NVIDIA"] (inferred)
+print(entities.people)      # ["Elon Musk", "Jensen Huang"]
+print(entities.locations)   # ["Austin, Texas"]</div>
+
+  <h2>Structured outputs with Anthropic</h2>
+  <p>Anthropic does not have a native structured outputs API with schema enforcement. The recommended approaches are: strongly prompted JSON (works well with Claude's instruction-following), or the tool use trick — defining a tool with the desired schema and forcing the model to call it.</p>
+
+  <div class="code-block">import anthropic
+import json
+from pydantic import BaseModel
+
+client = anthropic.Anthropic()
+
+class ProductReview(BaseModel):
+    sentiment: str
+    rating: int
+    key_positives: list[str]
+    key_negatives: list[str]
+    summary: str
+
+def extract_review_anthropic(review_text: str) -> ProductReview:
+    """Extract structured review data using Claude with the tool-use trick."""
+
+    # Define the extraction as a tool — forces Claude to produce schema-valid JSON
+    tool = {
+        "name": "extract_review",
+        "description": "Extract structured information from a product review",
+        "input_schema": {
+            "type": "object",
+            "properties": {
+                "sentiment": {
+                    "type": "string",
+                    "enum": ["positive", "negative", "neutral", "mixed"]
+                },
+                "rating": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 5,
+                    "description": "Inferred star rating 1-5"
+                },
+                "key_positives": {
+                    "type": "array",
+                    "items": {"type": "string"},
+                    "description": "List of positive aspects mentioned"
+                },
+                "key_negatives": {
+                    "type": "array",
+                    "items": {"type": "string"},
+                    "description": "List of negative aspects or complaints"
+                },
+                "summary": {
+                    "type": "string",
+                    "description": "One sentence summary of the review"
+                }
+            },
+            "required": ["sentiment", "rating", "key_positives", "key_negatives", "summary"]
+        }
+    }
+
+    response = client.messages.create(
+        model="claude-opus-4-5",
+        max_tokens=1024,
+        tools=[tool],
+        tool_choice={"type": "tool", "name": "extract_review"},  # force this tool
+        messages=[
+            {
+                "role": "user",
+                "content": f"Extract structured review data:\n\n{review_text}"
+            }
+        ]
+    )
+
+    # The tool_use block contains the structured data
+    tool_use_block = next(b for b in response.content if b.type == "tool_use")
+    return ProductReview(**tool_use_block.input)
+
+review = """
+Absolutely love this laptop! The battery life is incredible — 12+ hours easily.
+The keyboard feels great and the display is stunning. Only complaint is the webcam
+quality is mediocre for the price. Would definitely recommend.
+"""
+
+result = extract_review_anthropic(review)
+print(f"Sentiment: {result.sentiment}")     # positive
+print(f"Rating: {result.rating}/5")         # 4
+print(f"Positives: {result.key_positives}") # ["battery life", ...]</div>
+
+  <h2>Handling parse errors and retries</h2>
+  <p>Even with structured output enforcement, you should build resilient parsing that handles edge cases gracefully. The <code>parse()</code> helper may return <code>None</code> for the parsed field if the model refused to respond. For raw JSON parsing, always wrap in try/except.</p>
+
+  <div class="code-block">import json
+from openai import OpenAI
+from pydantic import BaseModel, ValidationError
+
+client = OpenAI()
+
+def extract_with_retry(text: str, schema: type[BaseModel], max_retries: int = 2) -> BaseModel:
+    """Extract structured data with retry on parse failure."""
+    last_error = None
+
+    for attempt in range(max_retries + 1):
+        try:
+            response = client.beta.chat.completions.parse(
+                model="gpt-4o-2024-08-06",
+                messages=[
+                    {"role": "system", "content": "Extract structured data. Be precise."},
+                    {"role": "user", "content": text}
+                    # On retry, we could append error context here
+                ],
+                response_format=schema,
+                temperature=0
+            )
+
+            parsed = response.choices[0].message.parsed
+            if parsed is None:
+                raise ValueError("Model returned null — possible refusal")
+
+            return parsed
+
+        except (ValidationError, ValueError, json.JSONDecodeError) as e:
+            last_error = e
+            if attempt < max_retries:
+                print(f"Parse failed (attempt {attempt+1}): {e}. Retrying...")
+            continue
+
+    raise RuntimeError(f"Extraction failed after {max_retries+1} attempts: {last_error}")</div>
+
+  <h2>Schema design tips</h2>
+  <p>How you design your schema significantly affects the quality and reliability of extraction. Some hard-learned rules:</p>
+
+  <ul>
+    <li><strong>Flat is better than nested.</strong> A schema with 10 top-level fields is easier for models to populate correctly than two levels of nesting. Avoid deep hierarchies.</li>
+    <li><strong>Use enums for controlled vocabularies.</strong> Instead of <code>"type": "string"</code> for a status field, use <code>"enum": ["pending", "active", "closed"]</code>. This eliminates spelling variations and ambiguity.</li>
+    <li><strong>Descriptions are instructions.</strong> The <code>description</code> field on each property is read by the model. Write clear, specific descriptions that resolve any ambiguity in what the field should contain.</li>
+    <li><strong>Mark everything required unless it truly is optional.</strong> Optional fields get skipped. If you need the data, make it required and let the model provide a best-effort value or null.</li>
+    <li><strong>Use specific types.</strong> Prefer <code>"type": "integer"</code> over <code>"type": "number"</code> for counts, IDs, and years. Prefer <code>"type": "boolean"</code> over strings like "yes"/"no".</li>
+  </ul>
+
+  <div class="good">
+    <div class="good-label">Structured outputs are the foundation of AI pipelines</div>
+    <p>Once you can reliably extract structured data from text, you can build document processing pipelines, automated research tools, data enrichment systems, and intelligent ETL workflows. The Pydantic + OpenAI structured outputs combination gives you a production-grade extraction pattern that is reliable enough for automated batch processing without human review.</p>
+  </div>
+
+</div>
+</main>
+</div>
+
+<div class="sticky-bar" id="sticky-bar">
+  <div class="sticky-bar-reading" id="sticky-reading">Read to the end to unlock the next module</div>
+  <div class="sticky-bar-track"><div class="sticky-bar-fill" id="sticky-fill"></div></div>
+  <div class="sticky-bar-label" id="sticky-label">0%</div>
+  <button class="sticky-bar-btn" id="sticky-btn" onclick="completeAndNext()">Module 6: Streaming Responses →</button>
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import { getFirestore, doc, setDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  const app=initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+  const auth=getAuth(app);const db=getFirestore(app);
+  let currentUser=null;
+  onAuthStateChanged(auth,u=>{currentUser=u;});
+  window.toggleTheme=function(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='☾'):(h.setAttribute('data-theme','dark'),i.textContent='☀');};
+  window.addEventListener('scroll',()=>{const d=document.documentElement,s=d.scrollTop||document.body.scrollTop,t=d.scrollHeight-d.clientHeight;document.getElementById('progress').style.width=(s/t*100)+'%';});
+  let unlocked=false;
+  function updateScrollProgress(){
+    const scrolled=window.scrollY+window.innerHeight;
+    const total=document.documentElement.scrollHeight;
+    const pct=Math.min(100,Math.round((scrolled/total)*100));
+    const fill=document.getElementById('sticky-fill');
+    const label=document.getElementById('sticky-label');
+    const btn=document.getElementById('sticky-btn');
+    const reading=document.getElementById('sticky-reading');
+    if(fill)fill.style.width=pct+'%';
+    if(label)label.textContent=pct+'%';
+    if(pct>=95&&!unlocked){unlocked=true;if(btn)btn.style.display='block';if(reading)reading.style.display='none';if(fill)fill.style.background='#22c55e';if(label)label.style.color='#22c55e';}
+  }
+  window.addEventListener('scroll',updateScrollProgress);
+  updateScrollProgress();
+  window.completeAndNext=async function(){
+    if(currentUser){try{await setDoc(doc(db,'users',currentUser.uid),{apisModules:arrayUnion('m5')},{merge:true});}catch(e){}}
+    window.location.href='apis-module-6.html';
+  };
+</script>
+</body>
+</html>

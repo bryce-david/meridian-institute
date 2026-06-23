@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 6: Robotic Surgery and Precision Medicine — AI in Healthcare — Meridian Institute of AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#BE185D;--accent-dim:rgba(190,24,93,0.1);--accent-dim2:rgba(190,24,93,0.05);--nav-bg:rgba(8,8,8,0.9);--callout-bg:rgba(190,24,93,0.07);--callout-border:rgba(190,24,93,0.25);--good-bg:rgba(34,197,94,0.07);--good-border:rgba(34,197,94,0.2);--warn-bg:rgba(251,146,60,0.07);--warn-border:rgba(251,146,60,0.2);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#9D174D;--accent-dim:rgba(157,23,77,0.08);--accent-dim2:rgba(157,23,77,0.04);--nav-bg:rgba(250,250,248,0.9);--callout-bg:rgba(157,23,77,0.05);--callout-border:rgba(157,23,77,0.2);--good-bg:rgba(22,163,74,0.06);--good-border:rgba(22,163,74,0.2);--warn-bg:rgba(234,88,12,0.05);--warn-border:rgba(234,88,12,0.2);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;overflow-x:hidden;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.7;overflow-x:hidden;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}
+  .nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}
+  .nav-back{font-size:13px;color:var(--text-2);text-decoration:none;transition:color 0.2s;}
+  .nav-back:hover{color:var(--text);}
+  .nav-label{font-size:13px;color:var(--text-3);}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;transition:all 0.2s;}
+  .theme-toggle:hover{background:var(--bg-3);color:var(--text);}
+  .progress-bar{position:fixed;top:60px;left:0;right:0;z-index:99;height:2px;background:var(--border);}
+  .progress-fill{height:100%;background:var(--accent);width:0%;transition:width 0.1s;}
+  .page-wrapper{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:100vh;padding-top:62px;overflow:hidden;}
+  .sidebar{position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto;border-right:1px solid var(--border);padding:32px 24px;background:var(--bg-2);}
+  .sidebar-course{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;}
+  .sidebar-course-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+  .sidebar-module{margin-bottom:4px;}
+  .sidebar-module-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:13px;color:var(--text-2);text-decoration:none;transition:all 0.2s;line-height:1.4;}
+  .sidebar-module-link:hover{background:var(--bg-3);color:var(--text);}
+  .sidebar-module-link.active{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-num{font-size:11px;font-weight:500;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--bg-4);color:var(--text-3);}
+  .sidebar-module-link.active .sidebar-num{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-divider{height:1px;background:var(--border);margin:20px 0;}
+  .sidebar-progress-label{font-size:12px;color:var(--text-3);margin-bottom:8px;display:flex;justify-content:space-between;}
+  .sidebar-progress-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sidebar-progress-fill{height:100%;width:60%;background:var(--accent);border-radius:2px;}
+  main{display:block;min-width:0;overflow:hidden;}
+  .content{max-width:760px;width:100%;padding:60px 64px 140px;margin:0 auto;}
+  .module-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+  .module-tag{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(190,24,93,0.2);padding:4px 12px;border-radius:100px;}
+  .module-meta{font-size:12px;color:var(--text-3);}
+  h1{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1.05;letter-spacing:-0.02em;color:var(--text);margin-bottom:24px;}
+  .intro-text{font-size:19px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+  h2{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:400;color:var(--text);margin:52px 0 18px;line-height:1.2;}
+  h3{font-size:16px;font-weight:500;color:var(--text);margin:32px 0 12px;}
+  p{font-size:16px;font-weight:300;color:var(--text-2);line-height:1.8;margin-bottom:20px;}
+  strong{font-weight:500;color:var(--text);}
+  em{font-style:italic;}
+  ul,ol{margin:0 0 20px 22px;color:var(--text-2);}
+  li{font-size:16px;font-weight:300;line-height:1.8;margin-bottom:8px;}
+  .callout{background:var(--callout-bg);border:1px solid var(--callout-border);border-radius:12px;padding:24px 28px;margin:32px 0;}
+  .callout-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+  .callout p{margin:0;font-size:15px;color:var(--text-2);}
+  .callout p+p{margin-top:12px;}
+  .good{background:var(--good-bg);border:1px solid var(--good-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .good-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#22c55e;margin-bottom:10px;}
+  .good p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn{background:var(--warn-bg);border:1px solid var(--warn-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .warn-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#fb923c;margin-bottom:10px;}
+  .warn p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn p+p{margin-top:12px;}
+  .analogy{background:var(--bg-2);border:1px solid var(--border);border-radius:12px;padding:28px;margin:28px 0;}
+  .analogy-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-3);margin-bottom:12px;}
+  .analogy p{margin:0;font-size:15px;color:var(--text-2);}
+  .disclaimer{background:rgba(251,146,60,0.07);border:1px solid rgba(251,146,60,0.3);border-radius:12px;padding:24px 28px;margin:0 0 40px;}
+  .disclaimer-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#fb923c;margin-bottom:10px;}
+  .disclaimer p{margin:0;font-size:14px;color:var(--text-2);line-height:1.7;}
+  .disclaimer p+p{margin-top:10px;}
+  .comparison-wrapper{overflow-x:auto;-webkit-overflow-scrolling:touch;width:100%;margin:28px 0;}
+  table{width:100%;border-collapse:collapse;font-size:14px;min-width:480px;}
+  th{text-align:left;padding:12px 16px;font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-3);border-bottom:1px solid var(--border-2);}
+  td{padding:14px 16px;border-bottom:1px solid var(--border);color:var(--text-2);line-height:1.6;vertical-align:top;}
+  tr:last-child td{border-bottom:none;}
+  td:first-child{color:var(--text);font-weight:500;width:30%;}
+  .key-stat{background:var(--bg-2);border:1px solid var(--border);border-radius:12px;padding:20px 24px;margin:16px 0;display:flex;align-items:center;gap:20px;}
+  .key-stat-num{font-family:'Cormorant Garamond',serif;font-size:40px;font-weight:400;color:var(--accent);line-height:1;flex-shrink:0;}
+  .key-stat-label{font-size:14px;color:var(--text-2);line-height:1.6;}
+  .key-stat-label strong{display:block;font-size:15px;color:var(--text);margin-bottom:4px;}
+  .principle-list{display:flex;flex-direction:column;gap:12px;margin:24px 0;}
+  .principle{background:var(--bg-2);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:0 12px 12px 0;padding:20px 24px;}
+  .principle-title{font-size:15px;font-weight:500;color:var(--text);margin-bottom:6px;}
+  .principle-desc{font-size:14px;color:var(--text-2);line-height:1.65;margin:0;}
+  .sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:var(--bg-2);border-top:1px solid var(--border-2);padding:14px 5%;display:flex;align-items:center;justify-content:space-between;gap:16px;backdrop-filter:blur(12px);}
+  .sticky-bar-track{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sticky-bar-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.2s;width:0%;}
+  .sticky-bar-label{font-size:12px;color:var(--text-3);white-space:nowrap;min-width:60px;text-align:right;}
+  .sticky-bar-btn{padding:10px 20px;border-radius:8px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;background:var(--accent);color:#fff;border:none;cursor:pointer;white-space:nowrap;transition:opacity 0.2s;display:none;}
+  .sticky-bar-btn:hover{opacity:0.88;}
+  .sticky-bar-reading{font-size:12px;color:var(--text-3);white-space:nowrap;}
+  @media(max-width:900px){.page-wrapper{grid-template-columns:1fr;}.sidebar{display:none;}.content{padding:40px 24px 120px;}h1{font-size:38px;}}
+  @media(max-width:600px){.content{padding:28px 16px 120px;}h1{font-size:30px;}h2{font-size:24px;}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="index.html" class="nav-back">🏠 Home</a>
+    <div class="nav-divider"></div>
+    <a href="courses.html" class="nav-back">← AI in Healthcare</a>
+    <div class="nav-divider"></div>
+    <span class="nav-label">Module 6</span>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">☀</span></button>
+</nav>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+
+<div class="page-wrapper">
+<aside class="sidebar">
+  <div class="sidebar-course">Course</div>
+  <div class="sidebar-course-name">AI in Healthcare</div>
+  <div class="sidebar-module"><a href="healthcare-module-1.html" class="sidebar-module-link "><span class="sidebar-num">1</span>AI in Clinical Diagnosis</a></div>
+  <div class="sidebar-module"><a href="healthcare-module-2.html" class="sidebar-module-link "><span class="sidebar-num">2</span>Medical Imaging and AI</a></div>
+  <div class="sidebar-module"><a href="healthcare-module-3.html" class="sidebar-module-link "><span class="sidebar-num">3</span>AI in Drug Discovery</a></div>
+  <div class="sidebar-module"><a href="healthcare-module-4.html" class="sidebar-module-link "><span class="sidebar-num">4</span>EHR and Predictive Analytics</a></div>
+  <div class="sidebar-module"><a href="healthcare-module-5.html" class="sidebar-module-link "><span class="sidebar-num">5</span>AI in Mental Health</a></div>
+  <div class="sidebar-module"><a href="healthcare-module-6.html" class="sidebar-module-link active"><span class="sidebar-num">6</span>Robotic Surgery and Precision Medicine</a></div>
+  <div class="sidebar-module"><a href="healthcare-module-7.html" class="sidebar-module-link "><span class="sidebar-num">7</span>Patient Data and Privacy</a></div>
+  <div class="sidebar-module"><a href="healthcare-module-8.html" class="sidebar-module-link "><span class="sidebar-num">8</span>AI and Public Health</a></div>
+  <div class="sidebar-module"><a href="healthcare-module-9.html" class="sidebar-module-link "><span class="sidebar-num">9</span>Medical AI Regulation</a></div>
+  <div class="sidebar-module"><a href="healthcare-module-10.html" class="sidebar-module-link "><span class="sidebar-num">10</span>The Future of Healthcare AI</a></div>
+  <div class="sidebar-module"><a href="quiz-healthcare.html" class="sidebar-module-link" style="color:var(--accent);margin-top:4px;"><span class="sidebar-num" style="background:var(--accent-dim);color:var(--accent);">✦</span>Final Assessment</a></div>
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-progress-label"><span>Course progress</span><span style="color:var(--accent);">6 / 10</span></div>
+  <div class="sidebar-progress-track"><div class="sidebar-progress-fill"></div></div>
+</aside>
+
+<main>
+<div class="content">
+  <div class="module-eyebrow"><span class="module-tag">Module 6</span><span class="module-meta">22 min read · AI in Healthcare</span></div>
+  <h1>Robotic Surgery and Precision Medicine</h1>
+
+  <p class="intro-text">Two of the most transformative shifts in modern medicine — AI-guided robotic surgery and genomics-driven precision medicine — are converging to make treatment more individualized than ever before.</p>
+
+  <h2>The da Vinci Surgical System: Anatomy of a Revolution</h2>
+  <p>When Intuitive Surgical launched the <strong>da Vinci Surgical System</strong> in 2000 — receiving FDA clearance for laparoscopic surgery — it introduced a paradigm that would reshape the operating room over the following quarter century. The system consists of a surgeon console, a patient-side cart with robotic arms, and a high-definition 3D vision system. The surgeon operates from the console, viewing a magnified, stereoscopic image of the surgical field and manipulating hand and foot controls that translate their movements into precise actions by the robotic instruments inside the patient's body.</p>
+  <p>The clinical advantages over traditional open surgery are substantial: smaller incisions, reduced blood loss, shorter hospital stays, less postoperative pain, and faster return to normal activity. Compared to conventional laparoscopic surgery, the robotic platform offers superior three-dimensional visualization, a greater range of motion through articulating instruments with seven degrees of freedom (versus the constrained movement of standard laparoscopic tools), and a more ergonomic operating position for the surgeon over long procedures.</p>
+  <p>By the mid-2020s, the da Vinci platform had been used in more than 10 million procedures worldwide, spanning urology (particularly prostatectomy), gynecology, general surgery, thoracic surgery, and cardiac surgery. Intuitive Surgical had generated revenues exceeding $7 billion annually, and competitors including Medtronic (Hugo), Johnson &amp; Johnson (Ottava), and CMR Surgical (Versius) had entered the market, signaling the field's maturation from novelty to standard of care.</p>
+
+  <h2>How AI Augments Surgical Precision</h2>
+  <p>The current generation of surgical robotic systems is not truly AI-driven in the sense of autonomous decision-making — they are teleoperation platforms that translate and refine the surgeon's intent. But the AI layer being integrated into these platforms is genuinely transformative in several specific capabilities.</p>
+
+  <div class="principle-list">
+    <div class="principle">
+      <div class="principle-title">Tremor filtering and motion stabilization</div>
+      <div class="principle-desc">Even the steadiest human hand has physiological tremor — small involuntary oscillations at frequencies of 8 to 12 Hz. Robotic systems filter out these tremors in real time, translating gross hand movements into smooth, precise instrument motions. At the microscopic scales required in procedures like coronary anastomosis or ophthalmic surgery, this filtering is the difference between a viable incision and tissue trauma.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Motion scaling</div>
+      <div class="principle-desc">Robotic platforms can scale surgeon hand movements — a 10 mm movement of the surgeon's hand translated to a 1 mm instrument movement at the surgical site. This allows procedures at a precision that exceeds the natural limits of human fine motor control, enabling microsurgical techniques in larger body cavities with instruments that would otherwise be too large.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Anatomical recognition and tissue identification</div>
+      <div class="principle-desc">Emerging AI systems can analyze real-time surgical video to identify anatomical structures — blood vessels, nerves, tissue planes — and alert surgeons to critical structures at risk of inadvertent injury. This "augmented reality" overlay, pioneered in platforms like Touch Surgery Enterprise and integrated into next-generation robotic consoles, represents one of the most clinically significant AI contributions to surgical safety.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Haptic feedback and force sensing</div>
+      <div class="principle-desc">Traditional robotic surgical systems lack haptic feedback — surgeons cannot "feel" tissue resistance through the console controls. AI-driven force sensing and haptic simulation are being developed to restore this tactile information, helping surgeons differentiate tissue types and avoid applying excessive force to fragile structures.</div>
+    </div>
+  </div>
+
+  <h2>Levels of Surgical Autonomy</h2>
+  <p>Surgical robotics exists on a spectrum of human involvement and machine autonomy. Understanding this spectrum is essential for evaluating both the current state and the trajectory of the field.</p>
+  <p>At the lowest level — where virtually all deployed systems currently operate — robots are pure <strong>teleoperation tools</strong>: every movement is directly controlled by the human surgeon in real time. The robot adds precision, visualization, and ergonomics, but makes no independent decisions. Moving up the spectrum, <strong>robot assistance</strong> adds AI-driven guidance: systems that can identify safe tissue planes, flag anatomical hazards, or provide motion constraints that prevent instruments from entering defined danger zones.</p>
+  <p>True <strong>supervised autonomy</strong> — where a robot performs a defined subtask (such as suturing a specific tissue layer) while the human monitors and can intervene — has been demonstrated in research settings but is not yet commercially deployed for general surgery. Research from Johns Hopkins and Children's National Medical Center demonstrated that the Smart Tissue Autonomous Robot (STAR) could perform intestinal anastomosis (reconnecting bowel segments after resection) with superior consistency to human surgeons on standard metrics — a landmark demonstration of what supervised autonomy can achieve on a well-defined, repetitive task.</p>
+  <p>Full autonomy — a robot that independently performs an entire complex operation from incision to closure — remains distant, constrained by the enormous variability of human anatomy, the unpredictability of intraoperative findings, and the ethical and regulatory frameworks governing patient safety and accountability.</p>
+
+  <div class="callout">
+    <div class="callout-label">The autonomy question</div>
+    <p>The question of how much autonomy surgical robots should have is not merely technical — it is deeply ethical. As systems become capable of performing defined tasks autonomously, questions of liability, informed consent, surgeon training, and the nature of the patient-physician relationship must be answered. Who is responsible when an autonomous surgical robot makes an error? The answer is not obvious, and regulatory frameworks are only beginning to catch up.</p>
+  </div>
+
+  <h2>AI-Assisted Surgical Planning and Outcome Prediction</h2>
+  <p>Before any robot enters an operating room, AI is reshaping how surgeons plan procedures. Preoperative imaging — CT scans, MRI, ultrasound — can now be processed by AI systems to generate patient-specific 3D reconstructions of anatomy, simulate surgical approaches, and flag patient-specific anatomical variants that might complicate the planned procedure.</p>
+  <p>In orthopedic surgery, AI-assisted preoperative planning systems analyze a patient's bone geometry, alignment, and implant options to calculate the optimal implant size, positioning, and surgical technique for joint replacement. Systems like Stryker's Mako robotic platform use these preoperative plans to create intraoperative constraints — physically preventing the robotic arm from cutting outside the planned boundaries — combining surgical planning AI with intraoperative robotic assistance.</p>
+  <p>Outcome prediction models trained on large surgical registries — datasets capturing thousands of cases with documented preoperative characteristics and postoperative outcomes — can now estimate procedure-specific complication risk for individual patients, enabling more informed preoperative counseling and risk-stratified care pathways. A patient predicted to be at high risk for postoperative complications might receive enhanced perioperative monitoring, earlier physiotherapy, or a modified surgical approach.</p>
+
+  <h2>Precision Medicine: The Right Treatment for the Right Patient</h2>
+  <p>The concept of <strong>precision medicine</strong> — sometimes called personalized medicine — rests on a fundamental recognition that biological variation between individuals means that the same disease in two patients may have different underlying mechanisms, follow different trajectories, and respond differently to treatment. The goal is to tailor therapy to the specific biological characteristics of each patient's disease rather than applying population-average protocols.</p>
+  <p>This is not an entirely new idea — blood typing before transfusion, HER2 testing before breast cancer chemotherapy, and BRCA mutation testing for breast and ovarian cancer risk are all forms of precision medicine that predate the genomics era. What has changed is the scale and resolution at which biological individuality can be characterized, driven by the dramatic reduction in the cost of genomic sequencing.</p>
+
+  <h2>The Genomics Cost Revolution</h2>
+  <p>When the Human Genome Project completed the first full sequence of the human genome in 2003, the cost was approximately <strong>$3 billion</strong> and the project had taken thirteen years. By 2023, clinical whole genome sequencing was available for under $1,000, and whole exome sequencing (covering the protein-coding regions most relevant to disease) for a few hundred dollars. The cost trajectory followed a curve steeper than Moore's Law for most of that period — a technological achievement without precedent in the history of medicine.</p>
+  <p>This cost collapse has made genomic sequencing clinically feasible — and in some contexts, standard of care — for patients with cancer, rare genetic diseases, and pharmacogenomic profiling. The practical consequence is a growing deluge of genomic data that no human clinician can interpret without computational assistance. AI and machine learning are the essential tools for converting raw genomic sequence into clinically actionable insight.</p>
+
+  <h2>Oncology: Genomic Profiling and Targeted Therapy</h2>
+  <p>Cancer is, fundamentally, a disease of disordered genomics — somatic mutations in a patient's own cells that drive uncontrolled proliferation. The revolution in <strong>tumor genomic profiling</strong> has revealed that cancers historically classified by their tissue of origin (lung cancer, breast cancer, colon cancer) are in fact heterogeneous collections of molecularly distinct diseases — and that the molecular characteristics of a tumor, not just its tissue origin, determine which therapies are likely to be effective.</p>
+  <p>Comprehensive genomic profiling platforms — including Foundation Medicine's FoundationOne CDx, approved by the FDA as a companion diagnostic — analyze hundreds of cancer-related genes simultaneously, identifying the specific mutations, copy number alterations, and structural rearrangements driving each patient's tumor. AI algorithms match these molecular profiles against databases of known driver mutations, clinical trial results, and FDA-approved targeted therapies to generate treatment recommendations.</p>
+  <p>The clinical impact has been significant. Patients with non-small cell lung cancer harboring EGFR mutations respond dramatically to EGFR inhibitors like osimertinib — with response rates far exceeding those of standard chemotherapy — while patients without these mutations derive little benefit. Identifying the right patient for the right targeted therapy requires the kind of high-dimensional pattern matching at which AI excels.</p>
+
+  <div class="good">
+    <div class="good-label">A landmark in oncology AI</div>
+    <p>In 2022, researchers demonstrated that AI analysis of standard H&amp;E-stained tumor biopsy slides — the same slides that pathologists have read for over a century — could predict the presence of specific genomic mutations directly from tissue morphology, without sequencing. This "morphological genomics" approach could potentially bring genomic stratification to clinical settings where sequencing is unavailable or too expensive, dramatically expanding access to precision oncology globally.</p>
+  </div>
+
+  <h2>Pharmacogenomics: Predicting Drug Response from Genetics</h2>
+  <p><strong>Pharmacogenomics</strong> — the study of how genetic variation influences individual response to drugs — represents one of the most immediately actionable domains of precision medicine. Inherited genetic variants in drug-metabolizing enzymes, drug transporters, and drug targets can mean the difference between a normal response, toxicity, or complete lack of efficacy to the same standard dose.</p>
+  <p>The cytochrome P450 enzyme system, encoded by CYP genes, metabolizes the majority of commonly prescribed medications. Variants in CYP2D6, CYP2C19, CYP2C9, and other genes create a spectrum of metabolizer phenotypes — from ultra-rapid metabolizers (who clear drugs so quickly that standard doses are ineffective) to poor metabolizers (who accumulate drugs to toxic levels). The antidepressant codeine-to-morphine conversion that underlies a serious pediatric safety risk, the variable antiplatelet efficacy of clopidogrel, the dose requirements for warfarin anticoagulation — all are pharmacogenomic phenomena with real clinical consequences that AI-augmented clinical decision support can now routinely flag.</p>
+  <p>Preemptive pharmacogenomic testing — sequencing a patient's relevant drug metabolism genes at the time of hospital admission or primary care enrollment, before any specific drug is prescribed — is being implemented at major academic medical centers. AI-powered clinical decision support systems integrate this genomic data with prescription orders, generating real-time alerts when a patient with a known metabolizer variant is prescribed a drug affected by that variant.</p>
+
+  <h2>CRISPR and AI's Role in Gene Therapy Targeting</h2>
+  <p>The development of <strong>CRISPR-Cas9</strong> gene editing technology — recognized with the Nobel Prize in Chemistry in 2020 — has opened the possibility of directly correcting the genomic mutations that cause disease. CRISPR guides a molecular "scissors" (the Cas9 enzyme) to a specific location in the genome using a guide RNA sequence, where it makes a precise cut that can either disable a gene or allow correction of a specific sequence error.</p>
+  <p>AI has become integral to CRISPR application in several ways. Guide RNA design — determining which sequence will most specifically and efficiently direct Cas9 to the intended target while minimizing off-target editing elsewhere in the genome — is an optimization problem for which machine learning models have demonstrated clear superiority over manual design. Deep learning models trained on large-scale CRISPR screen datasets can now predict guide RNA efficiency and off-target activity with accuracy that enables safer therapeutic design.</p>
+  <p>The clinical translation of CRISPR therapy is advancing rapidly. In 2023, Casgevy — a CRISPR-based therapy for sickle cell disease and beta-thalassemia developed by Vertex Pharmaceuticals and CRISPR Therapeutics — received FDA approval, marking the first licensed CRISPR medicine. The genomic target selection and optimization that enabled this therapy relied on computational tools that are increasingly AI-driven.</p>
+
+  <h2>Limitations: Cost, Access, and the Surgeon Learning Curve</h2>
+  <p>The convergence of robotic surgery and precision medicine represents genuine therapeutic progress — but an honest assessment requires confronting the significant limitations that constrain their impact, particularly for patients outside wealthy health systems.</p>
+
+  <div class="warn">
+    <div class="warn-label">The access problem is fundamental</div>
+    <p><strong>Cost barriers.</strong> A da Vinci surgical system costs between $1.5 million and $2.5 million to purchase, plus $100,000 to $170,000 in annual maintenance and significant per-procedure instrument costs. This capital requirement concentrates robotic surgery in large, well-resourced hospitals, creating a geography of access that mirrors existing healthcare inequality. Patients in rural areas and low-income countries have minimal access to these technologies regardless of their potential clinical benefit.</p>
+    <p><strong>The learning curve is real and consequential.</strong> Surgeons require between 150 and 250 robotic procedures to reach proficiency, and the early cases in any surgeon's robotic experience carry higher complication rates than their open surgery counterparts. Systems to assess robotic surgical competence objectively — using AI analysis of instrument movement patterns — are being developed but are not yet uniformly required before independent practice.</p>
+  </div>
+
+  <p>Similarly, precision medicine's promise is constrained by access. Comprehensive genomic tumor profiling costs several thousand dollars per test and is covered inconsistently by insurance. Gene therapies like Casgevy carry list prices exceeding $2 million per patient — beyond the reach of virtually all health systems outside the wealthiest countries, and stressing even those. The patients who stand to benefit most from precision approaches — those with rare genomic variants, those from underrepresented ethnic backgrounds whose genomic databases are sparse — are often those with the least access to them.</p>
+  <p>The trajectory is toward broader access as costs fall — genomic sequencing has already undergone one cost revolution, and a second is plausible within the decade. But the current reality is that the transformative technologies examined in this module are available primarily to those with the means and geography to access them. Ensuring that the benefits of AI-guided surgery and genomic medicine extend across economic and geographic lines is not merely an equity aspiration — it is a test of whether these technologies fulfill their actual medical potential or remain tools of the privileged.</p>
+
+</div>
+</main>
+</div>
+
+<div class="sticky-bar" id="sticky-bar">
+  <div class="sticky-bar-reading" id="sticky-reading">Read to the end to unlock the next module</div>
+  <div class="sticky-bar-track"><div class="sticky-bar-fill" id="sticky-fill"></div></div>
+  <div class="sticky-bar-label" id="sticky-label">0%</div>
+  <button class="sticky-bar-btn" id="sticky-btn" onclick="completeAndNext()">Module 7: Patient Data and Privacy →</button>
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import { getFirestore, doc, setDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  const app = initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+  const auth = getAuth(app); const db = getFirestore(app);
+  let currentUser = null;
+  onAuthStateChanged(auth, u => { currentUser = u; });
+
+  window.toggleTheme=function(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='☾'):(h.setAttribute('data-theme','dark'),i.textContent='☀');};
+  window.addEventListener('scroll',()=>{const d=document.documentElement,s=d.scrollTop||document.body.scrollTop,t=d.scrollHeight-d.clientHeight;document.getElementById('progress').style.width=(s/t*100)+'%';});
+
+  let unlocked=false;
+  function updateScrollProgress(){
+    const scrolled=window.scrollY+window.innerHeight;
+    const total=document.documentElement.scrollHeight;
+    const pct=Math.min(100,Math.round((scrolled/total)*100));
+    const fill=document.getElementById('sticky-fill');
+    const label=document.getElementById('sticky-label');
+    const btn=document.getElementById('sticky-btn');
+    const reading=document.getElementById('sticky-reading');
+    if(fill)fill.style.width=pct+'%';
+    if(label)label.textContent=pct+'%';
+    if(pct>=95&&!unlocked){
+      unlocked=true;
+      if(btn)btn.style.display='block';
+      if(reading)reading.style.display='none';
+      if(fill)fill.style.background='#22c55e';
+      if(label)label.style.color='#22c55e';
+    }
+  }
+  window.addEventListener('scroll',updateScrollProgress);
+  updateScrollProgress();
+
+  window.completeAndNext=async function(){
+    if(currentUser){
+      try{
+        await setDoc(doc(db,'users',currentUser.uid),{
+          healthcareModules: arrayUnion('m6')
+        }, { merge: true });
+      }catch(e){ /* progress save best-effort */ }
+    }
+    window.location.href='healthcare-module-7.html';
+  };
+</script>
+</body>
+</html>

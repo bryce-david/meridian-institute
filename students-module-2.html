@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 2: Research with AI — AI for Students — Meridian Institute of AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#6D4AFF;--accent-dim:rgba(109,74,255,0.1);--accent-dim2:rgba(109,74,255,0.05);--nav-bg:rgba(8,8,8,0.9);--callout-bg:rgba(109,74,255,0.07);--callout-border:rgba(109,74,255,0.25);--good-bg:rgba(34,197,94,0.07);--good-border:rgba(34,197,94,0.2);--warn-bg:rgba(251,146,60,0.07);--warn-border:rgba(251,146,60,0.2);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#5035cc;--accent-dim:rgba(80,53,204,0.08);--accent-dim2:rgba(80,53,204,0.04);--nav-bg:rgba(250,250,248,0.9);--callout-bg:rgba(80,53,204,0.05);--callout-border:rgba(80,53,204,0.2);--good-bg:rgba(22,163,74,0.06);--good-border:rgba(22,163,74,0.2);--warn-bg:rgba(234,88,12,0.05);--warn-border:rgba(234,88,12,0.2);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}html{scroll-behavior:smooth;overflow-x:hidden;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.7;overflow-x:hidden;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}.nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}.nav-back{font-size:13px;color:var(--text-2);text-decoration:none;transition:color 0.2s;}.nav-back:hover{color:var(--text);}.nav-label{font-size:13px;color:var(--text-3);}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;}
+  .progress-bar{position:fixed;top:60px;left:0;right:0;z-index:99;height:2px;background:var(--border);}.progress-fill{height:100%;background:var(--accent);width:0%;transition:width 0.1s;}
+  .page-wrapper{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:100vh;padding-top:62px;}
+  .sidebar{position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto;border-right:1px solid var(--border);padding:32px 24px;background:var(--bg-2);}
+  .sidebar-course{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;}
+  .sidebar-course-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+  .sidebar-module{margin-bottom:4px;}.sidebar-module-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:13px;color:var(--text-2);text-decoration:none;transition:all 0.2s;line-height:1.4;}
+  .sidebar-module-link:hover{background:var(--bg-3);color:var(--text);}.sidebar-module-link.active{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-num{font-size:11px;font-weight:500;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--bg-4);color:var(--text-3);}
+  .sidebar-module-link.active .sidebar-num{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-divider{height:1px;background:var(--border);margin:20px 0;}
+  .sidebar-progress-label{font-size:12px;color:var(--text-3);margin-bottom:8px;display:flex;justify-content:space-between;}
+  .sidebar-progress-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}.sidebar-progress-fill{height:100%;width:20%;background:var(--accent);border-radius:2px;}
+  main{display:block;min-width:0;}.content{max-width:760px;width:100%;padding:60px 64px 140px;margin:0 auto;}
+  .module-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+  .module-tag{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(109,74,255,0.2);padding:4px 12px;border-radius:100px;}
+  .module-meta{font-size:12px;color:var(--text-3);}
+  h1{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1.05;letter-spacing:-0.02em;color:var(--text);margin-bottom:24px;}
+  .intro-text{font-size:19px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+  h2{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:400;color:var(--text);margin:52px 0 18px;line-height:1.2;}
+  h3{font-size:16px;font-weight:500;color:var(--text);margin:32px 0 12px;}
+  p{font-size:16px;font-weight:300;color:var(--text-2);line-height:1.8;margin-bottom:20px;}
+  strong{font-weight:500;color:var(--text);}ul,ol{margin:0 0 20px 22px;color:var(--text-2);}li{font-size:16px;font-weight:300;line-height:1.8;margin-bottom:8px;}
+  .callout{background:var(--callout-bg);border:1px solid var(--callout-border);border-radius:12px;padding:24px 28px;margin:32px 0;}.callout-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}.callout p{margin:0;font-size:15px;color:var(--text-2);}.callout p+p{margin-top:12px;}
+  .good{background:var(--good-bg);border:1px solid var(--good-border);border-radius:12px;padding:24px 28px;margin:24px 0;}.good-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#22c55e;margin-bottom:10px;}.good p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn{background:var(--warn-bg);border:1px solid var(--warn-border);border-radius:12px;padding:24px 28px;margin:24px 0;}.warn-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#fb923c;margin-bottom:10px;}.warn p{margin:0;font-size:15px;color:var(--text-2);}.warn p+p{margin-top:12px;}
+  .principle-list{display:flex;flex-direction:column;gap:12px;margin:24px 0;}.principle{background:var(--bg-2);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:0 12px 12px 0;padding:20px 24px;}.principle-title{font-size:15px;font-weight:500;color:var(--text);margin-bottom:6px;}.principle-desc{font-size:14px;color:var(--text-2);line-height:1.65;margin:0;}
+  .comparison-wrapper{overflow-x:auto;width:100%;margin:28px 0;}table{width:100%;border-collapse:collapse;font-size:14px;min-width:480px;}th{text-align:left;padding:12px 16px;font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-3);border-bottom:1px solid var(--border-2);}td{padding:14px 16px;border-bottom:1px solid var(--border);color:var(--text-2);line-height:1.6;vertical-align:top;}tr:last-child td{border-bottom:none;}td:first-child{color:var(--text);font-weight:500;width:30%;}
+  .sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:var(--bg-2);border-top:1px solid var(--border-2);padding:14px 5%;display:flex;align-items:center;justify-content:space-between;gap:16px;backdrop-filter:blur(12px);}
+  .sticky-bar-track{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}.sticky-bar-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.2s;width:0%;}
+  .sticky-bar-label{font-size:12px;color:var(--text-3);white-space:nowrap;min-width:60px;text-align:right;}
+  .sticky-bar-btn{padding:10px 20px;border-radius:8px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;background:var(--accent);color:#fff;border:none;cursor:pointer;white-space:nowrap;transition:opacity 0.2s;display:none;}.sticky-bar-btn:hover{opacity:0.88;}
+  .sticky-bar-reading{font-size:12px;color:var(--text-3);white-space:nowrap;}
+  @media(max-width:900px){.page-wrapper{grid-template-columns:1fr;}.sidebar{display:none;}.content{padding:40px 24px 120px;}h1{font-size:38px;}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="courses.html" class="nav-back">← AI for Students</a>
+    <div class="nav-divider"></div>
+    <span class="nav-label">Module 2</span>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">☀</span></button>
+</nav>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+<div class="page-wrapper">
+<aside class="sidebar">
+  <div class="sidebar-course">Course</div>
+  <div class="sidebar-course-name">AI for Students</div>
+  <div class="sidebar-module"><a href="students-module-1.html" class="sidebar-module-link"><span class="sidebar-num">1</span>AI and Academic Work</a></div>
+  <div class="sidebar-module"><a href="students-module-2.html" class="sidebar-module-link active"><span class="sidebar-num">2</span>Research with AI</a></div>
+  <div class="sidebar-module"><a href="students-module-3.html" class="sidebar-module-link"><span class="sidebar-num">3</span>Writing with AI</a></div>
+  <div class="sidebar-module"><a href="students-module-4.html" class="sidebar-module-link"><span class="sidebar-num">4</span>Study Smarter with AI</a></div>
+  <div class="sidebar-module"><a href="students-module-5.html" class="sidebar-module-link"><span class="sidebar-num">5</span>Notes and Knowledge Management</a></div>
+  <div class="sidebar-module"><a href="students-module-6.html" class="sidebar-module-link"><span class="sidebar-num">6</span>Math and STEM with AI</a></div>
+  <div class="sidebar-module"><a href="students-module-7.html" class="sidebar-module-link"><span class="sidebar-num">7</span>Creative Projects and AI</a></div>
+  <div class="sidebar-module"><a href="students-module-8.html" class="sidebar-module-link"><span class="sidebar-num">8</span>Academic Integrity in the AI Era</a></div>
+  <div class="sidebar-module"><a href="students-module-9.html" class="sidebar-module-link"><span class="sidebar-num">9</span>Career Planning with AI</a></div>
+  <div class="sidebar-module"><a href="students-module-10.html" class="sidebar-module-link"><span class="sidebar-num">10</span>Your Personal AI Toolkit</a></div>
+  <div class="sidebar-module"><a href="quiz-students.html" class="sidebar-module-link" style="color:var(--accent);margin-top:4px;"><span class="sidebar-num" style="background:var(--accent-dim);color:var(--accent);">✦</span>Final Assessment</a></div>
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-progress-label"><span>Course progress</span><span style="color:var(--accent);">2 / 10</span></div>
+  <div class="sidebar-progress-track"><div class="sidebar-progress-fill"></div></div>
+</aside>
+<main>
+<div class="content">
+  <div class="module-eyebrow"><span class="module-tag">Module 2</span><span class="module-meta">14 min read · AI for Students</span></div>
+  <h1>Research with AI: Finding, Evaluating, and Using Sources</h1>
+  <p class="intro-text">Academic research has a paradox at its center: the more information you have access to, the harder it is to know what to trust. AI amplifies this paradox. It can help you find angles you wouldn't have thought of, synthesize bodies of literature rapidly, and surface connections across sources. It can also hallucinate citations, compress nuance, and give you the false comfort of having "done the research" when you've actually just skimmed the surface. This module teaches you to use AI for research in ways that genuinely deepen your work.</p>
+
+  <h2>The fundamental rule of AI-assisted research</h2>
+  <p>AI language models are not search engines. They don't retrieve information from the internet in real time (unless specifically designed to do so, like Perplexity). They generate text based on patterns in their training data — which means they can produce plausible-sounding citations, author names, journal titles, and page numbers that don't exist.</p>
+  <p>This is not a minor caveat. It is the central fact that should govern every research interaction you have with AI.</p>
+
+  <div class="warn">
+    <div class="warn-label">Never cite what you haven't verified</div>
+    <p>If an AI gives you a citation — "Johnson, M. (2019). The effects of sleep deprivation on cognitive performance. Journal of Neuroscience, 45(3), 112-128." — treat it as a research lead, not a confirmed source. Go find the actual paper. If you can't find it, don't cite it. AI-fabricated citations have ended academic careers. Don't let that be your story.</p>
+  </div>
+
+  <h2>What AI is genuinely useful for in research</h2>
+  <div class="principle-list">
+    <div class="principle">
+      <div class="principle-title">Scoping and orientation</div>
+      <div class="principle-desc">Before you know what to search for, AI can help you understand the shape of a topic. Ask "what are the main debates in the literature on X?" or "what are the key concepts I need to understand to research Y?" This gives you vocabulary and frameworks to take into real databases like JSTOR, PubMed, or Google Scholar.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Generating search terms</div>
+      <div class="principle-desc">Academic databases use specific terminology. If you search "social media makes people sad," you'll miss papers that use "social comparison theory," "platform-induced affective dysregulation," or "passive consumption behaviors." AI can tell you the technical terms your topic uses, which you then search in real databases.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Explaining dense sources</div>
+      <div class="principle-desc">Once you have a real paper, AI is excellent at helping you understand it. Paste in a section you're struggling with and ask for a plain-language explanation, or ask how a concept in the paper relates to your argument. This is generally acceptable use even under strict policies.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Identifying counterarguments</div>
+      <div class="principle-desc">Strong research anticipates objections. Ask AI "what are the strongest critiques of the argument that X?" — then verify those critiques by finding actual sources that make them. This builds a more rigorous paper and demonstrates genuine engagement with the literature.</div>
+    </div>
+  </div>
+
+  <h2>The research workflow that works</h2>
+  <p>Here's a reliable research process that uses AI where it's strong and relies on primary sources where it isn't:</p>
+  <ol>
+    <li><strong>Topic orientation (AI-assisted):</strong> Ask Claude or ChatGPT to explain the landscape of your topic — major debates, key theorists, relevant time periods, vocabulary. Write down the terms and concepts it mentions.</li>
+    <li><strong>Real database search:</strong> Take those terms into Google Scholar, your library's databases, JSTOR, PubMed, or whatever is relevant to your field. Find actual papers and books.</li>
+    <li><strong>Source evaluation (human judgment required):</strong> Assess the credibility of what you find — peer review status, publication date, author credentials, journal reputation, how often it's cited.</li>
+    <li><strong>Dense text comprehension (AI-assisted):</strong> Use AI to help you understand difficult passages in real sources. Paste the text, ask specific questions about it.</li>
+    <li><strong>Synthesis (primarily human, AI as thinking partner):</strong> Draft your synthesis of sources. You can use AI to challenge your argument or identify gaps, but the synthesis should reflect your reading, not AI's summary of your topic.</li>
+  </ol>
+
+  <div class="callout">
+    <div class="callout-label">Using Perplexity specifically for research</div>
+    <p>Perplexity AI is different from Claude or ChatGPT for research purposes — it performs live web searches and cites its sources with links. This makes it significantly more reliable for finding real, current information. Even so, always click through to verify the original source. Perplexity summarizes correctly most of the time, but misreads and omits context regularly enough that the original still matters.</p>
+  </div>
+
+  <h2>Evaluating what AI tells you about a topic</h2>
+  <p>When you use AI for research orientation, apply the same critical lens you'd apply to any source. Ask yourself:</p>
+  <ul>
+    <li>Is this a simplified or nuanced account of the topic? (AI tends toward the middle of debates)</li>
+    <li>What perspectives might be missing? (AI training data overrepresents English-language, Western, published sources)</li>
+    <li>Is this still accurate? (AI knowledge has cutoffs — for fast-moving fields, the picture may be outdated)</li>
+    <li>Am I accepting this because it's well-written, or because I've verified it? (fluency is not evidence of accuracy)</li>
+  </ul>
+
+  <div class="comparison-wrapper">
+    <table>
+      <tr><th>Research task</th><th>Use AI</th><th>Use real sources</th></tr>
+      <tr><td>Understanding a new topic</td><td>Orientation, vocabulary, major debates</td><td>Verify key claims, find primary theorists</td></tr>
+      <tr><td>Finding sources</td><td>Suggest search terms and areas</td><td>Actual search in databases</td></tr>
+      <tr><td>Understanding a paper</td><td>Explain dense passages</td><td>Read the actual paper</td></tr>
+      <tr><td>Building your argument</td><td>Challenge your draft, find counterarguments</td><td>Cite real sources for every claim</td></tr>
+      <tr><td>Getting citations</td><td>Never rely on AI-generated citations</td><td>Always from the real source</td></tr>
+    </table>
+  </div>
+
+  <div class="good">
+    <div class="good-label">The skill that lasts</div>
+    <p>Students who learn to use AI for research orientation while maintaining discipline about source verification are building a skill that will serve them in professional life too. The ability to rapidly orient in an unfamiliar domain, identify credible sources, and synthesize them into an original argument is exactly what employers, graduate schools, and research careers require. AI makes the first part faster. Your judgment makes the whole thing valuable.</p>
+  </div>
+</div>
+</main>
+</div>
+<div class="sticky-bar">
+  <div class="sticky-bar-reading" id="sticky-reading">Read to the end to unlock the next module</div>
+  <div class="sticky-bar-track"><div class="sticky-bar-fill" id="sticky-fill"></div></div>
+  <div class="sticky-bar-label" id="sticky-label">0%</div>
+  <button class="sticky-bar-btn" id="sticky-btn" onclick="completeAndNext()">Module 3: Writing with AI →</button>
+</div>
+<script type="module">
+  import{initializeApp}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import{getAuth,onAuthStateChanged}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import{getFirestore,doc,setDoc,arrayUnion}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  const app=initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+  const auth=getAuth(app);const db=getFirestore(app);let currentUser=null;
+  onAuthStateChanged(auth,u=>{currentUser=u;});
+  window.toggleTheme=function(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='☾'):(h.setAttribute('data-theme','dark'),i.textContent='☀');};
+  window.addEventListener('scroll',()=>{const d=document.documentElement,s=d.scrollTop||document.body.scrollTop,t=d.scrollHeight-d.clientHeight;document.getElementById('progress').style.width=(s/t*100)+'%';});
+  let unlocked=false;
+  function updateScroll(){const pct=Math.min(100,Math.round(((window.scrollY+window.innerHeight)/document.documentElement.scrollHeight)*100));const fill=document.getElementById('sticky-fill'),label=document.getElementById('sticky-label'),btn=document.getElementById('sticky-btn'),reading=document.getElementById('sticky-reading');if(fill)fill.style.width=pct+'%';if(label)label.textContent=pct+'%';if(pct>=95&&!unlocked){unlocked=true;if(btn)btn.style.display='block';if(reading)reading.style.display='none';if(fill)fill.style.background='#22c55e';if(label)label.style.color='#22c55e';}}
+  window.addEventListener('scroll',updateScroll);updateScroll();
+  window.completeAndNext=async function(){if(currentUser){try{await setDoc(doc(db,'users',currentUser.uid),{studentsModules:arrayUnion('m2')},{merge:true});}catch(e){}}window.location.href='students-module-3.html';};
+</script>
+</body>
+</html>

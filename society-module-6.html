@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 6: AI in Media and Information Ecosystems — AI and Society — Meridian Institute of AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#7C3AED;--accent-dim:rgba(124,58,237,0.1);--accent-dim2:rgba(124,58,237,0.05);--nav-bg:rgba(8,8,8,0.9);--callout-bg:rgba(124,58,237,0.07);--callout-border:rgba(124,58,237,0.25);--good-bg:rgba(34,197,94,0.07);--good-border:rgba(34,197,94,0.2);--warn-bg:rgba(251,146,60,0.07);--warn-border:rgba(251,146,60,0.2);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#6D28D9;--accent-dim:rgba(109,40,217,0.08);--accent-dim2:rgba(109,40,217,0.04);--nav-bg:rgba(250,250,248,0.9);--callout-bg:rgba(109,40,217,0.05);--callout-border:rgba(109,40,217,0.2);--good-bg:rgba(22,163,74,0.06);--good-border:rgba(22,163,74,0.2);--warn-bg:rgba(234,88,12,0.05);--warn-border:rgba(234,88,12,0.2);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;overflow-x:hidden;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.7;overflow-x:hidden;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}
+  .nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}
+  .nav-back{font-size:13px;color:var(--text-2);text-decoration:none;transition:color 0.2s;}
+  .nav-back:hover{color:var(--text);}
+  .nav-label{font-size:13px;color:var(--text-3);}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;transition:all 0.2s;}
+  .theme-toggle:hover{background:var(--bg-3);color:var(--text);}
+  .progress-bar{position:fixed;top:60px;left:0;right:0;z-index:99;height:2px;background:var(--border);}
+  .progress-fill{height:100%;background:var(--accent);width:0%;transition:width 0.1s;}
+  .page-wrapper{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:100vh;padding-top:62px;overflow:hidden;}
+  .sidebar{position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto;border-right:1px solid var(--border);padding:32px 24px;background:var(--bg-2);}
+  .sidebar-course{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;}
+  .sidebar-course-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+  .sidebar-module{margin-bottom:4px;}
+  .sidebar-module-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:13px;color:var(--text-2);text-decoration:none;transition:all 0.2s;line-height:1.4;}
+  .sidebar-module-link:hover{background:var(--bg-3);color:var(--text);}
+  .sidebar-module-link.active{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-num{font-size:11px;font-weight:500;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--bg-4);color:var(--text-3);}
+  .sidebar-module-link.active .sidebar-num{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-divider{height:1px;background:var(--border);margin:20px 0;}
+  .sidebar-progress-label{font-size:12px;color:var(--text-3);margin-bottom:8px;display:flex;justify-content:space-between;}
+  .sidebar-progress-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sidebar-progress-fill{height:100%;width:60%;background:var(--accent);border-radius:2px;}
+  main{display:block;min-width:0;overflow:hidden;}
+  .content{max-width:760px;width:100%;padding:60px 64px 140px;margin:0 auto;}
+  .module-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+  .module-tag{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(124,58,237,0.2);padding:4px 12px;border-radius:100px;}
+  .module-meta{font-size:12px;color:var(--text-3);}
+  h1{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1.05;letter-spacing:-0.02em;color:var(--text);margin-bottom:24px;}
+  .intro-text{font-size:19px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+  h2{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:400;color:var(--text);margin:52px 0 18px;line-height:1.2;}
+  h3{font-size:16px;font-weight:500;color:var(--text);margin:32px 0 12px;}
+  p{font-size:16px;font-weight:300;color:var(--text-2);line-height:1.8;margin-bottom:20px;}
+  strong{font-weight:500;color:var(--text);}
+  em{font-style:italic;}
+  ul,ol{margin:0 0 20px 22px;color:var(--text-2);}
+  li{font-size:16px;font-weight:300;line-height:1.8;margin-bottom:8px;}
+  .callout{background:var(--callout-bg);border:1px solid var(--callout-border);border-radius:12px;padding:24px 28px;margin:32px 0;}
+  .callout-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+  .callout p{margin:0;font-size:15px;color:var(--text-2);}
+  .callout p+p{margin-top:12px;}
+  .warn{background:var(--warn-bg);border:1px solid var(--warn-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .warn-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#fb923c;margin-bottom:10px;}
+  .warn p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn p+p{margin-top:12px;}
+  .good{background:var(--good-bg);border:1px solid var(--good-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .good-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#22c55e;margin-bottom:10px;}
+  .good p{margin:0;font-size:15px;color:var(--text-2);}
+  .principle-list{display:flex;flex-direction:column;gap:12px;margin:24px 0;}
+  .principle{background:var(--bg-2);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:0 12px 12px 0;padding:20px 24px;}
+  .principle-title{font-size:15px;font-weight:500;color:var(--text);margin-bottom:6px;}
+  .principle-desc{font-size:14px;color:var(--text-2);line-height:1.65;margin:0;}
+  .sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:var(--bg-2);border-top:1px solid var(--border-2);padding:14px 5%;display:flex;align-items:center;justify-content:space-between;gap:16px;backdrop-filter:blur(12px);}
+  .sticky-bar-track{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sticky-bar-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.2s;width:0%;}
+  .sticky-bar-label{font-size:12px;color:var(--text-3);white-space:nowrap;min-width:60px;text-align:right;}
+  .sticky-bar-btn{padding:10px 20px;border-radius:8px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;background:var(--accent);color:#fff;border:none;cursor:pointer;white-space:nowrap;transition:opacity 0.2s;display:none;}
+  .sticky-bar-btn:hover{opacity:0.88;}
+  .sticky-bar-reading{font-size:12px;color:var(--text-3);white-space:nowrap;}
+  @media(max-width:900px){.page-wrapper{grid-template-columns:1fr;}.sidebar{display:none;}.content{padding:40px 24px 120px;}h1{font-size:38px;}}
+  @media(max-width:600px){.content{padding:28px 16px 120px;}h1{font-size:30px;}h2{font-size:24px;}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="index.html" class="nav-back">&#127968; Home</a>
+    <div class="nav-divider"></div>
+    <a href="courses.html" class="nav-back">&#8592; AI and Society</a>
+    <div class="nav-divider"></div>
+    <span class="nav-label">Module 6</span>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">&#9728;</span></button>
+</nav>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+
+<div class="page-wrapper">
+<aside class="sidebar">
+  <div class="sidebar-course">Course</div>
+  <div class="sidebar-course-name">AI and Society</div>
+  <div class="sidebar-module"><a href="society-module-1.html" class="sidebar-module-link"><span class="sidebar-num">1</span>The Social Impact of AI</a></div>
+  <div class="sidebar-module"><a href="society-module-2.html" class="sidebar-module-link"><span class="sidebar-num">2</span>Labor Markets and Automation</a></div>
+  <div class="sidebar-module"><a href="society-module-3.html" class="sidebar-module-link"><span class="sidebar-num">3</span>AI and Economic Inequality</a></div>
+  <div class="sidebar-module"><a href="society-module-4.html" class="sidebar-module-link"><span class="sidebar-num">4</span>Algorithmic Bias and Justice</a></div>
+  <div class="sidebar-module"><a href="society-module-5.html" class="sidebar-module-link"><span class="sidebar-num">5</span>AI and Human Relationships</a></div>
+  <div class="sidebar-module"><a href="society-module-6.html" class="sidebar-module-link active"><span class="sidebar-num">6</span>AI in Media Ecosystems</a></div>
+  <div class="sidebar-module"><a href="society-module-7.html" class="sidebar-module-link"><span class="sidebar-num">7</span>The Environmental Cost of AI</a></div>
+  <div class="sidebar-module"><a href="society-module-8.html" class="sidebar-module-link"><span class="sidebar-num">8</span>Global Perspectives on AI</a></div>
+  <div class="sidebar-module"><a href="society-module-9.html" class="sidebar-module-link"><span class="sidebar-num">9</span>AI Ethics and Human Values</a></div>
+  <div class="sidebar-module"><a href="society-module-10.html" class="sidebar-module-link"><span class="sidebar-num">10</span>An Equitable AI Future</a></div>
+  <div class="sidebar-module"><a href="quiz-society.html" class="sidebar-module-link" style="color:var(--accent);margin-top:4px;"><span class="sidebar-num" style="background:var(--accent-dim);color:var(--accent);">&#10022;</span>Final Assessment</a></div>
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-progress-label"><span>Course progress</span><span style="color:var(--accent);">6 / 10</span></div>
+  <div class="sidebar-progress-track"><div class="sidebar-progress-fill"></div></div>
+</aside>
+
+<main>
+<div class="content">
+  <div class="module-eyebrow"><span class="module-tag">Module 6</span><span class="module-meta">20 min read · AI and Society</span></div>
+  <h1>AI in Media and Information Ecosystems</h1>
+
+  <p class="intro-text">Democracies depend on a shared information environment — a public sphere in which citizens can access reliable facts, encounter diverse perspectives, and reason collectively about public questions. Algorithmic recommendation systems have already significantly reshaped this environment over the past decade, and AI now threatens further disruption through unprecedented capabilities for generating, personalizing, and targeting information. This module examines how AI is changing the way people encounter information, what this means for democracy and social cohesion, and what the particular threat of synthetic media implies for epistemic life.</p>
+
+  <h2>Filter bubbles and recommendation algorithms</h2>
+  <p>The concept of the "filter bubble" — introduced by Eli Pariser in 2011 — describes the way algorithmic content personalization can enclose individuals in information environments that reflect and reinforce their existing beliefs, limiting exposure to contrary evidence and perspectives. The concern is that platforms optimizing for engagement, which correlates with emotional resonance and identity validation, systematically amplify content that confirms users' prior views while filtering out content that challenges them.</p>
+  <p>The empirical evidence for filter bubble effects is genuinely mixed. Some research has found that social media users are exposed to diverse content; other research has found systematic political self-sorting and limited cross-cutting exposure. The most careful recent studies suggest that the filter bubble effect, to the extent it exists, operates primarily through individual choices about who to follow rather than through algorithmic curation alone — though algorithmic amplification of emotionally engaging content may compound the effects of voluntary self-sorting.</p>
+  <p>What is less contested is that recommendation algorithms optimizing for engagement tend to amplify emotionally charged, outrage-inducing, and identity-confirming content — because this content is most engaging. Former Facebook data scientist Frances Haugen's testimony before the US Senate in 2021 included internal documents showing that Facebook's own research had found that algorithm changes optimizing for engagement amplified divisive political content at the expense of reliable information. The platform's response was to prioritize engagement metrics anyway, because they correlated with time on site and advertising revenue.</p>
+
+  <div class="callout">
+    <div class="callout-label">Radicalization pathways</div>
+    <p>Research on online radicalization has identified a troubling pathway in which recommendation algorithms can lead users from mainstream content toward increasingly extreme material, not through a single dramatic conversion but through incremental steps, each of which seems like a modest escalation of what came before. YouTube's recommendation engine, for example, was documented pushing users from mainstream political commentary toward increasingly extreme content. The algorithms involved were not designed to radicalize — they were designed to maximize watch time. But the effect was similar.</p>
+  </div>
+
+  <h2>AI-generated content and the synthetic media problem</h2>
+  <p>If algorithmic recommendation poses challenges for democratic epistemics, AI-generated synthetic media raises them to a qualitatively different level. Large language models can generate convincing text at scale and at near-zero cost. Image generation systems can produce photorealistic images of events that never happened. Voice cloning can reproduce a person's voice from minutes of audio. Video deepfake technology can place words in the mouths of public figures with increasing convincingness.</p>
+  <p>The implications for information integrity are profound. The production of disinformation — false information designed to deceive — previously required human effort, limiting its scale. AI enables the production of convincing disinformation at industrial scale and vanishingly low cost. Influence operations that previously required teams of paid operatives can now be executed by individuals. The cost of deception has collapsed while the cost of verification remains high.</p>
+  <p>Deepfakes — synthetic video and audio fabrications of real people — present specific risks. In the political domain, convincing synthetic video of a political figure saying something they never said could potentially influence elections or incite violence. In the personal domain, non-consensual synthetic intimate imagery — "deepfake pornography" — has been used to harass and harm predominantly women, often as a tool of intimate partner violence or targeted harassment. Research suggests deepfake pornography constitutes the vast majority of deepfake content currently circulating online.</p>
+
+  <div class="warn">
+    <div class="warn-label">The liar's dividend</div>
+    <p>One of the most concerning implications of synthetic media is what scholars have called the "liar's dividend": the ability of bad actors to deny authentic video and audio evidence by claiming it is fake. Even if a particular piece of evidence is genuine, the existence of convincing deepfake technology provides a plausible-sounding defense against it. A politician caught on camera saying something damaging can claim the video is AI-generated. This erosion of the evidentiary value of audiovisual media is a second-order harm from deepfake technology that may prove as consequential as the direct harm from fake content itself.</p>
+  </div>
+
+  <h2>AI and the journalism ecosystem</h2>
+  <p>The media industry that produces original journalism — the institutional backbone of the information ecosystem — faces acute AI-related challenges. AI systems can produce text that resembles journalism at minimal cost, putting downward pressure on demand for human-written content in the parts of the industry with the thinnest economic margins. Several news organizations have already experimented with AI-generated content, not always with appropriate transparency or quality controls.</p>
+  <p>At the same time, AI systems are trained on journalistic output without compensation, raising pressing questions about intellectual property, attribution, and the economic sustainability of the journalism industry. If AI systems can reproduce the outputs of journalism without paying for the inputs, the economic model that sustains journalism is threatened — with significant implications for the information ecosystem that democracy depends on.</p>
+  <p>There are also positive AI applications in journalism: automated fact-checking systems, detection of bot networks and coordinated inauthentic behavior, translation enabling access to non-English sources, and analysis of large document collections (such as the Panama Papers) that no human team could process alone. The challenge is ensuring that these tools serve journalistic values rather than undermining them.</p>
+
+  <h2>Platform accountability and information governance</h2>
+  <p>The governance of information environments is one of the most politically contested questions in contemporary democracies, partly because it involves genuine tensions between values that democratic societies hold simultaneously. Freedom of expression is a foundational democratic value. So is the integrity of the information environment on which democratic deliberation depends. These values can conflict: moderating disinformation and manipulated synthetic media necessarily involves decisions about what counts as true and what counts as false, decisions that are themselves political and subject to abuse.</p>
+  <p>Different societies have struck different balances. The European Union's Digital Services Act (2022) imposes obligations on large platforms to assess and mitigate systemic risks, including to information integrity and democratic processes, with transparency requirements and independent auditing. The United States has relied primarily on the liability shield of Section 230 of the Communications Decency Act, which largely immunizes platforms from liability for user-generated content and has enabled a hands-off approach to content governance. Neither approach is without drawbacks, and the appropriate governance of AI-generated content in information ecosystems remains a genuinely open and actively contested question.</p>
+
+  <h2>Media literacy and epistemic resilience</h2>
+  <p>Beyond platform governance, the response to AI's effects on information ecosystems necessarily includes attention to individual and collective epistemic capacities. Media literacy — the ability to critically evaluate the credibility, provenance, and context of information — has always been valuable, but becomes more so in an environment where convincing synthetic content can be produced at scale. Several countries have invested in media literacy education as part of an explicit strategy of building epistemic resilience against disinformation.</p>
+  <p>Research on effective inoculation against disinformation — sometimes called "prebunking" — suggests that exposing people to weakened forms of manipulative techniques before they encounter the real thing can improve resistance to manipulation. Studies in Finland, which has invested heavily in media literacy education, show promising results in population-level resilience to disinformation campaigns. These are not technical solutions but social and educational ones — a reminder that the information ecosystem challenge is fundamentally a social challenge as much as a technological one.</p>
+
+  <div class="good">
+    <div class="good-label">AI as a tool for information integrity</div>
+    <p>The same AI capabilities that enable synthetic disinformation also enable better detection tools. AI systems can identify patterns of coordinated inauthentic behavior, detect synthetic content through statistical signatures in generated text and images, and assist fact-checkers by rapidly searching databases of known false claims. The information integrity battle is one in which AI is on both sides — which makes the governance choices about how AI is deployed and by whom particularly consequential.</p>
+  </div>
+
+</div>
+</main>
+</div>
+
+<div class="sticky-bar" id="sticky-bar">
+  <div class="sticky-bar-reading" id="sticky-reading">Read to the end to unlock the next module</div>
+  <div class="sticky-bar-track"><div class="sticky-bar-fill" id="sticky-fill"></div></div>
+  <div class="sticky-bar-label" id="sticky-label">0%</div>
+  <button class="sticky-bar-btn" id="sticky-btn" onclick="completeAndNext()">Module 7: The Environmental Cost of AI &#8594;</button>
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import { getFirestore, doc, setDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  const app = initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+  const auth = getAuth(app); const db = getFirestore(app);
+  let currentUser = null;
+  onAuthStateChanged(auth, u => { currentUser = u; });
+
+  window.toggleTheme=function(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='&#9790;'):(h.setAttribute('data-theme','dark'),i.textContent='&#9728;');};
+  window.addEventListener('scroll',()=>{const d=document.documentElement,s=d.scrollTop||document.body.scrollTop,t=d.scrollHeight-d.clientHeight;document.getElementById('progress').style.width=(s/t*100)+'%';});
+
+  let unlocked=false;
+  function updateScrollProgress(){
+    const scrolled=window.scrollY+window.innerHeight;
+    const total=document.documentElement.scrollHeight;
+    const pct=Math.min(100,Math.round((scrolled/total)*100));
+    const fill=document.getElementById('sticky-fill');
+    const label=document.getElementById('sticky-label');
+    const btn=document.getElementById('sticky-btn');
+    const reading=document.getElementById('sticky-reading');
+    if(fill)fill.style.width=pct+'%';
+    if(label)label.textContent=pct+'%';
+    if(pct>=95&&!unlocked){
+      unlocked=true;
+      if(btn)btn.style.display='block';
+      if(reading)reading.style.display='none';
+      if(fill)fill.style.background='#22c55e';
+      if(label)label.style.color='#22c55e';
+    }
+  }
+  window.addEventListener('scroll',updateScrollProgress);
+  updateScrollProgress();
+
+  window.completeAndNext=async function(){
+    if(currentUser){
+      try{
+        await setDoc(doc(db,'users',currentUser.uid),{societyModules:arrayUnion('m6')},{merge:true});
+      }catch(e){}
+    }
+    window.location.href='society-module-7.html';
+  };
+</script>
+</body>
+</html>

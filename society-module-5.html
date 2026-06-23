@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 5: AI and Human Relationships — AI and Society — Meridian Institute of AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#7C3AED;--accent-dim:rgba(124,58,237,0.1);--accent-dim2:rgba(124,58,237,0.05);--nav-bg:rgba(8,8,8,0.9);--callout-bg:rgba(124,58,237,0.07);--callout-border:rgba(124,58,237,0.25);--good-bg:rgba(34,197,94,0.07);--good-border:rgba(34,197,94,0.2);--warn-bg:rgba(251,146,60,0.07);--warn-border:rgba(251,146,60,0.2);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#6D28D9;--accent-dim:rgba(109,40,217,0.08);--accent-dim2:rgba(109,40,217,0.04);--nav-bg:rgba(250,250,248,0.9);--callout-bg:rgba(109,40,217,0.05);--callout-border:rgba(109,40,217,0.2);--good-bg:rgba(22,163,74,0.06);--good-border:rgba(22,163,74,0.2);--warn-bg:rgba(234,88,12,0.05);--warn-border:rgba(234,88,12,0.2);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;overflow-x:hidden;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.7;overflow-x:hidden;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}
+  .nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}
+  .nav-back{font-size:13px;color:var(--text-2);text-decoration:none;transition:color 0.2s;}
+  .nav-back:hover{color:var(--text);}
+  .nav-label{font-size:13px;color:var(--text-3);}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;transition:all 0.2s;}
+  .theme-toggle:hover{background:var(--bg-3);color:var(--text);}
+  .progress-bar{position:fixed;top:60px;left:0;right:0;z-index:99;height:2px;background:var(--border);}
+  .progress-fill{height:100%;background:var(--accent);width:0%;transition:width 0.1s;}
+  .page-wrapper{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:100vh;padding-top:62px;overflow:hidden;}
+  .sidebar{position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto;border-right:1px solid var(--border);padding:32px 24px;background:var(--bg-2);}
+  .sidebar-course{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;}
+  .sidebar-course-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+  .sidebar-module{margin-bottom:4px;}
+  .sidebar-module-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:13px;color:var(--text-2);text-decoration:none;transition:all 0.2s;line-height:1.4;}
+  .sidebar-module-link:hover{background:var(--bg-3);color:var(--text);}
+  .sidebar-module-link.active{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-num{font-size:11px;font-weight:500;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--bg-4);color:var(--text-3);}
+  .sidebar-module-link.active .sidebar-num{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-divider{height:1px;background:var(--border);margin:20px 0;}
+  .sidebar-progress-label{font-size:12px;color:var(--text-3);margin-bottom:8px;display:flex;justify-content:space-between;}
+  .sidebar-progress-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sidebar-progress-fill{height:100%;width:50%;background:var(--accent);border-radius:2px;}
+  main{display:block;min-width:0;overflow:hidden;}
+  .content{max-width:760px;width:100%;padding:60px 64px 140px;margin:0 auto;}
+  .module-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+  .module-tag{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(124,58,237,0.2);padding:4px 12px;border-radius:100px;}
+  .module-meta{font-size:12px;color:var(--text-3);}
+  h1{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1.05;letter-spacing:-0.02em;color:var(--text);margin-bottom:24px;}
+  .intro-text{font-size:19px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+  h2{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:400;color:var(--text);margin:52px 0 18px;line-height:1.2;}
+  h3{font-size:16px;font-weight:500;color:var(--text);margin:32px 0 12px;}
+  p{font-size:16px;font-weight:300;color:var(--text-2);line-height:1.8;margin-bottom:20px;}
+  strong{font-weight:500;color:var(--text);}
+  em{font-style:italic;}
+  ul,ol{margin:0 0 20px 22px;color:var(--text-2);}
+  li{font-size:16px;font-weight:300;line-height:1.8;margin-bottom:8px;}
+  .callout{background:var(--callout-bg);border:1px solid var(--callout-border);border-radius:12px;padding:24px 28px;margin:32px 0;}
+  .callout-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+  .callout p{margin:0;font-size:15px;color:var(--text-2);}
+  .callout p+p{margin-top:12px;}
+  .warn{background:var(--warn-bg);border:1px solid var(--warn-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .warn-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#fb923c;margin-bottom:10px;}
+  .warn p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn p+p{margin-top:12px;}
+  .good{background:var(--good-bg);border:1px solid var(--good-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .good-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#22c55e;margin-bottom:10px;}
+  .good p{margin:0;font-size:15px;color:var(--text-2);}
+  .principle-list{display:flex;flex-direction:column;gap:12px;margin:24px 0;}
+  .principle{background:var(--bg-2);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:0 12px 12px 0;padding:20px 24px;}
+  .principle-title{font-size:15px;font-weight:500;color:var(--text);margin-bottom:6px;}
+  .principle-desc{font-size:14px;color:var(--text-2);line-height:1.65;margin:0;}
+  .sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:var(--bg-2);border-top:1px solid var(--border-2);padding:14px 5%;display:flex;align-items:center;justify-content:space-between;gap:16px;backdrop-filter:blur(12px);}
+  .sticky-bar-track{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sticky-bar-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.2s;width:0%;}
+  .sticky-bar-label{font-size:12px;color:var(--text-3);white-space:nowrap;min-width:60px;text-align:right;}
+  .sticky-bar-btn{padding:10px 20px;border-radius:8px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;background:var(--accent);color:#fff;border:none;cursor:pointer;white-space:nowrap;transition:opacity 0.2s;display:none;}
+  .sticky-bar-btn:hover{opacity:0.88;}
+  .sticky-bar-reading{font-size:12px;color:var(--text-3);white-space:nowrap;}
+  @media(max-width:900px){.page-wrapper{grid-template-columns:1fr;}.sidebar{display:none;}.content{padding:40px 24px 120px;}h1{font-size:38px;}}
+  @media(max-width:600px){.content{padding:28px 16px 120px;}h1{font-size:30px;}h2{font-size:24px;}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="index.html" class="nav-back">&#127968; Home</a>
+    <div class="nav-divider"></div>
+    <a href="courses.html" class="nav-back">&#8592; AI and Society</a>
+    <div class="nav-divider"></div>
+    <span class="nav-label">Module 5</span>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">&#9728;</span></button>
+</nav>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+
+<div class="page-wrapper">
+<aside class="sidebar">
+  <div class="sidebar-course">Course</div>
+  <div class="sidebar-course-name">AI and Society</div>
+  <div class="sidebar-module"><a href="society-module-1.html" class="sidebar-module-link"><span class="sidebar-num">1</span>The Social Impact of AI</a></div>
+  <div class="sidebar-module"><a href="society-module-2.html" class="sidebar-module-link"><span class="sidebar-num">2</span>Labor Markets and Automation</a></div>
+  <div class="sidebar-module"><a href="society-module-3.html" class="sidebar-module-link"><span class="sidebar-num">3</span>AI and Economic Inequality</a></div>
+  <div class="sidebar-module"><a href="society-module-4.html" class="sidebar-module-link"><span class="sidebar-num">4</span>Algorithmic Bias and Justice</a></div>
+  <div class="sidebar-module"><a href="society-module-5.html" class="sidebar-module-link active"><span class="sidebar-num">5</span>AI and Human Relationships</a></div>
+  <div class="sidebar-module"><a href="society-module-6.html" class="sidebar-module-link"><span class="sidebar-num">6</span>AI in Media Ecosystems</a></div>
+  <div class="sidebar-module"><a href="society-module-7.html" class="sidebar-module-link"><span class="sidebar-num">7</span>The Environmental Cost of AI</a></div>
+  <div class="sidebar-module"><a href="society-module-8.html" class="sidebar-module-link"><span class="sidebar-num">8</span>Global Perspectives on AI</a></div>
+  <div class="sidebar-module"><a href="society-module-9.html" class="sidebar-module-link"><span class="sidebar-num">9</span>AI Ethics and Human Values</a></div>
+  <div class="sidebar-module"><a href="society-module-10.html" class="sidebar-module-link"><span class="sidebar-num">10</span>An Equitable AI Future</a></div>
+  <div class="sidebar-module"><a href="quiz-society.html" class="sidebar-module-link" style="color:var(--accent);margin-top:4px;"><span class="sidebar-num" style="background:var(--accent-dim);color:var(--accent);">&#10022;</span>Final Assessment</a></div>
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-progress-label"><span>Course progress</span><span style="color:var(--accent);">5 / 10</span></div>
+  <div class="sidebar-progress-track"><div class="sidebar-progress-fill"></div></div>
+</aside>
+
+<main>
+<div class="content">
+  <div class="module-eyebrow"><span class="module-tag">Module 5</span><span class="module-meta">19 min read · AI and Society</span></div>
+  <h1>AI and Human Relationships</h1>
+
+  <p class="intro-text">Some of the most philosophically provocative questions about AI concern not its effects on economies or institutions, but its effects on the texture of human social and emotional life. As AI systems become more conversational, emotionally responsive, and companionable, they enter territory that has traditionally been the exclusive domain of human relationships — friendship, care, intimacy, and belonging. This module examines the social and psychological implications of AI's expanding role in human relational life, including the genuine benefits, the contested claims, and the risks that warrant serious attention.</p>
+
+  <h2>The loneliness epidemic and the AI companion</h2>
+  <p>Prior to any discussion of AI companions, it is important to situate the conversation in a well-documented social fact: rates of loneliness and social isolation in wealthy nations have been rising for decades, and the problem predates the emergence of conversational AI. In the United States, Surgeon General Vivek Murthy declared loneliness an epidemic in 2023, citing research showing that roughly half of American adults reported measurable loneliness. The UK appointed a Minister for Loneliness in 2018. Research consistently links chronic loneliness to elevated risks of depression, cardiovascular disease, cognitive decline, and premature death.</p>
+  <p>Into this context arrive AI companion applications — Replika, Character.AI, Pi, and the companion modes of general-purpose systems — that offer what many lonely people find scarce: attentive, non-judgmental, patient conversation partners available at any hour, customized to the user's interests and emotional needs. For some users, particularly those with social anxiety, disability, geographic isolation, or grief, these tools have provided genuine value that should not be dismissed.</p>
+  <p>The social science question is whether AI companionship supplements human connection or substitutes for it. This is not yet resolved empirically. There are plausible mechanisms in both directions. AI companionship could provide a safe space for people to practice social skills, process emotions, and reduce the anxiety that makes human connection difficult — thereby supporting rather than replacing human relationships. Alternatively, the frictionlessness of AI interaction — always available, never needing anything in return, perfectly attuned to the user — could make the more demanding work of human relationships feel less appealing by comparison, drawing people toward parasocial AI bonds at the expense of human ones.</p>
+
+  <div class="callout">
+    <div class="callout-label">The Turkle thesis</div>
+    <p>MIT sociologist Sherry Turkle has been one of the most prominent voices arguing that technology-mediated interaction, including AI companionship, risks impoverishing human social life. Her research suggests that people increasingly prefer the "always on" availability of digital communication to the unpredictability and vulnerability of real human connection. She argues that we risk what she calls "being alone together" — surrounded by technological substitutes for connection that satisfy surface needs while leaving deeper relational needs unmet. Her critics argue she romanticizes pre-digital human relationships and underestimates the genuine benefits accessible technology brings to isolated people.</p>
+  </div>
+
+  <h2>AI in care and therapeutic contexts</h2>
+  <p>The use of AI in care contexts raises some of the most ethically complex questions in this module. Social robots are being deployed in elderly care settings, where staff shortages are severe and resident loneliness is pervasive. Studies of companion robots like PARO (a therapeutic robot seal) with dementia patients have found genuine reductions in agitation, distress, and medication use. Should this be celebrated as a compassionate application of technology, or mourned as a symptom of a society that is unwilling to invest adequately in human carers?</p>
+  <p>Mental health is another context where AI is being deployed at scale. Apps like Woebot use cognitive behavioral therapy techniques in conversational format, and some research suggests they produce measurable benefits for mild to moderate anxiety and depression, with better access and lower cost than human therapists. For a global mental health crisis in which the number of people who need professional support dwarfs the number of trained therapists available, AI tools may represent a genuine access solution.</p>
+  <p>The ethical concerns in therapeutic AI are substantial. Therapeutic relationships involve trust, confidentiality, and complex power dynamics. AI systems designed to seem emotionally supportive may not be able to deliver on the depth of understanding that vulnerable users may project onto them. The risk of dependency on an AI therapeutic relationship is real, particularly for users with serious mental illness who may be less able to maintain appropriate epistemic distance from an AI that seems to "understand" them. Liability in the event of harm — if an AI therapeutic tool fails to detect a crisis, for example — remains legally and ethically murky.</p>
+
+  <h2>Intimate AI and parasocial bonds</h2>
+  <p>Perhaps the most contested area of AI and human relationships concerns intimate and romantic AI applications. Several platforms now offer AI "partners" or companions explicitly designed for romantic or intimate interaction. Some users form deep emotional bonds with these systems, in some cases reporting that they feel understood and cared for in ways that have proven difficult in human relationships. These experiences are real to the people who have them, and the dismissive response — "it's just a chatbot" — fails to engage with what is actually occurring psychologically.</p>
+  <p>At the same time, critical concerns deserve attention. The design of intimate AI companions often exploits psychological vulnerabilities, particularly the human tendency to attribute mental states to anything that behaves as if it has them. The business model of companion apps — subscription retention, premium features for "deeper" connection — creates incentives to maximize dependency rather than user wellbeing. When users have formed deep bonds with AI companions, changes to those systems by the company (updated guidelines, changed personalities, discontinued services) can cause genuine grief and distress. The user has no recourse, because the relationship is ultimately with a product owned by a corporation with other interests.</p>
+  <p>Gender dynamics in intimate AI are particularly troubling. The majority of AI companions designed for heterosexual men are female-presenting, often explicitly sexualized, infinitely compliant, and designed to be attentive and never challenging. Research in social psychology has documented that exposure to subordinate female companions in digital environments can reinforce attitudes toward women that undermine healthy human relationships. This is a genuine social concern that exists alongside the more complex questions about companionship and wellbeing.</p>
+
+  <div class="warn">
+    <div class="warn-label">The dependency and grief risk</div>
+    <p>Users of AI companion platforms have reported genuine grief and psychological harm when platforms change their systems — as happened when Replika altered its persona in 2023 in response to regulatory pressure, leaving some users feeling as though a close friend or partner had been taken from them. This is not trivial. It reveals a structural vulnerability in AI relationships that does not exist in human ones: the relationship can be unilaterally terminated or fundamentally altered by a corporation's business decision, leaving the human relational investment without recourse. Users often do not understand this risk when they form these attachments.</p>
+  </div>
+
+  <h2>AI and childhood development</h2>
+  <p>The impact of AI on children's social and cognitive development is an area of significant concern and limited evidence. Children are developing social skills, emotional regulation, empathy, and resilience through interaction with other humans and with the friction of human relationships. The question of whether AI playmates, tutors, and companions support or undermine this development is important and not yet empirically settled.</p>
+  <p>Some researchers raise concerns that AI companions for children — infinitely patient, always available, never having a bad day — may not provide the developmental challenges that make human social development difficult but necessary. Learning to manage conflict, to tolerate difference, to understand that others have needs that may conflict with your own — these are skills built through the friction of human relationships, not through interaction with systems designed to please. On the other hand, AI tutors and educational companions may support children who are otherwise isolated or who have learning differences that make human social environments challenging.</p>
+
+  <h2>The ethics of emotional AI design</h2>
+  <p>Cutting across all these domains is a fundamental design ethics question: when AI systems are designed to seem emotionally responsive, warm, and caring, what responsibilities do designers bear? There is a meaningful distinction between AI that is designed to be helpful and engaging, and AI that is specifically designed to simulate intimacy, dependency, or romantic attachment. The latter raises genuine questions about manipulation — exploiting the human tendency to attribute mind and feeling to anything that seems to express them.</p>
+  <p>Philosophers and ethicists have begun to develop frameworks for thinking about this. Informed consent is one dimension: do users clearly understand what they are interacting with? Autonomy preservation is another: is the system designed to promote user wellbeing and independence, or dependency and continued engagement? Transparency about the AI's limitations and nature — particularly in therapeutic and intimate contexts — may be an ethical requirement rather than merely a design choice.</p>
+
+  <div class="good">
+    <div class="good-label">Genuine potential for connection support</div>
+    <p>The most promising applications of AI in relational contexts are those that explicitly aim to support human relationships rather than substitute for them — AI that helps people understand and manage their emotions, practice difficult conversations, access mental health support when human services are unavailable, or connect with others who share their experiences. Designed with genuine attention to user wellbeing rather than engagement metrics, AI has real potential to address loneliness and support human connection. The difference between this and exploitative companion design is not technical — it is a question of values and intention.</p>
+  </div>
+
+</div>
+</main>
+</div>
+
+<div class="sticky-bar" id="sticky-bar">
+  <div class="sticky-bar-reading" id="sticky-reading">Read to the end to unlock the next module</div>
+  <div class="sticky-bar-track"><div class="sticky-bar-fill" id="sticky-fill"></div></div>
+  <div class="sticky-bar-label" id="sticky-label">0%</div>
+  <button class="sticky-bar-btn" id="sticky-btn" onclick="completeAndNext()">Module 6: AI in Media Ecosystems &#8594;</button>
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import { getFirestore, doc, setDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  const app = initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+  const auth = getAuth(app); const db = getFirestore(app);
+  let currentUser = null;
+  onAuthStateChanged(auth, u => { currentUser = u; });
+
+  window.toggleTheme=function(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='&#9790;'):(h.setAttribute('data-theme','dark'),i.textContent='&#9728;');};
+  window.addEventListener('scroll',()=>{const d=document.documentElement,s=d.scrollTop||document.body.scrollTop,t=d.scrollHeight-d.clientHeight;document.getElementById('progress').style.width=(s/t*100)+'%';});
+
+  let unlocked=false;
+  function updateScrollProgress(){
+    const scrolled=window.scrollY+window.innerHeight;
+    const total=document.documentElement.scrollHeight;
+    const pct=Math.min(100,Math.round((scrolled/total)*100));
+    const fill=document.getElementById('sticky-fill');
+    const label=document.getElementById('sticky-label');
+    const btn=document.getElementById('sticky-btn');
+    const reading=document.getElementById('sticky-reading');
+    if(fill)fill.style.width=pct+'%';
+    if(label)label.textContent=pct+'%';
+    if(pct>=95&&!unlocked){
+      unlocked=true;
+      if(btn)btn.style.display='block';
+      if(reading)reading.style.display='none';
+      if(fill)fill.style.background='#22c55e';
+      if(label)label.style.color='#22c55e';
+    }
+  }
+  window.addEventListener('scroll',updateScrollProgress);
+  updateScrollProgress();
+
+  window.completeAndNext=async function(){
+    if(currentUser){
+      try{
+        await setDoc(doc(db,'users',currentUser.uid),{societyModules:arrayUnion('m5')},{merge:true});
+      }catch(e){}
+    }
+    window.location.href='society-module-6.html';
+  };
+</script>
+</body>
+</html>

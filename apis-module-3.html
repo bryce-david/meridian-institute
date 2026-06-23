@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 3: Chat Completions in Depth — Building with AI APIs — Meridian Institute of AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#0F4C81;--accent-dim:rgba(15,76,129,0.1);--accent-dim2:rgba(15,76,129,0.05);--nav-bg:rgba(8,8,8,0.9);--callout-bg:rgba(15,76,129,0.07);--callout-border:rgba(15,76,129,0.25);--good-bg:rgba(34,197,94,0.07);--good-border:rgba(34,197,94,0.2);--warn-bg:rgba(251,146,60,0.07);--warn-border:rgba(251,146,60,0.2);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#1E40AF;--accent-dim:rgba(30,64,175,0.08);--accent-dim2:rgba(30,64,175,0.04);--nav-bg:rgba(250,250,248,0.9);--callout-bg:rgba(30,64,175,0.05);--callout-border:rgba(30,64,175,0.2);--good-bg:rgba(22,163,74,0.06);--good-border:rgba(22,163,74,0.2);--warn-bg:rgba(234,88,12,0.05);--warn-border:rgba(234,88,12,0.2);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;overflow-x:hidden;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.7;overflow-x:hidden;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}
+  .nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}
+  .nav-back{font-size:13px;color:var(--text-2);text-decoration:none;transition:color 0.2s;}
+  .nav-back:hover{color:var(--text);}
+  .nav-label{font-size:13px;color:var(--text-3);}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;transition:all 0.2s;}
+  .theme-toggle:hover{background:var(--bg-3);color:var(--text);}
+  .progress-bar{position:fixed;top:60px;left:0;right:0;z-index:99;height:2px;background:var(--border);}
+  .progress-fill{height:100%;background:var(--accent);width:0%;transition:width 0.1s;}
+  .page-wrapper{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:100vh;padding-top:62px;overflow:hidden;}
+  .sidebar{position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto;border-right:1px solid var(--border);padding:32px 24px;background:var(--bg-2);}
+  .sidebar-course{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;}
+  .sidebar-course-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+  .sidebar-module{margin-bottom:4px;}
+  .sidebar-module-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:13px;color:var(--text-2);text-decoration:none;transition:all 0.2s;line-height:1.4;}
+  .sidebar-module-link:hover{background:var(--bg-3);color:var(--text);}
+  .sidebar-module-link.active{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-num{font-size:11px;font-weight:500;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--bg-4);color:var(--text-3);}
+  .sidebar-module-link.active .sidebar-num{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-divider{height:1px;background:var(--border);margin:20px 0;}
+  .sidebar-progress-label{font-size:12px;color:var(--text-3);margin-bottom:8px;display:flex;justify-content:space-between;}
+  .sidebar-progress-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sidebar-progress-fill{height:100%;width:30%;background:var(--accent);border-radius:2px;}
+  main{display:block;min-width:0;overflow:hidden;}
+  .content{max-width:760px;width:100%;padding:60px 64px 140px;margin:0 auto;}
+  .module-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+  .module-tag{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(15,76,129,0.2);padding:4px 12px;border-radius:100px;}
+  .module-meta{font-size:12px;color:var(--text-3);}
+  h1{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1.05;letter-spacing:-0.02em;color:var(--text);margin-bottom:24px;}
+  .intro-text{font-size:19px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+  h2{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:400;color:var(--text);margin:52px 0 18px;line-height:1.2;}
+  h3{font-size:16px;font-weight:500;color:var(--text);margin:32px 0 12px;}
+  p{font-size:16px;font-weight:300;color:var(--text-2);line-height:1.8;margin-bottom:20px;}
+  strong{font-weight:500;color:var(--text);}
+  em{font-style:italic;}
+  ul,ol{margin:0 0 20px 22px;color:var(--text-2);}
+  li{font-size:16px;font-weight:300;line-height:1.8;margin-bottom:8px;}
+  .callout{background:var(--callout-bg);border:1px solid var(--callout-border);border-radius:12px;padding:24px 28px;margin:32px 0;}
+  .callout-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+  .callout p{margin:0;font-size:15px;color:var(--text-2);}
+  .callout p+p{margin-top:12px;}
+  .good{background:var(--good-bg);border:1px solid var(--good-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .good-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#22c55e;margin-bottom:10px;}
+  .good p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn{background:var(--warn-bg);border:1px solid var(--warn-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .warn-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#fb923c;margin-bottom:10px;}
+  .warn p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn p+p{margin-top:12px;}
+  .principle-list{display:flex;flex-direction:column;gap:12px;margin:24px 0;}
+  .principle{background:var(--bg-2);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:0 12px 12px 0;padding:20px 24px;}
+  .principle-title{font-size:15px;font-weight:500;color:var(--text);margin-bottom:6px;}
+  .principle-desc{font-size:14px;color:var(--text-2);line-height:1.65;margin:0;}
+  .code-block{background:#0d1117;border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:20px 24px;margin:24px 0;font-family:monospace;font-size:13px;color:#e6edf3;overflow-x:auto;line-height:1.7;white-space:pre;}
+  .param-table{width:100%;border-collapse:collapse;margin:24px 0;}
+  .param-table th{text-align:left;font-size:12px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-3);padding:10px 14px;border-bottom:1px solid var(--border-2);}
+  .param-table td{font-size:14px;color:var(--text-2);padding:12px 14px;border-bottom:1px solid var(--border);vertical-align:top;}
+  .param-table td:first-child{font-family:monospace;font-size:13px;color:var(--text);white-space:nowrap;}
+  .sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:var(--bg-2);border-top:1px solid var(--border-2);padding:14px 5%;display:flex;align-items:center;justify-content:space-between;gap:16px;backdrop-filter:blur(12px);}
+  .sticky-bar-track{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sticky-bar-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.2s;width:0%;}
+  .sticky-bar-label{font-size:12px;color:var(--text-3);white-space:nowrap;min-width:60px;text-align:right;}
+  .sticky-bar-btn{padding:10px 20px;border-radius:8px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;background:var(--accent);color:#fff;border:none;cursor:pointer;white-space:nowrap;transition:opacity 0.2s;display:none;}
+  .sticky-bar-btn:hover{opacity:0.88;}
+  .sticky-bar-reading{font-size:12px;color:var(--text-3);white-space:nowrap;}
+  @media(max-width:900px){.page-wrapper{grid-template-columns:1fr;}.sidebar{display:none;}.content{padding:40px 24px 120px;}h1{font-size:38px;}}
+  @media(max-width:600px){.content{padding:28px 16px 120px;}h1{font-size:30px;}h2{font-size:24px;}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="courses.html" class="nav-back">← Building with AI APIs</a>
+    <div class="nav-divider"></div>
+    <span class="nav-label">Module 3</span>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">☀</span></button>
+</nav>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+
+<div class="page-wrapper">
+<aside class="sidebar">
+  <div class="sidebar-course">Expert Track</div>
+  <div class="sidebar-course-name">Building with AI APIs</div>
+  <div class="sidebar-module"><a href="apis-module-1.html" class="sidebar-module-link"><span class="sidebar-num">1</span>API Fundamentals</a></div>
+  <div class="sidebar-module"><a href="apis-module-2.html" class="sidebar-module-link"><span class="sidebar-num">2</span>Your First API Call</a></div>
+  <div class="sidebar-module"><a href="apis-module-3.html" class="sidebar-module-link active"><span class="sidebar-num">3</span>Chat Completions in Depth</a></div>
+  <div class="sidebar-module"><a href="apis-module-4.html" class="sidebar-module-link"><span class="sidebar-num">4</span>Tokens and Cost Optimization</a></div>
+  <div class="sidebar-module"><a href="apis-module-5.html" class="sidebar-module-link"><span class="sidebar-num">5</span>Structured Outputs</a></div>
+  <div class="sidebar-module"><a href="apis-module-6.html" class="sidebar-module-link"><span class="sidebar-num">6</span>Streaming Responses</a></div>
+  <div class="sidebar-module"><a href="apis-module-7.html" class="sidebar-module-link"><span class="sidebar-num">7</span>Embeddings and Semantic Search</a></div>
+  <div class="sidebar-module"><a href="apis-module-8.html" class="sidebar-module-link"><span class="sidebar-num">8</span>Function Calling and Tool Use</a></div>
+  <div class="sidebar-module"><a href="apis-module-9.html" class="sidebar-module-link"><span class="sidebar-num">9</span>Production-Ready AI Apps</a></div>
+  <div class="sidebar-module"><a href="apis-module-10.html" class="sidebar-module-link"><span class="sidebar-num">10</span>Multi-Provider Strategies</a></div>
+  <div class="sidebar-module"><a href="quiz-apis.html" class="sidebar-module-link" style="color:var(--accent);margin-top:4px;"><span class="sidebar-num" style="background:var(--accent-dim);color:var(--accent);">✦</span>Final Assessment</a></div>
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-progress-label"><span>Course progress</span><span style="color:var(--accent);">3 / 10</span></div>
+  <div class="sidebar-progress-track"><div class="sidebar-progress-fill"></div></div>
+</aside>
+
+<main>
+<div class="content">
+  <div class="module-eyebrow"><span class="module-tag">Module 3</span><span class="module-meta">35 min read · Building with AI APIs</span></div>
+  <h1>Chat Completions in Depth</h1>
+
+  <p class="intro-text">The chat completions endpoint is the most important API surface in modern AI development. Understanding how it actually works — the roles system, how state is managed, the sampling parameters that control output behavior, and the full response structure — is the difference between building brittle demos and robust production systems.</p>
+
+  <h2>The messages array: roles and their purposes</h2>
+  <p>Every request to a chat completions API centers on the <code>messages</code> array. This is an ordered list of conversation turns, each with a <code>role</code> and <code>content</code>. There are three roles, and each serves a distinct function:</p>
+
+  <div class="principle-list">
+    <div class="principle">
+      <div class="principle-title">system — the instructions layer</div>
+      <div class="principle-desc">Sets the persistent instructions, persona, and constraints for the model. This is where you define who the assistant is, what it can and cannot do, what format to use, and any background context it needs. System messages appear at the start of the conversation. Think of this as your developer-controlled layer — the user should never be able to override it through conversation.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">user — the human turn</div>
+      <div class="principle-desc">Represents input from the human side of the conversation. This is the actual question, instruction, or content the end user submitted. In automated pipelines, the "user" message might be machine-generated — it is simply the turn that the model responds to.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">assistant — the model turn</div>
+      <div class="principle-desc">Represents a previous response from the model. When you are building multi-turn conversations, you include previous assistant responses in the messages array so the model has context of what it has already said. You can also inject an assistant message yourself to "prime" the model's response style or pick up mid-sentence — a technique called assistant prefilling.</div>
+    </div>
+  </div>
+
+  <div class="code-block">from openai import OpenAI
+client = OpenAI()
+
+response = client.chat.completions.create(
+    model="gpt-4o",
+    messages=[
+        # System: the instructions layer — controls behavior globally
+        {
+            "role": "system",
+            "content": (
+                "You are a senior Python engineer at a fintech company. "
+                "Give precise, production-quality answers. "
+                "Always include error handling in code examples. "
+                "Format code in Python 3.11+."
+            )
+        },
+        # User: the human turn
+        {
+            "role": "user",
+            "content": "How should I handle database connection pooling in a FastAPI app?"
+        }
+    ]
+)
+
+print(response.choices[0].message.content)</div>
+
+  <h3>System message design patterns</h3>
+  <p>Your system message is the most important prompt engineering lever you have. A well-designed system message can eliminate entire categories of incorrect behavior. Include:</p>
+  <ul>
+    <li><strong>Persona</strong> — who the assistant is and what expertise it has</li>
+    <li><strong>Scope</strong> — what topics are in and out of bounds</li>
+    <li><strong>Format instructions</strong> — response length, use of markdown, language</li>
+    <li><strong>Background context</strong> — information the model needs that won't be in every user message</li>
+    <li><strong>Safety rails</strong> — what the model should do when asked to go out of scope</li>
+  </ul>
+
+  <h2>Multi-turn conversation state management</h2>
+  <p>This is the most important architectural fact about chat completion APIs: <strong>they are stateless</strong>. The API has no memory between calls. Every request is completely independent. When you want the model to remember previous turns, you must send the full conversation history yourself in the messages array.</p>
+
+  <p>This is not a limitation — it is a deliberate design choice that gives you complete control over what the model sees. But it means your application is responsible for maintaining conversation state.</p>
+
+  <div class="code-block">from openai import OpenAI
+client = OpenAI()
+
+def run_conversation():
+    """A multi-turn conversation loop with manual state management."""
+
+    # The conversation history — starts with just the system message
+    messages = [
+        {
+            "role": "system",
+            "content": "You are a helpful Python tutor. Be encouraging and clear."
+        }
+    ]
+
+    print("Python Tutor (type 'quit' to exit)")
+    print("-" * 40)
+
+    while True:
+        user_input = input("\nYou: ").strip()
+        if user_input.lower() in ("quit", "exit"):
+            break
+        if not user_input:
+            continue
+
+        # Add the user's message to history
+        messages.append({"role": "user", "content": user_input})
+
+        # Send the FULL history — this is what creates the appearance of memory
+        response = client.chat.completions.create(
+            model="gpt-4o-mini",
+            messages=messages,
+            max_tokens=1000
+        )
+
+        assistant_reply = response.choices[0].message.content
+        print(f"\nTutor: {assistant_reply}")
+
+        # CRITICAL: add the assistant reply to history so future turns see it
+        messages.append({"role": "assistant", "content": assistant_reply})
+
+        # Optional: print token usage to monitor context growth
+        total = response.usage.total_tokens
+        print(f"  [Tokens used this turn: {total}]")
+
+run_conversation()</div>
+
+  <div class="warn">
+    <div class="warn-label">Context windows fill up</div>
+    <p>Because you send the full history each time, longer conversations use more and more tokens — and cost more. A 20-turn conversation with detailed responses can easily consume 10,000–30,000 tokens per call. You must implement context management for production systems: truncating old turns, summarizing history, or using a sliding window. Module 4 covers this in detail.</p>
+  </div>
+
+  <h2>Sampling parameters: controlling output behavior</h2>
+  <p>The model does not mechanically produce the "best" next word — it generates a probability distribution over its entire vocabulary and samples from it. The sampling parameters let you control that sampling process.</p>
+
+  <h3>temperature</h3>
+  <p>Temperature controls how concentrated or spread out the probability distribution is before sampling.</p>
+
+  <div class="principle-list">
+    <div class="principle">
+      <div class="principle-title">temperature = 0 — deterministic</div>
+      <div class="principle-desc">Always picks the highest-probability token. Given identical input, you get identical output every time. Use this for tasks where consistency matters: data extraction, classification, code generation, structured outputs. The model will still be creative — it just won't vary its choices between runs.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">temperature = 0.7–1.0 — balanced</div>
+      <div class="principle-desc">The standard range for conversational AI and general use. The model explores a wider set of options, producing varied, natural-sounding text. Most chat applications use 0.7–0.9. This is the default for most providers.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">temperature > 1.0 — chaotic</div>
+      <div class="principle-desc">Flattens the probability distribution, making even low-probability tokens likely. Output becomes unpredictable and often incoherent. Occasionally useful for creative tasks that need extreme novelty, but rarely appropriate for production systems.</div>
+    </div>
+  </div>
+
+  <h3>top_p (nucleus sampling)</h3>
+  <p>An alternative to temperature. Instead of scaling all probabilities, <code>top_p</code> restricts sampling to the smallest set of tokens whose cumulative probability exceeds <code>p</code>. With <code>top_p=0.9</code>, the model only considers the top tokens that together account for 90% of the probability mass — ignoring the long tail of unlikely tokens.</p>
+
+  <p>OpenAI recommends changing one of <code>temperature</code> or <code>top_p</code> but not both. Most practitioners use <code>temperature</code> and leave <code>top_p</code> at its default of 1.0.</p>
+
+  <div class="code-block">response = client.chat.completions.create(
+    model="gpt-4o",
+    messages=[{"role": "user", "content": "Write a haiku about APIs."}],
+
+    # Sampling parameters — typically set one or the other
+    temperature=0.9,   # Creative range: 0 (deterministic) to 2 (chaotic)
+    top_p=1.0,         # Nucleus sampling: default 1.0 (consider all tokens)
+
+    # Length control
+    max_tokens=200,    # Hard cap on output tokens
+
+    # Stop sequences: stop generating when any of these appear
+    stop=["\n\n", "###"],
+)</div>
+
+  <h3>max_tokens vs max_completion_tokens</h3>
+  <p>This is a common source of confusion caused by a naming inconsistency between providers:</p>
+
+  <table class="param-table">
+    <thead><tr><th>Provider</th><th>Parameter name</th><th>Behavior</th></tr></thead>
+    <tbody>
+      <tr><td>OpenAI (legacy)</td><td>max_tokens</td><td>Hard limit on output tokens. Deprecated in newer models.</td></tr>
+      <tr><td>OpenAI (o-series + gpt-4o-2024+)</td><td>max_completion_tokens</td><td>Replaces max_tokens. Covers both reasoning tokens and output tokens for o-series models.</td></tr>
+      <tr><td>Anthropic</td><td>max_tokens</td><td>Required field. Hard limit on output. No confusion — always max_tokens.</td></tr>
+      <tr><td>Google Gemini</td><td>maxOutputTokens</td><td>Same concept, different naming convention.</td></tr>
+    </tbody>
+  </table>
+
+  <p>For OpenAI's o1/o3 reasoning models, <code>max_completion_tokens</code> covers both the hidden chain-of-thought reasoning tokens and the visible output — which is why the distinction matters. If you set a limit that is too low, the model may run out of "thinking budget" before producing an answer.</p>
+
+  <h3>Stop sequences</h3>
+  <p>The <code>stop</code> parameter accepts a string or list of strings. When the model generates any of these sequences, it stops — even if <code>max_tokens</code> has not been reached. The stop sequence itself is not included in the output.</p>
+
+  <p>This is useful when you want the model to fill in a template and stop at a delimiter, or when you are building a few-shot prompting system where you want the model to stop after one example rather than generating more.</p>
+
+  <div class="code-block"># Example: structured extraction with stop sequences
+# The model generates JSON and stops at the closing delimiter
+response = client.chat.completions.create(
+    model="gpt-4o",
+    messages=[
+        {"role": "system", "content": "Extract entities. Return JSON only. Stop after the JSON object."},
+        {"role": "user", "content": "Apple Inc reported $94.9B in revenue for Q1 2025."}
+    ],
+    temperature=0,      # deterministic for extraction
+    stop=["```", "---"]  # stop at markdown fence or separator
+)</div>
+
+  <h2>The full response object structure</h2>
+  <p>Understanding the complete response object — not just the content field — is essential for building reliable systems.</p>
+
+  <div class="code-block">import json
+from openai import OpenAI
+client = OpenAI()
+
+response = client.chat.completions.create(
+    model="gpt-4o-mini",
+    messages=[{"role": "user", "content": "Name two planets."}],
+    logprobs=True,         # enable token log probabilities
+    top_logprobs=3         # return top 3 candidates at each position
+)
+
+# Top-level fields
+print("id:", response.id)            # unique request ID for debugging
+print("model:", response.model)      # exact model version served
+print("created:", response.created)  # unix timestamp
+
+# The choices array — usually just one choice
+choice = response.choices[0]
+print("finish_reason:", choice.finish_reason)  # "stop", "length", "content_filter", "tool_calls"
+print("content:", choice.message.content)
+print("role:", choice.message.role)  # always "assistant"
+
+# Usage — for cost tracking and monitoring
+usage = response.usage
+print("prompt_tokens:", usage.prompt_tokens)
+print("completion_tokens:", usage.completion_tokens)
+print("total_tokens:", usage.total_tokens)
+# Newer OpenAI models may include:
+# usage.prompt_tokens_details.cached_tokens  (prompt cache hits)
+# usage.completion_tokens_details.reasoning_tokens  (o-series hidden reasoning)
+
+# Log probabilities (when logprobs=True)
+if choice.logprobs:
+    for token_info in choice.logprobs.content[:3]:  # first 3 tokens
+        print(f"Token: {repr(token_info.token)!r:20} logprob: {token_info.logprob:.3f}")</div>
+
+  <h3>finish_reason values and what they mean</h3>
+
+  <table class="param-table">
+    <thead><tr><th>Value</th><th>Meaning</th><th>Action</th></tr></thead>
+    <tbody>
+      <tr><td>stop</td><td>Model finished naturally</td><td>Normal — use the output.</td></tr>
+      <tr><td>length</td><td>Hit max_tokens limit</td><td>Output may be truncated. Increase max_tokens or handle incomplete output.</td></tr>
+      <tr><td>content_filter</td><td>Provider policy blocked output</td><td>content field may be null. Inform the user appropriately.</td></tr>
+      <tr><td>tool_calls</td><td>Model wants to call a function</td><td>Execute the tool and send result back. See Module 8.</td></tr>
+      <tr><td>null</td><td>In-progress (streaming)</td><td>Final chunk will have a real finish_reason.</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Logprobs for uncertainty estimation</h2>
+  <p>When you enable <code>logprobs=True</code>, each output token comes with its log probability — the log of how confident the model was in that choice. This is a powerful signal for understanding model certainty and building confidence-aware systems.</p>
+
+  <p>A logprob of 0 means 100% confident (log(1) = 0). A logprob of -0.1 means very confident. A logprob of -5 means the model considered many alternatives. By examining logprobs on key tokens (like "Yes"/"No" for classification tasks), you can estimate confidence without asking the model to describe its own uncertainty.</p>
+
+  <div class="code-block">import math
+from openai import OpenAI
+client = OpenAI()
+
+def classify_with_confidence(text: str) -> dict:
+    """Classify sentiment and return confidence score from logprobs."""
+    response = client.chat.completions.create(
+        model="gpt-4o-mini",
+        messages=[
+            {"role": "system", "content": "Classify sentiment. Reply with only one word: Positive, Negative, or Neutral."},
+            {"role": "user", "content": text}
+        ],
+        temperature=0,
+        max_tokens=1,   # only need the first token
+        logprobs=True,
+        top_logprobs=3
+    )
+
+    choice = response.choices[0]
+    label = choice.message.content.strip()
+
+    # Convert logprob to probability
+    logprob = choice.logprobs.content[0].logprob
+    confidence = math.exp(logprob)
+
+    return {
+        "label": label,
+        "confidence": round(confidence, 4),
+        "top_alternatives": [
+            {"token": t.token, "prob": round(math.exp(t.logprob), 4)}
+            for t in choice.logprobs.content[0].top_logprobs
+        ]
+    }
+
+result = classify_with_confidence("The product exceeded all my expectations!")
+print(result)
+# {"label": "Positive", "confidence": 0.9823, "top_alternatives": [...]}</div>
+
+  <h2>Provider differences: a practical reference</h2>
+  <p>The conceptual model is the same across providers, but field names and behavior differ enough to cause bugs when switching.</p>
+
+  <div class="principle-list">
+    <div class="principle">
+      <div class="principle-title">Anthropic: max_tokens is required</div>
+      <div class="principle-desc">Unlike OpenAI, Anthropic requires max_tokens on every request — there is no default. The system prompt is a separate top-level parameter, not a messages entry. Response access is via message.content[0].text. Token usage uses input_tokens/output_tokens instead of prompt_tokens/completion_tokens.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">OpenAI: max_completion_tokens on newer models</div>
+      <div class="principle-desc">For gpt-4o and later models, max_completion_tokens is preferred over max_tokens. For o-series reasoning models, this is critical because it covers both reasoning tokens and output tokens. Always check which parameter the current model accepts.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Google Gemini: different message schema</div>
+      <div class="principle-desc">Gemini uses "model" instead of "assistant" for the model's role. System instructions go in a separate system_instruction field. The response schema differs significantly. Gemini also has a native multimodal API where images, audio, and video are first-class inputs.</div>
+    </div>
+  </div>
+
+  <div class="code-block"># Anthropic equivalent — same concepts, different API shape
+import anthropic
+client = anthropic.Anthropic()
+
+# Multi-turn conversation with Anthropic
+conversation_history = []
+
+def chat_anthropic(user_message: str) -> str:
+    conversation_history.append({"role": "user", "content": user_message})
+
+    response = client.messages.create(
+        model="claude-opus-4-5",
+        max_tokens=1024,          # REQUIRED — no default
+        system="You are a helpful coding assistant.",  # separate param, not a message
+        messages=conversation_history
+    )
+
+    assistant_text = response.content[0].text
+    conversation_history.append({"role": "assistant", "content": assistant_text})
+
+    # Anthropic usage fields
+    print(f"Input: {response.usage.input_tokens} | Output: {response.usage.output_tokens}")
+
+    return assistant_text
+
+print(chat_anthropic("What is a decorator in Python?"))
+print(chat_anthropic("Can you show me an example with functools.wraps?"))</div>
+
+  <div class="good">
+    <div class="good-label">The complete mental model</div>
+    <p>Every chat completion request is: a system message defining behavior + an ordered list of alternating user/assistant turns + sampling parameters controlling randomness. The API is stateless — you own the history. The response gives you content, a finish reason, token counts, and optionally log probabilities. With this model internalized, you can understand any chat completions API regardless of provider.</p>
+  </div>
+
+</div>
+</main>
+</div>
+
+<div class="sticky-bar" id="sticky-bar">
+  <div class="sticky-bar-reading" id="sticky-reading">Read to the end to unlock the next module</div>
+  <div class="sticky-bar-track"><div class="sticky-bar-fill" id="sticky-fill"></div></div>
+  <div class="sticky-bar-label" id="sticky-label">0%</div>
+  <button class="sticky-bar-btn" id="sticky-btn" onclick="completeAndNext()">Module 4: Tokens and Cost Optimization →</button>
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import { getFirestore, doc, setDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  const app=initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+  const auth=getAuth(app);const db=getFirestore(app);
+  let currentUser=null;
+  onAuthStateChanged(auth,u=>{currentUser=u;});
+  window.toggleTheme=function(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='☾'):(h.setAttribute('data-theme','dark'),i.textContent='☀');};
+  window.addEventListener('scroll',()=>{const d=document.documentElement,s=d.scrollTop||document.body.scrollTop,t=d.scrollHeight-d.clientHeight;document.getElementById('progress').style.width=(s/t*100)+'%';});
+  let unlocked=false;
+  function updateScrollProgress(){
+    const scrolled=window.scrollY+window.innerHeight;
+    const total=document.documentElement.scrollHeight;
+    const pct=Math.min(100,Math.round((scrolled/total)*100));
+    const fill=document.getElementById('sticky-fill');
+    const label=document.getElementById('sticky-label');
+    const btn=document.getElementById('sticky-btn');
+    const reading=document.getElementById('sticky-reading');
+    if(fill)fill.style.width=pct+'%';
+    if(label)label.textContent=pct+'%';
+    if(pct>=95&&!unlocked){unlocked=true;if(btn)btn.style.display='block';if(reading)reading.style.display='none';if(fill)fill.style.background='#22c55e';if(label)label.style.color='#22c55e';}
+  }
+  window.addEventListener('scroll',updateScrollProgress);
+  updateScrollProgress();
+  window.completeAndNext=async function(){
+    if(currentUser){try{await setDoc(doc(db,'users',currentUser.uid),{apisModules:arrayUnion('m3')},{merge:true});}catch(e){}}
+    window.location.href='apis-module-4.html';
+  };
+</script>
+</body>
+</html>

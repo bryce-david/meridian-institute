@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 9: AI and National Security — AI in Politics — Meridian Institute of AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#9D174D;--accent-dim:rgba(157,23,77,0.1);--nav-bg:rgba(8,8,8,0.9);--callout-bg:rgba(157,23,77,0.07);--callout-border:rgba(157,23,77,0.25);--good-bg:rgba(34,197,94,0.07);--good-border:rgba(34,197,94,0.2);--warn-bg:rgba(251,146,60,0.07);--warn-border:rgba(251,146,60,0.2);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#831843;--accent-dim:rgba(131,24,67,0.08);--nav-bg:rgba(250,250,248,0.9);--callout-bg:rgba(131,24,67,0.05);--callout-border:rgba(131,24,67,0.2);--good-bg:rgba(22,163,74,0.06);--good-border:rgba(22,163,74,0.2);--warn-bg:rgba(234,88,12,0.05);--warn-border:rgba(234,88,12,0.2);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}html{scroll-behavior:smooth;}body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.7;overflow-x:hidden;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}.nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}.nav-back{font-size:13px;color:var(--text-2);text-decoration:none;}.nav-label{font-size:13px;color:var(--text-3);}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;}
+  .progress-bar{position:fixed;top:60px;left:0;right:0;z-index:99;height:2px;background:var(--border);}.progress-fill{height:100%;background:var(--accent);width:0%;}
+  .page-wrapper{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:100vh;padding-top:62px;}
+  .sidebar{position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto;border-right:1px solid var(--border);padding:32px 24px;background:var(--bg-2);}
+  .sidebar-course{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;}.sidebar-course-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+  .sidebar-module{margin-bottom:4px;}.sidebar-module-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:13px;color:var(--text-2);text-decoration:none;transition:all 0.2s;line-height:1.4;}
+  .sidebar-module-link:hover{background:var(--bg-3);color:var(--text);}.sidebar-module-link.active{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-num{font-size:11px;font-weight:500;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--bg-4);color:var(--text-3);}
+  .sidebar-module-link.active .sidebar-num{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-divider{height:1px;background:var(--border);margin:20px 0;}
+  .sidebar-progress-label{font-size:12px;color:var(--text-3);margin-bottom:8px;display:flex;justify-content:space-between;}
+  .sidebar-progress-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}.sidebar-progress-fill{height:100%;background:var(--accent);border-radius:2px;}
+  main{display:block;min-width:0;}.content{max-width:760px;width:100%;padding:60px 64px 140px;margin:0 auto;}
+  .module-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+  .module-tag{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(157,23,77,0.2);padding:4px 12px;border-radius:100px;}
+  .module-meta{font-size:12px;color:var(--text-3);}
+  h1{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1.05;letter-spacing:-0.02em;margin-bottom:24px;}
+  .intro-text{font-size:19px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+  h2{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:400;color:var(--text);margin:52px 0 18px;line-height:1.2;}
+  p{font-size:16px;font-weight:300;color:var(--text-2);line-height:1.8;margin-bottom:20px;}strong{font-weight:500;color:var(--text);}
+  ul,ol{margin:0 0 20px 22px;color:var(--text-2);}li{font-size:16px;font-weight:300;line-height:1.8;margin-bottom:8px;}
+  .callout{background:var(--callout-bg);border:1px solid var(--callout-border);border-radius:12px;padding:24px 28px;margin:32px 0;}.callout-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}.callout p{margin:0;font-size:15px;color:var(--text-2);}.callout p+p{margin-top:12px;}
+  .good{background:var(--good-bg);border:1px solid var(--good-border);border-radius:12px;padding:24px 28px;margin:24px 0;}.good-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#22c55e;margin-bottom:10px;}.good p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn{background:var(--warn-bg);border:1px solid var(--warn-border);border-radius:12px;padding:24px 28px;margin:24px 0;}.warn-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#fb923c;margin-bottom:10px;}.warn p{margin:0;font-size:15px;color:var(--text-2);}
+  .principle-list{display:flex;flex-direction:column;gap:12px;margin:24px 0;}.principle{background:var(--bg-2);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:0 12px 12px 0;padding:20px 24px;}.principle-title{font-size:15px;font-weight:500;color:var(--text);margin-bottom:6px;}.principle-desc{font-size:14px;color:var(--text-2);line-height:1.65;margin:0;}
+  .sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:var(--bg-2);border-top:1px solid var(--border-2);padding:14px 5%;display:flex;align-items:center;justify-content:space-between;gap:16px;backdrop-filter:blur(12px);}
+  .sticky-bar-track{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}.sticky-bar-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.2s;width:0%;}
+  .sticky-bar-label{font-size:12px;color:var(--text-3);white-space:nowrap;}
+  .sticky-bar-btn{padding:10px 20px;border-radius:8px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;background:var(--accent);color:#fff;border:none;cursor:pointer;white-space:nowrap;transition:opacity 0.2s;display:none;}.sticky-bar-btn:hover{opacity:0.88;}
+  .sticky-bar-reading{font-size:12px;color:var(--text-3);white-space:nowrap;}
+  @media(max-width:900px){.page-wrapper{grid-template-columns:1fr;}.sidebar{display:none;}.content{padding:40px 24px 120px;}h1{font-size:38px;}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="courses.html" class="nav-back">← AI in Politics</a>
+    <div class="nav-divider"></div>
+    <span class="nav-label">Module 9</span>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">☀</span></button>
+</nav>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+<div class="page-wrapper">
+<aside class="sidebar">
+  <div class="sidebar-course">Course</div>
+  <div class="sidebar-course-name">AI in Politics</div>
+  <div class="sidebar-module"><a href="politics-module-1.html" class="sidebar-module-link"><span class="sidebar-num">1</span>AI and Modern Political Campaigns</a></div>
+  <div class="sidebar-module"><a href="politics-module-2.html" class="sidebar-module-link"><span class="sidebar-num">2</span>Disinformation, Deepfakes, and Democratic Discourse</a></div>
+  <div class="sidebar-module"><a href="politics-module-3.html" class="sidebar-module-link"><span class="sidebar-num">3</span>AI in Policy Making and Legislative Analysis</a></div>
+  <div class="sidebar-module"><a href="politics-module-4.html" class="sidebar-module-link"><span class="sidebar-num">4</span>Surveillance, Power, and Civil Liberties</a></div>
+  <div class="sidebar-module"><a href="politics-module-5.html" class="sidebar-module-link"><span class="sidebar-num">5</span>Algorithmic Bias in Voting and Representation</a></div>
+  <div class="sidebar-module"><a href="politics-module-6.html" class="sidebar-module-link"><span class="sidebar-num">6</span>AI and International Relations</a></div>
+  <div class="sidebar-module"><a href="politics-module-7.html" class="sidebar-module-link"><span class="sidebar-num">7</span>Political Polarization and Social Algorithms</a></div>
+  <div class="sidebar-module"><a href="politics-module-8.html" class="sidebar-module-link"><span class="sidebar-num">8</span>Regulating AI: A Political Science Perspective</a></div>
+  <div class="sidebar-module"><a href="politics-module-9.html" class="sidebar-module-link active"><span class="sidebar-num">9</span>AI and National Security</a></div>
+  <div class="sidebar-module"><a href="politics-module-10.html" class="sidebar-module-link"><span class="sidebar-num">10</span>The Future of Democracy in an AI World</a></div>
+  <div class="sidebar-module"><a href="quiz-politics.html" class="sidebar-module-link" style="color:var(--accent);margin-top:4px;"><span class="sidebar-num" style="background:var(--accent-dim);color:var(--accent);">✦</span>Final Assessment</a></div>
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-progress-label"><span>Course progress</span><span style="color:var(--accent);">9 / 10</span></div>
+  <div class="sidebar-progress-track"><div class="sidebar-progress-fill" style="width:90%;"></div></div>
+</aside>
+<main>
+<div class="content">
+  <div class="module-eyebrow"><span class="module-tag">Module 9</span><span class="module-meta">14 min read · AI in Politics</span></div>
+  <h1>AI and National Security</h1>
+  <p class="intro-text">Artificial intelligence is reshaping the nature of national security as fundamentally as the invention of the nuclear weapon or the internet. It is changing how states gather intelligence, how militaries conduct operations, how cyberattacks are launched and defended against, and how authoritarian and democratic governments project power. Understanding these shifts is essential for anyone engaged with foreign policy, defense strategy, or the governance of advanced technology.</p>
+
+  <h2>AI in intelligence gathering and analysis</h2>
+  <p>Intelligence agencies have always faced a problem of abundance: far more data than human analysts can process. AI addresses this directly. Machine learning systems can sift through satellite imagery to detect troop movements, monitor social media at scale for signals of instability, translate and summarize foreign-language communications, and identify patterns in financial data that suggest illicit activity.</p>
+  <p>The CIA, NSA, and their counterparts in allied nations have invested heavily in AI for precisely these applications. The 2023 Intelligence Authorization Act directed significant resources toward AI integration across the U.S. intelligence community. China's Ministry of State Security has announced analogous capabilities. The intelligence advantage increasingly correlates with AI capability.</p>
+
+  <div class="callout">
+    <div class="callout-label">The GEOINT revolution</div>
+    <p>Geospatial intelligence — satellite and aerial imagery analysis — was once limited by the number of human analysts who could review imagery. AI has changed that fundamentally. Commercial satellite companies like Planet Labs now image virtually every point on Earth daily, and AI systems can detect changes — a new military installation, a ship repositioning, a gathering crowd — within hours. The analytical bottleneck has moved from collection to interpretation, and AI is addressing interpretation too.</p>
+  </div>
+
+  <h2>Autonomous weapons and the laws of armed conflict</h2>
+  <p>Perhaps the most consequential and contested national security application of AI is in weapons systems. Autonomous weapons — systems capable of selecting and engaging targets without human decision-making at the point of engagement — represent a potential transformation of warfare with profound ethical and legal implications.</p>
+  <p>Current debate centers on "meaningful human control" — the principle that humans should remain in the decision loop for lethal force. The United States currently requires a human to authorize lethal strikes; several other nations are developing capabilities that may not maintain this constraint. International humanitarian law — specifically the principles of distinction (between combatants and civilians) and proportionality — must still apply, but autonomous systems that make these judgments algorithmically create unprecedented accountability gaps.</p>
+
+  <div class="warn">
+    <div class="warn-label">Accountability gaps in autonomous warfare</div>
+    <p>When an autonomous weapon kills a civilian, who is responsible? The programmer? The military commander? The state that deployed it? The manufacturer? Current international law has no clear answer, and the absence of accountability frameworks creates dangerous incentive structures. Nations may be more willing to use lethal force if no individual can be held responsible for errors.</p>
+  </div>
+
+  <h2>AI in cyber operations</h2>
+  <p>Nation-state cyber operations — espionage, sabotage, influence operations — are increasingly AI-enabled. AI assists with vulnerability scanning, malware development, and the automated identification of attack vectors. It also enables offensive information operations at unprecedented scale: generating realistic disinformation content, creating synthetic personas across social platforms, and personalizing influence campaigns.</p>
+  <p>Defensive cybersecurity is also AI-dependent. The volume and speed of modern cyberattacks exceed human response times. AI systems that detect anomalous network behavior, automatically isolate infected systems, and identify attack patterns in real time have become essential components of national cyber defense.</p>
+
+  <h2>Strategic stability and AI arms races</h2>
+  <div class="principle-list">
+    <div class="principle">
+      <div class="principle-title">Faster decision cycles and crisis instability</div>
+      <div class="principle-desc">AI-enabled military systems can detect threats and respond in milliseconds. This compresses decision cycles in ways that may destabilize crisis management. The Cuban Missile Crisis took thirteen days to resolve through diplomacy. AI-enabled escalation dynamics might play out in hours. The time for deliberate human judgment narrows.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Strategic surprise and opacity</div>
+      <div class="principle-desc">AI capabilities are difficult for adversaries to assess. Unlike nuclear weapons — which could be estimated through satellite imagery and testing data — AI military systems are largely invisible. This opacity can undermine deterrence stability: if a state cannot assess an adversary's AI capabilities, it cannot calibrate its own responses reliably.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Proliferation beyond great powers</div>
+      <div class="principle-desc">Unlike nuclear weapons, which require enormous industrial investment, AI capabilities can be acquired by smaller states and non-state actors at relatively lower cost. This broadens the field of actors with sophisticated offensive AI capabilities in ways that complicate traditional national security frameworks designed for state-to-state deterrence.</div>
+    </div>
+  </div>
+
+  <h2>Governance frameworks for national security AI</h2>
+  <p>International governance of AI in national security lags far behind the technology. No binding treaty regime addresses autonomous weapons — a gap that the International Committee of the Red Cross and many states have called urgent. The UN Group of Governmental Experts on Lethal Autonomous Weapons Systems has deliberated since 2014 without reaching consensus on prohibitions.</p>
+  <p>At the domestic level, several democracies have developed national AI strategies that include security dimensions. The U.S. Department of Defense published ethical principles for AI in 2020 — emphasizing reliability, governability, and the requirement for "appropriate levels of human judgment over the use of force." Implementation, however, remains uneven.</p>
+
+  <div class="good">
+    <div class="good-label">The governance imperative</div>
+    <p>AI in national security presents the clearest case for proactive international governance before harms accumulate rather than after. The failure to establish clear rules — on autonomous weapons, on AI-enabled influence operations, on the use of AI in nuclear command-and-control — represents a significant and growing strategic risk. Political scientists, international lawyers, and technologists share responsibility for advancing frameworks adequate to the technology's pace.</p>
+  </div>
+</div>
+</main>
+</div>
+<div class="sticky-bar">
+  <div class="sticky-bar-reading" id="sticky-reading">Read to the end to unlock the next module</div>
+  <div class="sticky-bar-track"><div class="sticky-bar-fill" id="sticky-fill"></div></div>
+  <div class="sticky-bar-label" id="sticky-label">0%</div>
+  <button class="sticky-bar-btn" id="sticky-btn" onclick="completeAndNext()">Module 10: The Future of Democracy →</button>
+</div>
+<script type="module">
+  import{initializeApp}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import{getAuth,onAuthStateChanged}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import{getFirestore,doc,setDoc,arrayUnion}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  const app=initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+  const auth=getAuth(app);const db=getFirestore(app);let currentUser=null;
+  onAuthStateChanged(auth,u=>{currentUser=u;});
+  window.toggleTheme=function(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='☾'):(h.setAttribute('data-theme','dark'),i.textContent='☀');};
+  window.addEventListener('scroll',()=>{const d=document.documentElement,s=d.scrollTop||document.body.scrollTop,t=d.scrollHeight-d.clientHeight;document.getElementById('progress').style.width=(s/t*100)+'%';});
+  let unlocked=false;
+  function updateScroll(){const pct=Math.min(100,Math.round(((window.scrollY+window.innerHeight)/document.documentElement.scrollHeight)*100));const fill=document.getElementById('sticky-fill'),label=document.getElementById('sticky-label'),btn=document.getElementById('sticky-btn'),reading=document.getElementById('sticky-reading');if(fill)fill.style.width=pct+'%';if(label)label.textContent=pct+'%';if(pct>=95&&!unlocked){unlocked=true;if(btn)btn.style.display='block';if(reading)reading.style.display='none';if(fill)fill.style.background='#22c55e';if(label)label.style.color='#22c55e';}}
+  window.addEventListener('scroll',updateScroll);updateScroll();
+  window.completeAndNext=async function(){if(currentUser){try{await setDoc(doc(db,'users',currentUser.uid),{politicsModules:arrayUnion('m9')},{merge:true});}catch(e){}}window.location.href='politics-module-10.html';};
+</script>
+</body>
+</html>

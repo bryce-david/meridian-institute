@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 3: Build vs. Buy vs. Partner — AI Strategy for Leaders — Meridian Institute of AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#1E40AF;--accent-dim:rgba(30,64,175,0.1);--accent-dim2:rgba(30,64,175,0.05);--nav-bg:rgba(8,8,8,0.9);--callout-bg:rgba(30,64,175,0.07);--callout-border:rgba(30,64,175,0.25);--good-bg:rgba(34,197,94,0.07);--good-border:rgba(34,197,94,0.2);--warn-bg:rgba(251,146,60,0.07);--warn-border:rgba(251,146,60,0.2);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#1E3A8A;--accent-dim:rgba(30,58,138,0.08);--accent-dim2:rgba(30,58,138,0.04);--nav-bg:rgba(250,250,248,0.9);--callout-bg:rgba(30,58,138,0.05);--callout-border:rgba(30,58,138,0.2);--good-bg:rgba(22,163,74,0.06);--good-border:rgba(22,163,74,0.2);--warn-bg:rgba(234,88,12,0.05);--warn-border:rgba(234,88,12,0.2);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;overflow-x:hidden;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.7;overflow-x:hidden;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}
+  .nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}
+  .nav-back{font-size:13px;color:var(--text-2);text-decoration:none;transition:color 0.2s;}
+  .nav-back:hover{color:var(--text);}
+  .nav-label{font-size:13px;color:var(--text-3);}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;transition:all 0.2s;}
+  .theme-toggle:hover{background:var(--bg-3);color:var(--text);}
+  .progress-bar{position:fixed;top:60px;left:0;right:0;z-index:99;height:2px;background:var(--border);}
+  .progress-fill{height:100%;background:var(--accent);width:0%;transition:width 0.1s;}
+  .page-wrapper{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:100vh;padding-top:62px;overflow:hidden;}
+  .sidebar{position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto;border-right:1px solid var(--border);padding:32px 24px;background:var(--bg-2);}
+  .sidebar-course{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;}
+  .sidebar-course-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+  .sidebar-module{margin-bottom:4px;}
+  .sidebar-module-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:13px;color:var(--text-2);text-decoration:none;transition:all 0.2s;line-height:1.4;}
+  .sidebar-module-link:hover{background:var(--bg-3);color:var(--text);}
+  .sidebar-module-link.active{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-num{font-size:11px;font-weight:500;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--bg-4);color:var(--text-3);}
+  .sidebar-module-link.active .sidebar-num{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-divider{height:1px;background:var(--border);margin:20px 0;}
+  .sidebar-progress-label{font-size:12px;color:var(--text-3);margin-bottom:8px;display:flex;justify-content:space-between;}
+  .sidebar-progress-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sidebar-progress-fill{height:100%;width:30%;background:var(--accent);border-radius:2px;}
+  main{display:block;min-width:0;overflow:hidden;}
+  .content{max-width:760px;width:100%;padding:60px 64px 140px;margin:0 auto;}
+  .module-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+  .module-tag{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(30,64,175,0.2);padding:4px 12px;border-radius:100px;}
+  .module-meta{font-size:12px;color:var(--text-3);}
+  h1{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1.05;letter-spacing:-0.02em;color:var(--text);margin-bottom:24px;}
+  .intro-text{font-size:19px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+  h2{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:400;color:var(--text);margin:52px 0 18px;line-height:1.2;}
+  h3{font-size:16px;font-weight:500;color:var(--text);margin:32px 0 12px;}
+  p{font-size:16px;font-weight:300;color:var(--text-2);line-height:1.8;margin-bottom:20px;}
+  strong{font-weight:500;color:var(--text);}
+  ul,ol{margin:0 0 20px 22px;color:var(--text-2);}
+  li{font-size:16px;font-weight:300;line-height:1.8;margin-bottom:8px;}
+  .callout{background:var(--callout-bg);border:1px solid var(--callout-border);border-radius:12px;padding:24px 28px;margin:32px 0;}
+  .callout-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+  .callout p{margin:0;font-size:15px;color:var(--text-2);}
+  .callout p+p{margin-top:12px;}
+  .good{background:var(--good-bg);border:1px solid var(--good-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .good-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#22c55e;margin-bottom:10px;}
+  .good p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn{background:var(--warn-bg);border:1px solid var(--warn-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .warn-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#fb923c;margin-bottom:10px;}
+  .warn p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn p+p{margin-top:12px;}
+  .principle-list{display:flex;flex-direction:column;gap:12px;margin:24px 0;}
+  .principle{background:var(--bg-2);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:0 12px 12px 0;padding:20px 24px;}
+  .principle-title{font-size:15px;font-weight:500;color:var(--text);margin-bottom:6px;}
+  .principle-desc{font-size:14px;color:var(--text-2);line-height:1.65;margin:0;}
+  .sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:var(--bg-2);border-top:1px solid var(--border-2);padding:14px 5%;display:flex;align-items:center;justify-content:space-between;gap:16px;backdrop-filter:blur(12px);}
+  .sticky-bar-track{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sticky-bar-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.2s;width:0%;}
+  .sticky-bar-label{font-size:12px;color:var(--text-3);white-space:nowrap;min-width:60px;text-align:right;}
+  .sticky-bar-btn{padding:10px 20px;border-radius:8px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;background:var(--accent);color:#fff;border:none;cursor:pointer;white-space:nowrap;transition:opacity 0.2s;display:none;}
+  .sticky-bar-btn:hover{opacity:0.88;}
+  .sticky-bar-reading{font-size:12px;color:var(--text-3);white-space:nowrap;}
+  @media(max-width:900px){.page-wrapper{grid-template-columns:1fr;}.sidebar{display:none;}.content{padding:40px 24px 120px;}h1{font-size:38px;}}
+  @media(max-width:600px){.content{padding:28px 16px 120px;}h1{font-size:30px;}h2{font-size:24px;}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="courses.html" class="nav-back">&#8592; AI Strategy for Leaders</a>
+    <div class="nav-divider"></div>
+    <span class="nav-label">Module 3</span>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">&#9728;</span></button>
+</nav>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+<div class="page-wrapper">
+<aside class="sidebar">
+  <div class="sidebar-course">Expert Track</div>
+  <div class="sidebar-course-name">AI Strategy for Leaders</div>
+  <div class="sidebar-module"><a href="strategy-module-1.html" class="sidebar-module-link"><span class="sidebar-num">1</span>The AI Strategic Landscape</a></div>
+  <div class="sidebar-module"><a href="strategy-module-2.html" class="sidebar-module-link"><span class="sidebar-num">2</span>Identifying AI Opportunities</a></div>
+  <div class="sidebar-module"><a href="strategy-module-3.html" class="sidebar-module-link active"><span class="sidebar-num">3</span>Build vs. Buy vs. Partner</a></div>
+  <div class="sidebar-module"><a href="strategy-module-4.html" class="sidebar-module-link"><span class="sidebar-num">4</span>Data Strategy as Competitive Advantage</a></div>
+  <div class="sidebar-module"><a href="strategy-module-5.html" class="sidebar-module-link"><span class="sidebar-num">5</span>AI Talent and Organizational Design</a></div>
+  <div class="sidebar-module"><a href="strategy-module-6.html" class="sidebar-module-link"><span class="sidebar-num">6</span>Managing AI Projects and Vendors</a></div>
+  <div class="sidebar-module"><a href="strategy-module-7.html" class="sidebar-module-link"><span class="sidebar-num">7</span>Measuring AI ROI</a></div>
+  <div class="sidebar-module"><a href="strategy-module-8.html" class="sidebar-module-link"><span class="sidebar-num">8</span>AI Risk Management</a></div>
+  <div class="sidebar-module"><a href="strategy-module-9.html" class="sidebar-module-link"><span class="sidebar-num">9</span>Change Management for AI</a></div>
+  <div class="sidebar-module"><a href="strategy-module-10.html" class="sidebar-module-link"><span class="sidebar-num">10</span>Building an AI-First Culture</a></div>
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-module"><a href="quiz-strategy.html" class="sidebar-module-link"><span class="sidebar-num">&#10003;</span>Final Assessment</a></div>
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-progress-label"><span>Course progress</span><span style="color:var(--accent);">3 / 10</span></div>
+  <div class="sidebar-progress-track"><div class="sidebar-progress-fill" style="width:30%;"></div></div>
+</aside>
+<main><div class="content">
+  <div class="module-eyebrow"><span class="module-tag">Module 3 · Expert Track</span><span class="module-meta">15 min read · AI Strategy for Leaders</span></div>
+  <h1>Build vs. Buy vs. Partner</h1>
+  <p class="intro-text">Once you have identified a high-priority AI opportunity, the next decision is how to pursue it. Build it yourself? Buy a commercial product? Partner with a vendor or research institution? This decision determines your speed to value, your cost structure, the depth of your competitive advantage, and your long-term flexibility. Getting it wrong is expensive in ways that are often not obvious until you are locked in.</p>
+
+  <h2>The Decision Is Not Binary</h2>
+  <p>The build-buy-partner framing is a simplification that hides the real complexity. Most AI implementations involve combinations: you might buy a foundation model from OpenAI or Anthropic, fine-tune it on your proprietary data (a form of building), and deploy it through a partner's integration platform. Understanding the full spectrum of options — and where on that spectrum each choice positions you — is more useful than treating it as a forced choice among three options.</p>
+  <p>The relevant dimensions are: how much custom development do you do? How much do you control your data and model? How much do you depend on external vendors for core functionality? And how difficult would it be to change course in two or three years if requirements change or the vendor relationship deteriorates?</p>
+
+  <h2>When to Build Custom AI</h2>
+  <p>Building custom AI — training or fine-tuning models on your own data, or developing proprietary AI systems from scratch — is the right choice under a specific set of conditions. Outside those conditions, it is almost always more expensive, slower, and riskier than it appears.</p>
+
+  <h3>Build When the Application Is Core to Your Competitive Advantage</h3>
+  <p>If the AI application you are building is the thing that differentiates you from competitors — the algorithm that makes your product better, the model that powers your core service, the capability that represents your key intellectual property — then you should own it. Amazon does not outsource its recommendation engine. Spotify does not buy its playlist curation from a vendor. Netflix does not purchase its content recommendation system off the shelf. These are core to the value proposition of the product, and building them internally creates durable advantages that competitors cannot easily replicate.</p>
+  <p>The test is straightforward: if a competitor could deploy the same commercial product you are considering buying and achieve the same competitive position, buying it does not create a strategic advantage. It creates a competitive necessity at best. Strategic AI capabilities need to be owned and continuously improved, not licensed.</p>
+
+  <h3>Build When Your Data Creates Irreplaceable Advantages</h3>
+  <p>Proprietary data that no vendor has access to is one of the most defensible AI moats that exists. If your organization has accumulated years of unique operational data, customer interaction data, or domain-specific labeled datasets, building custom models on that data can create capabilities that external vendors cannot match regardless of their foundation model quality. The key question is: does the data you own represent a meaningful advantage over what a vendor's generic training data provides? If yes, build. If not, buy.</p>
+
+  <h3>Build When Commercial Options Don't Exist or Don't Fit</h3>
+  <p>For genuinely novel applications, niche domains, or highly specific requirements, commercial off-the-shelf options may simply not exist or may not adequately address your needs. Organizations in specialized industrial sectors, cutting-edge research environments, or highly regulated industries frequently find that commercial AI tools are built for more common use cases and require extensive customization that effectively becomes a build exercise anyway.</p>
+
+  <div class="warn">
+    <div class="warn-label">The Hidden Cost of Building</div>
+    <p>Building custom AI is expensive in ways that go beyond initial development cost. You need ML engineers to build it, data scientists to train and evaluate it, MLOps engineers to deploy and monitor it, and ongoing resources to retrain it as the world changes. The total cost of ownership for a custom AI system over three years is often five to ten times the initial build cost. Model these costs honestly before choosing to build.</p>
+  </div>
+
+  <h2>When to Buy SaaS AI Tools</h2>
+  <p>Buying commercial AI products — SaaS tools, API-based services, pre-built models — is the right choice for a much wider range of applications than most organizations initially believe. The AI vendor ecosystem has matured dramatically, and commercial products exist for most common enterprise AI use cases.</p>
+
+  <h3>Buy When the Problem Is Solved and Solved Well</h3>
+  <p>For commodity AI applications — optical character recognition, speech-to-text, standard NLP tasks, common computer vision use cases — the commercial options are mature, inexpensive, and better than what most organizations could build themselves. Using AWS Textract for document extraction or Google Speech-to-Text for transcription rather than building proprietary systems is not a strategic compromise. It is an intelligent allocation of engineering resources toward higher-value problems.</p>
+  <p>The organizations that have moved fastest on AI have typically applied a "buy for commodity, build for differentiation" principle that keeps them from reinventing wheels while focusing custom development on capabilities that are genuinely unique.</p>
+
+  <h3>Buy When Speed Matters More Than Perfection</h3>
+  <p>Commercial products can be deployed in weeks; custom builds take months or years. In rapidly evolving markets, a good commercial solution deployed fast often generates more value than a better custom solution deployed late. This is especially true for the initial deployment of a capability: buy to validate the value proposition, then evaluate whether building a custom version is worth the investment once you have proven the business case.</p>
+
+  <h3>The SaaS AI Due Diligence Checklist</h3>
+  <p>Buying commercial AI does not mean buying without scrutiny. Before committing to any SaaS AI vendor, evaluate:</p>
+  <ul>
+    <li><strong>Model quality on your specific use case</strong> — generic benchmarks are insufficient; test the product on your own representative data before signing a contract</li>
+    <li><strong>Data handling and privacy</strong> — what data does the vendor store? Do they train on your data? What are their data retention and deletion practices? Is this compliant with your regulatory requirements?</li>
+    <li><strong>Uptime and SLAs</strong> — what performance guarantees does the vendor provide? What remedies exist for outages that affect your operations?</li>
+    <li><strong>Pricing structure at scale</strong> — many AI APIs are priced per query; understand what the cost looks like at your production volume, not just in pilot mode</li>
+    <li><strong>Roadmap alignment</strong> — is the vendor investing in the capabilities you will need in two to three years, or will you outgrow them?</li>
+    <li><strong>Financial stability</strong> — is this vendor likely to be in business in three years? Many AI startups are burning cash aggressively; evaluate the risk</li>
+  </ul>
+
+  <h2>When to Partner</h2>
+  <p>Partnerships — with AI vendors, research institutions, system integrators, or ecosystem providers — occupy the middle ground between building and buying. They are appropriate when you need more than a commercial product but cannot or should not build fully independently.</p>
+
+  <h3>Research Partnerships</h3>
+  <p>Partnerships with universities and research institutions provide access to frontier AI capabilities, pre-commercial techniques, and specialist talent at lower cost than hiring directly. The best of these partnerships involve joint research projects where the organization provides domain knowledge and data, and the research institution provides algorithmic expertise. Companies like Airbus, Rolls-Royce, and GE have long-standing AI research partnerships with leading universities that give them access to capabilities years before they become commercially available.</p>
+
+  <h3>System Integrator Partnerships</h3>
+  <p>Large system integrators (Accenture, Deloitte, IBM, Infosys, and others) offer AI implementation capacity that most organizations cannot develop internally in a reasonable timeframe. They bring implementation methodologies, change management experience, and a portfolio of prior deployments in your industry. The trade-off is cost and potential dependency on external expertise rather than building it internally. Use system integrators for the first major deployment if you have not done it before, with an explicit plan to internalize the knowledge as the engagement progresses.</p>
+
+  <h3>Ecosystem and Platform Partnerships</h3>
+  <p>Increasingly, AI strategy is shaped by which platform ecosystem you are embedded in. Microsoft Azure, Google Cloud, and Amazon Web Services each offer AI services that integrate deeply with their broader cloud platforms. Salesforce's Einstein, ServiceNow's AI capabilities, and SAP's embedded AI all represent platform-level AI that comes with your existing enterprise software. Understanding how these embedded AI capabilities can serve your needs — before investing in standalone solutions — often reveals faster paths to value.</p>
+
+  <h2>Total Cost of Ownership</h2>
+  <p>The build-buy-partner decision must be made on total cost of ownership, not upfront cost. This is where organizations most commonly make errors, because the upfront cost of building appears lower than the licensing cost of buying — before accounting for the full lifecycle cost of maintaining and improving a custom system.</p>
+  <p>A complete TCO model for build vs. buy includes:</p>
+  <ul>
+    <li><strong>Build</strong>: initial engineering cost + data infrastructure investment + MLOps tooling + ongoing retraining + monitoring + maintenance + opportunity cost of engineering resources deployed elsewhere</li>
+    <li><strong>Buy</strong>: licensing or API costs at production scale + integration engineering + vendor management overhead + migration cost if you switch vendors + risk premium for vendor dependency</li>
+    <li><strong>Partner</strong>: partnership fees + internal coordination costs + knowledge transfer investment + long-term dependency risk</li>
+  </ul>
+  <p>Over a three-to-five year horizon, the total cost of a well-chosen commercial product is almost always lower than a custom build unless the application is core to competitive differentiation. The exception is applications that achieve massive scale, where the per-unit economics of a commercial API become prohibitive relative to an owned model.</p>
+
+  <h2>Vendor Lock-In: A Strategic Risk Framework</h2>
+  <p>Vendor lock-in in AI is a genuine strategic risk that deserves careful management. The depth of lock-in varies significantly by choice:</p>
+
+  <div class="principle-list">
+    <div class="principle">
+      <div class="principle-title">Low Lock-In: Standard APIs and Open Models</div>
+      <div class="principle-desc">Using open-source models (Llama, Mistral, and others) or standard API formats with portable data means switching costs are manageable. Invest in abstraction layers that decouple your application from any specific underlying model.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Medium Lock-In: Platform AI Services</div>
+      <div class="principle-desc">Azure AI, AWS SageMaker, and Google Vertex AI offer powerful services, but models trained on one platform are not trivially portable to another. Ensure your training data and evaluation pipelines are maintained independently of the platform.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">High Lock-In: Deeply Integrated SaaS AI</div>
+      <div class="principle-desc">When an AI vendor's capabilities are deeply embedded in your workflows and their proprietary data format holds your operational history, switching cost is very high. These relationships require especially careful contractual protection: data portability, API continuity guarantees, and source code escrow for critical applications.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Mitigation Strategy: Modular Architecture</div>
+      <div class="principle-desc">Regardless of vendor choice, design AI systems with clear interfaces between the model layer, data layer, and application layer. This modularity means you can swap underlying models as better options emerge without rebuilding the entire application. It is the single most effective lock-in mitigation strategy available.</div>
+    </div>
+  </div>
+
+  <h2>The Make/Buy/Partner Framework Applied</h2>
+  <p>A practical decision framework for any specific AI opportunity runs through five questions in sequence:</p>
+  <ol>
+    <li><strong>Is this capability core to our competitive differentiation?</strong> If yes, bias strongly toward build. If no, proceed to question 2.</li>
+    <li><strong>Does a commercial solution exist that addresses 80%+ of our requirements?</strong> If yes, evaluate buy. If no, proceed to question 3.</li>
+    <li><strong>Can a partner build what we need faster and cheaper than we can internally?</strong> If yes, evaluate partner. If no, evaluate whether the opportunity is worth pursuing at all given the build cost.</li>
+    <li><strong>What is the total cost of ownership over three years for each viable option?</strong> Model this rigorously; the option that appears cheaper initially is often not the cheapest when maintenance, switching costs, and opportunity costs are included.</li>
+    <li><strong>What are the lock-in risks, and can we mitigate them contractually and architecturally?</strong> For any option, define what exit looks like before you commit to entry.</li>
+  </ol>
+
+  <div class="callout">
+    <div class="callout-label">The Strategic Principle</div>
+    <p>Build where it creates durable competitive advantage. Buy where commercial solutions are good enough and speed matters. Partner where you need capabilities beyond your current reach but do not yet know if the use case justifies permanent investment. And in every case, design for modularity and preserve your ability to change course. The best build-buy-partner decisions are reversible; the worst ones are not.</p>
+  </div>
+
+</div></main>
+</div>
+<div class="sticky-bar">
+  <div class="sticky-bar-reading" id="sticky-reading">Read to the end to unlock the next module</div>
+  <div class="sticky-bar-track"><div class="sticky-bar-fill" id="sticky-fill"></div></div>
+  <div class="sticky-bar-label" id="sticky-label">0%</div>
+  <button class="sticky-bar-btn" id="sticky-btn" onclick="completeAndNext()">Module 4: Data Strategy as Competitive Advantage &#8594;</button>
+</div>
+<script type="module">
+  import{initializeApp}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import{getAuth,onAuthStateChanged}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import{getFirestore,doc,setDoc,arrayUnion}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  const app=initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+  const auth=getAuth(app);const db=getFirestore(app);
+  let currentUser=null;
+  onAuthStateChanged(auth,u=>{currentUser=u;});
+  window.toggleTheme=function(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='&#9790;'):(h.setAttribute('data-theme','dark'),i.textContent='&#9728;');};
+  window.addEventListener('scroll',()=>{const d=document.documentElement,s=d.scrollTop||document.body.scrollTop,t=d.scrollHeight-d.clientHeight;document.getElementById('progress').style.width=(s/t*100)+'%';});
+  let unlocked=false;
+  function updateScrollProgress(){
+    const scrolled=window.scrollY+window.innerHeight;const total=document.documentElement.scrollHeight;
+    const pct=Math.min(100,Math.round((scrolled/total)*100));
+    const fill=document.getElementById('sticky-fill');const label=document.getElementById('sticky-label');
+    const btn=document.getElementById('sticky-btn');const reading=document.getElementById('sticky-reading');
+    if(fill)fill.style.width=pct+'%';if(label)label.textContent=pct+'%';
+    if(pct>=95&&!unlocked){unlocked=true;if(btn)btn.style.display='block';if(reading)reading.style.display='none';if(fill)fill.style.background='#22c55e';if(label)label.style.color='#22c55e';}
+  }
+  window.addEventListener('scroll',updateScrollProgress);updateScrollProgress();
+  window.completeAndNext=async function(){
+    if(currentUser){try{await setDoc(doc(db,'users',currentUser.uid),{strategyModules:arrayUnion('m3')},{merge:true});}catch(e){}}
+    window.location.href='strategy-module-4.html';
+  };
+</script>
+</body>
+</html>

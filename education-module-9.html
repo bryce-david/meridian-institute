@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 9: Redesigning Curriculum for the AI Era — AI in Education — Meridian Institute of AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#0284C7;--accent-dim:rgba(2,132,199,0.1);--nav-bg:rgba(8,8,8,0.9);--callout-bg:rgba(2,132,199,0.07);--callout-border:rgba(2,132,199,0.25);--good-bg:rgba(34,197,94,0.07);--good-border:rgba(34,197,94,0.2);--warn-bg:rgba(251,146,60,0.07);--warn-border:rgba(251,146,60,0.2);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#0369A1;--accent-dim:rgba(3,105,161,0.08);--nav-bg:rgba(250,250,248,0.9);--callout-bg:rgba(3,105,161,0.05);--callout-border:rgba(3,105,161,0.2);--good-bg:rgba(22,163,74,0.06);--good-border:rgba(22,163,74,0.2);--warn-bg:rgba(234,88,12,0.05);--warn-border:rgba(234,88,12,0.2);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}html{scroll-behavior:smooth;}body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.7;overflow-x:hidden;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}.nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}.nav-back{font-size:13px;color:var(--text-2);text-decoration:none;}.nav-label{font-size:13px;color:var(--text-3);}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;}
+  .progress-bar{position:fixed;top:60px;left:0;right:0;z-index:99;height:2px;background:var(--border);}.progress-fill{height:100%;background:var(--accent);width:0%;}
+  .page-wrapper{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:100vh;padding-top:62px;}
+  .sidebar{position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto;border-right:1px solid var(--border);padding:32px 24px;background:var(--bg-2);}
+  .sidebar-course{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;}.sidebar-course-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+  .sidebar-module{margin-bottom:4px;}.sidebar-module-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:13px;color:var(--text-2);text-decoration:none;transition:all 0.2s;line-height:1.4;}
+  .sidebar-module-link:hover{background:var(--bg-3);color:var(--text);}.sidebar-module-link.active{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-num{font-size:11px;font-weight:500;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--bg-4);color:var(--text-3);}
+  .sidebar-module-link.active .sidebar-num{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-divider{height:1px;background:var(--border);margin:20px 0;}
+  .sidebar-progress-label{font-size:12px;color:var(--text-3);margin-bottom:8px;display:flex;justify-content:space-between;}
+  .sidebar-progress-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}.sidebar-progress-fill{height:100%;background:var(--accent);border-radius:2px;}
+  main{display:block;min-width:0;}.content{max-width:760px;width:100%;padding:60px 64px 140px;margin:0 auto;}
+  .module-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+  .module-tag{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(2,132,199,0.2);padding:4px 12px;border-radius:100px;}
+  .module-meta{font-size:12px;color:var(--text-3);}
+  h1{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1.05;letter-spacing:-0.02em;margin-bottom:24px;}
+  .intro-text{font-size:19px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+  h2{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:400;color:var(--text);margin:52px 0 18px;line-height:1.2;}
+  p{font-size:16px;font-weight:300;color:var(--text-2);line-height:1.8;margin-bottom:20px;}strong{font-weight:500;color:var(--text);}
+  ul,ol{margin:0 0 20px 22px;color:var(--text-2);}li{font-size:16px;font-weight:300;line-height:1.8;margin-bottom:8px;}
+  .callout{background:var(--callout-bg);border:1px solid var(--callout-border);border-radius:12px;padding:24px 28px;margin:32px 0;}.callout-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}.callout p{margin:0;font-size:15px;color:var(--text-2);}.callout p+p{margin-top:12px;}
+  .good{background:var(--good-bg);border:1px solid var(--good-border);border-radius:12px;padding:24px 28px;margin:24px 0;}.good-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#22c55e;margin-bottom:10px;}.good p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn{background:var(--warn-bg);border:1px solid var(--warn-border);border-radius:12px;padding:24px 28px;margin:24px 0;}.warn-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#fb923c;margin-bottom:10px;}.warn p{margin:0;font-size:15px;color:var(--text-2);}
+  .principle-list{display:flex;flex-direction:column;gap:12px;margin:24px 0;}.principle{background:var(--bg-2);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:0 12px 12px 0;padding:20px 24px;}.principle-title{font-size:15px;font-weight:500;color:var(--text);margin-bottom:6px;}.principle-desc{font-size:14px;color:var(--text-2);line-height:1.65;margin:0;}
+  .sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:var(--bg-2);border-top:1px solid var(--border-2);padding:14px 5%;display:flex;align-items:center;justify-content:space-between;gap:16px;backdrop-filter:blur(12px);}
+  .sticky-bar-track{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}.sticky-bar-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.2s;width:0%;}
+  .sticky-bar-label{font-size:12px;color:var(--text-3);white-space:nowrap;}
+  .sticky-bar-btn{padding:10px 20px;border-radius:8px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;background:var(--accent);color:#fff;border:none;cursor:pointer;white-space:nowrap;transition:opacity 0.2s;display:none;}.sticky-bar-btn:hover{opacity:0.88;}
+  .sticky-bar-reading{font-size:12px;color:var(--text-3);white-space:nowrap;}
+  @media(max-width:900px){.page-wrapper{grid-template-columns:1fr;}.sidebar{display:none;}.content{padding:40px 24px 120px;}h1{font-size:38px;}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="courses.html" class="nav-back">← AI in Education</a>
+    <div class="nav-divider"></div>
+    <span class="nav-label">Module 9</span>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">☀</span></button>
+</nav>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+<div class="page-wrapper">
+<aside class="sidebar">
+  <div class="sidebar-course">Course</div>
+  <div class="sidebar-course-name">AI in Education</div>
+  <div class="sidebar-module"><a href="education-module-1.html" class="sidebar-module-link"><span class="sidebar-num">1</span>How AI is Transforming the Classroom</a></div>
+  <div class="sidebar-module"><a href="education-module-2.html" class="sidebar-module-link"><span class="sidebar-num">2</span>Personalized Learning</a></div>
+  <div class="sidebar-module"><a href="education-module-3.html" class="sidebar-module-link"><span class="sidebar-num">3</span>AI Tools for Teachers</a></div>
+  <div class="sidebar-module"><a href="education-module-4.html" class="sidebar-module-link"><span class="sidebar-num">4</span>Assessment in the AI Era</a></div>
+  <div class="sidebar-module"><a href="education-module-5.html" class="sidebar-module-link"><span class="sidebar-num">5</span>Critical Digital Literacy</a></div>
+  <div class="sidebar-module"><a href="education-module-6.html" class="sidebar-module-link"><span class="sidebar-num">6</span>AI and Special Needs Education</a></div>
+  <div class="sidebar-module"><a href="education-module-7.html" class="sidebar-module-link"><span class="sidebar-num">7</span>Student Data and Privacy</a></div>
+  <div class="sidebar-module"><a href="education-module-8.html" class="sidebar-module-link"><span class="sidebar-num">8</span>Educator Professional Development</a></div>
+  <div class="sidebar-module"><a href="education-module-9.html" class="sidebar-module-link active"><span class="sidebar-num">9</span>Redesigning Curriculum</a></div>
+  <div class="sidebar-module"><a href="education-module-10.html" class="sidebar-module-link"><span class="sidebar-num">10</span>The Future of Teaching</a></div>
+  <div class="sidebar-module"><a href="quiz-education.html" class="sidebar-module-link" style="color:var(--accent);margin-top:4px;"><span class="sidebar-num" style="background:var(--accent-dim);color:var(--accent);">✦</span>Final Assessment</a></div>
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-progress-label"><span>Course progress</span><span style="color:var(--accent);">9 / 10</span></div>
+  <div class="sidebar-progress-track"><div class="sidebar-progress-fill" style="width:90%;"></div></div>
+</aside>
+<main>
+<div class="content">
+  <div class="module-eyebrow"><span class="module-tag">Module 9</span><span class="module-meta">12 min read · AI in Education</span></div>
+  <h1>Redesigning Curriculum for the AI Era</h1>
+  <p class="intro-text">When AI can perform many of the tasks that traditional curriculum has trained students to do — from composing essays to solving equations to generating research summaries — the entire purpose and structure of curriculum comes into question. This module examines how educators and institutions are rethinking what students should learn, why, and how in a world where AI is a pervasive tool in intellectual work.</p>
+
+  <h2>Why Curriculum Must Change</h2>
+  <p>Curriculum is always, at some level, a set of predictions about what knowledge and skills people will need in the future. Those predictions have always been imperfect, but they have generally been stable enough that curricula designed for one generation have remained useful for the next. AI disrupts this stability because the tools available to an educated person have changed dramatically and rapidly.</p>
+  <p>Consider the five-paragraph essay, a staple of secondary English education for decades. Its purpose was to train students to organize ideas, construct arguments, and communicate in writing — skills fundamental to professional and civic participation. When students can generate a passable five-paragraph essay with a prompt, the exercise no longer reliably develops those skills. The form has lost its function as a developmental tool, though the underlying competencies it was meant to build remain as important as ever.</p>
+
+  <div class="callout">
+    <div class="callout-label">The Right Question</div>
+    <p>The right question for curriculum redesign is not "what can AI do that replaces what students were doing?" but rather "what do we want students to actually be able to do, and what learning experiences best develop those capacities in a world where AI is available?" Starting from learning outcomes rather than existing tasks produces more principled curriculum decisions.</p>
+  </div>
+
+  <h2>Identifying Durable Learning Goals</h2>
+  <p>Some learning goals are durable — they matter regardless of what tools are available. The ability to think critically and evaluate evidence is as important in an AI-rich world as in any other. The capacity for ethical reasoning, empathy, and perspective-taking is not diminished by AI and cannot be outsourced to it. Creativity — in the genuine sense of generating ideas that are novel, contextually appropriate, and meaningfully valuable — remains distinctly human. Communication, collaboration, and leadership are fundamentally relational competencies that AI cannot perform on a person's behalf.</p>
+  <p>Other learning goals need to be rethought. If the goal of a research paper is to teach students to locate, evaluate, and synthesize sources — and AI can do much of this mechanically — then the curriculum needs to design experiences that develop those competencies in ways that require human judgment and cannot be delegated to AI. This might mean more emphasis on primary source research, on evaluating sources for bias and context, and on synthesizing conflicting evidence to reach defensible conclusions.</p>
+
+  <div class="principle-list">
+    <div class="principle">
+      <div class="principle-title">Human Judgment and Decision-Making</div>
+      <div class="principle-desc">Curriculum should increasingly emphasize situations that require students to make judgments in conditions of uncertainty, ambiguity, and ethical complexity — the situations where human wisdom is most essential and AI is least reliable.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">AI Collaboration as a Skill</div>
+      <div class="principle-desc">Working effectively with AI — prompting well, evaluating outputs critically, integrating AI assistance into a productive workflow — is itself a competency that curriculum should explicitly develop. "AI fluency" is a 21st-century literacy as important as digital literacy was a decade ago.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Deep Domain Knowledge</div>
+      <div class="principle-desc">Counterintuitively, AI makes deep domain knowledge more valuable, not less. Evaluating AI output requires genuine expertise. Directing AI toward productive ends requires knowing what a good answer looks like. The surface-level coverage that characterized much content-focused curriculum is increasingly insufficient.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Interdisciplinary Problem-Solving</div>
+      <div class="principle-desc">Complex real-world problems — which AI is increasingly asked to address — do not respect disciplinary boundaries. Curriculum that builds students' capacity to work across disciplines, synthesize perspectives, and approach problems holistically prepares them for a world where AI handles routine domain-specific tasks.</div>
+    </div>
+  </div>
+
+  <h2>Integrating AI as a Curriculum Object</h2>
+  <p>Beyond using AI as a tool in existing curriculum, many educators argue that AI itself should become a curriculum object — something students study, interrogate, and understand. This is not only relevant in computer science classes. History students can examine AI's role in transforming labor markets and geopolitical power. English students can analyze AI-generated text for its rhetorical features and implicit assumptions. Ethics students can debate the moral frameworks relevant to autonomous systems. Social studies students can examine AI governance and policy.</p>
+  <p>Embedding AI as a subject of study across disciplines ensures that students develop the critical understanding of AI they need to be informed citizens, workers, and community members — not just capable users of AI tools, but thoughtful participants in democratic debates about AI's role in society.</p>
+
+  <div class="good">
+    <div class="good-label">Curriculum Innovation Example</div>
+    <p>Some secondary schools have introduced "AI Ethics Seminar" as a cross-disciplinary elective drawing on philosophy, computer science, social studies, and language arts. Students examine real-world AI deployment cases — predictive policing, medical diagnosis, content recommendation, hiring algorithms — and develop structured arguments about the ethical dimensions of each. This kind of integrative, real-world curriculum develops precisely the kind of reasoning that AI cannot replicate and that employers consistently identify as lacking in new graduates.</p>
+  </div>
+
+  <h2>Assessment Redesign as Curriculum Redesign</h2>
+  <p>As discussed in Module 4, assessment and curriculum are inseparable — what you assess shapes what is taught and what students prioritize learning. Curriculum redesign for the AI era necessarily involves assessment redesign. This means developing portfolios that document genuine learning processes, performance tasks that require real-world application of knowledge, oral assessments that reveal depth of understanding, and collaborative products that demonstrate interpersonal as well as intellectual competencies.</p>
+  <p>Curriculum designed around performance-based assessment tends to be more engaging, more relevant, and more resistant to AI circumvention than curriculum centered on traditional tests and essays. It is also more challenging to implement at scale — which is why curriculum redesign requires sustained institutional commitment and support for teacher professional development.</p>
+
+  <div class="warn">
+    <div class="warn-label">Avoid Cosmetic Change</div>
+    <p>The risk in any curriculum redesign effort is cosmetic change — relabeling old approaches with new terminology without fundamentally altering what students are doing and learning. "Adding AI" to a curriculum by having students use ChatGPT to complete existing assignments does not constitute meaningful curriculum redesign. Genuine redesign requires questioning the assumptions underlying existing curriculum and building from the question of what students actually need to know and be able to do.</p>
+  </div>
+
+  <h2>Practical Steps for Curriculum Redesign</h2>
+  <p>Curriculum redesign is not a one-person job — it is a collaborative process that unfolds over time. Teachers can begin with their own courses by auditing existing learning objectives, identifying which are durable and which need to be rethought in light of AI, redesigning one or two key assessment tasks to be AI-resilient and more authentically aligned to durable goals, and sharing experiments and reflections with colleagues.</p>
+  <p>At the institutional level, curriculum redesign requires structured time for collaborative planning, access to research and examples of innovative practice, administrative support for teachers taking creative risks, and willingness to revise accountability systems that currently incentivize the status quo. Districts and schools that invest in this work now will be far better positioned than those that wait for the curriculum to redesign itself.</p>
+</div>
+</main>
+</div>
+<div class="sticky-bar">
+  <div class="sticky-bar-reading" id="sticky-reading">Read to the end to unlock the next module</div>
+  <div class="sticky-bar-track"><div class="sticky-bar-fill" id="sticky-fill"></div></div>
+  <div class="sticky-bar-label" id="sticky-label">0%</div>
+  <button class="sticky-bar-btn" id="sticky-btn" onclick="completeAndNext()">Next Module →</button>
+</div>
+<script type="module">
+  import{initializeApp}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import{getAuth,onAuthStateChanged}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import{getFirestore,doc,setDoc,arrayUnion}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  const app=initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+  const auth=getAuth(app);const db=getFirestore(app);let currentUser=null;
+  onAuthStateChanged(auth,u=>{currentUser=u;});
+  window.toggleTheme=function(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='☾'):(h.setAttribute('data-theme','dark'),i.textContent='☀');};
+  window.addEventListener('scroll',()=>{const d=document.documentElement,s=d.scrollTop||document.body.scrollTop,t=d.scrollHeight-d.clientHeight;document.getElementById('progress').style.width=(s/t*100)+'%';});
+  let unlocked=false;
+  function updateScroll(){const pct=Math.min(100,Math.round(((window.scrollY+window.innerHeight)/document.documentElement.scrollHeight)*100));const fill=document.getElementById('sticky-fill'),label=document.getElementById('sticky-label'),btn=document.getElementById('sticky-btn'),reading=document.getElementById('sticky-reading');if(fill)fill.style.width=pct+'%';if(label)label.textContent=pct+'%';if(pct>=95&&!unlocked){unlocked=true;if(btn)btn.style.display='block';if(reading)reading.style.display='none';if(fill)fill.style.background='#22c55e';if(label)label.style.color='#22c55e';}}
+  window.addEventListener('scroll',updateScroll);updateScroll();
+  window.completeAndNext=async function(){if(currentUser){try{await setDoc(doc(db,'users',currentUser.uid),{educationModules:arrayUnion('m9')},{merge:true});}catch(e){}}window.location.href='education-module-10.html';};
+</script>
+</body>
+</html>

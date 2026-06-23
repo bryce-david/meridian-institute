@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 6: Your First AI Project — Meridian Institute of AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#5b8ff8;--accent-dim:rgba(91,143,248,0.1);--nav-bg:rgba(8,8,8,0.9);--callout-bg:rgba(91,143,248,0.07);--callout-border:rgba(91,143,248,0.25);--success:#22c55e;--success-bg:rgba(34,197,94,0.08);--success-border:rgba(34,197,94,0.25);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#2563eb;--accent-dim:rgba(37,99,235,0.08);--nav-bg:rgba(250,250,248,0.9);--callout-bg:rgba(37,99,235,0.05);--callout-border:rgba(37,99,235,0.2);--success:#16a34a;--success-bg:rgba(22,163,74,0.06);--success-border:rgba(22,163,74,0.25);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;overflow-x:hidden;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.7;overflow-x:hidden;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}
+  .nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}
+  .nav-back{font-size:13px;color:var(--text-2);text-decoration:none;transition:color 0.2s;}
+  .nav-back:hover{color:var(--text);}
+  .nav-label{font-size:13px;color:var(--text-3);}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;transition:all 0.2s;}
+  .theme-toggle:hover{background:var(--bg-3);color:var(--text);}
+  .progress-bar{position:fixed;top:60px;left:0;right:0;z-index:99;height:2px;background:var(--border);}
+  .progress-fill{height:100%;background:var(--accent);width:0%;transition:width 0.1s;}
+  .page-wrapper{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:100vh;padding-top:62px;overflow:hidden;}
+  .sidebar{position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto;border-right:1px solid var(--border);padding:32px 24px;background:var(--bg-2);}
+  .sidebar-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-3);margin-bottom:16px;}
+  .sidebar-module{margin-bottom:4px;}
+  .sidebar-module-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:13px;color:var(--text-2);text-decoration:none;transition:all 0.2s;line-height:1.4;}
+  .sidebar-module-link:hover{background:var(--bg-3);color:var(--text);}
+  .sidebar-module-link.active{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-num{font-size:11px;font-weight:500;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--bg-4);color:var(--text-3);}
+  .sidebar-module-link.active .sidebar-num{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-divider{height:1px;background:var(--border);margin:20px 0;}
+  .sidebar-progress-label{font-size:12px;color:var(--text-3);margin-bottom:8px;display:flex;justify-content:space-between;}
+  .sidebar-progress-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sidebar-progress-fill{height:100%;width:100%;background:var(--success);border-radius:2px;}
+  main{display:block;min-width:0;overflow:hidden;}
+  .content{max-width:760px;width:100%;padding:60px 64px 120px;margin:0 auto;}
+  .module-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+  .module-tag{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(91,143,248,0.2);padding:4px 12px;border-radius:100px;}
+  .module-meta{font-size:12px;color:var(--text-3);}
+  h1{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1.05;letter-spacing:-0.02em;color:var(--text);margin-bottom:24px;}
+  .intro-text{font-size:19px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+  h2{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:400;color:var(--text);margin:52px 0 18px;line-height:1.2;}
+  h3{font-size:16px;font-weight:500;color:var(--text);margin:32px 0 12px;}
+  p{font-size:16px;font-weight:300;color:var(--text-2);line-height:1.8;margin-bottom:20px;}
+  strong{font-weight:500;color:var(--text);}
+  .callout{background:var(--callout-bg);border:1px solid var(--callout-border);border-radius:12px;padding:24px 28px;margin:32px 0;}
+  .callout-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+  .callout p{margin:0;font-size:15px;color:var(--text-2);}
+  .callout p+p{margin-top:12px;}
+  .step-block{counter-reset:steps;display:flex;flex-direction:column;gap:0;margin:28px 0;}
+  .step{display:flex;gap:20px;padding:28px 0;border-bottom:1px solid var(--border);}
+  .step:last-child{border-bottom:none;}
+  .step-num{width:36px;height:36px;border-radius:50%;background:var(--accent-dim);border:1px solid rgba(91,143,248,0.25);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:500;color:var(--accent);flex-shrink:0;margin-top:2px;}
+  .step-title{font-size:15px;font-weight:500;color:var(--text);margin-bottom:8px;}
+  .step-body{font-size:14px;color:var(--text-2);line-height:1.7;margin:0;}
+  .prompt-block{background:var(--bg-2);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:0 12px 12px 0;padding:24px;margin:20px 0;font-size:14px;color:var(--text-2);line-height:1.75;white-space:pre-wrap;}
+  .prompt-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:12px;}
+  .example-card{background:var(--bg-2);border:1px solid var(--border);border-radius:14px;padding:28px;margin:16px 0;}
+  .example-title{font-size:16px;font-weight:500;color:var(--text);margin-bottom:6px;}
+  .example-use{font-size:13px;color:var(--text-3);margin-bottom:14px;}
+  .example-prompt{font-size:13px;color:var(--text-2);line-height:1.7;background:var(--bg-3);border-radius:8px;padding:14px 16px;white-space:pre-wrap;}
+  .complete-banner{background:var(--success-bg);border:1px solid var(--success-border);border-radius:16px;padding:36px;text-align:center;margin-top:48px;}
+  .complete-icon{font-size:48px;margin-bottom:16px;}
+  .complete-title{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:300;color:var(--text);margin-bottom:12px;}
+  .complete-desc{font-size:15px;color:var(--text-2);line-height:1.7;margin-bottom:28px;}
+  .btn-assessment{display:inline-block;padding:14px 32px;background:var(--accent);color:#fff;border-radius:10px;font-size:15px;font-weight:500;text-decoration:none;transition:opacity 0.2s;}
+  .btn-assessment:hover{opacity:0.88;}
+  .lesson-nav{display:flex;justify-content:space-between;align-items:center;margin-top:40px;padding-top:40px;border-top:1px solid var(--border);}
+  .btn-lesson{display:flex;align-items:center;gap:8px;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:500;text-decoration:none;transition:all 0.2s;cursor:pointer;border:none;font-family:'DM Sans',sans-serif;}
+  .btn-prev{background:transparent;color:var(--text-2);border:1px solid var(--border-2)!important;}
+  .btn-prev:hover{background:var(--bg-3);color:var(--text);}
+  @media(max-width:900px){.page-wrapper{grid-template-columns:1fr;}.sidebar{display:none;}.content{padding:40px 24px 80px;}h1{font-size:38px;}}
+  @media(max-width:600px){.content{padding:28px 16px 80px;}h1{font-size:30px;}h2{font-size:24px;}}
+
+  .sticky-bar {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    z-index: 200;
+    background: var(--bg-2);
+    border-top: 1px solid var(--border-2);
+    padding: 14px 5%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    backdrop-filter: blur(12px);
+    transition: all 0.3s;
+  }
+  .sticky-bar-track {
+    flex: 1;
+    height: 4px;
+    background: var(--border);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .sticky-bar-fill {
+    height: 100%;
+    background: var(--accent);
+    border-radius: 2px;
+    transition: width 0.2s;
+    width: 0%;
+  }
+  .sticky-bar-label {
+    font-size: 12px;
+    color: var(--text-3);
+    white-space: nowrap;
+    min-width: 60px;
+    text-align: right;
+  }
+  .sticky-bar-btn {
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    font-family: 'DM Sans', sans-serif;
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: opacity 0.2s;
+    display: none;
+  }
+  .sticky-bar-btn:hover { opacity: 0.88; }
+  .sticky-bar-reading {
+    font-size: 12px;
+    color: var(--text-3);
+    white-space: nowrap;
+  }
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="index.html" style="display:flex;align-items:center;text-decoration:none;">
+      <div class="nav-logo-mark">M</div>
+    </a>
+    <div class="nav-divider"></div>
+    <a href="index.html" class="nav-back" style="font-size:12px;">🏠 Home</a>
+    <div class="nav-divider"></div>
+    <a href="courses.html" class="nav-back">← Foundations of AI</a>
+    <div class="nav-divider"></div>
+    <span class="nav-label">Module 6</span>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">☀</span></button>
+</nav>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+<div class="page-wrapper">
+<aside class="sidebar">
+  <div class="sidebar-label">Foundations of AI</div>
+  <div class="sidebar-module"><a href="module-1-what-ai-actually-is.html" class="sidebar-module-link"><span class="sidebar-num">1</span>What AI Actually Is</a></div>
+  <div class="sidebar-module"><a href="module-2-how-ai-models-work.html" class="sidebar-module-link"><span class="sidebar-num">2</span>How AI Models Work</a></div>
+  <div class="sidebar-module"><a href="module-3-tools-that-exist.html" class="sidebar-module-link"><span class="sidebar-num">3</span>Tools That Exist Right Now</a></div>
+  <div class="sidebar-module"><a href="module-4-prompt-engineering.html" class="sidebar-module-link"><span class="sidebar-num">4</span>Prompt Engineering</a></div>
+  <div class="sidebar-module"><a href="module-5-ai-ethics.html" class="sidebar-module-link"><span class="sidebar-num">5</span>AI Ethics & Real Risks</a></div>
+  <div class="sidebar-module"><a href="module-6-your-first-ai-project.html" class="sidebar-module-link active"><span class="sidebar-num">6</span>Your First AI Project</a></div>
+  <div class="sidebar-module"><a href="quiz-foundations.html" class="sidebar-module-link" style="color:var(--accent);margin-top:4px;"><span class="sidebar-num" style="background:var(--accent-dim);color:var(--accent);">✦</span>Final Assessment</a></div>
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-progress-label"><span>Course progress</span><span style="color:var(--success);">6 / 6 ✓</span></div>
+  <div class="sidebar-progress-track"><div class="sidebar-progress-fill"></div></div>
+</aside>
+<main>
+<div class="content">
+  <div class="module-eyebrow"><span class="module-tag">Module 6</span><span class="module-meta">30 min · Hands-on project</span></div>
+  <h1>Your First AI Project</h1>
+  <p class="intro-text">Everything in this course has been building toward this. You understand what AI is, how it works, what tools exist, how to prompt effectively, and what the real risks are. Now you're going to build something with it — a custom AI assistant that solves a real problem in your life.</p>
+
+  <h2>What you're building</h2>
+  <p>A <strong>custom AI assistant</strong> — powered by Claude or ChatGPT — that has a specific job, a defined personality, clear rules for how it behaves, and genuine usefulness in your daily life.</p>
+  <p>This is not a toy. A well-built custom assistant can save you hours every week, help you think through decisions more clearly, or help you get better at something you're trying to learn. The quality of what you build is entirely determined by the quality of your system prompt — the instructions that define how your assistant behaves.</p>
+
+  <div class="callout">
+    <div class="callout-label">Why this project specifically</div>
+    <p>Building a custom assistant puts every skill from this course to use at once. You have to understand how AI models work to know what's possible. You have to understand prompt engineering to make it work well. You have to think about the ethical implications of what you're building. And you have to apply it to something real — which is where genuine learning happens.</p>
+  </div>
+
+  <h2>Step 1: Choose your assistant type</h2>
+  <p>Pick one that solves a real problem you actually have. The more specific the problem, the more useful the assistant.</p>
+
+  <div class="example-card">
+    <div class="example-title">📚 Study Coach</div>
+    <div class="example-use">Best for: Students who want smarter study sessions</div>
+    <div class="example-prompt">Helps you understand material, not just memorize it. Quizzes you, identifies gaps, explains concepts multiple ways, and pushes back when your answers are vague.</div>
+  </div>
+
+  <div class="example-card">
+    <div class="example-title">✍️ Writing Coach</div>
+    <div class="example-use">Best for: Anyone who writes and wants to improve</div>
+    <div class="example-prompt">Reviews your writing and gives direct, honest feedback. Identifies weak sentences, vague arguments, and structural problems — without sugarcoating. Asks you what you're trying to say before telling you how to say it better.</div>
+  </div>
+
+  <div class="example-card">
+    <div class="example-title">💡 Decision Advisor</div>
+    <div class="example-use">Best for: People who want to think through decisions more rigorously</div>
+    <div class="example-prompt">Helps you think through important decisions systematically. Identifies assumptions, asks what you might be missing, steelmans the opposing view, and refuses to just validate what you already think.</div>
+  </div>
+
+  <div class="example-card">
+    <div class="example-title">📈 Finance Tracker</div>
+    <div class="example-use">Best for: Anyone building financial knowledge and habits</div>
+    <div class="example-prompt">Explains financial concepts clearly, helps analyze investment decisions, calculates compound growth scenarios, and challenges you to think long-term rather than react to short-term noise.</div>
+  </div>
+
+  <div class="example-card">
+    <div class="example-title">🎯 Goal Accountability Partner</div>
+    <div class="example-use">Best for: People with big goals who need structured thinking</div>
+    <div class="example-prompt">Tracks your goals and progress, asks hard questions about why you're falling short, helps you identify obstacles and real solutions, and doesn't accept vague answers or excuses.</div>
+  </div>
+
+  <h2>Step 2: Write your system prompt</h2>
+  <p>The system prompt is the set of instructions that defines everything about your assistant. It runs invisibly in the background of every conversation, shaping every response. Here's the structure to follow:</p>
+
+  <div class="step-block">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div>
+        <div class="step-title">Define the role and purpose</div>
+        <div class="step-body">What is this assistant? What is its one job? Be specific. "You are a writing coach" is weak. "You are a direct, honest writing coach who helps ambitious students write more clearly and persuasively" is strong.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div>
+        <div class="step-title">Set the personality and tone</div>
+        <div class="step-body">How should it communicate? Direct and challenging? Warm and encouraging? Socratic — asking questions rather than giving answers? Define this explicitly or the AI will default to generic helpful-assistant mode.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div>
+        <div class="step-title">Write the behavioral rules</div>
+        <div class="step-body">What should it always do? What should it never do? "Always ask what I've already tried before giving advice." "Never just validate what I said without pushing back." "If my answer is vague, ask me to be more specific before continuing."</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div>
+        <div class="step-title">Give it context about you</div>
+        <div class="step-body">What does your assistant need to know to be useful? Your goals, your level of knowledge, your situation. The more relevant context you give it, the more tailored its responses will be.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">5</div>
+      <div>
+        <div class="step-title">Define what success looks like</div>
+        <div class="step-body">What outcome are you trying to achieve through this assistant? Being explicit about this helps the AI stay focused on what actually matters rather than drifting into generic helpfulness.</div>
+      </div>
+    </div>
+  </div>
+
+  <h2>Step 3: An example system prompt</h2>
+  <p>Here's a complete, well-written system prompt for a Study Coach assistant. Read it carefully — notice how specific every element is:</p>
+
+  <div class="prompt-block"><div class="prompt-label">Example System Prompt — Study Coach</div>You are a rigorous, Socratic study coach helping a high-achieving high school junior in Louisiana master challenging academic material. Your job is not to give answers — it is to build genuine understanding.
+
+Your personality: Direct, demanding, and encouraging in equal measure. You take the student's goals seriously and refuse to let them settle for surface-level understanding. You ask hard questions. You push back when answers are vague. You celebrate real insight.
+
+Your rules:
+— Never just give the answer. Always ask the student to attempt it first.
+— When the student gives a vague or incomplete answer, ask "Can you be more specific?" or "What do you mean by that?" before moving on.
+— After the student answers correctly, follow up with "Why?" or "What would change this answer?" to deepen understanding.
+— If the student says "I don't know," respond with "Take a guess — what do you think it might be?"
+— End every session by asking: "What's the one thing from today you want to make sure you remember?"
+
+Context about this student: Strong work ethic, ambitious long-term goals, tends to understand concepts quickly but sometimes moves on before truly internalizing them. Preparing for AP courses and standardized tests.
+
+The goal: Build the kind of deep, transferable understanding that shows up on tests, in college, and in life — not just the ability to recognize the right answer on a multiple choice question.</div>
+
+  <h2>Step 4: Build and test it</h2>
+  <p>Open Claude at claude.ai or ChatGPT at chat.openai.com. Start a new conversation. For Claude, you can paste your system prompt directly into the first message and tell it to behave as that assistant going forward. For ChatGPT Plus users, you can create a custom GPT and paste the system prompt into the instructions field.</p>
+  <p>Then test it rigorously. Give it inputs you'd actually use. See where it drifts from what you wanted. Go back and update your system prompt. Iterate until it behaves consistently the way you designed.</p>
+
+  <div class="callout">
+    <div class="callout-label">The iteration mindset</div>
+    <p>Your first version will not be perfect. That's not a failure — it's the process. Every time the assistant doesn't behave the way you wanted, ask yourself: what would I add to the system prompt to prevent this? Then add it and test again. The skill of building good AI systems is mostly the skill of writing clear, specific instructions and iterating on them.</p>
+  </div>
+
+  <h2>Step 5: Use it for real</h2>
+  <p>The final step is the most important one: actually use what you built. Have real study sessions with your study coach. Work through real decisions with your decision advisor. Review real writing with your writing coach.</p>
+  <p>This is where you'll discover what works and what doesn't. You'll find places where your prompt was too vague. You'll find behaviors you didn't anticipate. You'll refine it based on real use rather than imagined use. And you'll end up with something genuinely useful — an AI assistant built around your specific needs, that didn't exist before you built it.</p>
+
+  <h2>What to do with it</h2>
+  <p>Share it. Show it to someone who could use a similar tool. Document what you built and how you built it — the thinking behind the system prompt, what you iterated on and why. This kind of documented, thoughtful work is exactly what college admissions officers, internship managers, and future employers want to see evidence of: real initiative, real building, real learning.</p>
+
+  <div class="complete-banner">
+    <div class="complete-icon">🎓</div>
+    <div class="complete-title">You've completed the Foundations of AI course.</div>
+    <div class="complete-desc">Six modules. Core concepts, real tools, prompt engineering, ethical grounding, and a hands-on project. You now understand AI better than the vast majority of people using it every day. One step remains — take the final assessment and earn your Meridian certificate.</div>
+    <button onclick="completeAndNext()" class="btn-assessment" style="cursor:pointer;border:none;">Take the Final Assessment →</button>
+  </div>
+</div>
+</main>
+</div>
+<div class="sticky-bar" id="sticky-bar">
+  <div class="sticky-bar-reading" id="sticky-reading">Read to the end to unlock the next module</div>
+  <div class="sticky-bar-track">
+    <div class="sticky-bar-fill" id="sticky-fill"></div>
+  </div>
+  <div class="sticky-bar-label" id="sticky-label">0%</div>
+  <button class="sticky-bar-btn" id="sticky-btn" onclick="completeAndNext()">
+    Take the Final Assessment &#8594;
+  </button>
+</div>
+<script>
+  function toggleTheme(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='☾'):(h.setAttribute('data-theme','dark'),i.textContent='☀');}
+  window.addEventListener('scroll',()=>{const d=document.documentElement,s=d.scrollTop||document.body.scrollTop,t=d.scrollHeight-d.clientHeight;const p=document.getElementById('progress');if(p)p.style.width=(s/t*100)+'%';});
+  let unlocked=false;
+  function updateScrollProgress(){
+    const scrolled=window.scrollY+window.innerHeight;
+    const total=document.documentElement.scrollHeight;
+    const pct=Math.min(100,Math.round((scrolled/total)*100));
+    const fill=document.getElementById('sticky-fill');
+    const label=document.getElementById('sticky-label');
+    const btn=document.getElementById('sticky-btn');
+    const reading=document.getElementById('sticky-reading');
+    if(fill)fill.style.width=pct+'%';
+    if(label)label.textContent=pct+'%';
+    if(pct>=95&&!unlocked){unlocked=true;if(btn)btn.style.display='block';if(reading)reading.style.display='none';if(fill)fill.style.background='#22c55e';if(label)label.style.color='#22c55e';}
+  }
+  window.addEventListener('scroll',updateScrollProgress);
+  updateScrollProgress();
+  function completeAndNext(){
+    if(window.__meridianSaveProgress){ try{ window.__meridianSaveProgress("m6"); }catch(e){} }
+    setTimeout(function(){ window.location.href="quiz-foundations.html"; }, 120);
+  }
+</script>
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import { getFirestore, doc, getDoc, setDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  const app = initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+  const auth = getAuth(app); const db = getFirestore(app);
+  let meridianUser = null;
+  window.__meridianSaveProgress = async function(mValue){
+    if(!meridianUser) return;
+    try { await setDoc(doc(db,"users",meridianUser.uid), { foundationsModules: arrayUnion(mValue) }, { merge: true }); } catch(e) {}
+  };
+  onAuthStateChanged(auth, async (u) => {
+    meridianUser = u;
+    if (!u) return;
+    try {
+      const snap = await getDoc(doc(db, "users", u.uid));
+      const data = snap.exists() ? snap.data() : {};
+      const done = Array.isArray(data.foundationsModules) ? data.foundationsModules : [];
+      if (!done.includes("m5")) { document.body.innerHTML = `<div style=\"min-height:100vh;display:flex;align-items:center;justify-content:center;background:#080808;font-family:DM Sans,sans-serif;padding:24px;\"><div style=\"max-width:440px;text-align:center;background:#111;border:1px solid rgba(255,255,255,0.08);border-radius:20px;padding:48px;\"><div style=\"font-size:48px;margin-bottom:20px;\">&#128274;</div><div style=\"font-size:20px;font-weight:500;color:#f0f0f0;margin-bottom:12px;\">Module locked</div><div style=\"font-size:14px;color:#a0a0a0;margin-bottom:28px;line-height:1.6;\">Complete the previous module before continuing. Each module builds on the last.</div><a href=\"module-1-what-ai-actually-is.html\" style=\"display:inline-block;padding:12px 24px;background:#5b8ff8;color:#fff;border-radius:10px;font-size:14px;font-weight:500;text-decoration:none;\">&#8592; Back to the course</a></div></div>`; }
+    } catch(e) {}
+  });
+</script>
+</body>
+</html>

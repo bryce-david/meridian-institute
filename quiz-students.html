@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Final Assessment — AI for Students — Meridian Institute of AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#6D4AFF;--accent-dim:rgba(109,74,255,0.1);--nav-bg:rgba(8,8,8,0.9);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#5035cc;--accent-dim:rgba(80,53,204,0.08);--nav-bg:rgba(250,250,248,0.9);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}html{scroll-behavior:smooth;}body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.7;overflow-x:hidden;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}.nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}.nav-back{font-size:13px;color:var(--text-2);text-decoration:none;}.nav-label{font-size:13px;color:var(--text-3);}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;}
+  .quiz-wrap{max-width:720px;margin:0 auto;padding:100px 24px 60px;}
+  .quiz-header{text-align:center;margin-bottom:52px;}
+  .quiz-tag{display:inline-block;font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(109,74,255,0.2);padding:4px 16px;border-radius:100px;margin-bottom:20px;}
+  .quiz-header h1{font-family:'Cormorant Garamond',serif;font-size:44px;font-weight:300;letter-spacing:-0.02em;margin-bottom:12px;}
+  .quiz-header p{color:var(--text-2);font-size:16px;font-weight:300;}
+  .quiz-meta{display:flex;justify-content:center;gap:32px;margin-top:24px;padding-top:24px;border-top:1px solid var(--border);}
+  .quiz-meta-item{text-align:center;}.quiz-meta-num{font-size:28px;font-weight:300;color:var(--accent);font-family:'Cormorant Garamond',serif;}.quiz-meta-label{font-size:12px;color:var(--text-3);margin-top:2px;}
+  .q-block{background:var(--bg-2);border:1px solid var(--border);border-radius:14px;padding:28px;margin-bottom:16px;}
+  .q-num{font-size:11px;font-weight:500;color:var(--text-3);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:10px;}
+  .q-text{font-size:16px;font-weight:400;color:var(--text);line-height:1.6;margin-bottom:20px;}
+  .q-options{display:flex;flex-direction:column;gap:10px;}
+  .q-opt{display:flex;align-items:flex-start;gap:12px;padding:14px 16px;border:1px solid var(--border);border-radius:10px;cursor:pointer;transition:all 0.15s;background:var(--bg-3);}
+  .q-opt:hover{border-color:var(--accent);background:var(--accent-dim);}
+  .q-opt.selected{border-color:var(--accent);background:var(--accent-dim);}
+  .q-opt.correct{border-color:#22c55e;background:rgba(34,197,94,0.07);}
+  .q-opt.wrong{border-color:#ef4444;background:rgba(239,68,68,0.07);}
+  .opt-letter{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--border-2);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:500;color:var(--text-3);flex-shrink:0;margin-top:1px;}
+  .q-opt.selected .opt-letter{border-color:var(--accent);color:var(--accent);}
+  .q-opt.correct .opt-letter{border-color:#22c55e;color:#22c55e;}
+  .q-opt.wrong .opt-letter{border-color:#ef4444;color:#ef4444;}
+  .opt-text{font-size:15px;color:var(--text-2);line-height:1.5;}
+  .quiz-footer{margin-top:40px;display:flex;justify-content:center;}
+  .submit-btn{padding:14px 44px;background:var(--accent);color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:500;font-family:'DM Sans',sans-serif;cursor:pointer;transition:opacity 0.2s;}.submit-btn:hover{opacity:0.88;}.submit-btn:disabled{opacity:0.4;cursor:default;}
+  .result-box{background:var(--bg-2);border:1px solid var(--border);border-radius:16px;padding:48px;text-align:center;margin:40px 0;display:none;}
+  .result-box h2{font-family:'Cormorant Garamond',serif;font-size:40px;font-weight:300;margin-bottom:12px;}
+  .result-score{font-size:64px;font-weight:300;font-family:'Cormorant Garamond',serif;margin:24px 0;}
+  .result-box p{color:var(--text-2);margin-bottom:12px;}
+  .result-actions{display:flex;gap:12px;justify-content:center;margin-top:28px;flex-wrap:wrap;}
+  .btn-primary{padding:12px 28px;background:var(--accent);color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:500;font-family:'DM Sans',sans-serif;cursor:pointer;text-decoration:none;display:inline-block;transition:opacity 0.2s;}.btn-primary:hover{opacity:0.88;}
+  .btn-secondary{padding:12px 28px;background:transparent;color:var(--text-2);border:1px solid var(--border-2);border-radius:8px;font-size:14px;font-weight:500;font-family:'DM Sans',sans-serif;cursor:pointer;text-decoration:none;display:inline-block;transition:all 0.2s;}.btn-secondary:hover{border-color:var(--text);color:var(--text);}
+  .cert-preview{background:var(--accent-dim);border:1px solid rgba(109,74,255,0.2);border-radius:12px;padding:24px;margin:24px 0;font-size:14px;color:var(--text-2);}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="courses.html" class="nav-back">← AI for Students</a>
+    <div class="nav-divider"></div>
+    <span class="nav-label">Final Assessment</span>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">☀</span></button>
+</nav>
+<div class="quiz-wrap">
+  <div class="quiz-header">
+    <div class="quiz-tag">Final Assessment</div>
+    <h1>AI for Students</h1>
+    <p>Test your understanding of AI tools, research methods, academic integrity, and effective learning strategies.</p>
+    <div class="quiz-meta">
+      <div class="quiz-meta-item"><div class="quiz-meta-num">25</div><div class="quiz-meta-label">Questions</div></div>
+      <div class="quiz-meta-item"><div class="quiz-meta-num">70%</div><div class="quiz-meta-label">Pass mark</div></div>
+      <div class="quiz-meta-item"><div class="quiz-meta-num">Certificate</div><div class="quiz-meta-label">On pass</div></div>
+    </div>
+  </div>
+  <div id="quiz-container"></div>
+  <div class="result-box" id="result-box">
+    <div id="result-icon" style="font-size:48px;margin-bottom:8px;"></div>
+    <h2 id="result-title"></h2>
+    <div class="result-score" id="result-score"></div>
+    <p id="result-msg"></p>
+    <div class="cert-preview" id="cert-preview" style="display:none;">Certificate of completion awarded! View it on your dashboard.</div>
+    <div class="result-actions">
+      <a href="dashboard.html" class="btn-primary">Go to Dashboard</a>
+      <button class="btn-secondary" onclick="retake()">Retake Quiz</button>
+    </div>
+  </div>
+  <div class="quiz-footer" id="quiz-footer">
+    <button class="submit-btn" id="submit-btn" onclick="submitQuiz()">Submit Assessment</button>
+  </div>
+</div>
+<script type="module">
+  import{initializeApp}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import{getAuth,onAuthStateChanged}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import{getFirestore,doc,setDoc,getDoc}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  const app=initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+  const auth=getAuth(app);const db=getFirestore(app);let currentUser=null;
+  onAuthStateChanged(auth,u=>{currentUser=u;});
+  window.toggleTheme=function(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='☾'):(h.setAttribute('data-theme','dark'),i.textContent='☀');};
+
+  const ALL_QUESTIONS=[
+    {q:"What is a hallucination in the context of AI language models?",o:["When an AI generates inaccurate but plausible-sounding information","When an AI refuses to answer a question","When an AI crashes during a query","When an AI gives an overly long response"],a:0},
+    {q:"Which of the following is the safest way to use an AI-generated citation in an academic paper?",o:["Copy it directly — AI citations are accurate","Treat it as a lead and verify by finding the actual source","Use it only if the paper is older than 2015","Ask a second AI to confirm it"],a:1},
+    {q:"What does the Feynman technique involve?",o:["Speed-reading with AI assistance","Explaining a concept in simple terms to identify knowledge gaps","Highlighting and re-reading important sections","Creating digital flashcards from lecture slides"],a:1},
+    {q:"Active recall is effective for learning because it:",o:["Makes studying feel easier and more comfortable","Forces retrieval from memory, which strengthens retention","Reduces the time needed for any given topic","Automatically generates a study schedule"],a:1},
+    {q:"When using AI for research orientation, what should you do with the vocabulary and concepts it mentions?",o:["Cite them in your paper as AI-sourced information","Accept them as the definitive framing of the topic","Use them as search terms in real academic databases","Submit them as a literature review"],a:2},
+    {q:"Which AI tool is specifically designed to search the web in real time and cite sources?",o:["ChatGPT","Claude","Perplexity","Wolfram Alpha"],a:2},
+    {q:"The best use of AI in the writing process is:",o:["Having it write the first draft while you edit","Using it to replace your outline entirely","Getting feedback on structure and clarity for drafts you wrote yourself","Letting it choose your essay topic"],a:2},
+    {q:"Spaced repetition works by:",o:["Studying all material in one long session before an exam","Reviewing material at increasing time intervals for better retention","Switching between subjects rapidly","Summarizing notes immediately after class once"],a:1},
+    {q:"Why can AI output sound authoritative even when incorrect?",o:["AI models are required to be confident by design","Fluent, well-structured text creates an impression of accuracy independent of truth","AI has access to real-time information","Users are trained to trust digital sources more than print"],a:1},
+    {q:"Which of these represents a clearly unacceptable use of AI in most academic contexts?",o:["Using AI to brainstorm essay angles","Asking AI to generate retrieval quiz questions for self-study","Submitting AI-generated text as your own writing","Running your final draft through AI grammar check"],a:2},
+    {q:"In STEM courses, what is the primary risk of using AI to solve problem sets?",o:["AI solutions are often too advanced for the course level","It bypasses the productive struggle that builds mathematical intuition","Professors can always detect AI-generated solutions","AI charges per problem in most STEM applications"],a:1},
+    {q:"When a writing professor seems anti-AI, the most accurate interpretation is usually:",o:["They are technically unsophisticated","They are concerned AI bypasses the cognitive learning process the assignment builds","They are trying to make the course harder","They have a financial interest in students struggling"],a:1},
+    {q:"What does 'AI training data knowledge cutoff' mean for students doing research?",o:["AI cannot access any books published before a certain date","AI may have outdated information for fast-moving fields","AI charges more for queries about recent events","AI only works with English-language sources"],a:1},
+    {q:"The most reliable framework for deciding whether AI use crosses an integrity line is:",o:["If the professor hasn't specifically mentioned AI, it's fine","Whether you could walk through your reasoning process in detail if asked","Whether your classmates are also using AI","Whether the assignment was written before 2022"],a:1},
+    {q:"Cross-topic connection notes — connecting ideas from different lectures with AI — are valuable because:",o:["They count as extra credit at most institutions","They help build synthetic thinking that professors reward in papers and exams","They reduce the amount of material you need to study per exam","They allow you to combine modules into one final assignment"],a:1},
+    {q:"What is the primary advantage of using AI for mock interview practice?",o:["AI provides legally binding hiring decisions","Available anytime for unlimited practice with personalized feedback","AI has access to the specific company's interview database","Mock interviews with AI count as professional experience"],a:1},
+    {q:"Which study technique does cognitive science research consistently identify as most effective for long-term retention?",o:["Re-reading and highlighting key passages","Passive listening to recorded lectures","Active retrieval — recalling information from memory without looking at notes","Color-coded outlining of chapters"],a:2},
+    {q:"When AI revises your creative writing, what is the homogenization risk?",o:["AI may change your work into a genre you didn't intend","Your voice may shift toward AI's average aesthetic preferences, reducing distinctiveness","AI may accidentally plagiarize published authors","The revised version may be too long for the word limit"],a:1},
+    {q:"What should you do with an AI-generated research summary before using any claims from it?",o:["Accept it if the AI expressed high confidence","Verify key claims against primary sources","Run it through a second AI for confirmation","Check if it includes at least five citations"],a:1},
+    {q:"Why is asking a professor about AI use policy on a specific assignment a good practice?",o:["It reduces the likelihood they will grade your work strictly","It demonstrates ethical engagement with the assignment and usually yields useful clarity","It creates a written record that can be used as a defense later","It signals to the professor that you are technologically sophisticated"],a:1},
+    {q:"Which statement best describes how AI tools change the value of deep domain expertise?",o:["Deep expertise becomes less valuable as AI can replicate it","Deep expertise becomes more valuable because it's needed to evaluate and direct AI outputs","Deep expertise and AI skills are unrelated","Domain expertise is now only valuable in fields AI cannot enter"],a:1},
+    {q:"What is the danger of using AI to summarize readings before you read the original?",o:["AI summaries are often copyrighted by the original authors","You may miss argument structure, specific evidence, and authorial choices that matter for class","AI summaries are always shorter than the minimum reading requirement","Professors can detect which students used AI summaries from discussion quality"],a:1},
+    {q:"In post-lecture AI-assisted note processing, which of the following is most useful to request?",o:["A list of related videos to watch","Key concepts, a hierarchical outline, gaps in notes, and five retrieval questions","A prediction of what the next lecture will cover","A comparison of the lecture to another professor's teaching style"],a:1},
+    {q:"What distinguishes Socratic dialogue with AI from simply reading AI explanations?",o:["Socratic dialogue is faster to complete","Socratic dialogue forces active engagement and targets your specific misunderstandings","Socratic dialogue produces a certificate on completion","Socratic dialogue is only available on premium AI subscriptions"],a:1},
+    {q:"The most important habit for sustainable AI-assisted study is:",o:["Evaluating and switching to a new AI tool each month","Using AI consistently for specific high-value tasks like retrieval practice and feedback","Spending at least two hours daily testing AI tools","Limiting AI use to one session per assignment"],a:1},
+  ];
+
+  function shuffle(arr){for(let i=arr.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]];}return arr;}
+  const QUESTIONS=shuffle([...ALL_QUESTIONS]).slice(0,25);
+  const answers={};
+
+  function render(){
+    const c=document.getElementById('quiz-container');
+    c.innerHTML=QUESTIONS.map((q,i)=>`
+      <div class="q-block" id="qb-${i}">
+        <div class="q-num">Question ${i+1} of 25</div>
+        <div class="q-text">${q.q}</div>
+        <div class="q-options">
+          ${q.o.map((opt,j)=>`<div class="q-opt" id="opt-${i}-${j}" onclick="pick(${i},${j})">
+            <div class="opt-letter">${String.fromCharCode(65+j)}</div>
+            <div class="opt-text">${opt}</div>
+          </div>`).join('')}
+        </div>
+      </div>`).join('');
+  }
+  render();
+
+  window.pick=function(qi,oi){
+    if(answers[qi]!==undefined)return;
+    answers[qi]=oi;
+    QUESTIONS[qi].o.forEach((_,j)=>{document.getElementById(`opt-${qi}-${j}`).classList.remove('selected');});
+    document.getElementById(`opt-${qi}-${oi}`).classList.add('selected');
+  };
+
+  window.submitQuiz=async function(){
+    if(Object.keys(answers).length<25){alert('Please answer all 25 questions before submitting.');return;}
+    let score=0;
+    QUESTIONS.forEach((q,i)=>{
+      const correct=q.a;const chosen=answers[i];
+      QUESTIONS[i].o.forEach((_,j)=>{
+        const el=document.getElementById(`opt-${i}-${j}`);
+        el.style.pointerEvents='none';
+        if(j===correct)el.classList.add('correct');
+        else if(j===chosen&&chosen!==correct)el.classList.add('wrong');
+      });
+      if(chosen===correct)score++;
+    });
+    const pct=Math.round(score/25*100);const passed=pct>=70;
+    document.getElementById('quiz-footer').style.display='none';
+    const rb=document.getElementById('result-box');rb.style.display='block';
+    document.getElementById('result-icon').textContent=passed?'🎓':'📚';
+    document.getElementById('result-title').textContent=passed?'Certificate Earned!':'Keep Studying';
+    document.getElementById('result-score').textContent=`${pct}%`;
+    document.getElementById('result-score').style.color=passed?'#22c55e':'#fb923c';
+    document.getElementById('result-msg').textContent=passed?`You scored ${score} out of 25. Excellent work — you've demonstrated a strong grasp of AI tools for academic success.`:`You scored ${score} out of 25. You need 70% to pass. Review the modules and try again.`;
+    if(passed){
+      document.getElementById('cert-preview').style.display='block';
+      if(currentUser){try{const id='STU-'+Date.now();await setDoc(doc(db,'users',currentUser.uid),{studentsCertId:id},{merge:true});}catch(e){}}
+    }
+    rb.scrollIntoView({behavior:'smooth'});
+  };
+  window.retake=function(){window.location.reload();};
+</script>
+</body>
+</html>

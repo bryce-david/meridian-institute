@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 10: Foundation Models and the Frontier — Machine Learning Explained — Meridian Institute of AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#065F46;--accent-dim:rgba(6,95,70,0.1);--accent-dim2:rgba(6,95,70,0.05);--nav-bg:rgba(8,8,8,0.9);--callout-bg:rgba(6,95,70,0.07);--callout-border:rgba(6,95,70,0.25);--good-bg:rgba(34,197,94,0.07);--good-border:rgba(34,197,94,0.2);--warn-bg:rgba(251,146,60,0.07);--warn-border:rgba(251,146,60,0.2);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#064E3B;--accent-dim:rgba(6,78,59,0.08);--accent-dim2:rgba(6,78,59,0.04);--nav-bg:rgba(250,250,248,0.9);--callout-bg:rgba(6,78,59,0.05);--callout-border:rgba(6,78,59,0.2);--good-bg:rgba(22,163,74,0.06);--good-border:rgba(22,163,74,0.2);--warn-bg:rgba(234,88,12,0.05);--warn-border:rgba(234,88,12,0.2);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;overflow-x:hidden;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.7;overflow-x:hidden;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}
+  .nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}
+  .nav-back{font-size:13px;color:var(--text-2);text-decoration:none;transition:color 0.2s;}
+  .nav-back:hover{color:var(--text);}
+  .nav-label{font-size:13px;color:var(--text-3);}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;transition:all 0.2s;}
+  .theme-toggle:hover{background:var(--bg-3);color:var(--text);}
+  .progress-bar{position:fixed;top:60px;left:0;right:0;z-index:99;height:2px;background:var(--border);}
+  .progress-fill{height:100%;background:var(--accent);width:0%;transition:width 0.1s;}
+  .page-wrapper{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:100vh;padding-top:62px;overflow:hidden;}
+  .sidebar{position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto;border-right:1px solid var(--border);padding:32px 24px;background:var(--bg-2);}
+  .sidebar-course{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;}
+  .sidebar-course-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+  .sidebar-module{margin-bottom:4px;}
+  .sidebar-module-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:13px;color:var(--text-2);text-decoration:none;transition:all 0.2s;line-height:1.4;}
+  .sidebar-module-link:hover{background:var(--bg-3);color:var(--text);}
+  .sidebar-module-link.active{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-num{font-size:11px;font-weight:500;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--bg-4);color:var(--text-3);}
+  .sidebar-module-link.active .sidebar-num{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-divider{height:1px;background:var(--border);margin:20px 0;}
+  .sidebar-progress-label{font-size:12px;color:var(--text-3);margin-bottom:8px;display:flex;justify-content:space-between;}
+  .sidebar-progress-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sidebar-progress-fill{height:100%;width:100%;background:var(--accent);border-radius:2px;}
+  main{display:block;min-width:0;overflow:hidden;}
+  .content{max-width:760px;width:100%;padding:60px 64px 140px;margin:0 auto;}
+  .module-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+  .module-tag{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(6,95,70,0.2);padding:4px 12px;border-radius:100px;}
+  .module-meta{font-size:12px;color:var(--text-3);}
+  h1{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1.05;letter-spacing:-0.02em;color:var(--text);margin-bottom:24px;}
+  .intro-text{font-size:19px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+  h2{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:400;color:var(--text);margin:52px 0 18px;line-height:1.2;}
+  h3{font-size:16px;font-weight:500;color:var(--text);margin:32px 0 12px;}
+  p{font-size:16px;font-weight:300;color:var(--text-2);line-height:1.8;margin-bottom:20px;}
+  strong{font-weight:500;color:var(--text);}
+  em{font-style:italic;}
+  ul,ol{margin:0 0 20px 22px;color:var(--text-2);}
+  li{font-size:16px;font-weight:300;line-height:1.8;margin-bottom:8px;}
+  .callout{background:var(--callout-bg);border:1px solid var(--callout-border);border-radius:12px;padding:24px 28px;margin:32px 0;}
+  .callout-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+  .callout p{margin:0;font-size:15px;color:var(--text-2);}
+  .callout p+p{margin-top:12px;}
+  .good{background:var(--good-bg);border:1px solid var(--good-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .good-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#22c55e;margin-bottom:10px;}
+  .good p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn{background:var(--warn-bg);border:1px solid var(--warn-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .warn-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#fb923c;margin-bottom:10px;}
+  .warn p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn p+p{margin-top:12px;}
+  .analogy{background:var(--bg-2);border:1px solid var(--border);border-radius:12px;padding:28px;margin:28px 0;}
+  .analogy-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-3);margin-bottom:12px;}
+  .analogy p{margin:0;font-size:15px;color:var(--text-2);}
+  .analogy p+p{margin-top:12px;}
+  .principle-list{display:flex;flex-direction:column;gap:12px;margin:24px 0;}
+  .principle{background:var(--bg-2);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:0 12px 12px 0;padding:20px 24px;}
+  .principle-title{font-size:15px;font-weight:500;color:var(--text);margin-bottom:6px;}
+  .principle-desc{font-size:14px;color:var(--text-2);line-height:1.65;margin:0;}
+  .cta-box{background:var(--accent-dim);border:1px solid rgba(6,95,70,0.25);border-radius:16px;padding:36px 40px;margin:56px 0 24px;text-align:center;}
+  .cta-box-eyebrow{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:12px;}
+  .cta-box-title{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:400;color:var(--text);margin-bottom:12px;line-height:1.2;}
+  .cta-box-sub{font-size:15px;color:var(--text-2);line-height:1.7;margin-bottom:28px;}
+  .cta-box-btn{display:inline-block;padding:13px 32px;background:var(--accent);color:#fff;border-radius:10px;font-size:15px;font-weight:500;text-decoration:none;font-family:'DM Sans',sans-serif;transition:opacity 0.2s;}
+  .cta-box-btn:hover{opacity:0.88;}
+  .sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:var(--bg-2);border-top:1px solid var(--border-2);padding:14px 5%;display:flex;align-items:center;justify-content:space-between;gap:16px;backdrop-filter:blur(12px);}
+  .sticky-bar-track{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sticky-bar-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.2s;width:0%;}
+  .sticky-bar-label{font-size:12px;color:var(--text-3);white-space:nowrap;min-width:60px;text-align:right;}
+  .sticky-bar-btn{padding:10px 20px;border-radius:8px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;background:var(--accent);color:#fff;border:none;cursor:pointer;white-space:nowrap;transition:opacity 0.2s;display:none;}
+  .sticky-bar-btn:hover{opacity:0.88;}
+  .sticky-bar-reading{font-size:12px;color:var(--text-3);white-space:nowrap;}
+  @media(max-width:900px){.page-wrapper{grid-template-columns:1fr;}.sidebar{display:none;}.content{padding:40px 24px 120px;}h1{font-size:38px;}}
+  @media(max-width:600px){.content{padding:28px 16px 120px;}h1{font-size:30px;}h2{font-size:24px;}.cta-box{padding:28px 20px;}.cta-box-title{font-size:26px;}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="courses.html" class="nav-back">← Machine Learning Explained</a>
+    <div class="nav-divider"></div>
+    <span class="nav-label">Module 10</span>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">☀</span></button>
+</nav>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+
+<div class="page-wrapper">
+<aside class="sidebar">
+  <div class="sidebar-course">Expert Track</div>
+  <div class="sidebar-course-name">Machine Learning Explained</div>
+  <div class="sidebar-module"><a href="ml-module-1.html" class="sidebar-module-link"><span class="sidebar-num">1</span>How Machines Learn</a></div>
+  <div class="sidebar-module"><a href="ml-module-2.html" class="sidebar-module-link"><span class="sidebar-num">2</span>Data: The ML Foundation</a></div>
+  <div class="sidebar-module"><a href="ml-module-3.html" class="sidebar-module-link"><span class="sidebar-num">3</span>Supervised Learning Demystified</a></div>
+  <div class="sidebar-module"><a href="ml-module-4.html" class="sidebar-module-link"><span class="sidebar-num">4</span>Unsupervised Learning</a></div>
+  <div class="sidebar-module"><a href="ml-module-5.html" class="sidebar-module-link"><span class="sidebar-num">5</span>Neural Networks and Deep Learning</a></div>
+  <div class="sidebar-module"><a href="ml-module-6.html" class="sidebar-module-link"><span class="sidebar-num">6</span>NLP and Transformers</a></div>
+  <div class="sidebar-module"><a href="ml-module-7.html" class="sidebar-module-link"><span class="sidebar-num">7</span>Computer Vision</a></div>
+  <div class="sidebar-module"><a href="ml-module-8.html" class="sidebar-module-link"><span class="sidebar-num">8</span>Model Evaluation</a></div>
+  <div class="sidebar-module"><a href="ml-module-9.html" class="sidebar-module-link"><span class="sidebar-num">9</span>ML in Production</a></div>
+  <div class="sidebar-module"><a href="ml-module-10.html" class="sidebar-module-link active"><span class="sidebar-num">10</span>Foundation Models and the Frontier</a></div>
+  <div class="sidebar-module"><a href="quiz-ml.html" class="sidebar-module-link" style="color:var(--accent);margin-top:4px;"><span class="sidebar-num" style="background:var(--accent-dim);color:var(--accent);">✦</span>Final Assessment</a></div>
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-progress-label"><span>Course progress</span><span style="color:var(--accent);">10 / 10</span></div>
+  <div class="sidebar-progress-track"><div class="sidebar-progress-fill"></div></div>
+</aside>
+
+<main>
+<div class="content">
+  <div class="module-eyebrow"><span class="module-tag">Module 10 · Expert Track</span><span class="module-meta">26 min read · Machine Learning Explained</span></div>
+  <h1>Foundation Models and the Frontier</h1>
+
+  <p class="intro-text">Something qualitatively different happened in AI around 2020. It wasn't that the technology got faster, or that the data got cleaner, or that the algorithms got cleverer in the traditional sense. A new category of system emerged — one that previous ML frameworks simply don't capture well. Understanding what changed, why it matters, and what it means for practitioners is perhaps the most important thing anyone working in technology can grasp right now.</p>
+
+  <h2>What changed with scale: the bitter lesson</h2>
+  <p>Rich Sutton, one of the foundational figures in reinforcement learning, wrote an essay in 2019 called "The Bitter Lesson." Its thesis: over the entire history of AI, the approaches that consistently won in the long run were not those that encoded the most human knowledge but those that scaled best with computation. Search, learning, and general methods beat hand-crafted human insight, every time, once enough compute was applied.</p>
+  <p>The lesson is "bitter" because it's humbling for researchers who spend years engineering clever domain-specific solutions. But it has profound implications. It means the primary driver of AI capability progress is not algorithmic sophistication — it's scale. More data, more parameters, more compute. The transformer architecture happened to be particularly well-suited to scaling along all three dimensions simultaneously.</p>
+  <p>When models crossed certain scale thresholds, something unexpected happened: <strong>emergent capabilities</strong>. Abilities that were completely absent in smaller models appeared suddenly in larger ones — not as a gradual improvement, but as a threshold effect. Models that couldn't do multi-step arithmetic at one scale could do it reliably at ten times the scale. Models that produced word salad in certain languages became fluent in those languages at sufficient scale, even without any targeted training on those languages. Nobody programmed these capabilities. They emerged from scale applied to a simple objective — predict the next token.</p>
+
+  <div class="callout">
+    <div class="callout-label">The emergence phenomenon</div>
+    <p>Scientists at Google and other labs documented over 100 capabilities that appear suddenly as language models scale, including multi-step reasoning, translation to low-resource languages, analogical reasoning, and basic mathematical problem solving. The phenomenon is not fully understood. The leading hypothesis is that some capabilities require a minimum level of internal model complexity to represent the relevant patterns — once the model is large enough, the patterns are discoverable; below that threshold, they're not. This is unlike traditional engineering where performance improves smoothly with resources. In foundation models, sometimes nothing works, then something suddenly works very well.</p>
+  </div>
+
+  <h2>Why foundation models are different infrastructure</h2>
+  <p>All previous ML was task-specific. A spam classifier is a spam classifier. A medical image reader reads medical images. A recommendation system recommends. To apply ML to a new task, you collected task-specific data, designed task-specific features, trained a task-specific model, and built task-specific infrastructure. Each new application was an independent engineering project of comparable difficulty.</p>
+  <p>Foundation models broke this paradigm completely. A single model trained on general data at scale can perform thousands of tasks — not through separate training for each, but because the capabilities needed for most tasks were implicitly learned during general training. The same GPT-4 that writes a cover letter can also debug code, translate legal contracts, summarize medical literature, explain quantum physics to a teenager, and compose a sonnet. Without being retrained for any of these tasks.</p>
+  <p>This is the infrastructure shift. Foundation models are not task-specific tools. They're general-purpose cognitive infrastructure — more analogous to the internet or the operating system than to a conventional software application. The economic and organizational implications are enormous: the bulk of a company's ML investment can now go into using and adapting a single shared foundation, rather than building and maintaining a portfolio of specialized models.</p>
+
+  <h2>Fine-tuning vs prompting vs RAG: the practitioner's decision framework</h2>
+  <p>If foundation models are the platform, practitioners need a principled way to choose how to adapt them for specific needs. Three major approaches exist, with meaningfully different tradeoffs.</p>
+
+  <div class="principle-list">
+    <div class="principle">
+      <div class="principle-title">Prompting (in-context learning)</div>
+      <div class="principle-desc">Write instructions, examples, and context in the prompt itself. No additional training. Fastest to deploy, most flexible, easiest to iterate on. Limits: constrained by context window size, no persistent learning, and the model's underlying knowledge is fixed at its training cutoff. Best for: tasks where the base model already has the necessary knowledge, prototyping new capabilities, and flexible ad-hoc use cases.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">RAG (Retrieval-Augmented Generation)</div>
+      <div class="principle-desc">Retrieve relevant documents from a knowledge base and inject them into the prompt at query time. The model has access to current, specific, and proprietary information beyond its training cutoff. No model weights are modified. Best for: questions requiring up-to-date or organization-specific knowledge — legal document Q&A, internal knowledge base search, product documentation assistance.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Fine-tuning</div>
+      <div class="principle-desc">Continued training on task-specific data modifies the model's weights. The model learns task-specific style, format, and specialized knowledge that becomes part of its default behavior. Higher cost and slower iteration than prompting. Best for: consistent formatting requirements, highly specialized domains where the base model lacks key knowledge, applications requiring very specific persona or style, and production systems where prompt cost at scale is prohibitive.</div>
+    </div>
+  </div>
+
+  <p>The decision is not binary — most production systems combine approaches. A customer service bot might be fine-tuned on the company's tone and product knowledge, augmented by RAG for real-time inventory and order status, and further guided by system prompts for each interaction type. The framework: use prompting first (cheapest and fastest), add RAG when knowledge currency matters, add fine-tuning when consistent behavior or specialized performance is required despite the cost.</p>
+
+  <h2>Multimodal models: intelligence across perception types</h2>
+  <p>Early language models handled only text. The frontier has moved decisively toward multimodal systems — models that process and generate across text, images, audio, video, and even structured data simultaneously.</p>
+  <p>GPT-4V can analyze photographs and answer questions about them. Gemini Ultra processes video natively, understanding sequences of events across frames. Claude can read and reason about charts, diagrams, and documents. Models now being developed process protein structures, satellite imagery, sensor streams, and musical audio as naturally as text.</p>
+  <p>The significance is not just expanded input capability. When a model can see and read simultaneously, it can solve problems that are genuinely multimodal in nature — analyzing an X-ray while referencing the patient's clinical notes, understanding a diagram while reading its caption, processing a video call while hearing the audio. These are the natural forms in which information presents itself to humans. Multimodal models close the gap between how AI systems receive information and how humans experience the world.</p>
+
+  <h2>AI agents and agentic behavior</h2>
+  <p>The most significant frontier of the current moment is not a better language model — it's AI agents: systems that take sequences of actions in the world over extended time horizons to accomplish goals, rather than simply responding to single queries.</p>
+  <p>An agent receives a goal ("research and draft a competitive analysis of these five companies"), selects actions to achieve it (search the web, read documents, extract data, structure findings, draft text), executes those actions using available tools, observes the results, and adjusts its approach based on what it learns. It loops through this process over many steps, potentially hours, with limited human involvement.</p>
+  <p>This is qualitatively different from chatbot interactions. The model is not responding — it's planning and acting. Mistakes compound. The model might search for wrong information, misinterpret results, and base subsequent actions on the error, propagating it through the whole workflow. The reliability requirements are completely different from single-turn Q&A.</p>
+  <p>Current production examples of agentic AI include GitHub Copilot Workspace (writes, tests, and iterates on code autonomously), Devin (end-to-end software engineering agent), and enterprise systems where AI agents process invoices, triage support tickets, and update CRM records without human intervention. The pattern is clear: AI systems are beginning to do multi-step knowledge work, not just answer questions about it.</p>
+
+  <div class="analogy">
+    <div class="analogy-label">The junior analyst analogy for agents</div>
+    <p>Think of a traditional LLM as a very knowledgeable reference book — you ask it a question, it answers. Think of an AI agent as a very capable junior analyst you've hired. You give them a project goal. They go off, research it, make decisions about what to look up and how to organize findings, draft materials, revise them, and come back with finished work. They can use tools — a web browser, a spreadsheet, an email client. They take actions, not just produce text. The difference between a reference book and an analyst is the difference between answering questions and accomplishing tasks.</p>
+  </div>
+
+  <h2>What ML practitioners need to understand about the paradigm shift</h2>
+  <p>The transition to foundation models changes what ML practitioners need to know, what skills matter, and how systems are built. Several shifts are worth internalizing explicitly.</p>
+  <p><strong>The feature engineering bottleneck is gone for text and vision.</strong> Traditional ML required careful manual feature engineering — deciding what the model should pay attention to. Foundation models ingest raw data and figure out what's relevant. The work moves upstream to data curation and downstream to evaluation.</p>
+  <p><strong>Evaluation is harder and more important.</strong> When a model can do anything, evaluating whether it does your specific thing well requires genuine effort. Benchmark contamination (the model saw the test questions during training), capability elicitation (how do you know the model can do something if you don't know how to ask?), and alignment evaluation (does the model do what you actually want, not just what you asked for?) are live research problems that every practitioner deploying foundation models needs to grapple with.</p>
+  <p><strong>Prompting is an engineering discipline.</strong> The quality of a foundation model's output is dramatically sensitive to how it's instructed. Prompt engineering — designing instructions, examples, and framing to reliably elicit desired behavior — is a real skill with real impact on production system performance. It's not magic, but it's not trivial either.</p>
+  <p><strong>The cost structure of ML changed.</strong> Traditional ML: most cost is in training. Foundation models: most cost is in inference. A company using GPT-4 for customer service pays per token generated. At scale, this can be enormous. Optimizing for inference efficiency — using smaller models where possible, caching common responses, batching requests — becomes a major engineering concern it wasn't in the traditional ML world.</p>
+
+  <div class="good">
+    <div class="good-label">The practitioner's north star in a fast-moving landscape</div>
+    <p>The specific models, benchmarks, and architectures dominating discussion today will be different in two years. What won't change: the importance of clear problem definition, principled evaluation, and understanding what a system is actually doing versus what you hope it's doing. The practitioners who navigate the frontier best are not those who know the most about current models — they're those who can ask the right questions about any system: What is it optimizing for? What are its failure modes? How would I know if it was wrong? How would I measure if it's actually helping?</p>
+  </div>
+
+  <div class="cta-box">
+    <div class="cta-box-eyebrow">Final Assessment · Expert Track</div>
+    <div class="cta-box-title">You've completed all 10 modules</div>
+    <div class="cta-box-sub">Test your understanding across the entire Machine Learning Explained course. 25 randomized questions. You need 70% to earn your certificate. Questions cover concepts, applications, and scenario-based reasoning — not just recall.</div>
+    <a href="quiz-ml.html" class="cta-box-btn">Take the Final Assessment →</a>
+  </div>
+
+</div>
+</main>
+</div>
+
+<div class="sticky-bar" id="sticky-bar">
+  <div class="sticky-bar-reading" id="sticky-reading">Read to the end to complete the course</div>
+  <div class="sticky-bar-track"><div class="sticky-bar-fill" id="sticky-fill"></div></div>
+  <div class="sticky-bar-label" id="sticky-label">0%</div>
+  <button class="sticky-bar-btn" id="sticky-btn" onclick="completeAndNext()">Take the Final Assessment →</button>
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import { getFirestore, doc, setDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  const app=initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+  const auth=getAuth(app);const db=getFirestore(app);
+  let currentUser=null;
+  onAuthStateChanged(auth,u=>{currentUser=u;});
+  window.toggleTheme=function(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='☾'):(h.setAttribute('data-theme','dark'),i.textContent='☀');};
+  window.addEventListener('scroll',()=>{const d=document.documentElement,s=d.scrollTop||document.body.scrollTop,t=d.scrollHeight-d.clientHeight;document.getElementById('progress').style.width=(s/t*100)+'%';});
+  let unlocked=false;
+  function updateScrollProgress(){
+    const pct=Math.min(100,Math.round(((window.scrollY+window.innerHeight)/document.documentElement.scrollHeight)*100));
+    const fill=document.getElementById('sticky-fill'),label=document.getElementById('sticky-label'),btn=document.getElementById('sticky-btn'),reading=document.getElementById('sticky-reading');
+    if(fill)fill.style.width=pct+'%';if(label)label.textContent=pct+'%';
+    if(pct>=95&&!unlocked){unlocked=true;if(btn)btn.style.display='block';if(reading)reading.style.display='none';if(fill)fill.style.background='#22c55e';if(label)label.style.color='#22c55e';}
+  }
+  window.addEventListener('scroll',updateScrollProgress);updateScrollProgress();
+  window.completeAndNext=async function(){
+    if(currentUser){try{await setDoc(doc(db,'users',currentUser.uid),{mlModules:arrayUnion('m10')},{merge:true});}catch(e){}}
+    window.location.href='quiz-ml.html';
+  };
+</script>
+</body>
+</html>

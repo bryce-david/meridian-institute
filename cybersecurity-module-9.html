@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 9: Zero-Trust and AI – AI in Cybersecurity | Meridian Institute</title>
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --bg:#0f1117;--surface:#1a1d27;--surface2:#222536;--border:#2a2d3e;
+    --text:#e2e8f0;--text-muted:#8892a4;--text-dim:#5a6478;
+    --accent:#0E7490;--accent-dim:rgba(14,116,144,0.1);--accent-dim2:rgba(14,116,144,0.05);
+    --callout-bg:rgba(14,116,144,0.07);--callout-border:rgba(14,116,144,0.25);
+    --good:#10b981;--good-bg:rgba(16,185,129,0.08);--good-border:rgba(16,185,129,0.25);
+    --warn:#f59e0b;--warn-bg:rgba(245,158,11,0.08);--warn-border:rgba(245,158,11,0.25);
+    --radius:10px;--nav-h:58px;--progress-h:3px
+  }
+  [data-theme="light"]{
+    --bg:#f4f6fb;--surface:#ffffff;--surface2:#eef1f8;--border:#d8dce8;
+    --text:#1a1d2e;--text-muted:#5a6278;--text-dim:#9097aa;
+    --accent:#0C6280;--accent-dim:rgba(12,98,128,0.08);--accent-dim2:rgba(12,98,128,0.04);
+    --callout-bg:rgba(12,98,128,0.06);--callout-border:rgba(12,98,128,0.22);
+    --good:#059669;--good-bg:rgba(5,150,105,0.07);--good-border:rgba(5,150,105,0.22);
+    --warn:#d97706;--warn-bg:rgba(217,119,6,0.07);--warn-border:rgba(217,119,6,0.22)
+  }
+  html{scroll-behavior:smooth}
+  body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.7;min-height:100vh}
+  a{color:inherit;text-decoration:none}
+
+  #top-progress{position:fixed;top:0;left:0;width:0%;height:var(--progress-h);background:var(--accent);z-index:1000;transition:width .1s linear}
+
+  nav{position:fixed;top:var(--progress-h);left:0;right:0;height:var(--nav-h);background:rgba(15,17,23,0.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 24px;gap:0;z-index:900}
+  [data-theme="light"] nav{background:rgba(244,246,251,0.92)}
+  .nav-logo{font-size:1.1rem;font-weight:800;color:var(--accent);letter-spacing:-0.5px;background:var(--accent-dim);border:1px solid var(--callout-border);width:34px;height:34px;display:flex;align-items:center;justify-content:center;border-radius:8px;flex-shrink:0}
+  .nav-divider{width:1px;height:22px;background:var(--border);margin:0 14px}
+  .nav-back{font-size:.82rem;color:var(--text-muted);transition:color .2s}
+  .nav-back:hover{color:var(--accent)}
+  .nav-label{font-size:.82rem;color:var(--text-dim);margin-left:auto;margin-right:12px}
+  .theme-btn{background:var(--surface2);border:1px solid var(--border);color:var(--text-muted);padding:5px 10px;border-radius:6px;cursor:pointer;font-size:.78rem;transition:all .2s}
+  .theme-btn:hover{border-color:var(--accent);color:var(--accent)}
+
+  .page-wrapper{display:flex;margin-top:calc(var(--nav-h) + var(--progress-h));min-height:calc(100vh - var(--nav-h) - var(--progress-h))}
+
+  .sidebar{width:270px;flex-shrink:0;position:sticky;top:calc(var(--nav-h) + var(--progress-h));height:calc(100vh - var(--nav-h) - var(--progress-h));overflow-y:auto;padding:24px 16px;border-right:1px solid var(--border);display:flex;flex-direction:column;gap:4px}
+  .sidebar::-webkit-scrollbar{width:4px}
+  .sidebar::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
+  .sidebar-course-label{font-size:.7rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text-dim);padding:0 8px;margin-bottom:8px}
+  .sidebar-link{display:flex;align-items:center;gap:10px;padding:7px 10px;border-radius:7px;font-size:.82rem;color:var(--text-muted);transition:all .2s;cursor:pointer;border:1px solid transparent}
+  .sidebar-link:hover{background:var(--accent-dim);color:var(--text)}
+  .sidebar-link.active{background:var(--accent-dim);color:var(--accent);border-color:rgba(14,116,144,0.2);font-weight:600}
+  .sidebar-num{font-size:.72rem;color:var(--text-dim);width:18px;text-align:right;flex-shrink:0}
+  .sidebar-link.active .sidebar-num{color:var(--accent)}
+  .sidebar-divider{height:1px;background:var(--border);margin:8px 0}
+  .sidebar-assess{display:flex;align-items:center;gap:10px;padding:7px 10px;border-radius:7px;font-size:.82rem;color:var(--text-muted);transition:all .2s;margin-top:2px}
+  .sidebar-assess:hover{background:var(--accent-dim);color:var(--accent)}
+  .sidebar-progress-section{margin-top:auto;padding-top:16px;border-top:1px solid var(--border)}
+  .sidebar-progress-label{font-size:.72rem;color:var(--text-dim);margin-bottom:6px}
+  .sidebar-progress-track{height:4px;background:var(--surface2);border-radius:2px;overflow:hidden}
+  .sidebar-progress-fill{height:100%;background:var(--accent);border-radius:2px;width:90%}
+
+  main{flex:1;padding:48px 56px 120px;max-width:820px}
+  @media(max-width:900px){main{padding:32px 20px 120px}.sidebar{display:none}}
+
+  .module-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:22px;flex-wrap:wrap}
+  .module-tag{font-size:.72rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;background:var(--accent-dim);color:var(--accent);padding:4px 10px;border-radius:4px;border:1px solid rgba(14,116,144,0.2)}
+  .module-meta{font-size:.78rem;color:var(--text-dim)}
+
+  h1{font-size:2rem;font-weight:800;line-height:1.25;letter-spacing:-.03em;margin-bottom:18px;color:var(--text)}
+  .intro-text{font-size:1.05rem;color:var(--text-muted);line-height:1.75;margin-bottom:36px;padding-bottom:28px;border-bottom:1px solid var(--border)}
+  h2{font-size:1.2rem;font-weight:700;margin:36px 0 14px;color:var(--text);letter-spacing:-.02em}
+  p{color:var(--text-muted);margin-bottom:16px;font-size:.95rem;line-height:1.8}
+  strong{color:var(--text);font-weight:600}
+
+  .callout{background:var(--callout-bg);border-left:3px solid var(--accent);border-radius:0 var(--radius) var(--radius) 0;padding:16px 20px;margin:24px 0;font-size:.9rem;color:var(--text-muted)}
+  .callout strong{display:block;color:var(--accent);font-size:.78rem;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px}
+
+  .good-box{background:var(--good-bg);border:1px solid var(--good-border);border-radius:var(--radius);padding:16px 20px;margin:20px 0;font-size:.9rem;color:var(--text-muted)}
+  .good-box strong{display:block;color:var(--good);font-size:.78rem;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px}
+  .warn-box{background:var(--warn-bg);border:1px solid var(--warn-border);border-radius:var(--radius);padding:16px 20px;margin:20px 0;font-size:.9rem;color:var(--text-muted)}
+  .warn-box strong{display:block;color:var(--warn);font-size:.78rem;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px}
+
+  .principle-list{list-style:none;display:flex;flex-direction:column;gap:12px;margin:20px 0}
+  .principle-list li{display:flex;gap:14px;align-items:flex-start;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px;font-size:.9rem;color:var(--text-muted)}
+  .principle-list li .pill{background:var(--accent-dim);color:var(--accent);border:1px solid rgba(14,116,144,0.2);font-size:.72rem;font-weight:700;padding:3px 9px;border-radius:4px;white-space:nowrap;flex-shrink:0;margin-top:1px}
+
+  .sticky-bar{position:fixed;bottom:0;left:0;right:0;background:rgba(15,17,23,0.96);backdrop-filter:blur(12px);border-top:1px solid var(--border);padding:12px 24px;display:flex;align-items:center;gap:16px;z-index:800}
+  [data-theme="light"] .sticky-bar{background:rgba(244,246,251,0.96)}
+  .sticky-msg{font-size:.82rem;color:var(--text-muted);flex-shrink:0}
+  .sticky-track{flex:1;height:4px;background:var(--surface2);border-radius:2px;overflow:hidden}
+  .sticky-fill{height:100%;background:var(--accent);border-radius:2px;width:0%;transition:width .2s}
+  .sticky-pct{font-size:.78rem;color:var(--text-dim);flex-shrink:0;min-width:36px;text-align:right}
+  .sticky-btn{background:var(--accent);color:#fff;border:none;padding:9px 20px;border-radius:7px;font-size:.85rem;font-weight:600;cursor:pointer;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .3s,transform .2s;transform:translateY(4px)}
+  .sticky-btn.visible{opacity:1;pointer-events:auto;transform:translateY(0)}
+  .sticky-btn:hover{filter:brightness(1.1)}
+</style>
+</head>
+<body>
+
+<div id="top-progress"></div>
+
+<nav>
+  <a href="index.html" class="nav-logo">M</a>
+  <div class="nav-divider"></div>
+  <a href="courses.html" class="nav-back">← AI in Cybersecurity</a>
+  <div class="nav-divider"></div>
+  <span class="nav-label">Module 9</span>
+  <button class="theme-btn" onclick="toggleTheme()">Toggle Theme</button>
+</nav>
+
+<div class="page-wrapper">
+
+  <aside class="sidebar">
+    <div class="sidebar-course-label">AI in Cybersecurity</div>
+
+    <a href="cybersecurity-module-1.html" class="sidebar-link"><span class="sidebar-num">1</span>The AI-Driven Threat Landscape</a>
+    <a href="cybersecurity-module-2.html" class="sidebar-link"><span class="sidebar-num">2</span>Intrusion Detection and AI</a>
+    <a href="cybersecurity-module-3.html" class="sidebar-link"><span class="sidebar-num">3</span>AI-Powered Social Engineering</a>
+    <a href="cybersecurity-module-4.html" class="sidebar-link"><span class="sidebar-num">4</span>Malware Analysis with ML</a>
+    <a href="cybersecurity-module-5.html" class="sidebar-link"><span class="sidebar-num">5</span>Vulnerability Assessment and AI</a>
+    <a href="cybersecurity-module-6.html" class="sidebar-link"><span class="sidebar-num">6</span>Adversarial AI Attacks</a>
+    <a href="cybersecurity-module-7.html" class="sidebar-link"><span class="sidebar-num">7</span>AI in SOC Operations</a>
+    <a href="cybersecurity-module-8.html" class="sidebar-link"><span class="sidebar-num">8</span>Privacy and Data Protection</a>
+    <a href="cybersecurity-module-9.html" class="sidebar-link active"><span class="sidebar-num">9</span>Zero-Trust and AI</a>
+    <a href="cybersecurity-module-10.html" class="sidebar-link"><span class="sidebar-num">10</span>The Future of AI Security</a>
+
+    <div class="sidebar-divider"></div>
+    <a href="quiz-cybersecurity.html" class="sidebar-assess">&#9654; Final Assessment</a>
+
+    <div class="sidebar-progress-section">
+      <div class="sidebar-progress-label">9 / 10 modules complete</div>
+      <div class="sidebar-progress-track"><div class="sidebar-progress-fill"></div></div>
+    </div>
+  </aside>
+
+  <main id="main-content">
+    <div class="module-eyebrow">
+      <span class="module-tag">Module 9</span>
+      <span class="module-meta">AI in Cybersecurity &nbsp;·&nbsp; ~19 min read</span>
+    </div>
+
+    <h1>Zero-Trust Architectures and AI</h1>
+
+    <p class="intro-text">The perimeter is dead. For decades, enterprise security rested on a foundational assumption: if you could establish a secure boundary around your network, everything inside could be trusted. That assumption has been systematically dismantled by cloud computing, mobile work, third-party integrations, and sophisticated adversaries who have mastered the art of appearing legitimate once inside. Zero-trust architecture replaces the perimeter model with a more rigorous principle — and AI is what makes zero-trust scalable, adaptive, and practical.</p>
+
+    <h2>The Zero-Trust Principle: Never Trust, Always Verify</h2>
+    <p>Zero-trust is built on a deceptively simple mandate: no user, device, or network connection should be trusted by default, regardless of where it originates. Every access request must be verified, authorized based on the minimum privilege needed, and continuously monitored for signs of compromise. The phrase "never trust, always verify" was popularized by Forrester analyst John Kindervag in 2010, but the underlying concept gained urgency as high-profile breaches repeatedly demonstrated that perimeter defenses could be bypassed.</p>
+
+    <p>The model emerged from a recognition that the traditional "castle and moat" approach to network security was fundamentally broken. Attackers who breached the perimeter — through phishing, stolen credentials, supply chain compromise, or exploited vulnerabilities — found themselves in an environment of implicit trust where lateral movement was relatively unrestricted. The SolarWinds attack, one of the most significant supply chain compromises in history, demonstrated exactly this dynamic: attackers who gained access through a trusted software update could move laterally across government and enterprise networks for months because internal systems trusted each other implicitly.</p>
+
+    <div class="callout">
+      <strong>Historical Context</strong>
+      Google's BeyondCorp initiative, launched in 2011 and published in a series of academic papers starting in 2014, was the first large-scale production implementation of zero-trust principles. By 2017, the majority of Google's employees accessed internal applications over the internet with no VPN, authenticated by device certificates and identity credentials rather than network location. BeyondCorp became the template that defined the field.
+    </div>
+
+    <h2>Why Perimeter-Based Security Failed</h2>
+    <p>The perimeter security model assumed that the threat was outside and the organization was inside. This assumption failed on multiple dimensions simultaneously. <strong>Cloud adoption</strong> dissolved the concept of a network interior — when applications and data live in AWS, Azure, and SaaS platforms, there is no perimeter to defend. <strong>Remote work</strong> placed employees, and their devices, in environments entirely outside organizational control. <strong>Third-party integrations</strong> created trusted connections to partners, vendors, and contractors whose own security postures were often unknown. <strong>Credential theft</strong> enabled attackers to present themselves as legitimate insiders, bypassing perimeter controls entirely.</p>
+
+    <p>The consequence of these failures was not just security incidents — it was a specific pattern of security incidents characterized by prolonged dwell time and devastating lateral movement. The average time for attackers to move from initial compromise to accessing their target data fell to under 24 hours in many campaigns. Organizations found themselves detecting breaches weeks or months after they occurred, at which point the damage was already done. A security model that cannot contain the blast radius of a compromised credential is not a security model — it is an illusion.</p>
+
+    <h2>The Five Pillars of Zero-Trust</h2>
+    <p>CISA's Zero Trust Maturity Model organizes zero-trust implementation around five core pillars. AI plays distinct roles in each.</p>
+
+    <ul class="principle-list">
+      <li><span class="pill">Identity</span>Identity is the new perimeter. Every access request must be tied to a verified identity with appropriate attributes. AI enhances identity verification through behavioral biometrics and continuous risk scoring, detecting when an authenticated identity exhibits behaviors inconsistent with its baseline — even if the underlying credentials are valid.</li>
+      <li><span class="pill">Devices</span>The health and compliance posture of a device affects its trustworthiness. AI-powered endpoint detection analyzes device telemetry continuously, flagging deviations that suggest compromise — such as a device whose security controls were disabled, whose location is inconsistent with expected patterns, or whose software configuration has changed unexpectedly.</li>
+      <li><span class="pill">Networks</span>Zero-trust rejects implicit network trust, requiring every communication to be authorized. AI enables microsegmentation at scale by analyzing traffic patterns to understand which systems actually need to communicate, recommending segment boundaries, and detecting when traffic deviates from established baselines.</li>
+      <li><span class="pill">Applications</span>Application access is granted based on identity, device health, and context — not network location. AI-powered policy decision points evaluate these factors dynamically, adjusting access decisions in real time as context changes. A user accessing a sensitive application from an unmanaged device in an unusual location may receive reduced access rights automatically.</li>
+      <li><span class="pill">Data</span>Data protection in zero-trust means classifying data by sensitivity, applying protection policies, and monitoring access continuously. AI enables automated data discovery and classification at the scale required by modern enterprise environments, identifying sensitive data and applying appropriate controls without relying on manual tagging.</li>
+    </ul>
+
+    <h2>AI for Continuous Risk Scoring and Adaptive Authentication</h2>
+    <p>Static authentication — verify once at login, trust until logout — is incompatible with zero-trust principles. A user who authenticates legitimately at 9 AM can have their credential stolen at 10 AM. A device that was healthy when it logged in can be compromised by malware an hour later. Zero-trust requires continuous verification, and continuous verification at enterprise scale requires AI.</p>
+
+    <p>Continuous risk scoring assigns every active session a dynamic risk score based on evolving contextual signals. The score draws from device health telemetry, user behavior patterns, network context, threat intelligence feeds, and any signals of anomaly detected during the session. When the risk score exceeds defined thresholds, adaptive authentication triggers additional verification: step-up MFA, session termination, or automatic access restriction to lower-risk resources.</p>
+
+    <p>Microsoft's Conditional Access, Okta's Adaptive MFA, and CrowdStrike Falcon's identity protection all implement variants of this model. The AI component learns normal access patterns for each user and device combination, making risk scoring accurate enough to avoid excessive friction for legitimate users while maintaining sensitivity to genuine anomalies. A salesperson accessing the CRM from their usual laptop gets seamless access. The same account accessing financial records from a new device in a foreign country at 3 AM triggers immediate step-up authentication.</p>
+
+    <div class="good-box">
+      <strong>Measured Outcome</strong>
+      Organizations deploying AI-driven adaptive authentication have reported reducing phishing-related account takeovers by more than 99 percent, according to Microsoft's internal data from Azure AD customers. The combination of risk-based signals and step-up verification makes credential theft economically unattractive — the attacker must also compromise the device, the biometric pattern, and any additional factors simultaneously.
+    </div>
+
+    <h2>ML-Powered Policy Decision Points</h2>
+    <p>The Policy Decision Point (PDP) is the brain of a zero-trust architecture — the component that evaluates access requests and renders authorization decisions. In a traditional system, PDPs apply static policy rules: user X is allowed access to resource Y if condition Z is true. AI transforms the PDP from a rule evaluator into a risk-aware decision engine.</p>
+
+    <p>Machine learning models powering PDPs can evaluate dozens of contextual signals simultaneously and produce probabilistic access decisions that adapt to context rather than relying on binary allow/deny rules. A PDP might decide that a given access request should be allowed with full privileges under normal conditions, allowed with read-only access if the device health score is reduced, allowed with MFA challenge if the location is unusual, or denied entirely if multiple risk signals appear simultaneously.</p>
+
+    <p>This dynamic policy model requires careful design to avoid both excessive restriction — which creates user frustration and drives shadow IT — and excessive permissiveness — which defeats the purpose of zero-trust. The best ML-powered PDPs are trained on historical access patterns and tuned using feedback from security analysts who can label false positives and false negatives, creating a reinforcement loop that continuously improves policy accuracy.</p>
+
+    <h2>AI for Microsegmentation Recommendations</h2>
+    <p>Microsegmentation divides a network into small, isolated zones, limiting the blast radius of any single compromise. If an attacker compromises a workstation in the marketing department, microsegmentation should prevent them from reaching financial databases, production servers, or privileged management systems. Implementing microsegmentation effectively requires deep understanding of which systems legitimately need to communicate — and mapping those communication patterns in complex environments is precisely what AI excels at.</p>
+
+    <p>AI-driven network analysis tools observe actual traffic patterns over a period of weeks or months, building a comprehensive map of legitimate communication paths. From this map, they generate segmentation recommendations: proposed firewall rules, network policies, and software-defined networking configurations that allow observed legitimate traffic while blocking everything else. What would previously have taken months of manual network analysis and extensive disruption to implement can be done in weeks, with AI handling the mapping and initial policy generation while human engineers validate and refine.</p>
+
+    <div class="callout">
+      <strong>Implementation Note</strong>
+      Begin microsegmentation in shadow mode — implement AI-generated policies in monitoring-only mode and alert on violations without blocking for several weeks. This reveals legitimate traffic patterns that the initial AI analysis missed, preventing operational disruptions when enforcement mode is activated. It also builds confidence in the policy recommendations before applying them in production.
+    </div>
+
+    <h2>Behavioral Biometrics and Continuous Authentication</h2>
+    <p>Behavioral biometrics represent perhaps the most seamlessly continuous form of authentication available. Rather than challenging users to prove their identity through explicit authentication actions, behavioral biometric systems continuously model how a user naturally interacts with their device — typing rhythm, mouse movement patterns, touchscreen pressure and swipe dynamics, gait patterns on mobile devices — and detect when those patterns deviate from the established baseline.</p>
+
+    <p>These signals are genuinely difficult to spoof. An attacker who steals credentials and gains physical access to a device will type differently than the legitimate user, move the mouse differently, and interact with the touchscreen differently. Behavioral biometric systems can detect these deviations with high accuracy within minutes of a session beginning, triggering re-authentication challenges or session termination before significant damage can occur.</p>
+
+    <p>The challenge is that behavioral patterns change legitimately over time — due to injury, fatigue, software updates, or new hardware. AI models must balance sensitivity to genuine anomalies with tolerance for natural variation. Continuous retraining on recent behavioral data, combined with ensemble approaches that aggregate signals across multiple biometric dimensions, achieves this balance in production deployments.</p>
+
+    <h2>Zero-Trust for Cloud and Hybrid Environments</h2>
+    <p>Most organizations operate in hybrid environments where applications and data span on-premises systems, multiple cloud providers, and SaaS platforms. Implementing zero-trust across this heterogeneous landscape requires solutions that work consistently across environments, rather than separate tools optimized for each platform.</p>
+
+    <p>Cloud-native zero-trust solutions like Zscaler's Zero Trust Exchange, Palo Alto Networks' Prisma Access, and Cloudflare's Zero Trust platform create a software-defined security fabric that applies consistent policy regardless of where resources live or how users connect. AI components in these platforms handle dynamic threat scoring, anomaly detection, and policy adaptation at the scale required by global organizations with thousands of simultaneous sessions.</p>
+
+    <div class="warn-box">
+      <strong>Common Pitfall</strong>
+      Organizations frequently make the mistake of implementing zero-trust only for internet-facing access while retaining implicit trust within their internal networks. This "zero-trust for VPN replacement" approach fails to address the lateral movement risk that zero-trust is specifically designed to solve. True zero-trust requires consistent verification for all access, including server-to-server communication and privileged administrative access within the data center.
+    </div>
+
+    <h2>Zero-Trust Maturity Models and Implementation Challenges</h2>
+    <p>CISA's Zero Trust Maturity Model defines progression across five stages for each pillar: traditional, initial, advanced, and optimal. Most organizations entering a zero-trust journey begin at "traditional" — relying on perimeter defenses with limited identity verification and no microsegmentation. Reaching "optimal" maturity requires years of sustained effort and significant organizational transformation alongside technology investment.</p>
+
+    <p>AI's role in reducing implementation friction is increasingly recognized as critical to this journey. Manual implementation of zero-trust policies — crafting segmentation rules, defining access policies, tuning authentication requirements — is enormously labor-intensive. AI automation reduces this burden by generating initial policy sets from observed behavior, suggesting optimizations to reduce false positive rates, and continuously adapting policies as the environment evolves.</p>
+
+    <p>The organizational challenges of zero-trust are often harder than the technical ones. Users accustomed to seamless network access resist additional authentication requirements. IT teams accustomed to network-level controls must develop new operational models. AI helps here too: by making adaptive authentication invisible for the vast majority of normal access requests — reserving step-up challenges only for genuinely risky situations — it makes zero-trust practically invisible to users who are behaving normally, reducing resistance and accelerating adoption.</p>
+
+    <p>The shift to zero-trust is not a project with a completion date — it is an ongoing organizational posture. The environments it must protect continue to evolve: new cloud services, new devices, new collaboration platforms, new threats. AI provides the adaptive intelligence that allows zero-trust policies to evolve at the speed of the environment, maintaining effective protection without requiring constant manual intervention. In this sense, AI is not just an enhancement to zero-trust — it is what makes zero-trust viable at the scale and pace of modern enterprise computing.</p>
+
+  </main>
+</div>
+
+<div class="sticky-bar">
+  <span class="sticky-msg">Your progress</span>
+  <div class="sticky-track"><div class="sticky-fill" id="sticky-fill"></div></div>
+  <span class="sticky-pct" id="sticky-pct">0%</span>
+  <button class="sticky-btn" id="sticky-btn" onclick="completeAndNext()">Module 10: The Future of AI Security &rarr;</button>
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import { getFirestore, doc, setDoc, updateDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",
+    authDomain: "meridian-institute.firebaseapp.com",
+    projectId: "meridian-institute",
+    storageBucket: "meridian-institute.firebasestorage.app",
+    messagingSenderId: "355371012929",
+    appId: "1:355371012929:web:244fc2f15ee8ac656887c0"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+
+  window._firebaseAuth = auth;
+  window._firebaseDb = db;
+  window._arrayUnion = arrayUnion;
+
+  window.completeAndNext = async function() {
+    const user = auth.currentUser;
+    if (user) {
+      try {
+        const ref = doc(db, "users", user.uid);
+        await updateDoc(ref, { cybersecurityModules: arrayUnion('m9') });
+      } catch(e) {
+        try {
+          const ref = doc(db, "users", user.uid);
+          await setDoc(ref, { cybersecurityModules: ['m9'] }, { merge: true });
+        } catch(e2) { console.error(e2); }
+      }
+    }
+    window.location.href = "cybersecurity-module-10.html";
+  };
+</script>
+
+<script>
+  function toggleTheme() {
+    const html = document.documentElement;
+    html.setAttribute('data-theme', html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+  }
+
+  function updateProgress() {
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const pct = docHeight > 0 ? Math.min(100, (scrollTop / docHeight) * 100) : 0;
+
+    document.getElementById('top-progress').style.width = pct + '%';
+    document.getElementById('sticky-fill').style.width = pct + '%';
+    document.getElementById('sticky-pct').textContent = Math.round(pct) + '%';
+
+    const btn = document.getElementById('sticky-btn');
+    if (pct >= 95) { btn.classList.add('visible'); } else { btn.classList.remove('visible'); }
+  }
+
+  window.addEventListener('scroll', updateProgress, { passive: true });
+  updateProgress();
+</script>
+</body>
+</html>

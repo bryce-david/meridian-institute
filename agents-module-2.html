@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 2: The Agent Loop — Agentic AI and Autonomous Systems — Meridian Institute of AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#6B21A8;--accent-dim:rgba(107,33,168,0.1);--accent-dim2:rgba(107,33,168,0.05);--nav-bg:rgba(8,8,8,0.9);--callout-bg:rgba(107,33,168,0.07);--callout-border:rgba(107,33,168,0.25);--good-bg:rgba(34,197,94,0.07);--good-border:rgba(34,197,94,0.2);--warn-bg:rgba(251,146,60,0.07);--warn-border:rgba(251,146,60,0.2);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#581C87;--accent-dim:rgba(88,28,135,0.08);--accent-dim2:rgba(88,28,135,0.04);--nav-bg:rgba(250,250,248,0.9);--callout-bg:rgba(88,28,135,0.05);--callout-border:rgba(88,28,135,0.2);--good-bg:rgba(22,163,74,0.06);--good-border:rgba(22,163,74,0.2);--warn-bg:rgba(234,88,12,0.05);--warn-border:rgba(234,88,12,0.2);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;overflow-x:hidden;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.7;overflow-x:hidden;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}
+  .nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}
+  .nav-back{font-size:13px;color:var(--text-2);text-decoration:none;transition:color 0.2s;}
+  .nav-back:hover{color:var(--text);}
+  .nav-label{font-size:13px;color:var(--text-3);}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;transition:all 0.2s;}
+  .theme-toggle:hover{background:var(--bg-3);color:var(--text);}
+  .progress-bar{position:fixed;top:60px;left:0;right:0;z-index:99;height:2px;background:var(--border);}
+  .progress-fill{height:100%;background:var(--accent);width:0%;transition:width 0.1s;}
+  .page-wrapper{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:100vh;padding-top:62px;overflow:hidden;}
+  .sidebar{position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto;border-right:1px solid var(--border);padding:32px 24px;background:var(--bg-2);}
+  .sidebar-course{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;}
+  .sidebar-course-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+  .sidebar-module{margin-bottom:4px;}
+  .sidebar-module-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:13px;color:var(--text-2);text-decoration:none;transition:all 0.2s;line-height:1.4;}
+  .sidebar-module-link:hover{background:var(--bg-3);color:var(--text);}
+  .sidebar-module-link.active{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-num{font-size:11px;font-weight:500;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--bg-4);color:var(--text-3);}
+  .sidebar-module-link.active .sidebar-num{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-divider{height:1px;background:var(--border);margin:20px 0;}
+  .sidebar-progress-label{font-size:12px;color:var(--text-3);margin-bottom:8px;display:flex;justify-content:space-between;}
+  .sidebar-progress-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sidebar-progress-fill{height:100%;width:20%;background:var(--accent);border-radius:2px;}
+  main{display:block;min-width:0;overflow:hidden;}
+  .content{max-width:760px;width:100%;padding:60px 64px 140px;margin:0 auto;}
+  .module-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+  .module-tag{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(107,33,168,0.2);padding:4px 12px;border-radius:100px;}
+  .module-meta{font-size:12px;color:var(--text-3);}
+  h1{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1.05;letter-spacing:-0.02em;color:var(--text);margin-bottom:24px;}
+  .intro-text{font-size:19px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+  h2{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:400;color:var(--text);margin:52px 0 18px;line-height:1.2;}
+  h3{font-size:16px;font-weight:500;color:var(--text);margin:32px 0 12px;}
+  p{font-size:16px;font-weight:300;color:var(--text-2);line-height:1.8;margin-bottom:20px;}
+  strong{font-weight:500;color:var(--text);}
+  em{font-style:italic;}
+  ul,ol{margin:0 0 20px 22px;color:var(--text-2);}
+  li{font-size:16px;font-weight:300;line-height:1.8;margin-bottom:8px;}
+  .callout{background:var(--callout-bg);border:1px solid var(--callout-border);border-radius:12px;padding:24px 28px;margin:32px 0;}
+  .callout-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+  .callout p{margin:0;font-size:15px;color:var(--text-2);}
+  .callout p+p{margin-top:12px;}
+  .good{background:var(--good-bg);border:1px solid var(--good-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .good-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#22c55e;margin-bottom:10px;}
+  .good p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn{background:var(--warn-bg);border:1px solid var(--warn-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .warn-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#fb923c;margin-bottom:10px;}
+  .warn p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn p+p{margin-top:12px;}
+  .analogy{background:var(--bg-2);border:1px solid var(--border);border-radius:12px;padding:28px;margin:28px 0;}
+  .analogy-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-3);margin-bottom:12px;}
+  .analogy p{margin:0;font-size:15px;color:var(--text-2);}
+  .principle-list{display:flex;flex-direction:column;gap:12px;margin:24px 0;}
+  .principle{background:var(--bg-2);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:0 12px 12px 0;padding:20px 24px;}
+  .principle-title{font-size:15px;font-weight:500;color:var(--text);margin-bottom:6px;}
+  .principle-desc{font-size:14px;color:var(--text-2);line-height:1.65;margin:0;}
+  .code-block{background:var(--bg-3);border:1px solid var(--border);border-radius:10px;padding:20px 24px;margin:24px 0;font-family:'Courier New',monospace;font-size:13px;color:var(--text-2);overflow-x:auto;line-height:1.7;}
+  .sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:var(--bg-2);border-top:1px solid var(--border-2);padding:14px 5%;display:flex;align-items:center;justify-content:space-between;gap:16px;backdrop-filter:blur(12px);}
+  .sticky-bar-track{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sticky-bar-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.2s;width:0%;}
+  .sticky-bar-label{font-size:12px;color:var(--text-3);white-space:nowrap;min-width:60px;text-align:right;}
+  .sticky-bar-btn{padding:10px 20px;border-radius:8px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;background:var(--accent);color:#fff;border:none;cursor:pointer;white-space:nowrap;transition:opacity 0.2s;display:none;}
+  .sticky-bar-btn:hover{opacity:0.88;}
+  .sticky-bar-reading{font-size:12px;color:var(--text-3);white-space:nowrap;}
+  @media(max-width:900px){.page-wrapper{grid-template-columns:1fr;}.sidebar{display:none;}.content{padding:40px 24px 120px;}h1{font-size:38px;}}
+  @media(max-width:600px){.content{padding:28px 16px 120px;}h1{font-size:30px;}h2{font-size:24px;}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="courses.html" class="nav-back">← Agentic AI and Autonomous Systems</a>
+    <div class="nav-divider"></div>
+    <span class="nav-label">Module 2</span>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">☀</span></button>
+</nav>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+
+<div class="page-wrapper">
+<aside class="sidebar">
+  <div class="sidebar-course">Expert Track</div>
+  <div class="sidebar-course-name">Agentic AI and Autonomous Systems</div>
+  <div class="sidebar-module"><a href="agents-module-1.html" class="sidebar-module-link"><span class="sidebar-num">1</span>What Are AI Agents?</a></div>
+  <div class="sidebar-module"><a href="agents-module-2.html" class="sidebar-module-link active"><span class="sidebar-num">2</span>The Agent Loop: Perceive, Reason, Act</a></div>
+  <div class="sidebar-module"><a href="agents-module-3.html" class="sidebar-module-link"><span class="sidebar-num">3</span>Tool Use and Function Calling</a></div>
+  <div class="sidebar-module"><a href="agents-module-4.html" class="sidebar-module-link"><span class="sidebar-num">4</span>Memory Systems in AI Agents</a></div>
+  <div class="sidebar-module"><a href="agents-module-5.html" class="sidebar-module-link"><span class="sidebar-num">5</span>Multi-Agent Architectures</a></div>
+  <div class="sidebar-module"><a href="agents-module-6.html" class="sidebar-module-link"><span class="sidebar-num">6</span>Planning and Task Decomposition</a></div>
+  <div class="sidebar-module"><a href="agents-module-7.html" class="sidebar-module-link"><span class="sidebar-num">7</span>Retrieval-Augmented Generation</a></div>
+  <div class="sidebar-module"><a href="agents-module-8.html" class="sidebar-module-link"><span class="sidebar-num">8</span>Agent Safety and Reliability</a></div>
+  <div class="sidebar-module"><a href="agents-module-9.html" class="sidebar-module-link"><span class="sidebar-num">9</span>Building with Agent Frameworks</a></div>
+  <div class="sidebar-module"><a href="agents-module-10.html" class="sidebar-module-link"><span class="sidebar-num">10</span>The Future of Autonomous AI</a></div>
+  <div class="sidebar-module"><a href="quiz-agents.html" class="sidebar-module-link" style="color:var(--accent);margin-top:4px;"><span class="sidebar-num" style="background:var(--accent-dim);color:var(--accent);">✦</span>Final Assessment</a></div>
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-progress-label"><span>Course progress</span><span style="color:var(--accent);">2 / 10</span></div>
+  <div class="sidebar-progress-track"><div class="sidebar-progress-fill"></div></div>
+</aside>
+
+<main>
+<div class="content">
+  <div class="module-eyebrow"><span class="module-tag">Module 2</span><span class="module-meta">24 min read · Agentic AI and Autonomous Systems</span></div>
+  <h1>The Agent Loop: Perceive, Reason, Act</h1>
+
+  <p class="intro-text">Every AI agent, from the simplest to the most sophisticated, executes some variant of the same fundamental cycle: perceive the current state of the world, reason about what that state means and what should be done, take an action, observe what changed, and repeat. This observe-think-act loop is not an implementation detail — it is the defining structure of agency itself. Understanding it deeply, in all its nuances and variations, is the foundation for building agents that work and diagnosing agents that do not.</p>
+
+  <h2>The observe-think-act cycle unpacked</h2>
+  <p>The canonical agent loop has three phases. In the <strong>observe</strong> phase, the agent gathers information about its current state — this might mean reading the output of a previous tool call, loading the contents of a file, querying a database, or simply reading the most recent message in a conversation. The key insight is that observation is always mediated: agents do not perceive the world directly but through specific channels that return specific data types. What an agent can observe is determined entirely by its toolset and the information placed in its context window.</p>
+  <p>In the <strong>think</strong> phase, the language model processes the current context — everything the agent knows, has done, and has observed — and produces a response. This response may include reasoning (explicit chain-of-thought), a decision about which action to take, parameters for that action, and any other text the model generates. The think phase is where the model's reasoning capability determines the quality of the agent's decisions. A better model, given the same context, will generally make better decisions — but a well-designed context can compensate for a weaker model to a significant degree.</p>
+  <p>In the <strong>act</strong> phase, the agent executes whatever action the model decided on. This might be calling a tool, sending a message, writing to a file, or — crucially — deciding that the task is complete and returning a final answer. The act phase is where the agent interacts with the external world, and where the consequences of decisions become real.</p>
+
+  <div class="callout">
+    <div class="callout-label">The Loop as Code</div>
+    <p>In its simplest form, the agent loop is literally a while loop: while the task is not complete, observe the current state, call the model, parse the response, execute any actions, add the results to context, and loop. The sophistication of an agentic system lies not in replacing this loop but in enriching each phase — more sophisticated observation, better context management, more careful action parsing, richer tool ecosystems.</p>
+  </div>
+
+  <h2>How agents process environmental state</h2>
+  <p>The "environment" of an AI agent is the totality of what the agent can observe. For a code-writing agent, the environment might be the codebase it is editing, the terminal output of tests it runs, and the error messages produced by the compiler. For a research agent, the environment might be web search results, document contents, and the conversation history. For a computer-use agent, the environment might be screenshots of the current screen state, rendered as image tokens alongside text.</p>
+  <p>State representation is one of the most important design decisions in agent architecture. The agent can only reason about what is in its context window — everything outside the context is invisible until the agent explicitly retrieves it. This creates a fundamental tension: you want the context to contain enough information for good decisions, but context windows are finite and expensive, and too much irrelevant information degrades reasoning quality.</p>
+  <p>Expert practitioners develop a clear sense of what state their agents actually need. A coding agent reviewing a bug does not need the entire codebase in context — it needs the file where the bug is, the related test file, and perhaps the relevant parts of the documentation. Providing all 50,000 lines of the codebase would overwhelm the context and degrade performance. Selective state representation — deciding what to include and exclude — is as important as any other architectural decision.</p>
+
+  <h2>How agents decide what to do</h2>
+  <p>The decision-making process inside the think phase is where the language model's capability most directly determines agent quality. The model reads the current context and must produce a decision: what action to take next, or whether to terminate and return an answer. Different prompting strategies produce different decision quality:</p>
+
+  <div class="principle-list">
+    <div class="principle">
+      <div class="principle-title">Direct action selection</div>
+      <div class="principle-desc">The model reads context and immediately outputs an action — no intermediate reasoning. Fast and token-efficient, but produces lower-quality decisions on complex tasks because the model has no explicit reasoning trace to build on. Appropriate for simple, well-defined tasks.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Chain-of-thought reasoning</div>
+      <div class="principle-desc">The model reasons through the problem step-by-step in text before committing to an action. The reasoning trace is part of the output — the model thinks out loud. This significantly improves decision quality on complex tasks because the explicit reasoning reduces errors that arise from making implicit leaps.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">ReAct (Reason + Act)</div>
+      <div class="principle-desc">Interleaved reasoning and action: the model thinks, then acts, then thinks about what it observed, then acts again. This is the dominant paradigm for tool-using agents because it allows the model to incorporate tool results into its reasoning before deciding the next action. Produces higher-quality multi-step reasoning than either pure action or pure reasoning approaches alone.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Plan-then-execute</div>
+      <div class="principle-desc">The model first produces a complete plan for how to accomplish the task, then executes each step. Better for tasks where the structure is known in advance; less good for tasks where early actions produce information that should change the plan. Plan-then-execute agents often need replanning capability to handle discoveries.</div>
+    </div>
+  </div>
+
+  <h2>Action execution and feedback loops</h2>
+  <p>When an agent calls a tool, the orchestration layer executes that tool and returns the result. This result — whether it is a web page's HTML, a code execution output, a database query result, or an API response — is added to the agent's context and becomes part of the state for the next reasoning cycle. This is the feedback loop: actions produce observations, observations inform the next decision.</p>
+  <p>The quality of this feedback loop is determined by two factors: the richness of the tool output and the agent's ability to extract the signal from it. A web search that returns the full HTML of a webpage might contain the answer the agent needs buried in thousands of tokens of navigation links, ads, and boilerplate — the agent has to extract the relevant content. This is why many agent systems preprocess tool outputs before adding them to context: web pages get cleaned to main content, code execution outputs get truncated to manageable length, API responses get filtered to relevant fields.</p>
+  <p>Feedback loops can also fail in characteristic ways. The most common failure mode is <strong>silent failure</strong>: a tool call that technically succeeds but returns an output that does not contain what the agent expected, and the agent treats this null result as confirmation rather than investigating further. An agent that searches for information, gets back a search result page rather than the specific answer, and proceeds as if it found the answer has fallen into a silent failure. Designing agent systems to be skeptical of tool outputs — explicitly checking whether they contain the expected information before proceeding — is a critical reliability practice.</p>
+
+  <div class="warn">
+    <div class="warn-label">The Confirmation Bias Problem</div>
+    <p>Language models have a tendency toward what researchers call "sycophantic" reasoning — interpreting ambiguous evidence in the direction that supports proceeding rather than stopping to investigate. In an agent context, this means agents tend to interpret ambiguous tool outputs as successful and keep moving forward, even when a more careful reading would reveal that the tool call didn't actually accomplish what was intended. This is one of the most important failure modes to design against explicitly.</p>
+  </div>
+
+  <h2>Reactive vs deliberative agents</h2>
+  <p>A useful conceptual distinction in agent design is between <strong>reactive</strong> and <strong>deliberative</strong> architectures. Reactive agents are purely stimulus-response: they observe some state and immediately produce an action without any internal deliberation or planning. Pure reactive agents were common in classical robotics (like Braitenberg vehicles) and are still useful for narrow, fast-response tasks where reasoning overhead is too slow.</p>
+  <p>Deliberative agents maintain an internal model of the world, form goals, and reason about plans to achieve those goals. Modern language model-based agents are deliberative by nature — the language model's context window serves as the internal model, and the chain-of-thought output is the deliberation. The quality of deliberation scales with model capability and context quality.</p>
+  <p>Most practical agent architectures are <strong>hybrid</strong>: deliberative at the level of task planning and action selection, but with reactive sub-routines for fast, simple responses to well-defined stimuli. A research agent might deliberatively plan which sources to consult, but reactively decide whether a search result is relevant based on simple heuristics before passing it to the model for deeper analysis.</p>
+
+  <h2>Tool use as the core action primitive</h2>
+  <p>The most important category of agent action is <strong>tool use</strong>. Tools are functions that the agent can call to interact with the world: search engines, code interpreters, file systems, databases, APIs, web browsers, email clients, calendars. The set of tools available to an agent defines the boundary of what it can do.</p>
+  <p>Tool use is implemented via function calling APIs (covered in depth in Module 3), where the model outputs a structured specification of which function to call and with what arguments. The orchestration layer intercepts this, executes the function, and returns the result. From the model's perspective, tool calls appear in its context as structured input/output pairs.</p>
+  <p>The design of the tool interface — what tools exist, what they accept, what they return, how errors are communicated — has an enormous effect on agent capability. A web search tool that returns raw HTML will produce a very different agent than one that returns cleaned, truncated main content. A code execution tool that returns only the final output will produce different agent behavior than one that returns stdout, stderr, and a return code separately.</p>
+
+  <h2>A concrete worked example: Research agent loop</h2>
+  <p>Let us trace through a concrete example to make the agent loop tangible. Suppose we have a research agent tasked with: "What is the current market share of the top three cloud providers, and how has it changed in the last two years?"</p>
+  <p><strong>Iteration 1 — Observe:</strong> The agent sees only the initial task. <strong>Think:</strong> The model reasons that to answer this, it needs current market share data from a reliable source. It decides to search for recent cloud market share reports. <strong>Act:</strong> It calls the search tool with query "cloud provider market share 2024 2025 AWS Azure GCP".</p>
+  <p><strong>Iteration 2 — Observe:</strong> The agent reads the search results — a list of URLs and snippets. <strong>Think:</strong> It identifies which results look most authoritative (Synergy Research Group, Gartner, IDC reports). It decides to fetch the most relevant URL. <strong>Act:</strong> It calls the fetch_url tool on the most promising result.</p>
+  <p><strong>Iteration 3 — Observe:</strong> The agent reads the fetched page content, which contains market share percentages for Q1 2025. <strong>Think:</strong> It has 2025 data but needs 2023 data for comparison. It searches for historical data. <strong>Act:</strong> Another search call.</p>
+  <p><strong>Iteration 4–6:</strong> Similar pattern — fetch, read, identify what is still missing, search for it. <strong>Iteration 7 — Observe:</strong> The agent now has data from both 2023 and 2025. <strong>Think:</strong> It has enough to answer the question. It reasons through the numbers, identifies the trend, and decides to generate a final answer. <strong>Act:</strong> It returns the final structured answer with the data and trend analysis, terminating the loop.</p>
+
+  <div class="good">
+    <div class="good-label">What Made This Agent Work</div>
+    <p>Several design elements made this hypothetical agent succeed: a clear termination criterion (the agent knows when it has enough data), tools that return useful structured content (not raw noisy HTML), a model that can identify what information is missing and form targeted follow-up queries, and a context window large enough to hold all the gathered information for final synthesis. Remove any of these and the agent quality degrades significantly.</p>
+  </div>
+
+  <h2>Stopping criteria and termination</h2>
+  <p>One of the most underappreciated design problems in agent architecture is <strong>knowing when to stop</strong>. An agent that runs forever on a task that has no clear stopping point will exhaust its token budget and fail. An agent that stops too early will return incomplete results. Getting this right requires explicit design attention.</p>
+  <p>The most common stopping criteria are: the model explicitly decides to return a final answer (the model self-terminates), a maximum number of iterations is reached (a safety circuit breaker), a maximum token budget is consumed, or an explicit stopping signal is returned from a tool (e.g., a test suite that returns "all tests passing").</p>
+  <p>The model's ability to self-terminate reliably is a function of how clearly the task and completion criteria are defined in the system prompt. Agents given vague tasks tend to continue indefinitely, generating increasingly speculative actions. Agents given clearly defined success criteria terminate appropriately. This is one of the most important contributions of good prompt engineering to agent reliability: not better reasoning, but better stopping.</p>
+
+  <h2>The role of context management in the loop</h2>
+  <p>As the agent loop runs, the context window fills up. Each tool call adds observation data; each reasoning step adds output text. In long-running agents, the context can grow to hundreds of thousands of tokens. Context management — deciding what to keep, what to summarize, what to discard — becomes critical.</p>
+  <p>Naive context management (keep everything until you hit the limit, then error out) is the most common approach and the worst. Better approaches include: <strong>summarization</strong> (compressing earlier parts of the conversation into summaries, losing some detail but preserving key facts), <strong>selective retention</strong> (keeping only the most recent N tool calls, discarding older ones), and <strong>external memory</strong> (offloading older context to a vector database and retrieving it as needed, covered in Module 4).</p>
+  <p>The choice of context management strategy has a direct effect on agent quality over long runs. Agents that naively truncate their context lose important earlier observations. Agents that summarize intelligently can maintain coherent operation over much longer horizons. This is one of the key architectural decisions that separates toy agents from production-grade systems.</p>
+
+  <h2>Worked example: The agent loop in code</h2>
+  <p>Here is a simplified but realistic representation of what an agent loop looks like in Python. Understanding this structure makes it possible to reason about any agent framework you encounter:</p>
+
+  <div class="code-block">
+<pre>def run_agent(task: str, tools: list, max_iterations: int = 20):
+    context = [
+        {"role": "system", "content": SYSTEM_PROMPT},
+        {"role": "user", "content": task}
+    ]
+
+    for iteration in range(max_iterations):
+        # THINK: call the model with current context
+        response = model.chat(messages=context, tools=tools)
+
+        # Check if model wants to terminate
+        if response.stop_reason == "end_turn":
+            return response.content  # final answer
+
+        # ACT: execute any tool calls
+        if response.tool_calls:
+            context.append({"role": "assistant", "content": response})
+            for tool_call in response.tool_calls:
+                result = execute_tool(tool_call.name, tool_call.args)
+                # OBSERVE: add result to context
+                context.append({
+                    "role": "tool",
+                    "tool_call_id": tool_call.id,
+                    "content": str(result)
+                })
+
+    return "Max iterations reached"  # safety termination</pre>
+  </div>
+
+  <p>This structure — context accumulation, model call, tool execution, result observation — is the skeleton of every agent, regardless of how sophisticated the surrounding framework. LangChain, AutoGen, CrewAI, and Anthropic's agent patterns all implement this same fundamental loop with varying degrees of abstraction and capability layered on top.</p>
+
+</div>
+</main>
+</div>
+
+<div class="sticky-bar" id="sticky-bar">
+  <div class="sticky-bar-reading" id="sticky-reading">Read to the end to unlock the next module</div>
+  <div class="sticky-bar-track"><div class="sticky-bar-fill" id="sticky-fill"></div></div>
+  <div class="sticky-bar-label" id="sticky-label">0%</div>
+  <button class="sticky-bar-btn" id="sticky-btn" onclick="completeAndNext()">Module 3: Tool Use and Function Calling →</button>
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import { getFirestore, doc, setDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  const app=initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+  const auth=getAuth(app);const db=getFirestore(app);
+  let currentUser=null;
+  onAuthStateChanged(auth,u=>{currentUser=u;});
+
+  window.toggleTheme=function(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='☾'):(h.setAttribute('data-theme','dark'),i.textContent='☀');};
+  window.addEventListener('scroll',()=>{const d=document.documentElement,s=d.scrollTop||document.body.scrollTop,t=d.scrollHeight-d.clientHeight;document.getElementById('progress').style.width=(s/t*100)+'%';});
+
+  let unlocked=false;
+  function updateScrollProgress(){
+    const scrolled=window.scrollY+window.innerHeight;
+    const total=document.documentElement.scrollHeight;
+    const pct=Math.min(100,Math.round((scrolled/total)*100));
+    const fill=document.getElementById('sticky-fill');
+    const label=document.getElementById('sticky-label');
+    const btn=document.getElementById('sticky-btn');
+    const reading=document.getElementById('sticky-reading');
+    if(fill)fill.style.width=pct+'%';
+    if(label)label.textContent=pct+'%';
+    if(pct>=95&&!unlocked){
+      unlocked=true;
+      if(btn)btn.style.display='block';
+      if(reading)reading.style.display='none';
+      if(fill)fill.style.background='#22c55e';
+      if(label)label.style.color='#22c55e';
+    }
+  }
+  window.addEventListener('scroll',updateScrollProgress);
+  updateScrollProgress();
+
+  window.completeAndNext=async function(){
+    if(currentUser){
+      try{
+        await setDoc(doc(db,'users',currentUser.uid),{
+          agentsModules: arrayUnion('m2')
+        },{merge:true});
+      }catch(e){}
+    }
+    window.location.href='agents-module-3.html';
+  };
+</script>
+</body>
+</html>

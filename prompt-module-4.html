@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 4: Few-Shot and Chain-of-Thought — Prompt Engineering Mastery — Meridian Institute of AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#B45309;--accent-dim:rgba(180,83,9,0.1);--nav-bg:rgba(8,8,8,0.9);--callout-bg:rgba(180,83,9,0.07);--callout-border:rgba(180,83,9,0.25);--good-bg:rgba(34,197,94,0.07);--good-border:rgba(34,197,94,0.2);--warn-bg:rgba(251,146,60,0.07);--warn-border:rgba(251,146,60,0.2);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#92400E;--accent-dim:rgba(146,64,14,0.08);--nav-bg:rgba(250,250,248,0.9);--callout-bg:rgba(146,64,14,0.05);--callout-border:rgba(146,64,14,0.2);--good-bg:rgba(22,163,74,0.06);--good-border:rgba(22,163,74,0.2);--warn-bg:rgba(234,88,12,0.05);--warn-border:rgba(234,88,12,0.2);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}html{scroll-behavior:smooth;}body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.7;overflow-x:hidden;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}.nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}.nav-back{font-size:13px;color:var(--text-2);text-decoration:none;}.nav-label{font-size:13px;color:var(--text-3);}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;}
+  .progress-bar{position:fixed;top:60px;left:0;right:0;z-index:99;height:2px;background:var(--border);}.progress-fill{height:100%;background:var(--accent);width:0%;}
+  .page-wrapper{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:100vh;padding-top:62px;}
+  .sidebar{position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto;border-right:1px solid var(--border);padding:32px 24px;background:var(--bg-2);}
+  .sidebar-course{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;}.sidebar-course-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+  .sidebar-module{margin-bottom:4px;}.sidebar-module-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:13px;color:var(--text-2);text-decoration:none;transition:all 0.2s;line-height:1.4;}
+  .sidebar-module-link:hover{background:var(--bg-3);color:var(--text);}.sidebar-module-link.active{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-num{font-size:11px;font-weight:500;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--bg-4);color:var(--text-3);}
+  .sidebar-module-link.active .sidebar-num{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-divider{height:1px;background:var(--border);margin:20px 0;}
+  .sidebar-progress-label{font-size:12px;color:var(--text-3);margin-bottom:8px;display:flex;justify-content:space-between;}
+  .sidebar-progress-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}.sidebar-progress-fill{height:100%;background:var(--accent);border-radius:2px;}
+  main{display:block;min-width:0;}.content{max-width:760px;width:100%;padding:60px 64px 140px;margin:0 auto;}
+  .module-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+  .module-tag{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(180,83,9,0.2);padding:4px 12px;border-radius:100px;}
+  .module-meta{font-size:12px;color:var(--text-3);}
+  h1{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1.05;letter-spacing:-0.02em;margin-bottom:24px;}
+  .intro-text{font-size:19px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+  h2{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:400;color:var(--text);margin:52px 0 18px;line-height:1.2;}
+  p{font-size:16px;font-weight:300;color:var(--text-2);line-height:1.8;margin-bottom:20px;}strong{font-weight:500;color:var(--text);}
+  ul,ol{margin:0 0 20px 22px;color:var(--text-2);}li{font-size:16px;font-weight:300;line-height:1.8;margin-bottom:8px;}
+  .callout{background:var(--callout-bg);border:1px solid var(--callout-border);border-radius:12px;padding:24px 28px;margin:32px 0;}.callout-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}.callout p{margin:0;font-size:15px;color:var(--text-2);}.callout p+p{margin-top:12px;}
+  .good{background:var(--good-bg);border:1px solid var(--good-border);border-radius:12px;padding:24px 28px;margin:24px 0;}.good-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#22c55e;margin-bottom:10px;}.good p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn{background:var(--warn-bg);border:1px solid var(--warn-border);border-radius:12px;padding:24px 28px;margin:24px 0;}.warn-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#fb923c;margin-bottom:10px;}.warn p{margin:0;font-size:15px;color:var(--text-2);}
+  .principle-list{display:flex;flex-direction:column;gap:12px;margin:24px 0;}.principle{background:var(--bg-2);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:0 12px 12px 0;padding:20px 24px;}.principle-title{font-size:15px;font-weight:500;color:var(--text);margin-bottom:6px;}.principle-desc{font-size:14px;color:var(--text-2);line-height:1.65;margin:0;}
+  .code-block{background:#0d1117;border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:20px 24px;margin:24px 0;font-family:monospace;font-size:13px;color:#e6edf3;overflow-x:auto;line-height:1.7;white-space:pre-wrap;}
+  .sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:var(--bg-2);border-top:1px solid var(--border-2);padding:14px 5%;display:flex;align-items:center;justify-content:space-between;gap:16px;backdrop-filter:blur(12px);}
+  .sticky-bar-track{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}.sticky-bar-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.2s;width:0%;}
+  .sticky-bar-label{font-size:12px;color:var(--text-3);white-space:nowrap;}
+  .sticky-bar-btn{padding:10px 20px;border-radius:8px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;background:var(--accent);color:#fff;border:none;cursor:pointer;white-space:nowrap;transition:opacity 0.2s;display:none;}.sticky-bar-btn:hover{opacity:0.88;}
+  .sticky-bar-reading{font-size:12px;color:var(--text-3);white-space:nowrap;}
+  @media(max-width:900px){.page-wrapper{grid-template-columns:1fr;}.sidebar{display:none;}.content{padding:40px 24px 120px;}h1{font-size:38px;}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="courses.html" class="nav-back">&#8592; Prompt Engineering Mastery</a>
+    <div class="nav-divider"></div>
+    <span class="nav-label">Module 4</span>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">&#9728;</span></button>
+</nav>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+<div class="page-wrapper">
+<aside class="sidebar">
+  <div class="sidebar-course">Expert Track</div>
+  <div class="sidebar-course-name">Prompt Engineering Mastery</div>
+  <div class="sidebar-module"><a href="prompt-module-1.html" class="sidebar-module-link"><span class="sidebar-num">1</span>The Art and Science of Prompting</a></div>
+  <div class="sidebar-module"><a href="prompt-module-2.html" class="sidebar-module-link"><span class="sidebar-num">2</span>Instruction Clarity and Specificity</a></div>
+  <div class="sidebar-module"><a href="prompt-module-3.html" class="sidebar-module-link"><span class="sidebar-num">3</span>Role Assignment and Context Setting</a></div>
+  <div class="sidebar-module"><a href="prompt-module-4.html" class="sidebar-module-link active"><span class="sidebar-num">4</span>Few-Shot and Chain-of-Thought</a></div>
+  <div class="sidebar-module"><a href="prompt-module-5.html" class="sidebar-module-link"><span class="sidebar-num">5</span>System Prompts and Meta-Instructions</a></div>
+  <div class="sidebar-module"><a href="prompt-module-6.html" class="sidebar-module-link"><span class="sidebar-num">6</span>Advanced Reasoning Techniques</a></div>
+  <div class="sidebar-module"><a href="prompt-module-7.html" class="sidebar-module-link"><span class="sidebar-num">7</span>Prompt Chaining and Decomposition</a></div>
+  <div class="sidebar-module"><a href="prompt-module-8.html" class="sidebar-module-link"><span class="sidebar-num">8</span>Prompting for Code and Technical Tasks</a></div>
+  <div class="sidebar-module"><a href="prompt-module-9.html" class="sidebar-module-link"><span class="sidebar-num">9</span>Adversarial Prompting and Red-Teaming</a></div>
+  <div class="sidebar-module"><a href="prompt-module-10.html" class="sidebar-module-link"><span class="sidebar-num">10</span>Building Prompt Libraries</a></div>
+  <div class="sidebar-module"><a href="quiz-prompt.html" class="sidebar-module-link" style="color:var(--accent);margin-top:4px;"><span class="sidebar-num" style="background:var(--accent-dim);color:var(--accent);">&#10022;</span>Final Assessment</a></div>
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-progress-label"><span>Course progress</span><span style="color:var(--accent);">4 / 10</span></div>
+  <div class="sidebar-progress-track"><div class="sidebar-progress-fill" style="width:40%;"></div></div>
+</aside>
+<main>
+<div class="content">
+  <div class="module-eyebrow"><span class="module-tag">Module 4 · Expert Track</span><span class="module-meta">15 min read · Prompt Engineering Mastery</span></div>
+  <h1>Few-Shot and Chain-of-Thought Techniques</h1>
+  <p class="intro-text">Two of the most rigorously studied and consistently effective prompting techniques are few-shot learning — providing examples of input-output pairs to teach the model your specific pattern — and chain-of-thought prompting — instructing the model to reason step by step before reaching a conclusion. Mastering both techniques, and knowing when to apply each, is foundational to expert-level prompt engineering.</p>
+
+  <h2>Zero-Shot, Few-Shot, and Many-Shot</h2>
+  <p>The "shots" terminology refers to the number of examples included in the prompt. <strong>Zero-shot</strong> prompting provides no examples — just an instruction and an input. <strong>Few-shot</strong> provides a small number of input-output examples (typically 2-5) that illustrate the pattern. <strong>Many-shot</strong> provides a larger set of examples (10, 20, or more) to increase reliability and cover more variation.</p>
+  <p>Zero-shot works well for tasks that are common and well-represented in the model's training data. Standard summarization, translation, and basic classification all perform adequately zero-shot. When the task is novel, specialized, or requires a specific format the model has not seen frequently, few-shot is dramatically more reliable.</p>
+  <p>The mechanism is clear: examples communicate requirements that are difficult to specify in abstract language. If you want the model to classify support tickets into five specific categories using a particular naming convention, you can write a paragraph describing the criteria — or you can show three examples. The examples are almost always more reliable because they eliminate the gap between your description and the model's interpretation of it.</p>
+
+  <div class="callout">
+    <div class="callout-label">Why Examples Work</div>
+    <p>Examples are the most compact and unambiguous way to communicate a pattern. A single well-chosen example conveys format, style, level of detail, vocabulary, and reasoning approach simultaneously. Three examples can convey variation and boundary cases that would take paragraphs to specify abstractly — and convey them more reliably.</p>
+  </div>
+
+  <h2>Choosing Good Few-Shot Examples</h2>
+  <p>The quality of your examples matters as much as their quantity. Poor examples teach the wrong pattern or create confounds that mislead the model.</p>
+
+  <div class="principle-list">
+    <div class="principle">
+      <div class="principle-title">Representative of the Task Distribution</div>
+      <div class="principle-desc">Examples should reflect the range of inputs the model will actually encounter, not just easy or typical cases. If your task includes edge cases or ambiguous inputs, include examples of those. The model generalizes from what you show it.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Internally Consistent</div>
+      <div class="principle-desc">All examples should follow the same pattern, format, and style. Inconsistent examples teach the model that inconsistency is acceptable. If your first example uses markdown headers and your second uses plain text, the model will alternate unpredictably.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Demonstrative of the Hard Cases</div>
+      <div class="principle-desc">If there is a boundary condition where the right answer is non-obvious, include an example of it. "Include this in category A even though it might seem like B because X" teaches the decision rule explicitly. Never rely on the model inferring subtle distinctions from easy examples alone.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Appropriately Detailed</div>
+      <div class="principle-desc">The level of detail in your example outputs sets the expected level for actual outputs. If your examples are brief and direct, the model will produce brief and direct responses. Match the detail level to what you actually need.</div>
+    </div>
+  </div>
+
+  <h2>Few-Shot Prompt Structure</h2>
+  <p>A standard few-shot prompt has a clear structure: an instruction, followed by labeled examples, followed by the actual input to process.</p>
+
+  <div class="code-block">TASK: Classify customer support tickets as one of: Bug Report, Feature Request, Billing Issue, or General Inquiry. Return only the category label.
+
+Input: "The export button on the dashboard stopped working after yesterday's update."
+Output: Bug Report
+
+Input: "Is there any way to get weekly digest emails instead of daily ones?"
+Output: Feature Request
+
+Input: "I was charged twice for my subscription this month."
+Output: Billing Issue
+
+Input: "How do I add a team member to my account?"
+Output:</div>
+
+  <p>The structure cues the model to continue the pattern. Note the final "Output:" with nothing after it — this invites the model to complete the pattern with a classification. The model has three examples establishing the format and three category mappings to generalize from.</p>
+
+  <h2>Chain-of-Thought Prompting</h2>
+  <p>Chain-of-thought (CoT) prompting is the technique of instructing the model to show its reasoning step by step before producing a final answer. The seminal finding from research is simple and powerful: when models are prompted to think through a problem explicitly, their accuracy on multi-step reasoning tasks improves dramatically compared to prompting for a direct answer.</p>
+  <p>The most basic version is the phrase "Let's think step by step" appended to a question. This simple addition consistently improves performance on arithmetic, logic, and multi-step reasoning tasks. The reason is intuitive: generating an intermediate reasoning trace forces the model to "commit" to a chain of inferences that is then visible and correctable, rather than jumping directly to a prediction that may be superficially plausible but logically flawed.</p>
+
+  <div class="good">
+    <div class="good-label">Chain-of-Thought Example</div>
+    <p><strong>Prompt:</strong> "A store is selling notebooks for $3.50 each. A customer buys 4 notebooks and pays with a $20 bill. How much change do they receive? Think through this step by step before giving the final answer."</p>
+    <p><strong>Output:</strong> "Step 1: Calculate the total cost. 4 notebooks x $3.50 each = $14.00. Step 2: Calculate the change. $20.00 - $14.00 = $6.00. The customer receives $6.00 in change."</p>
+    <p>Without the CoT instruction, the model often gives the right answer — but on harder problems, forcing explicit intermediate steps substantially reduces errors and makes reasoning auditable.</p>
+  </div>
+
+  <h2>Few-Shot Chain-of-Thought</h2>
+  <p>The most powerful version of CoT prompting combines it with few-shot examples: you provide examples that include not just the input and final answer, but the complete reasoning chain in between. This teaches the model both the format of the reasoning trace and the type of reasoning you expect.</p>
+
+  <div class="code-block">Q: Roger has 5 tennis balls. He buys 2 more cans of tennis balls. Each can has 3 balls. How many tennis balls does he have now?
+A: Roger starts with 5 balls. He buys 2 cans, each with 3 balls, so that's 2 x 3 = 6 additional balls. 5 + 6 = 11. The answer is 11.
+
+Q: A juggler has 16 balls. Half of the balls are golf balls. Half of the golf balls are blue. How many blue golf balls are there?
+A: The juggler has 16 balls total. Half are golf balls: 16 / 2 = 8 golf balls. Half of the golf balls are blue: 8 / 2 = 4. The answer is 4.
+
+Q: [YOUR PROBLEM HERE]
+A:</div>
+
+  <p>This few-shot CoT structure reliably produces step-by-step reasoning for new problems. The examples establish the exact format of the reasoning trace you want — the vocabulary, the level of detail, the way intermediate results are stated.</p>
+
+  <h2>Self-Consistency: Sampling Multiple Reasoning Paths</h2>
+  <p>A powerful extension of chain-of-thought is <strong>self-consistency</strong>: generating multiple independent reasoning chains for the same problem and then selecting the most common answer. The intuition is that even if any individual chain can go wrong, the correct answer is likely to appear most frequently across multiple independent attempts.</p>
+  <p>In practice, you implement self-consistency by running the same CoT prompt multiple times (with temperature above 0 to introduce variation), extracting the final answers, and taking the majority vote. Research consistently shows that self-consistency improves accuracy over single-chain CoT, particularly for complex reasoning tasks. For high-stakes applications where reliability matters more than cost, this technique is worth the additional API calls.</p>
+
+  <div class="callout">
+    <div class="callout-label">When to Use CoT</div>
+    <p>Chain-of-thought is most valuable for tasks that require multi-step reasoning: mathematical problems, logical deduction, multi-criteria evaluation, planning. It is less valuable for straightforward factual retrieval or simple classification where the answer does not depend on intermediate steps. Forcing CoT on simple tasks adds tokens without improving quality and can sometimes hurt performance by introducing unnecessary complexity.</p>
+  </div>
+
+  <h2>Zero-Shot CoT: The Magic Phrase</h2>
+  <p>For situations where you cannot provide examples, zero-shot CoT — adding "Let's think step by step" or "Think through this carefully before answering" — still provides meaningful improvement on reasoning tasks. Research has found several effective zero-shot CoT triggers:</p>
+  <ul>
+    <li>"Let's think step by step."</li>
+    <li>"Think through this carefully and show your reasoning."</li>
+    <li>"Before answering, work through the problem systematically."</li>
+    <li>"Reason through each part of this problem before giving a final answer."</li>
+  </ul>
+  <p>The exact phrasing matters less than the principle: instructing the model to produce intermediate reasoning steps before committing to a final answer. The instruction to reason explicitly is more important than the specific words used to convey it.</p>
+
+  <h2>Combining Few-Shot and Role Assignment</h2>
+  <p>Few-shot and role assignment are complementary. Role assignment sets the analytical frame; few-shot examples calibrate the specific output format and style within that frame. A prompt that combines both has a role instruction establishing who the model is, followed by examples showing how that role approaches this specific task type, followed by the actual input. This layering produces the most consistently high-quality outputs for complex, specialized tasks.</p>
+
+</div>
+</main>
+</div>
+<div class="sticky-bar">
+  <div class="sticky-bar-reading" id="sticky-reading">Read to the end to unlock the next module</div>
+  <div class="sticky-bar-track"><div class="sticky-bar-fill" id="sticky-fill"></div></div>
+  <div class="sticky-bar-label" id="sticky-label">0%</div>
+  <button class="sticky-bar-btn" id="sticky-btn" onclick="completeAndNext()">Module 5: System Prompts &#8594;</button>
+</div>
+<script type="module">
+  import{initializeApp}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import{getAuth,onAuthStateChanged}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import{getFirestore,doc,setDoc,arrayUnion}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  const app=initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+  const auth=getAuth(app);const db=getFirestore(app);let currentUser=null;
+  onAuthStateChanged(auth,u=>{currentUser=u;});
+  window.toggleTheme=function(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='&#9790;'):(h.setAttribute('data-theme','dark'),i.textContent='&#9728;');};
+  window.addEventListener('scroll',()=>{const d=document.documentElement,s=d.scrollTop||document.body.scrollTop,t=d.scrollHeight-d.clientHeight;document.getElementById('progress').style.width=(s/t*100)+'%';});
+  let unlocked=false;
+  function updateScroll(){const pct=Math.min(100,Math.round(((window.scrollY+window.innerHeight)/document.documentElement.scrollHeight)*100));const fill=document.getElementById('sticky-fill'),label=document.getElementById('sticky-label'),btn=document.getElementById('sticky-btn'),reading=document.getElementById('sticky-reading');if(fill)fill.style.width=pct+'%';if(label)label.textContent=pct+'%';if(pct>=95&&!unlocked){unlocked=true;if(btn)btn.style.display='block';if(reading)reading.style.display='none';if(fill)fill.style.background='#22c55e';if(label)label.style.color='#22c55e';}}
+  window.addEventListener('scroll',updateScroll);updateScroll();
+  window.completeAndNext=async function(){if(currentUser){try{await setDoc(doc(db,'users',currentUser.uid),{promptModules:arrayUnion('m4')},{merge:true});}catch(e){}}window.location.href='prompt-module-5.html';};
+</script>
+</body>
+</html>

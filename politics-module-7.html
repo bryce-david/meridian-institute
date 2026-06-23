@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 7: Political Polarization and Social Algorithms — AI in Politics — Meridian Institute of AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#9D174D;--accent-dim:rgba(157,23,77,0.1);--nav-bg:rgba(8,8,8,0.9);--callout-bg:rgba(157,23,77,0.07);--callout-border:rgba(157,23,77,0.25);--good-bg:rgba(34,197,94,0.07);--good-border:rgba(34,197,94,0.2);--warn-bg:rgba(251,146,60,0.07);--warn-border:rgba(251,146,60,0.2);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#831843;--accent-dim:rgba(131,24,67,0.08);--nav-bg:rgba(250,250,248,0.9);--callout-bg:rgba(131,24,67,0.05);--callout-border:rgba(131,24,67,0.2);--good-bg:rgba(22,163,74,0.06);--good-border:rgba(22,163,74,0.2);--warn-bg:rgba(234,88,12,0.05);--warn-border:rgba(234,88,12,0.2);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}html{scroll-behavior:smooth;}body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.7;overflow-x:hidden;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}.nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}.nav-back{font-size:13px;color:var(--text-2);text-decoration:none;transition:color 0.2s;}.nav-back:hover{color:var(--text);}.nav-label{font-size:13px;color:var(--text-3);}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;}
+  .progress-bar{position:fixed;top:60px;left:0;right:0;z-index:99;height:2px;background:var(--border);}.progress-fill{height:100%;background:var(--accent);width:0%;transition:width 0.1s;}
+  .page-wrapper{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:100vh;padding-top:62px;}
+  .sidebar{position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto;border-right:1px solid var(--border);padding:32px 24px;background:var(--bg-2);}
+  .sidebar-course{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;}.sidebar-course-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+  .sidebar-module{margin-bottom:4px;}.sidebar-module-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:13px;color:var(--text-2);text-decoration:none;transition:all 0.2s;line-height:1.4;}
+  .sidebar-module-link:hover{background:var(--bg-3);color:var(--text);}.sidebar-module-link.active{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-num{font-size:11px;font-weight:500;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--bg-4);color:var(--text-3);}
+  .sidebar-module-link.active .sidebar-num{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-divider{height:1px;background:var(--border);margin:20px 0;}
+  .sidebar-progress-label{font-size:12px;color:var(--text-3);margin-bottom:8px;display:flex;justify-content:space-between;}
+  .sidebar-progress-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}.sidebar-progress-fill{height:100%;width:70%;background:var(--accent);border-radius:2px;}
+  main{display:block;min-width:0;}.content{max-width:760px;width:100%;padding:60px 64px 140px;margin:0 auto;}
+  .module-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+  .module-tag{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(157,23,77,0.2);padding:4px 12px;border-radius:100px;}
+  .module-meta{font-size:12px;color:var(--text-3);}
+  h1{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1.05;letter-spacing:-0.02em;margin-bottom:24px;}
+  .intro-text{font-size:19px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+  h2{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:400;color:var(--text);margin:52px 0 18px;line-height:1.2;}
+  h3{font-size:16px;font-weight:500;color:var(--text);margin:32px 0 12px;}
+  p{font-size:16px;font-weight:300;color:var(--text-2);line-height:1.8;margin-bottom:20px;}strong{font-weight:500;color:var(--text);}
+  ul,ol{margin:0 0 20px 22px;color:var(--text-2);}li{font-size:16px;font-weight:300;line-height:1.8;margin-bottom:8px;}
+  .callout{background:var(--callout-bg);border:1px solid var(--callout-border);border-radius:12px;padding:24px 28px;margin:32px 0;}.callout-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}.callout p{margin:0;font-size:15px;color:var(--text-2);}.callout p+p{margin-top:12px;}
+  .good{background:var(--good-bg);border:1px solid var(--good-border);border-radius:12px;padding:24px 28px;margin:24px 0;}.good-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#22c55e;margin-bottom:10px;}.good p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn{background:var(--warn-bg);border:1px solid var(--warn-border);border-radius:12px;padding:24px 28px;margin:24px 0;}.warn-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#fb923c;margin-bottom:10px;}.warn p{margin:0;font-size:15px;color:var(--text-2);}.warn p+p{margin-top:12px;}
+  .principle-list{display:flex;flex-direction:column;gap:12px;margin:24px 0;}.principle{background:var(--bg-2);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:0 12px 12px 0;padding:20px 24px;}.principle-title{font-size:15px;font-weight:500;color:var(--text);margin-bottom:6px;}.principle-desc{font-size:14px;color:var(--text-2);line-height:1.65;margin:0;}
+  .sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:var(--bg-2);border-top:1px solid var(--border-2);padding:14px 5%;display:flex;align-items:center;justify-content:space-between;gap:16px;backdrop-filter:blur(12px);}
+  .sticky-bar-track{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}.sticky-bar-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.2s;width:0%;}
+  .sticky-bar-label{font-size:12px;color:var(--text-3);white-space:nowrap;}
+  .sticky-bar-btn{padding:10px 20px;border-radius:8px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;background:var(--accent);color:#fff;border:none;cursor:pointer;white-space:nowrap;transition:opacity 0.2s;display:none;}.sticky-bar-btn:hover{opacity:0.88;}
+  .sticky-bar-reading{font-size:12px;color:var(--text-3);white-space:nowrap;}
+  @media(max-width:900px){.page-wrapper{grid-template-columns:1fr;}.sidebar{display:none;}.content{padding:40px 24px 120px;}h1{font-size:38px;}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="courses.html" class="nav-back">← AI in Politics</a>
+    <div class="nav-divider"></div>
+    <span class="nav-label">Module 7</span>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">☀</span></button>
+</nav>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+
+<div class="page-wrapper">
+<aside class="sidebar">
+  <div class="sidebar-course">Course</div>
+  <div class="sidebar-course-name">AI in Politics</div>
+  <div class="sidebar-module"><a href="politics-module-1.html" class="sidebar-module-link"><span class="sidebar-num">1</span>AI and Modern Political Campaigns</a></div>
+  <div class="sidebar-module"><a href="politics-module-2.html" class="sidebar-module-link"><span class="sidebar-num">2</span>Disinformation, Deepfakes, and Democratic Discourse</a></div>
+  <div class="sidebar-module"><a href="politics-module-3.html" class="sidebar-module-link"><span class="sidebar-num">3</span>AI in Policy Making and Legislative Analysis</a></div>
+  <div class="sidebar-module"><a href="politics-module-4.html" class="sidebar-module-link"><span class="sidebar-num">4</span>Surveillance, Power, and Civil Liberties</a></div>
+  <div class="sidebar-module"><a href="politics-module-5.html" class="sidebar-module-link"><span class="sidebar-num">5</span>Algorithmic Bias in Voting and Representation</a></div>
+  <div class="sidebar-module"><a href="politics-module-6.html" class="sidebar-module-link"><span class="sidebar-num">6</span>AI and International Relations</a></div>
+  <div class="sidebar-module"><a href="politics-module-7.html" class="sidebar-module-link active"><span class="sidebar-num">7</span>Political Polarization and Social Algorithms</a></div>
+  <div class="sidebar-module"><a href="politics-module-8.html" class="sidebar-module-link"><span class="sidebar-num">8</span>Regulating AI: A Political Science Perspective</a></div>
+  <div class="sidebar-module"><a href="politics-module-9.html" class="sidebar-module-link"><span class="sidebar-num">9</span>AI and National Security</a></div>
+  <div class="sidebar-module"><a href="politics-module-10.html" class="sidebar-module-link"><span class="sidebar-num">10</span>The Future of Democracy in an AI World</a></div>
+  <div class="sidebar-module"><a href="quiz-politics.html" class="sidebar-module-link" style="color:var(--accent);margin-top:4px;"><span class="sidebar-num" style="background:var(--accent-dim);color:var(--accent);">✦</span>Final Assessment</a></div>
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-progress-label"><span>Course progress</span><span style="color:var(--accent);">7 / 10</span></div>
+  <div class="sidebar-progress-track"><div class="sidebar-progress-fill"></div></div>
+</aside>
+
+<main>
+<div class="content">
+  <div class="module-eyebrow"><span class="module-tag">Module 7</span><span class="module-meta">19 min read · AI in Politics</span></div>
+  <h1>Political Polarization and Social Algorithms</h1>
+  <p class="intro-text">Political polarization — the growing distance between partisan groups in their beliefs, values, and mutual regard — is one of the defining features of democratic politics in the early twenty-first century. Social media algorithms are widely blamed for accelerating it. The relationship is more complex than the popular narrative suggests, but the design choices embedded in algorithmic content systems have real political consequences that are only beginning to be understood.</p>
+
+  <h2>What polarization is and why it matters</h2>
+  <p>Political scientists distinguish between ideological polarization — the movement of parties and politicians toward more extreme positions — and affective polarization — the growth of negative emotional attitudes toward political opponents. Both have increased in many democracies, though the patterns and causes differ across countries and political systems. Affective polarization may be the more dangerous form for democratic governance: when citizens and politicians view their opponents not merely as wrong but as threatening and contemptible, the compromises and coalitions that functional democracy requires become psychologically and politically costly to pursue.</p>
+  <p>The consequences of extreme polarization for democratic governance are well-documented. Legislative gridlock increases as cross-partisan coalitions become untenable. Institutional norms that depend on good-faith acceptance of election results, peaceful transfers of power, and the legitimacy of opposition parties are placed under stress. Democratic backsliding — the gradual erosion of democratic institutions by elected leaders who use democratic processes to consolidate power — becomes more likely when citizens refuse to hold co-partisans accountable for norm violations.</p>
+
+  <div class="callout">
+    <div class="callout-label">The echo chamber hypothesis</div>
+    <p>The dominant popular explanation for algorithmic polarization is the echo chamber: algorithms feed users content that confirms their existing beliefs, isolating them from contrary information and driving them toward more extreme positions. The academic research paints a more nuanced picture — exposure to opposing views can sometimes increase rather than reduce polarization, and the most politically engaged citizens tend to encounter more cross-partisan content, not less, due to the scale of their news consumption.</p>
+  </div>
+
+  <h2>How recommendation algorithms shape political content</h2>
+  <p>Social media platforms use recommendation algorithms to decide what content users see, in what order, and with what frequency. These algorithms optimize primarily for engagement metrics — time spent on platform, likes, shares, comments, and return visits. Political content, particularly content that generates strong emotional responses, tends to score highly on engagement metrics. Content that generates outrage, fear, or tribal affiliation cues reliably drives higher engagement than content that is accurate, nuanced, or emotionally neutral.</p>
+  <p>Research has found that across multiple platforms, content expressing moral outrage consistently achieves higher engagement than comparable content without outrage framing. If recommendation algorithms have been optimizing for engagement without constraints on the type of engagement, they have likely been systematically amplifying the most outrage-inducing content regardless of its accuracy or its effects on social cohesion.</p>
+
+  <div class="warn">
+    <div class="warn-label">The engagement-accuracy tradeoff</div>
+    <p>Misinformation consistently outperforms accurate information on engagement metrics: it spreads faster, reaches more people, and generates more emotional response. Algorithms optimized for engagement without accuracy constraints are therefore biased toward amplifying false information. This is not a bug that can be patched with better code — it reflects a structural misalignment between what engagement optimization rewards and what democratic discourse requires.</p>
+  </div>
+
+  <h2>Radicalization pathways and algorithmic amplification</h2>
+  <p>A documented pattern on several platforms involves recommendation algorithms leading users who engage with moderate political content progressively toward more extreme content in the same ideological direction. This pathway — sometimes described as an "outrage machine" or "radicalization pipeline" — works because more extreme content typically scores higher on engagement metrics than moderate content, and recommendation systems that follow the engagement signal can therefore consistently push users toward more extreme material.</p>
+  <p>The political consequences of this dynamic extend beyond individual radicalization. When the most algorithmically amplified political voices are consistently the most extreme ones, they shape what the political mainstream perceives as the distribution of opinion. Politicians who seek name recognition through algorithmic channels have incentives to produce the most outrage-inducing content. The result can be a political discourse that systematically over-represents extreme positions relative to the actual distribution of citizen opinion.</p>
+
+  <div class="principle-list">
+    <div class="principle">
+      <div class="principle-title">Filter bubbles</div>
+      <div class="principle-desc">Personalization systems that limit exposure to content that challenges users' existing beliefs, though the strength of this effect is more contested in the research than in popular discourse.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Outrage amplification</div>
+      <div class="principle-desc">Systematic algorithmic favor toward content that generates strong negative emotions, because such content consistently scores higher on engagement metrics than accurate or emotionally neutral content.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Extremism recommendation pathways</div>
+      <div class="principle-desc">Recommendation systems that lead users progressively toward more extreme content in the direction of initial engagement, by following engagement signals that consistently favor more extreme material.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Social comparison distortion</div>
+      <div class="principle-desc">Amplification of the most vocal and extreme expressions within each partisan community, creating misperceptions about the views of political opponents and the distribution of opinion within one's own group.</div>
+    </div>
+  </div>
+
+  <h2>The evidence on algorithms and polarization</h2>
+  <p>The research on whether social media algorithms directly cause political polarization is more contested than the popular narrative suggests. Several large-scale experimental studies — including Meta's own research published in academic journals — have found that removing algorithmic curation in favor of chronological feeds had limited measurable effect on polarization over short time periods. This does not mean algorithms are not harmful — it may mean that polarization operates on timescales that short experiments cannot capture, or that the effects are mediated through mechanisms the experiments did not measure.</p>
+  <p>What the research does establish is that social media platforms significantly shape the political information environment, that they consistently amplify certain types of political content over others, and that the design choices embedded in these systems are not politically neutral. Whether those effects rise to the level of "causing" polarization as a population-level phenomenon remains an active area of research with significant methodological disputes.</p>
+
+  <div class="good">
+    <div class="good-label">Algorithmic design alternatives</div>
+    <p>Platform design is not fixed. Several alternatives to pure engagement optimization have been proposed and in some cases tested: amplification of content that users report as "good for society" rather than just personally engaging; friction mechanisms that slow sharing of unverified content; bridging-based ranking that prioritizes content that resonates across partisan lines; and transparency requirements that allow researchers and regulators to audit algorithmic systems. Each of these involves design choices that trade off some engagement for other values — demonstrating that the current optimization choices are choices, not inevitabilities.</p>
+  </div>
+
+  <h2>Platform power and democratic accountability</h2>
+  <p>The algorithms that shape political discourse are designed by private companies, optimized for private commercial interests, and largely opaque to public inspection. The decisions these companies make about what political content to amplify, what to suppress, and what standards to apply are among the most consequential decisions affecting democratic discourse today. Yet they are made without democratic mandate, with limited transparency, and subject only to the market pressures of user attention and advertiser relationships. The democratic accountability deficit of private algorithmic governance is a fundamental political challenge of the current era.</p>
+</div>
+</main>
+</div>
+
+<div class="sticky-bar" id="sticky-bar">
+  <div class="sticky-bar-reading" id="sticky-reading">Read to the end to unlock the next module</div>
+  <div class="sticky-bar-track"><div class="sticky-bar-fill" id="sticky-fill"></div></div>
+  <div class="sticky-bar-label" id="sticky-label">0%</div>
+  <button class="sticky-bar-btn" id="sticky-btn" onclick="completeAndNext()">Module 8: Regulating AI: A Political Science Perspective →</button>
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import { getFirestore, doc, setDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  const app = initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+  const auth = getAuth(app); const db = getFirestore(app);
+  let currentUser = null;
+  onAuthStateChanged(auth, u => { currentUser = u; });
+  window.toggleTheme=function(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='☾'):(h.setAttribute('data-theme','dark'),i.textContent='☀');};
+  window.addEventListener('scroll',()=>{const d=document.documentElement,s=d.scrollTop||document.body.scrollTop,t=d.scrollHeight-d.clientHeight;document.getElementById('progress').style.width=(s/t*100)+'%';});
+  let unlocked=false;
+  function updateScrollProgress(){
+    const scrolled=window.scrollY+window.innerHeight;const total=document.documentElement.scrollHeight;
+    const pct=Math.min(100,Math.round((scrolled/total)*100));
+    const fill=document.getElementById('sticky-fill');const label=document.getElementById('sticky-fill');
+    const btn=document.getElementById('sticky-btn');const reading=document.getElementById('sticky-reading');
+    if(fill)fill.style.width=pct+'%';const lbl=document.getElementById('sticky-label');if(lbl)lbl.textContent=pct+'%';
+    if(pct>=95&&!unlocked){unlocked=true;if(btn)btn.style.display='block';if(reading)reading.style.display='none';if(fill)fill.style.background='#22c55e';if(lbl)lbl.style.color='#22c55e';}
+  }
+  window.addEventListener('scroll',updateScrollProgress);updateScrollProgress();
+  window.completeAndNext=async function(){
+    if(currentUser){try{await setDoc(doc(db,'users',currentUser.uid),{politicsModules:arrayUnion('m7')},{merge:true});}catch(e){}}
+    window.location.href='politics-module-8.html';
+  };
+</script>
+</body>
+</html>

@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 2: Identifying AI Opportunities — AI Strategy for Leaders — Meridian Institute of AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#1E40AF;--accent-dim:rgba(30,64,175,0.1);--accent-dim2:rgba(30,64,175,0.05);--nav-bg:rgba(8,8,8,0.9);--callout-bg:rgba(30,64,175,0.07);--callout-border:rgba(30,64,175,0.25);--good-bg:rgba(34,197,94,0.07);--good-border:rgba(34,197,94,0.2);--warn-bg:rgba(251,146,60,0.07);--warn-border:rgba(251,146,60,0.2);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#1E3A8A;--accent-dim:rgba(30,58,138,0.08);--accent-dim2:rgba(30,58,138,0.04);--nav-bg:rgba(250,250,248,0.9);--callout-bg:rgba(30,58,138,0.05);--callout-border:rgba(30,58,138,0.2);--good-bg:rgba(22,163,74,0.06);--good-border:rgba(22,163,74,0.2);--warn-bg:rgba(234,88,12,0.05);--warn-border:rgba(234,88,12,0.2);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;overflow-x:hidden;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.7;overflow-x:hidden;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}
+  .nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}
+  .nav-back{font-size:13px;color:var(--text-2);text-decoration:none;transition:color 0.2s;}
+  .nav-back:hover{color:var(--text);}
+  .nav-label{font-size:13px;color:var(--text-3);}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;transition:all 0.2s;}
+  .theme-toggle:hover{background:var(--bg-3);color:var(--text);}
+  .progress-bar{position:fixed;top:60px;left:0;right:0;z-index:99;height:2px;background:var(--border);}
+  .progress-fill{height:100%;background:var(--accent);width:0%;transition:width 0.1s;}
+  .page-wrapper{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:100vh;padding-top:62px;overflow:hidden;}
+  .sidebar{position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto;border-right:1px solid var(--border);padding:32px 24px;background:var(--bg-2);}
+  .sidebar-course{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;}
+  .sidebar-course-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+  .sidebar-module{margin-bottom:4px;}
+  .sidebar-module-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:13px;color:var(--text-2);text-decoration:none;transition:all 0.2s;line-height:1.4;}
+  .sidebar-module-link:hover{background:var(--bg-3);color:var(--text);}
+  .sidebar-module-link.active{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-num{font-size:11px;font-weight:500;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--bg-4);color:var(--text-3);}
+  .sidebar-module-link.active .sidebar-num{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-divider{height:1px;background:var(--border);margin:20px 0;}
+  .sidebar-progress-label{font-size:12px;color:var(--text-3);margin-bottom:8px;display:flex;justify-content:space-between;}
+  .sidebar-progress-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sidebar-progress-fill{height:100%;width:20%;background:var(--accent);border-radius:2px;}
+  main{display:block;min-width:0;overflow:hidden;}
+  .content{max-width:760px;width:100%;padding:60px 64px 140px;margin:0 auto;}
+  .module-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+  .module-tag{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(30,64,175,0.2);padding:4px 12px;border-radius:100px;}
+  .module-meta{font-size:12px;color:var(--text-3);}
+  h1{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1.05;letter-spacing:-0.02em;color:var(--text);margin-bottom:24px;}
+  .intro-text{font-size:19px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+  h2{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:400;color:var(--text);margin:52px 0 18px;line-height:1.2;}
+  h3{font-size:16px;font-weight:500;color:var(--text);margin:32px 0 12px;}
+  p{font-size:16px;font-weight:300;color:var(--text-2);line-height:1.8;margin-bottom:20px;}
+  strong{font-weight:500;color:var(--text);}
+  ul,ol{margin:0 0 20px 22px;color:var(--text-2);}
+  li{font-size:16px;font-weight:300;line-height:1.8;margin-bottom:8px;}
+  .callout{background:var(--callout-bg);border:1px solid var(--callout-border);border-radius:12px;padding:24px 28px;margin:32px 0;}
+  .callout-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+  .callout p{margin:0;font-size:15px;color:var(--text-2);}
+  .callout p+p{margin-top:12px;}
+  .good{background:var(--good-bg);border:1px solid var(--good-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .good-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#22c55e;margin-bottom:10px;}
+  .good p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn{background:var(--warn-bg);border:1px solid var(--warn-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .warn-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#fb923c;margin-bottom:10px;}
+  .warn p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn p+p{margin-top:12px;}
+  .principle-list{display:flex;flex-direction:column;gap:12px;margin:24px 0;}
+  .principle{background:var(--bg-2);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:0 12px 12px 0;padding:20px 24px;}
+  .principle-title{font-size:15px;font-weight:500;color:var(--text);margin-bottom:6px;}
+  .principle-desc{font-size:14px;color:var(--text-2);line-height:1.65;margin:0;}
+  .sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:var(--bg-2);border-top:1px solid var(--border-2);padding:14px 5%;display:flex;align-items:center;justify-content:space-between;gap:16px;backdrop-filter:blur(12px);}
+  .sticky-bar-track{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sticky-bar-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.2s;width:0%;}
+  .sticky-bar-label{font-size:12px;color:var(--text-3);white-space:nowrap;min-width:60px;text-align:right;}
+  .sticky-bar-btn{padding:10px 20px;border-radius:8px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;background:var(--accent);color:#fff;border:none;cursor:pointer;white-space:nowrap;transition:opacity 0.2s;display:none;}
+  .sticky-bar-btn:hover{opacity:0.88;}
+  .sticky-bar-reading{font-size:12px;color:var(--text-3);white-space:nowrap;}
+  @media(max-width:900px){.page-wrapper{grid-template-columns:1fr;}.sidebar{display:none;}.content{padding:40px 24px 120px;}h1{font-size:38px;}}
+  @media(max-width:600px){.content{padding:28px 16px 120px;}h1{font-size:30px;}h2{font-size:24px;}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="courses.html" class="nav-back">&#8592; AI Strategy for Leaders</a>
+    <div class="nav-divider"></div>
+    <span class="nav-label">Module 2</span>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">&#9728;</span></button>
+</nav>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+<div class="page-wrapper">
+<aside class="sidebar">
+  <div class="sidebar-course">Expert Track</div>
+  <div class="sidebar-course-name">AI Strategy for Leaders</div>
+  <div class="sidebar-module"><a href="strategy-module-1.html" class="sidebar-module-link"><span class="sidebar-num">1</span>The AI Strategic Landscape</a></div>
+  <div class="sidebar-module"><a href="strategy-module-2.html" class="sidebar-module-link active"><span class="sidebar-num">2</span>Identifying AI Opportunities</a></div>
+  <div class="sidebar-module"><a href="strategy-module-3.html" class="sidebar-module-link"><span class="sidebar-num">3</span>Build vs. Buy vs. Partner</a></div>
+  <div class="sidebar-module"><a href="strategy-module-4.html" class="sidebar-module-link"><span class="sidebar-num">4</span>Data Strategy as Competitive Advantage</a></div>
+  <div class="sidebar-module"><a href="strategy-module-5.html" class="sidebar-module-link"><span class="sidebar-num">5</span>AI Talent and Organizational Design</a></div>
+  <div class="sidebar-module"><a href="strategy-module-6.html" class="sidebar-module-link"><span class="sidebar-num">6</span>Managing AI Projects and Vendors</a></div>
+  <div class="sidebar-module"><a href="strategy-module-7.html" class="sidebar-module-link"><span class="sidebar-num">7</span>Measuring AI ROI</a></div>
+  <div class="sidebar-module"><a href="strategy-module-8.html" class="sidebar-module-link"><span class="sidebar-num">8</span>AI Risk Management</a></div>
+  <div class="sidebar-module"><a href="strategy-module-9.html" class="sidebar-module-link"><span class="sidebar-num">9</span>Change Management for AI</a></div>
+  <div class="sidebar-module"><a href="strategy-module-10.html" class="sidebar-module-link"><span class="sidebar-num">10</span>Building an AI-First Culture</a></div>
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-module"><a href="quiz-strategy.html" class="sidebar-module-link"><span class="sidebar-num">&#10003;</span>Final Assessment</a></div>
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-progress-label"><span>Course progress</span><span style="color:var(--accent);">2 / 10</span></div>
+  <div class="sidebar-progress-track"><div class="sidebar-progress-fill" style="width:20%;"></div></div>
+</aside>
+<main><div class="content">
+  <div class="module-eyebrow"><span class="module-tag">Module 2 · Expert Track</span><span class="module-meta">15 min read · AI Strategy for Leaders</span></div>
+  <h1>Identifying AI Opportunities</h1>
+  <p class="intro-text">Most organizations have more potential AI applications than they have capacity to pursue. The challenge is not generating ideas — it is separating the high-value, feasible opportunities from the shiny distractions, and building a disciplined process for making those judgments. This module gives you the frameworks to do exactly that.</p>
+
+  <h2>Why Opportunity Identification Goes Wrong</h2>
+  <p>The most common failure mode in AI opportunity identification is starting with the technology rather than the problem. A team sees a compelling AI demo, reads about a competitor's deployment, or attends a conference that leaves them excited about possibilities — and then goes looking for problems to apply the technology to. This is the wrong direction. It produces pilots that work technically but do not address real business pain, and it wastes resources on solutions looking for problems.</p>
+  <p>The second failure mode is starting with the problem but choosing the wrong problems. Not every painful business problem is a good AI opportunity. Some problems are painful because of organizational misalignment, process dysfunction, or incentive structures — and applying AI to them produces an expensive bandage on a wound that needs surgery. The discipline of opportunity assessment is partly about identifying when AI is the right answer and when it is not.</p>
+  <p>The third failure mode is confusing feasibility with desirability. An AI application might be technically possible but commercially unattractive, or commercially attractive but technically beyond the organization's current capabilities. Separating "can we do it?" from "should we do it?" requires structured frameworks rather than enthusiasm-driven decision-making.</p>
+
+  <div class="warn">
+    <div class="warn-label">The Demo Trap</div>
+    <p>AI demos are almost always more impressive than production deployments. Vendors demo AI systems on curated inputs in controlled conditions. Real-world data is messier, customer queries are stranger, and edge cases are more frequent than any demo suggests. When evaluating an AI opportunity based on a vendor demonstration, apply a significant skepticism discount and insist on evidence from production deployments at comparable organizations.</p>
+  </div>
+
+  <h2>The AI Opportunity Scanning Framework</h2>
+  <p>Systematic opportunity identification requires scanning across multiple dimensions of your business simultaneously. The most effective approach combines top-down strategic alignment with bottom-up operational discovery.</p>
+
+  <h3>Top-Down: Strategic Priority Mapping</h3>
+  <p>Start with your organization's top three to five strategic priorities. For each priority, ask: where are the bottlenecks? Where is human effort concentrated on tasks that are repetitive, data-intensive, or judgment-heavy but based on well-defined rules? Where are decisions being made slowly because of information overload? Where are errors or inconsistencies creating cost or risk? These are the structural locations where AI creates the most durable value.</p>
+  <p>If your strategic priority is revenue growth through customer acquisition, then opportunities in marketing personalization, lead scoring, and customer lifetime value prediction deserve priority attention. If your strategic priority is cost reduction, then opportunities in process automation, quality control, and demand forecasting are more relevant. Aligning AI opportunity scanning to strategic priorities is what separates strategic AI deployment from random experimentation.</p>
+
+  <h3>Bottom-Up: Operational Discovery</h3>
+  <p>Frontline workers often have better intuition about AI opportunities than executives — because they are the ones spending hours doing tasks that AI could do in seconds. A structured discovery process involves asking operational teams to identify: (1) tasks they do repeatedly that follow predictable patterns; (2) decisions they make regularly that rely on data they do not have time to properly analyze; (3) errors that recur despite clear rules about how to avoid them; and (4) customer interactions where response quality or speed is limited by their bandwidth.</p>
+  <p>The AI Opportunity Inventory — a structured catalog of potential AI applications gathered from across the organization — is one of the most valuable artifacts a leadership team can create. It turns diffuse, informal awareness of AI potential into actionable, comparable options.</p>
+
+  <h2>The Impact-Feasibility Matrix</h2>
+  <p>Once you have a candidate list of AI opportunities, you need a consistent framework for comparing them. The impact-feasibility matrix is the most widely used tool for this purpose, and with some AI-specific modifications it remains highly effective.</p>
+  <p><strong>Impact</strong> in this context has three components: the magnitude of the benefit if the application works as intended (cost savings, revenue increase, risk reduction, customer experience improvement); the certainty of the benefit (does this solve a well-understood problem or an aspirational one?); and the strategic significance (does this create durable competitive advantage or just a temporary efficiency?). Plot estimated impact on the vertical axis.</p>
+  <p><strong>Feasibility</strong> for AI applications has specific dimensions that differ from conventional software projects: data availability and quality (do you have the training data the model needs?); technical complexity (is this a well-solved problem class or frontier research?); organizational readiness (do you have the talent, processes, and change management capacity to deploy this?); and regulatory or compliance constraints. Plot estimated feasibility on the horizontal axis.</p>
+
+  <div class="good">
+    <div class="good-label">Quick Wins vs. Strategic Bets</div>
+    <p>Your opportunity portfolio should include both quick wins (high feasibility, moderate impact — typically automation of well-defined processes) and strategic bets (high impact, moderate feasibility — typically applications that require data investment and capability building). Organizations that pursue only quick wins build efficiency without differentiation. Organizations that pursue only strategic bets run out of patience and capital before they see returns.</p>
+  </div>
+
+  <h2>High-Value Use Cases vs. Hype</h2>
+  <p>The AI market is awash in use cases that generate impressive press releases and disappointing ROI. Distinguishing signal from noise requires understanding which AI applications have a strong track record across multiple deployment contexts.</p>
+
+  <h3>Well-Validated High-Value Use Cases</h3>
+  <p>These applications have been deployed successfully across hundreds of organizations and have robust evidence of value:</p>
+  <ul>
+    <li><strong>Document processing and extraction</strong> — reading invoices, contracts, forms, and other structured documents to extract data fields. Mature technology with high accuracy and clear ROI.</li>
+    <li><strong>Customer service automation</strong> — handling routine, well-defined customer queries through AI chat or voice. Effective for tier-1 support; requires human escalation design for complex cases.</li>
+    <li><strong>Demand forecasting</strong> — predicting future demand for products, services, or resources using historical data and external signals. One of the earliest and most reliable AI applications in business.</li>
+    <li><strong>Fraud detection</strong> — identifying anomalous transactions or behaviors indicative of fraud. Banking, insurance, and e-commerce have deployed this at scale for decades.</li>
+    <li><strong>Predictive maintenance</strong> — using sensor data to predict equipment failures before they occur. Well-validated in manufacturing, aviation, and utilities.</li>
+    <li><strong>Personalization and recommendation</strong> — matching content, products, or offers to individual preferences. Ubiquitous in consumer tech; increasingly deployed in B2B contexts.</li>
+  </ul>
+
+  <h3>Promising but Requiring More Care</h3>
+  <ul>
+    <li><strong>Generative AI for content creation</strong> — genuine productivity gains in marketing, documentation, and communications, but requires strong human review workflows and brand governance.</li>
+    <li><strong>AI-assisted hiring and talent assessment</strong> — significant bias risks; heavily regulated in some jurisdictions; requires careful validation and ongoing monitoring.</li>
+    <li><strong>Medical diagnosis assistance</strong> — enormous potential but strict regulatory requirements (FDA 510(k) clearance in the US, CE marking in Europe) and liability considerations.</li>
+    <li><strong>Autonomous decision-making in high-stakes contexts</strong> — credit decisions, legal recommendations, medical treatment plans — where the consequences of error are severe and explainability is legally required.</li>
+  </ul>
+
+  <h3>High Hype, Unproven at Scale</h3>
+  <ul>
+    <li><strong>AI-generated code replacing software teams entirely</strong> — AI coding tools are genuinely useful for augmenting developers; they are not yet reliable enough to replace experienced engineering judgment on complex systems.</li>
+    <li><strong>Fully autonomous customer service without human fallback</strong> — customers whose complex problems are not handled well by AI are disproportionately the highest-value customers you most need to retain.</li>
+    <li><strong>AI-driven strategy formulation</strong> — AI can surface patterns and scenarios for human strategists; it cannot replace the contextual judgment, ethical reasoning, and stakeholder management that strategy requires.</li>
+  </ul>
+
+  <h2>Data Readiness Assessment</h2>
+  <p>Every AI opportunity assessment must include a data readiness check. This is where most AI initiatives encounter their first serious obstacle, and identifying it early avoids expensive surprises.</p>
+  <p>Data readiness has four dimensions. <strong>Availability</strong>: do you have data that is relevant to the problem you are trying to solve? A model that predicts customer churn needs historical data on customers who churned and customers who did not. If that history does not exist in structured, retrievable form, you cannot build the model without first building the data infrastructure. <strong>Quality</strong>: is the data accurate, complete, and consistent? Poor data quality is the leading cause of AI project failure — and the failure often does not become visible until the model is in production, where its errors are attributed to the AI when they were caused by the data. <strong>Volume</strong>: do you have enough labeled examples for the model to learn from? The answer varies enormously by application and algorithm type — some modern approaches work with surprisingly small datasets; others require millions of examples. <strong>Recency</strong>: is the data current and representative of present conditions? A demand forecasting model trained on pre-pandemic data may perform poorly on post-pandemic demand patterns.</p>
+
+  <div class="callout">
+    <div class="callout-label">The Data Readiness Question</div>
+    <p>For every AI opportunity you are evaluating, ask: "What data does this model need to learn from and make predictions on — and do we have it, or can we get it in a reasonable timeframe at a reasonable cost?" If the answer requires more than six to twelve months of data collection before model training can begin, reprioritize. There are usually faster wins elsewhere.</p>
+  </div>
+
+  <h2>The Prioritization Matrix in Practice</h2>
+  <p>With impact, feasibility, and data readiness assessed for each candidate opportunity, you need a structured prioritization process. The most effective approach weights these dimensions against your specific organizational context.</p>
+  <p><strong>Urgent</strong> opportunities are those where competitors are already deploying, your data is ready, and the impact is clear. These should move to pilot immediately — delay costs you competitive ground.</p>
+  <p><strong>Build pipeline</strong> opportunities have high impact but require data or capability investment before they are feasible. These should be funded as infrastructure investments, not expected to produce short-term returns.</p>
+  <p><strong>Monitor</strong> opportunities have high potential but the technology is not yet mature or the use case is not well-validated. Track the evidence; do not invest ahead of it.</p>
+  <p><strong>Deprioritize</strong> opportunities have low impact-to-feasibility ratios regardless of how compelling the technology is. The discipline to say no to interesting AI ideas is a strategic capability.</p>
+
+  <h2>Common Beginner Mistakes</h2>
+  <div class="principle-list">
+    <div class="principle">
+      <div class="principle-title">Pursuing Novelty Over Value</div>
+      <div class="principle-desc">The most impressive AI use case is rarely the most valuable one. Organizations routinely pass over proven high-ROI applications (document extraction, demand forecasting, customer segmentation) in favor of ambitious frontier applications that take years to produce value. Start with proven applications and build the organizational muscle before swinging for the fence.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Ignoring Change Management in the Assessment</div>
+      <div class="principle-desc">An AI application that is technically excellent but organizationally rejected produces no value. The ease of adoption — how dramatically the application changes existing workflows, how resistant the affected team is, how well the benefits are visible to users — must be part of the feasibility assessment, not an afterthought.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">One-Time Assessment Instead of Living Inventory</div>
+      <div class="principle-desc">AI capabilities are evolving faster than annual planning cycles. An opportunity that was infeasible eighteen months ago may be easily achievable today with a new foundation model. The AI opportunity inventory should be a living document, reviewed quarterly, as new capabilities and vendor options emerge.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Failing to Define Success Before Starting</div>
+      <div class="principle-desc">Every AI opportunity assessment should conclude with a crisp definition of what success looks like: specific metrics, target thresholds, and a timeframe. Without this, pilots extend indefinitely, organizations lose patience before reaching the learning threshold, and AI initiatives are cancelled at exactly the wrong moment.</div>
+    </div>
+  </div>
+
+  <h2>The AI Opportunity Inventory Process</h2>
+  <p>For organizations ready to move beyond ad hoc opportunity identification, a structured AI opportunity inventory provides a comprehensive, repeatable, and comparable foundation for decision-making. Here is how leading organizations run this process.</p>
+  <p><strong>Phase 1: Discovery (weeks 1–3).</strong> Cross-functional workshops with representatives from each major business unit. Structured questions guide discovery: what decisions do you make repeatedly? What information do you wish you had? What tasks consume time without adding the judgment or creativity that you are uniquely positioned to provide? What errors recur despite clear rules? Capture 40–80 raw ideas across the organization.</p>
+  <p><strong>Phase 2: Initial Screening (week 4).</strong> Apply a simple filter: does this align to a strategic priority? Is there plausible data to support it? Is there a clear and measurable outcome? This typically narrows the field to 15–25 serious candidates.</p>
+  <p><strong>Phase 3: Deep Assessment (weeks 5–8).</strong> For each candidate, conduct a structured assessment covering impact estimate, feasibility factors, data readiness, competitive context, risk profile, and rough cost and timeline. Score each dimension consistently.</p>
+  <p><strong>Phase 4: Portfolio Construction (week 9).</strong> Assemble a portfolio of 3–5 initiatives across time horizons: 2–3 quick wins (3–6 months), 1–2 medium-term strategic investments (6–18 months), and 1 longer-term capability build. Present to leadership for resource allocation decisions.</p>
+
+  <div class="callout">
+    <div class="callout-label">Key Takeaway</div>
+    <p>The discipline of AI opportunity identification is not about finding the most exciting AI ideas. It is about building a repeatable process for identifying where AI creates real value in your specific business context, filtering ruthlessly for feasibility and data readiness, and constructing a portfolio that delivers near-term wins while building toward longer-term competitive advantage.</p>
+  </div>
+
+</div></main>
+</div>
+<div class="sticky-bar">
+  <div class="sticky-bar-reading" id="sticky-reading">Read to the end to unlock the next module</div>
+  <div class="sticky-bar-track"><div class="sticky-bar-fill" id="sticky-fill"></div></div>
+  <div class="sticky-bar-label" id="sticky-label">0%</div>
+  <button class="sticky-bar-btn" id="sticky-btn" onclick="completeAndNext()">Module 3: Build vs. Buy vs. Partner &#8594;</button>
+</div>
+<script type="module">
+  import{initializeApp}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import{getAuth,onAuthStateChanged}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import{getFirestore,doc,setDoc,arrayUnion}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  const app=initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+  const auth=getAuth(app);const db=getFirestore(app);
+  let currentUser=null;
+  onAuthStateChanged(auth,u=>{currentUser=u;});
+  window.toggleTheme=function(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='&#9790;'):(h.setAttribute('data-theme','dark'),i.textContent='&#9728;');};
+  window.addEventListener('scroll',()=>{const d=document.documentElement,s=d.scrollTop||document.body.scrollTop,t=d.scrollHeight-d.clientHeight;document.getElementById('progress').style.width=(s/t*100)+'%';});
+  let unlocked=false;
+  function updateScrollProgress(){
+    const scrolled=window.scrollY+window.innerHeight;const total=document.documentElement.scrollHeight;
+    const pct=Math.min(100,Math.round((scrolled/total)*100));
+    const fill=document.getElementById('sticky-fill');const label=document.getElementById('sticky-label');
+    const btn=document.getElementById('sticky-btn');const reading=document.getElementById('sticky-reading');
+    if(fill)fill.style.width=pct+'%';if(label)label.textContent=pct+'%';
+    if(pct>=95&&!unlocked){unlocked=true;if(btn)btn.style.display='block';if(reading)reading.style.display='none';if(fill)fill.style.background='#22c55e';if(label)label.style.color='#22c55e';}
+  }
+  window.addEventListener('scroll',updateScrollProgress);updateScrollProgress();
+  window.completeAndNext=async function(){
+    if(currentUser){try{await setDoc(doc(db,'users',currentUser.uid),{strategyModules:arrayUnion('m2')},{merge:true});}catch(e){}}
+    window.location.href='strategy-module-3.html';
+  };
+</script>
+</body>
+</html>

@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 3: Role Assignment and Context Setting — Prompt Engineering Mastery — Meridian Institute of AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#B45309;--accent-dim:rgba(180,83,9,0.1);--nav-bg:rgba(8,8,8,0.9);--callout-bg:rgba(180,83,9,0.07);--callout-border:rgba(180,83,9,0.25);--good-bg:rgba(34,197,94,0.07);--good-border:rgba(34,197,94,0.2);--warn-bg:rgba(251,146,60,0.07);--warn-border:rgba(251,146,60,0.2);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#92400E;--accent-dim:rgba(146,64,14,0.08);--nav-bg:rgba(250,250,248,0.9);--callout-bg:rgba(146,64,14,0.05);--callout-border:rgba(146,64,14,0.2);--good-bg:rgba(22,163,74,0.06);--good-border:rgba(22,163,74,0.2);--warn-bg:rgba(234,88,12,0.05);--warn-border:rgba(234,88,12,0.2);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}html{scroll-behavior:smooth;}body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.7;overflow-x:hidden;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}.nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}.nav-back{font-size:13px;color:var(--text-2);text-decoration:none;}.nav-label{font-size:13px;color:var(--text-3);}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;}
+  .progress-bar{position:fixed;top:60px;left:0;right:0;z-index:99;height:2px;background:var(--border);}.progress-fill{height:100%;background:var(--accent);width:0%;}
+  .page-wrapper{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:100vh;padding-top:62px;}
+  .sidebar{position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto;border-right:1px solid var(--border);padding:32px 24px;background:var(--bg-2);}
+  .sidebar-course{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;}.sidebar-course-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+  .sidebar-module{margin-bottom:4px;}.sidebar-module-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:13px;color:var(--text-2);text-decoration:none;transition:all 0.2s;line-height:1.4;}
+  .sidebar-module-link:hover{background:var(--bg-3);color:var(--text);}.sidebar-module-link.active{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-num{font-size:11px;font-weight:500;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--bg-4);color:var(--text-3);}
+  .sidebar-module-link.active .sidebar-num{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-divider{height:1px;background:var(--border);margin:20px 0;}
+  .sidebar-progress-label{font-size:12px;color:var(--text-3);margin-bottom:8px;display:flex;justify-content:space-between;}
+  .sidebar-progress-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}.sidebar-progress-fill{height:100%;background:var(--accent);border-radius:2px;}
+  main{display:block;min-width:0;}.content{max-width:760px;width:100%;padding:60px 64px 140px;margin:0 auto;}
+  .module-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+  .module-tag{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(180,83,9,0.2);padding:4px 12px;border-radius:100px;}
+  .module-meta{font-size:12px;color:var(--text-3);}
+  h1{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1.05;letter-spacing:-0.02em;margin-bottom:24px;}
+  .intro-text{font-size:19px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+  h2{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:400;color:var(--text);margin:52px 0 18px;line-height:1.2;}
+  p{font-size:16px;font-weight:300;color:var(--text-2);line-height:1.8;margin-bottom:20px;}strong{font-weight:500;color:var(--text);}
+  ul,ol{margin:0 0 20px 22px;color:var(--text-2);}li{font-size:16px;font-weight:300;line-height:1.8;margin-bottom:8px;}
+  .callout{background:var(--callout-bg);border:1px solid var(--callout-border);border-radius:12px;padding:24px 28px;margin:32px 0;}.callout-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}.callout p{margin:0;font-size:15px;color:var(--text-2);}.callout p+p{margin-top:12px;}
+  .good{background:var(--good-bg);border:1px solid var(--good-border);border-radius:12px;padding:24px 28px;margin:24px 0;}.good-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#22c55e;margin-bottom:10px;}.good p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn{background:var(--warn-bg);border:1px solid var(--warn-border);border-radius:12px;padding:24px 28px;margin:24px 0;}.warn-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#fb923c;margin-bottom:10px;}.warn p{margin:0;font-size:15px;color:var(--text-2);}
+  .principle-list{display:flex;flex-direction:column;gap:12px;margin:24px 0;}.principle{background:var(--bg-2);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:0 12px 12px 0;padding:20px 24px;}.principle-title{font-size:15px;font-weight:500;color:var(--text);margin-bottom:6px;}.principle-desc{font-size:14px;color:var(--text-2);line-height:1.65;margin:0;}
+  .code-block{background:#0d1117;border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:20px 24px;margin:24px 0;font-family:monospace;font-size:13px;color:#e6edf3;overflow-x:auto;line-height:1.7;white-space:pre;}
+  .sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:var(--bg-2);border-top:1px solid var(--border-2);padding:14px 5%;display:flex;align-items:center;justify-content:space-between;gap:16px;backdrop-filter:blur(12px);}
+  .sticky-bar-track{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}.sticky-bar-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.2s;width:0%;}
+  .sticky-bar-label{font-size:12px;color:var(--text-3);white-space:nowrap;}
+  .sticky-bar-btn{padding:10px 20px;border-radius:8px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;background:var(--accent);color:#fff;border:none;cursor:pointer;white-space:nowrap;transition:opacity 0.2s;display:none;}.sticky-bar-btn:hover{opacity:0.88;}
+  .sticky-bar-reading{font-size:12px;color:var(--text-3);white-space:nowrap;}
+  @media(max-width:900px){.page-wrapper{grid-template-columns:1fr;}.sidebar{display:none;}.content{padding:40px 24px 120px;}h1{font-size:38px;}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="courses.html" class="nav-back">← Prompt Engineering Mastery</a>
+    <div class="nav-divider"></div>
+    <span class="nav-label">Module 3</span>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">☀</span></button>
+</nav>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+<div class="page-wrapper">
+<aside class="sidebar">
+  <div class="sidebar-course">Expert Track</div>
+  <div class="sidebar-course-name">Prompt Engineering Mastery</div>
+  <div class="sidebar-module"><a href="prompt-module-1.html" class="sidebar-module-link"><span class="sidebar-num">1</span>The Art and Science of Prompting</a></div>
+  <div class="sidebar-module"><a href="prompt-module-2.html" class="sidebar-module-link"><span class="sidebar-num">2</span>Instruction Clarity and Specificity</a></div>
+  <div class="sidebar-module"><a href="prompt-module-3.html" class="sidebar-module-link active"><span class="sidebar-num">3</span>Role Assignment and Context Setting</a></div>
+  <div class="sidebar-module"><a href="prompt-module-4.html" class="sidebar-module-link"><span class="sidebar-num">4</span>Few-Shot and Chain-of-Thought</a></div>
+  <div class="sidebar-module"><a href="prompt-module-5.html" class="sidebar-module-link"><span class="sidebar-num">5</span>System Prompts and Meta-Instructions</a></div>
+  <div class="sidebar-module"><a href="prompt-module-6.html" class="sidebar-module-link"><span class="sidebar-num">6</span>Advanced Reasoning Techniques</a></div>
+  <div class="sidebar-module"><a href="prompt-module-7.html" class="sidebar-module-link"><span class="sidebar-num">7</span>Prompt Chaining and Decomposition</a></div>
+  <div class="sidebar-module"><a href="prompt-module-8.html" class="sidebar-module-link"><span class="sidebar-num">8</span>Prompting for Code and Technical Tasks</a></div>
+  <div class="sidebar-module"><a href="prompt-module-9.html" class="sidebar-module-link"><span class="sidebar-num">9</span>Adversarial Prompting and Red-Teaming</a></div>
+  <div class="sidebar-module"><a href="prompt-module-10.html" class="sidebar-module-link"><span class="sidebar-num">10</span>Building Prompt Libraries</a></div>
+  <div class="sidebar-module"><a href="quiz-prompt.html" class="sidebar-module-link" style="color:var(--accent);margin-top:4px;"><span class="sidebar-num" style="background:var(--accent-dim);color:var(--accent);">&#10022;</span>Final Assessment</a></div>
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-progress-label"><span>Course progress</span><span style="color:var(--accent);">3 / 10</span></div>
+  <div class="sidebar-progress-track"><div class="sidebar-progress-fill" style="width:30%;"></div></div>
+</aside>
+<main>
+<div class="content">
+  <div class="module-eyebrow"><span class="module-tag">Module 3 · Expert Track</span><span class="module-meta">15 min read · Prompt Engineering Mastery</span></div>
+  <h1>Role Assignment and Context Setting</h1>
+  <p class="intro-text">Telling a language model who it is and what world it is operating in is one of the most powerful and underused techniques in prompt engineering — role assignment and context setting shift the model's entire frame of reference, unlocking behaviors, vocabularies, and analytical stances that generic prompting never surfaces.</p>
+
+  <h2>Why Role Assignment Works</h2>
+  <p>Language models are trained on text written by humans in an enormous variety of roles: doctors, lawyers, novelists, engineers, teachers, critics, coaches, journalists. The patterns associated with each role — the vocabulary, the reasoning style, the level of assumed expertise, the way questions are framed and answers are structured — are all deeply embedded in the model's weights. Role assignment is a technique for activating those patterns deliberately.</p>
+  <p>When you begin a prompt with "You are a senior software architect with 15 years of experience designing distributed systems," you are not just telling the model to pretend. You are selecting a cluster of statistical patterns from its training — patterns associated with how senior architects write, reason, and communicate. The model's outputs shift accordingly: more precise technical vocabulary, more consideration of trade-offs, more attention to edge cases and failure modes, less focus on introductory concepts.</p>
+  <p>This is fundamentally different from simply asking for expertise-level responses. "Give me an expert-level analysis" is a quality instruction. "You are an expert with background in X" is a role instruction — it activates a specific cognitive frame with specific associated patterns. The latter is usually more effective because it contextualizes expertise rather than merely asserting it.</p>
+
+  <div class="callout">
+    <div class="callout-label">The Activation Mechanism</div>
+    <p>Role prompting works by selecting and activating patterns from training data. A vague role ("You are an expert") selects weakly from a diffuse pattern space. A specific role ("You are a board-level advisor who has helped five SaaS companies navigate Series B fundraising") selects strongly from a much narrower, more coherent cluster of patterns — producing responses that are characteristically different in depth, tone, and analytic stance.</p>
+  </div>
+
+  <h2>Constructing Effective Role Descriptions</h2>
+  <p>Not all role descriptions are equally effective. Weak roles describe a general category. Strong roles describe a specific combination of expertise, experience, perspective, and disposition. The most effective role descriptions include four elements:</p>
+
+  <div class="principle-list">
+    <div class="principle">
+      <div class="principle-title">Domain and Specialty</div>
+      <div class="principle-desc">Not just "doctor" but "emergency medicine physician" or "endocrinologist specializing in metabolic disorders." Not "marketer" but "B2B SaaS demand generation specialist focused on enterprise accounts." Specificity narrows the pattern cluster and makes the output far more expert.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Experience Level and Context</div>
+      <div class="principle-desc">"With 12 years in enterprise software sales at companies ranging from Series A to Fortune 500" gives the model a history that shapes its perspective. Experience context tells the model what tradeoffs the role has navigated, what assumptions the role makes, and what the role has learned from failure.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Analytical Perspective</div>
+      <div class="principle-desc">"You approach problems by first identifying the binding constraints, then working backwards from desired outcomes" explicitly shapes reasoning style. This is particularly powerful for analytical tasks where the path to the answer matters as much as the answer itself.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Values and Disposition</div>
+      <div class="principle-desc">"You prize precision over hedging and will tell someone directly when their plan has a fatal flaw rather than softening the critique" produces responses that are direct and opinionated rather than diplomatic and equivocal. Disposition instructions override the model's default tendency toward balance and agreement.</div>
+    </div>
+  </div>
+
+  <h2>Persona vs. Domain Expert Frames</h2>
+  <p>There is a useful distinction between full persona prompting and domain expert frames. <strong>Full persona prompting</strong> gives the model a character: a name, a history, a voice, a set of consistent mannerisms. It produces a coherent identity that can sustain long conversations and creative tasks. It is most valuable when consistency of voice and relational continuity matter — product chatbots, creative writing collaborators, interactive tutors.</p>
+  <p><strong>Domain expert frames</strong> assign expertise without a biographical character: "a tax attorney specializing in international corporate structuring" rather than "Alex Chen, a tax attorney who grew up in Hong Kong." Expert frames are better for analytical and technical tasks where you want the model to apply a specific expert's reasoning style without fictional biographical constraints that might distort the analysis.</p>
+  <p>For most business and technical prompting, domain expert frames are more reliable and predictable. For creative, conversational, and user-facing product contexts, full personas can add coherence and distinctiveness that pure expertise descriptions lack.</p>
+
+  <h2>Context Setting: The Four Layers</h2>
+  <p>Role assignment establishes who the model is. Context setting establishes what world the model is operating in. These are complementary and should usually appear together. Context has four layers that expert prompt engineers address systematically:</p>
+
+  <div class="principle-list">
+    <div class="principle">
+      <div class="principle-title">Task Context</div>
+      <div class="principle-desc">What specific task is this output for, and how will it be used? Writing a speech to be delivered verbally at a board meeting is fundamentally different from writing a speech to be read as a document. The same content requirement produces very different ideal outputs depending on delivery context and use case.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Project Context</div>
+      <div class="principle-desc">What is the larger project this task fits into? An individual analysis prompt produces better results when the model knows it is part of a due diligence process for a potential acquisition — not a general research exercise. The bigger picture changes which details matter and which framings are appropriate.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Audience Context</div>
+      <div class="principle-desc">Who will read or use this output? Their expertise level, their goals, their likely objections, their decision-making authority. The same information should be framed very differently for a CFO (implications, costs, risk) versus a software engineer (implementation, technical trade-offs, timeline).</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Constraint Context</div>
+      <div class="principle-desc">What real-world constraints apply? Regulatory environment, existing systems the output must integrate with, organizational politics, budget limits, timeline pressure. Constraints are often the most decision-relevant information the model can have — they determine what solutions are actually viable.</div>
+    </div>
+  </div>
+
+  <h2>A Practical Context-Setting Template</h2>
+  <p>Expert prompt engineers use structured approaches to context-setting to ensure all layers are addressed. This template works well for analytical and production tasks:</p>
+
+  <div class="code-block">ROLE: [Who you are — expertise, experience, perspective, disposition]
+
+CONTEXT:
+- Task: [What this output is for and how it will be used]
+- Project: [The larger initiative this fits into]
+- Audience: [Who will use this; their expertise level and goals]
+- Constraints: [Real-world limits that apply]
+
+INSTRUCTION: [The specific task, stated precisely]
+
+FORMAT: [How the output should be structured and delivered]</div>
+
+  <p>This is not a rigid template — it is a checklist of dimensions to cover. Many prompts will fold these elements into flowing prose rather than labeled sections. What matters is that all four context layers are addressed before the instruction, not the exact format.</p>
+
+  <h2>Injecting Domain-Specific Context</h2>
+  <p>Beyond the four structural layers, high-quality prompts often inject specific domain facts that the model needs to reason correctly within your context. This is particularly important when your situation diverges from the typical case the model was trained on.</p>
+  <p>For example: "We are a mid-market B2B software company with 180 employees, $22M ARR, and a 60/40 enterprise/SMB revenue mix. Our primary growth constraint is not lead generation — it is sales cycle length and close rates. With this context in mind..." This injection ensures the model's analysis is calibrated to your actual situation rather than the average company it has learned from.</p>
+  <p>The key question to ask yourself: "What would a consultant need to know in their first meeting to give advice that is actually relevant to us?" The answer to that question is the domain context to inject.</p>
+
+  <div class="warn">
+    <div class="warn-label">The Generic Advice Trap</div>
+    <p>Without specific context, models default to advice that is true in general but often not relevant to your specific situation. "Improve your marketing funnel" is generic. "Given that your conversion rate is highest on direct outbound but your team spends 70% of time on inbound content, the highest-leverage shift is rebalancing toward direct outbound" is specific. The difference is the context you provide.</p>
+  </div>
+
+  <h2>Role Assignment for Adversarial Thinking</h2>
+  <p>One of the most powerful applications of role assignment is deliberately activating adversarial perspectives — having the model take the role of a critic, a skeptic, or an opponent to stress-test your ideas. "You are a venture investor who has seen 50 companies in this space fail. You are deeply skeptical of this business model. Identify the three most likely fatal flaws in the following plan" produces a fundamentally different and more useful analysis than "What are the potential weaknesses of this plan?"</p>
+  <p>The adversarial role produces harder criticism, more specific objections, and less diplomatic hedging. The generic question produces a balanced assessment that may soft-pedal the most serious problems. For high-stakes decisions, explicitly assigning adversarial roles is one of the most valuable techniques available to prompt engineers.</p>
+
+  <div class="good">
+    <div class="good-label">Adversarial Role Example</div>
+    <p>"You are a seasoned CFO who has seen three startups fail due to runway mismanagement. You are reviewing the following 18-month financial plan with extreme skepticism. Your job is not to be balanced — it is to identify every assumption that could kill the company if it is wrong. Be direct and specific."</p>
+    <p>Compare the output of this prompt to "Please review this financial plan and identify potential issues." The adversarial role produces analysis that is both more rigorous and more actionable.</p>
+  </div>
+
+  <h2>Layering Role and Context</h2>
+  <p>The most sophisticated prompts layer role assignment and context setting so they reinforce each other. The role tells the model who it is; the context tells it what specific situation that person is in. When both are well-specified, the model generates responses that reflect a coherent expert perspective applied to a real situation — which is precisely what you need for high-quality analytical and creative work.</p>
+  <p>As you develop your prompt engineering practice, develop a library of role descriptions for the expert perspectives you invoke most often: the technical reviewer, the strategic advisor, the skeptical editor, the domain specialist. Pair them with context templates for your most common task types. The combination is a reusable infrastructure for consistently high-quality outputs.</p>
+
+</div>
+</main>
+</div>
+<div class="sticky-bar">
+  <div class="sticky-bar-reading" id="sticky-reading">Read to the end to unlock the next module</div>
+  <div class="sticky-bar-track"><div class="sticky-bar-fill" id="sticky-fill"></div></div>
+  <div class="sticky-bar-label" id="sticky-label">0%</div>
+  <button class="sticky-bar-btn" id="sticky-btn" onclick="completeAndNext()">Module 4: Few-Shot and CoT &#8594;</button>
+</div>
+<script type="module">
+  import{initializeApp}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import{getAuth,onAuthStateChanged}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import{getFirestore,doc,setDoc,arrayUnion}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  const app=initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+  const auth=getAuth(app);const db=getFirestore(app);let currentUser=null;
+  onAuthStateChanged(auth,u=>{currentUser=u;});
+  window.toggleTheme=function(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='&#9790;'):(h.setAttribute('data-theme','dark'),i.textContent='&#9728;');};
+  window.addEventListener('scroll',()=>{const d=document.documentElement,s=d.scrollTop||document.body.scrollTop,t=d.scrollHeight-d.clientHeight;document.getElementById('progress').style.width=(s/t*100)+'%';});
+  let unlocked=false;
+  function updateScroll(){const pct=Math.min(100,Math.round(((window.scrollY+window.innerHeight)/document.documentElement.scrollHeight)*100));const fill=document.getElementById('sticky-fill'),label=document.getElementById('sticky-label'),btn=document.getElementById('sticky-btn'),reading=document.getElementById('sticky-reading');if(fill)fill.style.width=pct+'%';if(label)label.textContent=pct+'%';if(pct>=95&&!unlocked){unlocked=true;if(btn)btn.style.display='block';if(reading)reading.style.display='none';if(fill)fill.style.background='#22c55e';if(label)label.style.color='#22c55e';}}
+  window.addEventListener('scroll',updateScroll);updateScroll();
+  window.completeAndNext=async function(){if(currentUser){try{await setDoc(doc(db,'users',currentUser.uid),{promptModules:arrayUnion('m3')},{merge:true});}catch(e){}}window.location.href='prompt-module-4.html';};
+</script>
+</body>
+</html>

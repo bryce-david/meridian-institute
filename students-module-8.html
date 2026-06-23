@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 8: Academic Integrity in the AI Era — AI for Students — Meridian Institute of AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#6D4AFF;--accent-dim:rgba(109,74,255,0.1);--nav-bg:rgba(8,8,8,0.9);--callout-bg:rgba(109,74,255,0.07);--callout-border:rgba(109,74,255,0.25);--good-bg:rgba(34,197,94,0.07);--good-border:rgba(34,197,94,0.2);--warn-bg:rgba(251,146,60,0.07);--warn-border:rgba(251,146,60,0.2);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#5035cc;--accent-dim:rgba(80,53,204,0.08);--nav-bg:rgba(250,250,248,0.9);--callout-bg:rgba(80,53,204,0.05);--callout-border:rgba(80,53,204,0.2);--good-bg:rgba(22,163,74,0.06);--good-border:rgba(22,163,74,0.2);--warn-bg:rgba(234,88,12,0.05);--warn-border:rgba(234,88,12,0.2);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}html{scroll-behavior:smooth;}body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.7;overflow-x:hidden;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}.nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}.nav-back{font-size:13px;color:var(--text-2);text-decoration:none;}.nav-label{font-size:13px;color:var(--text-3);}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;}
+  .progress-bar{position:fixed;top:60px;left:0;right:0;z-index:99;height:2px;background:var(--border);}.progress-fill{height:100%;background:var(--accent);width:0%;}
+  .page-wrapper{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:100vh;padding-top:62px;}
+  .sidebar{position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto;border-right:1px solid var(--border);padding:32px 24px;background:var(--bg-2);}
+  .sidebar-course{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;}.sidebar-course-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+  .sidebar-module{margin-bottom:4px;}.sidebar-module-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:13px;color:var(--text-2);text-decoration:none;transition:all 0.2s;line-height:1.4;}
+  .sidebar-module-link:hover{background:var(--bg-3);color:var(--text);}.sidebar-module-link.active{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-num{font-size:11px;font-weight:500;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--bg-4);color:var(--text-3);}
+  .sidebar-module-link.active .sidebar-num{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-divider{height:1px;background:var(--border);margin:20px 0;}
+  .sidebar-progress-label{font-size:12px;color:var(--text-3);margin-bottom:8px;display:flex;justify-content:space-between;}
+  .sidebar-progress-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}.sidebar-progress-fill{height:100%;width:80%;background:var(--accent);border-radius:2px;}
+  main{display:block;min-width:0;}.content{max-width:760px;width:100%;padding:60px 64px 140px;margin:0 auto;}
+  .module-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+  .module-tag{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(109,74,255,0.2);padding:4px 12px;border-radius:100px;}
+  .module-meta{font-size:12px;color:var(--text-3);}
+  h1{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1.05;letter-spacing:-0.02em;margin-bottom:24px;}
+  .intro-text{font-size:19px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+  h2{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:400;color:var(--text);margin:52px 0 18px;line-height:1.2;}
+  p{font-size:16px;font-weight:300;color:var(--text-2);line-height:1.8;margin-bottom:20px;}strong{font-weight:500;color:var(--text);}
+  ul,ol{margin:0 0 20px 22px;color:var(--text-2);}li{font-size:16px;font-weight:300;line-height:1.8;margin-bottom:8px;}
+  .callout{background:var(--callout-bg);border:1px solid var(--callout-border);border-radius:12px;padding:24px 28px;margin:32px 0;}.callout-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}.callout p{margin:0;font-size:15px;color:var(--text-2);}.callout p+p{margin-top:12px;}
+  .good{background:var(--good-bg);border:1px solid var(--good-border);border-radius:12px;padding:24px 28px;margin:24px 0;}.good-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#22c55e;margin-bottom:10px;}.good p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn{background:var(--warn-bg);border:1px solid var(--warn-border);border-radius:12px;padding:24px 28px;margin:24px 0;}.warn-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#fb923c;margin-bottom:10px;}.warn p{margin:0;font-size:15px;color:var(--text-2);}
+  .principle-list{display:flex;flex-direction:column;gap:12px;margin:24px 0;}.principle{background:var(--bg-2);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:0 12px 12px 0;padding:20px 24px;}.principle-title{font-size:15px;font-weight:500;color:var(--text);margin-bottom:6px;}.principle-desc{font-size:14px;color:var(--text-2);line-height:1.65;margin:0;}
+  .sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:var(--bg-2);border-top:1px solid var(--border-2);padding:14px 5%;display:flex;align-items:center;justify-content:space-between;gap:16px;backdrop-filter:blur(12px);}
+  .sticky-bar-track{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}.sticky-bar-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.2s;width:0%;}
+  .sticky-bar-label{font-size:12px;color:var(--text-3);white-space:nowrap;}
+  .sticky-bar-btn{padding:10px 20px;border-radius:8px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;background:var(--accent);color:#fff;border:none;cursor:pointer;white-space:nowrap;transition:opacity 0.2s;display:none;}.sticky-bar-btn:hover{opacity:0.88;}
+  .sticky-bar-reading{font-size:12px;color:var(--text-3);white-space:nowrap;}
+  @media(max-width:900px){.page-wrapper{grid-template-columns:1fr;}.sidebar{display:none;}.content{padding:40px 24px 120px;}h1{font-size:38px;}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="courses.html" class="nav-back">← AI for Students</a>
+    <div class="nav-divider"></div>
+    <span class="nav-label">Module 8</span>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">☀</span></button>
+</nav>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+<div class="page-wrapper">
+<aside class="sidebar">
+  <div class="sidebar-course">Course</div>
+  <div class="sidebar-course-name">AI for Students</div>
+  <div class="sidebar-module"><a href="students-module-1.html" class="sidebar-module-link"><span class="sidebar-num">1</span>AI and Academic Work</a></div>
+  <div class="sidebar-module"><a href="students-module-2.html" class="sidebar-module-link"><span class="sidebar-num">2</span>Research with AI</a></div>
+  <div class="sidebar-module"><a href="students-module-3.html" class="sidebar-module-link"><span class="sidebar-num">3</span>Writing with AI</a></div>
+  <div class="sidebar-module"><a href="students-module-4.html" class="sidebar-module-link"><span class="sidebar-num">4</span>Study Smarter with AI</a></div>
+  <div class="sidebar-module"><a href="students-module-5.html" class="sidebar-module-link"><span class="sidebar-num">5</span>Notes and Knowledge Management</a></div>
+  <div class="sidebar-module"><a href="students-module-6.html" class="sidebar-module-link"><span class="sidebar-num">6</span>Math and STEM with AI</a></div>
+  <div class="sidebar-module"><a href="students-module-7.html" class="sidebar-module-link"><span class="sidebar-num">7</span>Creative Projects and AI</a></div>
+  <div class="sidebar-module"><a href="students-module-8.html" class="sidebar-module-link active"><span class="sidebar-num">8</span>Academic Integrity in the AI Era</a></div>
+  <div class="sidebar-module"><a href="students-module-9.html" class="sidebar-module-link"><span class="sidebar-num">9</span>Career Planning with AI</a></div>
+  <div class="sidebar-module"><a href="students-module-10.html" class="sidebar-module-link"><span class="sidebar-num">10</span>Your Personal AI Toolkit</a></div>
+  <div class="sidebar-module"><a href="quiz-students.html" class="sidebar-module-link" style="color:var(--accent);margin-top:4px;"><span class="sidebar-num" style="background:var(--accent-dim);color:var(--accent);">✦</span>Final Assessment</a></div>
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-progress-label"><span>Course progress</span><span style="color:var(--accent);">8 / 10</span></div>
+  <div class="sidebar-progress-track"><div class="sidebar-progress-fill"></div></div>
+</aside>
+<main>
+<div class="content">
+  <div class="module-eyebrow"><span class="module-tag">Module 8</span><span class="module-meta">12 min read · AI for Students</span></div>
+  <h1>Academic Integrity in the AI Era</h1>
+  <p class="intro-text">Academic integrity is the contract between you and your institution: that the work you submit represents your understanding and effort. AI doesn't invalidate that contract — but it creates a dozen new ways to violate it, some of which are genuinely ambiguous and some of which are clearly wrong. This module gives you the framework to navigate that complexity with confidence.</p>
+
+  <h2>Why the old frameworks don't quite fit</h2>
+  <p>Academic integrity policies were written in an era before generative AI, and most institutions are still catching up. The traditional categories — plagiarism (copying another human's work), contract cheating (paying someone to do your work), unauthorized collaboration — map imperfectly onto AI use. This creates genuine gray areas, as well as clear violations.</p>
+  <p>The clearest principle that still applies: <strong>representing work as your own that wasn't produced by your own thinking is dishonest</strong>, regardless of whether the source was another student, a paid service, or a language model. The technology changed. The principle didn't.</p>
+
+  <h2>The spectrum of AI use</h2>
+  <div class="principle-list">
+    <div class="principle">
+      <div class="principle-title">Clearly acceptable (almost universally)</div>
+      <div class="principle-desc">Using AI to understand concepts, generate retrieval questions, get feedback on structure, check grammar, or brainstorm ideas you then develop yourself. These are comparable to using a dictionary, a writing center, or a study group.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Requires disclosure or policy check</div>
+      <div class="principle-desc">Using AI to substantially revise your writing, to generate outlines you follow closely, or to produce summaries you incorporate into your work. These are AI contributions that should be disclosed where policies require it, and avoided where policies prohibit AI assistance.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Clearly a violation in almost all contexts</div>
+      <div class="principle-desc">Submitting AI-generated text as your own writing on any assignment that assesses your writing ability. Having AI solve problem sets or exams. Using AI in contexts where it's explicitly prohibited without disclosure.</div>
+    </div>
+  </div>
+
+  <h2>The detection landscape</h2>
+  <p>Many students make decisions about AI use based on what they think they can get away with. This is both ethically wrong and strategically risky. AI detection tools have improved significantly — but more importantly, professors who know their students' work can often identify AI-generated content without any tool. The stylistic consistency, the lack of personal voice, the way it handles specific details — experienced readers notice.</p>
+
+  <div class="warn">
+    <div class="warn-label">Detection is not the whole risk</div>
+    <p>Even if AI-generated work isn't detected, you still leave the course without the knowledge and skills it was designed to build. In later courses, internships, graduate programs, or jobs that assume you have those skills, the gap shows up. Academic integrity violations that are never caught still have consequences — they just show up later and are harder to trace to the source.</p>
+  </div>
+
+  <h2>When you're unsure: what to do</h2>
+  <ol>
+    <li><strong>Read the assignment and syllabus policy first.</strong> Many instructors now include explicit AI policies. Follow them.</li>
+    <li><strong>If the policy is silent, ask.</strong> "Is it acceptable to use AI for [specific use]?" is not a suspicious question. It's an ethical one.</li>
+    <li><strong>When in doubt, don't.</strong> The downside risk of an integrity violation vastly exceeds the upside of saved time.</li>
+    <li><strong>If you used AI, keep a record of how.</strong> If you're later asked to explain your process, you should be able to.</li>
+  </ol>
+
+  <h2>Building habits that last</h2>
+  <p>The students who develop strong academic integrity habits aren't primarily thinking about avoiding consequences. They've internalized that their degree is supposed to certify genuine competence, and that eroding that certification is ultimately a harm to themselves. That framing — protecting the value of your own credential and your own capabilities — is more durable than fear of getting caught.</p>
+
+  <div class="callout">
+    <div class="callout-label">The self-test that works</div>
+    <p>Before submitting any AI-assisted work, ask: "If my professor asked me right now to walk them through my reasoning process for this assignment, step by step, could I do it?" If yes, you're genuinely the author of the work regardless of what tools helped. If no, you need to go back and do the work.</p>
+  </div>
+
+  <div class="good">
+    <div class="good-label">The integrity advantage</div>
+    <p>Students who maintain strong academic integrity practices, especially around AI, will graduate with credentials that actually mean something — verifiable competence that wasn't simulated. In a world where AI use is increasingly widespread and increasingly detectable, the students whose skills are genuine have a growing advantage over those whose credentials are hollow.</p>
+  </div>
+</div>
+</main>
+</div>
+<div class="sticky-bar">
+  <div class="sticky-bar-reading" id="sticky-reading">Read to the end to unlock the next module</div>
+  <div class="sticky-bar-track"><div class="sticky-bar-fill" id="sticky-fill"></div></div>
+  <div class="sticky-bar-label" id="sticky-label">0%</div>
+  <button class="sticky-bar-btn" id="sticky-btn" onclick="completeAndNext()">Module 9: Career Planning →</button>
+</div>
+<script type="module">
+  import{initializeApp}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import{getAuth,onAuthStateChanged}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import{getFirestore,doc,setDoc,arrayUnion}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  const app=initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+  const auth=getAuth(app);const db=getFirestore(app);let currentUser=null;
+  onAuthStateChanged(auth,u=>{currentUser=u;});
+  window.toggleTheme=function(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='☾'):(h.setAttribute('data-theme','dark'),i.textContent='☀');};
+  window.addEventListener('scroll',()=>{const d=document.documentElement,s=d.scrollTop||document.body.scrollTop,t=d.scrollHeight-d.clientHeight;document.getElementById('progress').style.width=(s/t*100)+'%';});
+  let unlocked=false;
+  function updateScroll(){const pct=Math.min(100,Math.round(((window.scrollY+window.innerHeight)/document.documentElement.scrollHeight)*100));const fill=document.getElementById('sticky-fill'),label=document.getElementById('sticky-label'),btn=document.getElementById('sticky-btn'),reading=document.getElementById('sticky-reading');if(fill)fill.style.width=pct+'%';if(label)label.textContent=pct+'%';if(pct>=95&&!unlocked){unlocked=true;if(btn)btn.style.display='block';if(reading)reading.style.display='none';if(fill)fill.style.background='#22c55e';if(label)label.style.color='#22c55e';}}
+  window.addEventListener('scroll',updateScroll);updateScroll();
+  window.completeAndNext=async function(){if(currentUser){try{await setDoc(doc(db,'users',currentUser.uid),{studentsModules:arrayUnion('m8')},{merge:true});}catch(e){}}window.location.href='students-module-9.html';};
+</script>
+</body>
+</html>

@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 3: AI and Economic Inequality — AI and Society — Meridian Institute of AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#7C3AED;--accent-dim:rgba(124,58,237,0.1);--accent-dim2:rgba(124,58,237,0.05);--nav-bg:rgba(8,8,8,0.9);--callout-bg:rgba(124,58,237,0.07);--callout-border:rgba(124,58,237,0.25);--good-bg:rgba(34,197,94,0.07);--good-border:rgba(34,197,94,0.2);--warn-bg:rgba(251,146,60,0.07);--warn-border:rgba(251,146,60,0.2);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#6D28D9;--accent-dim:rgba(109,40,217,0.08);--accent-dim2:rgba(109,40,217,0.04);--nav-bg:rgba(250,250,248,0.9);--callout-bg:rgba(109,40,217,0.05);--callout-border:rgba(109,40,217,0.2);--good-bg:rgba(22,163,74,0.06);--good-border:rgba(22,163,74,0.2);--warn-bg:rgba(234,88,12,0.05);--warn-border:rgba(234,88,12,0.2);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;overflow-x:hidden;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.7;overflow-x:hidden;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}
+  .nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}
+  .nav-back{font-size:13px;color:var(--text-2);text-decoration:none;transition:color 0.2s;}
+  .nav-back:hover{color:var(--text);}
+  .nav-label{font-size:13px;color:var(--text-3);}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;transition:all 0.2s;}
+  .theme-toggle:hover{background:var(--bg-3);color:var(--text);}
+  .progress-bar{position:fixed;top:60px;left:0;right:0;z-index:99;height:2px;background:var(--border);}
+  .progress-fill{height:100%;background:var(--accent);width:0%;transition:width 0.1s;}
+  .page-wrapper{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:100vh;padding-top:62px;overflow:hidden;}
+  .sidebar{position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto;border-right:1px solid var(--border);padding:32px 24px;background:var(--bg-2);}
+  .sidebar-course{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;}
+  .sidebar-course-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+  .sidebar-module{margin-bottom:4px;}
+  .sidebar-module-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:13px;color:var(--text-2);text-decoration:none;transition:all 0.2s;line-height:1.4;}
+  .sidebar-module-link:hover{background:var(--bg-3);color:var(--text);}
+  .sidebar-module-link.active{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-num{font-size:11px;font-weight:500;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--bg-4);color:var(--text-3);}
+  .sidebar-module-link.active .sidebar-num{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-divider{height:1px;background:var(--border);margin:20px 0;}
+  .sidebar-progress-label{font-size:12px;color:var(--text-3);margin-bottom:8px;display:flex;justify-content:space-between;}
+  .sidebar-progress-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sidebar-progress-fill{height:100%;width:30%;background:var(--accent);border-radius:2px;}
+  main{display:block;min-width:0;overflow:hidden;}
+  .content{max-width:760px;width:100%;padding:60px 64px 140px;margin:0 auto;}
+  .module-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+  .module-tag{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(124,58,237,0.2);padding:4px 12px;border-radius:100px;}
+  .module-meta{font-size:12px;color:var(--text-3);}
+  h1{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1.05;letter-spacing:-0.02em;color:var(--text);margin-bottom:24px;}
+  .intro-text{font-size:19px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+  h2{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:400;color:var(--text);margin:52px 0 18px;line-height:1.2;}
+  h3{font-size:16px;font-weight:500;color:var(--text);margin:32px 0 12px;}
+  p{font-size:16px;font-weight:300;color:var(--text-2);line-height:1.8;margin-bottom:20px;}
+  strong{font-weight:500;color:var(--text);}
+  em{font-style:italic;}
+  ul,ol{margin:0 0 20px 22px;color:var(--text-2);}
+  li{font-size:16px;font-weight:300;line-height:1.8;margin-bottom:8px;}
+  .callout{background:var(--callout-bg);border:1px solid var(--callout-border);border-radius:12px;padding:24px 28px;margin:32px 0;}
+  .callout-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+  .callout p{margin:0;font-size:15px;color:var(--text-2);}
+  .callout p+p{margin-top:12px;}
+  .warn{background:var(--warn-bg);border:1px solid var(--warn-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .warn-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#fb923c;margin-bottom:10px;}
+  .warn p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn p+p{margin-top:12px;}
+  .good{background:var(--good-bg);border:1px solid var(--good-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .good-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#22c55e;margin-bottom:10px;}
+  .good p{margin:0;font-size:15px;color:var(--text-2);}
+  .principle-list{display:flex;flex-direction:column;gap:12px;margin:24px 0;}
+  .principle{background:var(--bg-2);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:0 12px 12px 0;padding:20px 24px;}
+  .principle-title{font-size:15px;font-weight:500;color:var(--text);margin-bottom:6px;}
+  .principle-desc{font-size:14px;color:var(--text-2);line-height:1.65;margin:0;}
+  .sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:var(--bg-2);border-top:1px solid var(--border-2);padding:14px 5%;display:flex;align-items:center;justify-content:space-between;gap:16px;backdrop-filter:blur(12px);}
+  .sticky-bar-track{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sticky-bar-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.2s;width:0%;}
+  .sticky-bar-label{font-size:12px;color:var(--text-3);white-space:nowrap;min-width:60px;text-align:right;}
+  .sticky-bar-btn{padding:10px 20px;border-radius:8px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;background:var(--accent);color:#fff;border:none;cursor:pointer;white-space:nowrap;transition:opacity 0.2s;display:none;}
+  .sticky-bar-btn:hover{opacity:0.88;}
+  .sticky-bar-reading{font-size:12px;color:var(--text-3);white-space:nowrap;}
+  @media(max-width:900px){.page-wrapper{grid-template-columns:1fr;}.sidebar{display:none;}.content{padding:40px 24px 120px;}h1{font-size:38px;}}
+  @media(max-width:600px){.content{padding:28px 16px 120px;}h1{font-size:30px;}h2{font-size:24px;}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="index.html" class="nav-back">&#127968; Home</a>
+    <div class="nav-divider"></div>
+    <a href="courses.html" class="nav-back">&#8592; AI and Society</a>
+    <div class="nav-divider"></div>
+    <span class="nav-label">Module 3</span>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">&#9728;</span></button>
+</nav>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+
+<div class="page-wrapper">
+<aside class="sidebar">
+  <div class="sidebar-course">Course</div>
+  <div class="sidebar-course-name">AI and Society</div>
+  <div class="sidebar-module"><a href="society-module-1.html" class="sidebar-module-link"><span class="sidebar-num">1</span>The Social Impact of AI</a></div>
+  <div class="sidebar-module"><a href="society-module-2.html" class="sidebar-module-link"><span class="sidebar-num">2</span>Labor Markets and Automation</a></div>
+  <div class="sidebar-module"><a href="society-module-3.html" class="sidebar-module-link active"><span class="sidebar-num">3</span>AI and Economic Inequality</a></div>
+  <div class="sidebar-module"><a href="society-module-4.html" class="sidebar-module-link"><span class="sidebar-num">4</span>Algorithmic Bias and Justice</a></div>
+  <div class="sidebar-module"><a href="society-module-5.html" class="sidebar-module-link"><span class="sidebar-num">5</span>AI and Human Relationships</a></div>
+  <div class="sidebar-module"><a href="society-module-6.html" class="sidebar-module-link"><span class="sidebar-num">6</span>AI in Media Ecosystems</a></div>
+  <div class="sidebar-module"><a href="society-module-7.html" class="sidebar-module-link"><span class="sidebar-num">7</span>The Environmental Cost of AI</a></div>
+  <div class="sidebar-module"><a href="society-module-8.html" class="sidebar-module-link"><span class="sidebar-num">8</span>Global Perspectives on AI</a></div>
+  <div class="sidebar-module"><a href="society-module-9.html" class="sidebar-module-link"><span class="sidebar-num">9</span>AI Ethics and Human Values</a></div>
+  <div class="sidebar-module"><a href="society-module-10.html" class="sidebar-module-link"><span class="sidebar-num">10</span>An Equitable AI Future</a></div>
+  <div class="sidebar-module"><a href="quiz-society.html" class="sidebar-module-link" style="color:var(--accent);margin-top:4px;"><span class="sidebar-num" style="background:var(--accent-dim);color:var(--accent);">&#10022;</span>Final Assessment</a></div>
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-progress-label"><span>Course progress</span><span style="color:var(--accent);">3 / 10</span></div>
+  <div class="sidebar-progress-track"><div class="sidebar-progress-fill"></div></div>
+</aside>
+
+<main>
+<div class="content">
+  <div class="module-eyebrow"><span class="module-tag">Module 3</span><span class="module-meta">19 min read · AI and Society</span></div>
+  <h1>AI and Economic Inequality</h1>
+
+  <p class="intro-text">Economic inequality was already a defining challenge of the early twenty-first century before the emergence of advanced AI. In most wealthy nations, the share of income and wealth captured by the top decile, and especially the top percentile, had risen substantially since the 1980s. AI arrives into this context — and the question of whether it will amplify, mitigate, or complicate existing inequalities is one of the most consequential questions in the current political economy of technology.</p>
+
+  <h2>How AI interacts with existing inequalities</h2>
+  <p>Inequality is not a single phenomenon but a complex of related disparities: income inequality between households; wealth inequality in asset ownership; inequalities between regions and nations; inequalities structured by race, gender, and class. AI interacts differently with each of these dimensions, and understanding those interactions requires more precision than general claims about whether AI is "good" or "bad" for equality.</p>
+  <p>On income inequality within wealthy nations, the most plausible near-term scenario is that AI will primarily benefit high-skill workers who use AI as a productivity amplifier, and will put downward pressure on wages for middle-skill cognitive workers whose tasks AI can automate. This is a continuation and acceleration of what economists call "skill-biased technological change" — the tendency of modern technologies to reward education and cognitive skill while reducing demand for routine labor. The debate is whether AI represents a gradual continuation of this trend or a qualitative escalation.</p>
+  <p>On wealth inequality, the dynamics are potentially more alarming. The productivity gains from AI accrue primarily to the owners of the capital — the hardware, the software, the trained models, the platforms — through which AI creates value. If these ownership structures remain concentrated, AI's productivity gains will flow predominantly to a relatively small number of shareholders and founders rather than being distributed broadly through wages or public goods. The market capitalizations of the small number of companies leading in AI development are already extraordinary, and they are heavily owned by a relatively small number of people.</p>
+
+  <div class="callout">
+    <div class="callout-label">Capital vs. labor in the AI economy</div>
+    <p>The fundamental distributional question in the AI economy is the same one that has structured political economy since the industrial revolution: does productivity growth accrue primarily to the owners of capital or to workers? If AI-driven productivity growth is captured largely by capital, and if capital ownership remains as concentrated as it currently is, AI could represent a historically significant amplification of wealth inequality even if aggregate living standards rise.</p>
+  </div>
+
+  <h2>Wealth concentration and the superstar firm</h2>
+  <p>The structure of AI-intensive industries tends toward concentration. AI systems benefit from scale in several reinforcing ways: more users generate more data, which trains better models, which attract more users. This feedback loop favors incumbents with large existing user bases and data assets. In market structures economists call "winner-take-most," a small number of dominant firms capture the lion's share of value, while the long tail of competitors struggles to survive.</p>
+  <p>Research by economists David Autor and colleagues documents the rise of "superstar firms" — extremely productive companies that capture large market shares with relatively small workforces. These firms are highly profitable, but their productivity does not translate into proportionate employment or wages for the broader economy. AI may accelerate this pattern: the most AI-capable firms can produce more output with fewer workers, and the concentration of AI capability is itself distributed very unequally.</p>
+  <p>The geopolitical dimension amplifies this: AI capability is concentrated in a small number of countries — primarily the United States and China — and within those countries in a small number of metropolitan areas. This means the economic rents from AI may be captured by already-wealthy nations and regions at the expense of those less well-positioned to develop their own AI capabilities.</p>
+
+  <h2>Access to AI as a determinant of future inequality</h2>
+  <p>There is a troubling potential dynamic in which AI itself becomes a driver of inequality through differential access. If AI tools substantially augment the productivity and quality of work of those who can access and use them effectively, the gap between AI-augmented workers and those without access could become a new axis of stratification.</p>
+  <p>This is not entirely hypothetical. Research on the adoption of productivity-enhancing technologies consistently finds that adoption rates and effective use correlate with existing socioeconomic advantage. Wealthier individuals can afford better tools, receive better training in their use, and work in environments where effective use is modeled and rewarded. If AI follows this pattern — and there is no particular reason to think it will not — it could reproduce and amplify existing educational and class inequalities rather than leveling them.</p>
+  <p>The "AI will democratize expertise" narrative — that everyone will now have access to expert-quality legal, medical, and financial advice through AI — contains genuine truth. But it elides the fact that effective use of AI tools itself requires a level of digital literacy, critical thinking, and contextual knowledge that is not evenly distributed. A first-generation college student using AI to write a cover letter may get a better letter, but a well-connected graduate of an elite institution who knows how to prompt effectively and critically evaluate the output may get a much better letter.</p>
+
+  <h2>Global inequality and the digital divide</h2>
+  <p>The global dimension of AI inequality is particularly acute. The development of frontier AI systems requires computational infrastructure, trained talent, regulatory sophistication, and large pools of data — all of which are concentrated in wealthy nations and a small number of technology hubs. Developing nations face the prospect of AI transforming their economies primarily through the products and platforms of foreign companies, with limited ability to capture the value or shape the technology to their own needs.</p>
+  <p>This is not a hypothetical concern. The pattern of the internet age suggests that technological transitions developed in wealthy nations can widen rather than narrow global gaps when the infrastructure, business models, and regulatory frameworks were designed primarily for wealthy-nation contexts. Language is itself an inequality vector: the overwhelming majority of training data for the most capable AI systems is in English, which means these systems perform substantially better for English speakers than for speakers of the hundreds of languages with limited digital representation.</p>
+
+  <div class="warn">
+    <div class="warn-label">The data extraction economy</div>
+    <p>A dimension of AI's relationship to inequality that receives insufficient attention is the economic relationship between those who produce training data — by creating content, using platforms, performing digital labor — and those who benefit from it. The labor of billions of internet users, who generate the data on which AI systems are trained, is not compensated. The legal frameworks governing data ownership and data rights have not kept pace with the economic reality that data is now a primary input to extraordinary value creation. This is a form of uncompensated extraction that maps closely onto existing inequalities of power and voice.</p>
+  </div>
+
+  <h2>Policy responses and their limits</h2>
+  <p>Addressing AI-driven inequality requires a range of policy tools that operate at different timescales and levels. In the near term, strengthening labor protections, investing in public digital infrastructure, and expanding access to quality AI-literacy education can help reduce access-based inequalities. In the medium term, tax policy — particularly taxes on capital gains, corporate profits, and possibly on data or AI productivity specifically — determines whether AI's gains are shared broadly through public goods or concentrated privately. In the long term, questions about the ownership structure of AI infrastructure — public options, cooperative models, open-source development — may prove most consequential.</p>
+  <p>None of these responses is without difficulty or trade-offs. But the core point is that AI's distributional effects are not determined by the technology itself — they are determined by the political, legal, and institutional choices that societies make about how to govern it. This makes the politics of AI inequality a central arena of twenty-first-century democratic contestation.</p>
+
+  <div class="good">
+    <div class="good-label">Genuine opportunities for equalization</div>
+    <p>AI does create real opportunities to reduce certain inequalities — particularly access to expertise that was previously available only to the wealthy. AI-assisted medical diagnosis, legal advice, educational tutoring, and financial planning could be genuinely democratizing if deployed through public or subsidized channels rather than exclusively through premium-priced products. The question is whether societies actively pursue these democratizing applications or leave distribution to market forces that tend toward stratification.</p>
+  </div>
+
+</div>
+</main>
+</div>
+
+<div class="sticky-bar" id="sticky-bar">
+  <div class="sticky-bar-reading" id="sticky-reading">Read to the end to unlock the next module</div>
+  <div class="sticky-bar-track"><div class="sticky-bar-fill" id="sticky-fill"></div></div>
+  <div class="sticky-bar-label" id="sticky-label">0%</div>
+  <button class="sticky-bar-btn" id="sticky-btn" onclick="completeAndNext()">Module 4: Algorithmic Bias and Justice &#8594;</button>
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import { getFirestore, doc, setDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  const app = initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+  const auth = getAuth(app); const db = getFirestore(app);
+  let currentUser = null;
+  onAuthStateChanged(auth, u => { currentUser = u; });
+
+  window.toggleTheme=function(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='&#9790;'):(h.setAttribute('data-theme','dark'),i.textContent='&#9728;');};
+  window.addEventListener('scroll',()=>{const d=document.documentElement,s=d.scrollTop||document.body.scrollTop,t=d.scrollHeight-d.clientHeight;document.getElementById('progress').style.width=(s/t*100)+'%';});
+
+  let unlocked=false;
+  function updateScrollProgress(){
+    const scrolled=window.scrollY+window.innerHeight;
+    const total=document.documentElement.scrollHeight;
+    const pct=Math.min(100,Math.round((scrolled/total)*100));
+    const fill=document.getElementById('sticky-fill');
+    const label=document.getElementById('sticky-label');
+    const btn=document.getElementById('sticky-btn');
+    const reading=document.getElementById('sticky-reading');
+    if(fill)fill.style.width=pct+'%';
+    if(label)label.textContent=pct+'%';
+    if(pct>=95&&!unlocked){
+      unlocked=true;
+      if(btn)btn.style.display='block';
+      if(reading)reading.style.display='none';
+      if(fill)fill.style.background='#22c55e';
+      if(label)label.style.color='#22c55e';
+    }
+  }
+  window.addEventListener('scroll',updateScrollProgress);
+  updateScrollProgress();
+
+  window.completeAndNext=async function(){
+    if(currentUser){
+      try{
+        await setDoc(doc(db,'users',currentUser.uid),{societyModules:arrayUnion('m3')},{merge:true});
+      }catch(e){}
+    }
+    window.location.href='society-module-4.html';
+  };
+</script>
+</body>
+</html>

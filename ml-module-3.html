@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 3: Supervised Learning Demystified — Machine Learning Explained — Meridian Institute of AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#065F46;--accent-dim:rgba(6,95,70,0.1);--accent-dim2:rgba(6,95,70,0.05);--nav-bg:rgba(8,8,8,0.9);--callout-bg:rgba(6,95,70,0.07);--callout-border:rgba(6,95,70,0.25);--good-bg:rgba(34,197,94,0.07);--good-border:rgba(34,197,94,0.2);--warn-bg:rgba(251,146,60,0.07);--warn-border:rgba(251,146,60,0.2);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#064E3B;--accent-dim:rgba(6,78,59,0.08);--accent-dim2:rgba(6,78,59,0.04);--nav-bg:rgba(250,250,248,0.9);--callout-bg:rgba(6,78,59,0.05);--callout-border:rgba(6,78,59,0.2);--good-bg:rgba(22,163,74,0.06);--good-border:rgba(22,163,74,0.2);--warn-bg:rgba(234,88,12,0.05);--warn-border:rgba(234,88,12,0.2);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;overflow-x:hidden;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.7;overflow-x:hidden;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}
+  .nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}
+  .nav-back{font-size:13px;color:var(--text-2);text-decoration:none;transition:color 0.2s;}
+  .nav-back:hover{color:var(--text);}
+  .nav-label{font-size:13px;color:var(--text-3);}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;transition:all 0.2s;}
+  .theme-toggle:hover{background:var(--bg-3);color:var(--text);}
+  .progress-bar{position:fixed;top:60px;left:0;right:0;z-index:99;height:2px;background:var(--border);}
+  .progress-fill{height:100%;background:var(--accent);width:0%;transition:width 0.1s;}
+  .page-wrapper{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:100vh;padding-top:62px;overflow:hidden;}
+  .sidebar{position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto;border-right:1px solid var(--border);padding:32px 24px;background:var(--bg-2);}
+  .sidebar-course{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;}
+  .sidebar-course-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+  .sidebar-module{margin-bottom:4px;}
+  .sidebar-module-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:13px;color:var(--text-2);text-decoration:none;transition:all 0.2s;line-height:1.4;}
+  .sidebar-module-link:hover{background:var(--bg-3);color:var(--text);}
+  .sidebar-module-link.active{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-num{font-size:11px;font-weight:500;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--bg-4);color:var(--text-3);}
+  .sidebar-module-link.active .sidebar-num{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-divider{height:1px;background:var(--border);margin:20px 0;}
+  .sidebar-progress-label{font-size:12px;color:var(--text-3);margin-bottom:8px;display:flex;justify-content:space-between;}
+  .sidebar-progress-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sidebar-progress-fill{height:100%;width:30%;background:var(--accent);border-radius:2px;}
+  main{display:block;min-width:0;overflow:hidden;}
+  .content{max-width:760px;width:100%;padding:60px 64px 140px;margin:0 auto;}
+  .module-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+  .module-tag{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(6,95,70,0.2);padding:4px 12px;border-radius:100px;}
+  .module-meta{font-size:12px;color:var(--text-3);}
+  h1{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1.05;letter-spacing:-0.02em;color:var(--text);margin-bottom:24px;}
+  .intro-text{font-size:19px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+  h2{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:400;color:var(--text);margin:52px 0 18px;line-height:1.2;}
+  h3{font-size:16px;font-weight:500;color:var(--text);margin:32px 0 12px;}
+  p{font-size:16px;font-weight:300;color:var(--text-2);line-height:1.8;margin-bottom:20px;}
+  strong{font-weight:500;color:var(--text);}
+  em{font-style:italic;}
+  ul,ol{margin:0 0 20px 22px;color:var(--text-2);}
+  li{font-size:16px;font-weight:300;line-height:1.8;margin-bottom:8px;}
+  .callout{background:var(--callout-bg);border:1px solid var(--callout-border);border-radius:12px;padding:24px 28px;margin:32px 0;}
+  .callout-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+  .callout p{margin:0;font-size:15px;color:var(--text-2);}
+  .callout p+p{margin-top:12px;}
+  .good{background:var(--good-bg);border:1px solid var(--good-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .good-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#22c55e;margin-bottom:10px;}
+  .good p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn{background:var(--warn-bg);border:1px solid var(--warn-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .warn-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#fb923c;margin-bottom:10px;}
+  .warn p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn p+p{margin-top:12px;}
+  .analogy{background:var(--bg-2);border:1px solid var(--border);border-radius:12px;padding:28px;margin:28px 0;}
+  .analogy-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-3);margin-bottom:12px;}
+  .analogy p{margin:0;font-size:15px;color:var(--text-2);}
+  .principle-list{display:flex;flex-direction:column;gap:12px;margin:24px 0;}
+  .principle{background:var(--bg-2);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:0 12px 12px 0;padding:20px 24px;}
+  .principle-title{font-size:15px;font-weight:500;color:var(--text);margin-bottom:6px;}
+  .principle-desc{font-size:14px;color:var(--text-2);line-height:1.65;margin:0;}
+  .sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:var(--bg-2);border-top:1px solid var(--border-2);padding:14px 5%;display:flex;align-items:center;justify-content:space-between;gap:16px;backdrop-filter:blur(12px);}
+  .sticky-bar-track{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sticky-bar-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.2s;width:0%;}
+  .sticky-bar-label{font-size:12px;color:var(--text-3);white-space:nowrap;min-width:60px;text-align:right;}
+  .sticky-bar-btn{padding:10px 20px;border-radius:8px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;background:var(--accent);color:#fff;border:none;cursor:pointer;white-space:nowrap;transition:opacity 0.2s;display:none;}
+  .sticky-bar-btn:hover{opacity:0.88;}
+  .sticky-bar-reading{font-size:12px;color:var(--text-3);white-space:nowrap;}
+  @media(max-width:900px){.page-wrapper{grid-template-columns:1fr;}.sidebar{display:none;}.content{padding:40px 24px 120px;}h1{font-size:38px;}}
+  @media(max-width:600px){.content{padding:28px 16px 120px;}h1{font-size:30px;}h2{font-size:24px;}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="courses.html" class="nav-back">← Machine Learning Explained</a>
+    <div class="nav-divider"></div>
+    <span class="nav-label">Module 3</span>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">☀</span></button>
+</nav>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+
+<div class="page-wrapper">
+<aside class="sidebar">
+  <div class="sidebar-course">Expert Track</div>
+  <div class="sidebar-course-name">Machine Learning Explained</div>
+  <div class="sidebar-module"><a href="ml-module-1.html" class="sidebar-module-link"><span class="sidebar-num">1</span>How Machines Learn</a></div>
+  <div class="sidebar-module"><a href="ml-module-2.html" class="sidebar-module-link"><span class="sidebar-num">2</span>Data: The ML Foundation</a></div>
+  <div class="sidebar-module"><a href="ml-module-3.html" class="sidebar-module-link active"><span class="sidebar-num">3</span>Supervised Learning Demystified</a></div>
+  <div class="sidebar-module"><a href="ml-module-4.html" class="sidebar-module-link"><span class="sidebar-num">4</span>Unsupervised Learning</a></div>
+  <div class="sidebar-module"><a href="ml-module-5.html" class="sidebar-module-link"><span class="sidebar-num">5</span>Neural Networks and Deep Learning</a></div>
+  <div class="sidebar-module"><a href="ml-module-6.html" class="sidebar-module-link"><span class="sidebar-num">6</span>NLP and Transformers</a></div>
+  <div class="sidebar-module"><a href="ml-module-7.html" class="sidebar-module-link"><span class="sidebar-num">7</span>Computer Vision</a></div>
+  <div class="sidebar-module"><a href="ml-module-8.html" class="sidebar-module-link"><span class="sidebar-num">8</span>Model Evaluation</a></div>
+  <div class="sidebar-module"><a href="ml-module-9.html" class="sidebar-module-link"><span class="sidebar-num">9</span>ML in Production</a></div>
+  <div class="sidebar-module"><a href="ml-module-10.html" class="sidebar-module-link"><span class="sidebar-num">10</span>Foundation Models and the Frontier</a></div>
+  <div class="sidebar-module"><a href="quiz-ml.html" class="sidebar-module-link" style="color:var(--accent);margin-top:4px;"><span class="sidebar-num" style="background:var(--accent-dim);color:var(--accent);">✦</span>Final Assessment</a></div>
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-progress-label"><span>Course progress</span><span style="color:var(--accent);">3 / 10</span></div>
+  <div class="sidebar-progress-track"><div class="sidebar-progress-fill"></div></div>
+</aside>
+
+<main>
+<div class="content">
+  <div class="module-eyebrow"><span class="module-tag">Module 3 · Expert Track</span><span class="module-meta">22 min read · Machine Learning Explained</span></div>
+  <h1>Supervised Learning Demystified</h1>
+
+  <p class="intro-text">Supervised learning is the engine behind most of the ML systems that affect daily life — your email spam filter, your bank's fraud detection, your streaming service's recommendations, your phone's face recognition. It is the most mature and practically deployed family of ML techniques. Understanding how it actually works, without needing to write a line of code, will fundamentally change how you think about these systems.</p>
+
+  <h2>The two fundamental problems: regression and classification</h2>
+  <p>All supervised learning problems reduce to one of two types, differing in what the model is predicting.</p>
+  <p><strong>Regression</strong> predicts a continuous number. How much will this house sell for? What will tomorrow's temperature be? How many units will we sell next quarter? The output is a real number on a continuous scale, and the model is judged by how close its predictions are to the actual values.</p>
+  <p><strong>Classification</strong> predicts a category. Is this email spam or not spam? Does this X-ray show a tumor? Which of five possible customer segments does this person belong to? The output is a discrete category, and the model is judged by how often it picks the right one. When there are only two categories (spam/not spam, fraud/legitimate), it's called binary classification. More categories means multi-class classification.</p>
+  <p>Many real problems are hybrids or sequences. Credit approval might be regression (what's the probability of default?) followed by classification (above a threshold, approve). Medical imaging might classify whether a tumor is present and then, if so, regress the precise boundaries of the mass. Understanding which type of prediction you need is the first design decision in any supervised learning project.</p>
+
+  <h2>The loss function: the compass of learning</h2>
+  <p>How does a model know when it's getting better? Through a loss function — a mathematical formula that quantifies how wrong the model's predictions are. The training process is essentially a systematic search for the parameter values that minimize this error metric across all training examples.</p>
+  <p>For regression, the most common loss function is mean squared error: take the difference between each prediction and the true value, square it (to penalize large errors more than small ones, and to make the math work out cleanly), and average across all examples. A perfect model would have zero MSE. In practice, some irreducible error always exists because the real world has randomness.</p>
+  <p>For classification, the loss function measures how confident and correct the model was on each example. If a model predicts 95% probability of spam and the email was actually spam, the loss is very low. If it predicts 5% probability of spam and the email was actually spam, the loss is very high. The specific formula (cross-entropy loss) rewards confident correct answers and heavily penalizes confident wrong answers.</p>
+
+  <div class="analogy">
+    <div class="analogy-label">The loss function as GPS</div>
+    <p>Think of the loss function as your GPS. You're trying to reach a destination (perfect predictions) but you're lost in a high-dimensional landscape of possible parameter values. The loss function tells you how far you are from the destination at your current location. The learning algorithm uses that information to navigate toward lower loss, step by step. Like GPS, it doesn't guarantee the fastest route — but it reliably points you toward the goal.</p>
+  </div>
+
+  <h2>Gradient descent: how models actually learn</h2>
+  <p>With a loss function telling you how wrong the model is, the next question is: how do you make it less wrong? The answer — for nearly all modern ML — is gradient descent, one of the most important algorithms in computing history.</p>
+  <p>Imagine you're blindfolded on a hilly landscape and you want to get to the lowest point. You can't see the terrain ahead, but you can feel whether the ground is sloping upward or downward beneath your feet. A sensible strategy: take a small step in whichever direction feels most downhill. Then reassess. Take another step in the most downhill direction from your new position. Repeat until the ground feels flat in all directions — you've found a valley.</p>
+  <p>Gradient descent does exactly this in the mathematical landscape defined by the loss function over all possible model parameters. The "slope" at any point is the gradient — a vector that points in the direction of steepest increase in loss. You step in the opposite direction (steepest decrease) by a small amount (the learning rate). You repeat this for thousands or millions of steps, each time adjusting parameters slightly to reduce the loss on a batch of training examples.</p>
+  <p>The key practical consideration is the learning rate: how big each step is. Too large, and you overshoot minima, bouncing around without converging. Too small, and training takes forever. Choosing a good learning rate — or using adaptive algorithms that adjust it automatically — is one of the primary hyperparameter choices in supervised learning.</p>
+
+  <h2>Linear regression: the simplest learner</h2>
+  <p>The most fundamental supervised learning model is linear regression, and it's worth understanding deeply because it encapsulates principles that hold throughout much more complex models.</p>
+  <p>Linear regression assumes that the target variable can be predicted by a weighted sum of input features, plus a constant offset. House price prediction: take the square footage, multiply by some weight; add the number of bedrooms times another weight; add the neighborhood quality score times another weight; add a baseline constant. The weights encode how much each feature contributes to the prediction.</p>
+  <p>Training a linear regression model means finding the weights that minimize mean squared error across all training examples. This problem has a beautiful mathematical structure — the optimal weights can be found in a single calculation, or through gradient descent that converges reliably. The result is a model that is completely transparent: you can inspect every weight and understand exactly how each feature influences the prediction.</p>
+  <p>This transparency is linear regression's greatest strength and its greatest limitation. Many real relationships are not linear. House price doesn't increase linearly with size — a 10,000 square foot mansion doesn't cost proportionally more than a 1,000 square foot apartment. Crime probability doesn't decrease linearly with income. When the underlying relationship is genuinely nonlinear, a linear model will systematically fail.</p>
+
+  <h2>Decision trees: rules the machine writes itself</h2>
+  <p>Decision trees are one of the most intuitive and widely-used supervised learning algorithms. Instead of finding weights for a linear formula, a decision tree learns a hierarchy of if-then rules — a flowchart that partitions the input space into regions, with a prediction assigned to each region.</p>
+  <p>Imagine predicting whether a loan applicant will default. A decision tree might learn: "First, check if income is below $30,000. If yes, check if they have more than 3 missed payments. If yes, predict default. If no, check their credit score..." This branching structure captures nonlinear relationships and interactions between features in an immediately human-readable form.</p>
+  <p>The training algorithm works by greedily searching for the best split at each node: which feature and which threshold most cleanly separates the examples into groups with different target values? It adds splits until the tree reaches a specified depth or the examples in each leaf are sufficiently pure (all the same class).</p>
+  <p>Decision trees are interpretable and handle both regression and classification. Their weakness is instability: a small change in the training data can result in a completely different tree structure. They also tend to overfit — growing complex enough to memorize the training data exactly, then performing poorly on new examples.</p>
+
+  <h2>Ensemble methods: the wisdom of many trees</h2>
+  <p>The solution to decision trees' instability and overfitting problems is beautiful in its simplicity: instead of training one tree, train many trees and combine their predictions. This idea — ensemble learning — produces some of the most powerful and widely-deployed ML models in existence.</p>
+  <p><strong>Random forests</strong> train hundreds of decision trees, each on a random subset of the training data and a random subset of the features. To make a prediction, each tree votes (for classification) or contributes a value (for regression), and the ensemble averages the result. The randomization means the trees are usefully different from each other — they make different mistakes — so their errors cancel out when averaged, leaving only the signal that all of them consistently get right.</p>
+  <p><strong>Gradient boosting</strong> takes a different approach: trees are trained sequentially, each one focused specifically on correcting the mistakes of the previous ones. Rather than each tree trying to solve the full problem, each tree tries to improve on where the current ensemble is wrong. The final prediction is a weighted sum of all the trees' contributions. This sequential error-correction produces models that are exceptionally accurate on structured tabular data.</p>
+
+  <div class="good">
+    <div class="good-label">Why gradient boosting dominates competitions</div>
+    <p>XGBoost, LightGBM, and CatBoost — gradient boosting implementations — win the majority of Kaggle machine learning competitions on structured tabular data. They combine high accuracy, robustness to noisy features, tolerance for missing values, and relatively little hyperparameter tuning to achieve competitive performance. At companies like Airbnb, Uber, and Microsoft, gradient boosting models underlie many of the core prediction systems that drive business decisions.</p>
+  </div>
+
+  <h2>When to use which algorithm</h2>
+  <p>Choosing between algorithms is not primarily about which one is "best" in the abstract — it depends on the characteristics of your data and what you need the model to do.</p>
+
+  <div class="principle-list">
+    <div class="principle">
+      <div class="principle-title">Linear models: when simplicity and interpretability matter</div>
+      <div class="principle-desc">When you have limited data, when you need to understand exactly why each prediction was made, or when the relationship is genuinely approximately linear. Logistic regression (the classification version of linear regression) is still the dominant model for credit scoring in many financial institutions — not because it's most accurate, but because regulators require explanations for adverse credit decisions.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Decision trees: when stakeholders need to see the rules</div>
+      <div class="principle-desc">When the prediction logic needs to be reviewed by domain experts, embedded in a business process, or explained to customers. A single decision tree is one of the few ML models that non-technical stakeholders can genuinely inspect and validate.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Random forests: when accuracy matters more than interpretability</div>
+      <div class="principle-desc">When you have moderate amounts of structured data and want robustness with minimal tuning. Random forests rarely dramatically fail and are resistant to overfitting. They're an excellent default when you don't have a strong reason to use something else.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Gradient boosting: when you need maximum accuracy on structured data</div>
+      <div class="principle-desc">When you have clean, structured tabular data and performance is the primary criterion. Gradient boosting typically outperforms random forests on well-prepared datasets, at the cost of more hyperparameters to tune and somewhat more training time.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Neural networks: for images, text, audio, and high-dimensional unstructured data</div>
+      <div class="principle-desc">When the inputs are images, text, audio, or other high-dimensional unstructured data where feature extraction is itself a major challenge. Neural networks learn representations that classical algorithms require hand-engineered features to capture. We cover these in depth in Module 5.</div>
+    </div>
+  </div>
+
+  <h2>Overfitting and underfitting: the fundamental tension</h2>
+  <p>Every supervised learning algorithm faces a fundamental tension between two failure modes. Underfitting occurs when the model is too simple to capture the true patterns in the data — like trying to fit a straight line through data that follows a curve. Overfitting occurs when the model is too complex and memorizes the training data including its noise — like drawing a wildly wiggly line through every training point, which fails completely on new data.</p>
+  <p>The sweet spot is a model complex enough to capture the real signal in the data, but not so complex that it chases the random noise. Finding this sweet spot — model selection — is one of the central challenges of applied ML. Techniques like regularization (penalizing overly complex models), dropout (randomly disabling parts of the model during training), and cross-validation (systematically evaluating performance on held-out data) are all tools for navigating toward this sweet spot.</p>
+
+  <div class="callout">
+    <div class="callout-label">Industry examples of supervised learning</div>
+    <p>Netflix uses gradient boosting and neural networks to predict which titles you'll watch next — trained on billions of viewing decisions. Google uses logistic regression for spam filtering — at such massive scale that even a simple model, trained on enough data, achieves near-perfect accuracy. Hospitals use random forests to predict which patients are at risk of sepsis — looking at vital sign trajectories to trigger early intervention. Tesla uses large neural networks to predict safe driving actions from camera images. Supervised learning is not one application — it is the engine of modern AI.</p>
+  </div>
+
+</div>
+</main>
+</div>
+
+<div class="sticky-bar" id="sticky-bar">
+  <div class="sticky-bar-reading" id="sticky-reading">Read to the end to unlock the next module</div>
+  <div class="sticky-bar-track"><div class="sticky-bar-fill" id="sticky-fill"></div></div>
+  <div class="sticky-bar-label" id="sticky-label">0%</div>
+  <button class="sticky-bar-btn" id="sticky-btn" onclick="completeAndNext()">Module 4: Unsupervised Learning →</button>
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import { getFirestore, doc, setDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  const app=initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+  const auth=getAuth(app);const db=getFirestore(app);
+  let currentUser=null;
+  onAuthStateChanged(auth,u=>{currentUser=u;});
+  window.toggleTheme=function(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='☾'):(h.setAttribute('data-theme','dark'),i.textContent='☀');};
+  window.addEventListener('scroll',()=>{const d=document.documentElement,s=d.scrollTop||document.body.scrollTop,t=d.scrollHeight-d.clientHeight;document.getElementById('progress').style.width=(s/t*100)+'%';});
+  let unlocked=false;
+  function updateScrollProgress(){
+    const pct=Math.min(100,Math.round(((window.scrollY+window.innerHeight)/document.documentElement.scrollHeight)*100));
+    const fill=document.getElementById('sticky-fill'),label=document.getElementById('sticky-label'),btn=document.getElementById('sticky-btn'),reading=document.getElementById('sticky-reading');
+    if(fill)fill.style.width=pct+'%';if(label)label.textContent=pct+'%';
+    if(pct>=95&&!unlocked){unlocked=true;if(btn)btn.style.display='block';if(reading)reading.style.display='none';if(fill)fill.style.background='#22c55e';if(label)label.style.color='#22c55e';}
+  }
+  window.addEventListener('scroll',updateScrollProgress);updateScrollProgress();
+  window.completeAndNext=async function(){
+    if(currentUser){try{await setDoc(doc(db,'users',currentUser.uid),{mlModules:arrayUnion('m3')},{merge:true});}catch(e){}}
+    window.location.href='ml-module-4.html';
+  };
+</script>
+</body>
+</html>

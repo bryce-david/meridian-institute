@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Final Assessment — AI in Education — Meridian Institute of AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#0284C7;--accent-dim:rgba(2,132,199,0.1);--nav-bg:rgba(8,8,8,0.9);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#0369A1;--accent-dim:rgba(3,105,161,0.08);--nav-bg:rgba(250,250,248,0.9);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}.nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}.nav-back{font-size:13px;color:var(--text-2);text-decoration:none;}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;}
+  .quiz-wrap{max-width:720px;margin:0 auto;padding:100px 32px 80px;}
+  .quiz-header{text-align:center;margin-bottom:48px;}
+  .quiz-tag{display:inline-block;font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(2,132,199,0.2);padding:4px 14px;border-radius:100px;margin-bottom:20px;}
+  h1{font-family:'Cormorant Garamond',serif;font-size:44px;font-weight:300;line-height:1.1;margin-bottom:16px;}
+  .quiz-subhead{font-size:16px;color:var(--text-2);font-weight:300;margin-bottom:0;}
+  .quiz-meta{display:flex;gap:24px;justify-content:center;margin-top:20px;padding-top:20px;border-top:1px solid var(--border);}
+  .quiz-meta-item{font-size:13px;color:var(--text-3);}
+  #quiz-area{display:none;}#start-screen{}.start-btn{display:block;width:100%;max-width:320px;margin:32px auto 0;padding:14px 0;background:var(--accent);color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:500;font-family:'DM Sans',sans-serif;cursor:pointer;transition:opacity 0.2s;}.start-btn:hover{opacity:0.88;}
+  .q-block{background:var(--bg-2);border:1px solid var(--border);border-radius:14px;padding:28px 32px;margin-bottom:20px;}
+  .q-num{font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-3);margin-bottom:10px;}
+  .q-text{font-size:17px;font-weight:400;color:var(--text);line-height:1.55;margin-bottom:20px;}
+  .q-options{display:flex;flex-direction:column;gap:10px;}
+  .q-opt{display:flex;align-items:flex-start;gap:12px;padding:12px 16px;border-radius:9px;border:1px solid var(--border);cursor:pointer;transition:all 0.15s;font-size:15px;color:var(--text-2);line-height:1.5;background:var(--bg-3);}
+  .q-opt:hover{border-color:var(--accent);color:var(--text);}
+  .q-opt input[type=radio]{accent-color:var(--accent);margin-top:3px;flex-shrink:0;}
+  .q-opt.selected{border-color:var(--accent);background:var(--accent-dim);color:var(--text);}
+  .progress-track{height:3px;background:var(--border);border-radius:2px;margin-bottom:32px;overflow:hidden;}.progress-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.3s;}
+  .quiz-submit{display:block;width:100%;padding:15px 0;background:var(--accent);color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:500;font-family:'DM Sans',sans-serif;cursor:pointer;margin-top:12px;transition:opacity 0.2s;}.quiz-submit:hover{opacity:0.88;}.quiz-submit:disabled{opacity:0.4;cursor:not-allowed;}
+  #result-screen{display:none;text-align:center;padding:60px 0;}
+  .result-icon{font-size:56px;margin-bottom:16px;}
+  .result-title{font-family:'Cormorant Garamond',serif;font-size:40px;font-weight:400;margin-bottom:12px;}
+  .result-score{font-size:20px;color:var(--text-2);margin-bottom:8px;}
+  .result-msg{font-size:15px;color:var(--text-3);margin-bottom:36px;max-width:480px;margin-left:auto;margin-right:auto;line-height:1.6;}
+  .cert-box{background:var(--bg-2);border:1px solid var(--border);border-radius:14px;padding:24px 28px;margin:0 auto 32px;max-width:440px;}
+  .cert-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:8px;}
+  .cert-id{font-size:14px;color:var(--text-2);font-family:monospace;word-break:break-all;}
+  .result-btn{display:inline-block;padding:12px 28px;border-radius:9px;font-size:14px;font-weight:500;cursor:pointer;border:none;font-family:'DM Sans',sans-serif;}
+  .result-btn-primary{background:var(--accent);color:#fff;margin-right:10px;}.result-btn-primary:hover{opacity:0.88;}
+  .result-btn-secondary{background:var(--bg-2);color:var(--text-2);border:1px solid var(--border);}.result-btn-secondary:hover{color:var(--text);}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="courses.html" class="nav-back">← All Courses</a>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">☀</span></button>
+</nav>
+<div class="quiz-wrap">
+  <div class="quiz-header">
+    <div class="quiz-tag">Final Assessment</div>
+    <h1>AI in Education</h1>
+    <p class="quiz-subhead">25 questions · 70% required to pass · Earn your certificate</p>
+    <div class="quiz-meta">
+      <span class="quiz-meta-item">25 questions</span>
+      <span class="quiz-meta-item">~15 minutes</span>
+      <span class="quiz-meta-item">Passing: 18 / 25</span>
+    </div>
+  </div>
+  <div id="start-screen">
+    <button class="start-btn" onclick="startQuiz()">Begin Assessment</button>
+  </div>
+  <div id="quiz-area">
+    <div class="progress-track"><div class="progress-fill" id="q-progress"></div></div>
+    <div id="questions-container"></div>
+    <button class="quiz-submit" id="submit-btn" onclick="submitQuiz()" disabled>Submit Assessment</button>
+  </div>
+  <div id="result-screen">
+    <div class="result-icon" id="result-icon"></div>
+    <div class="result-title" id="result-title"></div>
+    <div class="result-score" id="result-score"></div>
+    <div class="result-msg" id="result-msg"></div>
+    <div class="cert-box" id="cert-box" style="display:none;">
+      <div class="cert-label">Certificate ID</div>
+      <div class="cert-id" id="cert-id-text"></div>
+    </div>
+    <button class="result-btn result-btn-primary" onclick="window.location.href='courses.html'">Back to Courses</button>
+    <button class="result-btn result-btn-secondary" id="retry-btn" onclick="retryQuiz()" style="display:none;">Retry Assessment</button>
+  </div>
+</div>
+<script type="module">
+import{initializeApp}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import{getAuth,onAuthStateChanged}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import{getFirestore,doc,setDoc}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+const app=initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+const auth=getAuth(app);const db=getFirestore(app);let currentUser=null;
+onAuthStateChanged(auth,u=>{currentUser=u;});
+window.toggleTheme=function(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='☾'):(h.setAttribute('data-theme','dark'),i.textContent='☀');};
+
+const ALL_QUESTIONS=[
+  {q:"What does AI-powered personalized learning primarily aim to do?",opts:["Reduce teaching staff","Adapt content and pace to individual student needs","Replace textbooks with video","Automate grading only"],a:1},
+  {q:"Which term describes AI systems that can identify when a student is struggling and adjust accordingly?",opts:["Static assessment","Adaptive learning systems","Broadcast instruction","Standardized testing"],a:1},
+  {q:"What is a primary concern about using AI for student grading?",opts:["It grades too slowly","It may not capture creativity and nuanced thinking","It costs too much","Students prefer paper grading"],a:1},
+  {q:"How can AI support teachers in classroom management?",opts:["By replacing them entirely","By identifying patterns in engagement and flagging at-risk students","By removing the need for lesson plans","By conducting parent-teacher conferences"],a:1},
+  {q:"What is 'learning analytics'?",opts:["Analytics software sold to parents","The use of data about learners to improve educational outcomes","A method of standardized testing","A curriculum design philosophy"],a:1},
+  {q:"Which AI application helps students receive feedback on writing in real time?",opts:["Facial recognition in classrooms","Automated essay scoring and feedback tools","Biometric attendance tracking","AI-generated textbooks"],a:1},
+  {q:"What is a key risk of using commercial AI tools in K-12 education?",opts:["Teachers will become redundant","Student data may be collected and monetized without adequate protection","AI tools are too expensive","Students learn too quickly"],a:1},
+  {q:"What does FERPA protect in the United States educational context?",opts:["Copyright of textbooks","Student education records and privacy","Teacher employment rights","School infrastructure"],a:1},
+  {q:"How can AI tools support students with disabilities?",opts:["By removing accommodation requirements","Through text-to-speech, real-time captioning, and adaptive interfaces","By standardizing all learning pathways","By automating IEP creation without human review"],a:1},
+  {q:"What is 'algorithmic bias' in educational AI?",opts:["When algorithms run too slowly","When AI systems systematically produce worse outcomes for certain student groups","When AI tools are too expensive for schools","When algorithms grade all students identically"],a:1},
+  {q:"Which is an example of generative AI use in education?",opts:["Fingerprint scanners at school entry","AI tutors that answer student questions in natural language","Automated cafeteria systems","Security cameras with behavior detection"],a:1},
+  {q:"What does 'critical digital literacy' mean for students?",opts:["Learning to code","The ability to evaluate, question, and critically engage with digital technologies and AI","Achieving high scores on digital skills tests","Using multiple devices at once"],a:1},
+  {q:"Why is AI-generated content a challenge for academic integrity?",opts:["It is always detectable","Students can submit AI-generated work as their own, making original assessment difficult","AI cannot write in academic styles","It only affects graduate education"],a:1},
+  {q:"What is the role of teachers in an AI-enhanced classroom?",opts:["Primarily to input data into AI systems","To be replaced by AI tutors","To facilitate, mentor, and provide human connection that AI cannot replicate","Only to grade assignments"],a:1},
+  {q:"What challenge does the 'digital divide' create for AI in education?",opts:["Students learn too fast","Students without reliable internet or devices are excluded from AI-enhanced learning","Too many students use AI","AI tools work better for wealthy students in every measurable way"],a:1},
+  {q:"How can AI help with curriculum design?",opts:["By writing all curriculum without teacher input","By analyzing learning outcomes data to identify gaps and suggest improvements","By eliminating elective courses","By standardizing all schools globally"],a:1},
+  {q:"What is 'explainable AI' and why does it matter in education?",opts:["AI that can speak out loud","AI whose decisions can be understood and audited — important for fair student assessments","AI that teaches explanation skills","AI limited to simple tasks"],a:1},
+  {q:"Which best describes a 'flipped classroom' model enhanced by AI?",opts:["Students never come to school","Students engage with AI-delivered content at home, then apply learning with teacher support in class","Teachers record all lessons with AI assistance","AI handles all in-class instruction"],a:1},
+  {q:"What should schools consider when evaluating an AI tool for students?",opts:["Primarily the marketing materials","Data privacy, algorithmic fairness, educator training, and evidence of effectiveness","Cost only","Whether the vendor is a well-known company"],a:1},
+  {q:"How does AI support early identification of learning difficulties?",opts:["Through mandatory standardized testing","By analyzing patterns in student performance data to flag potential issues early","By replacing diagnosis by qualified professionals","Through facial expression analysis"],a:1},
+  {q:"What is a 'recommendation system' in an educational platform?",opts:["A system for recommending schools to students","An AI that suggests learning resources, next topics, or practice exercises based on student data","A ranking of schools by performance","A teacher rating system"],a:1},
+  {q:"Why is educator professional development essential for AI integration?",opts:["So teachers can build AI systems","Teachers need to understand AI tools to use them effectively and critically — not just adopt them uncritically","AI replaces the need for teacher development","So schools can market themselves as innovative"],a:1},
+  {q:"What does 'data minimization' mean in an educational AI context?",opts:["Reducing class sizes","Collecting only the student data genuinely necessary for the system's educational function","Using smaller AI models","Minimizing the number of students who use AI"],a:1},
+  {q:"Which statement about AI and equitable education is most accurate?",opts:["AI automatically creates more equitable outcomes","AI tools require deliberate design and governance to avoid reinforcing existing inequalities","Equity concerns are overstated in education","AI is too expensive for equitable deployment"],a:1},
+  {q:"What is the primary purpose of a 'learning management system' (LMS) with AI features?",opts:["To replace teachers","To organize course content, track student progress, and adapt learning pathways","To communicate with parents","To generate standardized tests only"],a:1}
+];
+
+let activeQuestions=[];let userAnswers={};
+function shuffle(arr){const a=[...arr];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+
+window.startQuiz=function(){
+  activeQuestions=shuffle(ALL_QUESTIONS).slice(0,25);
+  userAnswers={};
+  document.getElementById('start-screen').style.display='none';
+  document.getElementById('quiz-area').style.display='block';
+  renderQuestions();
+};
+function renderQuestions(){
+  const c=document.getElementById('questions-container');
+  c.innerHTML=activeQuestions.map((q,qi)=>`
+    <div class="q-block" id="qb-${qi}">
+      <div class="q-num">Question ${qi+1} of ${activeQuestions.length}</div>
+      <div class="q-text">${q.q}</div>
+      <div class="q-options">
+        ${q.opts.map((o,oi)=>`
+          <label class="q-opt" id="opt-${qi}-${oi}">
+            <input type="radio" name="q${qi}" value="${oi}" onchange="selectOpt(${qi},${oi})">
+            ${o}
+          </label>`).join('')}
+      </div>
+    </div>`).join('');
+}
+window.selectOpt=function(qi,oi){
+  userAnswers[qi]=oi;
+  activeQuestions[qi].opts.forEach((_,i)=>{const el=document.getElementById(`opt-${qi}-${i}`);if(el)el.classList.toggle('selected',i===oi);});
+  const answered=Object.keys(userAnswers).length;
+  document.getElementById('q-progress').style.width=(answered/activeQuestions.length*100)+'%';
+  document.getElementById('submit-btn').disabled=answered<activeQuestions.length;
+};
+window.submitQuiz=async function(){
+  let correct=0;
+  activeQuestions.forEach((q,i)=>{if(userAnswers[i]===q.a)correct++;});
+  const pct=Math.round(correct/activeQuestions.length*100);
+  const passed=pct>=70;
+  if(passed&&currentUser){
+    try{const id='EDU-'+Date.now();await setDoc(doc(db,'users',currentUser.uid),{educationCertId:id},{merge:true});document.getElementById('cert-id-text').textContent=id;document.getElementById('cert-box').style.display='block';}catch(e){}
+  }
+  document.getElementById('quiz-area').style.display='none';
+  document.getElementById('result-icon').textContent=passed?'🎓':'📖';
+  document.getElementById('result-title').textContent=passed?'Certificate Earned':'Keep Studying';
+  document.getElementById('result-score').textContent=`${correct} / ${activeQuestions.length} correct (${pct}%)`;
+  document.getElementById('result-msg').textContent=passed?'Congratulations! You\'ve demonstrated a solid understanding of AI in Education.':'You need 70% to pass. Review the modules and try again when you\'re ready.';
+  if(!passed){document.getElementById('retry-btn').style.display='inline-block';}
+  document.getElementById('result-screen').style.display='block';
+};
+window.retryQuiz=function(){
+  document.getElementById('result-screen').style.display='none';
+  document.getElementById('result-icon').textContent='';
+  document.getElementById('cert-box').style.display='none';
+  document.getElementById('retry-btn').style.display='none';
+  window.startQuiz();
+};
+</script>
+</body>
+</html>

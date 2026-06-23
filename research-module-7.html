@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 7: Citation Management and Knowledge Organization — AI for Research and Academia — Meridian Institute of AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#064E3B;--accent-dim:rgba(6,78,59,0.1);--accent-dim2:rgba(6,78,59,0.05);--nav-bg:rgba(8,8,8,0.9);--callout-bg:rgba(6,78,59,0.07);--callout-border:rgba(6,78,59,0.25);--good-bg:rgba(34,197,94,0.07);--good-border:rgba(34,197,94,0.2);--warn-bg:rgba(251,146,60,0.07);--warn-border:rgba(251,146,60,0.2);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#065F46;--accent-dim:rgba(6,95,70,0.08);--accent-dim2:rgba(6,95,70,0.04);--nav-bg:rgba(250,250,248,0.9);--callout-bg:rgba(6,95,70,0.05);--callout-border:rgba(6,95,70,0.2);--good-bg:rgba(22,163,74,0.06);--good-border:rgba(22,163,74,0.2);--warn-bg:rgba(234,88,12,0.05);--warn-border:rgba(234,88,12,0.2);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;overflow-x:hidden;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.7;overflow-x:hidden;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}
+  .nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}
+  .nav-back{font-size:13px;color:var(--text-2);text-decoration:none;transition:color 0.2s;}
+  .nav-back:hover{color:var(--text);}
+  .nav-label{font-size:13px;color:var(--text-3);}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;transition:all 0.2s;}
+  .theme-toggle:hover{background:var(--bg-3);color:var(--text);}
+  .progress-bar{position:fixed;top:60px;left:0;right:0;z-index:99;height:2px;background:var(--border);}
+  .progress-fill{height:100%;background:var(--accent);width:0%;transition:width 0.1s;}
+  .page-wrapper{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:100vh;padding-top:62px;overflow:hidden;}
+  .sidebar{position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto;border-right:1px solid var(--border);padding:32px 24px;background:var(--bg-2);}
+  .sidebar-course{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;}
+  .sidebar-course-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+  .sidebar-module{margin-bottom:4px;}
+  .sidebar-module-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:13px;color:var(--text-2);text-decoration:none;transition:all 0.2s;line-height:1.4;}
+  .sidebar-module-link:hover{background:var(--bg-3);color:var(--text);}
+  .sidebar-module-link.active{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-num{font-size:11px;font-weight:500;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--bg-4);color:var(--text-3);}
+  .sidebar-module-link.active .sidebar-num{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-divider{height:1px;background:var(--border);margin:20px 0;}
+  .sidebar-progress-label{font-size:12px;color:var(--text-3);margin-bottom:8px;display:flex;justify-content:space-between;}
+  .sidebar-progress-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sidebar-progress-fill{height:100%;width:70%;background:var(--accent);border-radius:2px;}
+  main{display:block;min-width:0;overflow:hidden;}
+  .content{max-width:760px;width:100%;padding:60px 64px 140px;margin:0 auto;}
+  .module-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+  .module-tag{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(6,78,59,0.2);padding:4px 12px;border-radius:100px;}
+  .module-meta{font-size:12px;color:var(--text-3);}
+  h1{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1.05;letter-spacing:-0.02em;color:var(--text);margin-bottom:24px;}
+  .intro-text{font-size:19px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+  h2{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:400;color:var(--text);margin:52px 0 18px;line-height:1.2;}
+  h3{font-size:16px;font-weight:500;color:var(--text);margin:32px 0 12px;}
+  p{font-size:16px;font-weight:300;color:var(--text-2);line-height:1.8;margin-bottom:20px;}
+  strong{font-weight:500;color:var(--text);}
+  em{font-style:italic;}
+  ul,ol{margin:0 0 20px 22px;color:var(--text-2);}
+  li{font-size:16px;font-weight:300;line-height:1.8;margin-bottom:8px;}
+  .callout{background:var(--callout-bg);border:1px solid var(--callout-border);border-radius:12px;padding:24px 28px;margin:32px 0;}
+  .callout-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+  .callout p{margin:0;font-size:15px;color:var(--text-2);}
+  .callout p+p{margin-top:12px;}
+  .good{background:var(--good-bg);border:1px solid var(--good-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .good-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#22c55e;margin-bottom:10px;}
+  .good p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn{background:var(--warn-bg);border:1px solid var(--warn-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .warn-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#fb923c;margin-bottom:10px;}
+  .warn p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn p+p{margin-top:12px;}
+  .principle-list{display:flex;flex-direction:column;gap:12px;margin:24px 0;}
+  .principle{background:var(--bg-2);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:0 12px 12px 0;padding:20px 24px;}
+  .principle-title{font-size:15px;font-weight:500;color:var(--text);margin-bottom:6px;}
+  .principle-desc{font-size:14px;color:var(--text-2);line-height:1.65;margin:0;}
+  .sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:var(--bg-2);border-top:1px solid var(--border-2);padding:14px 5%;display:flex;align-items:center;justify-content:space-between;gap:16px;backdrop-filter:blur(12px);}
+  .sticky-bar-track{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sticky-bar-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.2s;width:0%;}
+  .sticky-bar-label{font-size:12px;color:var(--text-3);white-space:nowrap;min-width:60px;text-align:right;}
+  .sticky-bar-btn{padding:10px 20px;border-radius:8px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;background:var(--accent);color:#fff;border:none;cursor:pointer;white-space:nowrap;transition:opacity 0.2s;display:none;}
+  .sticky-bar-btn:hover{opacity:0.88;}
+  .sticky-bar-reading{font-size:12px;color:var(--text-3);white-space:nowrap;}
+  @media(max-width:900px){.page-wrapper{grid-template-columns:1fr;}.sidebar{display:none;}.content{padding:40px 24px 120px;}h1{font-size:38px;}}
+  @media(max-width:600px){.content{padding:28px 16px 120px;}h1{font-size:30px;}h2{font-size:24px;}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="courses.html" class="nav-back">← AI for Research and Academia</a>
+    <div class="nav-divider"></div>
+    <span class="nav-label">Module 7</span>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">☀</span></button>
+</nav>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+
+<div class="page-wrapper">
+<aside class="sidebar">
+  <div class="sidebar-course">Expert Track</div>
+  <div class="sidebar-course-name">AI for Research and Academia</div>
+  <div class="sidebar-module"><a href="research-module-1.html" class="sidebar-module-link"><span class="sidebar-num">1</span>AI as a Research Partner</a></div>
+  <div class="sidebar-module"><a href="research-module-2.html" class="sidebar-module-link"><span class="sidebar-num">2</span>Literature Discovery and Synthesis</a></div>
+  <div class="sidebar-module"><a href="research-module-3.html" class="sidebar-module-link"><span class="sidebar-num">3</span>Research Writing with AI</a></div>
+  <div class="sidebar-module"><a href="research-module-4.html" class="sidebar-module-link"><span class="sidebar-num">4</span>Data Analysis and Visualization</a></div>
+  <div class="sidebar-module"><a href="research-module-5.html" class="sidebar-module-link"><span class="sidebar-num">5</span>Hypothesis Generation</a></div>
+  <div class="sidebar-module"><a href="research-module-6.html" class="sidebar-module-link"><span class="sidebar-num">6</span>Peer Review and Integrity</a></div>
+  <div class="sidebar-module"><a href="research-module-7.html" class="sidebar-module-link active"><span class="sidebar-num">7</span>Citation Management</a></div>
+  <div class="sidebar-module"><a href="research-module-8.html" class="sidebar-module-link"><span class="sidebar-num">8</span>Communicating Research</a></div>
+  <div class="sidebar-module"><a href="research-module-9.html" class="sidebar-module-link"><span class="sidebar-num">9</span>Collaborative Research</a></div>
+  <div class="sidebar-module"><a href="research-module-10.html" class="sidebar-module-link"><span class="sidebar-num">10</span>The Future of AI-Augmented Science</a></div>
+  <div class="sidebar-module"><a href="quiz-research.html" class="sidebar-module-link" style="color:var(--accent);margin-top:4px;"><span class="sidebar-num" style="background:var(--accent-dim);color:var(--accent);">✦</span>Final Assessment</a></div>
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-progress-label"><span>Course progress</span><span style="color:var(--accent);">7 / 10</span></div>
+  <div class="sidebar-progress-track"><div class="sidebar-progress-fill"></div></div>
+</aside>
+
+<main>
+<div class="content">
+  <div class="module-eyebrow"><span class="module-tag">Module 7 · Expert Track</span><span class="module-meta">20 min read · AI for Research and Academia</span></div>
+  <h1>Citation Management and Knowledge Organization</h1>
+
+  <p class="intro-text">A researcher with 400 papers in a reference manager and no system for organizing, connecting, and retrieving what those papers say has not accumulated knowledge — they have accumulated files. The challenge of knowledge management at scale is one of the most persistent and underaddressed problems in academic research, and it has been substantially amenable to AI enhancement in the last several years. This module maps the landscape of AI-augmented tools for managing literature, building a personal knowledge base, and maintaining the connections between ideas that are the raw material of scientific synthesis.</p>
+
+  <h2>Zotero with AI enhancement</h2>
+  <p><strong>Zotero</strong> (zotero.org) remains the dominant free, open-source reference management platform for academic research, and its ecosystem has grown considerably with AI integrations. The core platform — which automatically extracts metadata from PDFs, DOIs, and web pages; organizes references in collections and subcollections; generates citations in any format; and integrates with word processors — is as capable as any commercial alternative. The AI enhancements extend this foundation significantly.</p>
+  <p><strong>ZoteroGPT</strong> is a plugin that enables natural language querying of your Zotero library: "What have I saved that discusses the role of dopamine in habit formation?" or "Which papers in my library use experience sampling methodology?" This is transformative for large libraries where you know you've read something relevant but can't locate it by author or title. The query runs against your actual saved papers, not against a general knowledge base, making it considerably more reliable than asking a general AI the same question.</p>
+  <p><strong>Research Rabbit</strong> (researchrabbitapp.com) integrates with Zotero to build a continuously updated map of the literature around your saved papers. Upload a collection of papers on a topic and Research Rabbit identifies: papers that those authors have published previously and subsequently, papers that are highly co-cited with your collection (cited together with them frequently), and papers that share significant citation overlap. It visualizes these relationships as an interactive graph, which is one of the most effective interfaces for understanding the structure of a literature. The "Earlier Work" and "Later Work" buttons are particularly useful for rapid genealogy of an idea — tracing a concept from its origins to its current state.</p>
+
+  <h2>Papers and ReadCube for literature management</h2>
+  <p><strong>Papers</strong> (readcube.com/papers) is a commercial reference manager with strong PDF management capabilities and an AI-powered recommendation system that learns from your reading patterns. Its "Discover" feature surfaces papers you have not seen but that match your research profile based on what you've saved, read, and annotated. For researchers who want recommendation beyond what Research Rabbit provides — which focuses on citation relationships — Papers offers behavioral recommendation that can surface methodologically similar work even without explicit citation connections.</p>
+  <p>The annotation and PDF reading experience in Papers is superior to Zotero's default interface, with inline annotation, cross-document search, and a reading history that integrates with the recommendation engine. For researchers who read large volumes of literature and want the reading experience itself to contribute to discovery, Papers has advantages over a pure citation management focus.</p>
+
+  <h2>Semantic Scholar's AI features</h2>
+  <p>Semantic Scholar (semanticscholar.org), developed by the Allen Institute for AI, has evolved from a search engine into an AI-powered research platform. Its most distinctive AI features include:</p>
+  <ul>
+    <li><strong>TLDR summaries:</strong> Machine-generated single-sentence summaries of papers' core contributions, displayed directly in search results. The TLDR accuracy is uneven but useful for rapid triage — identifying quickly which papers are likely worth reading in full.</li>
+    <li><strong>Citation intent classification:</strong> For any paper, Semantic Scholar shows not just what papers it cites but <em>why</em> — whether a citation is used for background, methodology, comparison, or result-building. This dramatically speeds up literature review by allowing you to filter by citation intent.</li>
+    <li><strong>Highly Influential Citations:</strong> Papers that are cited in ways that indicate deep influence on subsequent work, rather than merely being mentioned. These are typically foundational methodological papers or pivotal empirical findings.</li>
+    <li><strong>Research Topics:</strong> A taxonomy-based organization that groups papers by research area, allowing you to explore the scope of a field and its sub-communities through structured navigation rather than keyword search.</li>
+  </ul>
+
+  <h2>Building a personal knowledge graph</h2>
+  <p>The reference manager solves the problem of storing and citing papers. The knowledge graph solves the problem of organizing what those papers mean — connecting ideas, tracking the development of arguments, and building the synthetic understanding that is the foundation of original research. Several tools have emerged as environments for AI-augmented personal knowledge graphs.</p>
+
+  <h3>Obsidian with AI plugins</h3>
+  <p><strong>Obsidian</strong> (obsidian.md) is a local-first markdown note-taking application built around bidirectional linking between notes. Its graph view visualizes the connections between your notes as a navigable network, which makes the structure of your thinking visible in a way that linear note-taking does not. The local storage model — notes are plain text files on your device, not in a proprietary cloud — means your knowledge base is permanent, portable, and not dependent on a subscription.</p>
+  <p>The AI plugin ecosystem for Obsidian includes several tools that enable natural language querying of your vault, AI-assisted summarization of linked notes, and automated tagging and classification. The Copilot plugin allows conversational querying: "What have I written about the distinction between explicit and implicit memory?" The Smart Connections plugin builds a semantic similarity map of your notes and surfaces related notes you may not have linked explicitly. These tools turn a static archive into a retrievable, queryable knowledge base.</p>
+
+  <h3>Notion AI for research organization</h3>
+  <p><strong>Notion AI</strong> brings large language model capabilities into Notion's structured database environment. For research teams building shared knowledge bases, Notion's block-based structure combined with AI querying is a productive combination: you can maintain a database of papers with custom properties (topic, methodology, quality assessment, relevance to current project), and AI can query across that database in natural language. The tradeoff versus Obsidian is cloud-based storage with subscription costs but superior collaboration features.</p>
+
+  <h2>The Zettelkasten method and AI</h2>
+  <p>The <strong>Zettelkasten</strong> (German: "slip box") method, developed by sociologist Niklas Luhmann, is a note-taking philosophy built around atomic, densely linked notes: each note contains one idea, is linked to every other note it connects with, and accumulates connections over time to form an externalized web of thinking that generates new insights through its structure. Luhmann used it to write more than 70 books; contemporary researchers have found it valuable for managing the synthetic phase of large research programs.</p>
+  <p>AI enhances Zettelkasten practice in specific ways. When you write a new note, AI can identify which existing notes in your knowledge base it is most semantically similar to — suggesting links you might not have made explicitly. AI can also help you write the "permanent notes" that are the core of Zettelkasten: synthesizing a paper or concept into a single precise statement in your own words. The prompt "Convert my reading notes on [paper] into a single-sentence permanent note capturing the key claim I want to preserve" forces the synthesis that Zettelkasten requires and produces usable output faster than writing from scratch.</p>
+
+  <h2>Readwise Reader and AI-powered annotation</h2>
+  <p><strong>Readwise Reader</strong> (readwise.io/read) is a reading platform that combines PDF, web article, and newsletter ingestion with AI-powered features for annotation, synthesis, and spaced repetition review. Its Ghostreader feature enables in-line AI assistance while reading: you can ask questions about the text at the cursor ("what is the author's evidence for this claim?"), request explanations of technical terms, or generate flashcard-style review prompts from highlighted passages.</p>
+  <p>The spaced repetition integration is particularly valuable for researchers who read heavily: Readwise surfaces your highlights from weeks or months ago on a review schedule that is calibrated to help you retain what you've read. For researchers whose reading rate means that material read three months ago has been effectively forgotten, this passive review system substantially improves the proportion of read material that is retrievable when writing.</p>
+
+  <h2>Connected Papers and citation network visualization</h2>
+  <p><strong>Connected Papers</strong> (connectedpapers.com) builds a visual graph of the papers most closely related to any seed paper you specify, based on co-citation and bibliographic coupling — the papers that share significant citation overlap with your seed paper. The resulting visualization reveals the neighborhood of the literature around any specific work: which foundational papers define the field, which methodological papers cluster together, where the sub-communities are.</p>
+  <p>The most valuable use of Connected Papers is identifying foundational papers that you may have missed. If you find a highly relevant recent paper and build a Connected Papers graph around it, the papers with the highest node size in the graph are those most co-cited with your seed paper across the entire corpus — which reliably surfaces the most-cited foundational works in that area. This is substantially faster than working backward through reference lists manually.</p>
+
+  <h2>Managing hundreds of papers efficiently</h2>
+  <p>When a research program accumulates hundreds of papers, the organizational challenge becomes non-trivial. The researchers who manage large literature databases most effectively tend to use a consistent workflow that applies AI enhancement at specific, high-value points rather than attempting to AI-assist every step.</p>
+
+  <div class="principle-list">
+    <div class="principle">
+      <div class="principle-title">Rapid triage at ingestion</div>
+      <div class="principle-desc">When adding a new paper, spend 60 seconds: read the abstract, check the TLDR, skim the figures. Use AI to generate a brief note summarizing the paper's method and main finding in two sentences. Tag with methodology type and topical subcategory. This takes 2-3 minutes per paper but means your library is searchable and meaningful rather than a flat list of titles.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">ResearchRabbit for regular landscape updates</div>
+      <div class="principle-desc">Set a recurring task (monthly or quarterly for active research areas) to feed your current core papers into ResearchRabbit and check what new work has appeared in the "Later Work" view. This catches relevant new publications that didn't appear in your regular searches because they use different terminology or come from adjacent communities.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">AI-assisted annotation for high-priority papers</div>
+      <div class="principle-desc">For the subset of papers that are directly central to your work, use Readwise Reader or Zotero's PDF reader to annotate substantively. Ask AI questions about sections you find unclear, use it to generate potential counterarguments to the paper's claims, and write a Zettelkasten-style permanent note within 24 hours of reading. The annotation investment is only worthwhile for papers that will genuinely influence your thinking.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Synthesis sessions with Connected Papers</div>
+      <div class="principle-desc">Before beginning a new manuscript, spend a session with Connected Papers and Semantic Scholar exploring the structure of the literature around your key claims. The goal is to identify what you may have missed, not to do an exhaustive systematic review. An hour of structured network exploration typically surfaces several relevant papers that keyword searching would not have found.</div>
+    </div>
+  </div>
+
+  <div class="good">
+    <div class="good-label">The Layered Knowledge Management System</div>
+    <p>The most effective personal knowledge management systems combine tools at different levels: a reference manager (Zotero) as the canonical store of all papers, with AI search (ZoteroGPT) for retrieval; a network visualization tool (Research Rabbit, Connected Papers) for landscape mapping and gap identification; a personal knowledge graph (Obsidian) for synthetic understanding and idea linking; and a reading and annotation platform (Readwise Reader) for active engagement and retention. No single tool does all of this optimally. The combination creates a system where papers enter through the reference manager, network analysis helps identify what's missing, reading produces synthesized notes, and those notes accumulate into a connected understanding that is queryable and generative.</p>
+  </div>
+
+</div>
+</main>
+</div>
+
+<div class="sticky-bar" id="sticky-bar">
+  <div class="sticky-bar-reading" id="sticky-reading">Read to the end to unlock the next module</div>
+  <div class="sticky-bar-track"><div class="sticky-bar-fill" id="sticky-fill"></div></div>
+  <div class="sticky-bar-label" id="sticky-label">0%</div>
+  <button class="sticky-bar-btn" id="sticky-btn" onclick="completeAndNext()">Module 8: Communicating Research →</button>
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import { getFirestore, doc, setDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  const app=initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+  const auth=getAuth(app);const db=getFirestore(app);
+  let currentUser=null;
+  onAuthStateChanged(auth,u=>{currentUser=u;});
+  window.toggleTheme=function(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='☾'):(h.setAttribute('data-theme','dark'),i.textContent='☀');};
+  window.addEventListener('scroll',()=>{const d=document.documentElement,s=d.scrollTop||document.body.scrollTop,t=d.scrollHeight-d.clientHeight;document.getElementById('progress').style.width=(s/t*100)+'%';});
+  let unlocked=false;
+  function updateScrollProgress(){
+    const scrolled=window.scrollY+window.innerHeight;const total=document.documentElement.scrollHeight;
+    const pct=Math.min(100,Math.round((scrolled/total)*100));
+    const fill=document.getElementById('sticky-fill');const label=document.getElementById('sticky-label');
+    const btn=document.getElementById('sticky-btn');const reading=document.getElementById('sticky-reading');
+    if(fill)fill.style.width=pct+'%';if(label)label.textContent=pct+'%';
+    if(pct>=95&&!unlocked){unlocked=true;if(btn)btn.style.display='block';if(reading)reading.style.display='none';if(fill)fill.style.background='#22c55e';if(label)label.style.color='#22c55e';}
+  }
+  window.addEventListener('scroll',updateScrollProgress);updateScrollProgress();
+  window.completeAndNext=async function(){
+    if(currentUser){try{await setDoc(doc(db,'users',currentUser.uid),{researchModules:arrayUnion('m7')},{merge:true});}catch(e){}}
+    window.location.href='research-module-8.html';
+  };
+</script>
+</body>
+</html>

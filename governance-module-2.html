@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 2: Algorithmic Government Decisions — AI in Governance — Meridian Institute of AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#92400E;--accent-dim:rgba(146,64,14,0.1);--accent-dim2:rgba(146,64,14,0.05);--nav-bg:rgba(8,8,8,0.9);--callout-bg:rgba(146,64,14,0.07);--callout-border:rgba(146,64,14,0.25);--good-bg:rgba(34,197,94,0.07);--good-border:rgba(34,197,94,0.2);--warn-bg:rgba(251,146,60,0.07);--warn-border:rgba(251,146,60,0.2);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#78350F;--accent-dim:rgba(120,53,15,0.08);--accent-dim2:rgba(120,53,15,0.04);--nav-bg:rgba(250,250,248,0.9);--callout-bg:rgba(120,53,15,0.05);--callout-border:rgba(120,53,15,0.2);--good-bg:rgba(22,163,74,0.06);--good-border:rgba(22,163,74,0.2);--warn-bg:rgba(234,88,12,0.05);--warn-border:rgba(234,88,12,0.2);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;overflow-x:hidden;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.7;overflow-x:hidden;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}
+  .nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}
+  .nav-back{font-size:13px;color:var(--text-2);text-decoration:none;transition:color 0.2s;}
+  .nav-back:hover{color:var(--text);}
+  .nav-label{font-size:13px;color:var(--text-3);}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;transition:all 0.2s;}
+  .theme-toggle:hover{background:var(--bg-3);color:var(--text);}
+  .progress-bar{position:fixed;top:60px;left:0;right:0;z-index:99;height:2px;background:var(--border);}
+  .progress-fill{height:100%;background:var(--accent);width:0%;transition:width 0.1s;}
+  .page-wrapper{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:100vh;padding-top:62px;overflow:hidden;}
+  .sidebar{position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto;border-right:1px solid var(--border);padding:32px 24px;background:var(--bg-2);}
+  .sidebar-course{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;}
+  .sidebar-course-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+  .sidebar-module{margin-bottom:4px;}
+  .sidebar-module-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:13px;color:var(--text-2);text-decoration:none;transition:all 0.2s;line-height:1.4;}
+  .sidebar-module-link:hover{background:var(--bg-3);color:var(--text);}
+  .sidebar-module-link.active{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-num{font-size:11px;font-weight:500;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--bg-4);color:var(--text-3);}
+  .sidebar-module-link.active .sidebar-num{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-divider{height:1px;background:var(--border);margin:20px 0;}
+  .sidebar-progress-label{font-size:12px;color:var(--text-3);margin-bottom:8px;display:flex;justify-content:space-between;}
+  .sidebar-progress-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sidebar-progress-fill{height:100%;width:20%;background:var(--accent);border-radius:2px;}
+  main{display:block;min-width:0;overflow:hidden;}
+  .content{max-width:760px;width:100%;padding:60px 64px 140px;margin:0 auto;}
+  .module-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+  .module-tag{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(146,64,14,0.2);padding:4px 12px;border-radius:100px;}
+  .module-meta{font-size:12px;color:var(--text-3);}
+  h1{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1.05;letter-spacing:-0.02em;color:var(--text);margin-bottom:24px;}
+  .intro-text{font-size:19px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+  h2{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:400;color:var(--text);margin:52px 0 18px;line-height:1.2;}
+  h3{font-size:16px;font-weight:500;color:var(--text);margin:32px 0 12px;}
+  p{font-size:16px;font-weight:300;color:var(--text-2);line-height:1.8;margin-bottom:20px;}
+  strong{font-weight:500;color:var(--text);}
+  em{font-style:italic;}
+  ul,ol{margin:0 0 20px 22px;color:var(--text-2);}
+  li{font-size:16px;font-weight:300;line-height:1.8;margin-bottom:8px;}
+  .callout{background:var(--callout-bg);border:1px solid var(--callout-border);border-radius:12px;padding:24px 28px;margin:32px 0;}
+  .callout-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+  .callout p{margin:0;font-size:15px;color:var(--text-2);}
+  .callout p+p{margin-top:12px;}
+  .good{background:var(--good-bg);border:1px solid var(--good-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .good-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#22c55e;margin-bottom:10px;}
+  .good p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn{background:var(--warn-bg);border:1px solid var(--warn-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .warn-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#fb923c;margin-bottom:10px;}
+  .warn p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn p+p{margin-top:12px;}
+  .analogy{background:var(--bg-2);border:1px solid var(--border);border-radius:12px;padding:28px;margin:28px 0;}
+  .analogy-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-3);margin-bottom:12px;}
+  .analogy p{margin:0;font-size:15px;color:var(--text-2);}
+  .comparison-wrapper{overflow-x:auto;-webkit-overflow-scrolling:touch;width:100%;margin:28px 0;}
+  table{width:100%;border-collapse:collapse;font-size:14px;min-width:480px;}
+  th{text-align:left;padding:12px 16px;font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-3);border-bottom:1px solid var(--border-2);}
+  td{padding:14px 16px;border-bottom:1px solid var(--border);color:var(--text-2);line-height:1.6;vertical-align:top;}
+  tr:last-child td{border-bottom:none;}
+  td:first-child{color:var(--text);font-weight:500;width:30%;}
+  .key-stat{background:var(--bg-2);border:1px solid var(--border);border-radius:12px;padding:20px 24px;margin:16px 0;display:flex;align-items:center;gap:20px;}
+  .key-stat-num{font-family:'Cormorant Garamond',serif;font-size:40px;font-weight:400;color:var(--accent);line-height:1;flex-shrink:0;}
+  .key-stat-label{font-size:14px;color:var(--text-2);line-height:1.6;}
+  .key-stat-label strong{display:block;font-size:15px;color:var(--text);margin-bottom:4px;}
+  .principle-list{display:flex;flex-direction:column;gap:12px;margin:24px 0;}
+  .principle{background:var(--bg-2);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:0 12px 12px 0;padding:20px 24px;}
+  .principle-title{font-size:15px;font-weight:500;color:var(--text);margin-bottom:6px;}
+  .principle-desc{font-size:14px;color:var(--text-2);line-height:1.65;margin:0;}
+  .sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:var(--bg-2);border-top:1px solid var(--border-2);padding:14px 5%;display:flex;align-items:center;justify-content:space-between;gap:16px;backdrop-filter:blur(12px);}
+  .sticky-bar-track{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sticky-bar-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.2s;width:0%;}
+  .sticky-bar-label{font-size:12px;color:var(--text-3);white-space:nowrap;min-width:60px;text-align:right;}
+  .sticky-bar-btn{padding:10px 20px;border-radius:8px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;background:var(--accent);color:#fff;border:none;cursor:pointer;white-space:nowrap;transition:opacity 0.2s;display:none;}
+  .sticky-bar-btn:hover{opacity:0.88;}
+  .sticky-bar-reading{font-size:12px;color:var(--text-3);white-space:nowrap;}
+  @media(max-width:900px){.page-wrapper{grid-template-columns:1fr;}.sidebar{display:none;}.content{padding:40px 24px 120px;}h1{font-size:38px;}}
+  @media(max-width:600px){.content{padding:28px 16px 120px;}h1{font-size:30px;}h2{font-size:24px;}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="index.html" class="nav-back">&#127968; Home</a>
+    <div class="nav-divider"></div>
+    <a href="courses.html" class="nav-back">&#8592; AI in Governance</a>
+    <div class="nav-divider"></div>
+    <span class="nav-label">Module 2</span>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">&#9728;</span></button>
+</nav>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+
+<div class="page-wrapper">
+<aside class="sidebar">
+  <div class="sidebar-course">Course</div>
+  <div class="sidebar-course-name">AI in Governance</div>
+  <div class="sidebar-module"><a href="governance-module-1.html" class="sidebar-module-link"><span class="sidebar-num">1</span>AI in Public Service Delivery</a></div>
+  <div class="sidebar-module"><a href="governance-module-2.html" class="sidebar-module-link active"><span class="sidebar-num">2</span>Algorithmic Government Decisions</a></div>
+  <div class="sidebar-module"><a href="governance-module-3.html" class="sidebar-module-link"><span class="sidebar-num">3</span>Smart Cities and AI</a></div>
+  <div class="sidebar-module"><a href="governance-module-4.html" class="sidebar-module-link"><span class="sidebar-num">4</span>AI and Democratic Accountability</a></div>
+  <div class="sidebar-module"><a href="governance-module-5.html" class="sidebar-module-link"><span class="sidebar-num">5</span>Government AI Procurement</a></div>
+  <div class="sidebar-module"><a href="governance-module-6.html" class="sidebar-module-link"><span class="sidebar-num">6</span>AI in Criminal Justice</a></div>
+  <div class="sidebar-module"><a href="governance-module-7.html" class="sidebar-module-link"><span class="sidebar-num">7</span>International AI Governance</a></div>
+  <div class="sidebar-module"><a href="governance-module-8.html" class="sidebar-module-link"><span class="sidebar-num">8</span>Ethics of Automated Government</a></div>
+  <div class="sidebar-module"><a href="governance-module-9.html" class="sidebar-module-link"><span class="sidebar-num">9</span>AI in Social Services</a></div>
+  <div class="sidebar-module"><a href="governance-module-10.html" class="sidebar-module-link"><span class="sidebar-num">10</span>Trustworthy Government AI</a></div>
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-progress-label"><span>Course progress</span><span style="color:var(--accent);">2 / 10</span></div>
+  <div class="sidebar-progress-track"><div class="sidebar-progress-fill" style="width:20%;"></div></div>
+</aside>
+
+<main>
+<div class="content">
+  <div class="module-eyebrow"><span class="module-tag">Module 2</span><span class="module-meta">20 min read · AI in Governance</span></div>
+  <h1>Algorithmic Decision-Making in Government</h1>
+
+  <p class="intro-text">When a government algorithm determines whether a family receives welfare support, whether an immigration application is approved, or whether a child is referred for protective intervention, we are no longer in the realm of administrative convenience. We are at the intersection of computational systems and fundamental rights. Understanding how algorithmic decision-making works in government — and where it must be constrained — is essential knowledge for the modern public servant.</p>
+
+  <h2>What Algorithmic Decision-Making Means in Government</h2>
+  <p>The term "algorithmic decision-making" covers a wide spectrum. At one end sits simple rule-based automation: if an applicant earns less than a defined threshold and meets categorical criteria, the system approves the benefit without human review. These systems have existed in government for decades and are well-understood. At the other end sit machine learning models that generate probabilistic risk scores, recommendations, or eligibility determinations from patterns in training data — systems whose internal logic is often opaque even to their developers.</p>
+  <p>The governance challenges are most acute in the middle and upper range of this spectrum: systems that use statistical models to make or substantially influence decisions with material consequences for individual citizens. This includes predictive risk scoring tools in child welfare, fraud detection systems that flag welfare claimants for investigation, credit scoring used in government-backed lending, and immigration queue management algorithms that prioritise or deprioritise applications.</p>
+  <p>What distinguishes government algorithmic decision-making from private sector uses is the coercive power of the state and the absence of market exit options. A citizen denied a welfare benefit cannot "choose a different provider." The government's algorithmic decisions are often the only mechanism available, making errors consequential in ways that private sector failures typically are not.</p>
+
+  <div class="callout">
+    <div class="callout-label">The Core Tension</div>
+    <p>Algorithmic systems offer genuine efficiency gains: faster processing, consistent application of rules, and the ability to detect patterns across vast datasets. But efficiency and fairness are not the same thing. A system that processes 10,000 applications in an hour while systematically disadvantaging a particular demographic has traded equity for throughput — a trade-off that is unacceptable in democratic government and increasingly illegal under human rights law.</p>
+  </div>
+
+  <h2>High-Stakes Applications in Government</h2>
+
+  <h3>Benefits and Social Support Decisions</h3>
+  <p>Automated benefits systems are among the most widespread and consequential deployments of government AI. In Australia, the Robodebt scheme — which used algorithmic income averaging to raise debt notices against welfare recipients — resulted in approximately 470,000 false or incorrect debts, causing documented harm to some of the most vulnerable citizens in the country. The scheme was ultimately declared unlawful, and a Royal Commission found it was not only technically flawed but ethically indefensible. The Robodebt failure is now a canonical example of what happens when efficiency imperatives override legal obligation and human welfare.</p>
+  <p>In the Netherlands, the child benefits scandal (Toeslagenaffaire) saw tax authority algorithms flag thousands of families — disproportionately those of immigrant background — for suspected fraud. Families were required to repay benefits they had legally received, leading to financial ruin, family breakdown, and suicides. The scandal brought down the Dutch government in 2021 and triggered a complete overhaul of algorithmic governance rules across the public sector.</p>
+
+  <h3>Child Welfare and Family Intervention</h3>
+  <p>Predictive analytics tools in child protective services use historical data about family characteristics, prior reports, and socioeconomic indicators to generate risk scores that inform decisions about investigation, intervention, and removal of children from families. These tools are in use in Allegheny County (Pennsylvania), Los Angeles, New Zealand, and several other jurisdictions.</p>
+  <p>The civil liberties concerns are profound. Risk scores are often correlated with poverty, race, and historical contact with public systems — which themselves reflect systemic inequities rather than actual risk of harm. A family's risk score may be elevated because they receive welfare benefits, live in public housing, or have previously come to the attention of systems that disproportionately surveil low-income and minority communities. Using these correlations to target families for state intervention can entrench and amplify historical discrimination under a veneer of mathematical objectivity.</p>
+
+  <h3>Immigration Decisions</h3>
+  <p>Immigration case management increasingly relies on algorithmic tools to prioritise queues, flag applications for additional scrutiny, and in some jurisdictions generate automated initial determinations. The UK Home Office's visa streaming algorithm was found to route applicants from certain nationalities to more intensive scrutiny tracks in ways that raised significant race discrimination concerns. Canada's GCMS algorithmic tools have been the subject of transparency litigation. These applications are particularly sensitive because immigration decisions affect the ability of individuals to remain in countries where they have established lives and families.</p>
+
+  <h2>The Right to Explanation: GDPR Article 22 and Its Implications</h2>
+  <p>The EU's General Data Protection Regulation represents the most significant binding legal framework governing algorithmic decision-making to date. Article 22 establishes that individuals have the right not to be subject to a decision based solely on automated processing — including profiling — which produces legal effects or similarly significantly affects them. Where such decisions are made, individuals must be given meaningful information about the logic involved, the significance, and the envisaged consequences.</p>
+
+  <div class="principle-list">
+    <div class="principle">
+      <div class="principle-title">The Right Not to Be Solely Automated</div>
+      <div class="principle-desc">GDPR Article 22 creates a presumption against purely automated decisions with significant effects. For government decisions affecting rights or interests, human review is not optional — it is a legal requirement in EU jurisdictions and an ethical imperative everywhere else.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Meaningful Explanation</div>
+      <div class="principle-desc">The requirement for "meaningful information about the logic involved" is demanding. A statement that "a computer system determined your application was high-risk" does not satisfy the requirement. Citizens must be able to understand what factors drove the decision and how they could challenge or change them.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Suitable Safeguards</div>
+      <div class="principle-desc">Where automated decisions are permitted (with consent or legal basis), controllers must implement suitable safeguards including the right to obtain human intervention, express one's point of view, and contest the decision. These safeguards must be practical and accessible, not nominal.</div>
+    </div>
+  </div>
+
+  <p>Outside the EU, similar principles are emerging through administrative law, human rights frameworks, and domestic legislation. Canada's Directive on Automated Decision-Making requires algorithmic impact assessments and graduated oversight requirements based on decision stakes. New Zealand's Algorithm Charter establishes transparency, human oversight, and accountability obligations for government agencies using algorithms. The UK is developing its own Algorithmic Transparency Recording Standard.</p>
+
+  <h2>Case Study: The Dutch SyRI System</h2>
+  <p>The System Risk Indication (SyRI) was a Dutch government tool that combined data from multiple government agencies to generate risk scores predicting the likelihood that individuals were committing benefits fraud or tax evasion. The system cross-referenced data on income, employment, benefits receipt, housing, and debts to identify "high risk" individuals for investigation.</p>
+  <p>In 2020, the District Court of The Hague ruled SyRI unlawful, finding that it violated Article 8 of the European Convention on Human Rights — the right to private life. The court found that the system lacked sufficient transparency, that the legal basis for the data processing was inadequate, and that the system operated in ways that disproportionately targeted low-income neighbourhoods and produced discriminatory effects. The judgment established that algorithmic surveillance for fraud detection cannot be conducted without clear legal grounding, independent oversight, and genuine transparency.</p>
+  <p>The SyRI case is instructive because the government argued that the system was only used to identify people for investigation — a human would make the final decision. The court found that being identified for investigation was itself a significant effect on individuals, and that the algorithmic processing leading to that identification required legal justification. This expansive interpretation has significant implications for all risk-scoring and flagging systems in government.</p>
+
+  <h2>Case Study: COMPAS and Recidivism Prediction in the US</h2>
+  <p>COMPAS (Correctional Offender Management Profiling for Alternative Sanctions) is a risk assessment tool widely used in US courts to inform bail, sentencing, and parole decisions. A 2016 ProPublica investigation found that COMPAS incorrectly flagged Black defendants as future criminals at nearly twice the rate of white defendants, while white defendants who went on to reoffend were more likely to have been incorrectly classified as low risk.</p>
+  <p>The developers contested some aspects of this analysis, but the underlying debate exposed a fundamental mathematical tension: different definitions of fairness — equal false positive rates, equal predictive accuracy, equal treatment — are in many cases mathematically incompatible. A system cannot simultaneously satisfy all definitions of fairness when base rates differ between groups. This is not a solvable technical problem; it is a values question about which conception of fairness the justice system should prioritise. Algorithms do not resolve that question — they embed a particular answer, often invisibly.</p>
+
+  <div class="warn">
+    <div class="warn-label">The Fairness Impossibility Problem</div>
+    <p><strong>There is no technically neutral choice.</strong> Every risk scoring system makes implicit ethical choices about which type of error is more acceptable — false positives (over-flagging) or false negatives (under-flagging) — and whether accuracy should be equalised across groups or overall. These are political and ethical choices, not technical ones. They should be made explicitly, by accountable humans, not embedded silently in model training.</p>
+    <p><strong>Historical data reflects historical inequities.</strong> Training a model on past decisions — who was arrested, who was denied welfare, who was investigated — encodes the biases of those past decisions into the future. A system trained on biased history will replicate and potentially amplify that bias at scale and speed.</p>
+  </div>
+
+  <h2>Decision Support vs. Automated Decisions: A Critical Distinction</h2>
+  <p>A persistent framing in government AI deployment is that algorithmic tools provide "decision support" — they inform but do not replace human judgment. In theory, this preserves human accountability and avoids the legal constraints on automated decisions. In practice, the distinction is often illusory.</p>
+  <p>Research on automation bias consistently shows that human reviewers tend to accept algorithmic recommendations at very high rates, particularly when workloads are heavy, decisions are complex, and the algorithm carries institutional authority. A caseworker reviewing 60 files per day with an AI-generated risk score for each is, in practice, likely to follow the score in the vast majority of cases — not because they are lazy, but because the cognitive burden of genuine independent assessment in that volume is impossible. The decision may be nominally human, but it is functionally automated.</p>
+  <p>This has important governance implications. "Human in the loop" safeguards are only meaningful when the human genuinely has the time, information, training, and institutional permission to disagree with the algorithm. Designing for genuine human review — rather than nominal human review — requires attention to caseload ratios, reviewer training, audit trails that flag cases where the human overrode the algorithm, and organisational cultures that reward appropriate disagreement with algorithmic outputs.</p>
+
+  <h2>When Is Human Review Mandatory?</h2>
+  <p>Practitioners need clear criteria for determining when algorithmic decision support must be accompanied by genuine human review rather than algorithmic determination. The following factors are widely recognised as escalating the obligation for human oversight:</p>
+
+  <ul>
+    <li><strong>High stakes for the individual</strong> — decisions affecting liberty, housing, income, family integrity, immigration status, or access to healthcare require the highest levels of human review</li>
+    <li><strong>Low-frequency, high-consequence errors</strong> — even a small error rate in high-volume systems produces large numbers of wrongly affected citizens</li>
+    <li><strong>Protected characteristics are relevant predictors</strong> — any system where race, gender, religion, disability, or other protected characteristics are correlated with outputs requires intensive fairness auditing and human oversight</li>
+    <li><strong>Opacity of the model</strong> — the less interpretable the model, the greater the obligation for human review to compensate for the inability to verify algorithmic reasoning</li>
+    <li><strong>Irreversibility</strong> — decisions that are difficult or impossible to reverse (removal of children, detention, deportation) demand the highest standard of review before action</li>
+    <li><strong>Novel situations</strong> — algorithmic systems perform worst on cases that differ significantly from their training distribution; novel circumstances are precisely when human judgment is most necessary</li>
+  </ul>
+
+  <div class="good">
+    <div class="good-label">Audit Requirements: What Good Practice Looks Like</div>
+    <p>Leading jurisdictions require algorithmic impact assessments before deployment, ongoing bias audits with results published, independent third-party technical review for high-risk systems, mandatory incident reporting when algorithmic errors cause harm, and sunset clauses that require active reauthorisation of high-stakes systems. Canada's Directive on Automated Decision-Making is a useful reference framework, as is the EU AI Act's risk classification for high-risk AI systems in public administration.</p>
+  </div>
+
+  <h2>Explainability as a Governance Requirement</h2>
+  <p>Explainability in algorithmic government decisions is not merely a technical aspiration — it is a legal and democratic requirement. Citizens have a right, grounded in administrative law and human rights frameworks, to understand why decisions affecting them were made. This right is meaningless if the government cannot explain what drove an algorithmic output.</p>
+  <p>Explainability also enables accountability. If a government cannot explain why an algorithm produced the outcomes it did — why certain groups were flagged at higher rates, why error rates varied — it cannot be held accountable for those outcomes by Parliament, by the courts, or by the public. The requirement for explainability is therefore both a citizen right and a democratic accountability mechanism.</p>
+  <p>Achieving genuine explainability often requires choosing less complex models. A logistic regression model with 15 clearly defined inputs can be explained to a non-technical reviewer, a citizen, or a court. A gradient-boosted ensemble of hundreds of decision trees cannot be explained at the individual decision level with any practicality. Governance frameworks should treat model complexity as a cost to be justified, not a feature to be maximised.</p>
+
+  <div class="callout">
+    <div class="callout-label">For Practitioners</div>
+    <p>The most important question to ask when your agency proposes an algorithmic decision-making tool is not "does it work?" but "what does 'work' mean, who decided that, and for whom might it fail?" Unpacking those questions will take you to the values embedded in the system, the populations at risk of harm, and the oversight mechanisms needed to make deployment ethically defensible.</p>
+  </div>
+
+  <h2>Looking Ahead</h2>
+  <p>Module 3 moves from individual decisions to urban-scale AI infrastructure — the sensors, networks, and data platforms that constitute smart cities. The governance challenges at this scale are different in kind: we shift from decisions about individuals to the continuous monitoring of entire populations, and from administrative law to urban planning, data sovereignty, and civil liberties in public space.</p>
+
+</div>
+</main>
+</div>
+
+<div class="sticky-bar" id="sticky-bar">
+  <div class="sticky-bar-reading" id="sticky-reading">Read to the end to unlock the next module</div>
+  <div class="sticky-bar-track"><div class="sticky-bar-fill" id="sticky-fill"></div></div>
+  <div class="sticky-bar-label" id="sticky-label">0%</div>
+  <button class="sticky-bar-btn" id="sticky-btn" onclick="completeAndNext()">Module 3: Smart Cities and AI &#8594;</button>
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import { getFirestore, doc, setDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  const app = initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+  const auth = getAuth(app); const db = getFirestore(app);
+  let currentUser = null;
+  onAuthStateChanged(auth, u => { currentUser = u; });
+
+  window.toggleTheme=function(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='☾'):(h.setAttribute('data-theme','dark'),i.textContent='☀');};
+  window.addEventListener('scroll',()=>{const d=document.documentElement,s=d.scrollTop||document.body.scrollTop,t=d.scrollHeight-d.clientHeight;document.getElementById('progress').style.width=(s/t*100)+'%';});
+
+  let unlocked=false;
+  function updateScrollProgress(){
+    const scrolled=window.scrollY+window.innerHeight;
+    const total=document.documentElement.scrollHeight;
+    const pct=Math.min(100,Math.round((scrolled/total)*100));
+    const fill=document.getElementById('sticky-fill');
+    const label=document.getElementById('sticky-label');
+    const btn=document.getElementById('sticky-btn');
+    const reading=document.getElementById('sticky-reading');
+    if(fill)fill.style.width=pct+'%';
+    if(label)label.textContent=pct+'%';
+    if(pct>=95&&!unlocked){
+      unlocked=true;
+      if(btn)btn.style.display='block';
+      if(reading)reading.style.display='none';
+      if(fill)fill.style.background='#22c55e';
+      if(label)label.style.color='#22c55e';
+    }
+  }
+  window.addEventListener('scroll',updateScrollProgress);
+  updateScrollProgress();
+
+  window.completeAndNext=async function(){
+    if(currentUser){
+      try{
+        await setDoc(doc(db,'users',currentUser.uid),{
+          governanceModules: arrayUnion('m2')
+        }, { merge: true });
+      }catch(e){ /* progress save best-effort */ }
+    }
+    window.location.href='governance-module-3.html';
+  };
+</script>
+</body>
+</html>

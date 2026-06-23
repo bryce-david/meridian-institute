@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 10: Building Prompt Libraries — Prompt Engineering Mastery — Meridian Institute of AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#B45309;--accent-dim:rgba(180,83,9,0.1);--nav-bg:rgba(8,8,8,0.9);--callout-bg:rgba(180,83,9,0.07);--callout-border:rgba(180,83,9,0.25);--good-bg:rgba(34,197,94,0.07);--good-border:rgba(34,197,94,0.2);--warn-bg:rgba(251,146,60,0.07);--warn-border:rgba(251,146,60,0.2);}
+:root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#92400E;--accent-dim:rgba(146,64,14,0.08);--nav-bg:rgba(250,250,248,0.9);--callout-bg:rgba(146,64,14,0.05);--callout-border:rgba(146,64,14,0.2);--good-bg:rgba(22,163,74,0.06);--good-border:rgba(22,163,74,0.2);--warn-bg:rgba(234,88,12,0.05);--warn-border:rgba(234,88,12,0.2);}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}html{scroll-behavior:smooth;}body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.7;overflow-x:hidden;transition:background 0.3s,color 0.3s;}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+.nav-left{display:flex;align-items:center;gap:16px;}.nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+.nav-divider{width:1px;height:16px;background:var(--border-2);}.nav-back{font-size:13px;color:var(--text-2);text-decoration:none;}.nav-label{font-size:13px;color:var(--text-3);}
+.theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;}
+.progress-bar{position:fixed;top:60px;left:0;right:0;z-index:99;height:2px;background:var(--border);}.progress-fill{height:100%;background:var(--accent);width:0%;}
+.page-wrapper{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:100vh;padding-top:62px;}
+.sidebar{position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto;border-right:1px solid var(--border);padding:32px 24px;background:var(--bg-2);}
+.sidebar-course{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;}.sidebar-course-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+.sidebar-module{margin-bottom:4px;}.sidebar-module-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:13px;color:var(--text-2);text-decoration:none;transition:all 0.2s;line-height:1.4;}
+.sidebar-module-link:hover{background:var(--bg-3);color:var(--text);}.sidebar-module-link.active{background:var(--accent-dim);color:var(--accent);}
+.sidebar-num{font-size:11px;font-weight:500;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--bg-4);color:var(--text-3);}
+.sidebar-module-link.active .sidebar-num{background:var(--accent-dim);color:var(--accent);}
+.sidebar-divider{height:1px;background:var(--border);margin:20px 0;}
+.sidebar-progress-label{font-size:12px;color:var(--text-3);margin-bottom:8px;display:flex;justify-content:space-between;}
+.sidebar-progress-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}.sidebar-progress-fill{height:100%;background:var(--accent);border-radius:2px;}
+main{display:block;min-width:0;}.content{max-width:760px;width:100%;padding:60px 64px 140px;margin:0 auto;}
+.module-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+.module-tag{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(180,83,9,0.2);padding:4px 12px;border-radius:100px;}
+.module-meta{font-size:12px;color:var(--text-3);}
+h1{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1.05;letter-spacing:-0.02em;margin-bottom:24px;}
+.intro-text{font-size:19px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+h2{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:400;color:var(--text);margin:52px 0 18px;line-height:1.2;}
+p{font-size:16px;font-weight:300;color:var(--text-2);line-height:1.8;margin-bottom:20px;}strong{font-weight:500;color:var(--text);}
+ul,ol{margin:0 0 20px 22px;color:var(--text-2);}li{font-size:16px;font-weight:300;line-height:1.8;margin-bottom:8px;}
+.callout{background:var(--callout-bg);border:1px solid var(--callout-border);border-radius:12px;padding:24px 28px;margin:32px 0;}.callout-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}.callout p{margin:0;font-size:15px;color:var(--text-2);}.callout p+p{margin-top:12px;}
+.good{background:var(--good-bg);border:1px solid var(--good-border);border-radius:12px;padding:24px 28px;margin:24px 0;}.good-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#22c55e;margin-bottom:10px;}.good p{margin:0;font-size:15px;color:var(--text-2);}
+.warn{background:var(--warn-bg);border:1px solid var(--warn-border);border-radius:12px;padding:24px 28px;margin:24px 0;}.warn-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#fb923c;margin-bottom:10px;}.warn p{margin:0;font-size:15px;color:var(--text-2);}
+.principle-list{display:flex;flex-direction:column;gap:12px;margin:24px 0;}.principle{background:var(--bg-2);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:0 12px 12px 0;padding:20px 24px;}.principle-title{font-size:15px;font-weight:500;color:var(--text);margin-bottom:6px;}.principle-desc{font-size:14px;color:var(--text-2);line-height:1.65;margin:0;}
+.code-block{background:#0d1117;border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:20px 24px;margin:24px 0;font-family:monospace;font-size:13px;color:#e6edf3;overflow-x:auto;line-height:1.7;white-space:pre;}
+.cta-box{background:var(--accent-dim);border:1px solid rgba(180,83,9,0.2);border-radius:16px;padding:40px;text-align:center;margin:48px 0;}
+.cta-box h3{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:400;color:var(--text);margin-bottom:12px;}
+.cta-box p{color:var(--text-2);font-size:16px;margin:0 0 24px;}
+.cta-btn{display:inline-block;padding:12px 28px;background:var(--accent);color:#fff;border-radius:8px;text-decoration:none;font-size:14px;font-weight:500;transition:opacity 0.2s;}.cta-btn:hover{opacity:0.88;}
+.sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:var(--bg-2);border-top:1px solid var(--border-2);padding:14px 5%;display:flex;align-items:center;justify-content:space-between;gap:16px;backdrop-filter:blur(12px);}
+.sticky-bar-track{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}.sticky-bar-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.2s;width:0%;}
+.sticky-bar-label{font-size:12px;color:var(--text-3);white-space:nowrap;}
+.sticky-bar-btn{padding:10px 20px;border-radius:8px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;background:var(--accent);color:#fff;border:none;cursor:pointer;white-space:nowrap;transition:opacity 0.2s;display:none;}.sticky-bar-btn:hover{opacity:0.88;}
+.sticky-bar-reading{font-size:12px;color:var(--text-3);white-space:nowrap;}
+@media(max-width:900px){.page-wrapper{grid-template-columns:1fr;}.sidebar{display:none;}.content{padding:40px 24px 120px;}h1{font-size:38px;}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="courses.html" class="nav-back">← Prompt Engineering Mastery</a>
+    <div class="nav-divider"></div>
+    <span class="nav-label">Module 10</span>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">&#9728;</span></button>
+</nav>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+<div class="page-wrapper">
+<aside class="sidebar">
+  <div class="sidebar-course">Expert Track</div>
+  <div class="sidebar-course-name">Prompt Engineering Mastery</div>
+  <div class="sidebar-module"><a href="prompt-module-1.html" class="sidebar-module-link"><span class="sidebar-num">1</span>The Art and Science of Prompting</a></div>
+  <div class="sidebar-module"><a href="prompt-module-2.html" class="sidebar-module-link"><span class="sidebar-num">2</span>Instruction Clarity and Specificity</a></div>
+  <div class="sidebar-module"><a href="prompt-module-3.html" class="sidebar-module-link"><span class="sidebar-num">3</span>Role Assignment and Context Setting</a></div>
+  <div class="sidebar-module"><a href="prompt-module-4.html" class="sidebar-module-link"><span class="sidebar-num">4</span>Few-Shot and Chain-of-Thought</a></div>
+  <div class="sidebar-module"><a href="prompt-module-5.html" class="sidebar-module-link"><span class="sidebar-num">5</span>System Prompts and Meta-Instructions</a></div>
+  <div class="sidebar-module"><a href="prompt-module-6.html" class="sidebar-module-link"><span class="sidebar-num">6</span>Advanced Reasoning Techniques</a></div>
+  <div class="sidebar-module"><a href="prompt-module-7.html" class="sidebar-module-link"><span class="sidebar-num">7</span>Prompt Chaining and Decomposition</a></div>
+  <div class="sidebar-module"><a href="prompt-module-8.html" class="sidebar-module-link"><span class="sidebar-num">8</span>Prompting for Code and Technical Tasks</a></div>
+  <div class="sidebar-module"><a href="prompt-module-9.html" class="sidebar-module-link"><span class="sidebar-num">9</span>Adversarial Prompting and Red-Teaming</a></div>
+  <div class="sidebar-module"><a href="prompt-module-10.html" class="sidebar-module-link active"><span class="sidebar-num">10</span>Building Prompt Libraries</a></div>
+  <div class="sidebar-module"><a href="quiz-prompt.html" class="sidebar-module-link" style="color:var(--accent);margin-top:4px;"><span class="sidebar-num" style="background:var(--accent-dim);color:var(--accent);">&#10022;</span>Final Assessment</a></div>
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-progress-label"><span>Course progress</span><span style="color:var(--accent);">10 / 10</span></div>
+  <div class="sidebar-progress-track"><div class="sidebar-progress-fill" style="width:100%;"></div></div>
+</aside>
+<main>
+<div class="content">
+  <div class="module-eyebrow"><span class="module-tag">Module 10 · Expert Track</span><span class="module-meta">15 min read · Prompt Engineering Mastery</span></div>
+  <h1>Building Prompt Libraries</h1>
+  <p class="intro-text">Individual prompts are tactics; prompt libraries are strategy. As AI becomes embedded in how organizations work, the teams that build and maintain high-quality prompt libraries will compound their advantage over those who reinvent the wheel with every new use case. This final module covers the full lifecycle of prompts as managed, versioned, evaluated, and shared assets.</p>
+
+  <h2>Prompts Are Assets, Not Throwaway Text</h2>
+  <p>The shift from ad hoc prompting to prompt library management begins with a change in how you think about prompts. A prompt that reliably extracts structured data from messy contracts, consistently generates on-brand marketing copy, or dependably triages customer requests is a valuable organizational asset — comparable to a well-tested code module or a proven research framework.</p>
+  <p>Assets need to be managed. They need documentation so others can use them correctly. They need versioning so changes are tracked and regressions are detectable. They need ownership so someone is accountable for their quality. They need evaluation criteria so "better" is defined rather than subjective. None of this happens automatically — it requires deliberate investment in treating prompts as first-class artifacts.</p>
+  <p>The return on that investment is significant. Teams with well-maintained prompt libraries avoid redundant development, accumulate institutional knowledge about what works, maintain quality over time as models and requirements evolve, and can onboard new team members far more quickly than teams where prompt knowledge lives in individuals' heads.</p>
+
+  <h2>Version Control for Prompts</h2>
+  <p>Any prompt used in a production context should be under version control. Git is the natural choice for text-based prompt files, and the discipline of committing changes with meaningful messages ("improve specificity of output format requirements" is more useful than "update prompt") pays dividends when you need to understand why performance changed.</p>
+  <p>A minimal prompt file structure for version control looks like this:</p>
+
+  <div class="code-block"># prompts/contract_extractor/v2.1.0.yaml
+
+metadata:
+  name: "Contract Key Terms Extractor"
+  version: "2.1.0"
+  created: "2024-03-15"
+  last_modified: "2024-09-20"
+  owner: "legal-ai-team"
+  model: "claude-3-5-sonnet"
+  use_case: "Extract key commercial terms from contracts"
+  status: "production"  # draft | staging | production | deprecated
+
+changelog:
+  - version: "2.1.0"
+    date: "2024-09-20"
+    change: "Added extraction of limitation of liability clauses"
+  - version: "2.0.0"
+    date: "2024-06-01"
+    change: "Restructured output schema, added confidence scores"
+
+system_prompt: |
+  You are a legal analyst specializing in commercial contract
+  review. Extract the specified terms precisely and conservatively.
+  [... full prompt text ...]
+
+output_schema:
+  type: object
+  properties:
+    governing_law: {type: string, nullable: true}
+    payment_terms: {type: string, nullable: true}
+    ...
+
+golden_test_set: "tests/contract_extractor_golden.json"
+performance_baseline:
+  accuracy: 0.94
+  precision: 0.96
+  recall: 0.91</div>
+
+  <div class="callout">
+    <div class="callout-label">Versioning Strategy</div>
+    <p>Use semantic versioning: major versions for changes that break output schema or significantly alter behavior, minor versions for improvements within the same behavioral contract, patch versions for minor wording adjustments. This makes it clear to downstream consumers what level of change to expect when a prompt version updates.</p>
+  </div>
+
+  <h2>Templates and Variables</h2>
+  <p>Most prompts in a library are not used verbatim — they are templates instantiated with variable values at runtime. Designing prompts as explicit templates from the start, rather than retrofitting variables later, produces cleaner, more maintainable prompt code.</p>
+  <p>A good template separates the stable structural elements of a prompt (which change rarely and require careful revision) from the variable elements (which change with every call). Use a consistent variable syntax across your library:</p>
+
+  <div class="code-block"># Template example using double-brace syntax
+
+You are analyzing a {{document_type}} for {{client_name}}.
+The document was created on {{document_date}}.
+
+Your task: {{task_description}}
+
+Output format: {{output_format}}
+
+Constraints:
+- Focus exclusively on {{focus_area}}
+- Ignore {{exclusion_criteria}}
+- Use {{tone}} throughout
+
+DOCUMENT:
+{{document_content}}</div>
+
+  <p>Document each variable's expected type, whether it is required or optional, default values for optional variables, and example values. This documentation is what makes the template usable by someone who did not write it.</p>
+
+  <h2>Evaluation Frameworks</h2>
+  <p>A prompt without an evaluation framework is an artifact without a definition of quality. Before any prompt enters your library, you should be able to answer: what does "working correctly" mean for this prompt, and how do I measure it?</p>
+  <p>Build your evaluation framework around the dimensions that matter for each specific prompt. Different prompts require different evaluation criteria:</p>
+
+  <div class="principle-list">
+    <div class="principle">
+      <div class="principle-title">Extraction Accuracy</div>
+      <div class="principle-desc">For prompts that extract structured information: compare extracted values against ground truth labels. Measure precision (how often extracted values are correct) and recall (what fraction of true values are extracted). Track F1 score across the test set.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Classification Consistency</div>
+      <div class="principle-desc">For prompts that categorize inputs: measure agreement on identical or semantically equivalent inputs across multiple runs. High-quality classification prompts should have &gt;95% consistency on clear cases and defined handling for ambiguous ones.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Generation Quality</div>
+      <div class="principle-desc">For prompts that generate text: use rubric-based LLM-as-judge scoring (accuracy, relevance, tone, format compliance) averaged across a diverse test set. Establish baseline scores before the prompt goes live to detect regression.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Latency and Cost</div>
+      <div class="principle-desc">Track average token count (input + output) and response latency per call. Model improvements and prompt changes both affect these. Cost and latency regressions should trigger the same review process as quality regressions.</div>
+    </div>
+  </div>
+
+  <h2>A/B Testing Prompts</h2>
+  <p>When you have two candidate versions of a prompt and both seem promising, A/B testing provides an empirical basis for choosing. Route a fraction of real traffic to the candidate version, measure the evaluation metrics for both versions under identical conditions, and promote the winner when statistical significance is reached.</p>
+  <p>The key discipline in prompt A/B testing is changing one thing at a time. If Version B has a different persona, different format instructions, and different examples compared to Version A, you cannot know which change drove the difference in outcomes. Controlled experimentation requires isolation.</p>
+
+  <div class="warn">
+    <div class="warn-label">Common A/B Testing Mistakes</div>
+    <p>Running too short: most prompt changes have small effect sizes and require hundreds to thousands of samples for statistical significance. Measuring the wrong metric: optimizing for model confidence scores when the business cares about user satisfaction. Not stratifying: if different user segments respond differently to the prompt variants, aggregate results can obscure important subgroup effects.</p>
+  </div>
+
+  <h2>Building Team Prompt Libraries</h2>
+  <p>Individual prompt libraries scale to teams through governance, discoverability, and contribution processes. The minimal viable team library has four components:</p>
+  <ul>
+    <li><strong>A registry:</strong> A searchable catalog of all approved prompts with metadata (use case, owner, version, status, evaluation results). Even a shared spreadsheet is better than no registry — but a proper tool with search, tagging, and status tracking pays off quickly.</li>
+    <li><strong>A review process:</strong> Before a prompt is promoted to "production" status in the registry, it should pass a defined review: evaluation metrics meet thresholds, test coverage is adequate, documentation is complete, and at least one other team member has reviewed it.</li>
+    <li><strong>An update protocol:</strong> Who can modify production prompts? What triggers a review? How are downstream consumers notified of breaking changes? Defining this prevents the chaos of concurrent uncoordinated edits and silent breakages.</li>
+    <li><strong>A deprecation policy:</strong> Prompts that are no longer used should be explicitly deprecated and eventually archived, not silently abandoned. Deprecated prompts still carry institutional knowledge worth preserving in the changelog.</li>
+  </ul>
+
+  <h2>The Future of Prompting as AI Improves</h2>
+  <p>A reasonable question to ask at the end of a course on prompt engineering is: how much of this will still matter in three years? The honest answer is: the specifics will evolve substantially, but the underlying discipline will not disappear — it will shift.</p>
+  <p>As models improve, many current prompting techniques become less necessary. The elaborate scaffolding required to elicit reliable chain-of-thought reasoning from earlier models is largely unnecessary with frontier models. The hedging and repetition once required to get consistent output formats has been dramatically reduced by instruction-following improvements. This trend will continue.</p>
+  <p>What will not diminish is the value of clear thinking about what you want from an AI system. The models that do more with less instruction will also be applied to harder problems. The organizational knowledge about what outputs matter, how to evaluate them, how to catch failures before they reach users — that becomes more valuable, not less, as the underlying capability increases.</p>
+  <p>Prompt libraries, in their mature form, are really knowledge libraries: accumulated organizational understanding of how to work effectively with AI, encoded in tested, versioned artifacts. That kind of institutional knowledge compounds regardless of model improvements, because it captures what your organization needs — not just what the model can do.</p>
+
+  <div class="good">
+    <div class="good-label">Where to Go From Here</div>
+    <p>The most valuable next step after completing this course is to identify one high-value prompt you currently use informally and treat it as a library asset: write a proper template with documented variables, create a five-example golden test set, define evaluation criteria, and put it in version control. The discipline of doing this once makes the second and third time significantly faster, and the compounding begins.</p>
+  </div>
+
+  <div class="cta-box">
+    <h3>Ready to Prove Your Expertise?</h3>
+    <p>You have completed all ten modules of Prompt Engineering Mastery. Put your knowledge to the test with the final assessment — 25 questions drawn from a pool of 50, covering every technique and concept from across the course. Pass to earn your certificate.</p>
+    <a href="quiz-prompt.html" class="cta-btn">Take the Final Assessment &rarr;</a>
+  </div>
+</div>
+</main>
+</div>
+<div class="sticky-bar">
+  <div class="sticky-bar-reading" id="sticky-reading">Read to the end to unlock the assessment</div>
+  <div class="sticky-bar-track"><div class="sticky-bar-fill" id="sticky-fill"></div></div>
+  <div class="sticky-bar-label" id="sticky-label">0%</div>
+  <button class="sticky-bar-btn" id="sticky-btn" onclick="completeAndNext()">Take Final Assessment &rarr;</button>
+</div>
+<script type="module">
+import{initializeApp}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import{getAuth,onAuthStateChanged}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import{getFirestore,doc,setDoc,arrayUnion}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+const app=initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+const auth=getAuth(app);const db=getFirestore(app);let currentUser=null;
+onAuthStateChanged(auth,u=>{currentUser=u;});
+window.toggleTheme=function(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='&#9790;'):(h.setAttribute('data-theme','dark'),i.textContent='&#9728;');};
+window.addEventListener('scroll',()=>{const d=document.documentElement,s=d.scrollTop||document.body.scrollTop,t=d.scrollHeight-d.clientHeight;document.getElementById('progress').style.width=(s/t*100)+'%';});
+let unlocked=false;
+function updateScroll(){const pct=Math.min(100,Math.round(((window.scrollY+window.innerHeight)/document.documentElement.scrollHeight)*100));const fill=document.getElementById('sticky-fill'),label=document.getElementById('sticky-label'),btn=document.getElementById('sticky-btn'),reading=document.getElementById('sticky-reading');if(fill)fill.style.width=pct+'%';if(label)label.textContent=pct+'%';if(pct>=95&&!unlocked){unlocked=true;if(btn)btn.style.display='block';if(reading)reading.style.display='none';if(fill)fill.style.background='#22c55e';if(label)label.style.color='#22c55e';}}
+window.addEventListener('scroll',updateScroll);updateScroll();
+window.completeAndNext=async function(){if(currentUser){try{await setDoc(doc(db,'users',currentUser.uid),{promptModules:arrayUnion('m10')},{merge:true});}catch(e){}}window.location.href='quiz-prompt.html';};
+</script>
+</body>
+</html>

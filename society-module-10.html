@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 10: An Equitable AI Future — AI and Society — Meridian Institute of AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#7C3AED;--accent-dim:rgba(124,58,237,0.1);--nav-bg:rgba(8,8,8,0.9);--callout-bg:rgba(124,58,237,0.07);--callout-border:rgba(124,58,237,0.25);--good-bg:rgba(34,197,94,0.07);--good-border:rgba(34,197,94,0.2);--warn-bg:rgba(251,146,60,0.07);--warn-border:rgba(251,146,60,0.2);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#6D28D9;--accent-dim:rgba(109,40,217,0.08);--nav-bg:rgba(250,250,248,0.9);--callout-bg:rgba(109,40,217,0.05);--callout-border:rgba(109,40,217,0.2);--good-bg:rgba(22,163,74,0.06);--good-border:rgba(22,163,74,0.2);--warn-bg:rgba(234,88,12,0.05);--warn-border:rgba(234,88,12,0.2);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}html{scroll-behavior:smooth;}body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.7;overflow-x:hidden;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}.nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}.nav-back{font-size:13px;color:var(--text-2);text-decoration:none;}.nav-label{font-size:13px;color:var(--text-3);}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;}
+  .progress-bar{position:fixed;top:60px;left:0;right:0;z-index:99;height:2px;background:var(--border);}.progress-fill{height:100%;background:var(--accent);width:0%;}
+  .page-wrapper{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:100vh;padding-top:62px;}
+  .sidebar{position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto;border-right:1px solid var(--border);padding:32px 24px;background:var(--bg-2);}
+  .sidebar-course{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;}.sidebar-course-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+  .sidebar-module{margin-bottom:4px;}.sidebar-module-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:13px;color:var(--text-2);text-decoration:none;transition:all 0.2s;line-height:1.4;}
+  .sidebar-module-link:hover{background:var(--bg-3);color:var(--text);}.sidebar-module-link.active{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-num{font-size:11px;font-weight:500;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--bg-4);color:var(--text-3);}
+  .sidebar-module-link.active .sidebar-num{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-divider{height:1px;background:var(--border);margin:20px 0;}
+  .sidebar-progress-label{font-size:12px;color:var(--text-3);margin-bottom:8px;display:flex;justify-content:space-between;}
+  .sidebar-progress-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}.sidebar-progress-fill{height:100%;background:var(--accent);border-radius:2px;}
+  main{display:block;min-width:0;}.content{max-width:760px;width:100%;padding:60px 64px 140px;margin:0 auto;}
+  .module-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+  .module-tag{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(124,58,237,0.2);padding:4px 12px;border-radius:100px;}
+  .module-meta{font-size:12px;color:var(--text-3);}
+  h1{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1.05;letter-spacing:-0.02em;margin-bottom:24px;}
+  .intro-text{font-size:19px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+  h2{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:400;color:var(--text);margin:52px 0 18px;line-height:1.2;}
+  p{font-size:16px;font-weight:300;color:var(--text-2);line-height:1.8;margin-bottom:20px;}strong{font-weight:500;color:var(--text);}
+  ul,ol{margin:0 0 20px 22px;color:var(--text-2);}li{font-size:16px;font-weight:300;line-height:1.8;margin-bottom:8px;}
+  .callout{background:var(--callout-bg);border:1px solid var(--callout-border);border-radius:12px;padding:24px 28px;margin:32px 0;}.callout-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}.callout p{margin:0;font-size:15px;color:var(--text-2);}.callout p+p{margin-top:12px;}
+  .good{background:var(--good-bg);border:1px solid var(--good-border);border-radius:12px;padding:24px 28px;margin:24px 0;}.good-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#22c55e;margin-bottom:10px;}.good p{margin:0;font-size:15px;color:var(--text-2);}
+  .cta-box{background:var(--accent-dim);border:1px solid rgba(124,58,237,0.2);border-radius:16px;padding:40px;text-align:center;margin:48px 0;}
+  .cta-box h3{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:400;color:var(--text);margin-bottom:12px;}
+  .cta-box p{color:var(--text-2);font-size:16px;margin:0 0 24px;}
+  .cta-btn{display:inline-block;padding:12px 28px;background:var(--accent);color:#fff;border-radius:8px;text-decoration:none;font-size:14px;font-weight:500;transition:opacity 0.2s;}.cta-btn:hover{opacity:0.88;}
+  .sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:var(--bg-2);border-top:1px solid var(--border-2);padding:14px 5%;display:flex;align-items:center;justify-content:space-between;gap:16px;backdrop-filter:blur(12px);}
+  .sticky-bar-track{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}.sticky-bar-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.2s;width:0%;}
+  .sticky-bar-label{font-size:12px;color:var(--text-3);white-space:nowrap;}
+  .sticky-bar-btn{padding:10px 20px;border-radius:8px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;background:var(--accent);color:#fff;border:none;cursor:pointer;white-space:nowrap;transition:opacity 0.2s;display:none;}.sticky-bar-btn:hover{opacity:0.88;}
+  .sticky-bar-reading{font-size:12px;color:var(--text-3);white-space:nowrap;}
+  @media(max-width:900px){.page-wrapper{grid-template-columns:1fr;}.sidebar{display:none;}.content{padding:40px 24px 120px;}h1{font-size:38px;}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="courses.html" class="nav-back">← AI and Society</a>
+    <div class="nav-divider"></div>
+    <span class="nav-label">Module 10</span>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">☀</span></button>
+</nav>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+<div class="page-wrapper">
+<aside class="sidebar">
+  <div class="sidebar-course">Course</div>
+  <div class="sidebar-course-name">AI and Society</div>
+  <div class="sidebar-module"><a href="society-module-1.html" class="sidebar-module-link"><span class="sidebar-num">1</span>The Social Impact of AI</a></div>
+  <div class="sidebar-module"><a href="society-module-2.html" class="sidebar-module-link"><span class="sidebar-num">2</span>Labor Markets and Automation</a></div>
+  <div class="sidebar-module"><a href="society-module-3.html" class="sidebar-module-link"><span class="sidebar-num">3</span>AI and Economic Inequality</a></div>
+  <div class="sidebar-module"><a href="society-module-4.html" class="sidebar-module-link"><span class="sidebar-num">4</span>Algorithmic Bias and Justice</a></div>
+  <div class="sidebar-module"><a href="society-module-5.html" class="sidebar-module-link"><span class="sidebar-num">5</span>AI and Human Relationships</a></div>
+  <div class="sidebar-module"><a href="society-module-6.html" class="sidebar-module-link"><span class="sidebar-num">6</span>AI in Media Ecosystems</a></div>
+  <div class="sidebar-module"><a href="society-module-7.html" class="sidebar-module-link"><span class="sidebar-num">7</span>The Environmental Cost of AI</a></div>
+  <div class="sidebar-module"><a href="society-module-8.html" class="sidebar-module-link"><span class="sidebar-num">8</span>Global Perspectives on AI</a></div>
+  <div class="sidebar-module"><a href="society-module-9.html" class="sidebar-module-link"><span class="sidebar-num">9</span>AI Ethics and Human Values</a></div>
+  <div class="sidebar-module"><a href="society-module-10.html" class="sidebar-module-link active"><span class="sidebar-num">10</span>An Equitable AI Future</a></div>
+  <div class="sidebar-module"><a href="quiz-society.html" class="sidebar-module-link" style="color:var(--accent);margin-top:4px;"><span class="sidebar-num" style="background:var(--accent-dim);color:var(--accent);">✦</span>Final Assessment</a></div>
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-progress-label"><span>Course progress</span><span style="color:var(--accent);">10 / 10</span></div>
+  <div class="sidebar-progress-track"><div class="sidebar-progress-fill" style="width:100%;"></div></div>
+</aside>
+<main>
+<div class="content">
+  <div class="module-eyebrow"><span class="module-tag">Module 10</span><span class="module-meta">13 min read · AI and Society</span></div>
+  <h1>Building an Equitable AI Future</h1>
+  <p class="intro-text">The future of AI is not determined. The trajectory of any powerful technology is shaped by the choices made about how to develop, deploy, regulate, and resist it — choices made by researchers, companies, governments, civil society, and ordinary people. This final module is about what it would mean to build an AI future that is genuinely equitable, and what role different actors must play in bringing it about.</p>
+
+  <h2>What equity means for AI</h2>
+  <p>Equity in the context of AI means more than equal access to AI tools, though that matters. It means that the benefits of AI — in healthcare, education, economic opportunity, and quality of life — are broadly shared rather than concentrated in populations already advantaged. It means that the harms of AI — surveillance, displacement, bias in high-stakes decisions — are not disproportionately borne by communities already marginalized. And it means that the people most affected by AI have meaningful power to shape it.</p>
+  <p>This is a substantially more demanding standard than the status quo. Current AI development concentrates benefits among technology company shareholders and high-skill workers. It concentrates harms among low-income workers facing automation, communities subject to algorithmic management, and populations whose data is extracted without compensation. Achieving equity requires active intervention — not just avoiding discriminatory systems but affirmatively building systems that close rather than widen existing gaps.</p>
+
+  <div class="callout">
+    <div class="callout-label">The difference between equality and equity</div>
+    <p>Equality treats everyone the same. Equity accounts for different starting points and differential needs. An AI system that delivers the same quality of healthcare predictions to all demographic groups is equal. An AI system specifically designed to close gaps in health outcomes for historically underserved populations — by prioritizing them in clinical trial enrollment, flagging conditions that disproportionately affect them, or identifying barriers to care — is equitable. The distinction matters enormously for how we design and evaluate AI systems intended for social good.</p>
+  </div>
+
+  <h2>What governments must do</h2>
+  <p>Markets alone will not produce equitable AI. The incentive structures of private technology development point toward maximizing returns to shareholders, which rarely aligns with maximizing benefit to the most vulnerable. Government intervention is required:</p>
+  <ul>
+    <li><strong>Regulation with teeth:</strong> Risk-tiered AI regulation that requires human rights impact assessments, prohibits high-risk applications in sensitive domains without demonstrated safety, and carries meaningful penalties for violations</li>
+    <li><strong>Public investment in AI for public good:</strong> Government-funded research on AI applications in healthcare, education, and public services where private market incentives are insufficient — not just research on AI capabilities but on socially beneficial applications</li>
+    <li><strong>Antitrust and competition:</strong> Preventing monopolistic concentration of AI infrastructure (compute, data, talent) that would lock in current power distributions and foreclose alternative development models</li>
+    <li><strong>Digital infrastructure investment:</strong> Broadband access, digital literacy programs, and affordable devices are prerequisite conditions for equitable AI benefits — communities without them are excluded from the positive side of the ledger</li>
+  </ul>
+
+  <h2>What companies must do</h2>
+  <p>Private AI companies have enormous power over how AI develops, and have responsibilities commensurate with that power. Beyond legal compliance, equitable AI requires companies to:</p>
+  <ul>
+    <li>Measure and publicly report disparate impacts of deployed systems across demographic groups</li>
+    <li>Give affected communities meaningful voice — not just user research but actual decision-making authority — over systems that affect them significantly</li>
+    <li>Resist applications that are profitable but harmful, even when legal</li>
+    <li>Support rather than undermine regulation in the public interest</li>
+    <li>Make equity a real priority in compensation and promotion structures, not just in mission statements</li>
+  </ul>
+
+  <h2>What civil society and communities must do</h2>
+  <p>Governments and companies will not consistently do the right thing without external pressure. Civil society organizations — advocacy groups, academic researchers, labor unions, community organizations — play essential roles in identifying harms, demanding accountability, and proposing alternatives. So do individual citizens:</p>
+  <ul>
+    <li>Informed public engagement in AI policy debates — through public comment processes, electoral pressure, and civil society participation</li>
+    <li>Organizing by workers in AI-affected industries to ensure transitions are managed with adequate support, retraining, and voice</li>
+    <li>Community advocacy by populations subject to algorithmic systems — welfare recipients, criminal justice system-involved people, tenants, workers in surveilled workplaces</li>
+    <li>Journalism and academic research that exposes harmful AI applications before they entrench</li>
+  </ul>
+
+  <div class="good">
+    <div class="good-label">Reasons for cautious optimism</div>
+    <p>The trajectory of AI is not fixed. Facial recognition has been banned or severely restricted in many jurisdictions following campaigns by civil rights organizations. Predictive policing software has been dropped by several major cities after sustained community pressure. The EU AI Act represents a serious attempt to impose rights-based constraints on AI deployment. Workers in AI data labeling have organized to demand better pay and conditions. These victories are partial and provisional — but they demonstrate that collective action shapes technological outcomes. The future of AI is contested, not predetermined.</p>
+  </div>
+
+  <h2>Your role in shaping what comes next</h2>
+  <p>This course has covered AI's social impact across nine dimensions — labor, inequality, bias, relationships, media, environment, global perspectives, and ethics. The thread connecting them all is that technology is a human product, shaped by human choices, accountable to human values. The institutions, regulations, and norms that govern AI do not exist independently of the people who work within them, advocate for change, and hold them accountable.</p>
+  <p>Whatever role you play — as a professional who works with AI, a citizen subject to AI systems, a student beginning a career, or a person simply trying to understand the world — understanding AI's social dimensions makes you a more informed participant in the decisions that will shape it. That is what this course has aimed to build.</p>
+
+  <div class="cta-box">
+    <h3>You've completed the course</h3>
+    <p>Ten modules on AI's profound effects on society, work, justice, and human values. Take the final assessment to earn your certificate.</p>
+    <a href="quiz-society.html" class="cta-btn">Take the Final Assessment →</a>
+  </div>
+</div>
+</main>
+</div>
+<div class="sticky-bar">
+  <div class="sticky-bar-reading" id="sticky-reading">Read to the end to unlock the assessment</div>
+  <div class="sticky-bar-track"><div class="sticky-bar-fill" id="sticky-fill"></div></div>
+  <div class="sticky-bar-label" id="sticky-label">0%</div>
+  <button class="sticky-bar-btn" id="sticky-btn" onclick="completeAndNext()">Take Final Assessment →</button>
+</div>
+<script type="module">
+  import{initializeApp}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import{getAuth,onAuthStateChanged}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import{getFirestore,doc,setDoc,arrayUnion}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  const app=initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+  const auth=getAuth(app);const db=getFirestore(app);let currentUser=null;
+  onAuthStateChanged(auth,u=>{currentUser=u;});
+  window.toggleTheme=function(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='☾'):(h.setAttribute('data-theme','dark'),i.textContent='☀');};
+  window.addEventListener('scroll',()=>{const d=document.documentElement,s=d.scrollTop||document.body.scrollTop,t=d.scrollHeight-d.clientHeight;document.getElementById('progress').style.width=(s/t*100)+'%';});
+  let unlocked=false;
+  function updateScroll(){const pct=Math.min(100,Math.round(((window.scrollY+window.innerHeight)/document.documentElement.scrollHeight)*100));const fill=document.getElementById('sticky-fill'),label=document.getElementById('sticky-label'),btn=document.getElementById('sticky-btn'),reading=document.getElementById('sticky-reading');if(fill)fill.style.width=pct+'%';if(label)label.textContent=pct+'%';if(pct>=95&&!unlocked){unlocked=true;if(btn)btn.style.display='block';if(reading)reading.style.display='none';if(fill)fill.style.background='#22c55e';if(label)label.style.color='#22c55e';}}
+  window.addEventListener('scroll',updateScroll);updateScroll();
+  window.completeAndNext=async function(){if(currentUser){try{await setDoc(doc(db,'users',currentUser.uid),{societyModules:arrayUnion('m10')},{merge:true});}catch(e){}}window.location.href='quiz-society.html';};
+</script>
+</body>
+</html>

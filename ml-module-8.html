@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 8: Model Evaluation — Machine Learning Explained — Meridian Institute of AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#065F46;--accent-dim:rgba(6,95,70,0.1);--accent-dim2:rgba(6,95,70,0.05);--nav-bg:rgba(8,8,8,0.9);--callout-bg:rgba(6,95,70,0.07);--callout-border:rgba(6,95,70,0.25);--good-bg:rgba(34,197,94,0.07);--good-border:rgba(34,197,94,0.2);--warn-bg:rgba(251,146,60,0.07);--warn-border:rgba(251,146,60,0.2);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#064E3B;--accent-dim:rgba(6,78,59,0.08);--accent-dim2:rgba(6,78,59,0.04);--nav-bg:rgba(250,250,248,0.9);--callout-bg:rgba(6,78,59,0.05);--callout-border:rgba(6,78,59,0.2);--good-bg:rgba(22,163,74,0.06);--good-border:rgba(22,163,74,0.2);--warn-bg:rgba(234,88,12,0.05);--warn-border:rgba(234,88,12,0.2);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;overflow-x:hidden;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.7;overflow-x:hidden;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}
+  .nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}
+  .nav-back{font-size:13px;color:var(--text-2);text-decoration:none;transition:color 0.2s;}
+  .nav-back:hover{color:var(--text);}
+  .nav-label{font-size:13px;color:var(--text-3);}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;transition:all 0.2s;}
+  .theme-toggle:hover{background:var(--bg-3);color:var(--text);}
+  .progress-bar{position:fixed;top:60px;left:0;right:0;z-index:99;height:2px;background:var(--border);}
+  .progress-fill{height:100%;background:var(--accent);width:0%;transition:width 0.1s;}
+  .page-wrapper{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:100vh;padding-top:62px;overflow:hidden;}
+  .sidebar{position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto;border-right:1px solid var(--border);padding:32px 24px;background:var(--bg-2);}
+  .sidebar-course{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;}
+  .sidebar-course-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+  .sidebar-module{margin-bottom:4px;}
+  .sidebar-module-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:13px;color:var(--text-2);text-decoration:none;transition:all 0.2s;line-height:1.4;}
+  .sidebar-module-link:hover{background:var(--bg-3);color:var(--text);}
+  .sidebar-module-link.active{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-num{font-size:11px;font-weight:500;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--bg-4);color:var(--text-3);}
+  .sidebar-module-link.active .sidebar-num{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-divider{height:1px;background:var(--border);margin:20px 0;}
+  .sidebar-progress-label{font-size:12px;color:var(--text-3);margin-bottom:8px;display:flex;justify-content:space-between;}
+  .sidebar-progress-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sidebar-progress-fill{height:100%;width:80%;background:var(--accent);border-radius:2px;}
+  main{display:block;min-width:0;overflow:hidden;}
+  .content{max-width:760px;width:100%;padding:60px 64px 140px;margin:0 auto;}
+  .module-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+  .module-tag{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(6,95,70,0.2);padding:4px 12px;border-radius:100px;}
+  .module-meta{font-size:12px;color:var(--text-3);}
+  h1{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1.05;letter-spacing:-0.02em;color:var(--text);margin-bottom:24px;}
+  .intro-text{font-size:19px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+  h2{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:400;color:var(--text);margin:52px 0 18px;line-height:1.2;}
+  h3{font-size:16px;font-weight:500;color:var(--text);margin:32px 0 12px;}
+  p{font-size:16px;font-weight:300;color:var(--text-2);line-height:1.8;margin-bottom:20px;}
+  strong{font-weight:500;color:var(--text);}
+  em{font-style:italic;}
+  ul,ol{margin:0 0 20px 22px;color:var(--text-2);}
+  li{font-size:16px;font-weight:300;line-height:1.8;margin-bottom:8px;}
+  .callout{background:var(--callout-bg);border:1px solid var(--callout-border);border-radius:12px;padding:24px 28px;margin:32px 0;}
+  .callout-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+  .callout p{margin:0;font-size:15px;color:var(--text-2);}
+  .callout p+p{margin-top:12px;}
+  .good{background:var(--good-bg);border:1px solid var(--good-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .good-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#22c55e;margin-bottom:10px;}
+  .good p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn{background:var(--warn-bg);border:1px solid var(--warn-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .warn-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#fb923c;margin-bottom:10px;}
+  .warn p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn p+p{margin-top:12px;}
+  .analogy{background:var(--bg-2);border:1px solid var(--border);border-radius:12px;padding:28px;margin:28px 0;}
+  .analogy-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-3);margin-bottom:12px;}
+  .analogy p{margin:0;font-size:15px;color:var(--text-2);}
+  .analogy p+p{margin-top:12px;}
+  .principle-list{display:flex;flex-direction:column;gap:12px;margin:24px 0;}
+  .principle{background:var(--bg-2);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:0 12px 12px 0;padding:20px 24px;}
+  .principle-title{font-size:15px;font-weight:500;color:var(--text);margin-bottom:6px;}
+  .principle-desc{font-size:14px;color:var(--text-2);line-height:1.65;margin:0;}
+  .sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:var(--bg-2);border-top:1px solid var(--border-2);padding:14px 5%;display:flex;align-items:center;justify-content:space-between;gap:16px;backdrop-filter:blur(12px);}
+  .sticky-bar-track{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sticky-bar-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.2s;width:0%;}
+  .sticky-bar-label{font-size:12px;color:var(--text-3);white-space:nowrap;min-width:60px;text-align:right;}
+  .sticky-bar-btn{padding:10px 20px;border-radius:8px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;background:var(--accent);color:#fff;border:none;cursor:pointer;white-space:nowrap;transition:opacity 0.2s;display:none;}
+  .sticky-bar-btn:hover{opacity:0.88;}
+  .sticky-bar-reading{font-size:12px;color:var(--text-3);white-space:nowrap;}
+  @media(max-width:900px){.page-wrapper{grid-template-columns:1fr;}.sidebar{display:none;}.content{padding:40px 24px 120px;}h1{font-size:38px;}}
+  @media(max-width:600px){.content{padding:28px 16px 120px;}h1{font-size:30px;}h2{font-size:24px;}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="courses.html" class="nav-back">← Machine Learning Explained</a>
+    <div class="nav-divider"></div>
+    <span class="nav-label">Module 8</span>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">☀</span></button>
+</nav>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+
+<div class="page-wrapper">
+<aside class="sidebar">
+  <div class="sidebar-course">Expert Track</div>
+  <div class="sidebar-course-name">Machine Learning Explained</div>
+  <div class="sidebar-module"><a href="ml-module-1.html" class="sidebar-module-link"><span class="sidebar-num">1</span>How Machines Learn</a></div>
+  <div class="sidebar-module"><a href="ml-module-2.html" class="sidebar-module-link"><span class="sidebar-num">2</span>Data: The ML Foundation</a></div>
+  <div class="sidebar-module"><a href="ml-module-3.html" class="sidebar-module-link"><span class="sidebar-num">3</span>Supervised Learning Demystified</a></div>
+  <div class="sidebar-module"><a href="ml-module-4.html" class="sidebar-module-link"><span class="sidebar-num">4</span>Unsupervised Learning</a></div>
+  <div class="sidebar-module"><a href="ml-module-5.html" class="sidebar-module-link"><span class="sidebar-num">5</span>Neural Networks and Deep Learning</a></div>
+  <div class="sidebar-module"><a href="ml-module-6.html" class="sidebar-module-link"><span class="sidebar-num">6</span>NLP and Transformers</a></div>
+  <div class="sidebar-module"><a href="ml-module-7.html" class="sidebar-module-link"><span class="sidebar-num">7</span>Computer Vision</a></div>
+  <div class="sidebar-module"><a href="ml-module-8.html" class="sidebar-module-link active"><span class="sidebar-num">8</span>Model Evaluation</a></div>
+  <div class="sidebar-module"><a href="ml-module-9.html" class="sidebar-module-link"><span class="sidebar-num">9</span>ML in Production</a></div>
+  <div class="sidebar-module"><a href="ml-module-10.html" class="sidebar-module-link"><span class="sidebar-num">10</span>Foundation Models and the Frontier</a></div>
+  <div class="sidebar-module"><a href="quiz-ml.html" class="sidebar-module-link" style="color:var(--accent);margin-top:4px;"><span class="sidebar-num" style="background:var(--accent-dim);color:var(--accent);">✦</span>Final Assessment</a></div>
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-progress-label"><span>Course progress</span><span style="color:var(--accent);">8 / 10</span></div>
+  <div class="sidebar-progress-track"><div class="sidebar-progress-fill"></div></div>
+</aside>
+
+<main>
+<div class="content">
+  <div class="module-eyebrow"><span class="module-tag">Module 8 · Expert Track</span><span class="module-meta">22 min read · Machine Learning Explained</span></div>
+  <h1>Model Evaluation</h1>
+
+  <p class="intro-text">A model that works in your notebook and fails in production is worse than no model at all — it generates false confidence. Evaluation is the discipline of measuring whether a model is actually solving your problem, which is surprisingly different from measuring whether it gets high scores on standard benchmarks. The metrics you choose encode your values and your business priorities. Choose wrong, and you'll optimize for the wrong thing with impressive numbers to show for it.</p>
+
+  <h2>Why accuracy is almost always the wrong metric</h2>
+  <p>Accuracy seems intuitive: what fraction of my predictions were correct? If your model is right 95% of the time, it must be good. This reasoning fails in nearly every real-world application that matters, due to a fundamental statistical reality: class imbalance.</p>
+  <p>Consider a fraud detection system. Credit card fraud affects roughly 1% of transactions. A model that predicts "not fraud" for every single transaction — a model that has learned absolutely nothing, that ignores all the features you carefully engineered — achieves 99% accuracy. It perfectly passes the accuracy test while being completely useless.</p>
+  <p>The same problem appears everywhere: cancer screening (most patients don't have cancer), network intrusion detection (most traffic is legitimate), structural defect detection (most parts are fine), rare disease diagnosis (most patients are healthy). In any domain where positive cases are rare, accuracy is actively misleading — it rewards models that learn to ignore the minority class.</p>
+
+  <div class="warn">
+    <div class="warn-label">The 99% accuracy fraud detector</div>
+    <p>A bank deploys a new ML fraud detection system. The vendor reports 99% accuracy. The compliance team is impressed. Six months later, fraud losses have doubled. Investigation reveals: the model flags almost nothing as fraud. It learned that "not fraud" is almost always right and never bothers to detect the rare cases. The metric they chose actively rewarded the wrong behavior. This scenario, or close variants of it, has actually happened at multiple financial institutions. Accuracy on imbalanced datasets is not just uninformative — it's dangerous.</p>
+  </div>
+
+  <h2>The confusion matrix: four outcomes that tell the real story</h2>
+  <p>Every binary classification prediction falls into one of four categories. The confusion matrix makes these explicit:</p>
+  <p><strong>True Positive (TP):</strong> The model predicted positive, and it was actually positive. The fraud detector flagged a transaction, and it really was fraud. Correct catch.</p>
+  <p><strong>True Negative (TN):</strong> The model predicted negative, and it was actually negative. The detector cleared a transaction, and it was legitimate. Correct clear.</p>
+  <p><strong>False Positive (FP):</strong> The model predicted positive, but it was actually negative. The detector flagged a legitimate transaction as fraud. Wrong alarm — the customer's card gets declined at a restaurant.</p>
+  <p><strong>False Negative (FN):</strong> The model predicted negative, but it was actually positive. The detector cleared a fraudulent transaction. The fraud goes through — money is lost.</p>
+  <p>Accuracy counts only the true positives and true negatives. But the costs of false positives and false negatives are usually different, often dramatically so. In cancer screening, a false negative (missed cancer) is catastrophically worse than a false positive (unnecessary follow-up biopsy). In spam filtering, a false positive (legitimate email sent to spam) might be worse than a false negative (spam gets through). The confusion matrix forces you to see all four outcomes clearly.</p>
+
+  <h2>Precision and recall: the fundamental tradeoff</h2>
+  <p><strong>Precision</strong> asks: of all the cases the model flagged as positive, what fraction actually were positive? A model with perfect precision never generates a false alarm. But a model can achieve perfect precision by being very conservative — only flagging the most egregiously obvious cases, missing many real positives.</p>
+  <p><strong>Recall</strong> (also called sensitivity) asks: of all the actual positive cases, what fraction did the model catch? A model with perfect recall never misses a positive case. But a model can achieve perfect recall by flagging everything as positive, generating endless false alarms.</p>
+  <p>These two metrics are in tension, and this tension is fundamental — it's not a flaw in your model, it's a structural feature of classification under uncertainty. Making your model more aggressive (flagging more things as positive) increases recall but decreases precision. Making it more conservative does the opposite. You cannot simultaneously maximize both.</p>
+
+  <div class="analogy">
+    <div class="analogy-label">The airport security analogy</div>
+    <p>Airport security faces the precision-recall tradeoff daily. High recall: search every single passenger exhaustively. You'll catch every threat (perfect recall). You'll also flag thousands of innocent people per day as suspicious (terrible precision). High precision: only search passengers who match an extremely specific profile. Almost everyone you pull aside will actually be a threat (great precision). But most actual threats won't match that narrow profile, so they walk through (poor recall). Every security checkpoint sets a threshold on this tradeoff based on the relative costs of missing a threat versus inconveniencing innocent passengers. ML classifiers face exactly the same choice.</p>
+  </div>
+
+  <h2>F1 score: one number that balances both</h2>
+  <p>If you need a single number that captures the balance between precision and recall, the F1 score provides it. It's the harmonic mean of precision and recall — a mean that penalizes extreme imbalance between the two. A model with 100% precision and 0% recall would average to 50% under regular arithmetic but gets an F1 of 0. A model with 90% precision and 90% recall gets an F1 of 90%.</p>
+  <p>The F1 score is much more useful than accuracy on imbalanced datasets, but it still embeds an implicit assumption: that precision and recall matter equally. In many real problems, they don't. In cancer screening, a false negative (missing cancer) is much worse than a false positive (unnecessary biopsy). The F-beta score generalizes F1 to weight precision and recall differently — you can explicitly encode "recall matters twice as much as precision" into your metric. Your choice of evaluation metric is a business decision, not a technical one.</p>
+
+  <h2>ROC curves and AUC: evaluating threshold-free performance</h2>
+  <p>Most classifiers don't produce a hard "yes/no" — they produce a probability score. "This transaction has a 73% probability of being fraud." You then set a <strong>threshold</strong>: flag everything above 50%? Above 70%? Above 90%? Changing the threshold changes the precision-recall tradeoff.</p>
+  <p>An ROC (Receiver Operating Characteristic) curve shows you all possible tradeoffs at once. On the x-axis: false positive rate (what fraction of legitimate cases get flagged). On the y-axis: true positive rate, i.e., recall (what fraction of actual fraud gets caught). Each point on the curve represents a different threshold setting. A perfect classifier's curve bends sharply to the upper-left corner — you can catch everything with no false alarms. A random classifier's curve is a diagonal line.</p>
+  <p>The AUC (Area Under the Curve) summarizes the ROC curve as a single number between 0 and 1. AUC of 1.0 is a perfect classifier. AUC of 0.5 is random. AUC of 0.85 means: pick a random fraud case and a random legitimate case; there's an 85% chance the model assigns a higher fraud score to the actual fraud. AUC is threshold-independent — it tells you about the classifier's overall discriminative ability, not its performance at any specific threshold setting.</p>
+
+  <h2>The bias-variance tradeoff: underfitting and overfitting</h2>
+  <p>Every ML model sits somewhere on a spectrum between two failure modes. Understanding this spectrum is essential for diagnosing what's wrong with a model and how to fix it.</p>
+  <p><strong>Underfitting</strong> (high bias): The model is too simple to capture the real patterns in the data. It performs poorly on both training data and new data. A linear model trying to fit a clearly curved relationship will underfit — it can't represent the curvature at all, so its predictions are systematically wrong regardless of which data you show it. The signal is there; the model is too rigid to find it.</p>
+  <p><strong>Overfitting</strong> (high variance): The model is too complex — it has memorized the training data, including its noise and quirks. It performs spectacularly on training data but poorly on new data. If you show it a training example it has seen, it's perfect. If you show it a slightly different example it hasn't seen, it may fail completely. The model has learned the exam questions, not the underlying concepts.</p>
+
+  <div class="analogy">
+    <div class="analogy-label">The cooking class analogy for bias-variance</div>
+    <p>Underfitting is a student who follows one rule for all cooking: "add salt." The rule is too simple. They under-season everything, over-season everything, and never adapt to the dish. High bias: wrong in a systematic, predictable direction. Overfitting is a student who memorized every recipe in the textbook word for word. Give them the exact recipe from class — perfect execution. Change one ingredient — complete confusion. They learned the specific instructions, not the underlying principles of flavor balance and technique. High variance: right on the familiar, wrong on the new.</p>
+  </div>
+
+  <h2>Cross-validation: the honest performance estimate</h2>
+  <p>The fundamental rule of evaluation: never measure performance on the data you trained on. A model measured on its own training data is like a student grading their own exam — you'll always get 100% regardless of actual understanding.</p>
+  <p>The simple solution is to hold out a test set — data the model never saw during training. But if you then make decisions based on test set performance (choosing between models, tuning parameters), you've implicitly trained on the test set too. You need a third set: train on the training set, tune on the validation set, and report final performance on the test set — once, never again.</p>
+  <p><strong>Cross-validation</strong> makes this more robust. Instead of a single train/validation split, you divide the data into k equally sized groups (folds). Train on k-1 folds, test on the remaining fold. Repeat k times, each time using a different fold as the test set. Average the k performance estimates. This gives you a stable estimate of how the model will perform on new data, using all available data for both training and testing. Five-fold and ten-fold cross-validation are standard in practice.</p>
+
+  <h2>Choosing the right metric for your actual business problem</h2>
+  <p>The most important evaluation decision is the choice of metric itself. This is a business decision that should be made before any model is built, by people who understand the consequences of different types of errors.</p>
+
+  <div class="principle-list">
+    <div class="principle">
+      <div class="principle-title">When false negatives are catastrophic: maximize recall</div>
+      <div class="principle-desc">Cancer screening, sepsis detection, structural safety inspection, bomb detection. Missing a positive case is so costly that you accept many false alarms to ensure you catch everything real. Recall should dominate your metric, even at the cost of precision.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">When false positives are costly: maximize precision</div>
+      <div class="principle-desc">Automated content removal, legal document review for privilege, automated loan denial. Wrongly flagging something causes real harm — accounts unfairly suspended, privileged documents inadvertently disclosed, creditworthy borrowers denied. Precision dominates.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">When both matter equally: use F1 or AUC</div>
+      <div class="principle-desc">Fraud detection with manageable response teams, quality control inspection, spam filtering with good false-positive rates. Neither error type is clearly more costly; you want balanced performance across both. F1 or AUC provides threshold-agnostic comparison.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">When the cost ratio is known: embed it explicitly</div>
+      <div class="principle-desc">If a false negative costs $10,000 and a false positive costs $100, you can express this as a cost matrix and choose the threshold that minimizes expected cost. This is the most principled approach when error costs are quantifiable.</div>
+    </div>
+  </div>
+
+  <div class="good">
+    <div class="good-label">The discipline of prospective metric selection</div>
+    <p>The single most important evaluation practice is deciding your success metric before you see any results. Researchers and practitioners who choose metrics after seeing model performance are unconsciously (or consciously) selecting metrics that make their model look good. This is a form of p-hacking applied to machine learning. Lock in your metric, justify it in terms of business consequences, then train and evaluate. The metric should not change based on what the model achieves.</p>
+  </div>
+
+</div>
+</main>
+</div>
+
+<div class="sticky-bar" id="sticky-bar">
+  <div class="sticky-bar-reading" id="sticky-reading">Read to the end to unlock the next module</div>
+  <div class="sticky-bar-track"><div class="sticky-bar-fill" id="sticky-fill"></div></div>
+  <div class="sticky-bar-label" id="sticky-label">0%</div>
+  <button class="sticky-bar-btn" id="sticky-btn" onclick="completeAndNext()">Module 9: ML in Production →</button>
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import { getFirestore, doc, setDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  const app=initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+  const auth=getAuth(app);const db=getFirestore(app);
+  let currentUser=null;
+  onAuthStateChanged(auth,u=>{currentUser=u;});
+  window.toggleTheme=function(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='☾'):(h.setAttribute('data-theme','dark'),i.textContent='☀');};
+  window.addEventListener('scroll',()=>{const d=document.documentElement,s=d.scrollTop||document.body.scrollTop,t=d.scrollHeight-d.clientHeight;document.getElementById('progress').style.width=(s/t*100)+'%';});
+  let unlocked=false;
+  function updateScrollProgress(){
+    const pct=Math.min(100,Math.round(((window.scrollY+window.innerHeight)/document.documentElement.scrollHeight)*100));
+    const fill=document.getElementById('sticky-fill'),label=document.getElementById('sticky-label'),btn=document.getElementById('sticky-btn'),reading=document.getElementById('sticky-reading');
+    if(fill)fill.style.width=pct+'%';if(label)label.textContent=pct+'%';
+    if(pct>=95&&!unlocked){unlocked=true;if(btn)btn.style.display='block';if(reading)reading.style.display='none';if(fill)fill.style.background='#22c55e';if(label)label.style.color='#22c55e';}
+  }
+  window.addEventListener('scroll',updateScrollProgress);updateScrollProgress();
+  window.completeAndNext=async function(){
+    if(currentUser){try{await setDoc(doc(db,'users',currentUser.uid),{mlModules:arrayUnion('m8')},{merge:true});}catch(e){}}
+    window.location.href='ml-module-9.html';
+  };
+</script>
+</body>
+</html>

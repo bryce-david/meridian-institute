@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 4: Tokens and Cost Optimization — Building with AI APIs — Meridian Institute of AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#0F4C81;--accent-dim:rgba(15,76,129,0.1);--accent-dim2:rgba(15,76,129,0.05);--nav-bg:rgba(8,8,8,0.9);--callout-bg:rgba(15,76,129,0.07);--callout-border:rgba(15,76,129,0.25);--good-bg:rgba(34,197,94,0.07);--good-border:rgba(34,197,94,0.2);--warn-bg:rgba(251,146,60,0.07);--warn-border:rgba(251,146,60,0.2);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#1E40AF;--accent-dim:rgba(30,64,175,0.08);--accent-dim2:rgba(30,64,175,0.04);--nav-bg:rgba(250,250,248,0.9);--callout-bg:rgba(30,64,175,0.05);--callout-border:rgba(30,64,175,0.2);--good-bg:rgba(22,163,74,0.06);--good-border:rgba(22,163,74,0.2);--warn-bg:rgba(234,88,12,0.05);--warn-border:rgba(234,88,12,0.2);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;overflow-x:hidden;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.7;overflow-x:hidden;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}
+  .nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}
+  .nav-back{font-size:13px;color:var(--text-2);text-decoration:none;transition:color 0.2s;}
+  .nav-back:hover{color:var(--text);}
+  .nav-label{font-size:13px;color:var(--text-3);}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;transition:all 0.2s;}
+  .theme-toggle:hover{background:var(--bg-3);color:var(--text);}
+  .progress-bar{position:fixed;top:60px;left:0;right:0;z-index:99;height:2px;background:var(--border);}
+  .progress-fill{height:100%;background:var(--accent);width:0%;transition:width 0.1s;}
+  .page-wrapper{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:100vh;padding-top:62px;overflow:hidden;}
+  .sidebar{position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto;border-right:1px solid var(--border);padding:32px 24px;background:var(--bg-2);}
+  .sidebar-course{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;}
+  .sidebar-course-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+  .sidebar-module{margin-bottom:4px;}
+  .sidebar-module-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:13px;color:var(--text-2);text-decoration:none;transition:all 0.2s;line-height:1.4;}
+  .sidebar-module-link:hover{background:var(--bg-3);color:var(--text);}
+  .sidebar-module-link.active{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-num{font-size:11px;font-weight:500;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--bg-4);color:var(--text-3);}
+  .sidebar-module-link.active .sidebar-num{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-divider{height:1px;background:var(--border);margin:20px 0;}
+  .sidebar-progress-label{font-size:12px;color:var(--text-3);margin-bottom:8px;display:flex;justify-content:space-between;}
+  .sidebar-progress-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sidebar-progress-fill{height:100%;width:40%;background:var(--accent);border-radius:2px;}
+  main{display:block;min-width:0;overflow:hidden;}
+  .content{max-width:760px;width:100%;padding:60px 64px 140px;margin:0 auto;}
+  .module-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+  .module-tag{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(15,76,129,0.2);padding:4px 12px;border-radius:100px;}
+  .module-meta{font-size:12px;color:var(--text-3);}
+  h1{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1.05;letter-spacing:-0.02em;color:var(--text);margin-bottom:24px;}
+  .intro-text{font-size:19px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+  h2{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:400;color:var(--text);margin:52px 0 18px;line-height:1.2;}
+  h3{font-size:16px;font-weight:500;color:var(--text);margin:32px 0 12px;}
+  p{font-size:16px;font-weight:300;color:var(--text-2);line-height:1.8;margin-bottom:20px;}
+  strong{font-weight:500;color:var(--text);}
+  em{font-style:italic;}
+  ul,ol{margin:0 0 20px 22px;color:var(--text-2);}
+  li{font-size:16px;font-weight:300;line-height:1.8;margin-bottom:8px;}
+  .callout{background:var(--callout-bg);border:1px solid var(--callout-border);border-radius:12px;padding:24px 28px;margin:32px 0;}
+  .callout-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+  .callout p{margin:0;font-size:15px;color:var(--text-2);}
+  .callout p+p{margin-top:12px;}
+  .good{background:var(--good-bg);border:1px solid var(--good-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .good-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#22c55e;margin-bottom:10px;}
+  .good p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn{background:var(--warn-bg);border:1px solid var(--warn-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .warn-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#fb923c;margin-bottom:10px;}
+  .warn p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn p+p{margin-top:12px;}
+  .principle-list{display:flex;flex-direction:column;gap:12px;margin:24px 0;}
+  .principle{background:var(--bg-2);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:0 12px 12px 0;padding:20px 24px;}
+  .principle-title{font-size:15px;font-weight:500;color:var(--text);margin-bottom:6px;}
+  .principle-desc{font-size:14px;color:var(--text-2);line-height:1.65;margin:0;}
+  .code-block{background:#0d1117;border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:20px 24px;margin:24px 0;font-family:monospace;font-size:13px;color:#e6edf3;overflow-x:auto;line-height:1.7;white-space:pre;}
+  .price-table{width:100%;border-collapse:collapse;margin:24px 0;}
+  .price-table th{text-align:left;font-size:12px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-3);padding:10px 14px;border-bottom:1px solid var(--border-2);}
+  .price-table td{font-size:14px;color:var(--text-2);padding:12px 14px;border-bottom:1px solid var(--border);}
+  .price-table td:first-child{font-weight:500;color:var(--text);}
+  .sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:var(--bg-2);border-top:1px solid var(--border-2);padding:14px 5%;display:flex;align-items:center;justify-content:space-between;gap:16px;backdrop-filter:blur(12px);}
+  .sticky-bar-track{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sticky-bar-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.2s;width:0%;}
+  .sticky-bar-label{font-size:12px;color:var(--text-3);white-space:nowrap;min-width:60px;text-align:right;}
+  .sticky-bar-btn{padding:10px 20px;border-radius:8px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;background:var(--accent);color:#fff;border:none;cursor:pointer;white-space:nowrap;transition:opacity 0.2s;display:none;}
+  .sticky-bar-btn:hover{opacity:0.88;}
+  .sticky-bar-reading{font-size:12px;color:var(--text-3);white-space:nowrap;}
+  @media(max-width:900px){.page-wrapper{grid-template-columns:1fr;}.sidebar{display:none;}.content{padding:40px 24px 120px;}h1{font-size:38px;}}
+  @media(max-width:600px){.content{padding:28px 16px 120px;}h1{font-size:30px;}h2{font-size:24px;}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="courses.html" class="nav-back">← Building with AI APIs</a>
+    <div class="nav-divider"></div>
+    <span class="nav-label">Module 4</span>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">☀</span></button>
+</nav>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+
+<div class="page-wrapper">
+<aside class="sidebar">
+  <div class="sidebar-course">Expert Track</div>
+  <div class="sidebar-course-name">Building with AI APIs</div>
+  <div class="sidebar-module"><a href="apis-module-1.html" class="sidebar-module-link"><span class="sidebar-num">1</span>API Fundamentals</a></div>
+  <div class="sidebar-module"><a href="apis-module-2.html" class="sidebar-module-link"><span class="sidebar-num">2</span>Your First API Call</a></div>
+  <div class="sidebar-module"><a href="apis-module-3.html" class="sidebar-module-link"><span class="sidebar-num">3</span>Chat Completions in Depth</a></div>
+  <div class="sidebar-module"><a href="apis-module-4.html" class="sidebar-module-link active"><span class="sidebar-num">4</span>Tokens and Cost Optimization</a></div>
+  <div class="sidebar-module"><a href="apis-module-5.html" class="sidebar-module-link"><span class="sidebar-num">5</span>Structured Outputs</a></div>
+  <div class="sidebar-module"><a href="apis-module-6.html" class="sidebar-module-link"><span class="sidebar-num">6</span>Streaming Responses</a></div>
+  <div class="sidebar-module"><a href="apis-module-7.html" class="sidebar-module-link"><span class="sidebar-num">7</span>Embeddings and Semantic Search</a></div>
+  <div class="sidebar-module"><a href="apis-module-8.html" class="sidebar-module-link"><span class="sidebar-num">8</span>Function Calling and Tool Use</a></div>
+  <div class="sidebar-module"><a href="apis-module-9.html" class="sidebar-module-link"><span class="sidebar-num">9</span>Production-Ready AI Apps</a></div>
+  <div class="sidebar-module"><a href="apis-module-10.html" class="sidebar-module-link"><span class="sidebar-num">10</span>Multi-Provider Strategies</a></div>
+  <div class="sidebar-module"><a href="quiz-apis.html" class="sidebar-module-link" style="color:var(--accent);margin-top:4px;"><span class="sidebar-num" style="background:var(--accent-dim);color:var(--accent);">✦</span>Final Assessment</a></div>
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-progress-label"><span>Course progress</span><span style="color:var(--accent);">4 / 10</span></div>
+  <div class="sidebar-progress-track"><div class="sidebar-progress-fill"></div></div>
+</aside>
+
+<main>
+<div class="content">
+  <div class="module-eyebrow"><span class="module-tag">Module 4</span><span class="module-meta">35 min read · Building with AI APIs</span></div>
+  <h1>Tokens and Cost Optimization</h1>
+
+  <p class="intro-text">Every word you send and every word the model returns costs money. Understanding how tokens work, what determines your costs, and how to reduce them without sacrificing quality is one of the most valuable skills for any production AI engineer. The difference between a naive implementation and an optimized one can be a 10x reduction in costs at scale.</p>
+
+  <h2>What tokens actually are</h2>
+  <p>AI language models do not process text character by character or word by word. They process <strong>tokens</strong> — subword units that are the result of a preprocessing step called tokenization. A token can be as long as a full word or as short as a single character, depending on how common that sequence is in the training data.</p>
+
+  <p>The intuition: common English words tend to be single tokens. Uncommon words, technical jargon, and non-English text get split into multiple tokens. Numbers and punctuation have their own tokenization patterns that can be surprising.</p>
+
+  <div class="principle-list">
+    <div class="principle">
+      <div class="principle-title">Common words → one token each</div>
+      <div class="principle-desc">"cat", "the", "and", "Python", "function" — all single tokens. Common programming terms are usually single tokens too because they appear frequently in training data.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Numbers → one token per 1-3 digits</div>
+      <div class="principle-desc">The number "42" is one token. "1234" might be one or two tokens. "12345678" is likely 3-4 tokens. Each digit in very long numbers often gets its own token — which makes arithmetic expensive in token terms.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Non-English text → much higher token count</div>
+      <div class="principle-desc">A sentence in Chinese, Arabic, or Thai will typically use 2-4x more tokens than the same content in English, because the tokenizer was trained on predominantly English text. This dramatically affects cost for multilingual applications.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Whitespace and formatting → tokens too</div>
+      <div class="principle-desc">Newlines, spaces, and indentation all consume tokens. JSON with lots of whitespace uses more tokens than compact JSON. Markdown formatting (##, **, ---) adds tokens without adding information.</div>
+    </div>
+  </div>
+
+  <h2>Counting tokens with tiktoken</h2>
+  <p>OpenAI's <code>tiktoken</code> library lets you count tokens before making an API call. This is essential for cost estimation, context window management, and building systems that won't accidentally exceed limits.</p>
+
+  <div class="code-block">pip install tiktoken</div>
+
+  <div class="code-block">import tiktoken
+
+def count_tokens(text: str, model: str = "gpt-4o") -> int:
+    """Count tokens for a text string using the model's tokenizer."""
+    enc = tiktoken.encoding_for_model(model)
+    return len(enc.encode(text))
+
+def count_messages_tokens(messages: list, model: str = "gpt-4o") -> int:
+    """
+    Count tokens for a messages array, including message formatting overhead.
+    Each message has a small overhead (~4 tokens) for the role/content structure.
+    """
+    enc = tiktoken.encoding_for_model(model)
+    total = 0
+
+    for message in messages:
+        total += 4  # overhead per message (role + content + separators)
+        for key, value in message.items():
+            total += len(enc.encode(str(value)))
+
+    total += 2  # priming tokens for the assistant reply
+    return total
+
+# Example usage
+system_prompt = "You are a helpful assistant. Answer questions concisely."
+user_message = "Explain the difference between TCP and UDP protocols."
+
+messages = [
+    {"role": "system", "content": system_prompt},
+    {"role": "user", "content": user_message}
+]
+
+prompt_tokens = count_messages_tokens(messages)
+print(f"System prompt: {count_tokens(system_prompt)} tokens")
+print(f"User message: {count_tokens(user_message)} tokens")
+print(f"Total prompt tokens (with overhead): {prompt_tokens}")
+
+# Tokenization quirk demonstration
+words = ["cat", "concatenate", "pneumonoultramicroscopicsilicovolcanoconiosis"]
+for word in words:
+    tokens = tiktoken.encoding_for_model("gpt-4o").encode(word)
+    print(f"{word!r:50} → {len(tokens)} token(s): {tokens}")</div>
+
+  <div class="callout">
+    <div class="callout-label">Rule of thumb</div>
+    <p>For English text: 1 token ≈ 4 characters ≈ 0.75 words. A typical paragraph of 100 words is roughly 130 tokens. A full page (400–500 words) is roughly 500–650 tokens. These are approximations — always measure with tiktoken for precision.</p>
+  </div>
+
+  <h2>Context window limits</h2>
+  <p>Every model has a maximum context window — the total number of tokens it can process in a single request (input + output combined). Exceeding this limit results in an error. Understanding these limits is critical for designing systems that handle long documents or extended conversations.</p>
+
+  <table class="price-table">
+    <thead><tr><th>Model</th><th>Context window</th><th>Approximate pages</th></tr></thead>
+    <tbody>
+      <tr><td>gpt-4o-mini</td><td>128,000 tokens</td><td>~400 pages</td></tr>
+      <tr><td>gpt-4o</td><td>128,000 tokens</td><td>~400 pages</td></tr>
+      <tr><td>claude-opus-4-5</td><td>200,000 tokens</td><td>~650 pages</td></tr>
+      <tr><td>claude-haiku-3-5</td><td>200,000 tokens</td><td>~650 pages</td></tr>
+      <tr><td>gemini-1.5-pro</td><td>2,000,000 tokens</td><td>~6,500 pages</td></tr>
+    </tbody>
+  </table>
+
+  <p>Large context windows do not mean you should use them carelessly. Cost scales linearly with token count, and latency increases with context length. Just because you <em>can</em> fit an entire codebase in the context does not mean you should — targeted retrieval is usually faster and cheaper.</p>
+
+  <h2>Pricing: input vs output tokens</h2>
+  <p>All providers price input tokens and output tokens differently — output tokens cost more because they require the model to generate each token sequentially (autoregressive generation), while input tokens are processed in parallel. Output typically costs 3-5x more per token than input at equivalent quality levels.</p>
+
+  <table class="price-table">
+    <thead><tr><th>Model</th><th>Input (per M tokens)</th><th>Output (per M tokens)</th></tr></thead>
+    <tbody>
+      <tr><td>gpt-4o-mini</td><td>$0.15</td><td>$0.60</td></tr>
+      <tr><td>gpt-4o</td><td>$2.50</td><td>$10.00</td></tr>
+      <tr><td>claude-haiku-3-5</td><td>$0.80</td><td>$4.00</td></tr>
+      <tr><td>claude-sonnet-4-5</td><td>$3.00</td><td>$15.00</td></tr>
+      <tr><td>claude-opus-4-5</td><td>$15.00</td><td>$75.00</td></tr>
+      <tr><td>gemini-1.5-flash</td><td>$0.075</td><td>$0.30</td></tr>
+      <tr><td>gemini-1.5-pro</td><td>$1.25</td><td>$5.00</td></tr>
+    </tbody>
+  </table>
+
+  <div class="warn">
+    <div class="warn-label">Prices change frequently</div>
+    <p>AI pricing is in active flux. The figures above are indicative — always check the provider's current pricing page before building cost estimates into business plans or contracts. Providers regularly reduce prices as infrastructure improves.</p>
+  </div>
+
+  <h3>Cost estimation formula</h3>
+
+  <div class="code-block">def estimate_cost(
+    prompt_tokens: int,
+    completion_tokens: int,
+    model: str = "gpt-4o"
+) -> float:
+    """Estimate API call cost in USD."""
+
+    pricing = {
+        "gpt-4o":          {"input": 2.50,  "output": 10.00},
+        "gpt-4o-mini":     {"input": 0.15,  "output": 0.60},
+        "claude-opus-4-5": {"input": 15.00, "output": 75.00},
+        "claude-sonnet-4-5":{"input": 3.00, "output": 15.00},
+        "claude-haiku-3-5":{"input": 0.80,  "output": 4.00},
+        "gemini-1.5-pro":  {"input": 1.25,  "output": 5.00},
+        "gemini-1.5-flash":{"input": 0.075, "output": 0.30},
+    }
+
+    if model not in pricing:
+        raise ValueError(f"Unknown model: {model}")
+
+    p = pricing[model]
+    input_cost  = (prompt_tokens     / 1_000_000) * p["input"]
+    output_cost = (completion_tokens / 1_000_000) * p["output"]
+    return input_cost + output_cost
+
+# A document summarization call: 3000 input tokens, 400 output tokens
+cost = estimate_cost(3000, 400, "gpt-4o")
+print(f"Single call cost: ${cost:.6f}")  # ~$0.0115
+
+# At scale: 1000 such calls per day
+daily_cost = cost * 1000
+monthly_cost = daily_cost * 30
+print(f"Daily: ${daily_cost:.2f} | Monthly: ${monthly_cost:.2f}")
+# Daily: $11.50 | Monthly: $345.00
+
+# Same workload on gpt-4o-mini
+cost_mini = estimate_cost(3000, 400, "gpt-4o-mini")
+print(f"gpt-4o-mini monthly: ${cost_mini * 30000:.2f}")
+# gpt-4o-mini monthly: $7.65 — 45x cheaper</div>
+
+  <h2>Prompt caching</h2>
+  <p>Both Anthropic and OpenAI offer prompt caching — a mechanism that stores the KV (key-value) cache of your prompt on their servers and reuses it for subsequent requests with the same prefix. This can reduce costs by 50-90% for systems that repeat long system prompts or document contexts across many calls.</p>
+
+  <h3>Anthropic cache_control</h3>
+  <p>With Anthropic, you explicitly mark cache breakpoints using <code>cache_control</code>. Content before the last breakpoint is eligible for caching. Cached reads cost 10% of normal input token price; writes (first request) cost 125% of normal input price but are amortized over subsequent reads.</p>
+
+  <div class="code-block">import anthropic
+client = anthropic.Anthropic()
+
+# A 5000-token document you process many questions about
+long_document = "..." # your document content here
+
+def ask_about_document(question: str, document: str) -> str:
+    response = client.messages.create(
+        model="claude-opus-4-5",
+        max_tokens=1024,
+        system=[
+            {
+                "type": "text",
+                "text": "You are a document analyst. Answer questions about the provided document accurately.",
+                "cache_control": {"type": "ephemeral"}  # cache the system prompt
+            }
+        ],
+        messages=[
+            {
+                "role": "user",
+                "content": [
+                    {
+                        "type": "text",
+                        "text": f"Document:\n\n{document}",
+                        "cache_control": {"type": "ephemeral"}  # cache the document
+                    },
+                    {
+                        "type": "text",
+                        "text": f"Question: {question}"
+                        # question is NOT cached — it changes each time
+                    }
+                ]
+            }
+        ]
+    )
+
+    # Check cache performance
+    usage = response.usage
+    print(f"Cache write tokens: {getattr(usage, 'cache_creation_input_tokens', 0)}")
+    print(f"Cache read tokens:  {getattr(usage, 'cache_read_input_tokens', 0)}")
+
+    return response.content[0].text
+
+# First call: cache miss — pays 125% for cache write
+answer1 = ask_about_document("What is the main conclusion?", long_document)
+
+# Subsequent calls: cache hit — pays only 10% for cache read
+answer2 = ask_about_document("What methodology was used?", long_document)
+answer3 = ask_about_document("List the key findings.", long_document)</div>
+
+  <h3>OpenAI automatic caching</h3>
+  <p>OpenAI caches automatically — you do not opt in. Any prompt prefix longer than 1024 tokens that has been seen recently will be served from cache at 50% of the normal input token price. You can check <code>response.usage.prompt_tokens_details.cached_tokens</code> to see how many tokens were cached.</p>
+
+  <div class="code-block">from openai import OpenAI
+client = OpenAI()
+
+# OpenAI caches automatically — no special parameters needed
+# Just ensure your system prompt + repeated content comes first
+response = client.chat.completions.create(
+    model="gpt-4o",
+    messages=[
+        {"role": "system", "content": "..." * 300},  # long system prompt — will be cached
+        {"role": "user", "content": "Specific question that changes per request"}
+    ]
+)
+
+# Check if caching kicked in
+details = response.usage.model_dump().get("prompt_tokens_details", {})
+cached = details.get("cached_tokens", 0)
+regular = response.usage.prompt_tokens - cached
+print(f"Regular input tokens: {regular} | Cached tokens: {cached}")
+print(f"Effective cost savings: {cached * 0.5 / 1_000_000 * 2.50:.6f} USD")</div>
+
+  <h2>Context compression techniques</h2>
+  <p>For long-running conversations, you must actively manage the context to avoid runaway costs and hitting context limits.</p>
+
+  <div class="principle-list">
+    <div class="principle">
+      <div class="principle-title">Sliding window</div>
+      <div class="principle-desc">Keep only the N most recent turns. Simple and predictable, but loses older context entirely. Best for applications where recent context is most important (customer support, coding assistants).</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Summarization</div>
+      <div class="principle-desc">When the conversation grows long, call the API to summarize earlier turns, then replace them with the summary. Preserves semantics at much lower token cost. Adds latency at the summarization point.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Selective history</div>
+      <div class="principle-desc">Use a retrieval step to include only the most relevant past turns, not all of them. Requires embedding the conversation turns and doing similarity search — adds complexity but scales to very long conversations.</div>
+    </div>
+  </div>
+
+  <div class="code-block">from openai import OpenAI
+import tiktoken
+
+client = OpenAI()
+enc = tiktoken.encoding_for_model("gpt-4o-mini")
+
+MAX_HISTORY_TOKENS = 3000
+
+def trim_messages_to_budget(messages: list, max_tokens: int) -> list:
+    """
+    Trim conversation history to stay within a token budget.
+    Always keeps: system message + last user message.
+    Drops oldest turns first.
+    """
+    if not messages:
+        return messages
+
+    system_msgs = [m for m in messages if m["role"] == "system"]
+    other_msgs  = [m for m in messages if m["role"] != "system"]
+
+    # Count tokens for required messages
+    def token_count(msgs):
+        return sum(len(enc.encode(m["content"])) + 4 for m in msgs)
+
+    system_tokens = token_count(system_msgs)
+    budget = max_tokens - system_tokens
+
+    # Keep as many recent messages as fit, always keeping the last user message
+    kept = []
+    remaining = budget
+    for msg in reversed(other_msgs):
+        cost = len(enc.encode(msg["content"])) + 4
+        if remaining - cost >= 0:
+            kept.insert(0, msg)
+            remaining -= cost
+        elif not kept:
+            # Always keep at least the most recent message
+            kept.insert(0, msg)
+            break
+
+    return system_msgs + kept
+
+def chat_with_budget(conversation: list, user_input: str) -> str:
+    conversation.append({"role": "user", "content": user_input})
+    trimmed = trim_messages_to_budget(conversation, MAX_HISTORY_TOKENS)
+
+    response = client.chat.completions.create(
+        model="gpt-4o-mini",
+        messages=trimmed,
+        max_tokens=500
+    )
+    reply = response.choices[0].message.content
+    conversation.append({"role": "assistant", "content": reply})
+    return reply</div>
+
+  <h2>The cost / quality / latency triangle</h2>
+  <p>Every production AI decision involves trading off three variables. Improving one typically costs another.</p>
+
+  <ul>
+    <li><strong>Use a smaller model</strong> when the task is simple. gpt-4o-mini handles classification, summarization, and Q&amp;A over well-structured text as well as gpt-4o at 10-17x lower cost.</li>
+    <li><strong>Shorten your prompts</strong> by removing filler and redundancy. Shorter, cleaner prompts often get better responses anyway.</li>
+    <li><strong>Cache aggressively</strong> for any repeated prompt prefix. A 5000-token system prompt sent 1000 times per day becomes 100 tokens per call after caching.</li>
+    <li><strong>Batch where possible</strong> — some tasks (embedding generation, classification) can be processed in batches at 50% cost with OpenAI's batch API.</li>
+    <li><strong>Set tight max_tokens</strong> for tasks where output length is predictable. Do not give a classification task 2000 output tokens.</li>
+  </ul>
+
+  <div class="good">
+    <div class="good-label">The engineer's mindset on cost</div>
+    <p>Do not optimize prematurely, but do instrument from day one. Log every call's prompt_tokens, completion_tokens, model, and cost. Build a dashboard. You cannot optimize what you do not measure — and costs that look trivial in development can become thousands of dollars monthly in production.</p>
+  </div>
+
+</div>
+</main>
+</div>
+
+<div class="sticky-bar" id="sticky-bar">
+  <div class="sticky-bar-reading" id="sticky-reading">Read to the end to unlock the next module</div>
+  <div class="sticky-bar-track"><div class="sticky-bar-fill" id="sticky-fill"></div></div>
+  <div class="sticky-bar-label" id="sticky-label">0%</div>
+  <button class="sticky-bar-btn" id="sticky-btn" onclick="completeAndNext()">Module 5: Structured Outputs →</button>
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import { getFirestore, doc, setDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  const app=initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+  const auth=getAuth(app);const db=getFirestore(app);
+  let currentUser=null;
+  onAuthStateChanged(auth,u=>{currentUser=u;});
+  window.toggleTheme=function(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='☾'):(h.setAttribute('data-theme','dark'),i.textContent='☀');};
+  window.addEventListener('scroll',()=>{const d=document.documentElement,s=d.scrollTop||document.body.scrollTop,t=d.scrollHeight-d.clientHeight;document.getElementById('progress').style.width=(s/t*100)+'%';});
+  let unlocked=false;
+  function updateScrollProgress(){
+    const scrolled=window.scrollY+window.innerHeight;
+    const total=document.documentElement.scrollHeight;
+    const pct=Math.min(100,Math.round((scrolled/total)*100));
+    const fill=document.getElementById('sticky-fill');
+    const label=document.getElementById('sticky-label');
+    const btn=document.getElementById('sticky-btn');
+    const reading=document.getElementById('sticky-reading');
+    if(fill)fill.style.width=pct+'%';
+    if(label)label.textContent=pct+'%';
+    if(pct>=95&&!unlocked){unlocked=true;if(btn)btn.style.display='block';if(reading)reading.style.display='none';if(fill)fill.style.background='#22c55e';if(label)label.style.color='#22c55e';}
+  }
+  window.addEventListener('scroll',updateScrollProgress);
+  updateScrollProgress();
+  window.completeAndNext=async function(){
+    if(currentUser){try{await setDoc(doc(db,'users',currentUser.uid),{apisModules:arrayUnion('m4')},{merge:true});}catch(e){}}
+    window.location.href='apis-module-5.html';
+  };
+</script>
+</body>
+</html>

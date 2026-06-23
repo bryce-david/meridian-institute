@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 7: Computer Vision — Machine Learning Explained — Meridian Institute of AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#065F46;--accent-dim:rgba(6,95,70,0.1);--accent-dim2:rgba(6,95,70,0.05);--nav-bg:rgba(8,8,8,0.9);--callout-bg:rgba(6,95,70,0.07);--callout-border:rgba(6,95,70,0.25);--good-bg:rgba(34,197,94,0.07);--good-border:rgba(34,197,94,0.2);--warn-bg:rgba(251,146,60,0.07);--warn-border:rgba(251,146,60,0.2);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#064E3B;--accent-dim:rgba(6,78,59,0.08);--accent-dim2:rgba(6,78,59,0.04);--nav-bg:rgba(250,250,248,0.9);--callout-bg:rgba(6,78,59,0.05);--callout-border:rgba(6,78,59,0.2);--good-bg:rgba(22,163,74,0.06);--good-border:rgba(22,163,74,0.2);--warn-bg:rgba(234,88,12,0.05);--warn-border:rgba(234,88,12,0.2);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;overflow-x:hidden;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.7;overflow-x:hidden;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}
+  .nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}
+  .nav-back{font-size:13px;color:var(--text-2);text-decoration:none;transition:color 0.2s;}
+  .nav-back:hover{color:var(--text);}
+  .nav-label{font-size:13px;color:var(--text-3);}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;transition:all 0.2s;}
+  .theme-toggle:hover{background:var(--bg-3);color:var(--text);}
+  .progress-bar{position:fixed;top:60px;left:0;right:0;z-index:99;height:2px;background:var(--border);}
+  .progress-fill{height:100%;background:var(--accent);width:0%;transition:width 0.1s;}
+  .page-wrapper{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:100vh;padding-top:62px;overflow:hidden;}
+  .sidebar{position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto;border-right:1px solid var(--border);padding:32px 24px;background:var(--bg-2);}
+  .sidebar-course{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;}
+  .sidebar-course-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+  .sidebar-module{margin-bottom:4px;}
+  .sidebar-module-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:13px;color:var(--text-2);text-decoration:none;transition:all 0.2s;line-height:1.4;}
+  .sidebar-module-link:hover{background:var(--bg-3);color:var(--text);}
+  .sidebar-module-link.active{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-num{font-size:11px;font-weight:500;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--bg-4);color:var(--text-3);}
+  .sidebar-module-link.active .sidebar-num{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-divider{height:1px;background:var(--border);margin:20px 0;}
+  .sidebar-progress-label{font-size:12px;color:var(--text-3);margin-bottom:8px;display:flex;justify-content:space-between;}
+  .sidebar-progress-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sidebar-progress-fill{height:100%;width:70%;background:var(--accent);border-radius:2px;}
+  main{display:block;min-width:0;overflow:hidden;}
+  .content{max-width:760px;width:100%;padding:60px 64px 140px;margin:0 auto;}
+  .module-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+  .module-tag{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(6,95,70,0.2);padding:4px 12px;border-radius:100px;}
+  .module-meta{font-size:12px;color:var(--text-3);}
+  h1{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1.05;letter-spacing:-0.02em;color:var(--text);margin-bottom:24px;}
+  .intro-text{font-size:19px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+  h2{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:400;color:var(--text);margin:52px 0 18px;line-height:1.2;}
+  h3{font-size:16px;font-weight:500;color:var(--text);margin:32px 0 12px;}
+  p{font-size:16px;font-weight:300;color:var(--text-2);line-height:1.8;margin-bottom:20px;}
+  strong{font-weight:500;color:var(--text);}
+  em{font-style:italic;}
+  ul,ol{margin:0 0 20px 22px;color:var(--text-2);}
+  li{font-size:16px;font-weight:300;line-height:1.8;margin-bottom:8px;}
+  .callout{background:var(--callout-bg);border:1px solid var(--callout-border);border-radius:12px;padding:24px 28px;margin:32px 0;}
+  .callout-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+  .callout p{margin:0;font-size:15px;color:var(--text-2);}
+  .callout p+p{margin-top:12px;}
+  .good{background:var(--good-bg);border:1px solid var(--good-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .good-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#22c55e;margin-bottom:10px;}
+  .good p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn{background:var(--warn-bg);border:1px solid var(--warn-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .warn-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#fb923c;margin-bottom:10px;}
+  .warn p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn p+p{margin-top:12px;}
+  .analogy{background:var(--bg-2);border:1px solid var(--border);border-radius:12px;padding:28px;margin:28px 0;}
+  .analogy-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-3);margin-bottom:12px;}
+  .analogy p{margin:0;font-size:15px;color:var(--text-2);}
+  .principle-list{display:flex;flex-direction:column;gap:12px;margin:24px 0;}
+  .principle{background:var(--bg-2);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:0 12px 12px 0;padding:20px 24px;}
+  .principle-title{font-size:15px;font-weight:500;color:var(--text);margin-bottom:6px;}
+  .principle-desc{font-size:14px;color:var(--text-2);line-height:1.65;margin:0;}
+  .sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:var(--bg-2);border-top:1px solid var(--border-2);padding:14px 5%;display:flex;align-items:center;justify-content:space-between;gap:16px;backdrop-filter:blur(12px);}
+  .sticky-bar-track{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sticky-bar-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.2s;width:0%;}
+  .sticky-bar-label{font-size:12px;color:var(--text-3);white-space:nowrap;min-width:60px;text-align:right;}
+  .sticky-bar-btn{padding:10px 20px;border-radius:8px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;background:var(--accent);color:#fff;border:none;cursor:pointer;white-space:nowrap;transition:opacity 0.2s;display:none;}
+  .sticky-bar-btn:hover{opacity:0.88;}
+  .sticky-bar-reading{font-size:12px;color:var(--text-3);white-space:nowrap;}
+  @media(max-width:900px){.page-wrapper{grid-template-columns:1fr;}.sidebar{display:none;}.content{padding:40px 24px 120px;}h1{font-size:38px;}}
+  @media(max-width:600px){.content{padding:28px 16px 120px;}h1{font-size:30px;}h2{font-size:24px;}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="courses.html" class="nav-back">← Machine Learning Explained</a>
+    <div class="nav-divider"></div>
+    <span class="nav-label">Module 7</span>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">☀</span></button>
+</nav>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+
+<div class="page-wrapper">
+<aside class="sidebar">
+  <div class="sidebar-course">Expert Track</div>
+  <div class="sidebar-course-name">Machine Learning Explained</div>
+  <div class="sidebar-module"><a href="ml-module-1.html" class="sidebar-module-link"><span class="sidebar-num">1</span>How Machines Learn</a></div>
+  <div class="sidebar-module"><a href="ml-module-2.html" class="sidebar-module-link"><span class="sidebar-num">2</span>Data: The ML Foundation</a></div>
+  <div class="sidebar-module"><a href="ml-module-3.html" class="sidebar-module-link"><span class="sidebar-num">3</span>Supervised Learning Demystified</a></div>
+  <div class="sidebar-module"><a href="ml-module-4.html" class="sidebar-module-link"><span class="sidebar-num">4</span>Unsupervised Learning</a></div>
+  <div class="sidebar-module"><a href="ml-module-5.html" class="sidebar-module-link"><span class="sidebar-num">5</span>Neural Networks and Deep Learning</a></div>
+  <div class="sidebar-module"><a href="ml-module-6.html" class="sidebar-module-link"><span class="sidebar-num">6</span>NLP and Transformers</a></div>
+  <div class="sidebar-module"><a href="ml-module-7.html" class="sidebar-module-link active"><span class="sidebar-num">7</span>Computer Vision</a></div>
+  <div class="sidebar-module"><a href="ml-module-8.html" class="sidebar-module-link"><span class="sidebar-num">8</span>Model Evaluation</a></div>
+  <div class="sidebar-module"><a href="ml-module-9.html" class="sidebar-module-link"><span class="sidebar-num">9</span>ML in Production</a></div>
+  <div class="sidebar-module"><a href="ml-module-10.html" class="sidebar-module-link"><span class="sidebar-num">10</span>Foundation Models and the Frontier</a></div>
+  <div class="sidebar-module"><a href="quiz-ml.html" class="sidebar-module-link" style="color:var(--accent);margin-top:4px;"><span class="sidebar-num" style="background:var(--accent-dim);color:var(--accent);">✦</span>Final Assessment</a></div>
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-progress-label"><span>Course progress</span><span style="color:var(--accent);">7 / 10</span></div>
+  <div class="sidebar-progress-track"><div class="sidebar-progress-fill"></div></div>
+</aside>
+
+<main>
+<div class="content">
+  <div class="module-eyebrow"><span class="module-tag">Module 7 · Expert Track</span><span class="module-meta">22 min read · Machine Learning Explained</span></div>
+  <h1>Computer Vision</h1>
+
+  <p class="intro-text">Vision is the sense humans trust most — we process an enormous amount of information visually, and we do it with seemingly effortless ease. Recognizing a face in a crowd, reading a street sign while driving, spotting a tumor on an X-ray — these feel natural. For machines, each of these tasks requires solving a genuinely hard problem: how do you turn a grid of colored numbers into meaningful understanding of the world? Computer vision is the field that answers that question.</p>
+
+  <h2>Images as numerical tensors</h2>
+  <p>Before a model can "see" anything, we need to understand what an image actually is in computational terms. A digital image is not a picture — it's a three-dimensional array of numbers. Each pixel has three values representing the intensity of red, green, and blue light, each ranging from 0 to 255. A 1920×1080 image is a grid of 1,920 columns and 1,080 rows, with 3 color channels per pixel: roughly 6.2 million numbers.</p>
+  <p>When a computer vision model receives an image, it receives this numerical tensor. The model has no built-in concept of "edge," "color," "object," or "face." Every piece of visual understanding must be learned from data. The question is: how do you design a system that learns to extract meaningful patterns from a tensor of millions of numbers?</p>
+  <p>Early approaches tried to hand-engineer features: programmers wrote algorithms to detect edges, corners, and color histograms, then fed those features into classifiers. This worked for narrow tasks but required years of expert effort per domain and broke down whenever images were taken from a slightly different angle or lighting condition. The breakthrough came when we let the model learn features directly from pixel data.</p>
+
+  <h2>Convolutional neural networks: filters as feature detectors</h2>
+  <p>A Convolutional Neural Network (CNN) is a neural network architecture designed specifically for grid-structured data like images. Its key innovation is the <strong>convolutional filter</strong> — a small pattern-detector that slides across the entire image, looking for a specific feature wherever it appears.</p>
+  <p>Think of a filter as a small template — maybe 5×5 pixels in size — that represents a particular pattern, like a vertical edge or a diagonal stripe. The filter slides across every position in the image (left to right, top to bottom) and at each position, it checks how much the image matches the template. Where the image closely matches the filter, the output value is high. Where it doesn't, the output is low. The result is a new "activation map" — a grid showing where in the image that particular pattern was detected.</p>
+  <p>A CNN doesn't use one filter — it uses hundreds or thousands simultaneously. Each filter learns to detect a different elementary pattern. Crucially, the filters learn their patterns during training from data. You don't specify what patterns to look for; the network discovers which patterns are useful for the task.</p>
+
+  <div class="analogy">
+    <div class="analogy-label">The rubber stamp analogy</div>
+    <p>Imagine you have a rubber stamp with a particular design — say, a horizontal line. You stamp it across every position on a piece of paper and record where the ink sticks. The resulting pattern shows you everywhere that horizontal feature appeared. Now imagine having thousands of different rubber stamps — for vertical lines, curves, spots, textures — and stamping all of them simultaneously across the same image. You get thousands of maps, each highlighting where a different elementary visual feature lives. That collection of maps is what the first layer of a CNN produces from a raw image.</p>
+  </div>
+
+  <h2>Pooling and spatial hierarchy</h2>
+  <p>After a convolutional layer produces its activation maps, a <strong>pooling layer</strong> typically follows. Pooling reduces the spatial resolution of those maps — essentially shrinking them down. The most common approach, max pooling, divides the map into small regions and keeps only the maximum value from each region.</p>
+  <p>Why throw away information? Because we want the detected features to be location-tolerant. If a filter detected a vertical edge at position (42, 73) in the image, it should still be detected if the image is slightly shifted or the edge is at position (44, 71). By taking the maximum over small regions, pooling makes the detection robust to small spatial shifts. It also reduces the number of computations as you go deeper.</p>
+  <p>The alternating pattern of convolution and pooling creates spatial hierarchy — the network's signature capability. First-layer filters detect edges and textures. Second-layer filters, operating on the output of the first layer, detect combinations of edges — corners, curves, simple shapes. Third-layer filters detect combinations of shapes — eyes, wheels, leaves. By the final layers, the network recognizes high-level objects: faces, cars, dogs. The hierarchy builds automatically from training data, without anyone telling the network what intermediate features to look for.</p>
+
+  <h2>Classification vs detection vs segmentation</h2>
+  <p>Computer vision is not a single task — it's a family of increasingly precise challenges. Understanding the distinctions matters for matching the right tool to the right problem.</p>
+
+  <div class="principle-list">
+    <div class="principle">
+      <div class="principle-title">Image Classification</div>
+      <div class="principle-desc">What is the primary subject of this image? Answer: one label. "This is a dog." Used by Instagram to auto-categorize photo content, by Pinterest to cluster visual pins, by medical systems to identify the primary pathology in a scan.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Object Detection</div>
+      <div class="principle-desc">Where are all the relevant objects in this image, and what are they? Answer: bounding boxes with labels and confidence scores. "Dog at position [234,156,412,380], confidence 94%. Cat at position [88,44,200,190], confidence 87%." Used in autonomous vehicles to detect pedestrians, cyclists, and other cars in real time.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Semantic Segmentation</div>
+      <div class="principle-desc">Classify every single pixel in the image. Answer: a pixel-level map. "These 48,221 pixels are road. These 7,432 pixels are sidewalk. These 1,840 pixels are pedestrian." Used in surgical robotics to distinguish tissue types, in satellite imagery to map land use at field level.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Instance Segmentation</div>
+      <div class="principle-desc">Like semantic segmentation, but distinguishes between separate instances of the same class. Not just "these pixels are person" but "these pixels are Person A, those are Person B." Used in crowd analysis, sports tracking, and medical cell counting.</div>
+    </div>
+  </div>
+
+  <h2>Transfer learning: standing on the shoulders of ImageNet</h2>
+  <p>Training a CNN from scratch requires millions of labeled images and weeks of compute. Most organizations don't have either. Transfer learning solves this by letting you start with a model that someone else already trained on a massive dataset.</p>
+  <p>ImageNet is a dataset of 14 million labeled images across 1,000 categories. Training a large CNN on ImageNet takes the equivalent of thousands of GPU-hours and requires thousands of labeled examples per category. But the resulting model has learned extraordinarily rich visual features — not just "what a dog looks like," but a general understanding of textures, shapes, edges, colors, and how they combine into objects.</p>
+  <p>Transfer learning takes such a pre-trained model and adapts it to your specific task. You freeze the early layers (they already know how to detect edges and shapes — universal features useful everywhere), and retrain only the later layers on your specific dataset. A radiologist's group wanting to detect a specific lung pathology doesn't need a million chest X-rays — a few thousand, combined with a pre-trained model's general visual knowledge, can produce clinical-grade performance. Tesla's vision system, Google Photos' categorization, Apple's Face ID recognition, and medical imaging diagnostic tools all build on transfer learning from models trained on large general datasets.</p>
+
+  <div class="callout">
+    <div class="callout-label">The 2012 inflection point</div>
+    <p>In 2012, Alex Krizhevsky's AlexNet won the ImageNet competition with a top-5 error rate of 15.3% — compared to the runner-up's 26.2%. The gap was so large that the entire computer vision community pivoted to deep learning within months. Every year since, deep learning models have surpassed human-level performance (around 5% top-5 error) on ImageNet. What changed was not the algorithm — CNNs existed since the 1980s — but the combination of large labeled datasets, GPU hardware, and architectural refinements that made training feasible at scale.</p>
+  </div>
+
+  <h2>Generative models: creating images from scratch</h2>
+  <p>So far we've discussed vision models that analyze images. An equally important branch creates images. Two families of generative models have transformed creative and industrial applications.</p>
+
+  <h3>GANs: the forger and the detective</h3>
+  <p>Generative Adversarial Networks (GANs), introduced by Ian Goodfellow in 2014, use two neural networks in competition. The <strong>generator</strong> starts from random noise and tries to produce realistic images. The <strong>discriminator</strong> receives both real images and the generator's fakes, and tries to distinguish them. The generator's goal is to fool the discriminator. The discriminator's goal is to catch every fake.</p>
+  <p>Over thousands of training rounds, both networks improve. The discriminator gets better at spotting fakes, which forces the generator to produce more convincing images, which pushes the discriminator to look harder, and so on. The result, after sufficient training, is a generator that produces images so realistic humans cannot reliably tell them from photographs. This is how deepfakes are made, how StyleGAN generates synthetic human faces, and how drug companies generate synthetic molecular images for drug discovery research.</p>
+
+  <h3>Diffusion models: sculpting signal from noise</h3>
+  <p>Diffusion models, the technology behind Stable Diffusion, DALL-E, and Midjourney, work differently. They are trained by taking real images and progressively adding random noise until the image is completely destroyed — just static. The model learns to reverse this process: given a slightly noisy image, predict what the slightly-less-noisy version looked like.</p>
+  <p>At inference time, you start with pure noise and apply the learned denoising process hundreds of times, each step removing a little noise. What emerges from the noise, guided by a text prompt, is a generated image that matches the description. The text prompt guides which direction in "image space" the denoising moves — "a photorealistic mountain landscape at sunset" steers the noise removal toward images that look like mountain landscapes at sunset. The results are astonishing: photorealistic scenes, painterly artwork, product visualizations, and architectural renders that didn't exist before the prompt was typed.</p>
+
+  <h2>Real-world computer vision applications</h2>
+
+  <h3>Medical imaging</h3>
+  <p>CV models now match or exceed radiologist accuracy on specific diagnostic tasks. Google's DeepMind developed a system that detects over 50 types of eye disease from retinal scans with accuracy comparable to world-leading ophthalmologists. Zebra Medical Vision's models screen chest X-rays for pneumonia, fractures, and cardiovascular abnormalities in seconds. PathAI's pathology models analyze biopsy slides to identify cancer margins with precision that reduces diagnostic variability between pathologists. The economic and human impact is significant: in regions with radiologist shortages, CV can provide diagnostic screening that simply wasn't available before.</p>
+
+  <h3>Autonomous vehicles</h3>
+  <p>Autonomous vehicle perception stacks process inputs from cameras, LiDAR, and radar simultaneously — running multiple CV models to detect lanes, pedestrians, cyclists, traffic signs, and obstacles in real time. Tesla's Full Self-Driving system processes eight camera feeds simultaneously using a custom neural network accelerator chip designed specifically for vision inference. Waymo's system runs over a trillion operations per second of vision inference. The challenge is not just accuracy but robustness: a medical image classifier that fails 1% of the time is a problem; an autonomous vehicle vision system that fails 0.001% of the time while driving at highway speed may still cause accidents.</p>
+
+  <h3>Manufacturing quality control</h3>
+  <p>Traditional visual inspection relied on human inspectors who fatigue, have bad days, and cannot examine every product at production line speed. CV inspection systems run 24/7 at millisecond latency, examining every unit. Landing AI deploys visual inspection systems on semiconductor wafer fabrication lines to detect defects smaller than a micron. BMW uses CV to inspect welds, paint quality, and component fit across vehicle assembly. The economics are compelling: one CV system can replace dozens of human inspectors while catching defects earlier, reducing waste, and producing a digital record of every inspection.</p>
+
+  <div class="warn">
+    <div class="warn-label">The distribution shift problem in production vision systems</div>
+    <p>A CV model trained on images from one factory, one camera model, and one lighting configuration may perform poorly when deployed in a facility with different equipment. The model learned to recognize defects given the specific visual signature of its training environment — not the abstract concept of "defect." When that environment changes (camera replaced, lighting upgraded, product line modified), performance degrades. This is distribution shift, and it's the central operational challenge of deployed vision systems. Monitoring for it, collecting new training data continuously, and retraining regularly are not optional — they're core operational requirements.</p>
+  </div>
+
+</div>
+</main>
+</div>
+
+<div class="sticky-bar" id="sticky-bar">
+  <div class="sticky-bar-reading" id="sticky-reading">Read to the end to unlock the next module</div>
+  <div class="sticky-bar-track"><div class="sticky-bar-fill" id="sticky-fill"></div></div>
+  <div class="sticky-bar-label" id="sticky-label">0%</div>
+  <button class="sticky-bar-btn" id="sticky-btn" onclick="completeAndNext()">Module 8: Model Evaluation →</button>
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import { getFirestore, doc, setDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  const app=initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+  const auth=getAuth(app);const db=getFirestore(app);
+  let currentUser=null;
+  onAuthStateChanged(auth,u=>{currentUser=u;});
+  window.toggleTheme=function(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='☾'):(h.setAttribute('data-theme','dark'),i.textContent='☀');};
+  window.addEventListener('scroll',()=>{const d=document.documentElement,s=d.scrollTop||document.body.scrollTop,t=d.scrollHeight-d.clientHeight;document.getElementById('progress').style.width=(s/t*100)+'%';});
+  let unlocked=false;
+  function updateScrollProgress(){
+    const pct=Math.min(100,Math.round(((window.scrollY+window.innerHeight)/document.documentElement.scrollHeight)*100));
+    const fill=document.getElementById('sticky-fill'),label=document.getElementById('sticky-label'),btn=document.getElementById('sticky-btn'),reading=document.getElementById('sticky-reading');
+    if(fill)fill.style.width=pct+'%';if(label)label.textContent=pct+'%';
+    if(pct>=95&&!unlocked){unlocked=true;if(btn)btn.style.display='block';if(reading)reading.style.display='none';if(fill)fill.style.background='#22c55e';if(label)label.style.color='#22c55e';}
+  }
+  window.addEventListener('scroll',updateScrollProgress);updateScrollProgress();
+  window.completeAndNext=async function(){
+    if(currentUser){try{await setDoc(doc(db,'users',currentUser.uid),{mlModules:arrayUnion('m7')},{merge:true});}catch(e){}}
+    window.location.href='ml-module-8.html';
+  };
+</script>
+</body>
+</html>

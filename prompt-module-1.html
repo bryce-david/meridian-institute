@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 1: The Art and Science of Prompting — Prompt Engineering Mastery — Meridian Institute of AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#B45309;--accent-dim:rgba(180,83,9,0.1);--nav-bg:rgba(8,8,8,0.9);--callout-bg:rgba(180,83,9,0.07);--callout-border:rgba(180,83,9,0.25);--good-bg:rgba(34,197,94,0.07);--good-border:rgba(34,197,94,0.2);--warn-bg:rgba(251,146,60,0.07);--warn-border:rgba(251,146,60,0.2);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#92400E;--accent-dim:rgba(146,64,14,0.08);--nav-bg:rgba(250,250,248,0.9);--callout-bg:rgba(146,64,14,0.05);--callout-border:rgba(146,64,14,0.2);--good-bg:rgba(22,163,74,0.06);--good-border:rgba(22,163,74,0.2);--warn-bg:rgba(234,88,12,0.05);--warn-border:rgba(234,88,12,0.2);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}html{scroll-behavior:smooth;}body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.7;overflow-x:hidden;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}.nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}.nav-back{font-size:13px;color:var(--text-2);text-decoration:none;}.nav-label{font-size:13px;color:var(--text-3);}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;}
+  .progress-bar{position:fixed;top:60px;left:0;right:0;z-index:99;height:2px;background:var(--border);}.progress-fill{height:100%;background:var(--accent);width:0%;}
+  .page-wrapper{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:100vh;padding-top:62px;}
+  .sidebar{position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto;border-right:1px solid var(--border);padding:32px 24px;background:var(--bg-2);}
+  .sidebar-course{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;}.sidebar-course-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+  .sidebar-module{margin-bottom:4px;}.sidebar-module-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:13px;color:var(--text-2);text-decoration:none;transition:all 0.2s;line-height:1.4;}
+  .sidebar-module-link:hover{background:var(--bg-3);color:var(--text);}.sidebar-module-link.active{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-num{font-size:11px;font-weight:500;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--bg-4);color:var(--text-3);}
+  .sidebar-module-link.active .sidebar-num{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-divider{height:1px;background:var(--border);margin:20px 0;}
+  .sidebar-progress-label{font-size:12px;color:var(--text-3);margin-bottom:8px;display:flex;justify-content:space-between;}
+  .sidebar-progress-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}.sidebar-progress-fill{height:100%;background:var(--accent);border-radius:2px;}
+  main{display:block;min-width:0;}.content{max-width:760px;width:100%;padding:60px 64px 140px;margin:0 auto;}
+  .module-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+  .module-tag{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(180,83,9,0.2);padding:4px 12px;border-radius:100px;}
+  .module-meta{font-size:12px;color:var(--text-3);}
+  h1{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1.05;letter-spacing:-0.02em;margin-bottom:24px;}
+  .intro-text{font-size:19px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+  h2{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:400;color:var(--text);margin:52px 0 18px;line-height:1.2;}
+  p{font-size:16px;font-weight:300;color:var(--text-2);line-height:1.8;margin-bottom:20px;}strong{font-weight:500;color:var(--text);}
+  ul,ol{margin:0 0 20px 22px;color:var(--text-2);}li{font-size:16px;font-weight:300;line-height:1.8;margin-bottom:8px;}
+  .callout{background:var(--callout-bg);border:1px solid var(--callout-border);border-radius:12px;padding:24px 28px;margin:32px 0;}.callout-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}.callout p{margin:0;font-size:15px;color:var(--text-2);}.callout p+p{margin-top:12px;}
+  .good{background:var(--good-bg);border:1px solid var(--good-border);border-radius:12px;padding:24px 28px;margin:24px 0;}.good-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#22c55e;margin-bottom:10px;}.good p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn{background:var(--warn-bg);border:1px solid var(--warn-border);border-radius:12px;padding:24px 28px;margin:24px 0;}.warn-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#fb923c;margin-bottom:10px;}.warn p{margin:0;font-size:15px;color:var(--text-2);}
+  .principle-list{display:flex;flex-direction:column;gap:12px;margin:24px 0;}.principle{background:var(--bg-2);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:0 12px 12px 0;padding:20px 24px;}.principle-title{font-size:15px;font-weight:500;color:var(--text);margin-bottom:6px;}.principle-desc{font-size:14px;color:var(--text-2);line-height:1.65;margin:0;}
+  .code-block{background:#0d1117;border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:20px 24px;margin:24px 0;font-family:monospace;font-size:13px;color:#e6edf3;overflow-x:auto;line-height:1.7;white-space:pre;}
+  .cta-box{background:var(--accent-dim);border:1px solid rgba(180,83,9,0.2);border-radius:16px;padding:40px;text-align:center;margin:48px 0;}
+  .cta-box h3{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:400;color:var(--text);margin-bottom:12px;}
+  .cta-box p{color:var(--text-2);font-size:16px;margin:0 0 24px;}
+  .cta-btn{display:inline-block;padding:12px 28px;background:var(--accent);color:#fff;border-radius:8px;text-decoration:none;font-size:14px;font-weight:500;transition:opacity 0.2s;}.cta-btn:hover{opacity:0.88;}
+  .sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:var(--bg-2);border-top:1px solid var(--border-2);padding:14px 5%;display:flex;align-items:center;justify-content:space-between;gap:16px;backdrop-filter:blur(12px);}
+  .sticky-bar-track{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}.sticky-bar-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.2s;width:0%;}
+  .sticky-bar-label{font-size:12px;color:var(--text-3);white-space:nowrap;}
+  .sticky-bar-btn{padding:10px 20px;border-radius:8px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;background:var(--accent);color:#fff;border:none;cursor:pointer;white-space:nowrap;transition:opacity 0.2s;display:none;}.sticky-bar-btn:hover{opacity:0.88;}
+  .sticky-bar-reading{font-size:12px;color:var(--text-3);white-space:nowrap;}
+  @media(max-width:900px){.page-wrapper{grid-template-columns:1fr;}.sidebar{display:none;}.content{padding:40px 24px 120px;}h1{font-size:38px;}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="courses.html" class="nav-back">← Prompt Engineering Mastery</a>
+    <div class="nav-divider"></div>
+    <span class="nav-label">Module 1</span>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">☀</span></button>
+</nav>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+<div class="page-wrapper">
+<aside class="sidebar">
+  <div class="sidebar-course">Expert Track</div>
+  <div class="sidebar-course-name">Prompt Engineering Mastery</div>
+  <div class="sidebar-module"><a href="prompt-module-1.html" class="sidebar-module-link active"><span class="sidebar-num">1</span>The Art and Science of Prompting</a></div>
+  <div class="sidebar-module"><a href="prompt-module-2.html" class="sidebar-module-link"><span class="sidebar-num">2</span>Instruction Clarity and Specificity</a></div>
+  <div class="sidebar-module"><a href="prompt-module-3.html" class="sidebar-module-link"><span class="sidebar-num">3</span>Role Assignment and Context Setting</a></div>
+  <div class="sidebar-module"><a href="prompt-module-4.html" class="sidebar-module-link"><span class="sidebar-num">4</span>Few-Shot and Chain-of-Thought</a></div>
+  <div class="sidebar-module"><a href="prompt-module-5.html" class="sidebar-module-link"><span class="sidebar-num">5</span>System Prompts and Meta-Instructions</a></div>
+  <div class="sidebar-module"><a href="prompt-module-6.html" class="sidebar-module-link"><span class="sidebar-num">6</span>Advanced Reasoning Techniques</a></div>
+  <div class="sidebar-module"><a href="prompt-module-7.html" class="sidebar-module-link"><span class="sidebar-num">7</span>Prompt Chaining and Decomposition</a></div>
+  <div class="sidebar-module"><a href="prompt-module-8.html" class="sidebar-module-link"><span class="sidebar-num">8</span>Prompting for Code and Technical Tasks</a></div>
+  <div class="sidebar-module"><a href="prompt-module-9.html" class="sidebar-module-link"><span class="sidebar-num">9</span>Adversarial Prompting and Red-Teaming</a></div>
+  <div class="sidebar-module"><a href="prompt-module-10.html" class="sidebar-module-link"><span class="sidebar-num">10</span>Building Prompt Libraries</a></div>
+  <div class="sidebar-module"><a href="quiz-prompt.html" class="sidebar-module-link" style="color:var(--accent);margin-top:4px;"><span class="sidebar-num" style="background:var(--accent-dim);color:var(--accent);">✦</span>Final Assessment</a></div>
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-progress-label"><span>Course progress</span><span style="color:var(--accent);">1 / 10</span></div>
+  <div class="sidebar-progress-track"><div class="sidebar-progress-fill" style="width:10%;"></div></div>
+</aside>
+<main>
+<div class="content">
+  <div class="module-eyebrow"><span class="module-tag">Module 1 · Expert Track</span><span class="module-meta">15 min read · Prompt Engineering Mastery</span></div>
+  <h1>The Art and Science of Prompting</h1>
+  <p class="intro-text">Prompt engineering is the discipline of communicating with large language models precisely enough that you get what you actually want — and it is simultaneously one of the highest-leverage skills you can develop in the current era of AI. This module establishes the conceptual foundations: what a prompt really is, why it has such dramatic effects on model behavior, and how to build the mental model you need to become an expert practitioner.</p>
+
+  <h2>What Prompting Actually Is</h2>
+  <p>When you type a message to a language model, you are not issuing a command to a database, nor are you programming a deterministic function. You are providing a <strong>context window</strong> — a sequence of tokens — that the model uses to compute a probability distribution over what token should come next. This next-token prediction process, repeated thousands of times, produces the response you see.</p>
+  <p>This sounds mechanical, but the implications are profound. The model has no goals, no memory between sessions, no understanding of "what you meant" beyond what you wrote. Everything the model knows about your situation, your needs, your constraints, and your desired output must be inferred from the text you provide. Prompting is therefore the art of constructing that context window so skillfully that the most probable continuation — the model's output — is exactly what you need.</p>
+  <p>This is a fundamentally different paradigm from traditional software interfaces. You are not selecting from menus or calling APIs with typed parameters. You are communicating in natural language, which is inherently ambiguous, and you are doing so with a system trained on billions of examples of human text. The model has absorbed patterns of how humans communicate tasks, provide examples, signal constraints, and expect responses. Skilled prompting means understanding those patterns and using them deliberately.</p>
+
+  <div class="callout">
+    <div class="callout-label">Core Mental Model</div>
+    <p>A language model is a next-token predictor. It does not "understand" your prompt — it predicts the most statistically coherent continuation given everything in its context window. Your prompt is the entire world the model can see. Design it accordingly.</p>
+  </div>
+
+  <h2>The Next-Token Predictor Mental Model</h2>
+  <p>Understanding the next-token predictor model is not just an academic exercise — it changes how you think about prompt design in concrete ways. Consider what happens when you ask: <em>"What is the capital of France?"</em> The model does not look up an answer. It recognizes this as a pattern that appears millions of times in training data, always followed by the word "Paris," and predicts that continuation. It works because the training data contains reliable signal.</p>
+  <p>Now consider a vaguer query: <em>"Tell me about leadership."</em> The model again predicts the most probable continuation — but "what comes after a prompt about leadership" could be an essay, a list of tips, a historical analysis, a business article, or a philosophical treatise. The model has seen all of these follow similar prompts. It makes a choice based on subtle cues in your phrasing, but the choice is largely arbitrary. You get the average of what humans have written about leadership, not what you specifically need.</p>
+  <p>This is why prompt quality matters so dramatically. A vague prompt causes the model to average over an enormous space of possible continuations. A specific, well-structured prompt narrows that space sharply, directing the model toward the exact type of output you need. Every word in your prompt is a signal that shifts the probability distribution of the response.</p>
+
+  <h2>Why Prompt Quality Drives Output Quality</h2>
+  <p>The relationship between prompt quality and output quality is not linear — it is more like a threshold phenomenon. Below a certain level of clarity, you get outputs that are generic, off-target, or structurally wrong. Above that threshold, small improvements in prompt design produce dramatic improvements in usefulness. The difference between a mediocre prompt and an expert prompt is often not complexity — it is precision about three things: <strong>task, context, and format</strong>.</p>
+
+  <div class="principle-list">
+    <div class="principle">
+      <div class="principle-title">Task Precision</div>
+      <div class="principle-desc">What exactly do you want the model to do? Not "write something about X" but "analyze X from the perspective of Y, focusing on Z, and identifying three actionable recommendations."</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Context Richness</div>
+      <div class="principle-desc">What does the model need to know that it cannot infer from the task alone? Who is the audience? What constraints apply? What has already been tried? What matters most?</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Format Specification</div>
+      <div class="principle-desc">What should the output look like? Length, structure, tone, level of technicality, whether to use headers or bullets, whether to include caveats — all of these can be specified and should be.</div>
+    </div>
+  </div>
+
+  <h2>What Makes a Good Prompt vs. a Bad Prompt</h2>
+  <p>Bad prompts share common failure modes. They are ambiguous about the task. They omit context the model needs. They do not specify a format, leaving the model to guess. They describe what they want without specifying what they do not want. They are either too brief (giving the model nothing to work with) or too long and disorganized (burying the actual instruction in noise).</p>
+
+  <div class="warn">
+    <div class="warn-label">Bad Prompt Example</div>
+    <p>"Write a summary of the meeting."</p>
+    <p>What meeting? What kind of summary — action items, decisions, full narrative? For whom — internal team or executive? How long? What format? This prompt forces the model to guess everything important.</p>
+  </div>
+
+  <div class="good">
+    <div class="good-label">Good Prompt Example</div>
+    <p>"You are an executive assistant. Below are raw notes from a 45-minute product strategy meeting. Write a 200-word summary for the VP of Product that covers: (1) the three decisions made, (2) the two open questions that need resolution, and (3) any assigned action items with owner and deadline. Use a professional tone and a structured format with labeled sections."</p>
+    <p>This prompt specifies role, task, input, audience, length, content requirements, tone, and format. The model has essentially no room to produce the wrong kind of output.</p>
+  </div>
+
+  <p>Good prompts are not necessarily long — they are <strong>complete</strong>. They provide exactly the information needed to eliminate ambiguity about task, context, and format. Sometimes that takes two sentences. Sometimes it takes two paragraphs. The skill is knowing what to include and what to leave out.</p>
+
+  <h2>The Information Asymmetry Problem</h2>
+  <p>One of the central challenges of prompting is what we might call the information asymmetry problem. You know what you want. The model does not — and cannot — unless you tell it. You know that "summarize this" means "capture the key argument in 100 words for a non-technical reader." The model only knows that "summarize this" is a word that precedes a document.</p>
+  <p>Expert prompters have developed a habit of mind: before submitting any prompt, they ask themselves, "What would I need to know about this task if I were a smart colleague who just joined the project?" That question surfaces the contextual information that feels obvious to you but is invisible to the model. Answering it — in the prompt — is often the difference between a useful output and a frustrating one.</p>
+
+  <h2>Prompting as a Skill with Real Leverage</h2>
+  <p>It would be easy to dismiss prompting as a temporary workaround — something we do only because AI is not yet smart enough to read our minds. But this misunderstands the nature of the skill. Even as models improve, the fundamental communication challenge remains. A more powerful model given a vague prompt will produce more fluent nonsense. The leverage from clear prompting grows as model capability grows, because a more powerful model can do more with a well-specified task.</p>
+  <p>Consider the economics: a prompt engineer who consistently gets 80% of the value from a model interaction — versus someone who gets 20% — is providing four times the value from the same infrastructure. At scale, across an organization running hundreds of AI interactions per day, the difference is enormous. Prompt engineering is not just a personal productivity skill. It is an organizational capability that compounds.</p>
+
+  <div class="callout">
+    <div class="callout-label">The Leverage Principle</div>
+    <p>A poorly prompted GPT-4 class model produces worse outputs than a well-prompted GPT-3.5 class model on many tasks. Model capability and prompt quality multiply each other. Investing in prompt skill is investing in the effectiveness of every AI system you touch.</p>
+  </div>
+
+  <h2>The Structure of This Course</h2>
+  <p>This course is designed to take you from a solid understanding of prompting basics to true mastery — the ability to engineer prompts for complex, high-stakes, production contexts. Each module builds on the last, and the techniques become progressively more sophisticated.</p>
+  <p><strong>Modules 2 and 3</strong> cover the foundations: clarity, specificity, role assignment, and context setting. These are the techniques every prompt engineer must master before anything else. <strong>Modules 4 and 5</strong> go deeper: few-shot learning, chain-of-thought reasoning, and the anatomy of professional system prompts. <strong>Modules 6 and 7</strong> introduce advanced techniques: tree of thought, ReAct, self-critique, and prompt chaining for complex tasks. <strong>Module 8</strong> applies all of these specifically to code and technical tasks. <strong>Module 9</strong> covers red-teaming and adversarial testing — how to find the failure modes in your prompts before they find you. <strong>Module 10</strong> covers the operational layer: managing prompts as organizational assets, version control, evaluation frameworks, and what comes next in the field.</p>
+  <p>Throughout, the emphasis is on <strong>principles over recipes</strong>. Specific prompt templates become stale as models change. Principles about how models process context, how specificity reduces ambiguity, and how structure guides reasoning remain true across model generations. Learn the principles and you can engineer prompts for any model, any task, any context.</p>
+
+  <h2>How to Engage With This Material</h2>
+  <p>The most common mistake learners make with prompt engineering material is passive consumption. Reading about a technique is not the same as developing the skill. For each module, you should be actively experimenting: take the concepts, apply them to a real task you care about, compare the outputs, and iterate. The feedback loop between prompt and output is the actual teacher — this course just gives you the conceptual framework to understand what you are observing.</p>
+  <p>Keep a prompt journal. When you discover a phrasing that consistently produces better outputs, write it down with a note about why it works. When a technique fails, note what you expected and what happened instead. This deliberate practice is how you build the internalized intuition that separates novice from expert prompters.</p>
+
+  <div class="callout">
+    <div class="callout-label">Before You Continue</div>
+    <p>As you move through this course, maintain a working document where you capture your best prompts, your discoveries about what works and what does not, and your questions. By module 10, that document will be the beginning of your personal prompt library — the most practical artifact you can build from this course.</p>
+  </div>
+
+</div>
+</main>
+</div>
+<div class="sticky-bar">
+  <div class="sticky-bar-reading" id="sticky-reading">Read to the end to unlock the next module</div>
+  <div class="sticky-bar-track"><div class="sticky-bar-fill" id="sticky-fill"></div></div>
+  <div class="sticky-bar-label" id="sticky-label">0%</div>
+  <button class="sticky-bar-btn" id="sticky-btn" onclick="completeAndNext()">Module 2: Instruction Clarity →</button>
+</div>
+<script type="module">
+  import{initializeApp}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import{getAuth,onAuthStateChanged}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import{getFirestore,doc,setDoc,arrayUnion}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  const app=initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+  const auth=getAuth(app);const db=getFirestore(app);let currentUser=null;
+  onAuthStateChanged(auth,u=>{currentUser=u;});
+  window.toggleTheme=function(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='☾'):(h.setAttribute('data-theme','dark'),i.textContent='☀');};
+  window.addEventListener('scroll',()=>{const d=document.documentElement,s=d.scrollTop||document.body.scrollTop,t=d.scrollHeight-d.clientHeight;document.getElementById('progress').style.width=(s/t*100)+'%';});
+  let unlocked=false;
+  function updateScroll(){const pct=Math.min(100,Math.round(((window.scrollY+window.innerHeight)/document.documentElement.scrollHeight)*100));const fill=document.getElementById('sticky-fill'),label=document.getElementById('sticky-label'),btn=document.getElementById('sticky-btn'),reading=document.getElementById('sticky-reading');if(fill)fill.style.width=pct+'%';if(label)label.textContent=pct+'%';if(pct>=95&&!unlocked){unlocked=true;if(btn)btn.style.display='block';if(reading)reading.style.display='none';if(fill)fill.style.background='#22c55e';if(label)label.style.color='#22c55e';}}
+  window.addEventListener('scroll',updateScroll);updateScroll();
+  window.completeAndNext=async function(){if(currentUser){try{await setDoc(doc(db,'users',currentUser.uid),{promptModules:arrayUnion('m1')},{merge:true});}catch(e){}}window.location.href='prompt-module-2.html';};
+</script>
+</body>
+</html>

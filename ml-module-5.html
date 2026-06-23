@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 5: Neural Networks and Deep Learning — Machine Learning Explained — Meridian Institute of AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#065F46;--accent-dim:rgba(6,95,70,0.1);--accent-dim2:rgba(6,95,70,0.05);--nav-bg:rgba(8,8,8,0.9);--callout-bg:rgba(6,95,70,0.07);--callout-border:rgba(6,95,70,0.25);--good-bg:rgba(34,197,94,0.07);--good-border:rgba(34,197,94,0.2);--warn-bg:rgba(251,146,60,0.07);--warn-border:rgba(251,146,60,0.2);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#064E3B;--accent-dim:rgba(6,78,59,0.08);--accent-dim2:rgba(6,78,59,0.04);--nav-bg:rgba(250,250,248,0.9);--callout-bg:rgba(6,78,59,0.05);--callout-border:rgba(6,78,59,0.2);--good-bg:rgba(22,163,74,0.06);--good-border:rgba(22,163,74,0.2);--warn-bg:rgba(234,88,12,0.05);--warn-border:rgba(234,88,12,0.2);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;overflow-x:hidden;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.7;overflow-x:hidden;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}
+  .nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}
+  .nav-back{font-size:13px;color:var(--text-2);text-decoration:none;transition:color 0.2s;}
+  .nav-back:hover{color:var(--text);}
+  .nav-label{font-size:13px;color:var(--text-3);}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;transition:all 0.2s;}
+  .theme-toggle:hover{background:var(--bg-3);color:var(--text);}
+  .progress-bar{position:fixed;top:60px;left:0;right:0;z-index:99;height:2px;background:var(--border);}
+  .progress-fill{height:100%;background:var(--accent);width:0%;transition:width 0.1s;}
+  .page-wrapper{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:100vh;padding-top:62px;overflow:hidden;}
+  .sidebar{position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto;border-right:1px solid var(--border);padding:32px 24px;background:var(--bg-2);}
+  .sidebar-course{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;}
+  .sidebar-course-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+  .sidebar-module{margin-bottom:4px;}
+  .sidebar-module-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:13px;color:var(--text-2);text-decoration:none;transition:all 0.2s;line-height:1.4;}
+  .sidebar-module-link:hover{background:var(--bg-3);color:var(--text);}
+  .sidebar-module-link.active{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-num{font-size:11px;font-weight:500;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--bg-4);color:var(--text-3);}
+  .sidebar-module-link.active .sidebar-num{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-divider{height:1px;background:var(--border);margin:20px 0;}
+  .sidebar-progress-label{font-size:12px;color:var(--text-3);margin-bottom:8px;display:flex;justify-content:space-between;}
+  .sidebar-progress-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sidebar-progress-fill{height:100%;width:50%;background:var(--accent);border-radius:2px;}
+  main{display:block;min-width:0;overflow:hidden;}
+  .content{max-width:760px;width:100%;padding:60px 64px 140px;margin:0 auto;}
+  .module-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+  .module-tag{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(6,95,70,0.2);padding:4px 12px;border-radius:100px;}
+  .module-meta{font-size:12px;color:var(--text-3);}
+  h1{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1.05;letter-spacing:-0.02em;color:var(--text);margin-bottom:24px;}
+  .intro-text{font-size:19px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+  h2{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:400;color:var(--text);margin:52px 0 18px;line-height:1.2;}
+  h3{font-size:16px;font-weight:500;color:var(--text);margin:32px 0 12px;}
+  p{font-size:16px;font-weight:300;color:var(--text-2);line-height:1.8;margin-bottom:20px;}
+  strong{font-weight:500;color:var(--text);}
+  em{font-style:italic;}
+  ul,ol{margin:0 0 20px 22px;color:var(--text-2);}
+  li{font-size:16px;font-weight:300;line-height:1.8;margin-bottom:8px;}
+  .callout{background:var(--callout-bg);border:1px solid var(--callout-border);border-radius:12px;padding:24px 28px;margin:32px 0;}
+  .callout-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+  .callout p{margin:0;font-size:15px;color:var(--text-2);}
+  .callout p+p{margin-top:12px;}
+  .good{background:var(--good-bg);border:1px solid var(--good-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .good-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#22c55e;margin-bottom:10px;}
+  .good p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn{background:var(--warn-bg);border:1px solid var(--warn-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .warn-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#fb923c;margin-bottom:10px;}
+  .warn p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn p+p{margin-top:12px;}
+  .analogy{background:var(--bg-2);border:1px solid var(--border);border-radius:12px;padding:28px;margin:28px 0;}
+  .analogy-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-3);margin-bottom:12px;}
+  .analogy p{margin:0;font-size:15px;color:var(--text-2);}
+  .principle-list{display:flex;flex-direction:column;gap:12px;margin:24px 0;}
+  .principle{background:var(--bg-2);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:0 12px 12px 0;padding:20px 24px;}
+  .principle-title{font-size:15px;font-weight:500;color:var(--text);margin-bottom:6px;}
+  .principle-desc{font-size:14px;color:var(--text-2);line-height:1.65;margin:0;}
+  .sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:var(--bg-2);border-top:1px solid var(--border-2);padding:14px 5%;display:flex;align-items:center;justify-content:space-between;gap:16px;backdrop-filter:blur(12px);}
+  .sticky-bar-track{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sticky-bar-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.2s;width:0%;}
+  .sticky-bar-label{font-size:12px;color:var(--text-3);white-space:nowrap;min-width:60px;text-align:right;}
+  .sticky-bar-btn{padding:10px 20px;border-radius:8px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;background:var(--accent);color:#fff;border:none;cursor:pointer;white-space:nowrap;transition:opacity 0.2s;display:none;}
+  .sticky-bar-btn:hover{opacity:0.88;}
+  .sticky-bar-reading{font-size:12px;color:var(--text-3);white-space:nowrap;}
+  @media(max-width:900px){.page-wrapper{grid-template-columns:1fr;}.sidebar{display:none;}.content{padding:40px 24px 120px;}h1{font-size:38px;}}
+  @media(max-width:600px){.content{padding:28px 16px 120px;}h1{font-size:30px;}h2{font-size:24px;}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="courses.html" class="nav-back">← Machine Learning Explained</a>
+    <div class="nav-divider"></div>
+    <span class="nav-label">Module 5</span>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">☀</span></button>
+</nav>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+
+<div class="page-wrapper">
+<aside class="sidebar">
+  <div class="sidebar-course">Expert Track</div>
+  <div class="sidebar-course-name">Machine Learning Explained</div>
+  <div class="sidebar-module"><a href="ml-module-1.html" class="sidebar-module-link"><span class="sidebar-num">1</span>How Machines Learn</a></div>
+  <div class="sidebar-module"><a href="ml-module-2.html" class="sidebar-module-link"><span class="sidebar-num">2</span>Data: The ML Foundation</a></div>
+  <div class="sidebar-module"><a href="ml-module-3.html" class="sidebar-module-link"><span class="sidebar-num">3</span>Supervised Learning Demystified</a></div>
+  <div class="sidebar-module"><a href="ml-module-4.html" class="sidebar-module-link"><span class="sidebar-num">4</span>Unsupervised Learning</a></div>
+  <div class="sidebar-module"><a href="ml-module-5.html" class="sidebar-module-link active"><span class="sidebar-num">5</span>Neural Networks and Deep Learning</a></div>
+  <div class="sidebar-module"><a href="ml-module-6.html" class="sidebar-module-link"><span class="sidebar-num">6</span>NLP and Transformers</a></div>
+  <div class="sidebar-module"><a href="ml-module-7.html" class="sidebar-module-link"><span class="sidebar-num">7</span>Computer Vision</a></div>
+  <div class="sidebar-module"><a href="ml-module-8.html" class="sidebar-module-link"><span class="sidebar-num">8</span>Model Evaluation</a></div>
+  <div class="sidebar-module"><a href="ml-module-9.html" class="sidebar-module-link"><span class="sidebar-num">9</span>ML in Production</a></div>
+  <div class="sidebar-module"><a href="ml-module-10.html" class="sidebar-module-link"><span class="sidebar-num">10</span>Foundation Models and the Frontier</a></div>
+  <div class="sidebar-module"><a href="quiz-ml.html" class="sidebar-module-link" style="color:var(--accent);margin-top:4px;"><span class="sidebar-num" style="background:var(--accent-dim);color:var(--accent);">✦</span>Final Assessment</a></div>
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-progress-label"><span>Course progress</span><span style="color:var(--accent);">5 / 10</span></div>
+  <div class="sidebar-progress-track"><div class="sidebar-progress-fill"></div></div>
+</aside>
+
+<main>
+<div class="content">
+  <div class="module-eyebrow"><span class="module-tag">Module 5 · Expert Track</span><span class="module-meta">25 min read · Machine Learning Explained</span></div>
+  <h1>Neural Networks and Deep Learning</h1>
+
+  <p class="intro-text">Neural networks are the engine behind almost every remarkable AI achievement of the past decade — image recognition, speech synthesis, language generation, protein folding. They sound mysterious, possibly biological, certainly complex. The reality is both more mundane and more profound: at their core, neural networks are a specific mathematical architecture for learning. Understanding them conceptually, without the mathematics, gives you genuine insight into why they work and when they don't.</p>
+
+  <h2>The biological story is a metaphor, not a mechanism</h2>
+  <p>Neural networks were inspired by the brain. The brain contains roughly 86 billion neurons, each connected to thousands of others. When enough connected neurons fire simultaneously, they activate a target neuron. Early AI researchers asked: could we build something structurally similar in software?</p>
+  <p>The answer was yes — but the "similarity" is extremely superficial. An artificial neuron is nothing like a biological one. Real neurons are electrochemical organs that change over time, vary in type, and interact with hormones and glial cells in ways science still doesn't fully understand. An artificial neuron is a simple mathematical function: it takes in some numbers, multiplies each by a weight, adds the results together, and passes the sum through a simple transformation. That's it.</p>
+  <p>The brain metaphor is useful for intuition but dangerous if taken literally. Neural networks do not "think." They do not have neurons that represent memories or concepts in the way brain neurons do. They are sophisticated pattern-matching engines. Keeping this distinction clear prevents a lot of misconceptions about what these systems can and cannot do.</p>
+
+  <div class="analogy">
+    <div class="analogy-label">The dimmer switch analogy</div>
+    <p>Imagine a room with 1,000 dimmer switches, each controlling a light. To make a decision — say, whether a photo contains a dog — you want a single bright bulb to light up. Each dimmer is set to a value (how much it contributes), and each light's brightness feeds into the next room's dimmers. The whole building is arranged so that after many rooms of dimmer-and-light combinations, the final room produces one bright answer. Training the network means adjusting the billions of dimmer positions until the building reliably produces the right final bulb for any input you give it.</p>
+  </div>
+
+  <h2>What a layer actually does</h2>
+  <p>A neural network is organized into layers. The first layer receives raw input — pixel values for an image, numbers for a dataset. The last layer produces the output — a category, a number, a word. Every layer in between is transforming the representation, building up from simple raw features to complex meaningful ones.</p>
+  <p>Think about what happens when you recognize a face. Your visual system doesn't match the whole face to stored templates. It first detects edges and contrasts, then combines those into shapes like curves and corners, then assembles those into features like eyes and noses, then recognizes the configuration of those features as a particular person. Each stage builds on the last.</p>
+  <p>Deep neural networks do something analogous. Early layers detect simple patterns — edges, basic textures, small local variations. Middle layers combine those into mid-level features — parts of objects, characteristic shapes. Late layers combine those into high-level concepts — "this is a labrador's ear" or "this is a handwritten 7." The word "deep" in deep learning just means "many layers" — deep enough for this hierarchy of abstraction to emerge naturally from training.</p>
+
+  <h2>Activation functions: the essential ingredient</h2>
+  <p>Here's a critical subtlety. If each layer just multiplies inputs by weights and adds them up, and the next layer does the same, then the whole network — no matter how many layers — is equivalent to a single layer doing a single multiplication. It would be trivially simple and almost useless.</p>
+  <p>Activation functions fix this. After each neuron computes its weighted sum, it passes the result through a small nonlinear function. The most popular is the ReLU (Rectified Linear Unit), which simply replaces any negative number with zero and leaves positive numbers unchanged. This tiny operation, applied after every single neuron in the network, is what gives deep learning its expressive power. It introduces the nonlinearity that lets the network learn curved, complex, non-straight decision boundaries in data.</p>
+  <p>Without activation functions, you could stack a thousand layers and the network would still only be able to draw straight lines through data. With them, it can learn essentially any shape, any pattern, any function — given enough data and training time.</p>
+
+  <div class="callout">
+    <div class="callout-label">The universal approximation insight</div>
+    <p>Mathematicians proved that a neural network with even a single hidden layer and nonlinear activations can approximate any continuous function to arbitrary accuracy — given enough neurons. This is called the universal approximation theorem. The practical implication: neural networks are not limited to certain types of patterns. They're general-purpose pattern-learning machines. The challenge is not the architecture's expressiveness but getting enough data to train it well and keeping it from memorizing rather than generalizing.</p>
+  </div>
+
+  <h2>Backpropagation: blame assignment through the network</h2>
+  <p>Training a neural network means adjusting millions of weights so the network makes better predictions. The question is: when the network makes a mistake, which of the millions of weights should be changed, and by how much?</p>
+  <p>Backpropagation answers this through the chain rule of calculus — but you don't need the math to understand the concept. Think of it as blame assignment. The network makes a prediction. That prediction is compared to the correct answer. The difference — the error — is measured. Now the error signal is sent backwards through the network, layer by layer, to the input.</p>
+  <p>At each layer, the algorithm asks: "How much did each weight in this layer contribute to the final error?" A weight that had a large influence on a bad prediction gets most of the blame. Weights that barely mattered get little blame. Based on blame level, each weight is nudged slightly in the direction that would have reduced the error. Do this for millions of examples, and the weights gradually shift toward values that produce correct predictions.</p>
+  <p>The genius of backpropagation is that it works backwards efficiently. You don't have to guess which weights caused the error. The mathematics of how predictions are computed can be run in reverse — errors propagate backward through the same structure that predictions flow forward through. It's slow, but it's exact and reliable. This algorithm, formalized in the 1980s, is the core of how virtually all neural networks are trained today.</p>
+
+  <div class="analogy">
+    <div class="analogy-label">The restaurant kitchen analogy</div>
+    <p>A restaurant sends out a dish that a critic pans. The manager (backpropagation) needs to figure out what went wrong. They trace the blame backwards: the plate presentation was bad — whose fault? The final plating chef. The sauce was wrong — who made it? The sous chef. The stock was over-reduced — who did that? The line cook on stock duty. Each person gets feedback proportional to their contribution to the bad outcome, and each adjusts their technique accordingly. Run this process over thousands of dishes and every station gets progressively better at their specific role.</p>
+  </div>
+
+  <h2>Why depth matters: hierarchical feature learning</h2>
+  <p>You might wonder: why not just use one very wide layer instead of many deep layers? The answer is that depth enables hierarchical composition in a way width cannot replicate efficiently.</p>
+  <p>Consider language. The sentence "The bank by the river was steep" is unambiguous. "The bank called about my loan" is also unambiguous. But the word "bank" alone is ambiguous. Understanding it requires context. A shallow network would need to explicitly see every possible word combination to learn this. A deep network can learn, at lower layers, what "bank" means in isolation, then learn at higher layers how context modifies meaning. It reuses the same lower-level understanding across countless higher-level situations.</p>
+  <p>This is why deep models trained on large datasets dramatically outperform shallow models. The hierarchy of abstraction that depth enables isn't just more powerful — it's more efficient. Features learned at one layer are reused by all subsequent layers. The network isn't re-learning from scratch how to detect edges every time it needs to recognize an object; it learned edges once and builds on them everywhere.</p>
+
+  <h2>Overfitting and dropout: when the network memorizes instead of learns</h2>
+  <p>A neural network with millions of parameters, trained on a finite dataset, can achieve a perverse form of "success": it memorizes the training data perfectly. It learns the exact correct answer for every training example — including the irrelevant quirks and coincidences of that specific dataset — and produces meaningless garbage on new examples.</p>
+  <p>This is overfitting, and it's the central practical challenge of training large neural networks. Imagine a student who memorizes every practice exam verbatim instead of understanding the underlying concepts. They ace the practice tests but fail the actual exam when questions are phrased slightly differently.</p>
+  <p><strong>Dropout</strong> is one of the most elegant solutions. During training, at each step, a random fraction of neurons (typically 20-50%) are temporarily switched off — they neither receive inputs nor pass outputs. The network must learn to make correct predictions even when random parts of itself are unavailable. This forces every neuron to learn independently useful features rather than relying on co-conspirators. At test time, all neurons are active, but the redundant, more robust representations that dropout forced have made the network genuinely generalize.</p>
+
+  <h2>Batch normalization: keeping the signal alive</h2>
+  <p>As data flows through many layers, it can suffer from a subtle problem: the distribution of values getting progressively more extreme, or collapsing toward zero, making training unstable. Batch normalization addresses this by normalizing the values flowing through each layer — rescaling them so they maintain a consistent statistical distribution throughout training.</p>
+  <p>The effect is dramatic. Networks with batch normalization train faster, tolerate higher learning rates, and are less sensitive to weight initialization. It's one of the innovations that made training networks with hundreds of layers practical. Think of it as a quality-control station between every layer, ensuring the signal flowing through remains in a useful range rather than exploding or vanishing.</p>
+
+  <h2>Practical capabilities of deep learning today</h2>
+  <p>Deep learning's practical achievements are genuinely remarkable. In 2012, a deep neural network called AlexNet won the ImageNet competition, recognizing objects in photos with half the error rate of the previous best — a gap that shocked researchers who expected incremental progress. Since then, deep learning has exceeded human-level performance on many visual recognition benchmarks, enabled real-time speech recognition (Google Assistant, Siri, Alexa), powered the language models underlying GPT and Claude, discovered proteins structures that had stumped biologists for decades, and generated images, music, and video that were inconceivable ten years ago.</p>
+  <p>AlphaFold, DeepMind's deep learning system for protein structure prediction, arguably accelerated biology by decades. Tesla, Waymo, and Mobileye use deep neural networks as the core perception system for autonomous vehicles. Adobe's generative AI tools, Midjourney, DALL-E — all deep learning. The technology is no longer experimental; it's the infrastructure of the digital economy.</p>
+
+  <div class="good">
+    <div class="good-label">Where deep learning dominates</div>
+    <p>Deep learning is unambiguously the best approach for: anything with raw perceptual input (images, audio, video, text), tasks with massive datasets, problems where the relevant features are unknown in advance and must be discovered, and any domain where performance improvements at scale have continued to compound. The pattern is consistent: if you have enough data and enough compute, a deep neural network will outperform hand-engineered approaches on perceptual and sequential tasks.</p>
+  </div>
+
+  <h2>When NOT to use neural networks</h2>
+  <p>Deep learning has a justified reputation for solving hard problems, but it's regularly misapplied to problems that don't need it — and its limitations in those cases can be costly.</p>
+  <p><strong>Small datasets.</strong> Neural networks are data-hungry. A company with 500 customer records and a prediction problem should use logistic regression or a gradient boosted tree, not a neural network. Those simpler models generalize better from small samples and won't overfit the way a complex network will.</p>
+  <p><strong>When you need to explain your predictions.</strong> A regulatory compliance system that must explain to a borrower why their loan was denied cannot use a black-box neural network. Simpler interpretable models — decision trees, linear models — are legally and ethically required in many high-stakes domains.</p>
+  <p><strong>When compute is scarce.</strong> Deploying a large neural network on embedded hardware — a sensor, a microcontroller, an IoT device — requires significant optimization work. A simple rule-based system or a tiny classical model is often the correct engineering choice.</p>
+  <p><strong>When the relationship is simple and linear.</strong> If output is a straightforward function of input (revenue is 15% of sales volume), a neural network will learn this — but so will a linear regression in a fraction of the time, with better interpretability and lower maintenance burden. Reach for the simplest tool that solves the problem.</p>
+
+  <div class="warn">
+    <div class="warn-label">The complexity tax</div>
+    <p>Neural networks are not free. They require large datasets to train, significant compute to run, expert knowledge to debug, and are notoriously difficult to interpret when they fail. A model that gets 98% accuracy on your training distribution can fail spectacularly when input distribution shifts — and the failure mode is often silent and invisible until real damage is done. The question "should I use a neural network?" should always be answered by asking first whether simpler approaches have been genuinely tried and found insufficient.</p>
+  </div>
+
+</div>
+</main>
+</div>
+
+<div class="sticky-bar" id="sticky-bar">
+  <div class="sticky-bar-reading" id="sticky-reading">Read to the end to unlock the next module</div>
+  <div class="sticky-bar-track"><div class="sticky-bar-fill" id="sticky-fill"></div></div>
+  <div class="sticky-bar-label" id="sticky-label">0%</div>
+  <button class="sticky-bar-btn" id="sticky-btn" onclick="completeAndNext()">Module 6: NLP and Transformers →</button>
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import { getFirestore, doc, setDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  const app=initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+  const auth=getAuth(app);const db=getFirestore(app);
+  let currentUser=null;
+  onAuthStateChanged(auth,u=>{currentUser=u;});
+  window.toggleTheme=function(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='☾'):(h.setAttribute('data-theme','dark'),i.textContent='☀');};
+  window.addEventListener('scroll',()=>{const d=document.documentElement,s=d.scrollTop||document.body.scrollTop,t=d.scrollHeight-d.clientHeight;document.getElementById('progress').style.width=(s/t*100)+'%';});
+  let unlocked=false;
+  function updateScrollProgress(){
+    const pct=Math.min(100,Math.round(((window.scrollY+window.innerHeight)/document.documentElement.scrollHeight)*100));
+    const fill=document.getElementById('sticky-fill'),label=document.getElementById('sticky-label'),btn=document.getElementById('sticky-btn'),reading=document.getElementById('sticky-reading');
+    if(fill)fill.style.width=pct+'%';if(label)label.textContent=pct+'%';
+    if(pct>=95&&!unlocked){unlocked=true;if(btn)btn.style.display='block';if(reading)reading.style.display='none';if(fill)fill.style.background='#22c55e';if(label)label.style.color='#22c55e';}
+  }
+  window.addEventListener('scroll',updateScrollProgress);updateScrollProgress();
+  window.completeAndNext=async function(){
+    if(currentUser){try{await setDoc(doc(db,'users',currentUser.uid),{mlModules:arrayUnion('m5')},{merge:true});}catch(e){}}
+    window.location.href='ml-module-6.html';
+  };
+</script>
+</body>
+</html>

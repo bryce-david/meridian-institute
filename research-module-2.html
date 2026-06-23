@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 2: Literature Discovery and Synthesis — AI for Research and Academia — Meridian Institute of AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#064E3B;--accent-dim:rgba(6,78,59,0.1);--accent-dim2:rgba(6,78,59,0.05);--nav-bg:rgba(8,8,8,0.9);--callout-bg:rgba(6,78,59,0.07);--callout-border:rgba(6,78,59,0.25);--good-bg:rgba(34,197,94,0.07);--good-border:rgba(34,197,94,0.2);--warn-bg:rgba(251,146,60,0.07);--warn-border:rgba(251,146,60,0.2);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#065F46;--accent-dim:rgba(6,95,70,0.08);--accent-dim2:rgba(6,95,70,0.04);--nav-bg:rgba(250,250,248,0.9);--callout-bg:rgba(6,95,70,0.05);--callout-border:rgba(6,95,70,0.2);--good-bg:rgba(22,163,74,0.06);--good-border:rgba(22,163,74,0.2);--warn-bg:rgba(234,88,12,0.05);--warn-border:rgba(234,88,12,0.2);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;overflow-x:hidden;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.7;overflow-x:hidden;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}
+  .nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}
+  .nav-back{font-size:13px;color:var(--text-2);text-decoration:none;transition:color 0.2s;}
+  .nav-back:hover{color:var(--text);}
+  .nav-label{font-size:13px;color:var(--text-3);}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;transition:all 0.2s;}
+  .theme-toggle:hover{background:var(--bg-3);color:var(--text);}
+  .progress-bar{position:fixed;top:60px;left:0;right:0;z-index:99;height:2px;background:var(--border);}
+  .progress-fill{height:100%;background:var(--accent);width:0%;transition:width 0.1s;}
+  .page-wrapper{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:100vh;padding-top:62px;overflow:hidden;}
+  .sidebar{position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto;border-right:1px solid var(--border);padding:32px 24px;background:var(--bg-2);}
+  .sidebar-course{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;}
+  .sidebar-course-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+  .sidebar-module{margin-bottom:4px;}
+  .sidebar-module-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:13px;color:var(--text-2);text-decoration:none;transition:all 0.2s;line-height:1.4;}
+  .sidebar-module-link:hover{background:var(--bg-3);color:var(--text);}
+  .sidebar-module-link.active{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-num{font-size:11px;font-weight:500;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--bg-4);color:var(--text-3);}
+  .sidebar-module-link.active .sidebar-num{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-divider{height:1px;background:var(--border);margin:20px 0;}
+  .sidebar-progress-label{font-size:12px;color:var(--text-3);margin-bottom:8px;display:flex;justify-content:space-between;}
+  .sidebar-progress-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sidebar-progress-fill{height:100%;width:20%;background:var(--accent);border-radius:2px;}
+  main{display:block;min-width:0;overflow:hidden;}
+  .content{max-width:760px;width:100%;padding:60px 64px 140px;margin:0 auto;}
+  .module-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+  .module-tag{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(6,78,59,0.2);padding:4px 12px;border-radius:100px;}
+  .module-meta{font-size:12px;color:var(--text-3);}
+  h1{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1.05;letter-spacing:-0.02em;color:var(--text);margin-bottom:24px;}
+  .intro-text{font-size:19px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+  h2{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:400;color:var(--text);margin:52px 0 18px;line-height:1.2;}
+  h3{font-size:16px;font-weight:500;color:var(--text);margin:32px 0 12px;}
+  p{font-size:16px;font-weight:300;color:var(--text-2);line-height:1.8;margin-bottom:20px;}
+  strong{font-weight:500;color:var(--text);}
+  em{font-style:italic;}
+  ul,ol{margin:0 0 20px 22px;color:var(--text-2);}
+  li{font-size:16px;font-weight:300;line-height:1.8;margin-bottom:8px;}
+  .callout{background:var(--callout-bg);border:1px solid var(--callout-border);border-radius:12px;padding:24px 28px;margin:32px 0;}
+  .callout-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+  .callout p{margin:0;font-size:15px;color:var(--text-2);}
+  .callout p+p{margin-top:12px;}
+  .good{background:var(--good-bg);border:1px solid var(--good-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .good-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#22c55e;margin-bottom:10px;}
+  .good p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn{background:var(--warn-bg);border:1px solid var(--warn-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .warn-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#fb923c;margin-bottom:10px;}
+  .warn p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn p+p{margin-top:12px;}
+  .principle-list{display:flex;flex-direction:column;gap:12px;margin:24px 0;}
+  .principle{background:var(--bg-2);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:0 12px 12px 0;padding:20px 24px;}
+  .principle-title{font-size:15px;font-weight:500;color:var(--text);margin-bottom:6px;}
+  .principle-desc{font-size:14px;color:var(--text-2);line-height:1.65;margin:0;}
+  .sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:var(--bg-2);border-top:1px solid var(--border-2);padding:14px 5%;display:flex;align-items:center;justify-content:space-between;gap:16px;backdrop-filter:blur(12px);}
+  .sticky-bar-track{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sticky-bar-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.2s;width:0%;}
+  .sticky-bar-label{font-size:12px;color:var(--text-3);white-space:nowrap;min-width:60px;text-align:right;}
+  .sticky-bar-btn{padding:10px 20px;border-radius:8px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;background:var(--accent);color:#fff;border:none;cursor:pointer;white-space:nowrap;transition:opacity 0.2s;display:none;}
+  .sticky-bar-btn:hover{opacity:0.88;}
+  .sticky-bar-reading{font-size:12px;color:var(--text-3);white-space:nowrap;}
+  @media(max-width:900px){.page-wrapper{grid-template-columns:1fr;}.sidebar{display:none;}.content{padding:40px 24px 120px;}h1{font-size:38px;}}
+  @media(max-width:600px){.content{padding:28px 16px 120px;}h1{font-size:30px;}h2{font-size:24px;}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="courses.html" class="nav-back">← AI for Research and Academia</a>
+    <div class="nav-divider"></div>
+    <span class="nav-label">Module 2</span>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">☀</span></button>
+</nav>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+
+<div class="page-wrapper">
+<aside class="sidebar">
+  <div class="sidebar-course">Expert Track</div>
+  <div class="sidebar-course-name">AI for Research and Academia</div>
+  <div class="sidebar-module"><a href="research-module-1.html" class="sidebar-module-link"><span class="sidebar-num">1</span>AI as a Research Partner</a></div>
+  <div class="sidebar-module"><a href="research-module-2.html" class="sidebar-module-link active"><span class="sidebar-num">2</span>Literature Discovery and Synthesis</a></div>
+  <div class="sidebar-module"><a href="research-module-3.html" class="sidebar-module-link"><span class="sidebar-num">3</span>Research Writing with AI</a></div>
+  <div class="sidebar-module"><a href="research-module-4.html" class="sidebar-module-link"><span class="sidebar-num">4</span>Data Analysis and Visualization</a></div>
+  <div class="sidebar-module"><a href="research-module-5.html" class="sidebar-module-link"><span class="sidebar-num">5</span>Hypothesis Generation</a></div>
+  <div class="sidebar-module"><a href="research-module-6.html" class="sidebar-module-link"><span class="sidebar-num">6</span>Peer Review and Integrity</a></div>
+  <div class="sidebar-module"><a href="research-module-7.html" class="sidebar-module-link"><span class="sidebar-num">7</span>Citation Management</a></div>
+  <div class="sidebar-module"><a href="research-module-8.html" class="sidebar-module-link"><span class="sidebar-num">8</span>Communicating Research</a></div>
+  <div class="sidebar-module"><a href="research-module-9.html" class="sidebar-module-link"><span class="sidebar-num">9</span>Collaborative Research</a></div>
+  <div class="sidebar-module"><a href="research-module-10.html" class="sidebar-module-link"><span class="sidebar-num">10</span>The Future of AI-Augmented Science</a></div>
+  <div class="sidebar-module"><a href="quiz-research.html" class="sidebar-module-link" style="color:var(--accent);margin-top:4px;"><span class="sidebar-num" style="background:var(--accent-dim);color:var(--accent);">✦</span>Final Assessment</a></div>
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-progress-label"><span>Course progress</span><span style="color:var(--accent);">2 / 10</span></div>
+  <div class="sidebar-progress-track"><div class="sidebar-progress-fill"></div></div>
+</aside>
+
+<main>
+<div class="content">
+  <div class="module-eyebrow"><span class="module-tag">Module 2 · Expert Track</span><span class="module-meta">22 min read · AI for Research and Academia</span></div>
+  <h1>Literature Discovery and Synthesis</h1>
+
+  <p class="intro-text">The literature review is the most time-intensive part of most research projects, and it is the part that AI tools have disrupted most significantly. The disruption is real and valuable — but it introduces new failure modes that can be more insidious than the old ones. AI-assisted literature work is faster and broader in scope, but if the workflow is poorly designed, it is also capable of producing syntheses that sound authoritative while systematically misrepresenting the literature they claim to summarize.</p>
+
+  <h2>The pre-AI literature problem</h2>
+  <p>Traditional literature review has well-understood failure modes. Selection bias in what researchers choose to read, anchoring on a small number of highly-cited papers and missing heterodox views, language bias toward English-language publications, publication bias in what journals publish, and simple time constraints that make comprehensive coverage impossible in large literatures. A conscientious researcher doing a systematic review in a large field would spend months on the literature alone.</p>
+  <p>These problems were serious but at least visible. Researchers knew their searches were incomplete. They could describe their search strategy and acknowledge its limitations. Peer reviewers in a field could identify obvious gaps. The incompleteness was acknowledged and structured.</p>
+  <p>The risk with AI-assisted literature synthesis is a new kind of problem: syntheses that appear comprehensive and authoritative but are generated by models whose relationship to the actual literature is opaque. When a researcher asks an LLM to "summarize the literature on X," the resulting summary may sound complete, cite familiar names, and describe plausible findings — while being substantially confabulated. The danger is not just that specific citations may be fabricated (though they often are), but that the characterization of what the literature says, where debates lie, and what has been established may be systematically wrong in ways that are difficult to detect without deep domain expertise.</p>
+
+  <h2>AI-powered literature discovery tools: an honest evaluation</h2>
+  <p>The category of AI tools that actually searches academic databases is fundamentally different from general-purpose LLMs, and understanding this distinction is the foundation of responsible AI-assisted literature work. These tools retrieve real papers; they do not generate descriptions of imaginary ones. They are trustworthy for different reasons than general LLMs, and they have their own important limitations.</p>
+
+  <h3>Elicit: the systematic review assistant</h3>
+  <p>Elicit is the most purpose-built tool for the literature synthesis task. When you ask Elicit a research question, it searches Semantic Scholar's database of over 200 million papers and returns papers it judges relevant. More importantly, it then extracts structured information from each paper's text — the research question addressed, methodology, population studied, key findings, limitations — presenting this in a structured table that makes cross-paper comparison tractable.</p>
+  <p>For systematic and scoping reviews, Elicit significantly reduces the time required to screen and characterize large volumes of papers. The structured extraction allows researchers to identify patterns across papers (similar methodologies reaching different conclusions, for instance) that would take much longer to surface through manual reading. Elicit also supports literature synthesis: you can ask it to write a synthesis paragraph on a subset of papers, which you then verify and revise.</p>
+  <p>Elicit's limitations matter. Its coverage is strong for peer-reviewed papers in English but weaker for conference proceedings, non-English literature, dissertations, preprints, and very recent publications. For interdisciplinary topics, it may miss papers from peripheral disciplines that use different terminology. It is a tool for discovery and first-pass characterization — not a substitute for reading the papers you ultimately cite.</p>
+
+  <h3>Semantic Scholar: citation network analysis</h3>
+  <p>Semantic Scholar, developed by the Allen Institute for AI, is a free academic search engine with AI-powered features for exploring citation networks. Its most distinctive capability is TLDR — a one-sentence AI-generated summary of each paper — and its citation context analysis, which shows not just that Paper B cites Paper A, but in what context and with what framing. This allows researchers to understand quickly why papers are cited, which is often more informative than knowing they are cited.</p>
+  <p>Semantic Scholar's Recommended Papers feature surfaces papers that are conceptually related to ones you have identified as relevant, using embedding-based similarity rather than pure citation co-occurrence. This helps discover papers that are relevant but use different terminology or come from adjacent disciplines — one of the persistent blind spots of keyword-based search.</p>
+
+  <h3>ResearchRabbit: the citation network visualizer</h3>
+  <p>ResearchRabbit is purpose-built for citation network exploration. You seed it with a set of papers you already know are relevant, and it maps their citation relationships — what they cite, what cites them, and what papers are commonly cited alongside them. This visual exploration is particularly valuable for identifying foundational papers you may have missed and for understanding the intellectual history of a field.</p>
+  <p>The "similar work" and "earlier work" navigation is intuitive and surfaces discoveries that keyword-based search misses. ResearchRabbit integrates with Zotero for reference management, making it relatively easy to incorporate into existing workflows.</p>
+
+  <h3>Connected Papers: the dependency map</h3>
+  <p>Connected Papers generates a visual graph for a single paper, showing all papers it cites and all papers that cite it, laid out spatially so that related clusters are visually proximate. It is most useful for understanding the broader scholarly conversation around a specific paper and for identifying the major threads of work that converge on a topic. Less useful for large-scale discovery than ResearchRabbit, but excellent for understanding the context of individual papers you have already identified.</p>
+
+  <div class="callout">
+    <div class="callout-label">A Practical Discovery Workflow</div>
+    <p>A productive AI-assisted discovery workflow often combines tools: use Elicit or Semantic Scholar for initial keyword discovery; use ResearchRabbit to explore the citation network from your seed papers; use Connected Papers to understand the specific context of your most important sources. At each stage, you are expanding your net while maintaining personal contact with what you are including — reading abstracts, checking methodology, deciding inclusion yourself.</p>
+    <p>The common mistake is treating any of these tools as a complete solution and skipping the step of personally evaluating each paper you ultimately rely on. The tools accelerate discovery; they do not replace judgment about what is actually relevant and reliable.</p>
+  </div>
+
+  <h2>Systematic review augmentation</h2>
+  <p>Systematic reviews follow a defined protocol — pre-specified search strategy, eligibility criteria, dual screening, quality assessment, data extraction, and synthesis — designed to minimize bias and maximize reproducibility. AI intersects with this process at multiple points, but introducing AI also introduces questions about methodology that must be addressed explicitly in the review itself.</p>
+  <p>For the screening stage — reading titles and abstracts to decide which papers meet inclusion criteria — AI tools have shown genuine utility. Machine learning models trained on human screening decisions can prioritize the order in which papers are presented for screening, allowing human screeners to reach a recall threshold with fewer papers reviewed. Tools like Rayyan, Covidence, and Abstrackr now include AI-assisted screening features that accelerate the screening process while maintaining the human judgment required by systematic review methodology.</p>
+  <p>For data extraction — pulling specific quantitative and qualitative information from included papers — AI shows more mixed performance. Structured extraction with careful verification against original text is a reasonable workflow for some fields and some types of data. Unstructured extraction from full-text papers is currently less reliable and requires more intensive verification. The PRISMA guidelines for systematic reviews do not yet have consensus standards for AI use disclosure, but methodological transparency about AI tools used is good practice regardless.</p>
+
+  <div class="warn">
+    <div class="warn-label">Methodological Transparency</div>
+    <p>If you use AI tools in any stage of a systematic or scoping review, this must be disclosed in the methods section with enough specificity that another researcher could understand what role AI played and could assess whether it might have introduced systematic bias. The question is not whether to disclose, but how to describe your AI-assisted workflow precisely and honestly. Vague statements like "AI was used to assist with the review" are insufficient.</p>
+  </div>
+
+  <h2>Identifying gaps in literature</h2>
+  <p>One of the most valuable things AI can do in literature work is help identify what has <em>not</em> been studied. Gap identification is cognitively difficult — it requires holding a mental map of what exists and noticing absences, which is hard to do systematically across a large literature. AI tools can help in two ways.</p>
+  <p>First, structured synthesis tools like Elicit can surface the distribution of methodological approaches, populations studied, and outcome measures across a literature, making it relatively easy to see which combinations are underrepresented. If most studies of an intervention use adult samples in Western countries, the gap in pediatric populations and non-Western settings becomes visible through the table.</p>
+  <p>Second, you can engage general-purpose LLMs in a dialogue about gaps — but with important caveats. Asking Claude or ChatGPT "what are the gaps in the literature on X?" will produce a plausible-sounding answer, but that answer is generated from the model's training data and may not accurately reflect the current state of the field. The useful workflow is to first develop your own map of the literature through actual searching, then use AI to help you articulate the gaps you have identified and to probe whether you have considered the full range of gap types (population gaps, methodological gaps, theoretical gaps, outcome gaps, etc.).</p>
+
+  <h2>Synthesizing large bodies of work</h2>
+  <p>Once you have identified a set of relevant papers, synthesizing them — moving from a list of findings to a coherent narrative about what the literature says — is one of the most intellectually demanding tasks in research. AI can assist, but the nature of appropriate assistance is specific.</p>
+  <p>The most effective AI-assisted synthesis workflows use AI to help organize and structure synthesis that the researcher has already developed from reading primary sources. You read the papers, take notes, identify themes, and develop an understanding of the literature. Then you use AI to help you articulate that synthesis more clearly — to find the right language for a concept, to structure a section logically, to identify whether your narrative has gaps. The AI is working from your understanding, not generating understanding independently.</p>
+  <p>A less effective workflow — but one that is tempting given its speed — is to paste a collection of abstracts or excerpts into an AI tool and ask it to synthesize them. The resulting synthesis may be fluent and organized, but it is synthesizing summaries rather than the papers themselves, and it may introduce interpretations or framings that are not faithful to the original sources. If you use this approach, treat the output as a rough draft that requires careful verification against every claim.</p>
+
+  <h3>Detecting contradictions across papers</h3>
+  <p>One specific synthesis task where AI assistance is genuinely valuable is contradiction detection. When you are working with a large literature, identifying papers that reach contradictory conclusions on the same question is important but cognitively demanding at scale. You can use AI tools — particularly those with large context windows like Claude — to read a set of papers and identify where they disagree, either in findings or in interpretation of shared findings.</p>
+  <p>This requires careful prompting. Rather than asking for a synthesis, ask specifically: "identify any places where these papers reach different conclusions about X, or where one paper's findings challenge another's interpretation." This focused task is one where AI performs more reliably, because the task is comparative and bounded rather than generative and open-ended.</p>
+
+  <div class="principle-list">
+    <div class="principle">
+      <div class="principle-title">Read before you synthesize</div>
+      <div class="principle-desc">Every paper you cite should be a paper you have personally read — at minimum the abstract, introduction, and conclusions. AI synthesis tools are discovery accelerators, not reading substitutes. The intellectual responsibility for the literature review you produce is yours, and it requires personal engagement with the primary sources.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Search multiple databases, not just one</div>
+      <div class="principle-desc">No single database covers all relevant literature. A comprehensive search strategy typically includes PubMed or MEDLINE (for biomedical), Web of Science or Scopus (for broad coverage), Semantic Scholar (for AI-assisted discovery), and field-specific databases (PsycINFO, ERIC, SSRN, arXiv, etc.). AI tools are not substitutes for multi-database searching.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Document your search strategy</div>
+      <div class="principle-desc">A reproducible literature review requires documentation of search terms, databases searched, date of search, and inclusion/exclusion criteria. If you used AI tools, document which ones and how. This is required for systematic reviews and good practice for any literature-based research.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Update near submission</div>
+      <div class="principle-desc">A literature search conducted 12 months before submission may miss significant recent publications. Run a final update search — targeting the same databases with the same strategy — shortly before submission to ensure the review reflects the current state of the field.</div>
+    </div>
+  </div>
+
+  <h2>Citation networks and intellectual genealogy</h2>
+  <p>Understanding how a field has developed — which papers built on which, where paradigm shifts occurred, and which contributions are genuinely foundational versus highly cited for incidental reasons — is a kind of scholarly knowledge that takes years to develop through experience. Citation network tools can accelerate this understanding significantly.</p>
+  <p>The key insight from citation network analysis is that citation frequency is a poor proxy for intellectual importance. Some papers are heavily cited because they are genuinely foundational; others because they provide a convenient benchmark or were published in a high-visibility venue at the right moment. Papers with profound impact in a field are sometimes under-cited by modern standards because they predated the era of dense citation practice, or because their ideas were so thoroughly absorbed that subsequent work no longer cites them explicitly.</p>
+  <p>ResearchRabbit and Connected Papers help you trace intellectual genealogies in both directions: backward to foundational work that established the framework your literature operates within, and forward to see how influential papers have been applied, extended, and sometimes contradicted by subsequent work. This genealogical knowledge is one of the most important things a thorough literature review provides — and it is something AI tools can substantially accelerate without replacing the judgment required to interpret what you find.</p>
+
+  <div class="good">
+    <div class="good-label">What Good AI-Assisted Literature Work Looks Like</div>
+    <p>A researcher working at the frontier uses AI tools to extend the reach of their literature work, not to replace the critical engagement that makes a literature review valuable. They use Elicit to surface papers they might have missed and to extract structured data across a corpus; they use ResearchRabbit to explore citation networks and discover seminal work; they use a general-purpose LLM to help articulate syntheses they have already developed from reading; and they personally read every paper they cite. The resulting literature review is both broader and deeper than what the same researcher could have produced without AI — and every claim in it is grounded in their own engagement with primary sources.</p>
+  </div>
+
+</div>
+</main>
+</div>
+
+<div class="sticky-bar" id="sticky-bar">
+  <div class="sticky-bar-reading" id="sticky-reading">Read to the end to unlock the next module</div>
+  <div class="sticky-bar-track"><div class="sticky-bar-fill" id="sticky-fill"></div></div>
+  <div class="sticky-bar-label" id="sticky-label">0%</div>
+  <button class="sticky-bar-btn" id="sticky-btn" onclick="completeAndNext()">Module 3: Research Writing with AI →</button>
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import { getFirestore, doc, setDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  const app=initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+  const auth=getAuth(app);const db=getFirestore(app);
+  let currentUser=null;
+  onAuthStateChanged(auth,u=>{currentUser=u;});
+  window.toggleTheme=function(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='☾'):(h.setAttribute('data-theme','dark'),i.textContent='☀');};
+  window.addEventListener('scroll',()=>{const d=document.documentElement,s=d.scrollTop||document.body.scrollTop,t=d.scrollHeight-d.clientHeight;document.getElementById('progress').style.width=(s/t*100)+'%';});
+  let unlocked=false;
+  function updateScrollProgress(){
+    const scrolled=window.scrollY+window.innerHeight;const total=document.documentElement.scrollHeight;
+    const pct=Math.min(100,Math.round((scrolled/total)*100));
+    const fill=document.getElementById('sticky-fill');const label=document.getElementById('sticky-label');
+    const btn=document.getElementById('sticky-btn');const reading=document.getElementById('sticky-reading');
+    if(fill)fill.style.width=pct+'%';if(label)label.textContent=pct+'%';
+    if(pct>=95&&!unlocked){unlocked=true;if(btn)btn.style.display='block';if(reading)reading.style.display='none';if(fill)fill.style.background='#22c55e';if(label)label.style.color='#22c55e';}
+  }
+  window.addEventListener('scroll',updateScrollProgress);updateScrollProgress();
+  window.completeAndNext=async function(){
+    if(currentUser){try{await setDoc(doc(db,'users',currentUser.uid),{researchModules:arrayUnion('m2')},{merge:true});}catch(e){}}
+    window.location.href='research-module-3.html';
+  };
+</script>
+</body>
+</html>

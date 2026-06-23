@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 1: The Social Impact of Artificial Intelligence — AI and Society — Meridian Institute of AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#7C3AED;--accent-dim:rgba(124,58,237,0.1);--accent-dim2:rgba(124,58,237,0.05);--nav-bg:rgba(8,8,8,0.9);--callout-bg:rgba(124,58,237,0.07);--callout-border:rgba(124,58,237,0.25);--good-bg:rgba(34,197,94,0.07);--good-border:rgba(34,197,94,0.2);--warn-bg:rgba(251,146,60,0.07);--warn-border:rgba(251,146,60,0.2);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#6D28D9;--accent-dim:rgba(109,40,217,0.08);--accent-dim2:rgba(109,40,217,0.04);--nav-bg:rgba(250,250,248,0.9);--callout-bg:rgba(109,40,217,0.05);--callout-border:rgba(109,40,217,0.2);--good-bg:rgba(22,163,74,0.06);--good-border:rgba(22,163,74,0.2);--warn-bg:rgba(234,88,12,0.05);--warn-border:rgba(234,88,12,0.2);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;overflow-x:hidden;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.7;overflow-x:hidden;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}
+  .nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}
+  .nav-back{font-size:13px;color:var(--text-2);text-decoration:none;transition:color 0.2s;}
+  .nav-back:hover{color:var(--text);}
+  .nav-label{font-size:13px;color:var(--text-3);}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;transition:all 0.2s;}
+  .theme-toggle:hover{background:var(--bg-3);color:var(--text);}
+  .progress-bar{position:fixed;top:60px;left:0;right:0;z-index:99;height:2px;background:var(--border);}
+  .progress-fill{height:100%;background:var(--accent);width:0%;transition:width 0.1s;}
+  .page-wrapper{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:100vh;padding-top:62px;overflow:hidden;}
+  .sidebar{position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto;border-right:1px solid var(--border);padding:32px 24px;background:var(--bg-2);}
+  .sidebar-course{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;}
+  .sidebar-course-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+  .sidebar-module{margin-bottom:4px;}
+  .sidebar-module-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:13px;color:var(--text-2);text-decoration:none;transition:all 0.2s;line-height:1.4;}
+  .sidebar-module-link:hover{background:var(--bg-3);color:var(--text);}
+  .sidebar-module-link.active{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-num{font-size:11px;font-weight:500;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--bg-4);color:var(--text-3);}
+  .sidebar-module-link.active .sidebar-num{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-divider{height:1px;background:var(--border);margin:20px 0;}
+  .sidebar-progress-label{font-size:12px;color:var(--text-3);margin-bottom:8px;display:flex;justify-content:space-between;}
+  .sidebar-progress-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sidebar-progress-fill{height:100%;width:10%;background:var(--accent);border-radius:2px;}
+  main{display:block;min-width:0;overflow:hidden;}
+  .content{max-width:760px;width:100%;padding:60px 64px 140px;margin:0 auto;}
+  .module-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+  .module-tag{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(124,58,237,0.2);padding:4px 12px;border-radius:100px;}
+  .module-meta{font-size:12px;color:var(--text-3);}
+  h1{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1.05;letter-spacing:-0.02em;color:var(--text);margin-bottom:24px;}
+  .intro-text{font-size:19px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+  h2{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:400;color:var(--text);margin:52px 0 18px;line-height:1.2;}
+  h3{font-size:16px;font-weight:500;color:var(--text);margin:32px 0 12px;}
+  p{font-size:16px;font-weight:300;color:var(--text-2);line-height:1.8;margin-bottom:20px;}
+  strong{font-weight:500;color:var(--text);}
+  em{font-style:italic;}
+  ul,ol{margin:0 0 20px 22px;color:var(--text-2);}
+  li{font-size:16px;font-weight:300;line-height:1.8;margin-bottom:8px;}
+  .callout{background:var(--callout-bg);border:1px solid var(--callout-border);border-radius:12px;padding:24px 28px;margin:32px 0;}
+  .callout-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+  .callout p{margin:0;font-size:15px;color:var(--text-2);}
+  .callout p+p{margin-top:12px;}
+  .good{background:var(--good-bg);border:1px solid var(--good-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .good-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#22c55e;margin-bottom:10px;}
+  .good p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn{background:var(--warn-bg);border:1px solid var(--warn-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .warn-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#fb923c;margin-bottom:10px;}
+  .warn p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn p+p{margin-top:12px;}
+  .analogy{background:var(--bg-2);border:1px solid var(--border);border-radius:12px;padding:28px;margin:28px 0;}
+  .analogy-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-3);margin-bottom:12px;}
+  .analogy p{margin:0;font-size:15px;color:var(--text-2);}
+  .principle-list{display:flex;flex-direction:column;gap:12px;margin:24px 0;}
+  .principle{background:var(--bg-2);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:0 12px 12px 0;padding:20px 24px;}
+  .principle-title{font-size:15px;font-weight:500;color:var(--text);margin-bottom:6px;}
+  .principle-desc{font-size:14px;color:var(--text-2);line-height:1.65;margin:0;}
+  .sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:var(--bg-2);border-top:1px solid var(--border-2);padding:14px 5%;display:flex;align-items:center;justify-content:space-between;gap:16px;backdrop-filter:blur(12px);}
+  .sticky-bar-track{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sticky-bar-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.2s;width:0%;}
+  .sticky-bar-label{font-size:12px;color:var(--text-3);white-space:nowrap;min-width:60px;text-align:right;}
+  .sticky-bar-btn{padding:10px 20px;border-radius:8px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;background:var(--accent);color:#fff;border:none;cursor:pointer;white-space:nowrap;transition:opacity 0.2s;display:none;}
+  .sticky-bar-btn:hover{opacity:0.88;}
+  .sticky-bar-reading{font-size:12px;color:var(--text-3);white-space:nowrap;}
+  @media(max-width:900px){.page-wrapper{grid-template-columns:1fr;}.sidebar{display:none;}.content{padding:40px 24px 120px;}h1{font-size:38px;}}
+  @media(max-width:600px){.content{padding:28px 16px 120px;}h1{font-size:30px;}h2{font-size:24px;}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="index.html" class="nav-back">&#127968; Home</a>
+    <div class="nav-divider"></div>
+    <a href="courses.html" class="nav-back">&#8592; AI and Society</a>
+    <div class="nav-divider"></div>
+    <span class="nav-label">Module 1</span>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">&#9728;</span></button>
+</nav>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+
+<div class="page-wrapper">
+<aside class="sidebar">
+  <div class="sidebar-course">Course</div>
+  <div class="sidebar-course-name">AI and Society</div>
+  <div class="sidebar-module"><a href="society-module-1.html" class="sidebar-module-link active"><span class="sidebar-num">1</span>The Social Impact of AI</a></div>
+  <div class="sidebar-module"><a href="society-module-2.html" class="sidebar-module-link"><span class="sidebar-num">2</span>Labor Markets and Automation</a></div>
+  <div class="sidebar-module"><a href="society-module-3.html" class="sidebar-module-link"><span class="sidebar-num">3</span>AI and Economic Inequality</a></div>
+  <div class="sidebar-module"><a href="society-module-4.html" class="sidebar-module-link"><span class="sidebar-num">4</span>Algorithmic Bias and Justice</a></div>
+  <div class="sidebar-module"><a href="society-module-5.html" class="sidebar-module-link"><span class="sidebar-num">5</span>AI and Human Relationships</a></div>
+  <div class="sidebar-module"><a href="society-module-6.html" class="sidebar-module-link"><span class="sidebar-num">6</span>AI in Media Ecosystems</a></div>
+  <div class="sidebar-module"><a href="society-module-7.html" class="sidebar-module-link"><span class="sidebar-num">7</span>The Environmental Cost of AI</a></div>
+  <div class="sidebar-module"><a href="society-module-8.html" class="sidebar-module-link"><span class="sidebar-num">8</span>Global Perspectives on AI</a></div>
+  <div class="sidebar-module"><a href="society-module-9.html" class="sidebar-module-link"><span class="sidebar-num">9</span>AI Ethics and Human Values</a></div>
+  <div class="sidebar-module"><a href="society-module-10.html" class="sidebar-module-link"><span class="sidebar-num">10</span>An Equitable AI Future</a></div>
+  <div class="sidebar-module"><a href="quiz-society.html" class="sidebar-module-link" style="color:var(--accent);margin-top:4px;"><span class="sidebar-num" style="background:var(--accent-dim);color:var(--accent);">&#10022;</span>Final Assessment</a></div>
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-progress-label"><span>Course progress</span><span style="color:var(--accent);">1 / 10</span></div>
+  <div class="sidebar-progress-track"><div class="sidebar-progress-fill"></div></div>
+</aside>
+
+<main>
+<div class="content">
+  <div class="module-eyebrow"><span class="module-tag">Module 1</span><span class="module-meta">18 min read · AI and Society</span></div>
+  <h1>The Social Impact of Artificial Intelligence</h1>
+
+  <p class="intro-text">Artificial intelligence is not arriving in a vacuum. It enters societies that are already shaped by histories of inequality, competing visions of the good life, and deep disagreements about the proper relationship between technology, markets, and democratic governance. To understand AI's social impact is to understand not just what the technology does, but who it does it to, who benefits, who is harmed, and who gets to decide. This module builds the conceptual foundation for everything that follows.</p>
+
+  <h2>Why this moment is different</h2>
+  <p>Technologies have always reshaped social life. The printing press democratized access to text and destabilized religious authority. The railroad collapsed distance and reorganized labor. The internet diffused communication and created new asymmetries of attention and commerce. Each technological transition brought genuine gains and genuine losses, and each produced long debates about distribution, power, and meaning.</p>
+  <p>What makes the current AI transition distinctive is not simply the pace of change — though that pace is genuinely rapid — but the <strong>breadth and depth of cognitive territory</strong> the technology is entering. Previous general-purpose technologies typically automated physical or routine cognitive tasks. AI systems today are demonstrating competence in writing, legal reasoning, medical diagnosis, creative work, and scientific discovery. The domains that societies have historically reserved as distinctly human are now contested terrain.</p>
+  <p>This creates a different quality of social anxiety than past technological transitions produced. When a loom replaced hand-weaving, the displaced weaver could become a factory worker. The cognitive skills that made someone a weaver did not make them unemployable. But when AI begins to encroach on reading, writing, analysis, and judgment — the skills that constitute middle-class professional life — the psychological and social stakes become considerably higher.</p>
+
+  <div class="callout">
+    <div class="callout-label">The core sociological question</div>
+    <p>Technology does not determine social outcomes on its own. The same technology can be deployed to empower workers or to surveil them, to democratize access or to concentrate advantage, to strengthen community or to atomize it. The question is never simply "what can this technology do?" but always "who controls it, under what rules, serving whose interests?"</p>
+  </div>
+
+  <h2>Three frameworks for understanding AI's social impact</h2>
+  <p>Social scientists and ethicists have developed several frameworks for analyzing technological change. Three are especially useful for thinking about AI.</p>
+
+  <div class="principle-list">
+    <div class="principle">
+      <div class="principle-title">Technological determinism vs. social shaping</div>
+      <div class="principle-desc">Technological determinism holds that once a technology exists, its social consequences follow inevitably. Social shaping theory argues the opposite: technologies are designed by people with particular interests, and their effects depend on the social, political, and economic contexts into which they are deployed. AI is best understood through the social shaping lens — there is nothing inevitable about how it affects society.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Distributional analysis</div>
+      <div class="principle-desc">Who captures the gains from AI, and who bears its costs? Distributional analysis asks us to look past aggregate measures — "AI will add $X trillion to global GDP" — and ask which specific groups benefit, which are harmed, and whether existing inequalities are amplified or reduced. The same AI-driven productivity gain can appear very different depending on whether its benefits flow broadly or narrowly.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Power and governance</div>
+      <div class="principle-desc">AI systems concentrate power — the power to make decisions at scale, the power to surveil, the power to shape information environments. Governance analysis asks who holds that power, whether existing democratic and legal institutions are adequate to check it, and what new forms of accountability might be needed. This framework connects AI to longstanding debates about corporate power, state surveillance, and democratic legitimacy.</div>
+    </div>
+  </div>
+
+  <h2>The distribution of AI's benefits and harms</h2>
+  <p>The history of major technological transitions suggests a consistent pattern: productivity gains tend to accrue to capital owners and high-skill workers, while disruption tends to fall on lower-skill workers and communities with concentrated exposure to the disrupted industries. There is no automatic reason why AI should break this pattern.</p>
+  <p>Early evidence from AI deployment suggests several tendencies worth watching carefully. First, the organizations best positioned to capture AI's benefits are those with existing advantages: large pools of proprietary data, capital to invest in compute and talent, and regulatory sophistication to navigate governance environments. This tends to mean large technology companies, well-resourced corporations, and wealthy nations.</p>
+  <p>Second, the occupational groups most immediately affected by AI automation are not uniformly low-wage workers. Unlike previous waves of automation, which primarily displaced routine manual labor, AI is showing significant capability in white-collar cognitive tasks. Radiologists, paralegals, financial analysts, and customer service representatives all face material exposure. This is a genuinely new pattern in the history of automation.</p>
+  <p>Third, the communities most vulnerable to AI-related disruption are often those with the least political power to shape the response. Rural communities dependent on manufacturing jobs that AI could automate, workers in the gig economy who lack union representation, and developing nations that may find their comparative advantages in labor undercut — these groups face concentrated exposure with limited institutional recourse.</p>
+
+  <div class="warn">
+    <div class="warn-label">The optimism trap</div>
+    <p>Every major technology transition has been accompanied by optimistic predictions that the displaced would simply transition to new and better jobs. Sometimes this has been true; often it has taken far longer than predicted and required significant social policy intervention to manage the transition. The empirical record suggests caution about assuming that market mechanisms alone will distribute AI's gains equitably or cushion its disruptions adequately.</p>
+  </div>
+
+  <h2>AI and power concentration</h2>
+  <p>Perhaps the most structurally significant social impact of AI is its tendency to <strong>concentrate power</strong> at the level of the organization and the nation-state. Training the large AI models that are now driving productivity gains requires computational resources available to only a handful of companies. The data needed to train competitive systems is held by a small number of large platforms. The talent capable of building and maintaining frontier AI systems is extraordinarily scarce.</p>
+  <p>This concentration has several social implications. Within economies, it may accelerate the market power of a small number of very large firms — what economists call "winner-take-most" dynamics. Between nations, it creates a new axis of geopolitical competition, with AI capability becoming a dimension of national power alongside military strength and economic output. Within democracies, it raises questions about whether existing antitrust, privacy, and media regulation frameworks are adequate to prevent AI from being used as a tool of domination rather than flourishing.</p>
+
+  <h2>The social contract and AI</h2>
+  <p>Democratic societies rest on a social contract: individuals accept constraints on their freedom and pay taxes in exchange for public goods, security, and the opportunity for a decent life. Major technological transitions historically required renegotiating the terms of this contract — the New Deal in the United States, for example, represented a significant renegotiation of the relationship between labor, capital, and the state in response to industrial capitalism's disruptions.</p>
+  <p>AI appears to pose a similar challenge to existing social contracts. If AI automates a significant share of labor, the tax base built around payroll income may erode. If AI concentrates corporate profits without proportionate increases in wages, existing mechanisms for distributing productivity gains may prove inadequate. If AI enables unprecedented surveillance, individuals may lose the privacy on which political freedom partly depends.</p>
+  <p>These are not certainties — they are risks that well-designed policy could mitigate. But the first step is recognizing that AI's arrival does pose genuine questions about the adequacy of existing institutions, and that those questions deserve serious social and political deliberation rather than being left to the technology industry to resolve on its own terms.</p>
+
+  <div class="callout">
+    <div class="callout-label">The stakes of this course</div>
+    <p>Understanding AI's social implications is not a niche concern for specialists. It is increasingly a requirement for informed citizenship. The choices that societies make now — about regulation, investment, labor protections, and democratic governance of AI — will shape life chances for generations. This course aims to give you the conceptual tools to engage with those choices seriously, critically, and constructively.</p>
+  </div>
+
+  <h2>Looking ahead</h2>
+  <p>The remaining modules move from this broad overview to specific domains of social impact. We examine the labor market evidence in module two, the inequality dynamics in module three, the justice implications of algorithmic bias in module four, and the more intimate social dimensions — relationships, media, and culture — in modules five through eight. Modules nine and ten turn to the ethical frameworks and design principles that could guide a more equitable AI future. Throughout, the emphasis will be on understanding genuine debates rather than arriving at settled conclusions — because in a domain this consequential and this fast-moving, intellectual honesty about uncertainty is itself a social good.</p>
+
+</div>
+</main>
+</div>
+
+<div class="sticky-bar" id="sticky-bar">
+  <div class="sticky-bar-reading" id="sticky-reading">Read to the end to unlock the next module</div>
+  <div class="sticky-bar-track"><div class="sticky-bar-fill" id="sticky-fill"></div></div>
+  <div class="sticky-bar-label" id="sticky-label">0%</div>
+  <button class="sticky-bar-btn" id="sticky-btn" onclick="completeAndNext()">Module 2: Labor Markets and Automation &#8594;</button>
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import { getFirestore, doc, setDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  const app = initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+  const auth = getAuth(app); const db = getFirestore(app);
+  let currentUser = null;
+  onAuthStateChanged(auth, u => { currentUser = u; });
+
+  window.toggleTheme=function(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='&#9790;'):(h.setAttribute('data-theme','dark'),i.textContent='&#9728;');};
+  window.addEventListener('scroll',()=>{const d=document.documentElement,s=d.scrollTop||document.body.scrollTop,t=d.scrollHeight-d.clientHeight;document.getElementById('progress').style.width=(s/t*100)+'%';});
+
+  let unlocked=false;
+  function updateScrollProgress(){
+    const scrolled=window.scrollY+window.innerHeight;
+    const total=document.documentElement.scrollHeight;
+    const pct=Math.min(100,Math.round((scrolled/total)*100));
+    const fill=document.getElementById('sticky-fill');
+    const label=document.getElementById('sticky-label');
+    const btn=document.getElementById('sticky-btn');
+    const reading=document.getElementById('sticky-reading');
+    if(fill)fill.style.width=pct+'%';
+    if(label)label.textContent=pct+'%';
+    if(pct>=95&&!unlocked){
+      unlocked=true;
+      if(btn)btn.style.display='block';
+      if(reading)reading.style.display='none';
+      if(fill)fill.style.background='#22c55e';
+      if(label)label.style.color='#22c55e';
+    }
+  }
+  window.addEventListener('scroll',updateScrollProgress);
+  updateScrollProgress();
+
+  window.completeAndNext=async function(){
+    if(currentUser){
+      try{
+        await setDoc(doc(db,'users',currentUser.uid),{societyModules:arrayUnion('m1')},{merge:true});
+      }catch(e){}
+    }
+    window.location.href='society-module-2.html';
+  };
+</script>
+</body>
+</html>

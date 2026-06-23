@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 4: Malware Analysis with ML — AI in Cybersecurity — Meridian Institute of AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#0E7490;--accent-dim:rgba(14,116,144,0.1);--accent-dim2:rgba(14,116,144,0.05);--nav-bg:rgba(8,8,8,0.9);--callout-bg:rgba(14,116,144,0.07);--callout-border:rgba(14,116,144,0.25);--good-bg:rgba(34,197,94,0.07);--good-border:rgba(34,197,94,0.2);--warn-bg:rgba(251,146,60,0.07);--warn-border:rgba(251,146,60,0.2);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#0C6280;--accent-dim:rgba(12,98,128,0.08);--accent-dim2:rgba(12,98,128,0.04);--nav-bg:rgba(250,250,248,0.9);--callout-bg:rgba(12,98,128,0.05);--callout-border:rgba(12,98,128,0.2);--good-bg:rgba(22,163,74,0.06);--good-border:rgba(22,163,74,0.2);--warn-bg:rgba(234,88,12,0.05);--warn-border:rgba(234,88,12,0.2);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;overflow-x:hidden;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.7;overflow-x:hidden;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}
+  .nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}
+  .nav-back{font-size:13px;color:var(--text-2);text-decoration:none;transition:color 0.2s;}
+  .nav-back:hover{color:var(--text);}
+  .nav-label{font-size:13px;color:var(--text-3);}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;transition:all 0.2s;}
+  .theme-toggle:hover{background:var(--bg-3);color:var(--text);}
+  .progress-bar{position:fixed;top:60px;left:0;right:0;z-index:99;height:2px;background:var(--border);}
+  .progress-fill{height:100%;background:var(--accent);width:0%;transition:width 0.1s;}
+  .page-wrapper{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:100vh;padding-top:62px;overflow:hidden;}
+  .sidebar{position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto;border-right:1px solid var(--border);padding:32px 24px;background:var(--bg-2);}
+  .sidebar-course{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;}
+  .sidebar-course-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+  .sidebar-module{margin-bottom:4px;}
+  .sidebar-module-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:13px;color:var(--text-2);text-decoration:none;transition:all 0.2s;line-height:1.4;}
+  .sidebar-module-link:hover{background:var(--bg-3);color:var(--text);}
+  .sidebar-module-link.active{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-num{font-size:11px;font-weight:500;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--bg-4);color:var(--text-3);}
+  .sidebar-module-link.active .sidebar-num{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-divider{height:1px;background:var(--border);margin:20px 0;}
+  .sidebar-progress-label{font-size:12px;color:var(--text-3);margin-bottom:8px;display:flex;justify-content:space-between;}
+  .sidebar-progress-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sidebar-progress-fill{height:100%;width:40%;background:var(--accent);border-radius:2px;}
+  main{display:block;min-width:0;overflow:hidden;}
+  .content{max-width:760px;width:100%;padding:60px 64px 140px;margin:0 auto;}
+  .module-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+  .module-tag{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(14,116,144,0.2);padding:4px 12px;border-radius:100px;}
+  .module-meta{font-size:12px;color:var(--text-3);}
+  h1{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1.05;letter-spacing:-0.02em;color:var(--text);margin-bottom:24px;}
+  .intro-text{font-size:19px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+  h2{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:400;color:var(--text);margin:52px 0 18px;line-height:1.2;}
+  h3{font-size:16px;font-weight:500;color:var(--text);margin:32px 0 12px;}
+  p{font-size:16px;font-weight:300;color:var(--text-2);line-height:1.8;margin-bottom:20px;}
+  strong{font-weight:500;color:var(--text);}
+  em{font-style:italic;}
+  ul,ol{margin:0 0 20px 22px;color:var(--text-2);}
+  li{font-size:16px;font-weight:300;line-height:1.8;margin-bottom:8px;}
+  .callout{background:var(--callout-bg);border:1px solid var(--callout-border);border-radius:12px;padding:24px 28px;margin:32px 0;}
+  .callout-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+  .callout p{margin:0;font-size:15px;color:var(--text-2);}
+  .callout p+p{margin-top:12px;}
+  .good{background:var(--good-bg);border:1px solid var(--good-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .good-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#22c55e;margin-bottom:10px;}
+  .good p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn{background:var(--warn-bg);border:1px solid var(--warn-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .warn-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#fb923c;margin-bottom:10px;}
+  .warn p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn p+p{margin-top:12px;}
+  .analogy{background:var(--bg-2);border:1px solid var(--border);border-radius:12px;padding:28px;margin:28px 0;}
+  .analogy-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-3);margin-bottom:12px;}
+  .analogy p{margin:0;font-size:15px;color:var(--text-2);}
+  .disclaimer{background:rgba(251,146,60,0.07);border:1px solid rgba(251,146,60,0.3);border-radius:12px;padding:24px 28px;margin:0 0 40px;}
+  .disclaimer-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#fb923c;margin-bottom:10px;}
+  .disclaimer p{margin:0;font-size:14px;color:var(--text-2);line-height:1.7;}
+  .disclaimer p+p{margin-top:10px;}
+  .comparison-wrapper{overflow-x:auto;-webkit-overflow-scrolling:touch;width:100%;margin:28px 0;}
+  table{width:100%;border-collapse:collapse;font-size:14px;min-width:480px;}
+  th{text-align:left;padding:12px 16px;font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-3);border-bottom:1px solid var(--border-2);}
+  td{padding:14px 16px;border-bottom:1px solid var(--border);color:var(--text-2);line-height:1.6;vertical-align:top;}
+  tr:last-child td{border-bottom:none;}
+  td:first-child{color:var(--text);font-weight:500;width:30%;}
+  .key-stat{background:var(--bg-2);border:1px solid var(--border);border-radius:12px;padding:20px 24px;margin:16px 0;display:flex;align-items:center;gap:20px;}
+  .key-stat-num{font-family:'Cormorant Garamond',serif;font-size:40px;font-weight:400;color:var(--accent);line-height:1;flex-shrink:0;}
+  .key-stat-label{font-size:14px;color:var(--text-2);line-height:1.6;}
+  .key-stat-label strong{display:block;font-size:15px;color:var(--text);margin-bottom:4px;}
+  .principle-list{display:flex;flex-direction:column;gap:12px;margin:24px 0;}
+  .principle{background:var(--bg-2);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:0 12px 12px 0;padding:20px 24px;}
+  .principle-title{font-size:15px;font-weight:500;color:var(--text);margin-bottom:6px;}
+  .principle-desc{font-size:14px;color:var(--text-2);line-height:1.65;margin:0;}
+  .sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:var(--bg-2);border-top:1px solid var(--border-2);padding:14px 5%;display:flex;align-items:center;justify-content:space-between;gap:16px;backdrop-filter:blur(12px);}
+  .sticky-bar-track{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sticky-bar-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.2s;width:0%;}
+  .sticky-bar-label{font-size:12px;color:var(--text-3);white-space:nowrap;min-width:60px;text-align:right;}
+  .sticky-bar-btn{padding:10px 20px;border-radius:8px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;background:var(--accent);color:#fff;border:none;cursor:pointer;white-space:nowrap;transition:opacity 0.2s;display:none;}
+  .sticky-bar-btn:hover{opacity:0.88;}
+  .sticky-bar-reading{font-size:12px;color:var(--text-3);white-space:nowrap;}
+  @media(max-width:900px){.page-wrapper{grid-template-columns:1fr;}.sidebar{display:none;}.content{padding:40px 24px 120px;}h1{font-size:38px;}}
+  @media(max-width:600px){.content{padding:28px 16px 120px;}h1{font-size:30px;}h2{font-size:24px;}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="courses.html" class="nav-back">&#8592; AI in Cybersecurity</a>
+    <div class="nav-divider"></div>
+    <span class="nav-label">Module 4</span>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">&#9728;</span></button>
+</nav>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+
+<div class="page-wrapper">
+<aside class="sidebar">
+  <div class="sidebar-course">Course</div>
+  <div class="sidebar-course-name">AI in Cybersecurity</div>
+  <div class="sidebar-module"><a href="cybersecurity-module-1.html" class="sidebar-module-link"><span class="sidebar-num">1</span>The AI-Driven Threat Landscape</a></div>
+  <div class="sidebar-module"><a href="cybersecurity-module-2.html" class="sidebar-module-link"><span class="sidebar-num">2</span>Intrusion Detection and AI</a></div>
+  <div class="sidebar-module"><a href="cybersecurity-module-3.html" class="sidebar-module-link"><span class="sidebar-num">3</span>AI-Powered Social Engineering</a></div>
+  <div class="sidebar-module"><a href="cybersecurity-module-4.html" class="sidebar-module-link active"><span class="sidebar-num">4</span>Malware Analysis with ML</a></div>
+  <div class="sidebar-module"><a href="cybersecurity-module-5.html" class="sidebar-module-link"><span class="sidebar-num">5</span>Vulnerability Assessment and AI</a></div>
+  <div class="sidebar-module"><a href="cybersecurity-module-6.html" class="sidebar-module-link"><span class="sidebar-num">6</span>Adversarial AI Attacks</a></div>
+  <div class="sidebar-module"><a href="cybersecurity-module-7.html" class="sidebar-module-link"><span class="sidebar-num">7</span>AI in SOC Operations</a></div>
+  <div class="sidebar-module"><a href="cybersecurity-module-8.html" class="sidebar-module-link"><span class="sidebar-num">8</span>Privacy and Data Protection</a></div>
+  <div class="sidebar-module"><a href="cybersecurity-module-9.html" class="sidebar-module-link"><span class="sidebar-num">9</span>Zero-Trust and AI</a></div>
+  <div class="sidebar-module"><a href="cybersecurity-module-10.html" class="sidebar-module-link"><span class="sidebar-num">10</span>The Future of AI Security</a></div>
+  <div class="sidebar-module"><a href="quiz-cybersecurity.html" class="sidebar-module-link" style="color:var(--accent);margin-top:4px;"><span class="sidebar-num" style="background:var(--accent-dim);color:var(--accent);">&#10022;</span>Final Assessment</a></div>
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-progress-label"><span>Course progress</span><span style="color:var(--accent);">4 / 10</span></div>
+  <div class="sidebar-progress-track"><div class="sidebar-progress-fill"></div></div>
+</aside>
+
+<main>
+<div class="content">
+  <div class="module-eyebrow"><span class="module-tag">Module 4</span><span class="module-meta">25 min read &middot; AI in Cybersecurity</span></div>
+  <h1>Malware Analysis with ML</h1>
+
+  <p class="intro-text">Every day, security researchers encounter hundreds of thousands of new malicious files. Traditional antivirus engines, built on hand-crafted signatures, are simply overwhelmed by the volume and variety of modern malware. Machine learning has emerged as the essential tool for automating detection, classification, and deep analysis of malicious code at scale — but using it correctly requires understanding both the techniques and their limits.</p>
+
+  <h2>The failure of signature-based antivirus</h2>
+  <p>For decades, antivirus software worked by comparing files against a database of known malicious signatures — cryptographic hashes or byte patterns unique to previously identified malware. This approach was highly effective when the number of malware variants was small and threat actors lacked the tools to rapidly mutate their code. That world no longer exists.</p>
+  <p>Modern malware authors use <strong>polymorphic</strong> and <strong>metamorphic</strong> engines that automatically rewrite code on each infection, producing millions of functionally identical but byte-distinct variants. A signature written for one variant will miss every subsequent mutation. The AV-TEST Institute registers over 450,000 new malicious programs every single day — a volume no team of human analysts could process with manual signatures alone.</p>
+  <p>The deeper problem is that signature-based detection is inherently reactive. A threat cannot be added to the database until it has already been observed in the wild, analyzed, and published. That window between first appearance and signature deployment — sometimes days, sometimes weeks — is exactly when attackers do their most damage. Machine learning changes the game by enabling <em>generalization</em>: a model trained on malware characteristics can detect novel variants it has never seen before, based on patterns that persist across mutations.</p>
+
+  <div class="callout">
+    <div class="callout-label">Core insight</div>
+    <p>Signature-based detection asks: "Have I seen this exact file before?" Machine learning asks: "Does this file look like malware?" The second question is far more powerful against novel and mutated threats — but it introduces new failure modes, particularly false positives and adversarial manipulation.</p>
+  </div>
+
+  <h2>Static analysis: reading the binary without running it</h2>
+  <p>Static analysis examines a malware sample without executing it. For ML-based approaches, this means extracting features from the file's raw bytes, structure, and metadata — then feeding those features into a classifier. The advantage is speed and safety: no sandboxed execution environment is required, and analysis can be completed in milliseconds.</p>
+
+  <h3>PE header features</h3>
+  <p>Most Windows malware is packaged as Portable Executable (PE) files. The PE header contains rich metadata: the number and names of imported DLLs and functions, section names and entropy levels, compilation timestamps, resource tables, and subsystem flags. Malware tends to exhibit distinctive patterns in these fields — unusually high entropy in code sections (indicating packing or encryption), imports of low-level Windows API functions associated with injection or persistence, and anomalous section sizes.</p>
+
+  <h3>Import address table and API call patterns</h3>
+  <p>The set of Windows API functions a binary imports is one of the strongest static signals for malware classification. Ransomware tends to import cryptographic APIs. Spyware imports screenshot and keylogging APIs. Rootkits import kernel-level functions for hiding processes and files. A trained classifier can map API import sets to malware families with high accuracy, even when code has been substantially modified.</p>
+
+  <h3>Byte n-grams and raw feature extraction</h3>
+  <p>At the most fundamental level, malware detection can be framed as a sequence classification problem over raw bytes. Byte n-grams — sequences of n consecutive bytes extracted from the binary — capture local structural patterns without requiring semantic understanding of the code. Early ML malware classifiers used n-gram frequency histograms as features fed into naive Bayes or SVM classifiers. While these approaches are now supplemented by deeper techniques, they remain useful for rapid triage at high throughput.</p>
+
+  <h2>Dynamic analysis: watching malware execute</h2>
+  <p>Static analysis is blind to runtime behavior. A heavily obfuscated dropper may look clean statically while unpacking malicious code in memory and calling destructive APIs only during execution. Dynamic analysis addresses this by running the sample in a controlled sandbox environment and recording what it actually does.</p>
+  <p>Modern sandboxes instrument the operating system to capture: system calls and their arguments, network connections and DNS requests, file system operations (reads, writes, deletions, encryptions), registry modifications, process creation and injection events, and memory allocation patterns. This behavioral trace is then fed into ML models that classify the sample based on what it <em>did</em>, not what it looks like statically.</p>
+
+  <div class="callout">
+    <div class="callout-label">Static vs. dynamic: the tradeoff</div>
+    <p>Static analysis is fast but can be defeated by obfuscation. Dynamic analysis sees through obfuscation but is slower, requires execution infrastructure, and can be defeated by sandbox-aware malware that detects the analysis environment and alters its behavior. Production ML pipelines typically chain both: static classifiers triage at high speed, flagging suspicious samples for deeper dynamic analysis.</p>
+  </div>
+
+  <h2>Feature extraction and supervised classification</h2>
+  <p>The most common ML architecture for malware classification is supervised learning: a model trained on labeled samples (known malware vs. benign, or labeled by family) learns to map features to classes. The practical challenges lie in feature engineering and label quality.</p>
+
+  <div class="principle-list">
+    <div class="principle">
+      <div class="principle-title">Feature representation determines what the model can learn</div>
+      <div class="principle-desc">Raw bytes can be converted to grayscale images (treating each byte as a pixel), enabling convolutional neural networks to detect visual structural patterns. API call sequences can be modeled as text for NLP-style approaches. Control flow graphs can be parsed for graph-based features. Each representation exposes different aspects of malware behavior to the model.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Label quality is the hidden bottleneck</div>
+      <div class="principle-desc">Supervised models are only as good as their training labels. In malware research, labels are often noisy: antivirus vendor disagreements, mislabeled benign files, and ambiguous grayware all contaminate training sets. Label cleaning and ensemble voting across multiple AV engines are standard practices to improve ground truth reliability.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Family classification requires hierarchical thinking</div>
+      <div class="principle-desc">Malware families are not cleanly separable categories — they evolve, merge, and share code through malware-as-a-service markets. A two-class (malware/benign) problem is relatively tractable; multi-class family attribution is substantially harder and may require hierarchical classification or open-set recognition to handle unknown families.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Concept drift degrades models over time</div>
+      <div class="principle-desc">Malware evolves continuously. A classifier trained on samples from 2022 will see its accuracy degrade as attackers develop new techniques that fall outside the training distribution. Production ML systems require continuous retraining pipelines that ingest newly identified samples and periodically retrain or fine-tune models to stay current.</div>
+    </div>
+  </div>
+
+  <h2>Deep learning for obfuscated and packed malware</h2>
+  <p>Obfuscation is the primary technique attackers use to defeat static ML classifiers. A packer wraps the original malicious code in a layer of decryption logic; the outer shell looks benign or at least unfamiliar, while the actual payload only appears in memory during execution. Metamorphic engines rewrite code structure — replacing instructions with semantically equivalent alternatives, shuffling code blocks, inserting junk instructions — while preserving functionality.</p>
+  <p>Deep learning approaches address obfuscation in several ways. <strong>Recurrent neural networks (RNNs) and transformers</strong> applied to byte sequences can learn long-range dependencies that persist even through reordering and insertion. <strong>Disassembly-level analysis</strong> extracts the actual instruction stream rather than raw bytes, making simple obfuscations transparent. <strong>Code normalization</strong> pipelines attempt to canonicalize equivalent code representations before feature extraction, reducing the surface area that obfuscation can exploit.</p>
+  <p>The most powerful recent development is applying large language models to disassembled code. Treating assembly instructions as tokens, LLMs pretrained on large corpora of benign and malicious code can develop semantic understanding of what code <em>does</em> rather than merely what it looks like — enabling detection of novel obfuscation techniques that defeat pattern-based approaches.</p>
+
+  <h2>Graph neural networks for malware relationship mapping</h2>
+  <p>Individual malware samples do not exist in isolation. They share code, infrastructure, and development patterns with other samples from the same threat actor or malware family. Graph neural networks (GNNs) exploit these relationships for both classification and attribution.</p>
+  <p><strong>Code similarity graphs</strong> connect samples that share code segments, enabling propagation of labels from known samples to unknown variants. <strong>Call graphs</strong> represent the internal function call structure of a binary as a graph, and GNNs can learn family-distinctive graph topologies that persist even when individual functions are obfuscated. <strong>Infrastructure graphs</strong> connect samples through shared C2 domains, IP addresses, SSL certificates, and WHOIS records — revealing threat actor infrastructure even when code is completely rewritten.</p>
+
+  <div class="good">
+    <div class="good-label">Practical strength</div>
+    <p>Graph-based analysis is particularly powerful for threat attribution because attackers find it much harder to change their infrastructure patterns than their code. Even if a malware author completely rewrites their payload, they often reuse hosting providers, domain registrars, or SSL certificate patterns — connections that GNN-based threat intelligence platforms can detect and link back to known threat actors.</p>
+  </div>
+
+  <h2>Behavioral analysis and sandboxing at scale</h2>
+  <p>Modern commercial sandboxes — such as Cuckoo, ANY.RUN, and enterprise platforms from vendors like CrowdStrike and Palo Alto — run thousands of samples per hour in instrumented virtual machines, collecting behavioral telemetry that feeds directly into ML pipelines. The ML component handles the classification and prioritization: not every sandboxed sample deserves the same level of analyst attention, and ML-driven scoring helps SOC teams focus human expertise where it matters most.</p>
+  <p>Key behavioral features include API call sequences (modeled as time series or text), network indicators (C2 beaconing patterns, DNS-over-HTTPS usage, protocol anomalies), filesystem operations (mass encryption indicating ransomware, shadow copy deletion, backup removal), and process injection techniques (DLL injection, process hollowing, APC injection detected through memory introspection).</p>
+
+  <h2>Adversarial examples: when attackers fool the classifier</h2>
+  <p>ML-based malware classifiers are themselves vulnerable to attack. An adversarial example in the malware context is a malicious file that has been minimally modified to cross the decision boundary of a classifier — appearing benign to the model while retaining full malicious functionality.</p>
+
+  <div class="warn">
+    <div class="warn-label">Critical vulnerability</div>
+    <p><strong>Feature manipulation attacks</strong> add benign-looking bytes or metadata to a malicious binary — appending benign code to lower the model's malice score without affecting execution. <strong>Gradient-based attacks</strong> query the model repeatedly to map its decision boundary, then craft minimal perturbations that flip the classification. <strong>Semantic-preserving transformations</strong> apply code transformations that a metamorphic engine can already perform — inserting equivalent instructions, reordering independent code blocks — but directed specifically at evading a target classifier.</p>
+    <p>This is not theoretical: researchers have demonstrated adversarial attacks against commercial antivirus ML engines in both white-box and black-box settings. Any production ML malware detection system must assume that sophisticated attackers will probe and attempt to evade it.</p>
+  </div>
+
+  <h2>Threat intelligence integration</h2>
+  <p>ML-based malware analysis does not operate in isolation from broader threat intelligence. The most effective platforms integrate classifier output with structured threat intelligence feeds — MITRE ATT&amp;CK technique tagging, YARA rule matching, known threat actor TTPs, and vulnerability intelligence — to produce actionable context alongside detection verdicts.</p>
+  <p>When a ML classifier flags a sample as likely ransomware belonging to the LockBit family, that verdict should automatically trigger enrichment: known LockBit C2 infrastructure to block, specific persistence mechanisms to hunt for, known exfiltration destinations to monitor. The combination of ML speed and human-curated threat intelligence depth is what makes modern security platforms effective at scale.</p>
+
+  <div class="good">
+    <div class="good-label">Where ML truly earns its place</div>
+    <p>The real value of ML in malware analysis is triage at scale: processing hundreds of thousands of samples per day, prioritizing which ones deserve human attention, and clustering unknown variants around known families. No team of human analysts could cover this volume manually. ML does not replace the skilled reverse engineer who deeply analyzes a novel threat — it creates the space for that expertise to be applied where it matters.</p>
+  </div>
+
+  <h2>Next</h2>
+  <p>Module 5 examines how AI is transforming vulnerability assessment and penetration testing — from smart fuzzing and AI-assisted code review to automated CVE prioritization and AI-powered red team operations.</p>
+</div>
+</main>
+</div>
+
+<div class="sticky-bar" id="sticky-bar">
+  <div class="sticky-bar-reading" id="sticky-reading">Read to the end to unlock the next module</div>
+  <div class="sticky-bar-track"><div class="sticky-bar-fill" id="sticky-fill"></div></div>
+  <div class="sticky-bar-label" id="sticky-label">0%</div>
+  <button class="sticky-bar-btn" id="sticky-btn" onclick="completeAndNext()">Module 5: Vulnerability Assessment and AI &#8594;</button>
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import { getFirestore, doc, setDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  const app = initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+  const auth = getAuth(app); const db = getFirestore(app);
+  let currentUser = null;
+  onAuthStateChanged(auth, u => { currentUser = u; });
+
+  window.toggleTheme=function(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='&#9790;'):(h.setAttribute('data-theme','dark'),i.textContent='&#9728;');};
+  window.addEventListener('scroll',()=>{const d=document.documentElement,s=d.scrollTop||document.body.scrollTop,t=d.scrollHeight-d.clientHeight;document.getElementById('progress').style.width=(s/t*100)+'%';});
+
+  let unlocked=false;
+  function updateScrollProgress(){
+    const scrolled=window.scrollY+window.innerHeight;
+    const total=document.documentElement.scrollHeight;
+    const pct=Math.min(100,Math.round((scrolled/total)*100));
+    const fill=document.getElementById('sticky-fill');
+    const label=document.getElementById('sticky-label');
+    const btn=document.getElementById('sticky-btn');
+    const reading=document.getElementById('sticky-reading');
+    if(fill)fill.style.width=pct+'%';
+    if(label)label.textContent=pct+'%';
+    if(pct>=95&&!unlocked){
+      unlocked=true;
+      if(btn)btn.style.display='block';
+      if(reading)reading.style.display='none';
+      if(fill)fill.style.background='#22c55e';
+      if(label)label.style.color='#22c55e';
+    }
+  }
+  window.addEventListener('scroll',updateScrollProgress);
+  updateScrollProgress();
+
+  window.completeAndNext=async function(){
+    if(currentUser){
+      try{
+        await setDoc(doc(db,'users',currentUser.uid),{
+          cybersecurityModules: arrayUnion('m4')
+        },{merge:true});
+      }catch(e){ /* progress save best-effort */ }
+    }
+    window.location.href='cybersecurity-module-5.html';
+  };
+</script>
+</body>
+</html>

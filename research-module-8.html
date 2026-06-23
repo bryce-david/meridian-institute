@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 8: Communicating Research with AI — AI for Research and Academia — Meridian Institute of AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#064E3B;--accent-dim:rgba(6,78,59,0.1);--accent-dim2:rgba(6,78,59,0.05);--nav-bg:rgba(8,8,8,0.9);--callout-bg:rgba(6,78,59,0.07);--callout-border:rgba(6,78,59,0.25);--good-bg:rgba(34,197,94,0.07);--good-border:rgba(34,197,94,0.2);--warn-bg:rgba(251,146,60,0.07);--warn-border:rgba(251,146,60,0.2);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#065F46;--accent-dim:rgba(6,95,70,0.08);--accent-dim2:rgba(6,95,70,0.04);--nav-bg:rgba(250,250,248,0.9);--callout-bg:rgba(6,95,70,0.05);--callout-border:rgba(6,95,70,0.2);--good-bg:rgba(22,163,74,0.06);--good-border:rgba(22,163,74,0.2);--warn-bg:rgba(234,88,12,0.05);--warn-border:rgba(234,88,12,0.2);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;overflow-x:hidden;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.7;overflow-x:hidden;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}
+  .nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}
+  .nav-back{font-size:13px;color:var(--text-2);text-decoration:none;transition:color 0.2s;}
+  .nav-back:hover{color:var(--text);}
+  .nav-label{font-size:13px;color:var(--text-3);}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;transition:all 0.2s;}
+  .theme-toggle:hover{background:var(--bg-3);color:var(--text);}
+  .progress-bar{position:fixed;top:60px;left:0;right:0;z-index:99;height:2px;background:var(--border);}
+  .progress-fill{height:100%;background:var(--accent);width:0%;transition:width 0.1s;}
+  .page-wrapper{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:100vh;padding-top:62px;overflow:hidden;}
+  .sidebar{position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto;border-right:1px solid var(--border);padding:32px 24px;background:var(--bg-2);}
+  .sidebar-course{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;}
+  .sidebar-course-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+  .sidebar-module{margin-bottom:4px;}
+  .sidebar-module-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:13px;color:var(--text-2);text-decoration:none;transition:all 0.2s;line-height:1.4;}
+  .sidebar-module-link:hover{background:var(--bg-3);color:var(--text);}
+  .sidebar-module-link.active{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-num{font-size:11px;font-weight:500;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--bg-4);color:var(--text-3);}
+  .sidebar-module-link.active .sidebar-num{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-divider{height:1px;background:var(--border);margin:20px 0;}
+  .sidebar-progress-label{font-size:12px;color:var(--text-3);margin-bottom:8px;display:flex;justify-content:space-between;}
+  .sidebar-progress-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sidebar-progress-fill{height:100%;width:80%;background:var(--accent);border-radius:2px;}
+  main{display:block;min-width:0;overflow:hidden;}
+  .content{max-width:760px;width:100%;padding:60px 64px 140px;margin:0 auto;}
+  .module-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+  .module-tag{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(6,78,59,0.2);padding:4px 12px;border-radius:100px;}
+  .module-meta{font-size:12px;color:var(--text-3);}
+  h1{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1.05;letter-spacing:-0.02em;color:var(--text);margin-bottom:24px;}
+  .intro-text{font-size:19px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+  h2{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:400;color:var(--text);margin:52px 0 18px;line-height:1.2;}
+  h3{font-size:16px;font-weight:500;color:var(--text);margin:32px 0 12px;}
+  p{font-size:16px;font-weight:300;color:var(--text-2);line-height:1.8;margin-bottom:20px;}
+  strong{font-weight:500;color:var(--text);}
+  em{font-style:italic;}
+  ul,ol{margin:0 0 20px 22px;color:var(--text-2);}
+  li{font-size:16px;font-weight:300;line-height:1.8;margin-bottom:8px;}
+  .callout{background:var(--callout-bg);border:1px solid var(--callout-border);border-radius:12px;padding:24px 28px;margin:32px 0;}
+  .callout-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+  .callout p{margin:0;font-size:15px;color:var(--text-2);}
+  .callout p+p{margin-top:12px;}
+  .good{background:var(--good-bg);border:1px solid var(--good-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .good-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#22c55e;margin-bottom:10px;}
+  .good p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn{background:var(--warn-bg);border:1px solid var(--warn-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .warn-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#fb923c;margin-bottom:10px;}
+  .warn p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn p+p{margin-top:12px;}
+  .principle-list{display:flex;flex-direction:column;gap:12px;margin:24px 0;}
+  .principle{background:var(--bg-2);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:0 12px 12px 0;padding:20px 24px;}
+  .principle-title{font-size:15px;font-weight:500;color:var(--text);margin-bottom:6px;}
+  .principle-desc{font-size:14px;color:var(--text-2);line-height:1.65;margin:0;}
+  .sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:var(--bg-2);border-top:1px solid var(--border-2);padding:14px 5%;display:flex;align-items:center;justify-content:space-between;gap:16px;backdrop-filter:blur(12px);}
+  .sticky-bar-track{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sticky-bar-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.2s;width:0%;}
+  .sticky-bar-label{font-size:12px;color:var(--text-3);white-space:nowrap;min-width:60px;text-align:right;}
+  .sticky-bar-btn{padding:10px 20px;border-radius:8px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;background:var(--accent);color:#fff;border:none;cursor:pointer;white-space:nowrap;transition:opacity 0.2s;display:none;}
+  .sticky-bar-btn:hover{opacity:0.88;}
+  .sticky-bar-reading{font-size:12px;color:var(--text-3);white-space:nowrap;}
+  @media(max-width:900px){.page-wrapper{grid-template-columns:1fr;}.sidebar{display:none;}.content{padding:40px 24px 120px;}h1{font-size:38px;}}
+  @media(max-width:600px){.content{padding:28px 16px 120px;}h1{font-size:30px;}h2{font-size:24px;}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="courses.html" class="nav-back">← AI for Research and Academia</a>
+    <div class="nav-divider"></div>
+    <span class="nav-label">Module 8</span>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">☀</span></button>
+</nav>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+
+<div class="page-wrapper">
+<aside class="sidebar">
+  <div class="sidebar-course">Expert Track</div>
+  <div class="sidebar-course-name">AI for Research and Academia</div>
+  <div class="sidebar-module"><a href="research-module-1.html" class="sidebar-module-link"><span class="sidebar-num">1</span>AI as a Research Partner</a></div>
+  <div class="sidebar-module"><a href="research-module-2.html" class="sidebar-module-link"><span class="sidebar-num">2</span>Literature Discovery and Synthesis</a></div>
+  <div class="sidebar-module"><a href="research-module-3.html" class="sidebar-module-link"><span class="sidebar-num">3</span>Research Writing with AI</a></div>
+  <div class="sidebar-module"><a href="research-module-4.html" class="sidebar-module-link"><span class="sidebar-num">4</span>Data Analysis and Visualization</a></div>
+  <div class="sidebar-module"><a href="research-module-5.html" class="sidebar-module-link"><span class="sidebar-num">5</span>Hypothesis Generation</a></div>
+  <div class="sidebar-module"><a href="research-module-6.html" class="sidebar-module-link"><span class="sidebar-num">6</span>Peer Review and Integrity</a></div>
+  <div class="sidebar-module"><a href="research-module-7.html" class="sidebar-module-link"><span class="sidebar-num">7</span>Citation Management</a></div>
+  <div class="sidebar-module"><a href="research-module-8.html" class="sidebar-module-link active"><span class="sidebar-num">8</span>Communicating Research</a></div>
+  <div class="sidebar-module"><a href="research-module-9.html" class="sidebar-module-link"><span class="sidebar-num">9</span>Collaborative Research</a></div>
+  <div class="sidebar-module"><a href="research-module-10.html" class="sidebar-module-link"><span class="sidebar-num">10</span>The Future of AI-Augmented Science</a></div>
+  <div class="sidebar-module"><a href="quiz-research.html" class="sidebar-module-link" style="color:var(--accent);margin-top:4px;"><span class="sidebar-num" style="background:var(--accent-dim);color:var(--accent);">✦</span>Final Assessment</a></div>
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-progress-label"><span>Course progress</span><span style="color:var(--accent);">8 / 10</span></div>
+  <div class="sidebar-progress-track"><div class="sidebar-progress-fill"></div></div>
+</aside>
+
+<main>
+<div class="content">
+  <div class="module-eyebrow"><span class="module-tag">Module 8 · Expert Track</span><span class="module-meta">22 min read · AI for Research and Academia</span></div>
+  <h1>Communicating Research with AI</h1>
+
+  <p class="intro-text">Research that is not communicated effectively reaches fewer people, has less impact, and is less likely to receive the funding and attention needed to continue. Researchers are expected to communicate across multiple registers: to specialists through journal papers and conference presentations, to funding bodies through grant applications, to collaborators and reviewers through correspondence, and increasingly to public audiences through social media and science journalism. AI is a capable tool across all of these modes, though with different value propositions in each.</p>
+
+  <h2>Conference presentations with AI</h2>
+  <p>Conference presentations require translating the dense, technically precise content of a journal article into a format that communicates to a live audience in 12–20 minutes. The cognitive tasks involved — selecting what to include, organizing the narrative arc, creating visuals that communicate efficiently, writing speaker notes that are different from slide text — are all areas where AI assistance can be valuable.</p>
+
+  <h3>Structure and slide design</h3>
+  <p>The most common structural failure in academic conference talks is trying to include too much. A 15-minute talk should typically establish one clear argument supported by two or three pieces of evidence, not summarize an entire paper. AI can help identify this problem early: describe your paper to AI and ask it to suggest a talk structure that would communicate the core contribution compellingly in 15 minutes, then ask it to identify what you would need to cut to achieve that structure. The exercise of seeing what AI proposes to cut often reveals what is actually dispensable.</p>
+  <p><strong>Gamma</strong> (gamma.app) and <strong>Beautiful.ai</strong> are AI-powered presentation tools that generate slide structures and visual layouts from text input. Gamma's workflow — paste a text description of your talk and receive a formatted slide deck as a starting point — is valuable not because its default output is presentation-ready (it rarely is) but because it provides a structural scaffold that is easier to revise than a blank deck. The visual defaults in Gamma are generally cleaner than the defaults in PowerPoint, and the ability to iterate slide designs in natural language ("make this slide more minimal," "combine these two slides," "add a diagram showing the experimental design") speeds up the design process considerably.</p>
+
+  <h3>Speaker notes</h3>
+  <p>Speaker notes that work are not the same as the slide text expanded. They are what you would say in conversation about the slide — more informal, more narrative, more responsive to what a live audience needs to follow the argument. AI generates speaker notes well when prompted specifically: "Write speaker notes for this slide that would be appropriate for a researcher presenting to a mixed audience of specialists and graduate students. The notes should take approximately 90 seconds to deliver, and should explain the intuition behind the finding before stating the statistical result."</p>
+
+  <h2>Science communication for public audiences</h2>
+  <p>Translating research for non-specialist audiences is a distinct skill from academic writing, and one that many researchers find genuinely difficult. The challenge is not just simplifying vocabulary — it is finding the analogies, narratives, and frames that make abstract concepts concrete and relevant to someone without domain training. AI is consistently good at this translation task when prompted well.</p>
+  <p>The most effective SciComm prompt pattern: describe your research in technical terms, specify your target audience (general public? science enthusiasts? policy makers? journalists?), and ask AI to explain it using an analogy or narrative structure. Review the result for scientific accuracy — AI may introduce analogies that are vivid but technically misleading — and revise toward something that is both accessible and accurate. The AI draft is a starting point for the translation, not a finished product.</p>
+  <p>Common SciComm prompt variations that work well:</p>
+  <ul>
+    <li>"Explain this finding as if you were describing it to a curious high school student who is interested in science but has no background in [field]."</li>
+    <li>"Find three analogies from everyday life that capture the essential mechanism of [phenomenon]. Evaluate each for accuracy and accessibility."</li>
+    <li>"Write a 250-word explainer on [topic] for a general newspaper audience. Use concrete examples, avoid jargon, and end with why this research matters for daily life."</li>
+  </ul>
+
+  <h2>Grant writing support</h2>
+  <p>Grant writing is one of the highest-stakes writing tasks researchers undertake, and one where the structure, framing, and tone of the application have large effects on the outcome independent of the quality of the underlying science. AI assistance in grant writing has significant value, but its role should be carefully circumscribed.</p>
+
+  <h3>NIH, NSF, and ERC structures</h3>
+  <p>Each major funding body has specific application structures with well-defined sections, word limits, and review criteria. NIH R01 applications require a Specific Aims page (one page that must do the work of the entire application in capturing reviewer attention), a Research Strategy section (Significance, Innovation, Approach), and an approach to Human Subjects that follows specific templates. NSF applications require a Project Description with Intellectual Merit and Broader Impacts sections evaluated by separate criteria. ERC applications have distinctive sections including the "State of the Art" and "Methodology" that differ substantially from NIH conventions.</p>
+  <p>AI can explain the purpose, evaluation criteria, and structural expectations of each section in plain language. This is particularly useful for researchers applying to a funding body for the first time: understanding what reviewers are looking for in each section of an NIH Specific Aims page — that it must establish significance in the first paragraph, identify the gap in the second, articulate the central hypothesis and specific aims in the third — allows you to structure your writing to meet those expectations rather than discovering them by rejection.</p>
+
+  <h3>The Specific Aims page</h3>
+  <p>The Specific Aims page is arguably the highest-value page in an NIH grant application. Reviewers often form their overall impression from it before reading the Research Strategy in detail. AI assistance here is most useful for editing and tightening rather than generating: write your own Specific Aims page, then ask AI to evaluate whether each paragraph accomplishes its intended function, whether the transition from significance to gap to hypothesis is logically clear, whether the aims are parallel in structure and appropriately ambitious, and whether the significance of the proposed work is established convincingly in the opening paragraph. This gives you a sophisticated reader's response to a draft that you can revise substantively.</p>
+
+  <div class="warn">
+    <div class="warn-label">Grant Writing: AI for Editing, Not Writing</div>
+    <p>The distinction matters especially in grant writing. Grant reviewers have read thousands of applications and recognize generic, polished-but-hollow prose. The most compelling specific aims pages are written in the researcher's own voice, with genuine enthusiasm about the science, specific details about the preliminary data, and concrete descriptions of the proposed work. AI-generated text tends toward generic academic competence rather than the specific, detailed, convincing voice that wins grants. Use AI to edit, tighten, and check the structure of drafts you have written; do not use it to generate the drafts in the first place.</p>
+  </div>
+
+  <h2>Responding to reviewer comments</h2>
+  <p>The response-to-reviewers document is a critical piece of academic writing that receives little attention in graduate training despite having significant influence on revision outcomes. A well-written response is diplomatic, systematic, addresses every comment specifically, and signals to reviewers that their concerns have been taken seriously even when the authors disagree. AI assistance is well-suited to this task because the intellectual content — whether and how to address each scientific comment — is entirely the author's domain, while the framing, tone, and organization of the response are areas where AI adds value.</p>
+  <p>Effective reviewer response prompt patterns:</p>
+  <p><em>"Reviewer 2 makes the following comment: [paste comment]. Our response is that we agree this limitation exists but that it does not affect the main conclusions for the following reasons: [your reasons]. Please help me write a response paragraph that acknowledges the reviewer's concern respectfully, explains our reasoning clearly, and describes any changes we are making to the manuscript."</em></p>
+  <p><em>"I need to decline this reviewer's request to run an additional analysis, because the data required are not available and collecting them would require a new study. Please help me write a response that explains this diplomatically, acknowledges the reviewer's point has scientific merit, and explains why the paper remains valid without this analysis."</em></p>
+
+  <h2>Creating compelling abstracts with IMRaD</h2>
+  <p>The IMRaD structure — Introduction/background, Methods, Results, and Discussion/conclusion — is the dominant structure for scientific abstracts in biomedical and empirical social science research. Each component has a specific function: the Introduction establishes why the question matters; the Methods describe what was done; the Results state what was found; the Discussion/Conclusion situates the finding and states its significance. Abstracts that omit or conflate these components are harder to index, harder to understand at a glance, and less compelling to read.</p>
+  <p>AI can evaluate whether a given abstract fulfills each IMRaD component and identify where the structure has broken down. A useful prompt: "Evaluate this abstract against the IMRaD structure. For each component, tell me whether it is present, whether it is adequately developed, and whether it can be tightened without losing essential content. Then suggest a revised version that maintains the word limit of [X] words while more clearly fulfilling each structural component."</p>
+  <p>AI is also effective at writing multiple versions of an abstract at different word lengths — the 250-word journal abstract, the 150-word conference abstract, the 50-word database record — from a single complete draft. These versions require different levels of compression and different choices about what to retain, and the cognitive work of multiple compressions is tedious. AI handles it efficiently.</p>
+
+  <h2>Social media for researchers</h2>
+  <p>Researcher presence on social media has become an increasingly important vector for impact, collaboration, and visibility. The landscape has shifted since 2022: Twitter/X has declined in reach and norms for many academic communities; <strong>Bluesky</strong> has emerged as a growing alternative with strong adoption in some scientific communities; <strong>LinkedIn</strong> has grown in importance for researchers with applied and policy-facing work. The appropriate platform depends on your field and goals.</p>
+  <p>AI assistance for research social media is most useful for thread writing and translation tasks. A common and high-value workflow: when a paper is published, write a Twitter/Bluesky thread that explains the paper's key finding, method, and implications for a broad scientific audience. This requires distilling a 7,000-word paper into 10–12 posts of 280 characters each — a compression task that AI handles efficiently when given the paper and a target thread structure.</p>
+  <p>Prompt pattern for research threads: "I have published a paper with the following key finding: [describe finding]. Here are the main points I want to communicate: [list]. Write a 10-tweet thread that opens with a hook that would make a researcher outside my field want to read on, explains the core finding clearly, describes the method briefly, situates the finding against prior work, and ends with the broader implication. Use plain language throughout and avoid jargon except where it's unavoidable."</p>
+
+  <div class="good">
+    <div class="good-label">The Multi-Audience Communication Strategy</div>
+    <p>The researchers whose work reaches the widest impact are those who communicate it across multiple registers without compromising scientific accuracy. The paper is the archival record, written for specialists. The conference talk is the live performance, adapted for a mixed audience of specialists and adjacent researchers. The grant application is the persuasive pitch, written for reviewers across subdisciplines. The social media thread is the public announcement, written for anyone curious about science. AI does not need to understand your research to help you adapt your communication of it across these registers — but you do, and that expertise is the foundation on which AI's translation capability operates. The combination produces communication that is both accurate and accessible, which is substantially better than either alone.</p>
+  </div>
+
+</div>
+</main>
+</div>
+
+<div class="sticky-bar" id="sticky-bar">
+  <div class="sticky-bar-reading" id="sticky-reading">Read to the end to unlock the next module</div>
+  <div class="sticky-bar-track"><div class="sticky-bar-fill" id="sticky-fill"></div></div>
+  <div class="sticky-bar-label" id="sticky-label">0%</div>
+  <button class="sticky-bar-btn" id="sticky-btn" onclick="completeAndNext()">Module 9: Collaborative Research →</button>
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import { getFirestore, doc, setDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  const app=initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+  const auth=getAuth(app);const db=getFirestore(app);
+  let currentUser=null;
+  onAuthStateChanged(auth,u=>{currentUser=u;});
+  window.toggleTheme=function(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='☾'):(h.setAttribute('data-theme','dark'),i.textContent='☀');};
+  window.addEventListener('scroll',()=>{const d=document.documentElement,s=d.scrollTop||document.body.scrollTop,t=d.scrollHeight-d.clientHeight;document.getElementById('progress').style.width=(s/t*100)+'%';});
+  let unlocked=false;
+  function updateScrollProgress(){
+    const scrolled=window.scrollY+window.innerHeight;const total=document.documentElement.scrollHeight;
+    const pct=Math.min(100,Math.round((scrolled/total)*100));
+    const fill=document.getElementById('sticky-fill');const label=document.getElementById('sticky-label');
+    const btn=document.getElementById('sticky-btn');const reading=document.getElementById('sticky-reading');
+    if(fill)fill.style.width=pct+'%';if(label)label.textContent=pct+'%';
+    if(pct>=95&&!unlocked){unlocked=true;if(btn)btn.style.display='block';if(reading)reading.style.display='none';if(fill)fill.style.background='#22c55e';if(label)label.style.color='#22c55e';}
+  }
+  window.addEventListener('scroll',updateScrollProgress);updateScrollProgress();
+  window.completeAndNext=async function(){
+    if(currentUser){try{await setDoc(doc(db,'users',currentUser.uid),{researchModules:arrayUnion('m8')},{merge:true});}catch(e){}}
+    window.location.href='research-module-9.html';
+  };
+</script>
+</body>
+</html>

@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 5: Government AI Procurement — AI in Governance — Meridian Institute of AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#92400E;--accent-dim:rgba(146,64,14,0.1);--accent-dim2:rgba(146,64,14,0.05);--nav-bg:rgba(8,8,8,0.9);--callout-bg:rgba(146,64,14,0.07);--callout-border:rgba(146,64,14,0.25);--good-bg:rgba(34,197,94,0.07);--good-border:rgba(34,197,94,0.2);--warn-bg:rgba(251,146,60,0.07);--warn-border:rgba(251,146,60,0.2);}
+:root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#78350F;--accent-dim:rgba(120,53,15,0.08);--accent-dim2:rgba(120,53,15,0.04);--nav-bg:rgba(250,250,248,0.9);--callout-bg:rgba(120,53,15,0.05);--callout-border:rgba(120,53,15,0.2);--good-bg:rgba(22,163,74,0.06);--good-border:rgba(22,163,74,0.2);--warn-bg:rgba(234,88,12,0.05);--warn-border:rgba(234,88,12,0.2);}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;overflow-x:hidden;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.7;overflow-x:hidden;transition:background 0.3s,color 0.3s;}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+.nav-left{display:flex;align-items:center;gap:16px;}
+.nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+.nav-divider{width:1px;height:16px;background:var(--border-2);}
+.nav-back{font-size:13px;color:var(--text-2);text-decoration:none;transition:color 0.2s;}
+.nav-back:hover{color:var(--text);}
+.nav-label{font-size:13px;color:var(--text-3);}
+.theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;transition:all 0.2s;}
+.theme-toggle:hover{background:var(--bg-3);color:var(--text);}
+.progress-bar{position:fixed;top:60px;left:0;right:0;z-index:99;height:2px;background:var(--border);}
+.progress-fill{height:100%;background:var(--accent);width:0%;transition:width 0.1s;}
+.page-wrapper{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:100vh;padding-top:62px;overflow:hidden;}
+.sidebar{position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto;border-right:1px solid var(--border);padding:32px 24px;background:var(--bg-2);}
+.sidebar-course{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;}
+.sidebar-course-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+.sidebar-module{margin-bottom:4px;}
+.sidebar-module-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:13px;color:var(--text-2);text-decoration:none;transition:all 0.2s;line-height:1.4;}
+.sidebar-module-link:hover{background:var(--bg-3);color:var(--text);}
+.sidebar-module-link.active{background:var(--accent-dim);color:var(--accent);}
+.sidebar-num{font-size:11px;font-weight:500;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--bg-4);color:var(--text-3);}
+.sidebar-module-link.active .sidebar-num{background:var(--accent-dim);color:var(--accent);}
+.sidebar-divider{height:1px;background:var(--border);margin:20px 0;}
+.sidebar-progress-label{font-size:12px;color:var(--text-3);margin-bottom:8px;display:flex;justify-content:space-between;}
+.sidebar-progress-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+.sidebar-progress-fill{height:100%;width:50%;background:var(--accent);border-radius:2px;}
+main{display:block;min-width:0;overflow:hidden;}
+.content{max-width:760px;width:100%;padding:60px 64px 140px;margin:0 auto;}
+.module-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+.module-tag{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(146,64,14,0.2);padding:4px 12px;border-radius:100px;}
+.module-meta{font-size:12px;color:var(--text-3);}
+h1{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1.05;letter-spacing:-0.02em;color:var(--text);margin-bottom:24px;}
+.intro-text{font-size:19px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+h2{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:400;color:var(--text);margin:52px 0 18px;line-height:1.2;}
+h3{font-size:16px;font-weight:500;color:var(--text);margin:32px 0 12px;}
+p{font-size:16px;font-weight:300;color:var(--text-2);line-height:1.8;margin-bottom:20px;}
+strong{font-weight:500;color:var(--text);}
+em{font-style:italic;}
+ul,ol{margin:0 0 20px 22px;color:var(--text-2);}
+li{font-size:16px;font-weight:300;line-height:1.8;margin-bottom:8px;}
+.callout{background:var(--callout-bg);border:1px solid var(--callout-border);border-radius:12px;padding:24px 28px;margin:32px 0;}
+.callout-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+.callout p{margin:0;font-size:15px;color:var(--text-2);}
+.callout p+p{margin-top:12px;}
+.good{background:var(--good-bg);border:1px solid var(--good-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+.good-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#22c55e;margin-bottom:10px;}
+.good p{margin:0;font-size:15px;color:var(--text-2);}
+.warn{background:var(--warn-bg);border:1px solid var(--warn-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+.warn-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#fb923c;margin-bottom:10px;}
+.warn p{margin:0;font-size:15px;color:var(--text-2);}
+.warn p+p{margin-top:12px;}
+.analogy{background:var(--bg-2);border:1px solid var(--border);border-radius:12px;padding:28px;margin:28px 0;}
+.principle-list{display:flex;flex-direction:column;gap:12px;margin:24px 0;}
+.principle{background:var(--bg-2);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:0 12px 12px 0;padding:20px 24px;}
+.principle-title{font-size:15px;font-weight:500;color:var(--text);margin-bottom:6px;}
+.principle-desc{font-size:14px;color:var(--text-2);line-height:1.65;margin:0;}
+.sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:var(--bg-2);border-top:1px solid var(--border-2);padding:14px 5%;display:flex;align-items:center;justify-content:space-between;gap:16px;backdrop-filter:blur(12px);}
+.sticky-bar-track{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+.sticky-bar-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.2s;width:0%;}
+.sticky-bar-label{font-size:12px;color:var(--text-3);white-space:nowrap;min-width:60px;text-align:right;}
+.sticky-bar-btn{padding:10px 20px;border-radius:8px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;background:var(--accent);color:#fff;border:none;cursor:pointer;white-space:nowrap;transition:opacity 0.2s;display:none;}
+.sticky-bar-btn:hover{opacity:0.88;}
+.sticky-bar-reading{font-size:12px;color:var(--text-3);white-space:nowrap;}
+@media(max-width:900px){.page-wrapper{grid-template-columns:1fr;}.sidebar{display:none;}.content{padding:40px 24px 120px;}h1{font-size:38px;}}
+@media(max-width:600px){.content{padding:28px 16px 120px;}h1{font-size:30px;}h2{font-size:24px;}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="courses.html" class="nav-back">← AI in Governance</a>
+    <div class="nav-divider"></div>
+    <span class="nav-label">Module 5</span>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">☀</span></button>
+</nav>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+
+<div class="page-wrapper">
+<aside class="sidebar">
+  <div class="sidebar-course">Course</div>
+  <div class="sidebar-course-name">AI in Governance</div>
+  <div class="sidebar-module"><a href="governance-module-1.html" class="sidebar-module-link"><span class="sidebar-num">1</span>AI in Public Service Delivery</a></div>
+  <div class="sidebar-module"><a href="governance-module-2.html" class="sidebar-module-link"><span class="sidebar-num">2</span>Algorithmic Government Decisions</a></div>
+  <div class="sidebar-module"><a href="governance-module-3.html" class="sidebar-module-link"><span class="sidebar-num">3</span>Smart Cities and AI</a></div>
+  <div class="sidebar-module"><a href="governance-module-4.html" class="sidebar-module-link"><span class="sidebar-num">4</span>AI and Democratic Accountability</a></div>
+  <div class="sidebar-module"><a href="governance-module-5.html" class="sidebar-module-link active"><span class="sidebar-num">5</span>Government AI Procurement</a></div>
+  <div class="sidebar-module"><a href="governance-module-6.html" class="sidebar-module-link"><span class="sidebar-num">6</span>AI in Criminal Justice</a></div>
+  <div class="sidebar-module"><a href="governance-module-7.html" class="sidebar-module-link"><span class="sidebar-num">7</span>International AI Governance</a></div>
+  <div class="sidebar-module"><a href="governance-module-8.html" class="sidebar-module-link"><span class="sidebar-num">8</span>Ethics of Automated Government</a></div>
+  <div class="sidebar-module"><a href="governance-module-9.html" class="sidebar-module-link"><span class="sidebar-num">9</span>AI in Social Services</a></div>
+  <div class="sidebar-module"><a href="governance-module-10.html" class="sidebar-module-link"><span class="sidebar-num">10</span>Trustworthy Government AI</a></div>
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-progress-label"><span>Course progress</span><span style="color:var(--accent);">5 / 10</span></div>
+  <div class="sidebar-progress-track"><div class="sidebar-progress-fill"></div></div>
+</aside>
+
+<main>
+<div class="content">
+  <div class="module-eyebrow"><span class="module-tag">Module 5</span><span class="module-meta">22 min read · AI in Governance</span></div>
+  <h1>Procurement and Oversight of Government AI Systems</h1>
+  <p class="intro-text">Governments are the largest institutional purchasers of technology on earth. How they buy AI systems — what they require, what they scrutinize, what they leave unexamined — will shape how algorithmic decision-making affects citizens for decades. Procurement is not an administrative detail; it is one of the most consequential points of leverage government has over AI.</p>
+
+  <h2>Why AI procurement is different</h2>
+  <p>Traditional government software procurement has a logic built around stable specifications. An agency defines what it needs — a database to manage permits, a payroll system, a mapping application — and vendors bid on the ability to deliver those defined functions. The resulting contract specifies deliverables, performance metrics, and acceptance criteria. When the software is deployed, it behaves the same way today as it will in three years.</p>
+  <p>AI systems break this model in several important ways. Machine learning models are not static; they may drift as the data distribution they encounter in deployment diverges from the data they were trained on. A fraud detection model trained on historical patterns may perform well at first and degrade as fraudsters adapt. A predictive maintenance model for infrastructure may lose accuracy as the infrastructure itself ages. Traditional software procurement has no mechanism for specifying, testing, or monitoring this kind of temporal behavior.</p>
+  <p>AI systems also resist precise specification in ways traditional software does not. You can specify exactly what a payroll system must calculate; you cannot specify with equal precision what a computer vision system must "see" at every edge case. This creates a fundamental challenge for government purchasers who operate within legal frameworks that require clear, accountable, and auditable decisions. A system whose outputs cannot be fully predicted or explained may be technically capable but legally and ethically problematic.</p>
+
+  <div class="callout">
+    <div class="callout-label">The specification problem</div>
+    <p>Traditional procurement asks: does the system do what the contract specifies? AI procurement must also ask: does the system perform consistently across demographic groups? Does it remain accurate over time? Can it explain its outputs in terms a decision-maker can act on? Are there failure modes we haven't anticipated? These questions require expertise that most procurement offices do not currently have.</p>
+  </div>
+
+  <h2>Defining requirements: AI in public sector RFPs</h2>
+  <p>Request for Proposals (RFPs) for AI systems need to go well beyond functional requirements. Agencies increasingly recognize that they must specify not just what a system does, but how it does it, and what constraints it must operate within. This means building new categories of requirement into procurement documents.</p>
+  <p><strong>Explainability requirements</strong> specify how the system must be able to account for its outputs. This is not a binary — "explainable vs. black box" — but a spectrum. A system might provide feature importance scores, counterfactual explanations ("this application was declined; had income been 15% higher, it would have been approved"), or simplified rule-based approximations of its behavior. The appropriate level of explainability depends on the stakes of the decision and the legal requirements that apply to it.</p>
+  <p><strong>Fairness and bias requirements</strong> specify what the agency considers acceptable performance across demographic groups, and what metrics will be used to measure it. This requires the agency to make a prior decision about which fairness criterion applies — equal accuracy, equal false positive rates, equal positive predictive value — because these cannot all be simultaneously satisfied when base rates differ across groups.</p>
+  <p><strong>Data provenance requirements</strong> specify what data the vendor is permitted to use in training, what documentation of that data must be provided, and what restrictions apply to data generated by the agency's own operations. Many agencies have discovered after deployment that vendors trained models on government data in ways that created vendor dependency or privacy exposure.</p>
+
+  <div class="principle-list">
+    <div class="principle">
+      <div class="principle-title">Functional requirements</div>
+      <div class="principle-desc">What the system must do — the task it performs, the inputs it accepts, the outputs it produces, and the performance thresholds it must meet.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Explainability requirements</div>
+      <div class="principle-desc">How the system must account for individual outputs, what documentation must accompany decisions, and whether human-readable explanations must be provided to affected individuals.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Equity requirements</div>
+      <div class="principle-desc">What fairness metrics the system must satisfy, which demographic groups must be analyzed, what disparate impact thresholds are acceptable, and how ongoing monitoring will be conducted.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Security and reliability requirements</div>
+      <div class="principle-desc">Resilience to adversarial inputs, data poisoning, model extraction attacks, and performance degradation; uptime requirements and disaster recovery provisions.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Human oversight requirements</div>
+      <div class="principle-desc">Which decisions must be reviewed by a human before action is taken, what training staff must have to review AI outputs, and how overrides must be documented.</div>
+    </div>
+  </div>
+
+  <h2>Algorithmic impact assessments before deployment</h2>
+  <p>An algorithmic impact assessment (AIA) is a structured evaluation of a proposed AI system conducted before it is deployed in a consequential context. It borrows from the tradition of environmental and privacy impact assessments — systematic pre-deployment scrutiny of the potential harms a new capability could cause, with findings that inform whether and how to proceed.</p>
+  <p>A well-designed AIA examines the intended use of the system and all reasonably foreseeable misuses; the population that will be affected and any subpopulations with heightened vulnerability; the data on which the system was or will be trained, including its provenance, gaps, and historical biases; the accuracy and equity of the system across demographic groups; the legal implications of the system's outputs for affected individuals; and the governance structures that will oversee the system once deployed.</p>
+  <p>Canada's Directive on Automated Decision-Making, which came into force in 2019 and has been updated since, is the most developed national framework for AIAs in government. It establishes four impact levels based on the potential consequences of a decision — from administrative inconvenience to significant individual harm — and requires progressively more stringent assessment, transparency, and human review as the impact level rises. At the highest impact level, decisions must be reviewed by a qualified human before any action is taken, peer review of the system is required, and a plain-language explanation must be provided to any affected individual who requests one.</p>
+
+  <div class="good">
+    <div class="good-label">Canada's Directive: what it gets right</div>
+    <p>By tying requirements to impact level rather than to technology type, Canada's framework remains relevant as AI capabilities evolve. A novel AI system used to prioritize a low-stakes administrative task carries lighter requirements than a well-established system used to make consequential decisions about individuals. This proportionality is the right principle for government AI oversight.</p>
+  </div>
+
+  <h2>Pre-procurement market engagement</h2>
+  <p>Many procurement failures result from agencies writing requirements in a vacuum, without adequate understanding of what the market can actually provide. Pre-procurement market engagement — also called Requests for Information (RFIs), industry days, or market surveys — allows agencies to learn from vendors and civil society before committing to a specification.</p>
+  <p>For AI procurement, market engagement is especially valuable because the field moves quickly. A requirement written two years ago for a natural language processing system may not reflect what state-of-the-art systems can or cannot do today. Engaging with vendors, academic researchers, civil society organizations, and other governments before writing the RFP helps agencies write better requirements and avoid locking in outdated assumptions.</p>
+  <p>Market engagement must be conducted carefully to avoid giving any vendor unfair advantage in the subsequent competition. Best practice includes publishing a summary of market engagement findings, making the same questions available to all respondents, and ensuring that staff who conduct market engagement are not later involved in evaluating bids in ways that could introduce bias.</p>
+
+  <h2>Vendor risk management and the dependency problem</h2>
+  <p>Government AI procurement creates a category of risk that traditional software procurement also faces but AI amplifies: vendor dependency. When a government agency's operational capacity depends on a proprietary AI system that only one vendor can maintain, that vendor has extraordinary leverage. Switching costs are high, model documentation may be incomplete, and the agency may not have the internal expertise to evaluate whether the system is still performing adequately.</p>
+  <p>Vendor risk management for AI requires provisions that go beyond standard performance bonds and service level agreements. Agencies should require comprehensive model documentation — what training data was used, what validation was performed, what known limitations exist — that would allow another vendor or in-house team to replicate or replace the system. Source code escrow provisions may be appropriate for critical systems. Contracts should specify what happens to agency data if the vendor is acquired, goes out of business, or is acquired by a foreign entity.</p>
+
+  <div class="warn">
+    <div class="warn-label">The black box contract problem</div>
+    <p>Agencies that accept "proprietary model" provisions without requiring adequate documentation create a situation where they cannot evaluate the system's performance, cannot explain its outputs to affected individuals, and cannot replace it without starting from scratch. This is not merely a technical problem — it is a governance failure that creates legal exposure and undermines accountability.</p>
+    <p>Contract provisions should require vendors to provide documentation sufficient for an independent technical team to understand the system, audit its performance, and assess its ongoing reliability — even if the underlying model weights remain proprietary.</p>
+  </div>
+
+  <h2>Algorithmic audits: structure and practice</h2>
+  <p>An algorithmic audit is an independent examination of an AI system's behavior, conducted by parties with no financial interest in the system performing well. It differs from the vendor's own validation in that it is adversarial in spirit — the auditor is actively trying to find problems — and independent in structure — the auditor has access to the system but is not employed by or financially dependent on the vendor.</p>
+  <p>Audits can examine many dimensions of a system's behavior. Performance audits assess accuracy, recall, and precision, potentially disaggregated by demographic group. Fairness audits examine disparate impact in outputs and attempt to determine whether disparity, where it exists, is explainable by legitimate factors or reflects bias in training data or model design. Robustness audits probe the system's behavior under adversarial conditions, edge cases, and data distributions that differ from its training environment. Compliance audits assess whether the system operates within the legal constraints that apply to government decisions in the relevant domain.</p>
+  <p>The UK's Algorithmic Transparency Recording Standard, developed beginning in 2021, takes a different approach: rather than mandating independent audits, it requires agencies to publish structured information about algorithmic tools they use, the decisions they inform, and the oversight processes in place. This creates accountability through disclosure rather than through formal audit, making information available to civil society, researchers, and affected communities who can then conduct their own scrutiny.</p>
+
+  <h2>Contract provisions for transparency and ongoing monitoring</h2>
+  <p>The procurement contract is the moment at which government has the most leverage. Once a system is deployed and the agency has built operational dependencies on it, renegotiating terms is difficult. Transparency and oversight provisions should therefore be negotiated at the outset, not added as afterthoughts when problems emerge.</p>
+  <p>Key contract provisions for AI systems should include: regular performance reporting disaggregated by demographic group; notification requirements when the vendor makes material changes to the model; audit rights — the agency's ability to commission independent technical review of the system; incident reporting requirements when the system produces outputs that cause harm or that the vendor identifies as anomalous; and exit provisions that specify what documentation and data the agency receives if the contract ends.</p>
+  <p>Ongoing monitoring is not a post-procurement afterthought; it is a core governance function. AI systems can degrade in ways that are not immediately visible. A child welfare risk assessment tool may begin producing different outputs as the demographic composition of the caseload changes, without any change to the model itself. Monitoring protocols should specify what metrics will be tracked, at what frequency, by whom, and what triggers a formal review or suspension of the system.</p>
+
+  <h2>Building internal capacity versus vendor dependency</h2>
+  <p>There is a long-running debate in government technology about whether agencies should build internal technical capacity or rely on vendors for specialized expertise. AI sharpens this dilemma. AI systems are complex, evolve rapidly, and require ongoing technical judgment — not just at the point of procurement, but throughout the system's operational life.</p>
+  <p>An agency that lacks internal AI expertise cannot write good requirements, cannot evaluate vendor responses intelligently, cannot conduct meaningful oversight once a system is deployed, and cannot recognize when a system is performing badly. It is entirely dependent on the vendor's own assessment of the system's performance — a clear conflict of interest. Building internal capacity is therefore not a luxury; it is a prerequisite for responsible AI governance.</p>
+  <p>This does not mean every agency must employ data scientists who build models from scratch. It does mean having staff who understand enough about AI systems to ask the right questions of vendors, interpret performance reports critically, and know when to bring in independent expertise. Several governments have centralized this capacity — the UK's Government Digital Service, Canada's Digital Standards, and the U.S. General Services Administration's AI Center of Excellence are examples — providing specialized support to agencies that do not have it in-house.</p>
+
+  <div class="callout">
+    <div class="callout-label">Procurement red flags</div>
+    <p>Vendors who refuse to provide training data documentation; contracts that prohibit independent audits; performance metrics that cannot be disaggregated by demographic group; absence of model drift monitoring provisions; lack of human override mechanisms; and lock-in provisions that prevent the agency from switching vendors or building internal alternatives. Each of these should prompt significant scrutiny before a contract is signed.</p>
+  </div>
+
+  <p>Responsible AI procurement is ultimately about aligning the moment of maximum government leverage — the signing of a contract — with the values and accountability structures that should govern AI in public service. It requires technical sophistication, legal creativity, and institutional commitment. But it is also, in the end, a question of whether government takes seriously its obligation to understand and control the systems it uses to make decisions about citizens' lives.</p>
+</div>
+</main>
+</div>
+
+<div class="sticky-bar" id="sticky-bar">
+  <div class="sticky-bar-reading" id="sticky-reading">Read to the end to unlock the next module</div>
+  <div class="sticky-bar-track"><div class="sticky-bar-fill" id="sticky-fill"></div></div>
+  <div class="sticky-bar-label" id="sticky-label">0%</div>
+  <button class="sticky-bar-btn" id="sticky-btn" onclick="completeAndNext()">Module 6: AI in Criminal Justice →</button>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import { getFirestore, doc, setDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+const app = initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+const auth = getAuth(app); const db = getFirestore(app);
+let currentUser = null;
+onAuthStateChanged(auth, u => { currentUser = u; });
+window.toggleTheme=function(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='☾'):(h.setAttribute('data-theme','dark'),i.textContent='☀');};
+window.addEventListener('scroll',()=>{const d=document.documentElement,s=d.scrollTop||document.body.scrollTop,t=d.scrollHeight-d.clientHeight;document.getElementById('progress').style.width=(s/t*100)+'%';});
+let unlocked=false;
+function updateScrollProgress(){
+  const scrolled=window.scrollY+window.innerHeight;
+  const total=document.documentElement.scrollHeight;
+  const pct=Math.min(100,Math.round((scrolled/total)*100));
+  const fill=document.getElementById('sticky-fill');
+  const label=document.getElementById('sticky-label');
+  const btn=document.getElementById('sticky-btn');
+  const reading=document.getElementById('sticky-reading');
+  if(fill)fill.style.width=pct+'%';
+  if(label)label.textContent=pct+'%';
+  if(pct>=95&&!unlocked){
+    unlocked=true;
+    if(btn)btn.style.display='block';
+    if(reading)reading.style.display='none';
+    if(fill)fill.style.background='#22c55e';
+    if(label)label.style.color='#22c55e';
+  }
+}
+window.addEventListener('scroll',updateScrollProgress);
+updateScrollProgress();
+window.completeAndNext=async function(){
+  if(currentUser){
+    try{
+      await setDoc(doc(db,'users',currentUser.uid),{
+        governanceModules: arrayUnion('m5')
+      }, { merge: true });
+    }catch(e){}
+  }
+  window.location.href='governance-module-6.html';
+};
+</script>
+</body>
+</html>

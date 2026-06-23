@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 1: The AI-Driven Threat Landscape — AI in Cybersecurity — Meridian Institute of AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#0E7490;--accent-dim:rgba(14,116,144,0.1);--accent-dim2:rgba(14,116,144,0.05);--nav-bg:rgba(8,8,8,0.9);--callout-bg:rgba(14,116,144,0.07);--callout-border:rgba(14,116,144,0.25);--good-bg:rgba(34,197,94,0.07);--good-border:rgba(34,197,94,0.2);--warn-bg:rgba(251,146,60,0.07);--warn-border:rgba(251,146,60,0.2);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#0C6280;--accent-dim:rgba(12,98,128,0.08);--accent-dim2:rgba(12,98,128,0.04);--nav-bg:rgba(250,250,248,0.9);--callout-bg:rgba(12,98,128,0.05);--callout-border:rgba(12,98,128,0.2);--good-bg:rgba(22,163,74,0.06);--good-border:rgba(22,163,74,0.2);--warn-bg:rgba(234,88,12,0.05);--warn-border:rgba(234,88,12,0.2);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;overflow-x:hidden;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.7;overflow-x:hidden;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}
+  .nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}
+  .nav-back{font-size:13px;color:var(--text-2);text-decoration:none;transition:color 0.2s;}
+  .nav-back:hover{color:var(--text);}
+  .nav-label{font-size:13px;color:var(--text-3);}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;transition:all 0.2s;}
+  .theme-toggle:hover{background:var(--bg-3);color:var(--text);}
+  .progress-bar{position:fixed;top:60px;left:0;right:0;z-index:99;height:2px;background:var(--border);}
+  .progress-fill{height:100%;background:var(--accent);width:0%;transition:width 0.1s;}
+  .page-wrapper{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:100vh;padding-top:62px;overflow:hidden;}
+  .sidebar{position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto;border-right:1px solid var(--border);padding:32px 24px;background:var(--bg-2);}
+  .sidebar-course{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;}
+  .sidebar-course-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+  .sidebar-module{margin-bottom:4px;}
+  .sidebar-module-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:13px;color:var(--text-2);text-decoration:none;transition:all 0.2s;line-height:1.4;}
+  .sidebar-module-link:hover{background:var(--bg-3);color:var(--text);}
+  .sidebar-module-link.active{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-num{font-size:11px;font-weight:500;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--bg-4);color:var(--text-3);}
+  .sidebar-module-link.active .sidebar-num{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-divider{height:1px;background:var(--border);margin:20px 0;}
+  .sidebar-progress-label{font-size:12px;color:var(--text-3);margin-bottom:8px;display:flex;justify-content:space-between;}
+  .sidebar-progress-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sidebar-progress-fill{height:100%;width:10%;background:var(--accent);border-radius:2px;}
+  main{display:block;min-width:0;overflow:hidden;}
+  .content{max-width:760px;width:100%;padding:60px 64px 140px;margin:0 auto;}
+  .module-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+  .module-tag{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(14,116,144,0.2);padding:4px 12px;border-radius:100px;}
+  .module-meta{font-size:12px;color:var(--text-3);}
+  h1{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1.05;letter-spacing:-0.02em;color:var(--text);margin-bottom:24px;}
+  .intro-text{font-size:19px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+  h2{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:400;color:var(--text);margin:52px 0 18px;line-height:1.2;}
+  h3{font-size:16px;font-weight:500;color:var(--text);margin:32px 0 12px;}
+  p{font-size:16px;font-weight:300;color:var(--text-2);line-height:1.8;margin-bottom:20px;}
+  strong{font-weight:500;color:var(--text);}
+  em{font-style:italic;}
+  ul,ol{margin:0 0 20px 22px;color:var(--text-2);}
+  li{font-size:16px;font-weight:300;line-height:1.8;margin-bottom:8px;}
+  .callout{background:var(--callout-bg);border:1px solid var(--callout-border);border-radius:12px;padding:24px 28px;margin:32px 0;}
+  .callout-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+  .callout p{margin:0;font-size:15px;color:var(--text-2);}
+  .callout p+p{margin-top:12px;}
+  .good{background:var(--good-bg);border:1px solid var(--good-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .good-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#22c55e;margin-bottom:10px;}
+  .good p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn{background:var(--warn-bg);border:1px solid var(--warn-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .warn-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#fb923c;margin-bottom:10px;}
+  .warn p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn p+p{margin-top:12px;}
+  .analogy{background:var(--bg-2);border:1px solid var(--border);border-radius:12px;padding:28px;margin:28px 0;}
+  .analogy-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-3);margin-bottom:12px;}
+  .analogy p{margin:0;font-size:15px;color:var(--text-2);}
+  .disclaimer{background:rgba(251,146,60,0.07);border:1px solid rgba(251,146,60,0.3);border-radius:12px;padding:24px 28px;margin:0 0 40px;}
+  .disclaimer-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#fb923c;margin-bottom:10px;}
+  .disclaimer p{margin:0;font-size:14px;color:var(--text-2);line-height:1.7;}
+  .disclaimer p+p{margin-top:10px;}
+  .comparison-wrapper{overflow-x:auto;-webkit-overflow-scrolling:touch;width:100%;margin:28px 0;}
+  table{width:100%;border-collapse:collapse;font-size:14px;min-width:480px;}
+  th{text-align:left;padding:12px 16px;font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-3);border-bottom:1px solid var(--border-2);}
+  td{padding:14px 16px;border-bottom:1px solid var(--border);color:var(--text-2);line-height:1.6;vertical-align:top;}
+  tr:last-child td{border-bottom:none;}
+  td:first-child{color:var(--text);font-weight:500;width:30%;}
+  .key-stat{background:var(--bg-2);border:1px solid var(--border);border-radius:12px;padding:20px 24px;margin:16px 0;display:flex;align-items:center;gap:20px;}
+  .key-stat-num{font-family:'Cormorant Garamond',serif;font-size:40px;font-weight:400;color:var(--accent);line-height:1;flex-shrink:0;}
+  .key-stat-label{font-size:14px;color:var(--text-2);line-height:1.6;}
+  .key-stat-label strong{display:block;font-size:15px;color:var(--text);margin-bottom:4px;}
+  .principle-list{display:flex;flex-direction:column;gap:12px;margin:24px 0;}
+  .principle{background:var(--bg-2);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:0 12px 12px 0;padding:20px 24px;}
+  .principle-title{font-size:15px;font-weight:500;color:var(--text);margin-bottom:6px;}
+  .principle-desc{font-size:14px;color:var(--text-2);line-height:1.65;margin:0;}
+  .sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:var(--bg-2);border-top:1px solid var(--border-2);padding:14px 5%;display:flex;align-items:center;justify-content:space-between;gap:16px;backdrop-filter:blur(12px);}
+  .sticky-bar-track{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sticky-bar-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.2s;width:0%;}
+  .sticky-bar-label{font-size:12px;color:var(--text-3);white-space:nowrap;min-width:60px;text-align:right;}
+  .sticky-bar-btn{padding:10px 20px;border-radius:8px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;background:var(--accent);color:#fff;border:none;cursor:pointer;white-space:nowrap;transition:opacity 0.2s;display:none;}
+  .sticky-bar-btn:hover{opacity:0.88;}
+  .sticky-bar-reading{font-size:12px;color:var(--text-3);white-space:nowrap;}
+  @media(max-width:900px){.page-wrapper{grid-template-columns:1fr;}.sidebar{display:none;}.content{padding:40px 24px 120px;}h1{font-size:38px;}}
+  @media(max-width:600px){.content{padding:28px 16px 120px;}h1{font-size:30px;}h2{font-size:24px;}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="courses.html" class="nav-back">← AI in Cybersecurity</a>
+    <div class="nav-divider"></div>
+    <span class="nav-label">Module 1</span>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">☀</span></button>
+</nav>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+
+<div class="page-wrapper">
+<aside class="sidebar">
+  <div class="sidebar-course">Course</div>
+  <div class="sidebar-course-name">AI in Cybersecurity</div>
+  <div class="sidebar-module"><a href="cybersecurity-module-1.html" class="sidebar-module-link active"><span class="sidebar-num">1</span>The AI-Driven Threat Landscape</a></div>
+  <div class="sidebar-module"><a href="cybersecurity-module-2.html" class="sidebar-module-link"><span class="sidebar-num">2</span>Intrusion Detection and AI</a></div>
+  <div class="sidebar-module"><a href="cybersecurity-module-3.html" class="sidebar-module-link"><span class="sidebar-num">3</span>AI-Powered Social Engineering</a></div>
+  <div class="sidebar-module"><a href="cybersecurity-module-4.html" class="sidebar-module-link"><span class="sidebar-num">4</span>Malware Analysis with ML</a></div>
+  <div class="sidebar-module"><a href="cybersecurity-module-5.html" class="sidebar-module-link"><span class="sidebar-num">5</span>Vulnerability Assessment and AI</a></div>
+  <div class="sidebar-module"><a href="cybersecurity-module-6.html" class="sidebar-module-link"><span class="sidebar-num">6</span>Adversarial AI Attacks</a></div>
+  <div class="sidebar-module"><a href="cybersecurity-module-7.html" class="sidebar-module-link"><span class="sidebar-num">7</span>AI in SOC Operations</a></div>
+  <div class="sidebar-module"><a href="cybersecurity-module-8.html" class="sidebar-module-link"><span class="sidebar-num">8</span>Privacy and Data Protection</a></div>
+  <div class="sidebar-module"><a href="cybersecurity-module-9.html" class="sidebar-module-link"><span class="sidebar-num">9</span>Zero-Trust and AI</a></div>
+  <div class="sidebar-module"><a href="cybersecurity-module-10.html" class="sidebar-module-link"><span class="sidebar-num">10</span>The Future of AI Security</a></div>
+  <div class="sidebar-module"><a href="quiz-cybersecurity.html" class="sidebar-module-link" style="color:var(--accent);margin-top:4px;"><span class="sidebar-num" style="background:var(--accent-dim);color:var(--accent);">✦</span>Final Assessment</a></div>
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-progress-label"><span>Course progress</span><span style="color:var(--accent);">1 / 10</span></div>
+  <div class="sidebar-progress-track"><div class="sidebar-progress-fill"></div></div>
+</aside>
+
+<main>
+<div class="content">
+  <div class="module-eyebrow"><span class="module-tag">Module 1</span><span class="module-meta">18 min read · AI in Cybersecurity</span></div>
+  <h1>The AI-Driven Threat Landscape</h1>
+
+  <p class="intro-text">Cybersecurity has always been an arms race, but artificial intelligence has fundamentally shifted the battlefield. Attackers now wield tools that can autonomously adapt, scale campaigns to previously impossible volumes, and generate novel attack variants faster than any human team can track. Understanding how AI has restructured the modern threat landscape is the prerequisite to everything else in this course — defense is impossible without a clear-eyed view of what you are defending against.</p>
+
+  <h2>The volume and velocity problem</h2>
+  <p>Before AI became broadly accessible, sophisticated cyberattacks required skilled human operators at every stage: writing exploit code, crafting phishing emails, identifying valuable targets, and managing compromised systems. That human bottleneck was, paradoxically, one of the security community's most important natural limits on attackers. Skilled threat actors were rare, and their time was finite.</p>
+  <p>That constraint has been largely dissolved. Modern AI systems enable attackers to operate at machine speed and machine scale simultaneously. Security researchers now document campaigns where hundreds of thousands of unique phishing variants are generated and deployed in a single day — each one slightly different, each one evading static signature detection because no two are identical. The volume problem is not merely a quantitative change; it represents a qualitative shift in what defenders must be capable of detecting and blocking.</p>
+  <p>Velocity compounds the challenge. The time from vulnerability discovery to active exploitation — once measured in days or weeks — has compressed dramatically as automated scanning and AI-assisted exploit generation enter the attacker toolkit. When a new CVE is published, AI-assisted exploitation frameworks can analyze the vulnerability description and begin generating candidate exploit code within hours, sometimes before the majority of organizations have applied the patch.</p>
+
+  <div class="callout">
+    <div class="callout-label">The scale shift</div>
+    <p>A single threat actor with access to modern AI tooling can now operate campaigns that previously required a well-resourced team of a dozen specialists. The democratization of attack capability means that the sophistication bar for launching a meaningful attack has dropped significantly, even as the sophistication of the attacks themselves has increased.</p>
+  </div>
+
+  <h2>AI-assisted reconnaissance</h2>
+  <p>The first phase of most attacks — reconnaissance — has been transformed by AI more than any other. Reconnaissance traditionally required patient manual research: scraping LinkedIn for organizational charts, searching job postings for technology stack clues, mapping network perimeters with port scanners, and correlating data from breach dumps.</p>
+  <p>AI systems now automate and accelerate every step of this process. Large language models can ingest enormous volumes of public data — social media profiles, conference presentations, code repositories, news articles, corporate blog posts — and synthesize a detailed portrait of an organization's people, processes, and technology. They can identify the specific software versions an organization runs by cross-referencing job listings with GitHub contributions. They can map relationships between employees to identify who has privileged access and what their communication patterns look like.</p>
+  <p>This AI-powered OSINT (Open Source Intelligence) is not theoretical. Security red teams regularly demonstrate that an LLM given a company name and a few hours can produce an attack brief that would have taken a skilled analyst weeks to compile manually.</p>
+
+  <div class="principle-list">
+    <div class="principle">
+      <div class="principle-title">Organizational mapping at scale</div>
+      <div class="principle-desc">AI systems can automatically construct org charts, identify C-suite targets, and map reporting relationships from public LinkedIn data and press releases — without any human operator spending time on the task.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Technology stack fingerprinting</div>
+      <div class="principle-desc">Job postings, GitHub repositories, and Stack Overflow activity reveal the specific technologies an organization runs. AI can correlate this data to identify vulnerable software versions before an attack even begins.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Relationship graph construction</div>
+      <div class="principle-desc">By analyzing email signatures, conference speaker bios, and social connections, AI can identify who trusts whom inside an organization — invaluable for impersonation and social engineering campaigns.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Digital footprint aggregation</div>
+      <div class="principle-desc">AI tools can aggregate data from breach databases, public records, and social platforms to build detailed profiles of individual employees, including personal email addresses, home locations, and credentials leaked in prior breaches.</div>
+    </div>
+  </div>
+
+  <h2>The automation of attack campaigns</h2>
+  <p>Beyond reconnaissance, AI enables the full automation of multi-stage attack campaigns. Traditional attacks required human decision-making at each pivot point: after gaining initial access, a human operator would analyze the compromised environment, decide which systems to target next, and manually move laterally through the network. Each step required skilled attention and left windows of time for defenders to detect and respond.</p>
+  <p>AI-driven attack frameworks are now beginning to automate this lateral movement decision-making. Reinforcement learning models can be trained on simulated network environments to learn optimal paths through an enterprise network — identifying which machines to compromise in which order to reach high-value targets while minimizing the chance of detection. These models do not get tired, do not make impulsive decisions, and can run continuously without human oversight.</p>
+  <p>Command-and-control infrastructure has also evolved. AI can manage large botnets adaptively, routing traffic through compromised machines to obscure attack origins and dynamically adjusting behavior when detection signatures are updated. The orchestration that previously required a skilled operator can increasingly be delegated to automated systems.</p>
+
+  <h2>AI-generated malware and polymorphism</h2>
+  <p>Malware has always employed obfuscation techniques to evade antivirus detection — packing, encryption, and code substitution are decades-old techniques. But AI has introduced a new category of threat: malware that rewrites itself in semantically meaningful ways, not just cosmetic byte-level changes.</p>
+  <p>AI-generated malware can alter its code structure, rename variables, reorder operations, and substitute equivalent code blocks — all while preserving functional behavior. This <strong>semantic polymorphism</strong> defeats signature-based detection far more effectively than traditional packing, because the resulting variants are genuinely different programs that happen to perform the same malicious function.</p>
+  <p>Large language models have proven capable of generating functional malware code when prompted through jailbroken or lightly restricted instances. Security researchers have demonstrated that LLMs can be used to write ransomware, keyloggers, and network worms — with the code quality sufficient to evade many commercial antivirus products. This has prompted significant debate within the security community about the responsible disclosure norms that should govern AI-generated offensive tooling.</p>
+
+  <div class="warn">
+    <div class="warn-label">The polymorphism problem</div>
+    <p><strong>Signature-based detection is increasingly insufficient.</strong> When each malware sample can be uniquely generated for a specific target, maintaining a database of known malicious signatures becomes a losing game. Security teams relying primarily on signature-based tools are operating with a methodology that predates the AI threat era.</p>
+    <p><strong>Volume makes manual analysis impossible.</strong> When millions of unique variants exist, security analysts cannot individually examine each sample. AI-assisted malware analysis — covered in Module 4 — has become an operational necessity, not a luxury.</p>
+  </div>
+
+  <h2>Threat intelligence and AI</h2>
+  <p>The defender's answer to AI-powered attacks must itself be AI-powered, and threat intelligence is one of the most important applications. Threat intelligence involves collecting and analyzing data about threat actors, their tactics, techniques, and procedures (TTPs), and the indicators of compromise (IoCs) they leave behind — and doing it fast enough to be actionable.</p>
+  <p>AI systems now process threat feeds from thousands of sources simultaneously: dark web forums, malware repositories, honeypot networks, commercial threat feeds, and academic research. Natural language processing allows AI to read threat reports written in multiple languages, extract structured data from unstructured text, and correlate observations across sources that no human team could track manually.</p>
+  <p>Graph neural networks have emerged as particularly powerful tools for threat intelligence, mapping relationships between observed attack infrastructure: IP addresses, domains, TLS certificates, and malware samples that cluster into campaigns attributed to specific threat actors. When a new phishing domain appears, AI can immediately assess whether it shares infrastructure characteristics with known attack groups and predict likely targets and timelines.</p>
+
+  <div class="good">
+    <div class="good-label">Effective threat intelligence with AI</div>
+    <p>Organizations that deploy AI-driven threat intelligence platforms report dramatically reduced mean time to detect (MTTD) and mean time to respond (MTTR). The key advantage is correlation at scale: connecting a suspicious email to a known campaign infrastructure to a recently patched vulnerability to a specific nation-state actor — in seconds rather than hours.</p>
+  </div>
+
+  <h2>The asymmetric offense-defense dilemma</h2>
+  <p>One of the most important structural realities of cybersecurity is that offense and defense are not symmetric activities. An attacker needs to find only one successful path through a defender's perimeter; the defender must protect every possible path simultaneously. AI has amplified this asymmetry significantly.</p>
+  <p>Attackers benefit from AI in ways that compound: each new AI tool they adopt provides leverage that scales across all their campaigns. A new AI-powered reconnaissance tool improves the quality of every attack they run. A new polymorphic malware generator improves the stealth of every payload they deploy. Investments in AI capability have multiplicative returns for attackers.</p>
+  <p>Defenders, by contrast, must deploy AI across a fragmented landscape of existing security tools, each with its own integration requirements, data formats, and operational constraints. Deploying AI threat detection in a large enterprise requires integrating with SIEM systems, endpoint agents, network monitoring tools, identity providers, and cloud security platforms — and ensuring the AI has access to the signals it needs across all of them. This operational complexity is a structural disadvantage.</p>
+
+  <h2>Nation-state actors and machine learning</h2>
+  <p>The most sophisticated applications of AI in offensive cyber operations come from nation-state actors and the well-resourced criminal organizations that sometimes operate on their behalf. Intelligence agencies with significant computational resources have been developing ML-powered attack capabilities for over a decade, well before generative AI became publicly accessible.</p>
+  <p>Known nation-state TTPs that incorporate machine learning include: AI-assisted password cracking trained on breach databases specific to the target country's demographics; natural language processing for automated translation and cultural contextualization of spear phishing emails; and machine learning models that predict which employees within a target organization are most likely to click a phishing link based on behavioral analysis of their public social media activity.</p>
+  <p>Supply chain attacks — perhaps the most damaging category of nation-state operations — have also been augmented by AI. Automated code analysis tools can scan thousands of open-source repositories looking for strategic insertion points where malicious code could be introduced, or identify widely-used libraries with security weaknesses ripe for exploitation at scale.</p>
+
+  <div class="callout">
+    <div class="callout-label">The SolarWinds precedent</div>
+    <p>The 2020 SolarWinds attack — attributed to Russian intelligence — demonstrated what patient, sophisticated supply chain compromise looks like at scale. While that attack used traditional techniques, AI-assisted versions of the same approach could identify insertion points, test for detection, and adapt in ways that would make discovery even harder. The lesson: the most dangerous attacks are the ones you don't know about yet.</p>
+  </div>
+
+  <h2>Context-aware threat modeling</h2>
+  <p>The appropriate response to all of this is not panic — it is rigorous, context-aware threat modeling. Not every organization faces the same threat actors with the same motivations. A regional hospital faces different primary threats than a defense contractor, which faces different threats than a cryptocurrency exchange.</p>
+  <p>AI has made context-aware threat modeling more tractable. Rather than applying generic security frameworks, organizations can now use AI tools to analyze their specific industry, technology stack, geographic footprint, and public profile to generate prioritized threat models that reflect their actual risk exposure. AI can cross-reference an organization's profile against known threat actor preferences to identify which groups are most likely to target them and which TTPs those groups favor.</p>
+  <p>Effective threat modeling in the AI era must also account for the dynamic nature of the threat landscape. A threat model built six months ago may be significantly outdated if a new AI capability has emerged that changes the economics of a particular attack type. Continuous, AI-assisted threat model refresh is becoming a security operations best practice, not an annual compliance exercise.</p>
+
+  <div class="principle-list">
+    <div class="principle">
+      <div class="principle-title">Define your crown jewels first</div>
+      <div class="principle-desc">Context-aware threat modeling begins with identifying what attackers actually want from you — customer data, intellectual property, financial access, operational disruption. Threat models built around actual attacker motivation are far more actionable than generic compliance frameworks.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Map likely threat actors to your profile</div>
+      <div class="principle-desc">Use threat intelligence to identify which known actor groups are active in your sector, geography, and technology environment. Prioritize defenses against their known TTPs rather than defending against every theoretical attack.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Model for AI-augmented attacks specifically</div>
+      <div class="principle-desc">Traditional threat models assume human-speed attackers. Update your assumptions: reconnaissance may be comprehensive and fast, phishing will be personalized and numerous, and malware will be polymorphic. Your controls must be designed for machine-speed threats.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Refresh continuously, not annually</div>
+      <div class="principle-desc">The threat landscape changes on a timescale of weeks, not years. AI-assisted continuous threat model refresh — automatically ingesting new threat intelligence and re-evaluating your exposure — is becoming table stakes for mature security programs.</div>
+    </div>
+  </div>
+
+  <h2>What this means for defenders</h2>
+  <p>The picture painted in this module is deliberately challenging, because understanding the scale of the shift is necessary to motivate the right response. The good news — and there is genuine good news — is that AI is also a powerful tool in the hands of defenders. Every module in this course covers an application of AI that improves detection, response, or protection in meaningful ways.</p>
+  <p>The key mindset shift required of security professionals in this era is to stop thinking of AI purely as a threat and start thinking of it as an operating environment. AI is not something that happens to cybersecurity — it is the medium through which both attacks and defenses now operate. Security teams that develop fluency with AI tools, AI-augmented threat intelligence, and AI-assisted detection will have a genuine advantage. Those that wait for AI to become optional will find the gap increasingly difficult to close.</p>
+
+  <div class="good">
+    <div class="good-label">The defender's opportunity</div>
+    <p>AI provides defenders with capabilities that are genuinely transformative: the ability to detect behavioral anomalies at machine speed, to correlate signals across massive datasets, to automate response to known attack patterns, and to continuously update defenses based on the latest threat intelligence. The same force multiplier that benefits attackers is available to defenders — and defenders have something attackers don't: full visibility into their own environment.</p>
+  </div>
+
+</div>
+</main>
+</div>
+
+<div class="sticky-bar" id="sticky-bar">
+  <div class="sticky-bar-reading" id="sticky-reading">Read to the end to unlock the next module</div>
+  <div class="sticky-bar-track"><div class="sticky-bar-fill" id="sticky-fill"></div></div>
+  <div class="sticky-bar-label" id="sticky-label">0%</div>
+  <button class="sticky-bar-btn" id="sticky-btn" onclick="completeAndNext()">Module 2: Intrusion Detection and AI →</button>
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import { getFirestore, doc, setDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  const app = initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+  const auth = getAuth(app); const db = getFirestore(app);
+  let currentUser = null;
+  onAuthStateChanged(auth, u => { currentUser = u; });
+
+  window.toggleTheme=function(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='☾'):(h.setAttribute('data-theme','dark'),i.textContent='☀');};
+  window.addEventListener('scroll',()=>{const d=document.documentElement,s=d.scrollTop||document.body.scrollTop,t=d.scrollHeight-d.clientHeight;document.getElementById('progress').style.width=(s/t*100)+'%';});
+
+  let unlocked=false;
+  function updateScrollProgress(){
+    const scrolled=window.scrollY+window.innerHeight;
+    const total=document.documentElement.scrollHeight;
+    const pct=Math.min(100,Math.round((scrolled/total)*100));
+    const fill=document.getElementById('sticky-fill');
+    const label=document.getElementById('sticky-label');
+    const btn=document.getElementById('sticky-btn');
+    const reading=document.getElementById('sticky-reading');
+    if(fill)fill.style.width=pct+'%';
+    if(label)label.textContent=pct+'%';
+    if(pct>=95&&!unlocked){
+      unlocked=true;
+      if(btn)btn.style.display='block';
+      if(reading)reading.style.display='none';
+      if(fill)fill.style.background='#22c55e';
+      if(label)label.style.color='#22c55e';
+    }
+  }
+  window.addEventListener('scroll',updateScrollProgress);
+  updateScrollProgress();
+
+  window.completeAndNext=async function(){
+    if(currentUser){
+      try{
+        await setDoc(doc(db,'users',currentUser.uid),{
+          cybersecurityModules: arrayUnion('m1')
+        }, { merge: true });
+      }catch(e){ /* progress save best-effort */ }
+    }
+    window.location.href='cybersecurity-module-2.html';
+  };
+</script>
+</body>
+</html>

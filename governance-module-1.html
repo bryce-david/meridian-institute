@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 1: AI in Public Service Delivery — AI in Governance — Meridian Institute of AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#92400E;--accent-dim:rgba(146,64,14,0.1);--accent-dim2:rgba(146,64,14,0.05);--nav-bg:rgba(8,8,8,0.9);--callout-bg:rgba(146,64,14,0.07);--callout-border:rgba(146,64,14,0.25);--good-bg:rgba(34,197,94,0.07);--good-border:rgba(34,197,94,0.2);--warn-bg:rgba(251,146,60,0.07);--warn-border:rgba(251,146,60,0.2);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#78350F;--accent-dim:rgba(120,53,15,0.08);--accent-dim2:rgba(120,53,15,0.04);--nav-bg:rgba(250,250,248,0.9);--callout-bg:rgba(120,53,15,0.05);--callout-border:rgba(120,53,15,0.2);--good-bg:rgba(22,163,74,0.06);--good-border:rgba(22,163,74,0.2);--warn-bg:rgba(234,88,12,0.05);--warn-border:rgba(234,88,12,0.2);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;overflow-x:hidden;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.7;overflow-x:hidden;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}
+  .nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}
+  .nav-back{font-size:13px;color:var(--text-2);text-decoration:none;transition:color 0.2s;}
+  .nav-back:hover{color:var(--text);}
+  .nav-label{font-size:13px;color:var(--text-3);}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;transition:all 0.2s;}
+  .theme-toggle:hover{background:var(--bg-3);color:var(--text);}
+  .progress-bar{position:fixed;top:60px;left:0;right:0;z-index:99;height:2px;background:var(--border);}
+  .progress-fill{height:100%;background:var(--accent);width:0%;transition:width 0.1s;}
+  .page-wrapper{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:100vh;padding-top:62px;overflow:hidden;}
+  .sidebar{position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto;border-right:1px solid var(--border);padding:32px 24px;background:var(--bg-2);}
+  .sidebar-course{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;}
+  .sidebar-course-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+  .sidebar-module{margin-bottom:4px;}
+  .sidebar-module-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:13px;color:var(--text-2);text-decoration:none;transition:all 0.2s;line-height:1.4;}
+  .sidebar-module-link:hover{background:var(--bg-3);color:var(--text);}
+  .sidebar-module-link.active{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-num{font-size:11px;font-weight:500;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--bg-4);color:var(--text-3);}
+  .sidebar-module-link.active .sidebar-num{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-divider{height:1px;background:var(--border);margin:20px 0;}
+  .sidebar-progress-label{font-size:12px;color:var(--text-3);margin-bottom:8px;display:flex;justify-content:space-between;}
+  .sidebar-progress-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sidebar-progress-fill{height:100%;width:10%;background:var(--accent);border-radius:2px;}
+  main{display:block;min-width:0;overflow:hidden;}
+  .content{max-width:760px;width:100%;padding:60px 64px 140px;margin:0 auto;}
+  .module-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+  .module-tag{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(146,64,14,0.2);padding:4px 12px;border-radius:100px;}
+  .module-meta{font-size:12px;color:var(--text-3);}
+  h1{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1.05;letter-spacing:-0.02em;color:var(--text);margin-bottom:24px;}
+  .intro-text{font-size:19px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+  h2{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:400;color:var(--text);margin:52px 0 18px;line-height:1.2;}
+  h3{font-size:16px;font-weight:500;color:var(--text);margin:32px 0 12px;}
+  p{font-size:16px;font-weight:300;color:var(--text-2);line-height:1.8;margin-bottom:20px;}
+  strong{font-weight:500;color:var(--text);}
+  em{font-style:italic;}
+  ul,ol{margin:0 0 20px 22px;color:var(--text-2);}
+  li{font-size:16px;font-weight:300;line-height:1.8;margin-bottom:8px;}
+  .callout{background:var(--callout-bg);border:1px solid var(--callout-border);border-radius:12px;padding:24px 28px;margin:32px 0;}
+  .callout-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+  .callout p{margin:0;font-size:15px;color:var(--text-2);}
+  .callout p+p{margin-top:12px;}
+  .good{background:var(--good-bg);border:1px solid var(--good-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .good-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#22c55e;margin-bottom:10px;}
+  .good p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn{background:var(--warn-bg);border:1px solid var(--warn-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .warn-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#fb923c;margin-bottom:10px;}
+  .warn p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn p+p{margin-top:12px;}
+  .analogy{background:var(--bg-2);border:1px solid var(--border);border-radius:12px;padding:28px;margin:28px 0;}
+  .analogy-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-3);margin-bottom:12px;}
+  .analogy p{margin:0;font-size:15px;color:var(--text-2);}
+  .disclaimer{background:rgba(251,146,60,0.07);border:1px solid rgba(251,146,60,0.3);border-radius:12px;padding:24px 28px;margin:0 0 40px;}
+  .disclaimer-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#fb923c;margin-bottom:10px;}
+  .disclaimer p{margin:0;font-size:14px;color:var(--text-2);line-height:1.7;}
+  .disclaimer p+p{margin-top:10px;}
+  .comparison-wrapper{overflow-x:auto;-webkit-overflow-scrolling:touch;width:100%;margin:28px 0;}
+  table{width:100%;border-collapse:collapse;font-size:14px;min-width:480px;}
+  th{text-align:left;padding:12px 16px;font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-3);border-bottom:1px solid var(--border-2);}
+  td{padding:14px 16px;border-bottom:1px solid var(--border);color:var(--text-2);line-height:1.6;vertical-align:top;}
+  tr:last-child td{border-bottom:none;}
+  td:first-child{color:var(--text);font-weight:500;width:30%;}
+  .key-stat{background:var(--bg-2);border:1px solid var(--border);border-radius:12px;padding:20px 24px;margin:16px 0;display:flex;align-items:center;gap:20px;}
+  .key-stat-num{font-family:'Cormorant Garamond',serif;font-size:40px;font-weight:400;color:var(--accent);line-height:1;flex-shrink:0;}
+  .key-stat-label{font-size:14px;color:var(--text-2);line-height:1.6;}
+  .key-stat-label strong{display:block;font-size:15px;color:var(--text);margin-bottom:4px;}
+  .principle-list{display:flex;flex-direction:column;gap:12px;margin:24px 0;}
+  .principle{background:var(--bg-2);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:0 12px 12px 0;padding:20px 24px;}
+  .principle-title{font-size:15px;font-weight:500;color:var(--text);margin-bottom:6px;}
+  .principle-desc{font-size:14px;color:var(--text-2);line-height:1.65;margin:0;}
+  .sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:var(--bg-2);border-top:1px solid var(--border-2);padding:14px 5%;display:flex;align-items:center;justify-content:space-between;gap:16px;backdrop-filter:blur(12px);}
+  .sticky-bar-track{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sticky-bar-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.2s;width:0%;}
+  .sticky-bar-label{font-size:12px;color:var(--text-3);white-space:nowrap;min-width:60px;text-align:right;}
+  .sticky-bar-btn{padding:10px 20px;border-radius:8px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;background:var(--accent);color:#fff;border:none;cursor:pointer;white-space:nowrap;transition:opacity 0.2s;display:none;}
+  .sticky-bar-btn:hover{opacity:0.88;}
+  .sticky-bar-reading{font-size:12px;color:var(--text-3);white-space:nowrap;}
+  @media(max-width:900px){.page-wrapper{grid-template-columns:1fr;}.sidebar{display:none;}.content{padding:40px 24px 120px;}h1{font-size:38px;}}
+  @media(max-width:600px){.content{padding:28px 16px 120px;}h1{font-size:30px;}h2{font-size:24px;}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="index.html" class="nav-back">&#127968; Home</a>
+    <div class="nav-divider"></div>
+    <a href="courses.html" class="nav-back">&#8592; AI in Governance</a>
+    <div class="nav-divider"></div>
+    <span class="nav-label">Module 1</span>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">&#9728;</span></button>
+</nav>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+
+<div class="page-wrapper">
+<aside class="sidebar">
+  <div class="sidebar-course">Course</div>
+  <div class="sidebar-course-name">AI in Governance</div>
+  <div class="sidebar-module"><a href="governance-module-1.html" class="sidebar-module-link active"><span class="sidebar-num">1</span>AI in Public Service Delivery</a></div>
+  <div class="sidebar-module"><a href="governance-module-2.html" class="sidebar-module-link"><span class="sidebar-num">2</span>Algorithmic Government Decisions</a></div>
+  <div class="sidebar-module"><a href="governance-module-3.html" class="sidebar-module-link"><span class="sidebar-num">3</span>Smart Cities and AI</a></div>
+  <div class="sidebar-module"><a href="governance-module-4.html" class="sidebar-module-link"><span class="sidebar-num">4</span>AI and Democratic Accountability</a></div>
+  <div class="sidebar-module"><a href="governance-module-5.html" class="sidebar-module-link"><span class="sidebar-num">5</span>Government AI Procurement</a></div>
+  <div class="sidebar-module"><a href="governance-module-6.html" class="sidebar-module-link"><span class="sidebar-num">6</span>AI in Criminal Justice</a></div>
+  <div class="sidebar-module"><a href="governance-module-7.html" class="sidebar-module-link"><span class="sidebar-num">7</span>International AI Governance</a></div>
+  <div class="sidebar-module"><a href="governance-module-8.html" class="sidebar-module-link"><span class="sidebar-num">8</span>Ethics of Automated Government</a></div>
+  <div class="sidebar-module"><a href="governance-module-9.html" class="sidebar-module-link"><span class="sidebar-num">9</span>AI in Social Services</a></div>
+  <div class="sidebar-module"><a href="governance-module-10.html" class="sidebar-module-link"><span class="sidebar-num">10</span>Trustworthy Government AI</a></div>
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-progress-label"><span>Course progress</span><span style="color:var(--accent);">1 / 10</span></div>
+  <div class="sidebar-progress-track"><div class="sidebar-progress-fill" style="width:10%;"></div></div>
+</aside>
+
+<main>
+<div class="content">
+  <div class="module-eyebrow"><span class="module-tag">Module 1</span><span class="module-meta">18 min read · AI in Governance</span></div>
+  <h1>AI in Public Service Delivery</h1>
+
+  <p class="intro-text">Governments interact with citizens across thousands of touchpoints every day — issuing permits, processing benefits, answering questions, resolving complaints. Artificial intelligence is reshaping each of these interactions, often invisibly. For public servants, understanding how AI transforms service delivery is no longer optional: it defines the future of the institutions we build and the people we serve.</p>
+
+  <h2>The Transformation of Public Services</h2>
+  <p>For most of the 20th century, government service delivery was characterised by paper forms, queuing systems, and front-line staff performing repetitive data entry. Digital government in the 1990s and 2000s moved many transactions online, but the underlying logic remained the same: citizens provided information, clerks verified it, and bureaucratic processes churned slowly forward.</p>
+  <p>AI introduces a qualitatively different kind of change. Rather than simply digitising existing workflows, AI systems can interpret natural language, make probabilistic inferences about eligibility and risk, process images and documents, and deliver personalised responses at speed and scale that no human workforce can match. A well-deployed AI layer can reduce processing times from weeks to seconds, cut call centre volumes by 30–50%, and surface relevant information to citizens proactively — before they even know they need it.</p>
+  <p>But speed and scale are not intrinsically good governance outcomes. The way AI is deployed determines whether it enhances or undermines public trust, accessibility, and constitutional rights. This module examines the most significant applications, their demonstrated benefits, and the governance obligations that must accompany them.</p>
+
+  <div class="callout">
+    <div class="callout-label">Framing Principle</div>
+    <p>AI in public services is not primarily a technology question. It is a question about the relationship between governments and citizens. Every design decision — who gets access, how decisions are communicated, what happens when the system is wrong — is a political and ethical decision, not just a technical one.</p>
+  </div>
+
+  <h2>Citizen-Facing Applications: What Is Already Deployed</h2>
+  <p>Across OECD nations, government AI deployment has accelerated substantially since 2020. The most prevalent applications fall into several categories.</p>
+
+  <h3>Conversational AI and Virtual Assistants</h3>
+  <p>Government chatbots and virtual assistants now handle millions of citizen queries annually. The UK's HM Revenue and Customs deployed a virtual assistant that handles over 5 million conversations per year, resolving routine tax queries around the clock without human intervention. Australia's Services Australia operates an AI-powered messaging service that guides citizens through complex welfare claim processes. Singapore's OneService chatbot allows residents to report municipal issues — potholes, illegal parking, noise complaints — via natural language, automatically routing them to the appropriate agency.</p>
+  <p>The capabilities of these systems have expanded dramatically with large language models. Where earlier chatbots required citizens to select from rigid menus or use specific keywords, modern LLM-powered assistants can interpret plain-language questions, handle ambiguity, and maintain conversational context across multiple turns. This lowers the literacy and digital fluency threshold for accessing government services — though it does not eliminate it.</p>
+
+  <h3>Benefits Eligibility and Claims Processing</h3>
+  <p>AI-assisted eligibility determination is perhaps the highest-stakes citizen-facing application. Systems that help determine who receives housing assistance, unemployment benefits, disability payments, or food support have direct material consequences for vulnerable populations. Several jurisdictions have implemented AI tools that cross-reference applicant data against administrative records, flag likely eligibility, detect potential fraud, and prioritise caseworker review queues.</p>
+  <p>When designed well, these systems reduce the administrative burden on both citizens and caseworkers. They can proactively notify eligible citizens who have not applied — a significant issue in many countries where benefit take-up rates are far below entitlement rates. The UK's universal credit system uses algorithmic tools to identify claimants who may need additional support. Canada's CRA has deployed AI to pre-populate tax returns for low-income filers, reducing compliance barriers.</p>
+
+  <h3>Permit and Licensing Processing</h3>
+  <p>Building permits, business licences, environmental approvals, and professional registrations represent another high-volume application domain. AI document analysis tools can review submitted plans and forms, check them against regulatory requirements, identify missing information, and in straightforward cases approve or reject applications without human review. Singapore's Urban Redevelopment Authority uses AI to automate portions of building plan approval. Several US cities have deployed AI tools to accelerate permitting — a domain notorious for bottlenecks that delay construction and economic development.</p>
+
+  <h3>311 and General Inquiry Services</h3>
+  <p>Municipal 311 services — non-emergency government phone and digital lines — are natural candidates for AI augmentation. Call volumes are high, queries are often repetitive, and resolution requires routing rather than deep expertise. AI-powered 311 systems can transcribe calls in real time, suggest resolutions to operators, and in many cases handle queries end-to-end. New York City's 311 AI system processes tens of thousands of service requests weekly. Los Angeles has experimented with AI triage that categorises requests and assigns them to the correct department within seconds of submission.</p>
+
+  <h2>Case Study: Estonia's Digital-First Government</h2>
+  <p>Estonia is the most frequently cited example of a government that has successfully built AI-enhanced services at national scale. The country's X-Road data exchange platform — in operation since 2001 — creates a secure, interoperable backbone connecting government, healthcare, judicial, and private sector databases. AI services built on top of X-Road can access the information they need with citizen consent, eliminating the need for citizens to provide documents the government already holds.</p>
+  <p>The practical result is transformative. Tax returns are pre-populated and submitted in minutes. Healthcare providers access complete medical records instantly. Business registration takes less than 20 minutes online. The Estonian government estimates that digital public services save citizens and officials over 800 years of working time annually. The AI layer is not flashy — it works in the background, automating document verification, flagging anomalies, and personalising information delivery — but its effect on service quality is profound.</p>
+  <p>The lessons from Estonia are instructive. Success required political commitment to data interoperability, strong digital identity infrastructure (Estonia's digital ID card is foundational), clear data governance rules, and consistent investment over two decades. There are no shortcuts. Countries that attempt to deploy AI without addressing underlying data fragmentation and identity infrastructure typically find their AI pilots unable to scale.</p>
+
+  <div class="good">
+    <div class="good-label">What Works: Estonia's Principles</div>
+    <p>The Estonian model succeeds because AI augments an interoperable data infrastructure, not a siloed one. Services are designed around citizen needs rather than agency boundaries. Data is shared by default within government (with consent), so citizens provide information once. Digital identity is universal and trusted. These structural conditions make AI deployment effective.</p>
+  </div>
+
+  <h2>Accessibility and Equity in AI Service Delivery</h2>
+  <p>The promise of AI-enhanced government services is that they will be more accessible, faster, and more equitable than what came before. The reality is more complicated. AI systems can entrench and amplify existing inequities if they are not designed with explicit attention to differential access and impact.</p>
+
+  <div class="warn">
+    <div class="warn-label">The Digital Exclusion Risk</div>
+    <p><strong>Not everyone is online.</strong> In most OECD countries, 15–25% of adults have low or no digital skills. Older citizens, people with disabilities, those in rural areas, and those experiencing poverty are systematically less likely to be able to access AI-mediated services. If AI becomes the primary channel and human alternatives are degraded, these groups face compounding disadvantage.</p>
+    <p><strong>Language and literacy barriers.</strong> Even sophisticated NLP systems perform worse on non-standard dialects, non-native English, and low-literacy inputs. Citizens who most need government support are often those who face the highest barriers to AI-mediated access.</p>
+  </div>
+
+  <p>Equity-conscious AI deployment requires a multi-channel strategy. AI can be the primary channel for routine transactions, but robust human fallback must remain accessible, adequately resourced, and not treated as a service of last resort. The UK Government Digital Service's accessibility guidelines mandate that all digital services meet WCAG 2.1 AA standards and that telephone and in-person alternatives are maintained. Australia's Digital Service Standard requires agencies to test services with users who have diverse access needs.</p>
+
+  <p>Proactive equity analysis — examining whether AI-mediated services produce differential outcomes by race, gender, income, geography, or disability status — should be built into service design from the outset, not retrofitted after deployment.</p>
+
+  <h2>The Mandatory Human Fallback</h2>
+  <p>One of the clearest governance obligations in AI-assisted public services is the requirement for meaningful human review and appeal pathways. This is not merely a matter of good practice — in many jurisdictions it is a legal requirement. The EU's General Data Protection Regulation Article 22 creates a right not to be subject to solely automated decisions that produce significant effects. Administrative law in most common law countries requires that decisions affecting rights or interests be reviewable.</p>
+
+  <div class="principle-list">
+    <div class="principle">
+      <div class="principle-title">Human Review Must Be Meaningful</div>
+      <div class="principle-desc">A nominal review process that rubber-stamps AI outputs does not satisfy the legal or ethical requirement. Human reviewers must have sufficient time, information, and authority to override AI recommendations. Systems should be designed so that reviewers are not cognitively anchored to the AI output by default.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Appeals Must Be Accessible</div>
+      <div class="principle-desc">Citizens must know they have a right to appeal AI-assisted decisions, and the process for doing so must be practical. Complicated appeals processes effectively eliminate the right. Decisions should clearly explain the basis for the outcome and how to challenge it.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Error Tracking Is a Governance Function</div>
+      <div class="principle-desc">Agencies should systematically track AI error rates, the distribution of errors across citizen groups, and appeal outcomes. This data should be reported publicly. A system that generates a 2% error rate across 10 million transactions is producing 200,000 wrong decisions — each affecting a real person.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Staffing the Fallback</div>
+      <div class="principle-desc">Cost savings from AI automation should not be entirely captured by headcount reductions in the short term. Front-line capacity to handle escalations, complex cases, and human-preference contacts must be maintained. The inverse risk — AI failure cascades overwhelming an understaffed human fallback — is a serious operational concern.</div>
+    </div>
+  </div>
+
+  <h2>Measuring AI Performance in Public Services</h2>
+  <p>How should governments evaluate whether AI-mediated services are performing well? Technical accuracy metrics — precision, recall, F1 score — are necessary but insufficient for a public governance context. A broader measurement framework should include:</p>
+
+  <ul>
+    <li><strong>Citizen satisfaction and trust</strong> — do citizens feel they received a fair, comprehensible response?</li>
+    <li><strong>Accessibility rates</strong> — are completion rates comparable across demographic groups?</li>
+    <li><strong>Resolution quality</strong> — are issues resolved correctly, or are AI interactions followed by human escalations that reveal a prior error?</li>
+    <li><strong>Processing time distributions</strong> — not just averages, but the experience of citizens in the tail of the distribution</li>
+    <li><strong>Appeal and error rates by population segment</strong> — are particular groups experiencing disproportionate adverse outcomes?</li>
+    <li><strong>Staff experience</strong> — are front-line workers finding AI tools helpful or burdensome?</li>
+  </ul>
+
+  <p>New Zealand's Government Chief Digital Officer has developed a public AI measurement framework that incorporates many of these dimensions. Canada's Directive on Automated Decision-Making requires impact assessments that evaluate accuracy, bias, explainability, and recourse. These frameworks represent emerging best practice for responsible AI service delivery measurement.</p>
+
+  <div class="callout">
+    <div class="callout-label">Key Takeaway for Practitioners</div>
+    <p>AI in public service delivery offers genuine opportunities to reduce processing times, improve accessibility, and free caseworkers for complex human-centred work. But realising those benefits requires deliberate design: maintaining robust human fallbacks, measuring equity impacts, ensuring meaningful appeals, and investing in the data infrastructure that makes AI effective. The technology is the easy part. The governance is the hard part — and it is where public servants make the difference.</p>
+  </div>
+
+  <h2>Looking Ahead</h2>
+  <p>The next module examines what happens when AI moves beyond answering questions into making consequential decisions — who gets benefits, who is flagged for investigation, who receives a licence. Algorithmic decision-making in government raises some of the most significant questions in contemporary public administration, and understanding its legal, ethical, and operational dimensions is essential for any practitioner working in a digitising government.</p>
+
+</div>
+</main>
+</div>
+
+<div class="sticky-bar" id="sticky-bar">
+  <div class="sticky-bar-reading" id="sticky-reading">Read to the end to unlock the next module</div>
+  <div class="sticky-bar-track"><div class="sticky-bar-fill" id="sticky-fill"></div></div>
+  <div class="sticky-bar-label" id="sticky-label">0%</div>
+  <button class="sticky-bar-btn" id="sticky-btn" onclick="completeAndNext()">Module 2: Algorithmic Government Decisions &#8594;</button>
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import { getFirestore, doc, setDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  const app = initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+  const auth = getAuth(app); const db = getFirestore(app);
+  let currentUser = null;
+  onAuthStateChanged(auth, u => { currentUser = u; });
+
+  window.toggleTheme=function(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='☾'):(h.setAttribute('data-theme','dark'),i.textContent='☀');};
+  window.addEventListener('scroll',()=>{const d=document.documentElement,s=d.scrollTop||document.body.scrollTop,t=d.scrollHeight-d.clientHeight;document.getElementById('progress').style.width=(s/t*100)+'%';});
+
+  let unlocked=false;
+  function updateScrollProgress(){
+    const scrolled=window.scrollY+window.innerHeight;
+    const total=document.documentElement.scrollHeight;
+    const pct=Math.min(100,Math.round((scrolled/total)*100));
+    const fill=document.getElementById('sticky-fill');
+    const label=document.getElementById('sticky-label');
+    const btn=document.getElementById('sticky-btn');
+    const reading=document.getElementById('sticky-reading');
+    if(fill)fill.style.width=pct+'%';
+    if(label)label.textContent=pct+'%';
+    if(pct>=95&&!unlocked){
+      unlocked=true;
+      if(btn)btn.style.display='block';
+      if(reading)reading.style.display='none';
+      if(fill)fill.style.background='#22c55e';
+      if(label)label.style.color='#22c55e';
+    }
+  }
+  window.addEventListener('scroll',updateScrollProgress);
+  updateScrollProgress();
+
+  window.completeAndNext=async function(){
+    if(currentUser){
+      try{
+        await setDoc(doc(db,'users',currentUser.uid),{
+          governanceModules: arrayUnion('m1')
+        }, { merge: true });
+      }catch(e){ /* progress save best-effort */ }
+    }
+    window.location.href='governance-module-2.html';
+  };
+</script>
+</body>
+</html>

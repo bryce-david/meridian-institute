@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 7: Retrieval-Augmented Generation — Agentic AI and Autonomous Systems — Meridian Institute of AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#6B21A8;--accent-dim:rgba(107,33,168,0.1);--accent-dim2:rgba(107,33,168,0.05);--nav-bg:rgba(8,8,8,0.9);--callout-bg:rgba(107,33,168,0.07);--callout-border:rgba(107,33,168,0.25);--good-bg:rgba(34,197,94,0.07);--good-border:rgba(34,197,94,0.2);--warn-bg:rgba(251,146,60,0.07);--warn-border:rgba(251,146,60,0.2);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#581C87;--accent-dim:rgba(88,28,135,0.08);--accent-dim2:rgba(88,28,135,0.04);--nav-bg:rgba(250,250,248,0.9);--callout-bg:rgba(88,28,135,0.05);--callout-border:rgba(88,28,135,0.2);--good-bg:rgba(22,163,74,0.06);--good-border:rgba(22,163,74,0.2);--warn-bg:rgba(234,88,12,0.05);--warn-border:rgba(234,88,12,0.2);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;overflow-x:hidden;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.7;overflow-x:hidden;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}
+  .nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}
+  .nav-back{font-size:13px;color:var(--text-2);text-decoration:none;transition:color 0.2s;}
+  .nav-back:hover{color:var(--text);}
+  .nav-label{font-size:13px;color:var(--text-3);}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;transition:all 0.2s;}
+  .theme-toggle:hover{background:var(--bg-3);color:var(--text);}
+  .progress-bar{position:fixed;top:60px;left:0;right:0;z-index:99;height:2px;background:var(--border);}
+  .progress-fill{height:100%;background:var(--accent);width:0%;transition:width 0.1s;}
+  .page-wrapper{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:100vh;padding-top:62px;overflow:hidden;}
+  .sidebar{position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto;border-right:1px solid var(--border);padding:32px 24px;background:var(--bg-2);}
+  .sidebar-course{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;}
+  .sidebar-course-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+  .sidebar-module{margin-bottom:4px;}
+  .sidebar-module-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:13px;color:var(--text-2);text-decoration:none;transition:all 0.2s;line-height:1.4;}
+  .sidebar-module-link:hover{background:var(--bg-3);color:var(--text);}
+  .sidebar-module-link.active{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-num{font-size:11px;font-weight:500;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--bg-4);color:var(--text-3);}
+  .sidebar-module-link.active .sidebar-num{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-divider{height:1px;background:var(--border);margin:20px 0;}
+  .sidebar-progress-label{font-size:12px;color:var(--text-3);margin-bottom:8px;display:flex;justify-content:space-between;}
+  .sidebar-progress-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sidebar-progress-fill{height:100%;width:70%;background:var(--accent);border-radius:2px;}
+  main{display:block;min-width:0;overflow:hidden;}
+  .content{max-width:760px;width:100%;padding:60px 64px 140px;margin:0 auto;}
+  .module-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+  .module-tag{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(107,33,168,0.2);padding:4px 12px;border-radius:100px;}
+  .module-meta{font-size:12px;color:var(--text-3);}
+  h1{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1.05;letter-spacing:-0.02em;color:var(--text);margin-bottom:24px;}
+  .intro-text{font-size:19px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+  h2{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:400;color:var(--text);margin:52px 0 18px;line-height:1.2;}
+  h3{font-size:16px;font-weight:500;color:var(--text);margin:32px 0 12px;}
+  p{font-size:16px;font-weight:300;color:var(--text-2);line-height:1.8;margin-bottom:20px;}
+  strong{font-weight:500;color:var(--text);}
+  em{font-style:italic;}
+  ul,ol{margin:0 0 20px 22px;color:var(--text-2);}
+  li{font-size:16px;font-weight:300;line-height:1.8;margin-bottom:8px;}
+  .callout{background:var(--callout-bg);border:1px solid var(--callout-border);border-radius:12px;padding:24px 28px;margin:32px 0;}
+  .callout-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+  .callout p{margin:0;font-size:15px;color:var(--text-2);}
+  .callout p+p{margin-top:12px;}
+  .good{background:var(--good-bg);border:1px solid var(--good-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .good-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#22c55e;margin-bottom:10px;}
+  .good p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn{background:var(--warn-bg);border:1px solid var(--warn-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .warn-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#fb923c;margin-bottom:10px;}
+  .warn p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn p+p{margin-top:12px;}
+  .comparison-wrapper{overflow-x:auto;-webkit-overflow-scrolling:touch;width:100%;margin:28px 0;}
+  table{width:100%;border-collapse:collapse;font-size:14px;min-width:480px;}
+  th{text-align:left;padding:12px 16px;font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-3);border-bottom:1px solid var(--border-2);}
+  td{padding:14px 16px;border-bottom:1px solid var(--border);color:var(--text-2);line-height:1.6;vertical-align:top;}
+  tr:last-child td{border-bottom:none;}
+  td:first-child{color:var(--text);font-weight:500;width:28%;}
+  .principle-list{display:flex;flex-direction:column;gap:12px;margin:24px 0;}
+  .principle{background:var(--bg-2);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:0 12px 12px 0;padding:20px 24px;}
+  .principle-title{font-size:15px;font-weight:500;color:var(--text);margin-bottom:6px;}
+  .principle-desc{font-size:14px;color:var(--text-2);line-height:1.65;margin:0;}
+  .sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:var(--bg-2);border-top:1px solid var(--border-2);padding:14px 5%;display:flex;align-items:center;justify-content:space-between;gap:16px;backdrop-filter:blur(12px);}
+  .sticky-bar-track{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sticky-bar-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.2s;width:0%;}
+  .sticky-bar-label{font-size:12px;color:var(--text-3);white-space:nowrap;min-width:60px;text-align:right;}
+  .sticky-bar-btn{padding:10px 20px;border-radius:8px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;background:var(--accent);color:#fff;border:none;cursor:pointer;white-space:nowrap;transition:opacity 0.2s;display:none;}
+  .sticky-bar-btn:hover{opacity:0.88;}
+  .sticky-bar-reading{font-size:12px;color:var(--text-3);white-space:nowrap;}
+  @media(max-width:900px){.page-wrapper{grid-template-columns:1fr;}.sidebar{display:none;}.content{padding:40px 24px 120px;}h1{font-size:38px;}}
+  @media(max-width:600px){.content{padding:28px 16px 120px;}h1{font-size:30px;}h2{font-size:24px;}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="courses.html" class="nav-back">← Agentic AI and Autonomous Systems</a>
+    <div class="nav-divider"></div>
+    <span class="nav-label">Module 7</span>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">☀</span></button>
+</nav>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+
+<div class="page-wrapper">
+<aside class="sidebar">
+  <div class="sidebar-course">Expert Track</div>
+  <div class="sidebar-course-name">Agentic AI and Autonomous Systems</div>
+  <div class="sidebar-module"><a href="agents-module-1.html" class="sidebar-module-link"><span class="sidebar-num">1</span>What Are AI Agents?</a></div>
+  <div class="sidebar-module"><a href="agents-module-2.html" class="sidebar-module-link"><span class="sidebar-num">2</span>The Agent Loop: Perceive, Reason, Act</a></div>
+  <div class="sidebar-module"><a href="agents-module-3.html" class="sidebar-module-link"><span class="sidebar-num">3</span>Tool Use and Function Calling</a></div>
+  <div class="sidebar-module"><a href="agents-module-4.html" class="sidebar-module-link"><span class="sidebar-num">4</span>Memory Systems in AI Agents</a></div>
+  <div class="sidebar-module"><a href="agents-module-5.html" class="sidebar-module-link"><span class="sidebar-num">5</span>Multi-Agent Architectures</a></div>
+  <div class="sidebar-module"><a href="agents-module-6.html" class="sidebar-module-link"><span class="sidebar-num">6</span>Planning and Task Decomposition</a></div>
+  <div class="sidebar-module"><a href="agents-module-7.html" class="sidebar-module-link active"><span class="sidebar-num">7</span>Retrieval-Augmented Generation</a></div>
+  <div class="sidebar-module"><a href="agents-module-8.html" class="sidebar-module-link"><span class="sidebar-num">8</span>Agent Safety and Reliability</a></div>
+  <div class="sidebar-module"><a href="agents-module-9.html" class="sidebar-module-link"><span class="sidebar-num">9</span>Building with Agent Frameworks</a></div>
+  <div class="sidebar-module"><a href="agents-module-10.html" class="sidebar-module-link"><span class="sidebar-num">10</span>The Future of Autonomous AI</a></div>
+  <div class="sidebar-module"><a href="quiz-agents.html" class="sidebar-module-link" style="color:var(--accent);margin-top:4px;"><span class="sidebar-num" style="background:var(--accent-dim);color:var(--accent);">✦</span>Final Assessment</a></div>
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-progress-label"><span>Course progress</span><span style="color:var(--accent);">7 / 10</span></div>
+  <div class="sidebar-progress-track"><div class="sidebar-progress-fill"></div></div>
+</aside>
+
+<main>
+<div class="content">
+  <div class="module-eyebrow"><span class="module-tag">Module 7</span><span class="module-meta">32 min read · Agentic AI and Autonomous Systems</span></div>
+  <h1>Retrieval-Augmented Generation</h1>
+
+  <p class="intro-text">Every language model has a knowledge cutoff — a point in time beyond which it knows nothing. Every model also lacks access to your private data, internal documents, and proprietary knowledge. And every model hallucinates, sometimes confidently producing plausible-sounding but false information. Retrieval-Augmented Generation (RAG) is the most widely deployed technique for addressing all three of these limitations simultaneously. Understanding RAG deeply — from the indexing pipeline through advanced retrieval techniques to evaluation — is essential knowledge for anyone building production AI systems.</p>
+
+  <h2>What RAG solves</h2>
+  <p>RAG addresses three fundamental limitations of language models operating from training knowledge alone.</p>
+  <p><strong>The knowledge cutoff problem.</strong> Models are trained on data collected up to a certain date. Events, research, regulations, and facts that emerged after that date are simply unknown to the model. RAG solves this by retrieving current information at inference time, allowing the model to answer questions about recent events by reading retrieved content rather than relying on training knowledge.</p>
+  <p><strong>The private data problem.</strong> Your company's internal documents, customer records, proprietary research, and institutional knowledge were not in the model's training data. Without RAG, the model has no access to these sources. With RAG, you index private data and retrieve relevant sections on demand, allowing the model to reason over your specific knowledge.</p>
+  <p><strong>Hallucination reduction.</strong> When a model must answer from training knowledge alone, it can produce confident but fabricated responses — especially for specific facts, citations, statistics, and niche domain knowledge. When the model is given retrieved documents containing the actual answer, it can ground its response in real content rather than generating plausible-sounding substitutes. RAG doesn't eliminate hallucination, but it reduces the rate significantly for factual questions by giving the model a reliable reference to cite.</p>
+
+  <h2>The indexing pipeline</h2>
+  <p>Before RAG can work, your documents must be indexed — converted from raw text into a format that supports fast semantic retrieval. The indexing pipeline consists of four stages.</p>
+
+  <div class="principle-list">
+    <div class="principle">
+      <div class="principle-title">1. Document loading</div>
+      <div class="principle-desc">Raw documents must be loaded from wherever they live: PDFs, Word documents, web pages, databases, APIs, email archives, code repositories. Each source type requires a different loader. LangChain and LlamaIndex both provide extensive libraries of document loaders. The key challenges at this stage are handling diverse file formats, preserving document structure (headings, tables, code blocks), and dealing with encoding issues in older or non-English documents.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">2. Chunking</div>
+      <div class="principle-desc">Documents must be split into chunks before embedding, because embedding models have input length limits (typically 512–8192 tokens) and you need chunks small enough that retrieved content fits in the context window without crowding out other information. The chunking strategy dramatically affects retrieval quality. Poor chunking — cutting in the middle of a sentence, separating a question from its answer — produces chunks that are semantically incomplete and retrieve poorly.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">3. Embedding</div>
+      <div class="principle-desc">Each chunk is passed through an embedding model to produce a dense vector representation. All chunks in the knowledge base must be embedded with the same model. This process is done once at index time (not at query time) and is typically the most computationally expensive part of the indexing pipeline for large knowledge bases.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">4. Storage</div>
+      <div class="principle-desc">Vectors are stored in a vector database alongside the source chunk content and metadata (document ID, title, date, section heading, etc.). Good metadata enables metadata filtering during retrieval — restricting searches to a specific document type, date range, or author without changing the semantic search itself.</div>
+    </div>
+  </div>
+
+  <h2>Chunking strategies</h2>
+  <p>Chunking is where most RAG systems fail in practice. Getting chunking right has more impact on retrieval quality than almost any other design decision.</p>
+
+  <h3>Fixed-size chunking</h3>
+  <p>Split every document into chunks of N characters or tokens with an overlap of M. Simple to implement, consistent, and works surprisingly well for many use cases. The limitation is that it ignores document structure entirely — a 512-token chunk might start mid-paragraph and end mid-sentence, producing semantically incoherent fragments. The overlap parameter (typically 10–20% of chunk size) helps by ensuring context from the end of one chunk appears at the start of the next.</p>
+
+  <h3>Semantic chunking</h3>
+  <p>Rather than splitting at fixed sizes, semantic chunking splits at semantic boundaries — paragraph breaks, section changes, or detected topic shifts. This preserves the natural flow of ideas within each chunk and produces more coherent retrievable units. More complex to implement but generally produces higher-quality chunks for structured documents like research papers, legal texts, and technical documentation.</p>
+
+  <h3>Recursive character splitting</h3>
+  <p>LangChain's <code>RecursiveCharacterTextSplitter</code> implements a practical middle ground: it tries to split on paragraph breaks first, then sentence breaks, then word breaks, falling back to character splits only when necessary to meet the target chunk size. This preserves structure when possible while guaranteeing a maximum chunk size.</p>
+
+  <h3>Contextual chunk enrichment</h3>
+  <p>A newer technique (popularized by Anthropic's "contextual retrieval" research) involves prepending a brief context summary to each chunk before embedding: "This excerpt is from Chapter 3 of [Document Name], which discusses [topic]. The preceding section covered [topic]. This chunk explains..." This enriches the semantic content of the chunk with context that would otherwise be lost, significantly improving retrieval accuracy for documents where individual chunks lack sufficient context to be retrieved correctly in isolation.</p>
+
+  <h2>Vector search and approximate nearest neighbor</h2>
+  <p>At query time, the search process converts the query to a vector using the same embedding model, then finds the stored vectors most similar to the query vector. For small knowledge bases (under ~100k vectors), exact nearest neighbor search is fast enough. For large knowledge bases, approximate nearest neighbor (ANN) algorithms are used — they trade a small accuracy loss for massive speed improvements.</p>
+  <p>The leading ANN algorithms used in vector databases include HNSW (Hierarchical Navigable Small World — the default in most modern vector databases, excellent speed/accuracy tradeoff), IVF (Inverted File Index — partitions the space into clusters, searches only nearby clusters), and ScaNN (Google's scalable ANN — particularly fast for very high-dimensional vectors). The choice is usually handled by the vector database, not the application developer.</p>
+
+  <h2>Re-ranking for precision</h2>
+  <p>Vector similarity search is fast but not always precise. The top-k results by cosine similarity often include somewhat irrelevant items that happened to have high embedding similarity but are not what the user actually needs. <strong>Re-ranking</strong> adds a second pass that reorders the retrieved candidates using a more computationally expensive but more accurate relevance model.</p>
+  <p>Re-rankers (like Cohere Rerank, or cross-encoder models like <code>ms-marco-MiniLM-L-6-v2</code>) take the original query and each retrieved chunk as a pair and produce a relevance score for that specific query-document combination — a more nuanced assessment than pure embedding similarity. A typical RAG pipeline: retrieve top-50 by vector similarity, re-rank to top-5, inject those 5 into the context. The re-ranking step typically adds 100–300ms but substantially improves precision.</p>
+
+  <h2>Query transformation techniques</h2>
+  <p>Sometimes the user's raw query is not the best input for vector search. Query transformation techniques modify or expand the query before retrieval to improve the quality of what gets retrieved.</p>
+
+  <h3>HyDE: Hypothetical Document Embeddings</h3>
+  <p>HyDE is one of the most effective query transformation techniques. Instead of embedding the user's query and searching for similar documents, HyDE first uses a language model to generate a <em>hypothetical document</em> that would answer the query — essentially, it writes an answer to the question (without actual knowledge, just based on what such an answer would look like). Then it embeds that hypothetical document and searches for real documents similar to it.</p>
+  <p>The intuition is that the hypothetical answer is in "document space" rather than "question space" — it uses the vocabulary, phrasing, and structure of answers, which tends to be much closer in embedding space to actual answer documents than the question itself is. HyDE can dramatically improve retrieval for complex or technical queries where the question phrasing differs significantly from how answers are written in the knowledge base.</p>
+
+  <div class="callout">
+    <div class="callout-label">HyDE in Practice</div>
+    <p>A query like "why does my payment fail at checkout?" might retrieve different documents than a hypothetical answer like "Payment failures at checkout are commonly caused by expired cards, insufficient funds, mismatched billing addresses, or temporary gateway outages. The error code returned indicates..." — because the hypothetical answer uses the terminology and structure found in actual troubleshooting documentation. HyDE is particularly valuable when the knowledge base was written for experts and the queries come from non-experts using different vocabulary.</p>
+  </div>
+
+  <h3>Query expansion</h3>
+  <p>Generate multiple variations of the user's query — different phrasings, synonyms, related questions — and retrieve for each variation, then merge and de-duplicate the results. This improves recall by covering more of the semantic space around the original query. Useful when the knowledge base uses inconsistent terminology or when the user's query might be expressed in various ways.</p>
+
+  <h3>Step-back prompting</h3>
+  <p>Transform a specific question into a more general one before retrieval. "What's the FDA approval status of Drug X for pediatric use?" becomes "What are the FDA approval requirements for pediatric drug use?" The more general question may retrieve foundational context that helps answer the specific question — context that wouldn't match the specific query at all.</p>
+
+  <h2>Hybrid search: semantic plus keyword</h2>
+  <p>Pure semantic search excels at meaning-based queries but can miss items that are only retrievable by exact keyword match. Pure keyword search (BM25) is precise for known terms but misses semantic matches. <strong>Hybrid search</strong> combines both, running both semantic and keyword search and merging the results using a rank fusion algorithm like Reciprocal Rank Fusion (RRF).</p>
+  <p>Hybrid search is particularly valuable for: queries containing specific names, codes, model numbers, or technical terms that are better matched by exact text; knowledge bases with precise technical vocabulary; and situations where both "what does this term mean" and "find this specific term" queries need to be handled by the same system. Weaviate and many other vector databases support hybrid search natively.</p>
+
+  <h2>Advanced RAG patterns</h2>
+  <p><strong>Parent document retrieval:</strong> Store small chunks for precise retrieval but return the parent document or a larger chunk when the small chunk is retrieved. This solves the tension between small chunks (better retrieval precision) and large chunks (more context for the model).</p>
+  <p><strong>Agentic RAG:</strong> Rather than a single fixed retrieval step, an agent decides when to retrieve, what to query, and whether to retrieve again after reading initial results. If the first retrieval doesn't answer the question, the agent reformulates the query and tries again. This iterative, adaptive retrieval substantially improves quality for complex multi-part questions.</p>
+  <p><strong>Multi-vector retrieval:</strong> Index each document with multiple vectors — a summary vector, a question vector (what questions does this document answer?), and a content vector. Different query types route to different index layers, improving coverage.</p>
+
+  <h2>Evaluating RAG: the RAGAS framework</h2>
+  <p>RAGAS (Retrieval Augmented Generation Assessment) is the leading open-source framework for evaluating RAG pipelines. It measures four dimensions:</p>
+
+  <div class="comparison-wrapper">
+  <table>
+    <tr><th>Metric</th><th>What It Measures</th><th>Ideal Value</th></tr>
+    <tr><td>Faithfulness</td><td>Does the generated answer contain only claims that are supported by the retrieved context? (Hallucination detection)</td><td>1.0 — every claim is grounded</td></tr>
+    <tr><td>Answer Relevancy</td><td>Does the generated answer address the actual question asked?</td><td>1.0 — directly answers the question</td></tr>
+    <tr><td>Context Precision</td><td>Are the retrieved chunks actually relevant to the question? (Retrieval quality)</td><td>1.0 — all retrieved chunks are relevant</td></tr>
+    <tr><td>Context Recall</td><td>Do the retrieved chunks contain all the information needed to answer the question?</td><td>1.0 — nothing important was missed</td></tr>
+  </table>
+  </div>
+
+  <p>RAGAS evaluates these metrics automatically using LLM judges, making it practical to run on large test sets without manual annotation. A well-functioning RAG pipeline should score above 0.8 on all four metrics; scores below 0.6 on any metric indicate a problem worth diagnosing.</p>
+
+  <h2>RAG vs fine-tuning decision matrix</h2>
+  <p>A common architectural decision: should new knowledge be added to a model through RAG or through fine-tuning? Both can work, but they are better suited to different use cases.</p>
+
+  <div class="comparison-wrapper">
+  <table>
+    <tr><th>Dimension</th><th>RAG</th><th>Fine-tuning</th></tr>
+    <tr><td>Knowledge updates</td><td>Instant — update the index, no retraining</td><td>Requires retraining cycle (hours to days)</td></tr>
+    <tr><td>Knowledge type</td><td>Factual, retrievable content; documents; Q&A pairs</td><td>Style, tone, behavior, implicit know-how</td></tr>
+    <tr><td>Cost</td><td>Storage + retrieval at inference time</td><td>Training compute upfront, cheaper inference</td></tr>
+    <tr><td>Interpretability</td><td>High — can see exactly what was retrieved and why</td><td>Low — knowledge is implicit in weights</td></tr>
+    <tr><td>Privacy</td><td>Data stays outside the model; can be deleted</td><td>Data is baked into model weights</td></tr>
+    <tr><td>Best for</td><td>Dynamic knowledge, private data, large knowledge bases</td><td>Consistent output format, domain-specific behavior, specialized vocabulary</td></tr>
+  </table>
+  </div>
+
+  <div class="good">
+    <div class="good-label">The Most Common Answer</div>
+    <p>In the majority of production use cases, RAG is the right choice over fine-tuning for adding factual knowledge. It is faster to update, more interpretable, more privacy-preserving, and often achieves higher accuracy because the model can read the exact source rather than relying on vaguely-remembered fine-tuning examples. Fine-tuning is most valuable for changing how the model behaves — its tone, output format, and domain-specific reasoning style — rather than what it knows. Many of the most effective systems combine both: a fine-tuned base model with a RAG layer for dynamic factual grounding.</p>
+  </div>
+
+</div>
+</main>
+</div>
+
+<div class="sticky-bar" id="sticky-bar">
+  <div class="sticky-bar-reading" id="sticky-reading">Read to the end to unlock the next module</div>
+  <div class="sticky-bar-track"><div class="sticky-bar-fill" id="sticky-fill"></div></div>
+  <div class="sticky-bar-label" id="sticky-label">0%</div>
+  <button class="sticky-bar-btn" id="sticky-btn" onclick="completeAndNext()">Module 8: Agent Safety and Reliability →</button>
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import { getFirestore, doc, setDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  const app=initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+  const auth=getAuth(app);const db=getFirestore(app);
+  let currentUser=null;
+  onAuthStateChanged(auth,u=>{currentUser=u;});
+
+  window.toggleTheme=function(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='☾'):(h.setAttribute('data-theme','dark'),i.textContent='☀');};
+  window.addEventListener('scroll',()=>{const d=document.documentElement,s=d.scrollTop||document.body.scrollTop,t=d.scrollHeight-d.clientHeight;document.getElementById('progress').style.width=(s/t*100)+'%';});
+
+  let unlocked=false;
+  function updateScrollProgress(){
+    const scrolled=window.scrollY+window.innerHeight;
+    const total=document.documentElement.scrollHeight;
+    const pct=Math.min(100,Math.round((scrolled/total)*100));
+    const fill=document.getElementById('sticky-fill');
+    const label=document.getElementById('sticky-label');
+    const btn=document.getElementById('sticky-btn');
+    const reading=document.getElementById('sticky-reading');
+    if(fill)fill.style.width=pct+'%';
+    if(label)label.textContent=pct+'%';
+    if(pct>=95&&!unlocked){
+      unlocked=true;
+      if(btn)btn.style.display='block';
+      if(reading)reading.style.display='none';
+      if(fill)fill.style.background='#22c55e';
+      if(label)label.style.color='#22c55e';
+    }
+  }
+  window.addEventListener('scroll',updateScrollProgress);
+  updateScrollProgress();
+
+  window.completeAndNext=async function(){
+    if(currentUser){
+      try{
+        await setDoc(doc(db,'users',currentUser.uid),{
+          agentsModules: arrayUnion('m7')
+        },{merge:true});
+      }catch(e){}
+    }
+    window.location.href='agents-module-8.html';
+  };
+</script>
+</body>
+</html>

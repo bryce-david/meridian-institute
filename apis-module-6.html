@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 6: Streaming Responses — Building with AI APIs — Meridian Institute of AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#0F4C81;--accent-dim:rgba(15,76,129,0.1);--accent-dim2:rgba(15,76,129,0.05);--nav-bg:rgba(8,8,8,0.9);--callout-bg:rgba(15,76,129,0.07);--callout-border:rgba(15,76,129,0.25);--good-bg:rgba(34,197,94,0.07);--good-border:rgba(34,197,94,0.2);--warn-bg:rgba(251,146,60,0.07);--warn-border:rgba(251,146,60,0.2);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#1E40AF;--accent-dim:rgba(30,64,175,0.08);--accent-dim2:rgba(30,64,175,0.04);--nav-bg:rgba(250,250,248,0.9);--callout-bg:rgba(30,64,175,0.05);--callout-border:rgba(30,64,175,0.2);--good-bg:rgba(22,163,74,0.06);--good-border:rgba(22,163,74,0.2);--warn-bg:rgba(234,88,12,0.05);--warn-border:rgba(234,88,12,0.2);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;overflow-x:hidden;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.7;overflow-x:hidden;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}
+  .nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}
+  .nav-back{font-size:13px;color:var(--text-2);text-decoration:none;transition:color 0.2s;}
+  .nav-back:hover{color:var(--text);}
+  .nav-label{font-size:13px;color:var(--text-3);}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;transition:all 0.2s;}
+  .theme-toggle:hover{background:var(--bg-3);color:var(--text);}
+  .progress-bar{position:fixed;top:60px;left:0;right:0;z-index:99;height:2px;background:var(--border);}
+  .progress-fill{height:100%;background:var(--accent);width:0%;transition:width 0.1s;}
+  .page-wrapper{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:100vh;padding-top:62px;overflow:hidden;}
+  .sidebar{position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto;border-right:1px solid var(--border);padding:32px 24px;background:var(--bg-2);}
+  .sidebar-course{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;}
+  .sidebar-course-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+  .sidebar-module{margin-bottom:4px;}
+  .sidebar-module-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:13px;color:var(--text-2);text-decoration:none;transition:all 0.2s;line-height:1.4;}
+  .sidebar-module-link:hover{background:var(--bg-3);color:var(--text);}
+  .sidebar-module-link.active{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-num{font-size:11px;font-weight:500;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--bg-4);color:var(--text-3);}
+  .sidebar-module-link.active .sidebar-num{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-divider{height:1px;background:var(--border);margin:20px 0;}
+  .sidebar-progress-label{font-size:12px;color:var(--text-3);margin-bottom:8px;display:flex;justify-content:space-between;}
+  .sidebar-progress-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sidebar-progress-fill{height:100%;width:60%;background:var(--accent);border-radius:2px;}
+  main{display:block;min-width:0;overflow:hidden;}
+  .content{max-width:760px;width:100%;padding:60px 64px 140px;margin:0 auto;}
+  .module-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+  .module-tag{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(15,76,129,0.2);padding:4px 12px;border-radius:100px;}
+  .module-meta{font-size:12px;color:var(--text-3);}
+  h1{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1.05;letter-spacing:-0.02em;color:var(--text);margin-bottom:24px;}
+  .intro-text{font-size:19px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+  h2{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:400;color:var(--text);margin:52px 0 18px;line-height:1.2;}
+  h3{font-size:16px;font-weight:500;color:var(--text);margin:32px 0 12px;}
+  p{font-size:16px;font-weight:300;color:var(--text-2);line-height:1.8;margin-bottom:20px;}
+  strong{font-weight:500;color:var(--text);}
+  em{font-style:italic;}
+  ul,ol{margin:0 0 20px 22px;color:var(--text-2);}
+  li{font-size:16px;font-weight:300;line-height:1.8;margin-bottom:8px;}
+  .callout{background:var(--callout-bg);border:1px solid var(--callout-border);border-radius:12px;padding:24px 28px;margin:32px 0;}
+  .callout-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+  .callout p{margin:0;font-size:15px;color:var(--text-2);}
+  .callout p+p{margin-top:12px;}
+  .good{background:var(--good-bg);border:1px solid var(--good-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .good-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#22c55e;margin-bottom:10px;}
+  .good p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn{background:var(--warn-bg);border:1px solid var(--warn-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .warn-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#fb923c;margin-bottom:10px;}
+  .warn p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn p+p{margin-top:12px;}
+  .principle-list{display:flex;flex-direction:column;gap:12px;margin:24px 0;}
+  .principle{background:var(--bg-2);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:0 12px 12px 0;padding:20px 24px;}
+  .principle-title{font-size:15px;font-weight:500;color:var(--text);margin-bottom:6px;}
+  .principle-desc{font-size:14px;color:var(--text-2);line-height:1.65;margin:0;}
+  .code-block{background:#0d1117;border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:20px 24px;margin:24px 0;font-family:monospace;font-size:13px;color:#e6edf3;overflow-x:auto;line-height:1.7;white-space:pre;}
+  .sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:var(--bg-2);border-top:1px solid var(--border-2);padding:14px 5%;display:flex;align-items:center;justify-content:space-between;gap:16px;backdrop-filter:blur(12px);}
+  .sticky-bar-track{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sticky-bar-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.2s;width:0%;}
+  .sticky-bar-label{font-size:12px;color:var(--text-3);white-space:nowrap;min-width:60px;text-align:right;}
+  .sticky-bar-btn{padding:10px 20px;border-radius:8px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;background:var(--accent);color:#fff;border:none;cursor:pointer;white-space:nowrap;transition:opacity 0.2s;display:none;}
+  .sticky-bar-btn:hover{opacity:0.88;}
+  .sticky-bar-reading{font-size:12px;color:var(--text-3);white-space:nowrap;}
+  @media(max-width:900px){.page-wrapper{grid-template-columns:1fr;}.sidebar{display:none;}.content{padding:40px 24px 120px;}h1{font-size:38px;}}
+  @media(max-width:600px){.content{padding:28px 16px 120px;}h1{font-size:30px;}h2{font-size:24px;}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="courses.html" class="nav-back">&#8592; Building with AI APIs</a>
+    <div class="nav-divider"></div>
+    <span class="nav-label">Module 6</span>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">&#9728;</span></button>
+</nav>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+
+<div class="page-wrapper">
+<aside class="sidebar">
+  <div class="sidebar-course">Expert Track</div>
+  <div class="sidebar-course-name">Building with AI APIs</div>
+  <div class="sidebar-module"><a href="apis-module-1.html" class="sidebar-module-link"><span class="sidebar-num">1</span>API Fundamentals</a></div>
+  <div class="sidebar-module"><a href="apis-module-2.html" class="sidebar-module-link"><span class="sidebar-num">2</span>Your First API Call</a></div>
+  <div class="sidebar-module"><a href="apis-module-3.html" class="sidebar-module-link"><span class="sidebar-num">3</span>Chat Completions in Depth</a></div>
+  <div class="sidebar-module"><a href="apis-module-4.html" class="sidebar-module-link"><span class="sidebar-num">4</span>Tokens and Cost Optimization</a></div>
+  <div class="sidebar-module"><a href="apis-module-5.html" class="sidebar-module-link"><span class="sidebar-num">5</span>Structured Outputs</a></div>
+  <div class="sidebar-module"><a href="apis-module-6.html" class="sidebar-module-link active"><span class="sidebar-num">6</span>Streaming Responses</a></div>
+  <div class="sidebar-module"><a href="apis-module-7.html" class="sidebar-module-link"><span class="sidebar-num">7</span>Embeddings and Semantic Search</a></div>
+  <div class="sidebar-module"><a href="apis-module-8.html" class="sidebar-module-link"><span class="sidebar-num">8</span>Function Calling and Tool Use</a></div>
+  <div class="sidebar-module"><a href="apis-module-9.html" class="sidebar-module-link"><span class="sidebar-num">9</span>Production-Ready AI Apps</a></div>
+  <div class="sidebar-module"><a href="apis-module-10.html" class="sidebar-module-link"><span class="sidebar-num">10</span>Multi-Provider Strategies</a></div>
+  <div class="sidebar-module"><a href="quiz-apis.html" class="sidebar-module-link" style="color:var(--accent);margin-top:4px;"><span class="sidebar-num" style="background:var(--accent-dim);color:var(--accent);">&#10022;</span>Final Assessment</a></div>
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-progress-label"><span>Course progress</span><span style="color:var(--accent);">6 / 10</span></div>
+  <div class="sidebar-progress-track"><div class="sidebar-progress-fill"></div></div>
+</aside>
+
+<main>
+<div class="content">
+  <div class="module-eyebrow"><span class="module-tag">Module 6</span><span class="module-meta">30 min read · Building with AI APIs</span></div>
+  <h1>Streaming Responses</h1>
+
+  <p class="intro-text">Without streaming, a user stares at a blank screen for several seconds until the entire response is ready. With streaming, the first words appear in under a second and text flows naturally. This module covers how streaming works under the hood and how to implement it correctly in Python backends and browser frontends.</p>
+
+  <h2>Why streaming matters: latency perception</h2>
+  <p>There are two distinct latency numbers in AI APIs: <strong>time-to-first-token</strong> (TTFT) and <strong>total generation time</strong>. Without streaming, users experience the full total latency — a 5-second wait for a blank screen followed by instant full response. With streaming, content starts appearing at TTFT — typically 200ms to 800ms — and users perceive the application as dramatically more responsive even if total time is identical.</p>
+
+  <p>Human perception of wait time is nonlinear. A 5-second blank wait feels painful; the same 5 seconds watching text appear word by word feels natural and engaging. Streaming is not just a performance optimization — it is a UX transformation that changes how users judge your application's quality.</p>
+
+  <h2>Server-Sent Events: the underlying protocol</h2>
+  <p>Streaming AI responses use <strong>Server-Sent Events</strong> (SSE) — a simple HTTP protocol for pushing data from server to client over a persistent connection. Each event is a line beginning with <code>data:</code> followed by JSON content, followed by a blank line. The stream ends with a special <code>data: [DONE]</code> sentinel.</p>
+
+  <div class="code-block"># Raw SSE stream (what flows over the HTTP connection):
+
+data: {"choices":[{"delta":{"role":"assistant","content":""},"index":0}]}
+
+data: {"choices":[{"delta":{"content":"The"},"index":0}]}
+
+data: {"choices":[{"delta":{"content":" capital"},"index":0}]}
+
+data: {"choices":[{"delta":{"content":" of"},"index":0}]}
+
+data: {"choices":[{"delta":{"content":" France"},"index":0}]}
+
+data: {"choices":[{"delta":{"content":" is"},"index":0}]}
+
+data: {"choices":[{"delta":{"content":" Paris"},"index":0}]}
+
+data: {"choices":[{"delta":{},"finish_reason":"stop","index":0}]}
+
+data: [DONE]</div>
+
+  <p>Each <code>delta.content</code> field contains a small chunk of text — sometimes a full word, sometimes a few characters, sometimes just punctuation. Your code must accumulate these chunks to build the final response.</p>
+
+  <h2>Streaming with the OpenAI Python SDK</h2>
+  <p>The SDK abstracts the raw SSE protocol. You iterate over a stream object with a simple <code>for</code> loop. The SDK handles parsing the SSE events and extracting the delta content.</p>
+
+  <div class="code-block">from openai import OpenAI
+import sys
+
+client = OpenAI()
+
+def stream_response(prompt: str) -> str:
+    """
+    Stream a response to stdout and return the complete text.
+    Simulates a terminal-based chat interface.
+    """
+    full_response = ""
+    finish_reason = None
+
+    # stream=True enables streaming mode
+    with client.chat.completions.stream(
+        model="gpt-4o",
+        messages=[
+            {"role": "system", "content": "You are a concise technical assistant."},
+            {"role": "user", "content": prompt}
+        ],
+        max_tokens=1000
+    ) as stream:
+        for text in stream.text_stream:
+            # Each iteration yields a small string chunk
+            print(text, end="", flush=True)  # flush=True is critical for real-time display
+            full_response += text
+
+    print()  # newline after streaming completes
+
+    # Access the final snapshot for metadata
+    final = stream.get_final_completion()
+    print(f"\n[finish_reason: {final.choices[0].finish_reason}]")
+    print(f"[tokens: {final.usage.total_tokens}]")
+
+    return full_response
+
+result = stream_response("Explain how garbage collection works in Python.")</div>
+
+  <h3>Lower-level streaming with chunk iteration</h3>
+  <p>For more control — particularly when handling tool calls or tracking metadata per chunk — iterate over the raw chunks rather than using the text_stream helper.</p>
+
+  <div class="code-block">from openai import OpenAI
+
+client = OpenAI()
+
+def stream_with_chunks(messages: list) -> str:
+    """Stream with full chunk access for monitoring and metadata."""
+    accumulated = ""
+    chunk_count = 0
+
+    stream = client.chat.completions.create(
+        model="gpt-4o-mini",
+        messages=messages,
+        stream=True
+    )
+
+    for chunk in stream:
+        chunk_count += 1
+        choice = chunk.choices[0] if chunk.choices else None
+
+        if choice is None:
+            continue
+
+        # Extract delta content — may be None for the first chunk
+        delta_content = choice.delta.content
+        if delta_content:
+            accumulated += delta_content
+            print(delta_content, end="", flush=True)
+
+        # Check for completion
+        if choice.finish_reason is not None:
+            print(f"\n[done: {choice.finish_reason} after {chunk_count} chunks]")
+
+    return accumulated</div>
+
+  <h2>Streaming with the Anthropic SDK</h2>
+  <p>Anthropic's SDK uses a context manager pattern for streaming. The event model is more structured — you receive typed events for different phases of the response rather than a single uniform chunk type.</p>
+
+  <div class="code-block">import anthropic
+
+client = anthropic.Anthropic()
+
+def stream_anthropic(prompt: str) -> str:
+    """Stream a Claude response with Anthropic's SDK."""
+    full_text = ""
+
+    with client.messages.stream(
+        model="claude-opus-4-5",
+        max_tokens=1024,
+        messages=[{"role": "user", "content": prompt}]
+    ) as stream:
+
+        # text_stream yields string chunks — the cleanest interface
+        for text_chunk in stream.text_stream:
+            print(text_chunk, end="", flush=True)
+            full_text += text_chunk
+
+    print()
+
+    # get_final_message() returns the complete message with usage stats
+    final_message = stream.get_final_message()
+    usage = final_message.usage
+    print(f"\nInput tokens: {usage.input_tokens} | Output tokens: {usage.output_tokens}")
+    print(f"Stop reason: {final_message.stop_reason}")
+
+    return full_text
+
+response = stream_anthropic("What are the main differences between async and sync Python?")</div>
+
+  <h2>Streaming tool calls: accumulating JSON arguments</h2>
+  <p>When the model wants to call a function during streaming, the tool call arguments arrive as JSON fragments across multiple chunks. You must accumulate the argument deltas and parse them only after the stream completes. This is one of the trickiest parts of streaming.</p>
+
+  <div class="code-block">import json
+from openai import OpenAI
+
+client = OpenAI()
+
+def stream_with_tool_calls(messages: list, tools: list) -> dict:
+    """
+    Stream a response that may include tool calls.
+    Accumulates JSON argument fragments correctly.
+    """
+    accumulated_content = ""
+    tool_calls_accumulator = {}  # index -> {id, name, arguments_str}
+
+    stream = client.chat.completions.create(
+        model="gpt-4o",
+        messages=messages,
+        tools=tools,
+        stream=True
+    )
+
+    finish_reason = None
+
+    for chunk in stream:
+        if not chunk.choices:
+            continue
+
+        choice = chunk.choices[0]
+        delta = choice.delta
+        finish_reason = choice.finish_reason or finish_reason
+
+        # Accumulate regular text content
+        if delta.content:
+            accumulated_content += delta.content
+            print(delta.content, end="", flush=True)
+
+        # Accumulate tool call fragments
+        if delta.tool_calls:
+            for tc_delta in delta.tool_calls:
+                idx = tc_delta.index
+
+                if idx not in tool_calls_accumulator:
+                    tool_calls_accumulator[idx] = {
+                        "id": "",
+                        "name": "",
+                        "arguments_str": ""
+                    }
+
+                tc = tool_calls_accumulator[idx]
+
+                # These fields arrive on the first chunk for this tool call
+                if tc_delta.id:
+                    tc["id"] += tc_delta.id
+                if tc_delta.function and tc_delta.function.name:
+                    tc["name"] += tc_delta.function.name
+
+                # Arguments arrive as JSON fragments — accumulate as string
+                if tc_delta.function and tc_delta.function.arguments:
+                    tc["arguments_str"] += tc_delta.function.arguments
+
+    # Parse accumulated tool calls
+    parsed_tool_calls = []
+    for idx, tc in sorted(tool_calls_accumulator.items()):
+        try:
+            arguments = json.loads(tc["arguments_str"])
+        except json.JSONDecodeError:
+            arguments = {}  # malformed — handle gracefully
+
+        parsed_tool_calls.append({
+            "id": tc["id"],
+            "name": tc["name"],
+            "arguments": arguments
+        })
+
+    return {
+        "content": accumulated_content,
+        "tool_calls": parsed_tool_calls,
+        "finish_reason": finish_reason
+    }</div>
+
+  <h2>Error handling in streams</h2>
+  <p>Streams can fail mid-generation — network interruptions, timeouts, or provider errors. Always wrap streaming loops in try/except and decide whether to retry or surface the partial response.</p>
+
+  <div class="code-block">from openai import OpenAI, APIConnectionError, APIStatusError
+import time
+
+client = OpenAI()
+
+def stream_with_error_handling(messages: list, max_retries: int = 2) -> str:
+    """Stream with robust error handling and partial response recovery."""
+
+    for attempt in range(max_retries + 1):
+        accumulated = ""
+        try:
+            with client.chat.completions.stream(
+                model="gpt-4o-mini",
+                messages=messages,
+                max_tokens=500,
+                timeout=30.0  # timeout per request, not per chunk
+            ) as stream:
+                for text in stream.text_stream:
+                    accumulated += text
+                    print(text, end="", flush=True)
+
+            print()
+            return accumulated
+
+        except APIConnectionError as e:
+            print(f"\n[Connection lost after {len(accumulated)} chars]")
+            if attempt < max_retries:
+                print(f"Retrying in {2**attempt}s...")
+                time.sleep(2**attempt)
+            else:
+                # Return whatever we got — partial response may still be useful
+                return accumulated or ""
+
+        except APIStatusError as e:
+            if e.status_code == 429:  # rate limit
+                time.sleep(2**attempt)
+            else:
+                raise  # don't retry on other errors
+
+    return accumulated</div>
+
+  <h2>Building a real-time streaming UI in JavaScript</h2>
+  <p>In browser applications, you stream from your backend to the browser. Your backend streams from the AI provider, and the browser connects to your backend via the browser's native <code>EventSource</code> API or by reading a <code>ReadableStream</code> from a fetch response.</p>
+
+  <div class="code-block">// Frontend JavaScript — streaming from a backend endpoint
+
+async function streamChat(userMessage) {
+  const outputEl = document.getElementById('output');
+  outputEl.textContent = '';
+
+  // POST to your backend, which streams from the AI provider
+  const response = await fetch('/api/chat/stream', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ message: userMessage })
+  });
+
+  if (!response.ok) {
+    outputEl.textContent = 'Error: ' + response.statusText;
+    return;
+  }
+
+  // Read the streaming response body
+  const reader = response.body.getReader();
+  const decoder = new TextDecoder();
+
+  while (true) {
+    const { done, value } = await reader.read();
+    if (done) break;
+
+    // Decode the chunk and parse SSE format
+    const chunk = decoder.decode(value, { stream: true });
+    const lines = chunk.split('\n');
+
+    for (const line of lines) {
+      if (line.startsWith('data: ')) {
+        const data = line.slice(6).trim();
+        if (data === '[DONE]') break;
+
+        try {
+          const parsed = JSON.parse(data);
+          const content = parsed.choices?.[0]?.delta?.content;
+          if (content) {
+            outputEl.textContent += content;
+            // Auto-scroll as content arrives
+            outputEl.scrollTop = outputEl.scrollHeight;
+          }
+        } catch (e) {
+          // Skip malformed chunks
+        }
+      }
+    }
+  }
+}
+
+// Python FastAPI backend that proxies the stream:
+/*
+from fastapi import FastAPI
+from fastapi.responses import StreamingResponse
+from openai import OpenAI
+
+app = FastAPI()
+client = OpenAI()
+
+@app.post("/api/chat/stream")
+async def chat_stream(request: dict):
+    async def generate():
+        stream = client.chat.completions.create(
+            model="gpt-4o-mini",
+            messages=[{"role": "user", "content": request["message"]}],
+            stream=True
+        )
+        for chunk in stream:
+            content = chunk.choices[0].delta.content or ""
+            if content:
+                import json
+                data = json.dumps({"choices": [{"delta": {"content": content}}]})
+                yield f"data: {data}\n\n"
+        yield "data: [DONE]\n\n"
+
+    return StreamingResponse(generate(), media_type="text/event-stream")
+*/</div>
+
+  <h2>When NOT to stream</h2>
+  <p>Streaming is not always the right choice. There are cases where the non-streaming API is strictly better:</p>
+
+  <div class="principle-list">
+    <div class="principle">
+      <div class="principle-title">Batch processing pipelines</div>
+      <div class="principle-desc">When you are processing 1000 documents overnight and no human is watching, streaming adds complexity with no benefit. Use the standard API, parallelize requests, and focus on throughput. For bulk workloads, use the Batch API at 50% cost.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Structured output parsing</div>
+      <div class="principle-desc">If you are using JSON mode or structured outputs, you cannot parse the result until it is complete. Streaming has no benefit here — you receive fragments of JSON that you cannot use until the full object arrives. Use the non-streaming API.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Short responses</div>
+      <div class="principle-desc">For responses under 50 tokens — one-word answers, classifications, simple extractions — the overhead of setting up and managing a stream outweighs any UX benefit. The total latency is often lower without streaming.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Downstream processing required before display</div>
+      <div class="principle-desc">If your application needs to post-process, validate, or transform the complete response before showing it to the user, streaming provides no benefit and adds complexity. Render-then-display is simpler than stream-and-transform.</div>
+    </div>
+  </div>
+
+  <div class="good">
+    <div class="good-label">Streaming is table stakes for chat UIs</div>
+    <p>Any chat interface that waits for a full response before displaying it will feel broken to modern users. Streaming is the expected behavior. Implement it from the start rather than retrofitting — the streaming code path is different enough from synchronous that a rewrite is often faster than adapting existing code.</p>
+  </div>
+
+</div>
+</main>
+</div>
+
+<div class="sticky-bar" id="sticky-bar">
+  <div class="sticky-bar-reading" id="sticky-reading">Read to the end to unlock the next module</div>
+  <div class="sticky-bar-track"><div class="sticky-bar-fill" id="sticky-fill"></div></div>
+  <div class="sticky-bar-label" id="sticky-label">0%</div>
+  <button class="sticky-bar-btn" id="sticky-btn" onclick="completeAndNext()">Module 7: Embeddings and Semantic Search &#8594;</button>
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import { getFirestore, doc, setDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  const app=initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+  const auth=getAuth(app);const db=getFirestore(app);
+  let currentUser=null;
+  onAuthStateChanged(auth,u=>{currentUser=u;});
+  window.toggleTheme=function(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='☾'):(h.setAttribute('data-theme','dark'),i.textContent='☀');};
+  window.addEventListener('scroll',()=>{const d=document.documentElement,s=d.scrollTop||document.body.scrollTop,t=d.scrollHeight-d.clientHeight;document.getElementById('progress').style.width=(s/t*100)+'%';});
+  let unlocked=false;
+  function updateScrollProgress(){
+    const scrolled=window.scrollY+window.innerHeight;
+    const total=document.documentElement.scrollHeight;
+    const pct=Math.min(100,Math.round((scrolled/total)*100));
+    const fill=document.getElementById('sticky-fill');
+    const label=document.getElementById('sticky-label');
+    const btn=document.getElementById('sticky-btn');
+    const reading=document.getElementById('sticky-reading');
+    if(fill)fill.style.width=pct+'%';
+    if(label)label.textContent=pct+'%';
+    if(pct>=95&&!unlocked){unlocked=true;if(btn)btn.style.display='block';if(reading)reading.style.display='none';if(fill)fill.style.background='#22c55e';if(label)label.style.color='#22c55e';}
+  }
+  window.addEventListener('scroll',updateScrollProgress);
+  updateScrollProgress();
+  window.completeAndNext=async function(){
+    if(currentUser){try{await setDoc(doc(db,'users',currentUser.uid),{apisModules:arrayUnion('m6')},{merge:true});}catch(e){}}
+    window.location.href='apis-module-7.html';
+  };
+</script>
+</body>
+</html>

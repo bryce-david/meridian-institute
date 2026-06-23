@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 6: Adversarial AI and Model Attacks — AI in Cybersecurity — Meridian Institute of AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#0E7490;--accent-dim:rgba(14,116,144,0.1);--accent-dim2:rgba(14,116,144,0.05);--nav-bg:rgba(8,8,8,0.9);--callout-bg:rgba(14,116,144,0.07);--callout-border:rgba(14,116,144,0.25);--good-bg:rgba(34,197,94,0.07);--good-border:rgba(34,197,94,0.2);--warn-bg:rgba(251,146,60,0.07);--warn-border:rgba(251,146,60,0.2);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#0C6280;--accent-dim:rgba(12,98,128,0.08);--accent-dim2:rgba(12,98,128,0.04);--nav-bg:rgba(250,250,248,0.9);--callout-bg:rgba(12,98,128,0.05);--callout-border:rgba(12,98,128,0.2);--good-bg:rgba(22,163,74,0.06);--good-border:rgba(22,163,74,0.2);--warn-bg:rgba(234,88,12,0.05);--warn-border:rgba(234,88,12,0.2);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;overflow-x:hidden;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.7;overflow-x:hidden;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}
+  .nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}
+  .nav-back{font-size:13px;color:var(--text-2);text-decoration:none;transition:color 0.2s;}
+  .nav-back:hover{color:var(--text);}
+  .nav-label{font-size:13px;color:var(--text-3);}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;transition:all 0.2s;}
+  .theme-toggle:hover{background:var(--bg-3);color:var(--text);}
+  .progress-bar{position:fixed;top:60px;left:0;right:0;z-index:99;height:2px;background:var(--border);}
+  .progress-fill{height:100%;background:var(--accent);width:0%;transition:width 0.1s;}
+  .page-wrapper{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:100vh;padding-top:62px;overflow:hidden;}
+  .sidebar{position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto;border-right:1px solid var(--border);padding:32px 24px;background:var(--bg-2);}
+  .sidebar-course{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;}
+  .sidebar-course-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+  .sidebar-module{margin-bottom:4px;}
+  .sidebar-module-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:13px;color:var(--text-2);text-decoration:none;transition:all 0.2s;line-height:1.4;}
+  .sidebar-module-link:hover{background:var(--bg-3);color:var(--text);}
+  .sidebar-module-link.active{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-num{font-size:11px;font-weight:500;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--bg-4);color:var(--text-3);}
+  .sidebar-module-link.active .sidebar-num{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-divider{height:1px;background:var(--border);margin:20px 0;}
+  .sidebar-progress-label{font-size:12px;color:var(--text-3);margin-bottom:8px;display:flex;justify-content:space-between;}
+  .sidebar-progress-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sidebar-progress-fill{height:100%;width:60%;background:var(--accent);border-radius:2px;}
+  main{display:block;min-width:0;overflow:hidden;}
+  .content{max-width:760px;width:100%;padding:60px 64px 140px;margin:0 auto;}
+  .module-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+  .module-tag{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(14,116,144,0.2);padding:4px 12px;border-radius:100px;}
+  .module-meta{font-size:12px;color:var(--text-3);}
+  h1{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1.05;letter-spacing:-0.02em;color:var(--text);margin-bottom:24px;}
+  .intro-text{font-size:19px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+  h2{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:400;color:var(--text);margin:52px 0 18px;line-height:1.2;}
+  h3{font-size:16px;font-weight:500;color:var(--text);margin:32px 0 12px;}
+  p{font-size:16px;font-weight:300;color:var(--text-2);line-height:1.8;margin-bottom:20px;}
+  strong{font-weight:500;color:var(--text);}
+  em{font-style:italic;}
+  ul,ol{margin:0 0 20px 22px;color:var(--text-2);}
+  li{font-size:16px;font-weight:300;line-height:1.8;margin-bottom:8px;}
+  .callout{background:var(--callout-bg);border:1px solid var(--callout-border);border-radius:12px;padding:24px 28px;margin:32px 0;}
+  .callout-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+  .callout p{margin:0;font-size:15px;color:var(--text-2);}
+  .callout p+p{margin-top:12px;}
+  .good{background:var(--good-bg);border:1px solid var(--good-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .good-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#22c55e;margin-bottom:10px;}
+  .good p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn{background:var(--warn-bg);border:1px solid var(--warn-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .warn-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#fb923c;margin-bottom:10px;}
+  .warn p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn p+p{margin-top:12px;}
+  .analogy{background:var(--bg-2);border:1px solid var(--border);border-radius:12px;padding:28px;margin:28px 0;}
+  .analogy-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-3);margin-bottom:12px;}
+  .analogy p{margin:0;font-size:15px;color:var(--text-2);}
+  .disclaimer{background:rgba(251,146,60,0.07);border:1px solid rgba(251,146,60,0.3);border-radius:12px;padding:24px 28px;margin:0 0 40px;}
+  .disclaimer-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#fb923c;margin-bottom:10px;}
+  .disclaimer p{margin:0;font-size:14px;color:var(--text-2);line-height:1.7;}
+  .disclaimer p+p{margin-top:10px;}
+  .comparison-wrapper{overflow-x:auto;-webkit-overflow-scrolling:touch;width:100%;margin:28px 0;}
+  table{width:100%;border-collapse:collapse;font-size:14px;min-width:480px;}
+  th{text-align:left;padding:12px 16px;font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-3);border-bottom:1px solid var(--border-2);}
+  td{padding:14px 16px;border-bottom:1px solid var(--border);color:var(--text-2);line-height:1.6;vertical-align:top;}
+  tr:last-child td{border-bottom:none;}
+  td:first-child{color:var(--text);font-weight:500;width:30%;}
+  .key-stat{background:var(--bg-2);border:1px solid var(--border);border-radius:12px;padding:20px 24px;margin:16px 0;display:flex;align-items:center;gap:20px;}
+  .key-stat-num{font-family:'Cormorant Garamond',serif;font-size:40px;font-weight:400;color:var(--accent);line-height:1;flex-shrink:0;}
+  .key-stat-label{font-size:14px;color:var(--text-2);line-height:1.6;}
+  .key-stat-label strong{display:block;font-size:15px;color:var(--text);margin-bottom:4px;}
+  .principle-list{display:flex;flex-direction:column;gap:12px;margin:24px 0;}
+  .principle{background:var(--bg-2);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:0 12px 12px 0;padding:20px 24px;}
+  .principle-title{font-size:15px;font-weight:500;color:var(--text);margin-bottom:6px;}
+  .principle-desc{font-size:14px;color:var(--text-2);line-height:1.65;margin:0;}
+  .sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:var(--bg-2);border-top:1px solid var(--border-2);padding:14px 5%;display:flex;align-items:center;justify-content:space-between;gap:16px;backdrop-filter:blur(12px);}
+  .sticky-bar-track{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sticky-bar-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.2s;width:0%;}
+  .sticky-bar-label{font-size:12px;color:var(--text-3);white-space:nowrap;min-width:60px;text-align:right;}
+  .sticky-bar-btn{padding:10px 20px;border-radius:8px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;background:var(--accent);color:#fff;border:none;cursor:pointer;white-space:nowrap;transition:opacity 0.2s;display:none;}
+  .sticky-bar-btn:hover{opacity:0.88;}
+  .sticky-bar-reading{font-size:12px;color:var(--text-3);white-space:nowrap;}
+  @media(max-width:900px){.page-wrapper{grid-template-columns:1fr;}.sidebar{display:none;}.content{padding:40px 24px 120px;}h1{font-size:38px;}}
+  @media(max-width:600px){.content{padding:28px 16px 120px;}h1{font-size:30px;}h2{font-size:24px;}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="courses.html" class="nav-back">&#8592; AI in Cybersecurity</a>
+    <div class="nav-divider"></div>
+    <span class="nav-label">Module 6</span>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">&#9728;</span></button>
+</nav>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+
+<div class="page-wrapper">
+<aside class="sidebar">
+  <div class="sidebar-course">Course</div>
+  <div class="sidebar-course-name">AI in Cybersecurity</div>
+  <div class="sidebar-module"><a href="cybersecurity-module-1.html" class="sidebar-module-link"><span class="sidebar-num">1</span>The AI-Driven Threat Landscape</a></div>
+  <div class="sidebar-module"><a href="cybersecurity-module-2.html" class="sidebar-module-link"><span class="sidebar-num">2</span>Intrusion Detection and AI</a></div>
+  <div class="sidebar-module"><a href="cybersecurity-module-3.html" class="sidebar-module-link"><span class="sidebar-num">3</span>AI-Powered Social Engineering</a></div>
+  <div class="sidebar-module"><a href="cybersecurity-module-4.html" class="sidebar-module-link"><span class="sidebar-num">4</span>Malware Analysis with ML</a></div>
+  <div class="sidebar-module"><a href="cybersecurity-module-5.html" class="sidebar-module-link"><span class="sidebar-num">5</span>Vulnerability Assessment and AI</a></div>
+  <div class="sidebar-module"><a href="cybersecurity-module-6.html" class="sidebar-module-link active"><span class="sidebar-num">6</span>Adversarial AI Attacks</a></div>
+  <div class="sidebar-module"><a href="cybersecurity-module-7.html" class="sidebar-module-link"><span class="sidebar-num">7</span>AI in SOC Operations</a></div>
+  <div class="sidebar-module"><a href="cybersecurity-module-8.html" class="sidebar-module-link"><span class="sidebar-num">8</span>Privacy and Data Protection</a></div>
+  <div class="sidebar-module"><a href="cybersecurity-module-9.html" class="sidebar-module-link"><span class="sidebar-num">9</span>Zero-Trust and AI</a></div>
+  <div class="sidebar-module"><a href="cybersecurity-module-10.html" class="sidebar-module-link"><span class="sidebar-num">10</span>The Future of AI Security</a></div>
+  <div class="sidebar-module"><a href="quiz-cybersecurity.html" class="sidebar-module-link" style="color:var(--accent);margin-top:4px;"><span class="sidebar-num" style="background:var(--accent-dim);color:var(--accent);">&#10022;</span>Final Assessment</a></div>
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-progress-label"><span>Course progress</span><span style="color:var(--accent);">6 / 10</span></div>
+  <div class="sidebar-progress-track"><div class="sidebar-progress-fill"></div></div>
+</aside>
+
+<main>
+<div class="content">
+  <div class="module-eyebrow"><span class="module-tag">Module 6</span><span class="module-meta">28 min read &middot; AI in Cybersecurity</span></div>
+  <h1>Adversarial AI and Model Attacks</h1>
+
+  <p class="intro-text">When we deploy AI to defend against cyber threats, we introduce a new attack surface: the AI models themselves. Adversarial machine learning is the study of how ML systems fail under deliberate, intelligent attack — and understanding these failure modes is not an academic exercise. Every organization deploying AI for intrusion detection, malware classification, or fraud prevention must understand how adversaries will attempt to subvert those systems from day one.</p>
+
+  <h2>What adversarial machine learning is — and why it matters now</h2>
+  <p>Adversarial machine learning (AML) is the discipline studying the security of ML systems against malicious actors who seek to manipulate model behavior for their own ends. The field traces back to 2004, when researchers demonstrated that naive Bayes spam classifiers could be defeated by inserting benign-looking words into spam emails. Today, it encompasses a rich taxonomy of attacks against every phase of the ML lifecycle.</p>
+  <p>The reason AML has moved from academic curiosity to urgent operational concern is simple: the attack surface has grown dramatically. Organizations now deploy ML models for authentication, malware detection, network anomaly detection, fraud prevention, and autonomous response. Each of these deployments represents a high-value target. If an attacker can manipulate the behavior of a malware classifier, their payload evades detection. If they can corrupt a fraud model, financial crime goes undetected. The stakes are not theoretical.</p>
+
+  <div class="callout">
+    <div class="callout-label">The fundamental problem</div>
+    <p>ML models learn statistical patterns from training data and use those patterns to make inferences about new inputs. This means their behavior can be manipulated by anyone who understands — or can probe — the model's decision boundaries. Unlike traditional software where correct behavior is specified by code, ML model behavior is shaped by data, making it fundamentally harder to reason about and harder to defend.</p>
+  </div>
+
+  <h2>Evasion attacks: fooling classifiers at inference time</h2>
+  <p>Evasion attacks occur at inference time — after the model has been trained and deployed. The attacker does not modify the model; they craft inputs that cause the model to make incorrect predictions. This is the most immediately practical class of adversarial attack because it requires no access to the model's internals or training pipeline.</p>
+
+  <h3>White-box evasion: gradient-based attacks</h3>
+  <p>When an attacker has full knowledge of the model architecture and parameters, they can compute gradients of the model's loss function with respect to the input. By iteratively modifying the input in the direction that maximizes the model's prediction error, they generate adversarial examples — inputs that are perceptibly similar (or functionally identical) to legitimate inputs but are misclassified by the model.</p>
+  <p>The Fast Gradient Sign Method (FGSM), introduced by Goodfellow et al. in 2014, is the canonical white-box attack: take a single step in the direction of the gradient sign with a fixed step size epsilon. More sophisticated attacks like Projected Gradient Descent (PGD) iterate this process multiple times with random restarts, producing more powerful adversarial examples at the cost of additional computation. In image classification benchmarks, these attacks can reliably fool state-of-the-art classifiers while making changes imperceptible to human observers.</p>
+
+  <h3>Black-box evasion: when you can only observe outputs</h3>
+  <p>In realistic attack scenarios, the attacker typically cannot access model parameters. Black-box attacks work by querying the model as an oracle — submitting inputs and observing outputs — then using those observations to either estimate gradients or train a surrogate model that approximates the target.</p>
+  <p><strong>Transfer attacks</strong> exploit a remarkable property of adversarial examples: examples crafted to fool one model often fool other models trained on the same task, even with different architectures. An attacker can train their own surrogate model on publicly available data, generate adversarial examples against it, and find that many of those examples also fool the target deployed model.</p>
+  <p><strong>Query-based attacks</strong> use the model's output probabilities or confidence scores to estimate the gradient through finite differences, then iteratively craft adversarial examples without needing access to model parameters. Even when models return only hard labels (not probabilities), score-free attacks based on evolutionary algorithms or random search can still find effective adversarial examples given sufficient queries.</p>
+
+  <div class="warn">
+    <div class="warn-label">Direct cybersecurity impact</div>
+    <p><strong>Malware evasion:</strong> Researchers have demonstrated that ML-based antivirus models can be evaded by appending benign code sections to malicious binaries, perturbing import tables, or inserting functionally neutral byte sequences. The malware remains fully functional while crossing the classifier's decision boundary into the benign region. This is not theoretical — proof-of-concept tools implementing these attacks are publicly available.</p>
+    <p><strong>Network intrusion evasion:</strong> ML-based IDS/IPS systems can be evaded by fragmenting attack traffic to alter timing and flow features, inserting decoy packets that shift statistical features toward benign distributions, and leveraging protocol edge cases that shift feature values away from attack signatures while preserving attack semantics.</p>
+  </div>
+
+  <h2>Poisoning attacks: corrupting the training data</h2>
+  <p>Poisoning attacks target the training phase rather than inference. By injecting carefully crafted malicious samples into the training data — or corrupting existing samples — an attacker can degrade overall model accuracy, insert backdoors, or cause the model to systematically misclassify specific targeted inputs.</p>
+
+  <h3>Availability attacks</h3>
+  <p>The simplest poisoning objective is denial of service against the model: degrade its accuracy on legitimate data to the point that it becomes useless. This requires only injecting sufficient mislabeled or corrupted samples to shift the decision boundary away from the true underlying distribution. In systems where training data is collected from production traffic — common in intrusion detection and fraud systems that continuously retrain — an attacker who can influence what traffic the system sees can poison the training set organically.</p>
+
+  <h3>Targeted poisoning</h3>
+  <p>More sophisticated poisoning attacks target specific misclassification outcomes rather than general degradation. The attacker crafts poison samples that cause the model to misclassify a specific test input — perhaps a particular attacker-controlled payload — while maintaining near-normal accuracy on all other inputs. This is much harder to detect through standard model evaluation metrics, since overall performance appears unaffected.</p>
+
+  <div class="callout">
+    <div class="callout-label">The supply chain risk</div>
+    <p>Training data for security ML models often comes from threat intelligence feeds, public malware repositories, network traffic captures, and third-party data providers. Any of these can be a poisoning vector. An attacker with access to a widely-used threat intelligence feed can potentially poison models at multiple organizations simultaneously. This threat is directly analogous to software supply chain attacks — and demands similar controls around data provenance and integrity.</p>
+  </div>
+
+  <h2>Backdoor attacks: trojan models</h2>
+  <p>Backdoor attacks are a sophisticated variant of poisoning that inserts a hidden trigger mechanism into the model. A backdoored model behaves normally on clean inputs and passes standard accuracy evaluation — but when inputs contain a specific trigger pattern (a pixel patch, a watermark, a specific byte sequence), the model produces a predetermined attacker-chosen output regardless of the true input semantics.</p>
+  <p>Backdoors are particularly dangerous in the increasingly common scenario where organizations deploy pre-trained models from public repositories, purchase models from third-party vendors, or use models that were fine-tuned on third-party datasets. The backdoor is invisible in the model weights without specialized analysis and cannot be detected by standard evaluation on clean test sets.</p>
+  <p>In cybersecurity contexts, a backdoored intrusion detection model might be trained to always classify traffic containing a specific sequence of bytes as benign — giving an attacker a permanent, invisible bypass. A backdoored malware classifier might classify any file containing a specific marker string as benign, enabling the attacker to prepend that string to any payload.</p>
+
+  <h2>Model inversion and membership inference: privacy attacks</h2>
+  <p>Not all adversarial ML attacks aim to manipulate model predictions. A second class of attacks targets the <em>information</em> that ML models inadvertently expose about their training data.</p>
+
+  <h3>Model inversion attacks</h3>
+  <p>Model inversion attacks recover sensitive training data by repeatedly querying a model and using its outputs to reconstruct inputs. The attack exploits the fact that models learn detailed statistical properties of their training distribution — detailed enough that, given access to the model's confidence scores, an attacker can reconstruct a representative sample of training inputs. In healthcare ML, this means recovering patient data. In face recognition systems, recovering training images. In cybersecurity, recovering internal network traffic patterns or system configurations used to train behavioral baselines.</p>
+
+  <h3>Membership inference attacks</h3>
+  <p>Membership inference attacks determine whether a specific data record was included in the training set. The attack works because models tend to produce higher confidence scores for training examples than for unseen examples — a manifestation of overfitting. An attacker who can query the model and observe confidence distributions can distinguish members from non-members with accuracy significantly above random chance.</p>
+  <p>In cybersecurity contexts, membership inference against a fraud detection model could reveal which specific transactions were used for training — potentially exposing sensitive financial behavior. Against a network anomaly detector, it could reveal what specific traffic patterns the defender considers normal, helping an attacker design traffic that mimics those patterns.</p>
+
+  <h2>Model stealing and extraction</h2>
+  <p>Model stealing attacks reconstruct a functional copy of a proprietary deployed model by querying it as a black box. The attacker submits inputs and collects outputs, then trains a local surrogate model to replicate the behavior. Sufficiently precise extraction can produce a model that matches the original's accuracy and decision boundaries closely — effectively stealing the intellectual property of the model without access to weights or training data.</p>
+  <p>For cybersecurity AI, model stealing enables a second-order attack: once an attacker has a local replica of the target defense model, they can mount much more efficient white-box evasion attacks against the replica, then transfer those adversarial examples to the deployed system. Model stealing converts a black-box problem into a white-box problem, dramatically lowering the cost of subsequent evasion.</p>
+
+  <div class="principle-list">
+    <div class="principle">
+      <div class="principle-title">Adversarial training: the primary defense against evasion</div>
+      <div class="principle-desc">The most effective defense against evasion attacks is including adversarial examples in the training set. By training on both clean and adversarially perturbed inputs, models learn decision boundaries that are robust to the perturbations used. PGD-based adversarial training is the current state-of-the-art approach, though it increases training cost and can reduce accuracy on clean inputs — a fundamental tradeoff that requires careful calibration for production systems.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Certified robustness: provable guarantees</div>
+      <div class="principle-desc">Empirical defenses can be broken by stronger attacks. Certified robustness approaches use mathematical verification techniques to provably guarantee that a model's prediction will not change for all inputs within a specified perturbation budget. Randomized smoothing is the most scalable certified defense, using random noise injection to create a smoothed classifier with certifiable robustness bounds. Certified defenses currently cover only small perturbation budgets and simple models, but the theoretical foundations are sound.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Input preprocessing: breaking gradient flows</div>
+      <div class="principle-desc">Many adversarial examples rely on precise gradient information to construct perturbations. Input preprocessing defenses — JPEG compression, image resizing, feature squeezing, bit-depth reduction — destroy the precise perturbation values that gradient-based attacks compute. While preprocessing defenses can be adaptively circumvented when the attacker knows which preprocessing is applied, they raise the attack cost and remain effective against non-adaptive attackers.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Ensemble and diversity defenses: increasing attacker cost</div>
+      <div class="principle-desc">Adversarial examples generated against a single model often fail to transfer perfectly to an ensemble of diverse models. Deploying multiple models trained with different architectures, random seeds, and subsets of training data means that an adversarial example effective against one model may be classified correctly by others. This raises the attacker's cost without providing certified guarantees, and is most effective when model diversity is high and attacker query budgets are limited.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Data provenance and integrity controls against poisoning</div>
+      <div class="principle-desc">Defending against poisoning attacks requires treating training data as a critical security asset. This means cryptographic integrity verification of training datasets, anomaly detection on incoming training samples (rejecting samples with anomalous feature distributions), careful access controls on data pipelines, and regular audits comparing model behavior against baseline ground truth. For continuously retrained systems, these controls must operate at production speed and scale.</div>
+    </div>
+  </div>
+
+  <h2>Why this matters for AI security systems specifically</h2>
+  <p>Adversarial ML vulnerabilities are not merely an abstract concern — they are directly consequential when AI systems are used as security controls. The threat model for an AI-powered firewall or malware classifier is fundamentally different from that of a product recommendation engine. Adversaries are motivated, persistent, and technically sophisticated. They will actively probe deployed models, invest in understanding their decision boundaries, and iteratively develop evasion techniques.</p>
+  <p>This reality demands that AI security systems be designed with adversarial conditions as the primary design constraint, not an afterthought. Models must be evaluated not just on clean accuracy but on robustness benchmarks. Deployment architectures must limit the information available to external adversaries — avoiding the confidence score exposure that enables model stealing and gradient estimation. Monitoring systems must detect anomalous query patterns that indicate active evasion research against deployed models.</p>
+
+  <div class="warn">
+    <div class="warn-label">The overconfidence failure mode</div>
+    <p>The most dangerous mistake in deploying AI for cybersecurity is treating model accuracy on clean benchmarks as a reliable indicator of security effectiveness. A model achieving 99.7% accuracy on a standard malware benchmark can be evaded by an attacker willing to invest a few hours in gradient-based perturbation. Security practitioners must demand adversarial robustness evaluations, not just clean accuracy metrics, before trusting ML-based defenses with high-stakes security decisions.</p>
+  </div>
+
+  <h2>The arms race dynamic</h2>
+  <p>Perhaps the most important conceptual insight in adversarial ML is that it is not a problem to be solved but a dynamic to be managed. Every defense technique enables new attacks; every attack technique informs new defenses. The history of the field is one of continuous escalation: signature-based defenses fall to gradient attacks; gradient attacks are partially addressed by adversarial training; adversarial training is circumvented by stronger attacks with larger perturbation budgets; certified robustness provides provable guarantees but within limited perturbation radii; and so the cycle continues.</p>
+  <p>This arms race dynamic has direct parallels throughout cybersecurity — the history of antivirus vs. malware, of cryptography vs. cryptanalysis, of firewalls vs. evasion techniques. Security professionals are already well acquainted with the need for continuous adaptation. Adversarial ML adds a new dimension: not just the attack tools change, but the <em>nature</em> of the defender's own weapons (the AI models) changes under adversarial pressure, in ways that are more difficult to anticipate and audit than traditional software.</p>
+
+  <div class="good">
+    <div class="good-label">The productive framing</div>
+    <p>Understanding adversarial ML is not a reason to distrust AI-based security tools — it is the knowledge required to deploy them responsibly. A security team that understands evasion attacks will demand adversarial robustness testing. A team that understands poisoning attacks will implement training data integrity controls. A team that understands backdoor risks will audit pre-trained models before deployment. Adversarial ML knowledge transforms AI from a black box you hope works into a system you understand and can defend. That is exactly what security engineering requires.</p>
+  </div>
+
+  <h2>Next</h2>
+  <p>Module 7 moves from attacking AI to using AI on the defender's side at scale — how Security Operations Centers are being transformed by AI-driven alert triage, automated investigation, and continuous threat hunting across enterprise environments.</p>
+</div>
+</main>
+</div>
+
+<div class="sticky-bar" id="sticky-bar">
+  <div class="sticky-bar-reading" id="sticky-reading">Read to the end to unlock the next module</div>
+  <div class="sticky-bar-track"><div class="sticky-bar-fill" id="sticky-fill"></div></div>
+  <div class="sticky-bar-label" id="sticky-label">0%</div>
+  <button class="sticky-bar-btn" id="sticky-btn" onclick="completeAndNext()">Module 7: AI in SOC Operations &#8594;</button>
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import { getFirestore, doc, setDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  const app = initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+  const auth = getAuth(app); const db = getFirestore(app);
+  let currentUser = null;
+  onAuthStateChanged(auth, u => { currentUser = u; });
+
+  window.toggleTheme=function(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='&#9790;'):(h.setAttribute('data-theme','dark'),i.textContent='&#9728;');};
+  window.addEventListener('scroll',()=>{const d=document.documentElement,s=d.scrollTop||document.body.scrollTop,t=d.scrollHeight-d.clientHeight;document.getElementById('progress').style.width=(s/t*100)+'%';});
+
+  let unlocked=false;
+  function updateScrollProgress(){
+    const scrolled=window.scrollY+window.innerHeight;
+    const total=document.documentElement.scrollHeight;
+    const pct=Math.min(100,Math.round((scrolled/total)*100));
+    const fill=document.getElementById('sticky-fill');
+    const label=document.getElementById('sticky-label');
+    const btn=document.getElementById('sticky-btn');
+    const reading=document.getElementById('sticky-reading');
+    if(fill)fill.style.width=pct+'%';
+    if(label)label.textContent=pct+'%';
+    if(pct>=95&&!unlocked){
+      unlocked=true;
+      if(btn)btn.style.display='block';
+      if(reading)reading.style.display='none';
+      if(fill)fill.style.background='#22c55e';
+      if(label)label.style.color='#22c55e';
+    }
+  }
+  window.addEventListener('scroll',updateScrollProgress);
+  updateScrollProgress();
+
+  window.completeAndNext=async function(){
+    if(currentUser){
+      try{
+        await setDoc(doc(db,'users',currentUser.uid),{
+          cybersecurityModules: arrayUnion('m6')
+        },{merge:true});
+      }catch(e){ /* progress save best-effort */ }
+    }
+    window.location.href='cybersecurity-module-7.html';
+  };
+</script>
+</body>
+</html>

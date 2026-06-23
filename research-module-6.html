@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 6: Peer Review and Academic Integrity — AI for Research and Academia — Meridian Institute of AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#064E3B;--accent-dim:rgba(6,78,59,0.1);--accent-dim2:rgba(6,78,59,0.05);--nav-bg:rgba(8,8,8,0.9);--callout-bg:rgba(6,78,59,0.07);--callout-border:rgba(6,78,59,0.25);--good-bg:rgba(34,197,94,0.07);--good-border:rgba(34,197,94,0.2);--warn-bg:rgba(251,146,60,0.07);--warn-border:rgba(251,146,60,0.2);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#065F46;--accent-dim:rgba(6,95,70,0.08);--accent-dim2:rgba(6,95,70,0.04);--nav-bg:rgba(250,250,248,0.9);--callout-bg:rgba(6,95,70,0.05);--callout-border:rgba(6,95,70,0.2);--good-bg:rgba(22,163,74,0.06);--good-border:rgba(22,163,74,0.2);--warn-bg:rgba(234,88,12,0.05);--warn-border:rgba(234,88,12,0.2);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;overflow-x:hidden;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.7;overflow-x:hidden;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}
+  .nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}
+  .nav-back{font-size:13px;color:var(--text-2);text-decoration:none;transition:color 0.2s;}
+  .nav-back:hover{color:var(--text);}
+  .nav-label{font-size:13px;color:var(--text-3);}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;transition:all 0.2s;}
+  .theme-toggle:hover{background:var(--bg-3);color:var(--text);}
+  .progress-bar{position:fixed;top:60px;left:0;right:0;z-index:99;height:2px;background:var(--border);}
+  .progress-fill{height:100%;background:var(--accent);width:0%;transition:width 0.1s;}
+  .page-wrapper{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:100vh;padding-top:62px;overflow:hidden;}
+  .sidebar{position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto;border-right:1px solid var(--border);padding:32px 24px;background:var(--bg-2);}
+  .sidebar-course{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;}
+  .sidebar-course-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+  .sidebar-module{margin-bottom:4px;}
+  .sidebar-module-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:13px;color:var(--text-2);text-decoration:none;transition:all 0.2s;line-height:1.4;}
+  .sidebar-module-link:hover{background:var(--bg-3);color:var(--text);}
+  .sidebar-module-link.active{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-num{font-size:11px;font-weight:500;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--bg-4);color:var(--text-3);}
+  .sidebar-module-link.active .sidebar-num{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-divider{height:1px;background:var(--border);margin:20px 0;}
+  .sidebar-progress-label{font-size:12px;color:var(--text-3);margin-bottom:8px;display:flex;justify-content:space-between;}
+  .sidebar-progress-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sidebar-progress-fill{height:100%;width:60%;background:var(--accent);border-radius:2px;}
+  main{display:block;min-width:0;overflow:hidden;}
+  .content{max-width:760px;width:100%;padding:60px 64px 140px;margin:0 auto;}
+  .module-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+  .module-tag{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(6,78,59,0.2);padding:4px 12px;border-radius:100px;}
+  .module-meta{font-size:12px;color:var(--text-3);}
+  h1{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1.05;letter-spacing:-0.02em;color:var(--text);margin-bottom:24px;}
+  .intro-text{font-size:19px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+  h2{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:400;color:var(--text);margin:52px 0 18px;line-height:1.2;}
+  h3{font-size:16px;font-weight:500;color:var(--text);margin:32px 0 12px;}
+  p{font-size:16px;font-weight:300;color:var(--text-2);line-height:1.8;margin-bottom:20px;}
+  strong{font-weight:500;color:var(--text);}
+  em{font-style:italic;}
+  ul,ol{margin:0 0 20px 22px;color:var(--text-2);}
+  li{font-size:16px;font-weight:300;line-height:1.8;margin-bottom:8px;}
+  .callout{background:var(--callout-bg);border:1px solid var(--callout-border);border-radius:12px;padding:24px 28px;margin:32px 0;}
+  .callout-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+  .callout p{margin:0;font-size:15px;color:var(--text-2);}
+  .callout p+p{margin-top:12px;}
+  .good{background:var(--good-bg);border:1px solid var(--good-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .good-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#22c55e;margin-bottom:10px;}
+  .good p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn{background:var(--warn-bg);border:1px solid var(--warn-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .warn-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#fb923c;margin-bottom:10px;}
+  .warn p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn p+p{margin-top:12px;}
+  .principle-list{display:flex;flex-direction:column;gap:12px;margin:24px 0;}
+  .principle{background:var(--bg-2);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:0 12px 12px 0;padding:20px 24px;}
+  .principle-title{font-size:15px;font-weight:500;color:var(--text);margin-bottom:6px;}
+  .principle-desc{font-size:14px;color:var(--text-2);line-height:1.65;margin:0;}
+  .comparison-wrapper{overflow-x:auto;-webkit-overflow-scrolling:touch;width:100%;margin:28px 0;}
+  table{width:100%;border-collapse:collapse;font-size:14px;min-width:480px;}
+  th{text-align:left;padding:12px 16px;font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-3);border-bottom:1px solid var(--border-2);}
+  td{padding:14px 16px;border-bottom:1px solid var(--border);color:var(--text-2);line-height:1.6;vertical-align:top;}
+  tr:last-child td{border-bottom:none;}
+  td:first-child{color:var(--text);font-weight:500;width:35%;}
+  .sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:var(--bg-2);border-top:1px solid var(--border-2);padding:14px 5%;display:flex;align-items:center;justify-content:space-between;gap:16px;backdrop-filter:blur(12px);}
+  .sticky-bar-track{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sticky-bar-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.2s;width:0%;}
+  .sticky-bar-label{font-size:12px;color:var(--text-3);white-space:nowrap;min-width:60px;text-align:right;}
+  .sticky-bar-btn{padding:10px 20px;border-radius:8px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;background:var(--accent);color:#fff;border:none;cursor:pointer;white-space:nowrap;transition:opacity 0.2s;display:none;}
+  .sticky-bar-btn:hover{opacity:0.88;}
+  .sticky-bar-reading{font-size:12px;color:var(--text-3);white-space:nowrap;}
+  @media(max-width:900px){.page-wrapper{grid-template-columns:1fr;}.sidebar{display:none;}.content{padding:40px 24px 120px;}h1{font-size:38px;}}
+  @media(max-width:600px){.content{padding:28px 16px 120px;}h1{font-size:30px;}h2{font-size:24px;}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="courses.html" class="nav-back">← AI for Research and Academia</a>
+    <div class="nav-divider"></div>
+    <span class="nav-label">Module 6</span>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">☀</span></button>
+</nav>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+
+<div class="page-wrapper">
+<aside class="sidebar">
+  <div class="sidebar-course">Expert Track</div>
+  <div class="sidebar-course-name">AI for Research and Academia</div>
+  <div class="sidebar-module"><a href="research-module-1.html" class="sidebar-module-link"><span class="sidebar-num">1</span>AI as a Research Partner</a></div>
+  <div class="sidebar-module"><a href="research-module-2.html" class="sidebar-module-link"><span class="sidebar-num">2</span>Literature Discovery and Synthesis</a></div>
+  <div class="sidebar-module"><a href="research-module-3.html" class="sidebar-module-link"><span class="sidebar-num">3</span>Research Writing with AI</a></div>
+  <div class="sidebar-module"><a href="research-module-4.html" class="sidebar-module-link"><span class="sidebar-num">4</span>Data Analysis and Visualization</a></div>
+  <div class="sidebar-module"><a href="research-module-5.html" class="sidebar-module-link"><span class="sidebar-num">5</span>Hypothesis Generation</a></div>
+  <div class="sidebar-module"><a href="research-module-6.html" class="sidebar-module-link active"><span class="sidebar-num">6</span>Peer Review and Integrity</a></div>
+  <div class="sidebar-module"><a href="research-module-7.html" class="sidebar-module-link"><span class="sidebar-num">7</span>Citation Management</a></div>
+  <div class="sidebar-module"><a href="research-module-8.html" class="sidebar-module-link"><span class="sidebar-num">8</span>Communicating Research</a></div>
+  <div class="sidebar-module"><a href="research-module-9.html" class="sidebar-module-link"><span class="sidebar-num">9</span>Collaborative Research</a></div>
+  <div class="sidebar-module"><a href="research-module-10.html" class="sidebar-module-link"><span class="sidebar-num">10</span>The Future of AI-Augmented Science</a></div>
+  <div class="sidebar-module"><a href="quiz-research.html" class="sidebar-module-link" style="color:var(--accent);margin-top:4px;"><span class="sidebar-num" style="background:var(--accent-dim);color:var(--accent);">✦</span>Final Assessment</a></div>
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-progress-label"><span>Course progress</span><span style="color:var(--accent);">6 / 10</span></div>
+  <div class="sidebar-progress-track"><div class="sidebar-progress-fill"></div></div>
+</aside>
+
+<main>
+<div class="content">
+  <div class="module-eyebrow"><span class="module-tag">Module 6 · Expert Track</span><span class="module-meta">23 min read · AI for Research and Academia</span></div>
+  <h1>Peer Review and Academic Integrity</h1>
+
+  <p class="intro-text">Peer review is the mechanism by which the scientific community evaluates and filters knowledge claims before they enter the literature. It depends on the expertise, judgment, and intellectual independence of reviewers. AI is now present in the peer review process — used by authors preparing manuscripts, by reviewers evaluating them, and by editors managing submissions — and this raises questions about disclosure obligations, limits of appropriate use, and the integrity of the evaluation system itself. These questions matter because peer review's authority rests on the assumption that what it certifies has passed human expert judgment.</p>
+
+  <h2>AI use by reviewers: disclosure obligations</h2>
+  <p>The question of whether and how reviewers should disclose AI use has no single universal answer yet, but the direction of norms is clear: disclosure is increasingly required, and failure to disclose when asked is treated as a violation of publishing ethics by most major journals. The underlying principle is that editors and the field deserve accurate information about how manuscripts were evaluated.</p>
+  <p>Several major publishers and journals have issued explicit guidance. The International Committee of Medical Journal Editors (ICMJE) has stated that AI tools cannot conduct peer review, because peer review requires accountability that AI cannot bear. Nature has issued guidance asking reviewers to disclose any AI tool use in the review process. Cell Press journals similarly require disclosure of AI assistance in preparing review reports. The committee on Publication Ethics (COPE) has published guidelines emphasizing that reviewers remain personally responsible for the content of their reviews and cannot delegate the substantive evaluation to AI.</p>
+  <p>The practical implication: before you use any AI assistance in reviewing a manuscript, check the journal's current author and reviewer guidelines. If the journal requires disclosure, disclose specifically — not vaguely. If the journal prohibits certain uses, honor those prohibitions regardless of whether you think the restriction is reasonable.</p>
+
+  <div class="callout">
+    <div class="callout-label">Confidentiality and AI Tools</div>
+    <p>A critical and often overlooked issue: when you paste manuscript content into an AI tool, you may be violating the confidentiality agreement that peer review depends on. Manuscripts submitted for review are confidential — they represent unpublished work shared in trust. Many AI tools, including free-tier versions of major models, use inputs to improve future outputs, which could result in confidential research becoming part of a training dataset or being surfaced to future users. Before using any AI tool with manuscript content, understand the tool's data retention and training policies. Enterprise and API versions of major AI tools typically offer stronger confidentiality protections than consumer products. Some journals have begun explicitly prohibiting submission of manuscript content to AI tools for this reason.</p>
+  </div>
+
+  <h2>Permitted vs. problematic reviewer uses</h2>
+  <p>The distinction that most journals and ethics bodies are converging on is between AI use that supports the reviewer's own expert evaluation and AI use that substitutes for it. The reviewer's role is to provide expert scientific judgment — on the significance of the question, the soundness of the methods, the validity of the conclusions, and the accuracy of the claims against the literature. That judgment cannot be delegated without fundamentally undermining what peer review certifies.</p>
+
+  <div class="principle-list">
+    <div class="principle">
+      <div class="principle-title">Generally permitted with disclosure</div>
+      <div class="principle-desc">Using AI to improve the grammar, clarity, and organization of your written review report. Asking AI to help you understand a specific statistical method or technical section outside your direct expertise, so that you can form your own judgment about it. Using AI to check whether your comments are clearly expressed and whether your recommendations are well-reasoned. These uses support the quality of your communication without substituting for your scientific judgment.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Requires caution and care</div>
+      <div class="principle-desc">Using AI to generate a list of potential concerns about a manuscript, which you then evaluate and filter. This is a grey area: if you review every concern AI raises against your own expert judgment and discard those that don't hold up, the evaluation remains yours. If you uncritically adopt the list, it does not. The difference is in how much critical engagement you bring to the AI's output.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Problematic regardless of disclosure</div>
+      <div class="principle-desc">Asking AI to generate a complete review of the manuscript and submitting it with minimal modification. Delegating to AI the judgment of whether the research question is significant, whether the study design is sound, or whether the conclusions are supported. Sharing unpublished manuscript content with AI tools that have data retention policies inconsistent with peer review confidentiality obligations.</div>
+    </div>
+  </div>
+
+  <h2>AI-generated text detection: severe limitations</h2>
+  <p>The emergence of AI-generated academic text has prompted interest in automated detection tools, and two have become widely discussed: <strong>GPTZero</strong> and <strong>Turnitin's AI Detection</strong> feature. Both are in active use by instructors, editors, and institutions. Both have serious, documented limitations that are not widely understood — and that have already produced unfair consequences for researchers and students.</p>
+  <p>The fundamental problem is that no current AI detection tool is reliable enough to justify high-stakes determinations of academic misconduct. The false positive rate — flagging human-written text as AI-generated — is substantial and has been documented across multiple independent evaluations. GPTZero and Turnitin's detection both show elevated false positive rates for text written by non-native English speakers, because the stylistic features associated with "AI-generated" text (shorter average sentence length, simpler vocabulary, more consistent sentence structure) overlap significantly with the writing patterns of people writing in their second or third language. This is not a technical edge case: it is a systematic bias that disproportionately affects international researchers and students.</p>
+
+  <div class="warn">
+    <div class="warn-label">Do Not Treat AI Detection as Evidence</div>
+    <p>Multiple universities have disciplined students and researchers based on AI detection tool flags, and several of those cases have subsequently been overturned when the individuals demonstrated that their writing was their own. If you are an editor or instructor considering using AI detection: a positive flag is a signal to investigate further, not evidence of misconduct. If you are a researcher or student who has been accused based on a detection flag: you have the right to contest the finding, and false positives are common and documented. The scientific consensus at the time of writing is that no available tool can reliably distinguish AI-generated from human-generated academic text.</p>
+    <p>The detection problem is also technically intractable in the short term: as AI models improve and as humans incorporate AI assistance in more complex ways, the stylistic signatures that detectors rely on become less reliable, not more. This is not a solvable engineering problem with current approaches.</p>
+  </div>
+
+  <h2>Institutional AI policies: a survey</h2>
+  <p>Universities and research institutions have responded to AI in academic work with a range of policies that differ substantially in their specificity, permissiveness, and enforcement mechanisms. Understanding the policy landscape helps researchers navigate disclosure requirements and avoid inadvertent violations.</p>
+
+  <div class="comparison-wrapper">
+  <table>
+    <tr><th>Institution</th><th>Policy approach</th><th>Key provisions</th></tr>
+    <tr><td>MIT</td><td>Disclosure-based, context-dependent</td><td>Requires disclosure of AI tool use; specific course/department rules govern permissibility of AI assistance in academic work; no blanket ban</td></tr>
+    <tr><td>Stanford</td><td>Default-permitted with disclosure</td><td>AI use is permitted unless instructors specify otherwise; disclosure required; Honor Code applies to AI-generated content submitted as original work</td></tr>
+    <tr><td>Harvard</td><td>Instructor-determined</td><td>No university-wide rule; individual instructors set AI policies for courses; research integrity policies apply to all submitted work</td></tr>
+    <tr><td>Oxford / Russell Group</td><td>Cautious, disclosure-oriented</td><td>UK Russell Group institutions generally require disclosure; some have blanket bans on AI in assessed work; policies vary by department and assessment type</td></tr>
+    <tr><td>Cambridge</td><td>Explicit prohibition in assessments unless stated</td><td>Use of AI tools in assessed work without explicit permission treated as academic misconduct; exceptions by course</td></tr>
+  </table>
+  </div>
+
+  <p>The practical takeaway: institutional policies are evolving rapidly and vary dramatically. Check your institution's current policy and your department's specific guidance annually. Policies that were silent a year ago may now require disclosure. Policies that were permissive may have been tightened in response to specific incidents.</p>
+
+  <h2>Plagiarism in the AI era</h2>
+  <p>The concept of plagiarism — presenting someone else's intellectual work as your own — requires reexamination in the AI era, because AI-generated text is not anyone's intellectual work in the conventional sense. Traditional plagiarism detection tools (Turnitin, iThenticate) check submitted text against a database of existing documents and flag matches above a threshold. AI-generated text typically passes these checks because it is not copied from any specific source — it is synthesized from the statistical patterns of an enormous corpus.</p>
+  <p>The ethical issue is nevertheless real. When you submit work containing AI-generated text that you represent as your own intellectual contribution — particularly in contexts where scholarly contribution is the object of evaluation (a thesis, a journal article, a grant application) — you are misrepresenting the nature of your contribution. Whether or not a detection tool catches it, the misrepresentation is present and it matters.</p>
+  <p>The more nuanced question is where the line falls. Using AI to polish the prose of a paragraph whose ideas and arguments are your own is different from submitting AI-generated reasoning as your intellectual contribution to a scholarly debate. Most ethics frameworks are converging on intent, disclosure, and the extent of intellectual contribution as the relevant criteria — not the presence or absence of AI assistance per se.</p>
+
+  <h2>The evolving norms landscape</h2>
+  <p>The norms around AI in academic publishing are shifting with unusual speed, and what was true eighteen months ago may not reflect current expectations. A current snapshot:</p>
+  <p><strong>Authorship:</strong> All major publishers — Nature Portfolio, Elsevier, Springer Nature, PLOS, Wiley, Taylor &amp; Francis — have issued policies stating that AI tools cannot be listed as authors. Authorship requires accountability that AI cannot bear. A human author must take responsibility for all AI contributions.</p>
+  <p><strong>Disclosure requirements:</strong> The majority of major journals now require disclosure of AI tool use in manuscript preparation. The required location and format of disclosure vary: some require it in the methods section, some in an author contribution statement, some in a cover letter. Increasingly, journals are requiring description of the specific use, not merely acknowledgment that AI was used.</p>
+  <p><strong>Prohibition vs. disclosure:</strong> A minority of journals, particularly in some humanities and social science fields, prohibit AI-generated text in submissions. Others are explicitly silent — no policy exists. "Silent" should be interpreted as requiring the researcher's own judgment, not as permission. When in doubt, disclose.</p>
+  <p><strong>The trajectory:</strong> The trajectory of institutional and journal norms is toward greater specificity, greater disclosure requirements, and greater clarity about what constitutes misuse. Researchers who have established good documentation practices now will be well-positioned as requirements tighten, rather than discovering gaps in their practices when those gaps become compliance problems.</p>
+
+  <div class="good">
+    <div class="good-label">The Integrity-Preserving Reviewer Practice</div>
+    <p>A peer reviewer who uses AI responsibly does so transparently and in service of their own expert judgment. They check the journal's AI policy before beginning a review. They do not share unpublished manuscript content with tools that have data retention policies incompatible with peer review confidentiality. If they use AI to improve the clarity of their written comments, they disclose this as required. They recognize that the substantive evaluation — the expert judgment about whether the science is sound — is irreducibly their responsibility and cannot be outsourced to any tool. Their review represents their own considered opinion, supported by appropriate tools, and they would defend every substantive claim in it from their own expertise if asked.</p>
+  </div>
+
+</div>
+</main>
+</div>
+
+<div class="sticky-bar" id="sticky-bar">
+  <div class="sticky-bar-reading" id="sticky-reading">Read to the end to unlock the next module</div>
+  <div class="sticky-bar-track"><div class="sticky-bar-fill" id="sticky-fill"></div></div>
+  <div class="sticky-bar-label" id="sticky-label">0%</div>
+  <button class="sticky-bar-btn" id="sticky-btn" onclick="completeAndNext()">Module 7: Citation Management →</button>
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import { getFirestore, doc, setDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  const app=initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+  const auth=getAuth(app);const db=getFirestore(app);
+  let currentUser=null;
+  onAuthStateChanged(auth,u=>{currentUser=u;});
+  window.toggleTheme=function(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='☾'):(h.setAttribute('data-theme','dark'),i.textContent='☀');};
+  window.addEventListener('scroll',()=>{const d=document.documentElement,s=d.scrollTop||document.body.scrollTop,t=d.scrollHeight-d.clientHeight;document.getElementById('progress').style.width=(s/t*100)+'%';});
+  let unlocked=false;
+  function updateScrollProgress(){
+    const scrolled=window.scrollY+window.innerHeight;const total=document.documentElement.scrollHeight;
+    const pct=Math.min(100,Math.round((scrolled/total)*100));
+    const fill=document.getElementById('sticky-fill');const label=document.getElementById('sticky-fill');const label2=document.getElementById('sticky-label');
+    const btn=document.getElementById('sticky-btn');const reading=document.getElementById('sticky-reading');
+    if(fill)fill.style.width=pct+'%';if(label2)label2.textContent=pct+'%';
+    if(pct>=95&&!unlocked){unlocked=true;if(btn)btn.style.display='block';if(reading)reading.style.display='none';if(fill)fill.style.background='#22c55e';if(label2)label2.style.color='#22c55e';}
+  }
+  window.addEventListener('scroll',updateScrollProgress);updateScrollProgress();
+  window.completeAndNext=async function(){
+    if(currentUser){try{await setDoc(doc(db,'users',currentUser.uid),{researchModules:arrayUnion('m6')},{merge:true});}catch(e){}}
+    window.location.href='research-module-7.html';
+  };
+</script>
+</body>
+</html>

@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 4: Unsupervised Learning and Pattern Discovery — Machine Learning Explained — Meridian Institute of AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#065F46;--accent-dim:rgba(6,95,70,0.1);--accent-dim2:rgba(6,95,70,0.05);--nav-bg:rgba(8,8,8,0.9);--callout-bg:rgba(6,95,70,0.07);--callout-border:rgba(6,95,70,0.25);--good-bg:rgba(34,197,94,0.07);--good-border:rgba(34,197,94,0.2);--warn-bg:rgba(251,146,60,0.07);--warn-border:rgba(251,146,60,0.2);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#064E3B;--accent-dim:rgba(6,78,59,0.08);--accent-dim2:rgba(6,78,59,0.04);--nav-bg:rgba(250,250,248,0.9);--callout-bg:rgba(6,78,59,0.05);--callout-border:rgba(6,78,59,0.2);--good-bg:rgba(22,163,74,0.06);--good-border:rgba(22,163,74,0.2);--warn-bg:rgba(234,88,12,0.05);--warn-border:rgba(234,88,12,0.2);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;overflow-x:hidden;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.7;overflow-x:hidden;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}
+  .nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}
+  .nav-back{font-size:13px;color:var(--text-2);text-decoration:none;transition:color 0.2s;}
+  .nav-back:hover{color:var(--text);}
+  .nav-label{font-size:13px;color:var(--text-3);}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;transition:all 0.2s;}
+  .theme-toggle:hover{background:var(--bg-3);color:var(--text);}
+  .progress-bar{position:fixed;top:60px;left:0;right:0;z-index:99;height:2px;background:var(--border);}
+  .progress-fill{height:100%;background:var(--accent);width:0%;transition:width 0.1s;}
+  .page-wrapper{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:100vh;padding-top:62px;overflow:hidden;}
+  .sidebar{position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto;border-right:1px solid var(--border);padding:32px 24px;background:var(--bg-2);}
+  .sidebar-course{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;}
+  .sidebar-course-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+  .sidebar-module{margin-bottom:4px;}
+  .sidebar-module-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:13px;color:var(--text-2);text-decoration:none;transition:all 0.2s;line-height:1.4;}
+  .sidebar-module-link:hover{background:var(--bg-3);color:var(--text);}
+  .sidebar-module-link.active{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-num{font-size:11px;font-weight:500;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--bg-4);color:var(--text-3);}
+  .sidebar-module-link.active .sidebar-num{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-divider{height:1px;background:var(--border);margin:20px 0;}
+  .sidebar-progress-label{font-size:12px;color:var(--text-3);margin-bottom:8px;display:flex;justify-content:space-between;}
+  .sidebar-progress-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sidebar-progress-fill{height:100%;width:40%;background:var(--accent);border-radius:2px;}
+  main{display:block;min-width:0;overflow:hidden;}
+  .content{max-width:760px;width:100%;padding:60px 64px 140px;margin:0 auto;}
+  .module-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+  .module-tag{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(6,95,70,0.2);padding:4px 12px;border-radius:100px;}
+  .module-meta{font-size:12px;color:var(--text-3);}
+  h1{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1.05;letter-spacing:-0.02em;color:var(--text);margin-bottom:24px;}
+  .intro-text{font-size:19px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+  h2{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:400;color:var(--text);margin:52px 0 18px;line-height:1.2;}
+  h3{font-size:16px;font-weight:500;color:var(--text);margin:32px 0 12px;}
+  p{font-size:16px;font-weight:300;color:var(--text-2);line-height:1.8;margin-bottom:20px;}
+  strong{font-weight:500;color:var(--text);}
+  em{font-style:italic;}
+  ul,ol{margin:0 0 20px 22px;color:var(--text-2);}
+  li{font-size:16px;font-weight:300;line-height:1.8;margin-bottom:8px;}
+  .callout{background:var(--callout-bg);border:1px solid var(--callout-border);border-radius:12px;padding:24px 28px;margin:32px 0;}
+  .callout-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+  .callout p{margin:0;font-size:15px;color:var(--text-2);}
+  .callout p+p{margin-top:12px;}
+  .good{background:var(--good-bg);border:1px solid var(--good-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .good-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#22c55e;margin-bottom:10px;}
+  .good p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn{background:var(--warn-bg);border:1px solid var(--warn-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .warn-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#fb923c;margin-bottom:10px;}
+  .warn p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn p+p{margin-top:12px;}
+  .analogy{background:var(--bg-2);border:1px solid var(--border);border-radius:12px;padding:28px;margin:28px 0;}
+  .analogy-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-3);margin-bottom:12px;}
+  .analogy p{margin:0;font-size:15px;color:var(--text-2);}
+  .principle-list{display:flex;flex-direction:column;gap:12px;margin:24px 0;}
+  .principle{background:var(--bg-2);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:0 12px 12px 0;padding:20px 24px;}
+  .principle-title{font-size:15px;font-weight:500;color:var(--text);margin-bottom:6px;}
+  .principle-desc{font-size:14px;color:var(--text-2);line-height:1.65;margin:0;}
+  .sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:var(--bg-2);border-top:1px solid var(--border-2);padding:14px 5%;display:flex;align-items:center;justify-content:space-between;gap:16px;backdrop-filter:blur(12px);}
+  .sticky-bar-track{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sticky-bar-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.2s;width:0%;}
+  .sticky-bar-label{font-size:12px;color:var(--text-3);white-space:nowrap;min-width:60px;text-align:right;}
+  .sticky-bar-btn{padding:10px 20px;border-radius:8px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;background:var(--accent);color:#fff;border:none;cursor:pointer;white-space:nowrap;transition:opacity 0.2s;display:none;}
+  .sticky-bar-btn:hover{opacity:0.88;}
+  .sticky-bar-reading{font-size:12px;color:var(--text-3);white-space:nowrap;}
+  @media(max-width:900px){.page-wrapper{grid-template-columns:1fr;}.sidebar{display:none;}.content{padding:40px 24px 120px;}h1{font-size:38px;}}
+  @media(max-width:600px){.content{padding:28px 16px 120px;}h1{font-size:30px;}h2{font-size:24px;}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="courses.html" class="nav-back">← Machine Learning Explained</a>
+    <div class="nav-divider"></div>
+    <span class="nav-label">Module 4</span>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">☀</span></button>
+</nav>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+
+<div class="page-wrapper">
+<aside class="sidebar">
+  <div class="sidebar-course">Expert Track</div>
+  <div class="sidebar-course-name">Machine Learning Explained</div>
+  <div class="sidebar-module"><a href="ml-module-1.html" class="sidebar-module-link"><span class="sidebar-num">1</span>How Machines Learn</a></div>
+  <div class="sidebar-module"><a href="ml-module-2.html" class="sidebar-module-link"><span class="sidebar-num">2</span>Data: The ML Foundation</a></div>
+  <div class="sidebar-module"><a href="ml-module-3.html" class="sidebar-module-link"><span class="sidebar-num">3</span>Supervised Learning Demystified</a></div>
+  <div class="sidebar-module"><a href="ml-module-4.html" class="sidebar-module-link active"><span class="sidebar-num">4</span>Unsupervised Learning</a></div>
+  <div class="sidebar-module"><a href="ml-module-5.html" class="sidebar-module-link"><span class="sidebar-num">5</span>Neural Networks and Deep Learning</a></div>
+  <div class="sidebar-module"><a href="ml-module-6.html" class="sidebar-module-link"><span class="sidebar-num">6</span>NLP and Transformers</a></div>
+  <div class="sidebar-module"><a href="ml-module-7.html" class="sidebar-module-link"><span class="sidebar-num">7</span>Computer Vision</a></div>
+  <div class="sidebar-module"><a href="ml-module-8.html" class="sidebar-module-link"><span class="sidebar-num">8</span>Model Evaluation</a></div>
+  <div class="sidebar-module"><a href="ml-module-9.html" class="sidebar-module-link"><span class="sidebar-num">9</span>ML in Production</a></div>
+  <div class="sidebar-module"><a href="ml-module-10.html" class="sidebar-module-link"><span class="sidebar-num">10</span>Foundation Models and the Frontier</a></div>
+  <div class="sidebar-module"><a href="quiz-ml.html" class="sidebar-module-link" style="color:var(--accent);margin-top:4px;"><span class="sidebar-num" style="background:var(--accent-dim);color:var(--accent);">✦</span>Final Assessment</a></div>
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-progress-label"><span>Course progress</span><span style="color:var(--accent);">4 / 10</span></div>
+  <div class="sidebar-progress-track"><div class="sidebar-progress-fill"></div></div>
+</aside>
+
+<main>
+<div class="content">
+  <div class="module-eyebrow"><span class="module-tag">Module 4 · Expert Track</span><span class="module-meta">20 min read · Machine Learning Explained</span></div>
+  <h1>Unsupervised Learning and Pattern Discovery</h1>
+
+  <p class="intro-text">Supervised learning is powerful precisely because it has correct answers to learn from. But most data in the world arrives without labels. Companies have terabytes of customer behavior data with no obvious "right answer" attached. Scientists have genomic sequences without pre-categorized meanings. Networks generate traffic logs that nobody has yet classified. Unsupervised learning is the set of techniques for finding structure in unlabeled data — and the structures it discovers can be genuinely surprising.</p>
+
+  <h2>What clustering reveals</h2>
+  <p>The most fundamental question unsupervised learning can answer is: are there natural groups in this data? Clustering algorithms find examples that are similar to each other and different from other groups — without being told in advance what the groups should look like or how many there are.</p>
+  <p>This is qualitatively different from supervised classification. A spam classifier is told: "some emails are spam, some are not; learn the difference." A clustering algorithm on the same emails might discover that there are seven distinct types of unsolicited email — lottery scams, phishing attempts, newsletters the user never reads, marketing from companies they've shopped at, promotions from unknown retailers, health supplement spam, and cryptocurrency pitches — without anyone defining those categories in advance. The categories emerge from the data's structure, not from human annotation.</p>
+  <p>In business, clustering is one of the most commonly deployed unsupervised techniques. Customer segmentation — dividing customers into groups with similar behavior patterns — uses clustering to identify natural groupings that a product or marketing team can then name and act on. Netflix uses clustering to identify viewer taste groups; even if you didn't tell Netflix you like "quirky independent dramas," clustering would identify that you and similar viewers watch the same subset of films, allowing the recommendation system to surface titles it knows your cluster enjoys.</p>
+
+  <h2>K-means: the archetypal clustering algorithm</h2>
+  <p>K-means is the most widely taught and widely deployed clustering algorithm. Its logic is elegantly simple, and understanding it illuminates the general principles of all clustering methods.</p>
+  <p>The algorithm begins by placing k cluster centers randomly in the feature space (k is a number you specify in advance — perhaps you want to find 5 customer segments, so k=5). Each data point is then assigned to the nearest cluster center. Next, each cluster center is moved to the mean position of all the points currently assigned to it. Points are reassigned to the nearest (new) centers. Centers are updated again. This process repeats until the assignments stop changing.</p>
+  <p>The result is k clusters, each characterized by its center point. The algorithm has found k groups such that points within each group are more similar to each other than to points in other groups, according to the distance metric in feature space.</p>
+  <p>K-means has important limitations. It requires you to specify k in advance — a significant limitation when you don't know how many groups exist. It finds spherical clusters and struggles when natural groups are elongated, nested, or non-convex. It's sensitive to outliers (a single anomalous point can pull a cluster center far from where it belongs). And it can converge to different results depending on the random initialization of cluster centers. Despite these limitations, k-means is fast, scalable to large datasets, and works remarkably well in many practical applications.</p>
+
+  <div class="callout">
+    <div class="callout-label">Choosing k: the elbow method</div>
+    <p>How do you decide how many clusters to use? One practical approach is the "elbow method": train k-means for multiple values of k (from 2 to 20, say) and plot the total within-cluster variance against k. As k increases, variance decreases — but returns diminish. The "elbow" in the curve, where additional clusters stop dramatically improving cohesion, suggests the natural number of groups in the data. This is heuristic rather than mathematically definitive, but it often corresponds well with human intuition about meaningful groupings.</p>
+  </div>
+
+  <h2>Dimensionality reduction: seeing the shape of data</h2>
+  <p>Real datasets are high-dimensional. A customer record might have 200 features. A gene expression profile might have 20,000 features. An image is a vector with as many dimensions as it has pixels. Working with data in hundreds or thousands of dimensions is computationally expensive, mathematically tricky, and cognitively impossible — you cannot visualize a 200-dimensional space.</p>
+  <p>Dimensionality reduction compresses high-dimensional data into a lower-dimensional representation that preserves the most important structure. It's like making a map: a map discards the third dimension (altitude) and the fine texture of terrain, but it preserves the relationships between cities — which are near each other, which are far apart — that you actually care about when navigating.</p>
+  <p><strong>Principal Component Analysis (PCA)</strong> is the classic dimensionality reduction technique. It finds the directions in the high-dimensional space along which the data varies most, and projects the data onto a small number of those directions. If you have 200 features but 2 principal components capture 95% of the variance in the data, you've reduced your dimensionality by 100x with minimal information loss.</p>
+  <p>PCA is particularly powerful for visualization. By projecting data onto two or three principal components, you can plot it and see its structure visually — clusters that were invisible in 200 dimensions become apparent as separated clouds of points on a 2D plot. This is how researchers first confirmed that word embedding vectors (which we'll encounter in Module 6) form meaningful semantic clusters: PCA reduction revealed that words with similar meanings cluster together in embedding space.</p>
+
+  <div class="analogy">
+    <div class="analogy-label">The shadow analogy for PCA</div>
+    <p>Imagine a 3D sculpture illuminated by a light from a specific angle. The shadow on the wall is a 2D projection of the 3D object. Most of the shape's important features — its silhouette, the relationships between its parts — are preserved in the shadow, even though one dimension has been eliminated. PCA finds the "angle of light" that preserves the most information in the resulting shadow. Choosing the right projection direction makes all the difference between a revealing shadow and an uninformative blob.</p>
+  </div>
+
+  <h2>Anomaly detection: finding what doesn't fit</h2>
+  <p>If clustering finds what's normal, anomaly detection finds what's abnormal. An anomaly detector learns the structure of "normal" data and then flags examples that don't fit that structure — they're too far from any cluster center, they have feature combinations that almost never occur together in normal examples, or they represent patterns that the model assigns very low probability.</p>
+  <p>The applications span virtually every industry. In cybersecurity, anomaly detection flags network traffic patterns that deviate from normal behavior — a server suddenly sending data to an unusual external IP at 3am. In manufacturing, sensors on production equipment generate streams of readings that an anomaly detector monitors for the signatures that precede equipment failure. In finance, transactions that are unusual for a specific account holder — a $50,000 wire transfer from someone who typically makes $200 purchases — trigger fraud alerts. In healthcare, patient vital signs that diverge from the expected trajectory for their condition prompt clinical review.</p>
+  <p>The key challenge in anomaly detection is defining "normal" precisely enough to catch real anomalies without generating an overwhelming flood of false alarms. If the anomaly threshold is set too sensitively, every minor deviation triggers an alert and operators learn to ignore them. If it's set too loosely, real anomalies are missed. Calibrating this threshold, and keeping it calibrated as "normal" evolves over time, is one of the core operational challenges of deployed anomaly detection systems.</p>
+
+  <h2>Recommendation systems: the most visible unsupervised application</h2>
+  <p>When you open Netflix, Amazon, or Spotify, the recommendations you see are largely generated by a family of techniques called collaborative filtering — one of the most commercially valuable applications of unsupervised pattern discovery.</p>
+  <p>The core insight is simple: if you and another user have historically liked the same things, you're likely to like each other's future choices too. A collaborative filtering system constructs a matrix where rows are users and columns are items (movies, products, songs), and cell values are ratings or engagement signals. It then finds users who are "similar" to you in this space and recommends things they've enjoyed that you haven't seen yet.</p>
+  <p>More sophisticated recommendation systems use matrix factorization: they decompose the user-item matrix into two lower-dimensional matrices — one representing users in terms of latent "taste dimensions," and one representing items in terms of those same dimensions. The latent dimensions don't have human labels (Netflix doesn't explicitly define a "gritty crime drama" dimension), but they emerge from the patterns in engagement data and correspond to meaningful taste groupings.</p>
+
+  <div class="good">
+    <div class="good-label">The business impact of recommendation</div>
+    <p>Amazon reports that approximately 35% of its revenue is attributable to recommendations. Netflix estimates that its recommendation system saves over $1 billion annually in content production and customer retention costs — by surfacing content viewers want, they reduce churn and the need to spend on blockbuster titles. Spotify's Discover Weekly playlist, generated entirely by collaborative filtering and unsupervised listening pattern analysis, has become one of the most listened-to playlists in the service's history. Unsupervised pattern discovery at scale is among the most financially significant ML applications.</p>
+  </div>
+
+  <h2>What unsupervised learning cannot do</h2>
+  <p>Unsupervised learning finds structure, but it doesn't tell you what that structure means. K-means on customer data will give you five clusters, but it won't tell you whether those clusters correspond to "high value loyal customers," "price-sensitive bargain hunters," and "at-risk churners" — or whether they correspond to something completely different that you hadn't anticipated. Naming, interpreting, and validating the discovered structure requires human judgment and domain expertise.</p>
+  <p>This is a fundamental limitation. The patterns unsupervised algorithms find are real patterns in the data, but whether they're the patterns you care about is not something the algorithm can determine. An unsupervised algorithm analyzing product purchase data might cluster customers in a way that turns out to reflect their geographic region rather than their shopping behavior — a real pattern, but not the commercially useful one you wanted.</p>
+
+  <div class="warn">
+    <div class="warn-label">The interpretation problem</div>
+    <p>Unsupervised methods are exploratory tools, not definitive answers. The clusters or components they identify are hypotheses about structure, not verified facts about meaning. Every application of unsupervised learning should include a human validation step: do subject matter experts recognize these groupings as meaningful? Do the clusters predict outcomes that matter? Does the dimensionality reduction preserve the features that domain knowledge says are important? Treating unsupervised outputs as ground truth without this validation is a common and consequential mistake.</p>
+  </div>
+
+  <h2>Topic modeling: finding themes in text</h2>
+  <p>One particularly powerful application of unsupervised learning is topic modeling — discovering the latent themes that appear across a large collection of documents. Latent Dirichlet Allocation (LDA) is the most widely used topic modeling algorithm. Given a corpus of documents, it simultaneously learns: what topics are present in the corpus, and what mix of topics each document contains.</p>
+  <p>If you fed LDA 50,000 news articles, it might discover topics that correspond roughly to politics, sports, technology, finance, and entertainment — not because you told it to look for those categories, but because those are the natural clusters of vocabulary that appear together. Each article gets a probability distribution over topics: 80% technology, 15% business, 5% society. This is powerful for organizing large document collections, understanding what's being discussed, and finding articles relevant to a specific theme.</p>
+  <p>Research institutions use topic modeling to analyze the themes in decades of scientific literature, identifying emerging research fronts before they're widely recognized. Businesses use it to analyze customer feedback at scale, discovering complaint categories that no one anticipated. Intelligence analysts use it to find thematic clusters across large document collections. The common thread is discovering structure in text that a human couldn't manually identify at scale.</p>
+
+</div>
+</main>
+</div>
+
+<div class="sticky-bar" id="sticky-bar">
+  <div class="sticky-bar-reading" id="sticky-reading">Read to the end to unlock the next module</div>
+  <div class="sticky-bar-track"><div class="sticky-bar-fill" id="sticky-fill"></div></div>
+  <div class="sticky-bar-label" id="sticky-label">0%</div>
+  <button class="sticky-bar-btn" id="sticky-btn" onclick="completeAndNext()">Module 5: Neural Networks and Deep Learning →</button>
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import { getFirestore, doc, setDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  const app=initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+  const auth=getAuth(app);const db=getFirestore(app);
+  let currentUser=null;
+  onAuthStateChanged(auth,u=>{currentUser=u;});
+  window.toggleTheme=function(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='☾'):(h.setAttribute('data-theme','dark'),i.textContent='☀');};
+  window.addEventListener('scroll',()=>{const d=document.documentElement,s=d.scrollTop||document.body.scrollTop,t=d.scrollHeight-d.clientHeight;document.getElementById('progress').style.width=(s/t*100)+'%';});
+  let unlocked=false;
+  function updateScrollProgress(){
+    const pct=Math.min(100,Math.round(((window.scrollY+window.innerHeight)/document.documentElement.scrollHeight)*100));
+    const fill=document.getElementById('sticky-fill'),label=document.getElementById('sticky-label'),btn=document.getElementById('sticky-btn'),reading=document.getElementById('sticky-reading');
+    if(fill)fill.style.width=pct+'%';if(label)label.textContent=pct+'%';
+    if(pct>=95&&!unlocked){unlocked=true;if(btn)btn.style.display='block';if(reading)reading.style.display='none';if(fill)fill.style.background='#22c55e';if(label)label.style.color='#22c55e';}
+  }
+  window.addEventListener('scroll',updateScrollProgress);updateScrollProgress();
+  window.completeAndNext=async function(){
+    if(currentUser){try{await setDoc(doc(db,'users',currentUser.uid),{mlModules:arrayUnion('m4')},{merge:true});}catch(e){}}
+    window.location.href='ml-module-5.html';
+  };
+</script>
+</body>
+</html>

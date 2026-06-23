@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 1: How Machines Learn — Machine Learning Explained — Meridian Institute of AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#065F46;--accent-dim:rgba(6,95,70,0.1);--accent-dim2:rgba(6,95,70,0.05);--nav-bg:rgba(8,8,8,0.9);--callout-bg:rgba(6,95,70,0.07);--callout-border:rgba(6,95,70,0.25);--good-bg:rgba(34,197,94,0.07);--good-border:rgba(34,197,94,0.2);--warn-bg:rgba(251,146,60,0.07);--warn-border:rgba(251,146,60,0.2);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#064E3B;--accent-dim:rgba(6,78,59,0.08);--accent-dim2:rgba(6,78,59,0.04);--nav-bg:rgba(250,250,248,0.9);--callout-bg:rgba(6,78,59,0.05);--callout-border:rgba(6,78,59,0.2);--good-bg:rgba(22,163,74,0.06);--good-border:rgba(22,163,74,0.2);--warn-bg:rgba(234,88,12,0.05);--warn-border:rgba(234,88,12,0.2);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;overflow-x:hidden;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.7;overflow-x:hidden;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}
+  .nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}
+  .nav-back{font-size:13px;color:var(--text-2);text-decoration:none;transition:color 0.2s;}
+  .nav-back:hover{color:var(--text);}
+  .nav-label{font-size:13px;color:var(--text-3);}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;transition:all 0.2s;}
+  .theme-toggle:hover{background:var(--bg-3);color:var(--text);}
+  .progress-bar{position:fixed;top:60px;left:0;right:0;z-index:99;height:2px;background:var(--border);}
+  .progress-fill{height:100%;background:var(--accent);width:0%;transition:width 0.1s;}
+  .page-wrapper{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:100vh;padding-top:62px;overflow:hidden;}
+  .sidebar{position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto;border-right:1px solid var(--border);padding:32px 24px;background:var(--bg-2);}
+  .sidebar-course{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;}
+  .sidebar-course-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+  .sidebar-module{margin-bottom:4px;}
+  .sidebar-module-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:13px;color:var(--text-2);text-decoration:none;transition:all 0.2s;line-height:1.4;}
+  .sidebar-module-link:hover{background:var(--bg-3);color:var(--text);}
+  .sidebar-module-link.active{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-num{font-size:11px;font-weight:500;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--bg-4);color:var(--text-3);}
+  .sidebar-module-link.active .sidebar-num{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-divider{height:1px;background:var(--border);margin:20px 0;}
+  .sidebar-progress-label{font-size:12px;color:var(--text-3);margin-bottom:8px;display:flex;justify-content:space-between;}
+  .sidebar-progress-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sidebar-progress-fill{height:100%;width:10%;background:var(--accent);border-radius:2px;}
+  main{display:block;min-width:0;overflow:hidden;}
+  .content{max-width:760px;width:100%;padding:60px 64px 140px;margin:0 auto;}
+  .module-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+  .module-tag{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(6,95,70,0.2);padding:4px 12px;border-radius:100px;}
+  .module-meta{font-size:12px;color:var(--text-3);}
+  h1{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1.05;letter-spacing:-0.02em;color:var(--text);margin-bottom:24px;}
+  .intro-text{font-size:19px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+  h2{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:400;color:var(--text);margin:52px 0 18px;line-height:1.2;}
+  h3{font-size:16px;font-weight:500;color:var(--text);margin:32px 0 12px;}
+  p{font-size:16px;font-weight:300;color:var(--text-2);line-height:1.8;margin-bottom:20px;}
+  strong{font-weight:500;color:var(--text);}
+  em{font-style:italic;}
+  ul,ol{margin:0 0 20px 22px;color:var(--text-2);}
+  li{font-size:16px;font-weight:300;line-height:1.8;margin-bottom:8px;}
+  .callout{background:var(--callout-bg);border:1px solid var(--callout-border);border-radius:12px;padding:24px 28px;margin:32px 0;}
+  .callout-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+  .callout p{margin:0;font-size:15px;color:var(--text-2);}
+  .callout p+p{margin-top:12px;}
+  .good{background:var(--good-bg);border:1px solid var(--good-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .good-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#22c55e;margin-bottom:10px;}
+  .good p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn{background:var(--warn-bg);border:1px solid var(--warn-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .warn-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#fb923c;margin-bottom:10px;}
+  .warn p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn p+p{margin-top:12px;}
+  .analogy{background:var(--bg-2);border:1px solid var(--border);border-radius:12px;padding:28px;margin:28px 0;}
+  .analogy-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-3);margin-bottom:12px;}
+  .analogy p{margin:0;font-size:15px;color:var(--text-2);}
+  .principle-list{display:flex;flex-direction:column;gap:12px;margin:24px 0;}
+  .principle{background:var(--bg-2);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:0 12px 12px 0;padding:20px 24px;}
+  .principle-title{font-size:15px;font-weight:500;color:var(--text);margin-bottom:6px;}
+  .principle-desc{font-size:14px;color:var(--text-2);line-height:1.65;margin:0;}
+  .sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:var(--bg-2);border-top:1px solid var(--border-2);padding:14px 5%;display:flex;align-items:center;justify-content:space-between;gap:16px;backdrop-filter:blur(12px);}
+  .sticky-bar-track{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sticky-bar-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.2s;width:0%;}
+  .sticky-bar-label{font-size:12px;color:var(--text-3);white-space:nowrap;min-width:60px;text-align:right;}
+  .sticky-bar-btn{padding:10px 20px;border-radius:8px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;background:var(--accent);color:#fff;border:none;cursor:pointer;white-space:nowrap;transition:opacity 0.2s;display:none;}
+  .sticky-bar-btn:hover{opacity:0.88;}
+  .sticky-bar-reading{font-size:12px;color:var(--text-3);white-space:nowrap;}
+  @media(max-width:900px){.page-wrapper{grid-template-columns:1fr;}.sidebar{display:none;}.content{padding:40px 24px 120px;}h1{font-size:38px;}}
+  @media(max-width:600px){.content{padding:28px 16px 120px;}h1{font-size:30px;}h2{font-size:24px;}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="courses.html" class="nav-back">← Machine Learning Explained</a>
+    <div class="nav-divider"></div>
+    <span class="nav-label">Module 1</span>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">☀</span></button>
+</nav>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+
+<div class="page-wrapper">
+<aside class="sidebar">
+  <div class="sidebar-course">Expert Track</div>
+  <div class="sidebar-course-name">Machine Learning Explained</div>
+  <div class="sidebar-module"><a href="ml-module-1.html" class="sidebar-module-link active"><span class="sidebar-num">1</span>How Machines Learn</a></div>
+  <div class="sidebar-module"><a href="ml-module-2.html" class="sidebar-module-link"><span class="sidebar-num">2</span>Data: The ML Foundation</a></div>
+  <div class="sidebar-module"><a href="ml-module-3.html" class="sidebar-module-link"><span class="sidebar-num">3</span>Supervised Learning Demystified</a></div>
+  <div class="sidebar-module"><a href="ml-module-4.html" class="sidebar-module-link"><span class="sidebar-num">4</span>Unsupervised Learning</a></div>
+  <div class="sidebar-module"><a href="ml-module-5.html" class="sidebar-module-link"><span class="sidebar-num">5</span>Neural Networks and Deep Learning</a></div>
+  <div class="sidebar-module"><a href="ml-module-6.html" class="sidebar-module-link"><span class="sidebar-num">6</span>NLP and Transformers</a></div>
+  <div class="sidebar-module"><a href="ml-module-7.html" class="sidebar-module-link"><span class="sidebar-num">7</span>Computer Vision</a></div>
+  <div class="sidebar-module"><a href="ml-module-8.html" class="sidebar-module-link"><span class="sidebar-num">8</span>Model Evaluation</a></div>
+  <div class="sidebar-module"><a href="ml-module-9.html" class="sidebar-module-link"><span class="sidebar-num">9</span>ML in Production</a></div>
+  <div class="sidebar-module"><a href="ml-module-10.html" class="sidebar-module-link"><span class="sidebar-num">10</span>Foundation Models and the Frontier</a></div>
+  <div class="sidebar-module"><a href="quiz-ml.html" class="sidebar-module-link" style="color:var(--accent);margin-top:4px;"><span class="sidebar-num" style="background:var(--accent-dim);color:var(--accent);">✦</span>Final Assessment</a></div>
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-progress-label"><span>Course progress</span><span style="color:var(--accent);">1 / 10</span></div>
+  <div class="sidebar-progress-track"><div class="sidebar-progress-fill"></div></div>
+</aside>
+
+<main>
+<div class="content">
+  <div class="module-eyebrow"><span class="module-tag">Module 1 · Expert Track</span><span class="module-meta">20 min read · Machine Learning Explained</span></div>
+  <h1>How Machines Learn: The Core Intuition</h1>
+
+  <p class="intro-text">Machine learning is one of the most consequential technologies ever created, yet its core idea is surprisingly accessible. At its heart, ML is about finding patterns in data and using those patterns to make decisions about new situations. Understanding why this is so powerful — and where it fundamentally breaks down — is the foundation for everything else in this course.</p>
+
+  <h2>The old way: programming explicit rules</h2>
+  <p>Before machine learning, software worked through explicit instruction. A programmer would sit down and painstakingly encode every rule the program needed to follow. Want to build a spam filter? You'd write rules: if the email contains "Nigerian prince," mark it spam. If it contains "Viagra," mark it spam. If it comes from a domain registered yesterday, mark it suspicious. You'd spend months building a rule library, and it would work — until spammers adapted their wording by a single word and your filter became useless overnight.</p>
+  <p>This is the fundamental limitation of rule-based systems: the programmer must anticipate every case in advance. The world is endlessly complex. Human faces come in billions of variations. Spoken words have accents, pacing, and background noise. Medical images have subtle texture differences that signal disease. Writing explicit rules for all of this is not just hard — in many domains, it is literally impossible. Expert radiologists cannot fully articulate the rules they use to spot a tumor; they just see it, after years of training their visual system on thousands of examples.</p>
+
+  <div class="analogy">
+    <div class="analogy-label">The key contrast</div>
+    <p>Traditional programming: you give the computer Rules + Data → it produces Answers.<br><br>Machine learning: you give the computer Data + Answers → it figures out the Rules itself. Those learned rules can then be applied to new data the system has never seen.</p>
+  </div>
+
+  <h2>The core intuition: learning from examples</h2>
+  <p>Machine learning flips the paradigm. Instead of writing rules, you collect thousands — or millions — of examples. Each example pairs an input with a known output. Show the system 100,000 emails labeled "spam" or "not spam" and it will find the statistical regularities that distinguish them. The patterns it discovers may not correspond to any rule a human would articulate; they emerge from the geometry of the data itself.</p>
+  <p>Think about how a child learns to recognize dogs. You don't hand them a taxonomy of breeds with anatomical specifications. You point at a golden retriever and say "dog," then a poodle ("dog"), then a Great Dane ("dog"), then a cat ("not a dog"). After enough examples, something clicks. The child has extracted a concept from examples, and they can apply it to a dog they've never seen before — even a cartoon drawing of one.</p>
+  <p>This is exactly what machine learning systems do, except the "concept" being learned isn't stored as words in a brain. It's encoded as numbers — millions of parameter values that together form a mathematical function capable of taking new inputs and producing the right outputs. The learning process is a search through the space of all possible such functions to find the one that best explains the training examples.</p>
+
+  <h2>The three learning paradigms</h2>
+  <p>Machine learning is not one thing — it's a family of techniques organized around three fundamentally different relationships between data and labels.</p>
+
+  <div class="principle-list">
+    <div class="principle">
+      <div class="principle-title">Supervised learning: learning with a teacher</div>
+      <div class="principle-desc">Every training example has both an input and a known correct output (called a label). The system learns to map inputs to outputs by minimizing its mistakes on the labeled examples. This is the workhorse of modern ML — it powers spam filters, fraud detection, medical diagnosis, and most of what you encounter day-to-day. The catch: labeled data is expensive. Someone has to provide those correct answers for thousands or millions of examples.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Unsupervised learning: finding hidden structure</div>
+      <div class="principle-desc">The data has no labels at all. The algorithm's job is to find interesting structure in the raw inputs — clusters of similar examples, compressed representations, anomalies that don't fit any group. This is useful when you have lots of data but don't know what to look for, or when labeling is impractical. Customer segmentation, anomaly detection, and topic modeling are classic unsupervised problems.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Reinforcement learning: learning through interaction</div>
+      <div class="principle-desc">The system learns by taking actions in an environment and receiving rewards or penalties. It doesn't receive correct answers — only feedback on how well it's doing over time. This mirrors how animals (including humans) learn many skills. AlphaGo, autonomous vehicles, and game-playing AI all rely on reinforcement learning. It's powerful but notoriously hard to apply reliably outside controlled environments.</div>
+    </div>
+  </div>
+
+  <h2>Why ML works: the magic of generalization</h2>
+  <p>If a model simply memorized every training example, it would be useless — it couldn't handle any input it hadn't seen before. The remarkable thing about well-trained ML models is that they <strong>generalize</strong>: they discover patterns in the training data that transfer to new examples drawn from the same distribution.</p>
+  <p>This works because the real world has structure. Emails from the same spammer have recurring vocabulary patterns. Dog faces share proportional relationships between ear position and snout length. Fraudulent transactions cluster in feature space near other fraudulent transactions. The patterns in training data are real patterns about the world, not just artifacts of that particular dataset — and so they hold up when applied to new, unseen examples.</p>
+  <p>The statistical guarantee underlying all of this is remarkably deep: if your training data is a large enough random sample from the distribution you care about, a model that performs well on training data will perform approximately as well on new data from the same distribution. This isn't magic — it's the law of large numbers applied to the space of inputs and outputs.</p>
+
+  <div class="callout">
+    <div class="callout-label">The central condition</div>
+    <p>ML generalizes when the training distribution matches the deployment distribution. When you deploy a fraud detector trained on 2020 transaction data and fraud patterns shift in 2023, performance degrades. When you train a medical model on data from one hospital and deploy it at another with different patient demographics, it may underperform. Distribution shift is the most common cause of real-world ML failures.</p>
+  </div>
+
+  <h2>When ML works and when it doesn't</h2>
+  <p>Machine learning is not a universal tool. Understanding where it thrives — and where it fails — is the most practically valuable thing you can take from this module.</p>
+  <p>ML tends to excel when: the problem has a clear input-output mapping but the rules are too complex or numerous to articulate; you have large quantities of labeled examples; you can tolerate probabilistic rather than guaranteed-correct outputs; and the world you're modeling is relatively stable over time.</p>
+  <p>ML tends to struggle when: you have very little data; you need the system to explain its reasoning in human-understandable terms; the cost of any single mistake is catastrophic; the deployment environment is very different from the training environment; or the task requires reasoning that goes beyond recognizing patterns in data — like planning several steps into the future or understanding causality rather than correlation.</p>
+
+  <div class="warn">
+    <div class="warn-label">Correlation is not causation</div>
+    <p>ML models are exceptional pattern-matchers but they do not understand causes. A model trained on hospital admissions might learn that patients with more medical equipment around them have higher mortality — because sicker patients get more equipment. If you used that model to decide that removing equipment would save lives, you'd be making a causal inference from a correlational pattern, with lethal results. ML never tells you why a pattern exists; it only tells you the pattern is there.</p>
+  </div>
+
+  <h2>The ML pipeline: what actually happens</h2>
+  <p>Building an ML system involves far more than training a model. The pipeline that transforms raw data into a deployed, useful system has many stages, and the model training step is often not even the hardest one.</p>
+
+  <div class="principle-list">
+    <div class="principle">
+      <div class="principle-title">Problem definition</div>
+      <div class="principle-desc">What are you predicting? What counts as success? What data do you have, and what data would you need? These seemingly simple questions consume enormous effort in practice. Many ML projects fail not because the algorithm is wrong but because the problem was poorly defined from the start.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Data collection and labeling</div>
+      <div class="principle-desc">Gathering training examples, often with correct labels provided by human annotators. This is frequently the most expensive and time-consuming step. The quality of your data entirely determines the ceiling of what your model can learn.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Feature engineering and preprocessing</div>
+      <div class="principle-desc">Transforming raw inputs into a form that ML algorithms can process. Images become pixel arrays. Text becomes token sequences or embedding vectors. Tabular data gets normalized, missing values get imputed. The choices made here profoundly affect model performance.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Model selection and training</div>
+      <div class="principle-desc">Choosing an algorithm family, setting hyperparameters, and running the optimization process that adjusts model parameters to minimize errors on training data. Modern deep learning makes this step more automated but not trivial.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Evaluation and iteration</div>
+      <div class="principle-desc">Measuring model performance on held-out data it hasn't seen during training. If performance is insufficient, you return to earlier steps — more data, better features, a different architecture. Good ML practice is highly iterative.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Deployment and monitoring</div>
+      <div class="principle-desc">Serving the model to real users and watching carefully for degradation over time. The world changes, data distributions shift, and models that worked well initially may silently fail months later. Continuous monitoring is essential.</div>
+    </div>
+  </div>
+
+  <h2>Setting expectations correctly</h2>
+  <p>Machine learning has generated enormous hype, which has produced unrealistic expectations in organizations deploying it. It helps to be precise about what ML systems actually are: they are sophisticated interpolation machines. They can make extraordinarily accurate predictions about cases that are similar to cases they've seen before. They cannot think, reason, or generalize to truly novel situations the way humans can.</p>
+  <p>This is not a small limitation — it's fundamental. A chess engine trained on millions of grandmaster games can defeat any human player, but it cannot play checkers. A language model trained on the entire internet cannot tell you what will happen tomorrow — it can only predict what text pattern comes next given its training distribution.</p>
+  <p>The organizations that extract the most value from ML are those that apply it precisely where it fits: well-defined prediction problems with abundant historical data and stable environments. The organizations that waste enormous resources on ML are typically those that treat it as a magic solution to any problem involving data, without asking whether the core conditions for success are actually met.</p>
+
+  <div class="good">
+    <div class="good-label">The honest promise</div>
+    <p>Within its appropriate domain, machine learning is genuinely revolutionary. It allows us to build systems that perform tasks — recognize faces, translate languages, detect tumors, route traffic, recommend content — that would have been considered impossible without a human expert just twenty years ago. The key is knowing what that domain is and designing ML applications that stay firmly within it.</p>
+  </div>
+
+  <h2>The data dependency that changes everything</h2>
+  <p>Perhaps the single most important thing to understand about ML is its complete dependence on data. A brilliant algorithm trained on bad data produces bad predictions. A mediocre algorithm trained on excellent, comprehensive data can outperform a brilliant algorithm trained on limited data. This is why "data is the new oil" became such a popular phrase — it captures a real dynamic. Organizations with access to rich, diverse, high-quality data have a structural advantage in ML that is very difficult to overcome with algorithmic cleverness alone.</p>
+  <p>This data dependency has profound implications for society. It means early-mover advantage in data collection compounds over time. It means organizations with access to many users — large platforms — have inherent ML advantages over smaller competitors. It means that what gets predicted well depends on what has been measured historically, which introduces historical biases into algorithmic decisions. Understanding this data dependency is not just technically important; it is politically and ethically important for anyone thinking seriously about where ML is taking society.</p>
+
+  <div class="callout">
+    <div class="callout-label">The path ahead</div>
+    <p>The remaining modules will take each of these ideas much deeper. Module 2 is devoted entirely to data — the practical realities of building, cleaning, and preparing datasets. Modules 3 through 5 cover the three main families of ML algorithms in depth. Modules 6 and 7 apply these ideas to language and vision specifically. Modules 8 through 10 address evaluation, deployment, and the emerging frontier of foundation models. The intuitions you've built here will serve as the scaffold for everything that follows.</p>
+  </div>
+
+</div>
+</main>
+</div>
+
+<div class="sticky-bar" id="sticky-bar">
+  <div class="sticky-bar-reading" id="sticky-reading">Read to the end to unlock the next module</div>
+  <div class="sticky-bar-track"><div class="sticky-bar-fill" id="sticky-fill"></div></div>
+  <div class="sticky-bar-label" id="sticky-label">0%</div>
+  <button class="sticky-bar-btn" id="sticky-btn" onclick="completeAndNext()">Module 2: Data: The ML Foundation →</button>
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import { getFirestore, doc, setDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  const app=initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+  const auth=getAuth(app);const db=getFirestore(app);
+  let currentUser=null;
+  onAuthStateChanged(auth,u=>{currentUser=u;});
+  window.toggleTheme=function(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='☾'):(h.setAttribute('data-theme','dark'),i.textContent='☀');};
+  window.addEventListener('scroll',()=>{const d=document.documentElement,s=d.scrollTop||document.body.scrollTop,t=d.scrollHeight-d.clientHeight;document.getElementById('progress').style.width=(s/t*100)+'%';});
+  let unlocked=false;
+  function updateScrollProgress(){
+    const pct=Math.min(100,Math.round(((window.scrollY+window.innerHeight)/document.documentElement.scrollHeight)*100));
+    const fill=document.getElementById('sticky-fill'),label=document.getElementById('sticky-label'),btn=document.getElementById('sticky-btn'),reading=document.getElementById('sticky-reading');
+    if(fill)fill.style.width=pct+'%';if(label)label.textContent=pct+'%';
+    if(pct>=95&&!unlocked){unlocked=true;if(btn)btn.style.display='block';if(reading)reading.style.display='none';if(fill)fill.style.background='#22c55e';if(label)label.style.color='#22c55e';}
+  }
+  window.addEventListener('scroll',updateScrollProgress);updateScrollProgress();
+  window.completeAndNext=async function(){
+    if(currentUser){try{await setDoc(doc(db,'users',currentUser.uid),{mlModules:arrayUnion('m1')},{merge:true});}catch(e){}}
+    window.location.href='ml-module-2.html';
+  };
+</script>
+</body>
+</html>

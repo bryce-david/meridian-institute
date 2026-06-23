@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 2: Making Your First API Call — Building with AI APIs — Meridian Institute of AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#0F4C81;--accent-dim:rgba(15,76,129,0.1);--accent-dim2:rgba(15,76,129,0.05);--nav-bg:rgba(8,8,8,0.9);--callout-bg:rgba(15,76,129,0.07);--callout-border:rgba(15,76,129,0.25);--good-bg:rgba(34,197,94,0.07);--good-border:rgba(34,197,94,0.2);--warn-bg:rgba(251,146,60,0.07);--warn-border:rgba(251,146,60,0.2);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#1E40AF;--accent-dim:rgba(30,64,175,0.08);--accent-dim2:rgba(30,64,175,0.04);--nav-bg:rgba(250,250,248,0.9);--callout-bg:rgba(30,64,175,0.05);--callout-border:rgba(30,64,175,0.2);--good-bg:rgba(22,163,74,0.06);--good-border:rgba(22,163,74,0.2);--warn-bg:rgba(234,88,12,0.05);--warn-border:rgba(234,88,12,0.2);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;overflow-x:hidden;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.7;overflow-x:hidden;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}
+  .nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}
+  .nav-back{font-size:13px;color:var(--text-2);text-decoration:none;transition:color 0.2s;}
+  .nav-back:hover{color:var(--text);}
+  .nav-label{font-size:13px;color:var(--text-3);}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;transition:all 0.2s;}
+  .theme-toggle:hover{background:var(--bg-3);color:var(--text);}
+  .progress-bar{position:fixed;top:60px;left:0;right:0;z-index:99;height:2px;background:var(--border);}
+  .progress-fill{height:100%;background:var(--accent);width:0%;transition:width 0.1s;}
+  .page-wrapper{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:100vh;padding-top:62px;overflow:hidden;}
+  .sidebar{position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto;border-right:1px solid var(--border);padding:32px 24px;background:var(--bg-2);}
+  .sidebar-course{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;}
+  .sidebar-course-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+  .sidebar-module{margin-bottom:4px;}
+  .sidebar-module-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:13px;color:var(--text-2);text-decoration:none;transition:all 0.2s;line-height:1.4;}
+  .sidebar-module-link:hover{background:var(--bg-3);color:var(--text);}
+  .sidebar-module-link.active{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-num{font-size:11px;font-weight:500;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--bg-4);color:var(--text-3);}
+  .sidebar-module-link.active .sidebar-num{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-divider{height:1px;background:var(--border);margin:20px 0;}
+  .sidebar-progress-label{font-size:12px;color:var(--text-3);margin-bottom:8px;display:flex;justify-content:space-between;}
+  .sidebar-progress-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sidebar-progress-fill{height:100%;width:20%;background:var(--accent);border-radius:2px;}
+  main{display:block;min-width:0;overflow:hidden;}
+  .content{max-width:760px;width:100%;padding:60px 64px 140px;margin:0 auto;}
+  .module-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+  .module-tag{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(15,76,129,0.2);padding:4px 12px;border-radius:100px;}
+  .module-meta{font-size:12px;color:var(--text-3);}
+  h1{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1.05;letter-spacing:-0.02em;color:var(--text);margin-bottom:24px;}
+  .intro-text{font-size:19px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+  h2{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:400;color:var(--text);margin:52px 0 18px;line-height:1.2;}
+  h3{font-size:16px;font-weight:500;color:var(--text);margin:32px 0 12px;}
+  p{font-size:16px;font-weight:300;color:var(--text-2);line-height:1.8;margin-bottom:20px;}
+  strong{font-weight:500;color:var(--text);}
+  em{font-style:italic;}
+  ul,ol{margin:0 0 20px 22px;color:var(--text-2);}
+  li{font-size:16px;font-weight:300;line-height:1.8;margin-bottom:8px;}
+  .callout{background:var(--callout-bg);border:1px solid var(--callout-border);border-radius:12px;padding:24px 28px;margin:32px 0;}
+  .callout-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+  .callout p{margin:0;font-size:15px;color:var(--text-2);}
+  .callout p+p{margin-top:12px;}
+  .good{background:var(--good-bg);border:1px solid var(--good-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .good-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#22c55e;margin-bottom:10px;}
+  .good p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn{background:var(--warn-bg);border:1px solid var(--warn-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .warn-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#fb923c;margin-bottom:10px;}
+  .warn p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn p+p{margin-top:12px;}
+  .principle-list{display:flex;flex-direction:column;gap:12px;margin:24px 0;}
+  .principle{background:var(--bg-2);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:0 12px 12px 0;padding:20px 24px;}
+  .principle-title{font-size:15px;font-weight:500;color:var(--text);margin-bottom:6px;}
+  .principle-desc{font-size:14px;color:var(--text-2);line-height:1.65;margin:0;}
+  .code-block{background:#0d1117;border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:20px 24px;margin:24px 0;font-family:monospace;font-size:13px;color:#e6edf3;overflow-x:auto;line-height:1.7;white-space:pre;}
+  .sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:var(--bg-2);border-top:1px solid var(--border-2);padding:14px 5%;display:flex;align-items:center;justify-content:space-between;gap:16px;backdrop-filter:blur(12px);}
+  .sticky-bar-track{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sticky-bar-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.2s;width:0%;}
+  .sticky-bar-label{font-size:12px;color:var(--text-3);white-space:nowrap;min-width:60px;text-align:right;}
+  .sticky-bar-btn{padding:10px 20px;border-radius:8px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;background:var(--accent);color:#fff;border:none;cursor:pointer;white-space:nowrap;transition:opacity 0.2s;display:none;}
+  .sticky-bar-btn:hover{opacity:0.88;}
+  .sticky-bar-reading{font-size:12px;color:var(--text-3);white-space:nowrap;}
+  @media(max-width:900px){.page-wrapper{grid-template-columns:1fr;}.sidebar{display:none;}.content{padding:40px 24px 120px;}h1{font-size:38px;}}
+  @media(max-width:600px){.content{padding:28px 16px 120px;}h1{font-size:30px;}h2{font-size:24px;}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="courses.html" class="nav-back">← Building with AI APIs</a>
+    <div class="nav-divider"></div>
+    <span class="nav-label">Module 2</span>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">☀</span></button>
+</nav>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+
+<div class="page-wrapper">
+<aside class="sidebar">
+  <div class="sidebar-course">Expert Track</div>
+  <div class="sidebar-course-name">Building with AI APIs</div>
+  <div class="sidebar-module"><a href="apis-module-1.html" class="sidebar-module-link"><span class="sidebar-num">1</span>API Fundamentals</a></div>
+  <div class="sidebar-module"><a href="apis-module-2.html" class="sidebar-module-link active"><span class="sidebar-num">2</span>Your First API Call</a></div>
+  <div class="sidebar-module"><a href="apis-module-3.html" class="sidebar-module-link"><span class="sidebar-num">3</span>Chat Completions in Depth</a></div>
+  <div class="sidebar-module"><a href="apis-module-4.html" class="sidebar-module-link"><span class="sidebar-num">4</span>Tokens and Cost Optimization</a></div>
+  <div class="sidebar-module"><a href="apis-module-5.html" class="sidebar-module-link"><span class="sidebar-num">5</span>Structured Outputs</a></div>
+  <div class="sidebar-module"><a href="apis-module-6.html" class="sidebar-module-link"><span class="sidebar-num">6</span>Streaming Responses</a></div>
+  <div class="sidebar-module"><a href="apis-module-7.html" class="sidebar-module-link"><span class="sidebar-num">7</span>Embeddings and Semantic Search</a></div>
+  <div class="sidebar-module"><a href="apis-module-8.html" class="sidebar-module-link"><span class="sidebar-num">8</span>Function Calling and Tool Use</a></div>
+  <div class="sidebar-module"><a href="apis-module-9.html" class="sidebar-module-link"><span class="sidebar-num">9</span>Production-Ready AI Apps</a></div>
+  <div class="sidebar-module"><a href="apis-module-10.html" class="sidebar-module-link"><span class="sidebar-num">10</span>Multi-Provider Strategies</a></div>
+  <div class="sidebar-module"><a href="quiz-apis.html" class="sidebar-module-link" style="color:var(--accent);margin-top:4px;"><span class="sidebar-num" style="background:var(--accent-dim);color:var(--accent);">✦</span>Final Assessment</a></div>
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-progress-label"><span>Course progress</span><span style="color:var(--accent);">2 / 10</span></div>
+  <div class="sidebar-progress-track"><div class="sidebar-progress-fill"></div></div>
+</aside>
+
+<main>
+<div class="content">
+  <div class="module-eyebrow"><span class="module-tag">Module 2</span><span class="module-meta">25 min read · Building with AI APIs</span></div>
+  <h1>Making Your First API Call</h1>
+
+  <p class="intro-text">Theory only takes you so far. This module is about getting your hands on a working AI API integration — real code that runs, sends a request to an AI model, and gives you a response you can use. By the end you will have a pattern you can adapt for nearly any AI integration, and you will understand every line of it well enough to debug and extend it.</p>
+
+  <h2>Setting up your Python environment</h2>
+  <p>Python is the dominant language for AI API work. The <code>openai</code> SDK wraps the raw HTTP calls so you write clean Python instead of constructing request dictionaries manually. Understanding the underlying HTTP is valuable when things go wrong or when you are working with a provider that does not have an SDK, but for day-to-day work the SDK is the right tool.</p>
+
+  <h3>Virtual environments</h3>
+  <p>Always work in a virtual environment to isolate dependencies per project. This prevents version conflicts between projects and makes your requirements file reliable. Use Python 3.9 or higher.</p>
+
+  <div class="code-block">mkdir my-ai-project
+cd my-ai-project
+python3 -m venv venv
+
+# Activate on macOS/Linux
+source venv/bin/activate
+
+# Activate on Windows
+venv\Scripts\activate
+
+# Install the SDK and dotenv for environment variable management
+pip install openai python-dotenv</div>
+
+  <h2>API key security: environment variables</h2>
+  <p>Your API key is a secret credential that grants billing authority over your account. The rule is simple: never hardcode it in source files, never commit it to version control, never expose it in client-side code. The correct pattern for development is <strong>environment variables</strong> — storing the key in your operating system's environment or a local file that is excluded from source control.</p>
+
+  <h3>Using a .env file</h3>
+  <p>Create a file named <code>.env</code> in your project root:</p>
+
+  <div class="code-block">OPENAI_API_KEY=sk-proj-your-actual-key-here</div>
+
+  <p>Immediately add <code>.env</code> to your <code>.gitignore</code>. Do this before your first commit:</p>
+
+  <div class="code-block">echo ".env" &gt;&gt; .gitignore</div>
+
+  <div class="warn">
+    <div class="warn-label">The .gitignore step is not optional</div>
+    <p><strong>Thousands of API keys are leaked to GitHub every day.</strong> Automated bots scan new commits looking for API key patterns. If your key is committed even once, it should be considered compromised — rotate it immediately. The .gitignore line before your first commit is the safest habit you can build.</p>
+    <p><strong>For production deployments:</strong> Use your hosting platform's secrets management — AWS Secrets Manager, Railway environment variables, Vercel environment variables, Heroku config vars. Never ship .env files inside containers or commit them to repositories.</p>
+  </div>
+
+  <h2>Your first completion: the minimal example</h2>
+  <p>Here is the simplest possible working OpenAI API call. Every line is intentional — nothing is boilerplate you can safely ignore:</p>
+
+  <div class="code-block">import os
+from openai import OpenAI
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
+
+# Initialize the client — reads OPENAI_API_KEY from the environment automatically
+client = OpenAI()
+
+# Make the API call
+response = client.chat.completions.create(
+    model="gpt-4o-mini",
+    messages=[
+        {"role": "user", "content": "What is the capital of France?"}
+    ]
+)
+
+# Extract and print the response text
+print(response.choices[0].message.content)</div>
+
+  <p>Run this with <code>python app.py</code> and you will see the model's response in your terminal. Let us understand every part.</p>
+
+  <h3>The OpenAI client</h3>
+  <p><code>OpenAI()</code> creates a client instance. With no arguments, it reads your API key from the <code>OPENAI_API_KEY</code> environment variable — which <code>load_dotenv()</code> has loaded from your <code>.env</code> file. The client handles HTTP connection pooling, retry logic on network errors, and request formatting.</p>
+
+  <h3>The model parameter</h3>
+  <p><code>gpt-4o-mini</code> is OpenAI's efficient, lower-cost model — excellent for development and prototyping. It costs roughly $0.15 per million input tokens and $0.60 per million output tokens. Use <code>gpt-4o</code> for tasks needing top capability at higher cost. The model name is just a string — switching providers means changing this string and the client initialization.</p>
+
+  <h3>The messages array</h3>
+  <p>The <code>messages</code> parameter is a list of message objects, each with a <code>role</code> and <code>content</code>. For a simple single-turn question, you need one message with <code>role: "user"</code>. We will explore the full role system extensively in Module 3.</p>
+
+  <h2>Reading the full response object</h2>
+  <p>The response contains far more than just the text. Understanding its full structure helps you use all available information and handle edge cases properly.</p>
+
+  <div class="code-block">import os
+from openai import OpenAI
+from dotenv import load_dotenv
+
+load_dotenv()
+client = OpenAI()
+
+response = client.chat.completions.create(
+    model="gpt-4o-mini",
+    messages=[
+        {"role": "user", "content": "Explain recursion in one paragraph."}
+    ],
+    max_tokens=200
+)
+
+# Response metadata
+print("ID:", response.id)           # e.g. "chatcmpl-abc123"
+print("Model:", response.model)     # exact version served, e.g. "gpt-4o-mini-2024-07-18"
+print("Created:", response.created) # Unix timestamp
+
+# The main content
+choice = response.choices[0]
+print("Finish reason:", choice.finish_reason)  # "stop", "length", or "content_filter"
+print("Role:", choice.message.role)            # always "assistant"
+print("Content:", choice.message.content)
+
+# Token usage — critical for cost tracking
+print("Prompt tokens:", response.usage.prompt_tokens)
+print("Completion tokens:", response.usage.completion_tokens)
+print("Total tokens:", response.usage.total_tokens)</div>
+
+  <h3>The finish_reason field</h3>
+  <p>This field tells you <em>why</em> the model stopped generating. It has three important values:</p>
+  <ul>
+    <li><strong>"stop"</strong> — The model finished naturally. This is what you want.</li>
+    <li><strong>"length"</strong> — The response was cut off because it reached <code>max_tokens</code>. The output may be incomplete. Increase <code>max_tokens</code> or use chunking.</li>
+    <li><strong>"content_filter"</strong> — The response was blocked by the provider's content policy. The content field may be null or partial.</li>
+  </ul>
+
+  <p>Always check <code>finish_reason</code> in production code. A response that looks complete might actually be truncated if finish_reason is "length".</p>
+
+  <h2>Understanding tokens in practice</h2>
+  <p>The token usage fields in every response are your direct window into cost. AI models do not process text character by character or word by word — they process <strong>tokens</strong>, which are chunks of text roughly corresponding to 3-4 characters or about 0.75 words in English.</p>
+  <p>Pricing is always quoted per million tokens. The total cost of any API call is:</p>
+  <div class="code-block">cost = (prompt_tokens / 1_000_000 * input_price) + (completion_tokens / 1_000_000 * output_price)</div>
+  <p>For gpt-4o-mini at $0.15/M input and $0.60/M output, a call with 100 prompt tokens and 200 completion tokens costs:</p>
+  <div class="code-block">cost = (100 / 1_000_000 * 0.15) + (200 / 1_000_000 * 0.60)
+     = $0.000015 + $0.000120
+     = $0.000135 (about 0.014 cents)</div>
+  <p>This seems tiny — and individual calls are cheap — but these costs compound with scale. A system making 10,000 calls per day with 500 average total tokens will cost roughly $4.50/day on gpt-4o-mini, or $90/day on gpt-4o. Building cost awareness into your code from the start is a professional habit. Module 4 covers cost optimization in depth.</p>
+
+  <h2>Making a call with the raw requests library</h2>
+  <p>While the SDK is the right choice for production code, understanding the raw HTTP call demystifies what the SDK is doing and is valuable when troubleshooting or working with providers without an SDK:</p>
+
+  <div class="code-block">import os
+import json
+import requests
+from dotenv import load_dotenv
+
+load_dotenv()
+
+url = "https://api.openai.com/v1/chat/completions"
+
+headers = {
+    "Authorization": f"Bearer {os.environ['OPENAI_API_KEY']}",
+    "Content-Type": "application/json"
+}
+
+payload = {
+    "model": "gpt-4o-mini",
+    "messages": [
+        {"role": "user", "content": "Name three programming languages."}
+    ],
+    "max_tokens": 100
+}
+
+response = requests.post(url, headers=headers, json=payload)
+
+if response.status_code == 200:
+    data = response.json()
+    print(data["choices"][0]["message"]["content"])
+else:
+    print(f"Error {response.status_code}: {response.text}")</div>
+
+  <p>Compare this to the SDK version: the SDK handles constructing the URL, setting the Authorization header, serializing the payload as JSON, and parsing the response — but it is just HTTP POST with JSON. This is exactly what every AI API is under the hood.</p>
+
+  <h2>Your first working integration: a simple Q&amp;A helper</h2>
+  <p>Let us put this together into a simple interactive program that reads questions from the user in a loop and gets AI answers. This is a real, usable tool:</p>
+
+  <div class="code-block">from openai import OpenAI
+from dotenv import load_dotenv
+
+load_dotenv()
+client = OpenAI()
+
+def ask(question: str) -> str:
+    """Send a question to GPT-4o-mini and return the answer text."""
+    response = client.chat.completions.create(
+        model="gpt-4o-mini",
+        messages=[
+            {
+                "role": "system",
+                "content": "You are a helpful assistant. Give concise, accurate answers."
+            },
+            {
+                "role": "user",
+                "content": question
+            }
+        ],
+        max_tokens=500,
+        temperature=0.7
+    )
+
+    # Check for truncation
+    if response.choices[0].finish_reason == "length":
+        print("[Warning: response may be truncated]")
+
+    return response.choices[0].message.content
+
+def main():
+    print("AI Q&amp;A Helper (type 'quit' to exit)")
+    print("-" * 40)
+
+    while True:
+        question = input("\nYour question: ").strip()
+        if question.lower() in ("quit", "exit", "q"):
+            break
+        if not question:
+            continue
+
+        try:
+            answer = ask(question)
+            print(f"\nAnswer: {answer}")
+        except Exception as e:
+            print(f"Error: {e}")
+
+if __name__ == "__main__":
+    main()</div>
+
+  <p>Notice several things this code demonstrates correctly:</p>
+  <ul>
+    <li>The <code>ask()</code> function is a clean abstraction — the calling code does not need to know about response objects or finish reasons</li>
+    <li>A system message is included to set the assistant's behavior (more on this in Module 3)</li>
+    <li>We check <code>finish_reason</code> and warn the user if the response was truncated</li>
+    <li>Exceptions are caught so the program does not crash on API errors</li>
+    <li>The loop allows multiple questions without restarting the program</li>
+  </ul>
+
+  <h2>Handling errors gracefully</h2>
+  <p>Production code must handle API errors without crashing. The OpenAI SDK raises typed exceptions that you can catch and handle appropriately:</p>
+
+  <div class="code-block">from openai import OpenAI, RateLimitError, APIStatusError, APIConnectionError
+from dotenv import load_dotenv
+import time
+
+load_dotenv()
+client = OpenAI()
+
+def call_with_retry(messages: list, max_retries: int = 3) -> str:
+    """Call the API with simple exponential backoff on rate limit errors."""
+    for attempt in range(max_retries):
+        try:
+            response = client.chat.completions.create(
+                model="gpt-4o-mini",
+                messages=messages,
+                max_tokens=500
+            )
+            return response.choices[0].message.content
+
+        except RateLimitError:
+            if attempt == max_retries - 1:
+                raise
+            wait = 2 ** attempt  # 1s, 2s, 4s
+            print(f"Rate limited. Waiting {wait}s before retry {attempt + 1}/{max_retries}")
+            time.sleep(wait)
+
+        except APIConnectionError as e:
+            print(f"Connection error: {e}. Retrying...")
+            time.sleep(1)
+
+        except APIStatusError as e:
+            # 4xx errors are usually your fault — don't retry
+            if 400 <= e.status_code < 500:
+                raise
+            # 5xx errors are server-side — retry with backoff
+            if attempt == max_retries - 1:
+                raise
+            time.sleep(2 ** attempt)
+
+    raise RuntimeError("Max retries exceeded")</div>
+
+  <p>This pattern — retry on transient errors, fail fast on client errors — is the foundation of production reliability. Module 9 covers full production hardening including circuit breakers and observability.</p>
+
+  <h2>Working with the Anthropic SDK</h2>
+  <p>Because the course covers multiple providers, here is the same basic call using Anthropic's Claude API. The conceptual model is identical but the SDK and schema differ slightly:</p>
+
+  <div class="code-block">import anthropic
+from dotenv import load_dotenv
+
+load_dotenv()
+
+# Reads ANTHROPIC_API_KEY from environment
+client = anthropic.Anthropic()
+
+message = client.messages.create(
+    model="claude-3-5-haiku-20241022",  # Fast, affordable Claude model
+    max_tokens=500,
+    messages=[
+        {"role": "user", "content": "What is recursion?"}
+    ]
+)
+
+# Anthropic's response structure differs slightly from OpenAI
+print(message.content[0].text)
+
+# Token usage
+print(f"Input tokens: {message.usage.input_tokens}")
+print(f"Output tokens: {message.usage.output_tokens}")</div>
+
+  <p>Key differences from OpenAI: Anthropic uses <code>max_tokens</code> as a required field (not optional). The response is accessed via <code>message.content[0].text</code> rather than <code>response.choices[0].message.content</code>. The system prompt is a separate parameter (<code>system="..."</code>) rather than a messages entry. These are the kinds of provider-specific differences that Module 10's abstraction strategies address.</p>
+
+  <div class="good">
+    <div class="good-label">You have everything you need to start building</div>
+    <p>With a working API call, environment variable security, response parsing, and basic error handling, you have the complete foundation for an AI integration. Every more advanced concept in this course builds on exactly what you have learned here. The next module dives into the messages system — where the real power of chat-based APIs lives.</p>
+  </div>
+
+</div>
+</main>
+</div>
+
+<div class="sticky-bar" id="sticky-bar">
+  <div class="sticky-bar-reading" id="sticky-reading">Read to the end to unlock the next module</div>
+  <div class="sticky-bar-track"><div class="sticky-bar-fill" id="sticky-fill"></div></div>
+  <div class="sticky-bar-label" id="sticky-label">0%</div>
+  <button class="sticky-bar-btn" id="sticky-btn" onclick="completeAndNext()">Module 3: Chat Completions in Depth →</button>
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import { getFirestore, doc, setDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  const app=initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+  const auth = getAuth(app); const db = getFirestore(app);
+  let currentUser = null;
+  onAuthStateChanged(auth, u => { currentUser = u; });
+  window.toggleTheme=function(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='☾'):(h.setAttribute('data-theme','dark'),i.textContent='☀');};
+  window.addEventListener('scroll',()=>{const d=document.documentElement,s=d.scrollTop||document.body.scrollTop,t=d.scrollHeight-d.clientHeight;document.getElementById('progress').style.width=(s/t*100)+'%';});
+  let unlocked=false;
+  function updateScrollProgress(){
+    const scrolled=window.scrollY+window.innerHeight;
+    const total=document.documentElement.scrollHeight;
+    const pct=Math.min(100,Math.round((scrolled/total)*100));
+    const fill=document.getElementById('sticky-fill');
+    const label=document.getElementById('sticky-label');
+    const btn=document.getElementById('sticky-btn');
+    const reading=document.getElementById('sticky-reading');
+    if(fill)fill.style.width=pct+'%';
+    if(label)label.textContent=pct+'%';
+    if(pct>=95&&!unlocked){unlocked=true;if(btn)btn.style.display='block';if(reading)reading.style.display='none';if(fill)fill.style.background='#22c55e';if(label)label.style.color='#22c55e';}
+  }
+  window.addEventListener('scroll',updateScrollProgress);
+  updateScrollProgress();
+  window.completeAndNext=async function(){
+    if(currentUser){try{await setDoc(doc(db,'users',currentUser.uid),{apisModules:arrayUnion('m2')},{merge:true});}catch(e){}}
+    window.location.href='apis-module-3.html';
+  };
+</script>
+</body>
+</html>

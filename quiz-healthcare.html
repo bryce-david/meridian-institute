@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Final Assessment — AI in Healthcare — Meridian Institute of AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#BE185D;--accent-dim:rgba(190,24,93,0.1);--nav-bg:rgba(8,8,8,0.9);--success:#22c55e;--success-bg:rgba(34,197,94,0.08);--success-border:rgba(34,197,94,0.25);--fail-bg:rgba(239,68,68,0.08);--fail-border:rgba(239,68,68,0.25);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#9D174D;--accent-dim:rgba(157,23,77,0.08);--nav-bg:rgba(250,250,248,0.9);--success:#16a34a;--success-bg:rgba(22,163,74,0.06);--success-border:rgba(22,163,74,0.25);--fail-bg:rgba(220,38,38,0.06);--fail-border:rgba(220,38,38,0.25);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}
+  .nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}.nav-back{font-size:13px;color:var(--text-2);text-decoration:none;}.nav-back:hover{color:var(--text);}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;}
+  .page{max-width:680px;margin:0 auto;padding:90px 24px 80px;}
+  .quiz-eyebrow{font-size:11px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:12px;}
+  .quiz-title{font-family:'Cormorant Garamond',serif;font-size:42px;font-weight:300;color:var(--text);line-height:1.1;margin-bottom:12px;}
+  .quiz-sub{font-size:15px;color:var(--text-2);line-height:1.7;margin-bottom:28px;}
+  .quiz-rules{background:var(--bg-2);border:1px solid var(--border);border-radius:12px;padding:18px 22px;margin-bottom:28px;display:flex;gap:20px;flex-wrap:wrap;}
+  .quiz-rule{font-size:13px;color:var(--text-2);display:flex;align-items:center;gap:8px;}
+  .btn-start{padding:14px 32px;background:var(--accent);color:#fff;border-radius:10px;font-size:15px;font-weight:500;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;margin-top:4px;}
+  #quiz-section{display:none;}
+  .progress-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;}
+  .progress-label{font-size:13px;color:var(--text-3);}
+  .progress-track{height:3px;background:var(--border);border-radius:2px;overflow:hidden;margin-bottom:36px;}
+  .progress-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.3s;}
+  .question-num{font-size:11px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:14px;}
+  .question-text{font-family:'Cormorant Garamond',serif;font-size:27px;font-weight:400;color:var(--text);line-height:1.35;margin-bottom:28px;}
+  .options{display:flex;flex-direction:column;gap:10px;margin-bottom:24px;}
+  .option{display:flex;align-items:flex-start;gap:14px;padding:15px 18px;border:1px solid var(--border-2);border-radius:12px;cursor:pointer;transition:all 0.18s;background:var(--bg-2);}
+  .option:hover{border-color:var(--accent);background:var(--accent-dim);}
+  .option.selected{border-color:var(--accent);background:var(--accent-dim);}
+  .option.correct{border-color:var(--success);background:var(--success-bg);cursor:default;}
+  .option.wrong{border-color:#ef4444;background:var(--fail-bg);cursor:default;}
+  .option.disabled{cursor:default;opacity:0.55;}
+  .option-letter{width:26px;height:26px;border-radius:6px;background:var(--bg-3);border:1px solid var(--border-2);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:500;color:var(--text-3);flex-shrink:0;margin-top:2px;}
+  .option.selected .option-letter{background:var(--accent);color:#fff;border-color:var(--accent);}
+  .option.correct .option-letter{background:var(--success);color:#fff;border-color:var(--success);}
+  .option.wrong .option-letter{background:#ef4444;color:#fff;border-color:#ef4444;}
+  .option-text{font-size:15px;color:var(--text-2);line-height:1.55;}
+  .option.selected .option-text,.option.correct .option-text{color:var(--text);}
+  .feedback{padding:16px 20px;border-radius:10px;font-size:14px;line-height:1.65;margin-bottom:20px;display:none;}
+  .feedback.show{display:block;}
+  .feedback.correct{background:var(--success-bg);border:1px solid var(--success-border);color:var(--success);}
+  .feedback.wrong{background:var(--fail-bg);border:1px solid var(--fail-border);color:#ef4444;}
+  .btn-next{padding:12px 28px;background:var(--accent);color:#fff;border-radius:9px;font-size:14px;font-weight:500;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;display:none;}
+  .btn-next.show{display:inline-block;}
+  #result-section{display:none;text-align:center;padding:20px 0;}
+  .result-icon{font-size:64px;margin-bottom:20px;}
+  .result-title{font-family:'Cormorant Garamond',serif;font-size:42px;font-weight:300;color:var(--text);margin-bottom:12px;}
+  .result-score{font-size:56px;font-weight:300;font-family:'Cormorant Garamond',serif;margin:20px 0;}
+  .result-score.pass{color:var(--success);}.result-score.fail{color:#ef4444;}
+  .result-message{font-size:16px;color:var(--text-2);line-height:1.7;max-width:520px;margin:0 auto 32px;}
+  .result-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
+  .btn-result{padding:13px 28px;border-radius:10px;font-size:14px;font-weight:500;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;text-decoration:none;display:inline-block;}
+  .btn-primary{background:var(--accent);color:#fff;}.btn-ghost{background:transparent;color:var(--text-2);border:1px solid var(--border-2);}
+  @media(max-width:600px){.quiz-title{font-size:34px;}.question-text{font-size:23px;}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="index.html" class="nav-back">🏠 Home</a>
+    <div class="nav-divider"></div>
+    <a href="courses.html" class="nav-back">← AI in Healthcare</a>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">☀</span></button>
+</nav>
+<div class="page">
+  <div id="start-section">
+    <div class="quiz-eyebrow">Final Assessment · AI in Healthcare</div>
+    <div class="quiz-title">Test Your Knowledge</div>
+    <div class="quiz-sub">Test your knowledge of AI applications in clinical medicine, medical imaging, drug discovery, patient privacy, and the future of healthcare. You need 70% to pass and earn your certificate.</div>
+    <div class="quiz-rules">
+      <div class="quiz-rule">📋 25 questions</div>
+      <div class="quiz-rule">✅ 70% to pass (18 of 25)</div>
+      <div class="quiz-rule">🔀 Randomized each attempt</div>
+      <div class="quiz-rule">🏆 Pass to earn your certificate</div>
+    </div>
+    <button class="btn-start" onclick="startQuiz()">Begin Assessment →</button>
+  </div>
+  <div id="quiz-section">
+    <div class="progress-header">
+      <span class="progress-label" id="progress-label">Question 1 of 25</span>
+      <span class="progress-label" id="score-label">0 correct</span>
+    </div>
+    <div class="progress-track"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+    <div class="question-num" id="question-num">Question 1</div>
+    <div class="question-text" id="question-text"></div>
+    <div class="options" id="options"></div>
+    <div class="feedback" id="feedback"></div>
+    <button class="btn-next" id="btn-next" onclick="nextQuestion()">Next Question →</button>
+  </div>
+  <div id="result-section">
+    <div class="result-icon" id="result-icon"></div>
+    <div class="result-title" id="result-title"></div>
+    <div class="result-score" id="result-score"></div>
+    <div class="result-message" id="result-message"></div>
+    <div class="result-actions" id="result-actions"></div>
+  </div>
+</div>
+<script type="module">
+import{initializeApp}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import{getAuth,onAuthStateChanged}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import{getFirestore,doc,setDoc}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+const app=initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+const auth=getAuth(app);const db=getFirestore(app);let currentUser=null;
+onAuthStateChanged(auth,u=>{currentUser=u;});
+
+const ALL_QUESTIONS=[{"q":"What distinguishes modern AI-based clinical decision support systems from traditional rule-based CDSS?","options":["Modern AI systems use explicit if-then rules programmed by physicians, while rule-based CDSS uses statistical learning","Modern AI learns patterns from large clinical datasets, while rule-based CDSS relies on manually encoded expert rules","Traditional rule-based CDSS uses deep learning, while modern AI systems rely on simple threshold alerts","Modern AI systems require no validation studies, while rule-based CDSS must be clinically tested before deployment"],"answer":1,"explain":"Traditional CDSS used hard-coded expert rules. Modern AI-based systems learn statistical patterns from large datasets of clinical outcomes."},{"q":"What is 'alert fatigue' in the context of AI clinical decision support?","options":["Physicians becoming physically tired from long shifts when using AI monitoring systems","Clinicians ignoring or overriding frequent AI alerts because alert volume is so high that warnings lose meaning","AI systems that slow down over time as alert databases become too large to process efficiently","Patients becoming resistant to AI-generated treatment recommendations after repeated exposure"],"answer":1,"explain":"Alert fatigue occurs when clinicians override alerts reflexively due to excessive volume — a major barrier to effective CDSS adoption."},{"q":"How do convolutional neural networks (CNNs) detect abnormalities in medical images?","options":["They compare each image pixel-by-pixel against a single ideal reference image stored in the training database","They learn hierarchical visual features from labeled training images, identifying patterns associated with pathology","They measure absolute color values in each image and flag areas that fall outside predetermined normal ranges","They rely on radiologists to annotate each new image in real time before the network can analyze it"],"answer":1,"explain":"CNNs learn hierarchical features — edges, shapes, textures — from thousands of labeled examples, building representations that correlate with pathological findings."},{"q":"Approximately how many AI/ML-based medical devices had received FDA clearance by 2023?","options":["Fewer than 50, as FDA approval of AI devices remains extremely rare and experimental","Around 500 or more, primarily in radiology, cardiology, and other imaging-heavy specialties","Exactly 12, representing only the devices that completed full PMA clinical trials","Over 5,000, as the FDA fast-tracks all AI devices under a special emergency exemption"],"answer":1,"explain":"By 2023, the FDA had cleared over 500 AI/ML-based medical devices, with radiology accounting for the largest share."},{"q":"A chest X-ray AI trained predominantly on images from one hospital system performs significantly worse at another hospital. What does this best illustrate?","options":["That the second hospital's X-ray machines are technically inferior and producing lower-quality images","Dataset distribution shift — the model learned features specific to one scanner/population that don't generalize","That AI cannot be used across different healthcare systems under any circumstances","That chest X-ray AI only works when validated on data from the exact same machine that trained it"],"answer":1,"explain":"Models trained on narrow datasets fail when deployed in different settings — a dataset shift problem that requires validation across diverse populations."},{"q":"What made AlphaFold's release a paradigm shift for drug discovery?","options":["It automated the synthesis of new drug compounds directly from chemical formulas without any laboratory work","It accurately predicted 3D protein structures from amino acid sequences, solving a 50-year-old biology challenge","It replaced clinical trials by predicting drug safety and efficacy entirely from computational simulations","It reduced the cost of gene sequencing to under $100 per genome, enabling widespread genomic medicine"],"answer":1,"explain":"AlphaFold solved the protein folding problem — predicting 3D structure from sequence — giving researchers structural data that previously required years of crystallography work."},{"q":"What is the approximate traditional timeline and cost for bringing a new drug from discovery to market?","options":["1-2 years and approximately $50 million, primarily due to regulatory filing fees","10-15 years and approximately $2.6 billion, accounting for the high failure rate across development stages","5-7 years and approximately $500 million, with most time spent on Phase III trials","20-30 years and approximately $10 billion, as all compounds must be individually synthesized by hand"],"answer":1,"explain":"Drug development traditionally takes 10-15 years and costs ~$2.6 billion when accounting for failures — the core reason AI's acceleration potential is so significant."},{"q":"What fundamental limitation means AI-designed drug candidates still require traditional wet lab validation?","options":["AI tools cannot generate novel molecular structures, only modify existing approved drugs with minor changes","Computational predictions of molecular behavior do not guarantee real-world biological activity — only experiments confirm this","Regulatory agencies prohibit any drug that was designed using AI from entering clinical trials","Wet lab validation is only needed for biological drugs, not for small molecule compounds designed by AI"],"answer":1,"explain":"AI can predict promising candidates, but biological systems are complex — a computationally attractive molecule must still be synthesized and tested in cells, animals, and humans."},{"q":"Hospitals face CMS financial penalties for excessive 30-day readmissions. How does AI help address this?","options":["AI automatically discharges patients after exactly 30 days to avoid the penalty measurement window","AI risk-scores patients at discharge to identify those needing intensive follow-up to prevent readmission","AI submits appeals to CMS on the hospital's behalf when readmission penalties are incorrectly calculated","AI replaces case managers entirely, eliminating the human labor cost of readmission prevention programs"],"answer":1,"explain":"Predictive models score patients at discharge for readmission risk, enabling care teams to target interventions — follow-up calls, home visits, medication support — to those most likely to return."},{"q":"The 2019 Obermeyer et al. study found significant bias in a widely used EHR-based risk algorithm. What was the nature of that bias?","options":["The algorithm overestimated risk for elderly patients because age was given too much weight in the model","The algorithm systematically underestimated illness severity in Black patients because it used healthcare cost as a proxy for health need","The algorithm performed better for privately insured patients because it was trained exclusively on commercial insurance data","The algorithm flagged female patients as higher risk for readmission regardless of their actual clinical condition"],"answer":1,"explain":"The algorithm used healthcare spending as a proxy for health needs — but Black patients receive less care per unit of illness, so their true burden was systematically underestimated."},{"q":"What is HL7 FHIR and why does it matter for AI in healthcare?","options":["A federal law requiring all hospitals to use the same EHR vendor to enable data sharing","A data interoperability standard that enables structured health data exchange between different systems, fueling AI development","A cybersecurity framework that encrypts patient data before it can be used to train machine learning models","A hospital accreditation program that certifies whether an institution's EHR system meets AI readiness standards"],"answer":1,"explain":"FHIR (Fast Healthcare Interoperability Resources) is a standard for exchanging healthcare data — critical for AI because interoperability enables the large, diverse datasets models need."},{"q":"What does the evidence base for AI therapy chatbots like Woebot suggest, and what is their primary intended role?","options":["They are clinically proven to replace licensed therapists for all forms of mental health treatment","They show modest benefits for mild-to-moderate symptoms and are designed to supplement, not replace, human care","They are purely educational tools with no therapeutic benefit, used only to explain mental health concepts","They are only approved for use by licensed clinicians and cannot be accessed directly by patients"],"answer":1,"explain":"Studies show chatbots like Woebot can reduce mild-to-moderate depression and anxiety symptoms, but they are designed as supplements — not replacements — for professional care."},{"q":"Why is mental health data considered particularly sensitive in the context of AI applications?","options":["Mental health data contains genetic information that can be used to identify relatives of the patient","Mental health data can be used to discriminate in employment, insurance, and custody decisions, and carries significant stigma","Mental health data is regulated by HIPAA separately from other medical data under stricter federal encryption rules","Mental health AI cannot be deployed without FDA device clearance, unlike other areas of healthcare AI"],"answer":1,"explain":"Mental health data reveals vulnerabilities that can lead to discrimination in employment, insurance, and family courts — the stakes of a breach or misuse are uniquely high."},{"q":"What is 'digital phenotyping' in mental health research?","options":["Using genetic sequencing data to identify biomarkers that predict susceptibility to mental health disorders","Passively collecting behavioral data from smartphones — movement, sleep, social interaction patterns — to infer mental state","Digitizing paper-based psychiatric assessments into structured electronic formats for longitudinal tracking","Training AI models on digital photographs of facial expressions to detect real-time emotional states"],"answer":1,"explain":"Digital phenotyping uses passive sensing from smartphones — GPS, screen time, call patterns, accelerometer — to continuously infer mental health signals without active self-reporting."},{"q":"Which AI capability most directly enhances the da Vinci Surgical System's performance during procedures?","options":["Fully autonomous decision-making that allows the robot to complete procedures without any surgeon present","Tremor filtering and motion scaling that translate the surgeon's hand movements into precise, micro-scale instrument actions","Real-time patient anesthesia management, automatically adjusting drug dosages throughout the procedure","Post-operative wound closure using machine vision to automatically suture incisions after the surgeon completes the main procedure"],"answer":1,"explain":"Tremor filtering eliminates physiological hand tremor and motion scaling allows the robot to translate large hand movements into tiny, precise instrument actions — enhancing surgical dexterity."},{"q":"What is the core definition of precision medicine?","options":["Delivering healthcare exclusively through high-precision robotic surgical systems to reduce human error","Tailoring medical treatment to the individual characteristics of each patient — the right drug, right dose, right patient, right time","Using AI to precisely measure the cost-effectiveness of every medical intervention before it is approved for clinical use","A standardized treatment protocol that eliminates variation in care delivery across all patients with the same diagnosis"],"answer":1,"explain":"Precision medicine individualizes care based on patient-specific factors — genetic, environmental, lifestyle — rather than applying population-average treatments."},{"q":"Which of the following is NOT covered by HIPAA's privacy protections?","options":["Medical records held by your primary care physician's office","Hospital billing records connected to your diagnosis and treatment","Health data you voluntarily share with a consumer wellness app not connected to a covered healthcare entity","Insurance claim records submitted by your health plan to process a medical procedure"],"answer":2,"explain":"HIPAA applies to covered entities (providers, payers, clearinghouses) and their business associates. Consumer apps not connected to these entities are generally not covered — a significant gap."},{"q":"What problem does federated learning solve for healthcare AI?","options":["It allows hospitals to share patient data freely across institutions without needing patient consent","It enables AI models to be trained across distributed datasets without raw patient data leaving individual institutions","It federalizes healthcare data ownership, transferring control from hospitals to a central government repository","It allows AI models to learn from synthetic data alone, eliminating the need for any real patient information"],"answer":1,"explain":"Federated learning trains models locally at each institution and shares only model updates — not patient data — solving the privacy vs. collaboration tension."},{"q":"BlueDot was notable for detecting early signals of the COVID-19 outbreak. What data sources did it use?","options":["It accessed confidential WHO and CDC internal databases weeks before public health agencies received official reports","It analyzed news reports, airline ticketing data, and disease outbreak information to identify unusual pneumonia clustering","It monitored social media posts from Wuhan residents and used sentiment analysis to detect unusual health anxiety","It analyzed satellite images of hospital parking lots to infer unusual patient volumes before official reporting began"],"answer":1,"explain":"BlueDot used natural language processing on news articles combined with airline ticketing data to detect unusual pneumonia clusters in Wuhan and model potential spread before WHO's public announcement."},{"q":"What is 'syndromic surveillance' in public health?","options":["Monitoring known disease syndromes through mandatory physician reporting to state health departments","Detecting outbreak signals from non-traditional data sources like pharmacy sales, emergency department chief complaints, and school absenteeism — before laboratory confirmation","A method of tracking disease transmission by monitoring the social networks of confirmed cases","Genetically sequencing pathogen samples to identify syndromic variants that may evade existing vaccines"],"answer":1,"explain":"Syndromic surveillance uses pre-diagnostic signals — symptom patterns, OTC drug purchases, absenteeism — to detect outbreaks days or weeks before lab-confirmed cases appear."},{"q":"Under the FDA's framework, what is 'Software as a Medical Device' (SaMD)?","options":["Any software embedded in a physical medical device, such as the operating software of an MRI machine or pacemaker","Software intended to be used for medical purposes that performs functions independent of a hardware medical device","Software used by hospital administrators for billing and scheduling that incidentally affects patient care workflows","Open-source clinical software that operates outside FDA jurisdiction because it is freely distributed and not sold commercially"],"answer":1,"explain":"SaMD is software intended for medical purposes that runs on general-purpose computing platforms, independent of a specific medical device — the category that encompasses most AI diagnostic tools."},{"q":"Why do adaptive AI algorithms that continue learning after deployment present a unique regulatory challenge?","options":["They require new hardware to be installed each time the algorithm updates, triggering a full device recertification process","The algorithm's behavior changes over time, potentially diverging from the version that was clinically validated and cleared","Adaptive algorithms must be re-trained by the FDA itself rather than the manufacturer, creating bottlenecks in the approval process","The EU AI Act prohibits any adaptive algorithm from being used in medical settings, creating a global ban"],"answer":1,"explain":"FDA clearance validates a specific algorithm version. If the algorithm continues learning post-deployment, it can drift from that validated version — performance may improve or degrade unpredictably."},{"q":"Under the EU AI Act, how are AI systems used in healthcare generally classified?","options":["As minimal risk systems, since they operate under physician supervision and cannot make autonomous decisions","As high-risk systems, requiring conformity assessment, transparency, human oversight, and post-market monitoring","As prohibited systems, as the EU has determined that AI cannot safely operate in clinical environments","As general-purpose systems exempt from medical device regulation since they are software rather than physical devices"],"answer":1,"explain":"The EU AI Act classifies AI in healthcare as high-risk, requiring extensive conformity assessments, data quality requirements, human oversight provisions, and post-market monitoring."},{"q":"What is 'ambient clinical intelligence' as exemplified by products like Nuance DAX?","options":["A hospital-wide sensor network that monitors patient vital signs continuously without requiring any nursing interaction","AI that listens to clinical conversations in the exam room and automatically generates structured clinical documentation","An AI system that ambients noise in clinical environments to protect patient conversation privacy during consultations","Passive AI that monitors physician behavior in clinical settings to flag deviations from evidence-based practice guidelines"],"answer":1,"explain":"Ambient clinical intelligence — exemplified by Nuance DAX — uses AI to listen to physician-patient conversations and automatically generate structured clinical notes, dramatically reducing documentation burden."},{"q":"Which risk does the course identify as a core concern about AI's future in healthcare that could widen health disparities?","options":["AI will make healthcare too affordable, reducing pharmaceutical company incentives to develop new drugs","AI tools will be adopted primarily by well-resourced health systems, leaving under-resourced communities further behind","AI will replace all physicians within a decade, creating a global shortage of human clinical expertise","AI will make medicine so personalized that standardized public health guidelines become impossible to enforce"],"answer":1,"explain":"If advanced AI tools are adopted primarily by well-funded systems, they could amplify existing disparities — the communities that need the most benefit may be the last to access it."}];
+
+let questions=[],current=0,score=0,answered=false;
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+window.startQuiz=function(){
+  questions=shuffle([...ALL_QUESTIONS]).slice(0,25);current=0;score=0;
+  document.getElementById('start-section').style.display='none';
+  document.getElementById('quiz-section').style.display='block';renderQuestion();
+};
+function renderQuestion(){
+  answered=false;const q=questions[current];
+  document.getElementById('question-num').textContent=`Question ${current+1} of 25`;
+  document.getElementById('question-text').textContent=q.q;
+  document.getElementById('progress-label').textContent=`Question ${current+1} of 25`;
+  document.getElementById('score-label').textContent=`${score} correct`;
+  document.getElementById('progress-fill').style.width=`${(current/25)*100}%`;
+  document.getElementById('feedback').className='feedback';document.getElementById('btn-next').className='btn-next';
+  const letters=['A','B','C','D'];const optionsEl=document.getElementById('options');optionsEl.innerHTML='';
+  const indices=shuffle([0,1,2,3]);
+  indices.forEach((origIdx,displayIdx)=>{
+    const opt=document.createElement('div');opt.className='option';
+    opt.innerHTML=`<div class="option-letter">${letters[displayIdx]}</div><div class="option-text">${q.options[origIdx]}</div>`;
+    opt.onclick=()=>selectAnswer(opt,origIdx===q.answer,indices.indexOf(q.answer),q.explain);
+    optionsEl.appendChild(opt);
+  });
+}
+function selectAnswer(clickedEl,isCorrect,correctShuffledIdx,explain){
+  if(answered)return;answered=true;
+  document.querySelectorAll('.option').forEach((o,i)=>{o.classList.add('disabled');if(i===correctShuffledIdx)o.classList.add('correct');});
+  if(isCorrect){clickedEl.classList.add('correct');score++;}else{clickedEl.classList.add('wrong');}
+  document.getElementById('score-label').textContent=`${score} correct`;
+  const fb=document.getElementById('feedback');fb.className=`feedback ${isCorrect?'correct':'wrong'} show`;
+  fb.textContent=isCorrect?`✓ Correct. ${explain}`:`✗ ${explain}`;
+  const btn=document.getElementById('btn-next');btn.className='btn-next show';btn.textContent=current===24?'See Results →':'Next Question →';
+}
+window.nextQuestion=function(){current++;if(current>=25)showResults();else renderQuestion();};
+async function showResults(){
+  document.getElementById('quiz-section').style.display='none';document.getElementById('result-section').style.display='block';
+  const passed=score>=18;const pct=Math.round((score/25)*100);
+  document.getElementById('result-icon').textContent=passed?'🏆':'📚';
+  document.getElementById('result-title').textContent=passed?'Assessment Passed':'Not This Time';
+  document.getElementById('result-score').className=`result-score ${passed?'pass':'fail'}`;
+  document.getElementById('result-score').textContent=`${score} / 25`;
+  if(passed){
+    document.getElementById('result-message').textContent=`You scored ${pct}% — above the 70% threshold. Your AI in Healthcare certificate is being issued.`;
+    if(currentUser){
+      try{
+        const certId='HLT-'+Date.now();
+        await setDoc(doc(db,'users',currentUser.uid),{healthcareCertId:certId},{merge:true});
+        document.getElementById('result-actions').innerHTML=`<a href="certificate.html?id=${certId}" class="btn-result btn-primary" target="_blank">View Certificate →</a><a href="dashboard.html" class="btn-result btn-ghost">Dashboard</a>`;
+      }catch(e){document.getElementById('result-actions').innerHTML=`<a href="dashboard.html" class="btn-result btn-primary">Dashboard</a>`;}
+    }
+  }else{
+    document.getElementById('result-message').textContent=`You scored ${pct}% — you need 70% to pass. Review the modules where your answers were weakest and try again.`;
+    document.getElementById('result-actions').innerHTML=`<a href="healthcare-module-1.html" class="btn-result btn-primary">Review from Module 1</a><button class="btn-result btn-ghost" onclick="location.reload()">Try Again</button>`;
+  }
+}
+window.toggleTheme=function(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='☾'):(h.setAttribute('data-theme','dark'),i.textContent='☀');};
+</script>
+</body>
+</html>

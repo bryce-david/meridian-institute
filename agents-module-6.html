@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 6: Planning and Task Decomposition — Agentic AI and Autonomous Systems — Meridian Institute of AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#6B21A8;--accent-dim:rgba(107,33,168,0.1);--accent-dim2:rgba(107,33,168,0.05);--nav-bg:rgba(8,8,8,0.9);--callout-bg:rgba(107,33,168,0.07);--callout-border:rgba(107,33,168,0.25);--good-bg:rgba(34,197,94,0.07);--good-border:rgba(34,197,94,0.2);--warn-bg:rgba(251,146,60,0.07);--warn-border:rgba(251,146,60,0.2);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#581C87;--accent-dim:rgba(88,28,135,0.08);--accent-dim2:rgba(88,28,135,0.04);--nav-bg:rgba(250,250,248,0.9);--callout-bg:rgba(88,28,135,0.05);--callout-border:rgba(88,28,135,0.2);--good-bg:rgba(22,163,74,0.06);--good-border:rgba(22,163,74,0.2);--warn-bg:rgba(234,88,12,0.05);--warn-border:rgba(234,88,12,0.2);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;overflow-x:hidden;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.7;overflow-x:hidden;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}
+  .nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}
+  .nav-back{font-size:13px;color:var(--text-2);text-decoration:none;transition:color 0.2s;}
+  .nav-back:hover{color:var(--text);}
+  .nav-label{font-size:13px;color:var(--text-3);}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;transition:all 0.2s;}
+  .theme-toggle:hover{background:var(--bg-3);color:var(--text);}
+  .progress-bar{position:fixed;top:60px;left:0;right:0;z-index:99;height:2px;background:var(--border);}
+  .progress-fill{height:100%;background:var(--accent);width:0%;transition:width 0.1s;}
+  .page-wrapper{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:100vh;padding-top:62px;overflow:hidden;}
+  .sidebar{position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto;border-right:1px solid var(--border);padding:32px 24px;background:var(--bg-2);}
+  .sidebar-course{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;}
+  .sidebar-course-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+  .sidebar-module{margin-bottom:4px;}
+  .sidebar-module-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:13px;color:var(--text-2);text-decoration:none;transition:all 0.2s;line-height:1.4;}
+  .sidebar-module-link:hover{background:var(--bg-3);color:var(--text);}
+  .sidebar-module-link.active{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-num{font-size:11px;font-weight:500;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--bg-4);color:var(--text-3);}
+  .sidebar-module-link.active .sidebar-num{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-divider{height:1px;background:var(--border);margin:20px 0;}
+  .sidebar-progress-label{font-size:12px;color:var(--text-3);margin-bottom:8px;display:flex;justify-content:space-between;}
+  .sidebar-progress-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sidebar-progress-fill{height:100%;width:60%;background:var(--accent);border-radius:2px;}
+  main{display:block;min-width:0;overflow:hidden;}
+  .content{max-width:760px;width:100%;padding:60px 64px 140px;margin:0 auto;}
+  .module-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+  .module-tag{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(107,33,168,0.2);padding:4px 12px;border-radius:100px;}
+  .module-meta{font-size:12px;color:var(--text-3);}
+  h1{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1.05;letter-spacing:-0.02em;color:var(--text);margin-bottom:24px;}
+  .intro-text{font-size:19px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+  h2{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:400;color:var(--text);margin:52px 0 18px;line-height:1.2;}
+  h3{font-size:16px;font-weight:500;color:var(--text);margin:32px 0 12px;}
+  p{font-size:16px;font-weight:300;color:var(--text-2);line-height:1.8;margin-bottom:20px;}
+  strong{font-weight:500;color:var(--text);}
+  em{font-style:italic;}
+  ul,ol{margin:0 0 20px 22px;color:var(--text-2);}
+  li{font-size:16px;font-weight:300;line-height:1.8;margin-bottom:8px;}
+  .callout{background:var(--callout-bg);border:1px solid var(--callout-border);border-radius:12px;padding:24px 28px;margin:32px 0;}
+  .callout-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+  .callout p{margin:0;font-size:15px;color:var(--text-2);}
+  .callout p+p{margin-top:12px;}
+  .good{background:var(--good-bg);border:1px solid var(--good-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .good-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#22c55e;margin-bottom:10px;}
+  .good p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn{background:var(--warn-bg);border:1px solid var(--warn-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .warn-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#fb923c;margin-bottom:10px;}
+  .warn p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn p+p{margin-top:12px;}
+  .code-block{background:var(--bg-3);border:1px solid var(--border);border-radius:10px;padding:20px 24px;margin:24px 0;font-family:'Courier New',monospace;font-size:13px;color:var(--text-2);overflow-x:auto;line-height:1.7;}
+  .principle-list{display:flex;flex-direction:column;gap:12px;margin:24px 0;}
+  .principle{background:var(--bg-2);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:0 12px 12px 0;padding:20px 24px;}
+  .principle-title{font-size:15px;font-weight:500;color:var(--text);margin-bottom:6px;}
+  .principle-desc{font-size:14px;color:var(--text-2);line-height:1.65;margin:0;}
+  .sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:var(--bg-2);border-top:1px solid var(--border-2);padding:14px 5%;display:flex;align-items:center;justify-content:space-between;gap:16px;backdrop-filter:blur(12px);}
+  .sticky-bar-track{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sticky-bar-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.2s;width:0%;}
+  .sticky-bar-label{font-size:12px;color:var(--text-3);white-space:nowrap;min-width:60px;text-align:right;}
+  .sticky-bar-btn{padding:10px 20px;border-radius:8px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;background:var(--accent);color:#fff;border:none;cursor:pointer;white-space:nowrap;transition:opacity 0.2s;display:none;}
+  .sticky-bar-btn:hover{opacity:0.88;}
+  .sticky-bar-reading{font-size:12px;color:var(--text-3);white-space:nowrap;}
+  @media(max-width:900px){.page-wrapper{grid-template-columns:1fr;}.sidebar{display:none;}.content{padding:40px 24px 120px;}h1{font-size:38px;}}
+  @media(max-width:600px){.content{padding:28px 16px 120px;}h1{font-size:30px;}h2{font-size:24px;}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="courses.html" class="nav-back">← Agentic AI and Autonomous Systems</a>
+    <div class="nav-divider"></div>
+    <span class="nav-label">Module 6</span>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">☀</span></button>
+</nav>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+
+<div class="page-wrapper">
+<aside class="sidebar">
+  <div class="sidebar-course">Expert Track</div>
+  <div class="sidebar-course-name">Agentic AI and Autonomous Systems</div>
+  <div class="sidebar-module"><a href="agents-module-1.html" class="sidebar-module-link"><span class="sidebar-num">1</span>What Are AI Agents?</a></div>
+  <div class="sidebar-module"><a href="agents-module-2.html" class="sidebar-module-link"><span class="sidebar-num">2</span>The Agent Loop: Perceive, Reason, Act</a></div>
+  <div class="sidebar-module"><a href="agents-module-3.html" class="sidebar-module-link"><span class="sidebar-num">3</span>Tool Use and Function Calling</a></div>
+  <div class="sidebar-module"><a href="agents-module-4.html" class="sidebar-module-link"><span class="sidebar-num">4</span>Memory Systems in AI Agents</a></div>
+  <div class="sidebar-module"><a href="agents-module-5.html" class="sidebar-module-link"><span class="sidebar-num">5</span>Multi-Agent Architectures</a></div>
+  <div class="sidebar-module"><a href="agents-module-6.html" class="sidebar-module-link active"><span class="sidebar-num">6</span>Planning and Task Decomposition</a></div>
+  <div class="sidebar-module"><a href="agents-module-7.html" class="sidebar-module-link"><span class="sidebar-num">7</span>Retrieval-Augmented Generation</a></div>
+  <div class="sidebar-module"><a href="agents-module-8.html" class="sidebar-module-link"><span class="sidebar-num">8</span>Agent Safety and Reliability</a></div>
+  <div class="sidebar-module"><a href="agents-module-9.html" class="sidebar-module-link"><span class="sidebar-num">9</span>Building with Agent Frameworks</a></div>
+  <div class="sidebar-module"><a href="agents-module-10.html" class="sidebar-module-link"><span class="sidebar-num">10</span>The Future of Autonomous AI</a></div>
+  <div class="sidebar-module"><a href="quiz-agents.html" class="sidebar-module-link" style="color:var(--accent);margin-top:4px;"><span class="sidebar-num" style="background:var(--accent-dim);color:var(--accent);">✦</span>Final Assessment</a></div>
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-progress-label"><span>Course progress</span><span style="color:var(--accent);">6 / 10</span></div>
+  <div class="sidebar-progress-track"><div class="sidebar-progress-fill"></div></div>
+</aside>
+
+<main>
+<div class="content">
+  <div class="module-eyebrow"><span class="module-tag">Module 6</span><span class="module-meta">26 min read · Agentic AI and Autonomous Systems</span></div>
+  <h1>Planning and Task Decomposition</h1>
+
+  <p class="intro-text">The gap between a user's ambiguous request and the sequence of concrete actions needed to fulfill it is bridged by planning. An agent that can plan well can take on complex, multi-step tasks that would be impossible to accomplish in a single inference step. An agent that plans poorly will either attempt to do too much at once and fail, or decompose tasks in ways that don't respect real-world dependencies. Planning is simultaneously one of the most powerful capabilities in agentic AI and one of its most fragile — the place where compounding errors most visibly accumulate.</p>
+
+  <h2>How agents break down ambiguous tasks</h2>
+  <p>When a user says "write me a competitive analysis of the top five players in the EV battery market," they are giving the agent a goal, not a plan. The agent must convert that goal into a sequence of concrete, executable steps. This conversion process — task decomposition — is one of the core cognitive operations in agentic reasoning.</p>
+  <p>Effective task decomposition requires the agent to: clarify ambiguities in the goal (which aspects of "competitive analysis" are most important?), identify what information is needed and where to get it, determine the dependencies between subtasks (market share data must be gathered before it can be compared), estimate what resources and tools are required, and structure the steps in a logical sequence that builds toward the goal.</p>
+  <p>Models accomplish this primarily through their general reasoning capabilities, guided by prompting. The most reliable approach is to explicitly ask the model to "think step by step" before acting — this forces the model to surface its decomposition reasoning rather than jumping to the first action that comes to mind.</p>
+
+  <h2>Hierarchical planning: goals, subtasks, and actions</h2>
+  <p>Complex tasks benefit from hierarchical decomposition, where the planning happens at multiple levels of abstraction simultaneously.</p>
+  <p>At the <strong>goal level</strong>, the task is expressed in terms of desired outcomes: "Produce a competitive analysis report covering market share, technology differentiation, and strategic positioning for five EV battery companies." This is what the user wants; it is abstract and not directly executable.</p>
+  <p>At the <strong>subtask level</strong>, the goal is broken into major components, each representing a meaningful unit of work: (1) identify the top five EV battery companies by market share, (2) research each company's technology approach, (3) research each company's strategic positioning, (4) compile and synthesize findings, (5) draft and format the report. Each subtask is concrete enough to assign but still represents multiple individual actions.</p>
+  <p>At the <strong>action level</strong>, each subtask is broken into the specific tool calls and operations needed to execute it: "search web for 'EV battery market share 2025'", "extract relevant data from search results", "search for '[company name] battery technology approach'", and so on. Actions are the unit of actual execution — the things that interact with the world.</p>
+  <p>Hierarchical planning lets the agent maintain a coherent view of the overall task while working at the action level. Without it, agents often lose track of why they are doing a particular action and can drift away from the original goal.</p>
+
+  <h2>Task graphs and dependency management</h2>
+  <p>The relationships between subtasks can be represented as a <strong>directed acyclic graph (DAG)</strong> where nodes are subtasks and edges represent dependencies. Subtask B depends on subtask A means B cannot start until A is complete. Subtasks with no dependency between them can run in parallel.</p>
+  <p>Explicit dependency tracking enables several important capabilities: parallelism detection (which subtasks can run simultaneously), scheduling (in what order must tasks execute), and failure propagation analysis (if subtask A fails, which downstream subtasks are blocked?). In multi-agent systems, the dependency graph can guide which subagents to launch first and when to aggregate their results.</p>
+
+  <div class="code-block">
+<pre># Simple task graph representation
+task_graph = {
+    "identify_companies": {"depends_on": [], "status": "pending"},
+    "research_company_A": {"depends_on": ["identify_companies"], "status": "pending"},
+    "research_company_B": {"depends_on": ["identify_companies"], "status": "pending"},
+    "research_company_C": {"depends_on": ["identify_companies"], "status": "pending"},
+    "research_company_D": {"depends_on": ["identify_companies"], "status": "pending"},
+    "research_company_E": {"depends_on": ["identify_companies"], "status": "pending"},
+    "synthesize_findings": {"depends_on": [
+        "research_company_A", "research_company_B", "research_company_C",
+        "research_company_D", "research_company_E"
+    ], "status": "pending"},
+    "draft_report": {"depends_on": ["synthesize_findings"], "status": "pending"}
+}
+# After identify_companies completes, research_company_A through E
+# can all run in parallel — 5 subagents simultaneously</pre>
+  </div>
+
+  <h2>The ReAct framework in agentic contexts</h2>
+  <p>The <strong>ReAct</strong> framework (Reason + Act) is the dominant approach to interleaving planning and execution in agentic systems. Rather than generating a complete plan upfront and then executing it, ReAct alternates between reasoning steps (thinking about what to do) and action steps (actually doing something), using the results of each action to inform the next reasoning step.</p>
+  <p>A ReAct trace looks like:</p>
+
+  <div class="code-block">
+<pre>Thought: I need to find the top 5 EV battery companies by market share.
+  The most reliable source for this would be recent industry reports.
+Action: web_search("EV battery market share 2025 top companies")
+Observation: [search results returned — CATL 37%, BYD 16%, LGES 14%, ...]
+
+Thought: CATL, BYD, LG Energy Solution, Panasonic, and Samsung SDI
+  appear to be the top 5. Now I need to research each one's technology.
+  I can run these searches in parallel.
+Action: parallel [
+  web_search("CATL battery technology LFP NMC 2025"),
+  web_search("BYD Blade battery technology differentiation"),
+  ...
+]
+Observation: [results for all parallel searches]
+
+Thought: I now have the technology information. I notice that CATL and BYD
+  are both heavily invested in LFP chemistry, while the Korean players
+  focus on NMC. This is a key differentiator to highlight.</pre>
+  </div>
+
+  <p>The key property of ReAct is that reasoning and action are interleaved — the agent doesn't have to commit to a full plan before starting. This is adaptive: if an early action returns surprising information, the agent can revise its plan for subsequent steps. This adaptability is critical for tasks where the information landscape can't be fully anticipated.</p>
+
+  <div class="callout">
+    <div class="callout-label">ReAct vs Pure Chain-of-Thought</div>
+    <p>Pure chain-of-thought prompting asks the model to reason before answering, but without taking real-world actions. ReAct extends this by allowing the model to actually execute actions between reasoning steps and observe their results. This grounds the reasoning in real information rather than letting it drift into confabulation. For factual tasks, ReAct agents consistently outperform pure reasoning approaches because they can verify claims against actual data rather than relying on training knowledge that may be incomplete or outdated.</p>
+  </div>
+
+  <h2>Plan validation before execution</h2>
+  <p>For high-stakes tasks, generating and immediately executing a plan is risky. A superior approach is to generate a plan, validate it before execution, and only proceed once the plan meets quality criteria.</p>
+  <p>Plan validation can take several forms. <strong>Self-critique</strong>: the agent reviews its own plan and identifies potential issues, missing steps, or logical flaws before executing. <strong>Human review</strong>: for high-stakes or irreversible actions, the plan is presented to a human for approval before execution begins — this is a core element of supervised autonomy. <strong>Simulated execution</strong>: the agent traces through the plan logically to predict its outcomes, identifying failure points before real-world execution.</p>
+  <p>A simple but highly effective validation pattern is to ask the model "What could go wrong with this plan? What assumptions am I making that might be incorrect?" before beginning execution. This adversarial self-review surfaces hidden assumptions and missing contingencies that are not apparent when the plan is first generated.</p>
+
+  <h2>Replanning when steps fail</h2>
+  <p>Even well-constructed plans encounter failures during execution. A web search returns no results. An API is unavailable. A subtask produces output that invalidates an assumption the plan was built on. Handling these failures gracefully is what separates robust agents from fragile ones.</p>
+  <p>The replanning loop consists of: detecting that a step has failed or produced unexpected output, diagnosing why it failed, determining whether to retry, substitute an alternative approach, or abandon the subtask, updating the overall plan to reflect the new information, and continuing execution with the revised plan.</p>
+  <p>The most important property of replanning is that it must be <strong>bounded</strong>. An agent that can replan indefinitely in response to failures can end up in infinite loops, exhausting compute and time budgets without ever completing the task. Implement explicit limits: a maximum number of retries per step, a maximum number of replanning cycles per task, and a graceful degradation path when limits are reached (return partial results with an explanation of what failed and why).</p>
+
+  <div class="warn">
+    <div class="warn-label">Compounding Errors in Long-Horizon Tasks</div>
+    <p>Each planning and execution step has some probability of error. In a 5-step plan with 90% reliability per step, the probability that all 5 steps succeed is only 0.9^5 ≈ 59%. In a 20-step plan, it drops to 0.9^20 ≈ 12%. Long-horizon tasks compound errors dramatically — an early mistake that isn't detected propagates forward and gets built upon, potentially invalidating many subsequent steps. This is the fundamental reliability challenge of agentic systems. Mitigation strategies: validate outputs at each step before using them as inputs to the next, build in checkpoints where an overseer reviews progress, and design tasks to minimize the number of sequential dependent steps.</p>
+  </div>
+
+  <h2>When to generate a plan vs act immediately</h2>
+  <p>Not every task benefits from upfront planning. For simple, well-defined tasks with a clear sequence of actions, generating a full plan before acting adds latency without adding value. For complex, ambiguous tasks where the path forward is unclear, planning is essential.</p>
+  <p>Practical heuristics for when to plan upfront:</p>
+  <ul>
+    <li><strong>Plan when</strong> the task has more than 3–4 sequential steps, when subtasks have complex dependencies, when the task involves irreversible actions, or when partial failure would be very costly</li>
+    <li><strong>Act immediately when</strong> the task is a single tool call or simple lookup, when the path forward is unambiguous, or when latency is a higher priority than optimality</li>
+    <li><strong>Use ReAct</strong> as the default for most tasks — it provides the benefits of planning (structured reasoning) without the cost of committing to a full upfront plan that may be invalidated by early results</li>
+  </ul>
+
+  <h2>Plan representation formats</h2>
+  <p>How a plan is represented — in the agent's context or in an external data structure — affects how easily it can be manipulated, validated, and tracked.</p>
+  <p><strong>Natural language lists</strong> are the most common format for in-context plans. Easy to generate, easy for the model to reason over, but difficult to programmatically parse or track status. Good for short plans in single-agent settings.</p>
+  <p><strong>Structured JSON task graphs</strong> provide machine-readable plans that can be tracked, modified, and executed programmatically. Each step has an ID, description, dependencies, status, and result. More complex to generate but far more amenable to monitoring and manipulation. Required for multi-agent systems where different agents execute different steps.</p>
+  <p><strong>Markdown checklists</strong> occupy a middle ground: human-readable, easy to render in UIs, and partially parseable. The agent can update checkboxes as steps complete, giving users visibility into progress. Useful for tasks where human oversight is part of the design.</p>
+
+  <div class="good">
+    <div class="good-label">The Value of Explicit Planning</div>
+    <p>Experiments across multiple agent benchmarks consistently show that agents prompted to generate an explicit plan before acting outperform agents that jump directly to action, even when the plan is never explicitly validated. The act of writing out a plan forces the model to clarify its approach, identify dependencies, and surface hidden assumptions — all of which improve execution quality. The cost is a few hundred extra tokens and a fraction of a second of latency. For any multi-step task, the investment is almost always worth it.</p>
+  </div>
+
+</div>
+</main>
+</div>
+
+<div class="sticky-bar" id="sticky-bar">
+  <div class="sticky-bar-reading" id="sticky-reading">Read to the end to unlock the next module</div>
+  <div class="sticky-bar-track"><div class="sticky-bar-fill" id="sticky-fill"></div></div>
+  <div class="sticky-bar-label" id="sticky-label">0%</div>
+  <button class="sticky-bar-btn" id="sticky-btn" onclick="completeAndNext()">Module 7: Retrieval-Augmented Generation →</button>
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import { getFirestore, doc, setDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  const app=initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+  const auth=getAuth(app);const db=getFirestore(app);
+  let currentUser=null;
+  onAuthStateChanged(auth,u=>{currentUser=u;});
+
+  window.toggleTheme=function(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='☾'):(h.setAttribute('data-theme','dark'),i.textContent='☀');};
+  window.addEventListener('scroll',()=>{const d=document.documentElement,s=d.scrollTop||document.body.scrollTop,t=d.scrollHeight-d.clientHeight;document.getElementById('progress').style.width=(s/t*100)+'%';});
+
+  let unlocked=false;
+  function updateScrollProgress(){
+    const scrolled=window.scrollY+window.innerHeight;
+    const total=document.documentElement.scrollHeight;
+    const pct=Math.min(100,Math.round((scrolled/total)*100));
+    const fill=document.getElementById('sticky-fill');
+    const label=document.getElementById('sticky-label');
+    const btn=document.getElementById('sticky-btn');
+    const reading=document.getElementById('sticky-reading');
+    if(fill)fill.style.width=pct+'%';
+    if(label)label.textContent=pct+'%';
+    if(pct>=95&&!unlocked){
+      unlocked=true;
+      if(btn)btn.style.display='block';
+      if(reading)reading.style.display='none';
+      if(fill)fill.style.background='#22c55e';
+      if(label)label.style.color='#22c55e';
+    }
+  }
+  window.addEventListener('scroll',updateScrollProgress);
+  updateScrollProgress();
+
+  window.completeAndNext=async function(){
+    if(currentUser){
+      try{
+        await setDoc(doc(db,'users',currentUser.uid),{
+          agentsModules: arrayUnion('m6')
+        },{merge:true});
+      }catch(e){}
+    }
+    window.location.href='agents-module-7.html';
+  };
+</script>
+</body>
+</html>

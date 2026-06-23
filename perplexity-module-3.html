@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 3: Prompting Perplexity Effectively — Mastering Perplexity — Meridian Institute of AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#00ADB5;--accent-dim:rgba(0,173,181,0.1);--nav-bg:rgba(8,8,8,0.9);--callout-bg:rgba(0,173,181,0.07);--callout-border:rgba(0,173,181,0.25);--good-bg:rgba(34,197,94,0.07);--good-border:rgba(34,197,94,0.2);--bad-bg:rgba(239,68,68,0.07);--bad-border:rgba(239,68,68,0.2);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#008891;--accent-dim:rgba(0,136,145,0.08);--nav-bg:rgba(250,250,248,0.9);--callout-bg:rgba(0,136,145,0.05);--callout-border:rgba(0,136,145,0.2);--good-bg:rgba(22,163,74,0.06);--good-border:rgba(22,163,74,0.2);--bad-bg:rgba(220,38,38,0.05);--bad-border:rgba(220,38,38,0.2);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}html{scroll-behavior:smooth;overflow-x:hidden;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.7;overflow-x:hidden;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}
+  .nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}.nav-back{font-size:13px;color:var(--text-2);text-decoration:none;}.nav-label{font-size:13px;color:var(--text-3);}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;}
+  .progress-bar{position:fixed;top:60px;left:0;right:0;z-index:99;height:2px;background:var(--border);}.progress-fill{height:100%;background:var(--accent);width:0%;}
+  .page-wrapper{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:100vh;padding-top:62px;}
+  .sidebar{position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto;border-right:1px solid var(--border);padding:32px 24px;background:var(--bg-2);}
+  .sidebar-course{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;}
+  .sidebar-course-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+  .sidebar-module{margin-bottom:4px;}
+  .sidebar-module-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:13px;color:var(--text-2);text-decoration:none;transition:all 0.2s;line-height:1.4;}
+  .sidebar-module-link:hover{background:var(--bg-3);color:var(--text);}.sidebar-module-link.active{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-num{font-size:11px;font-weight:500;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--bg-4);color:var(--text-3);}
+  .sidebar-module-link.active .sidebar-num{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-divider{height:1px;background:var(--border);margin:20px 0;}
+  .sidebar-progress-label{font-size:12px;color:var(--text-3);margin-bottom:8px;display:flex;justify-content:space-between;}
+  .sidebar-progress-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sidebar-progress-fill{height:100%;width:42%;background:var(--accent);border-radius:2px;}
+  main{display:block;min-width:0;}.content{max-width:760px;width:100%;padding:60px 64px 140px;margin:0 auto;}
+  .module-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+  .module-tag{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(0,173,181,0.2);padding:4px 12px;border-radius:100px;}
+  .module-meta{font-size:12px;color:var(--text-3);}
+  h1{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1.05;letter-spacing:-0.02em;color:var(--text);margin-bottom:24px;}
+  .intro-text{font-size:19px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+  h2{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:400;color:var(--text);margin:52px 0 18px;line-height:1.2;}
+  h3{font-size:16px;font-weight:500;color:var(--text);margin:32px 0 12px;}
+  p{font-size:16px;font-weight:300;color:var(--text-2);line-height:1.8;margin-bottom:20px;}strong{font-weight:500;color:var(--text);}
+  .callout{background:var(--callout-bg);border:1px solid var(--callout-border);border-radius:12px;padding:24px 28px;margin:32px 0;}
+  .callout-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+  .callout p{margin:0;font-size:15px;color:var(--text-2);}.callout p+p{margin-top:12px;}
+  .good{background:var(--good-bg);border:1px solid var(--good-border);border-radius:12px;padding:20px 24px;margin:12px 0;}
+  .good-label{font-size:10px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:#22c55e;margin-bottom:10px;}
+  .bad{background:var(--bad-bg);border:1px solid var(--bad-border);border-radius:12px;padding:20px 24px;margin:12px 0;}
+  .bad-label{font-size:10px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:#ef4444;margin-bottom:10px;}
+  .good p,.bad p{margin:0;font-size:15px;color:var(--text-2);}
+  .prompt-text{font-size:14px;color:var(--text-2);line-height:1.7;white-space:pre-wrap;}
+  .technique{background:var(--bg-2);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:0 12px 12px 0;padding:20px 24px;margin:16px 0;}
+  .technique-title{font-size:15px;font-weight:500;color:var(--text);margin-bottom:8px;}.technique-desc{font-size:14px;color:var(--text-2);line-height:1.65;margin:0;}
+  .sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:var(--bg-2);border-top:1px solid var(--border-2);padding:14px 5%;display:flex;align-items:center;justify-content:space-between;gap:16px;backdrop-filter:blur(12px);}
+  .sticky-bar-track{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sticky-bar-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.2s;width:0%;}
+  .sticky-bar-label{font-size:12px;color:var(--text-3);white-space:nowrap;min-width:60px;text-align:right;}
+  .sticky-bar-btn{padding:10px 20px;border-radius:8px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;background:var(--accent);color:#fff;border:none;cursor:pointer;white-space:nowrap;transition:opacity 0.2s;display:none;}
+  .sticky-bar-reading{font-size:12px;color:var(--text-3);white-space:nowrap;}
+  @media(max-width:900px){.page-wrapper{grid-template-columns:1fr;}.sidebar{display:none;}.content{padding:40px 24px 120px;}h1{font-size:38px;}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="index.html" class="nav-back">🏠 Home</a>
+    <div class="nav-divider"></div>
+    <a href="courses.html" class="nav-back">← Mastering Perplexity</a>
+    <div class="nav-divider"></div>
+    <span class="nav-label">Module 3</span>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">☀</span></button>
+</nav>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+<div class="page-wrapper">
+<aside class="sidebar">
+  <div class="sidebar-course">Course</div>
+  <div class="sidebar-course-name">Mastering Perplexity</div>
+  <div class="sidebar-module"><a href="perplexity-module-1.html" class="sidebar-module-link"><span class="sidebar-num">1</span>Understanding Perplexity</a></div>
+  <div class="sidebar-module"><a href="perplexity-module-2.html" class="sidebar-module-link"><span class="sidebar-num">2</span>How Perplexity Works</a></div>
+  <div class="sidebar-module"><a href="perplexity-module-3.html" class="sidebar-module-link active"><span class="sidebar-num">3</span>Prompting Perplexity Effectively</a></div>
+  <div class="sidebar-module"><a href="perplexity-module-4.html" class="sidebar-module-link"><span class="sidebar-num">4</span>Focus Modes & Pro Features</a></div>
+  <div class="sidebar-module"><a href="perplexity-module-5.html" class="sidebar-module-link"><span class="sidebar-num">5</span>Spaces & Collaboration</a></div>
+  <div class="sidebar-module"><a href="perplexity-module-6.html" class="sidebar-module-link"><span class="sidebar-num">6</span>Perplexity in the Real World</a></div>
+  <div class="sidebar-module"><a href="perplexity-module-7.html" class="sidebar-module-link"><span class="sidebar-num">7</span>Perplexity vs The Field</a></div>
+  <div class="sidebar-module"><a href="quiz-perplexity.html" class="sidebar-module-link" style="color:var(--accent);margin-top:4px;"><span class="sidebar-num" style="background:var(--accent-dim);color:var(--accent);">✦</span>Final Assessment</a></div>
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-progress-label"><span>Course progress</span><span style="color:var(--accent);">3 / 7</span></div>
+  <div class="sidebar-progress-track"><div class="sidebar-progress-fill"></div></div>
+</aside>
+<main>
+<div class="content">
+  <div class="module-eyebrow"><span class="module-tag">Module 3</span><span class="module-meta">20 min read · Mastering Perplexity</span></div>
+  <h1>Prompting Perplexity Effectively</h1>
+  <p class="intro-text">Perplexity prompting is different from prompting Claude or ChatGPT. You're not writing to a language model — you're writing to a search-synthesis system. The techniques that make Claude produce better writing don't apply here. What matters is query precision, scope definition, and knowing how to use follow-up questions to drill down progressively.</p>
+
+  <h2>Think in queries, not conversations</h2>
+  <p>The biggest mistake Perplexity beginners make is prompting it like they prompt Claude — with long, detailed, context-heavy instructions. Perplexity works best with focused queries that map directly to something searchable. Save the elaborate prompt engineering for your writing and analysis tools.</p>
+
+  <div class="bad">
+    <div class="bad-label">❌ Prompting Perplexity like an LLM</div>
+    <p class="prompt-text">You are a business analyst with expertise in market research. I need you to carefully consider multiple perspectives and provide a nuanced analysis of the competitive landscape for electric vehicles, including historical context, current players, and future projections. Please organize your response with headers and use a professional tone.</p>
+  </div>
+
+  <div class="good">
+    <div class="good-label">✓ Prompting Perplexity like a search engine</div>
+    <p class="prompt-text">What is the current market share breakdown among major EV manufacturers in the US as of 2024?</p>
+  </div>
+
+  <p>The second query gets you a sourced, current, precise answer. The first gets you a long synthesis that buries the actual data you need. Save the "nuanced analysis" framing for Claude — Perplexity's job is to surface accurate current information, not to perform rhetorical analysis.</p>
+
+  <h2>Specificity is everything</h2>
+  <p>Perplexity's search quality is directly determined by query specificity. Vague queries return vague, high-level answers. Specific queries return precise, useful data.</p>
+
+  <div class="technique">
+    <div class="technique-title">Add time anchors</div>
+    <div class="technique-desc">"What are the most cited AI papers of 2024?" beats "What are important AI papers?" The year anchor tells Perplexity to weight recent sources and filters out outdated information. Use "as of [month year]", "in the last 6 months", "current as of 2025" to control recency.</div>
+  </div>
+  <div class="technique">
+    <div class="technique-title">Specify the type of answer you want</div>
+    <div class="technique-desc">"What is the price of X" vs "What are the pricing tiers and what's included in each." The second query shapes the structure of what gets searched and synthesized. Telling Perplexity the format of the answer you need produces better-structured results.</div>
+  </div>
+  <div class="technique">
+    <div class="technique-title">Name the geography and context</div>
+    <div class="technique-desc">"What are the regulations for X" is ambiguous. "What are the US federal regulations for X as of 2024" is searchable. Geographic and regulatory context eliminates irrelevant results and focuses the synthesis on what's actually applicable to you.</div>
+  </div>
+  <div class="technique">
+    <div class="technique-title">Ask for comparisons explicitly</div>
+    <div class="technique-desc">"Compare X and Y on price, features, and user reviews" produces a structured comparative answer. Without the "compare" framing, you'd need to ask about X and Y separately and synthesize yourself.</div>
+  </div>
+
+  <h2>The progressive narrowing technique</h2>
+  <p>Perplexity's follow-up conversation is underused. The best research workflow isn't one perfect query — it's a series of progressively specific questions that drill down from overview to detail.</p>
+
+  <div class="good">
+    <div class="good-label">✓ Progressive narrowing in action</div>
+    <p class="prompt-text">Query 1: "What are the main approaches to carbon capture technology currently being deployed at scale?"
+
+Query 2 (follow-up): "Which of those has the lowest cost per ton of CO2 as of 2024?"
+
+Query 3: "What are the main engineering challenges preventing that approach from scaling further?"
+
+Query 4: "Which companies are working on solving those specific challenges?"</p>
+  </div>
+
+  <p>Each query builds on the previous. By query 4, you have a highly specific, sourced answer that would have been impossible to get with a single broad question — because the context developed through the conversation shapes what Perplexity searches for.</p>
+
+  <h2>Triggering source verification</h2>
+  <p>You can prompt Perplexity to be more careful about source quality by specifying what kinds of sources you want.</p>
+
+  <div class="technique">
+    <div class="technique-title">Restrict to primary sources</div>
+    <div class="technique-desc">"According to official company announcements and filings" or "based on peer-reviewed research" steers Perplexity toward authoritative sources rather than secondary aggregators or opinion pieces.</div>
+  </div>
+  <div class="technique">
+    <div class="technique-title">Ask for conflicting perspectives</div>
+    <div class="technique-desc">"What do different experts say about X — including any disagreements" forces Perplexity to surface the range of views rather than presenting one perspective as settled. For contested topics, this gives you a more accurate picture.</div>
+  </div>
+  <div class="technique">
+    <div class="technique-title">Ask what's uncertain</div>
+    <div class="technique-desc">"What is still unknown or debated about X?" produces a different and often more valuable answer than just asking what is known. This surfaces the limits of current knowledge, which is critical for research.</div>
+  </div>
+
+  <h2>When NOT to use Perplexity</h2>
+  <p>Knowing Perplexity's limits is as important as knowing its strengths. Reach for a different tool when you need:</p>
+  <p><strong>Creative or analytical writing.</strong> Perplexity can write, but it's not what it's optimized for. Claude produces better essays, analyses, and arguments.</p>
+  <p><strong>Reasoning about your own documents.</strong> Perplexity searches the web. It can't analyze files you upload with the depth Claude can bring to document analysis.</p>
+  <p><strong>Complex multi-step reasoning.</strong> For hard logic problems, code architecture, or strategic thinking, Claude or ChatGPT's o-series models produce better results.</p>
+  <p><strong>Highly specialized or obscure topics with thin web coverage.</strong> If few quality sources exist on the web about your topic, Perplexity's output degrades significantly — it can only synthesize what it finds.</p>
+
+  <div class="callout">
+    <div class="callout-label">The meta-skill</div>
+    <p>The highest-value Perplexity skill is knowing exactly when to use it and when to switch tools. Use it to establish factual grounding and gather current information — then take that output to Claude or ChatGPT to analyze, write about, or reason from. The two workflows complement each other perfectly.</p>
+  </div>
+
+</div>
+</main>
+</div>
+<div class="sticky-bar">
+  <div class="sticky-bar-reading" id="sticky-reading">Read to the end to unlock the next module</div>
+  <div class="sticky-bar-track"><div class="sticky-bar-fill" id="sticky-fill"></div></div>
+  <div class="sticky-bar-label" id="sticky-label">0%</div>
+  <button class="sticky-bar-btn" id="sticky-btn" onclick="completeAndNext()">Module 4: Focus Modes & Pro Features →</button>
+</div>
+<script>
+  function toggleTheme(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='☾'):(h.setAttribute('data-theme','dark'),i.textContent='☀');}
+  window.addEventListener('scroll',()=>{const d=document.documentElement,s=d.scrollTop||document.body.scrollTop,t=d.scrollHeight-d.clientHeight;document.getElementById('progress').style.width=(s/t*100)+'%';});
+  
+  let unlocked=false;
+  function updateScrollProgress(){const pct=Math.min(100,Math.round(((window.scrollY+window.innerHeight)/document.documentElement.scrollHeight)*100));document.getElementById('sticky-fill').style.width=pct+'%';document.getElementById('sticky-label').textContent=pct+'%';if(pct>=95&&!unlocked){unlocked=true;document.getElementById('sticky-btn').style.display='block';document.getElementById('sticky-reading').style.display='none';document.getElementById('sticky-fill').style.background='#22c55e';document.getElementById('sticky-label').style.color='#22c55e';}}
+  window.addEventListener('scroll',updateScrollProgress);updateScrollProgress();
+  function completeAndNext(){
+    if(window.__meridianSaveProgress){ try{ window.__meridianSaveProgress("m3"); }catch(e){} }
+    setTimeout(function(){ window.location.href="perplexity-module-4.html"; }, 120);
+  }
+</script>
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import { getFirestore, doc, setDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  const app = initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+  const auth = getAuth(app); const db = getFirestore(app);
+  let meridianUser = null;
+  onAuthStateChanged(auth, u => { meridianUser = u; });
+  window.__meridianSaveProgress = async function(mValue){
+    if(!meridianUser) return;
+    try { await setDoc(doc(db,"users",meridianUser.uid), { perplexityModules: arrayUnion(mValue) }, { merge: true }); } catch(e) {}
+  };
+</script>
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  const _gapp = initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+  const _gauth = getAuth(_gapp); const _gdb = getFirestore(_gapp);
+  onAuthStateChanged(_gauth, async (u) => {
+    if (!u) return;
+    try {
+      const snap = await getDoc(doc(_gdb, "users", u.uid));
+      const data = snap.exists() ? snap.data() : {};
+      const done = Array.isArray(data.perplexityModules) ? data.perplexityModules : [];
+      if (!done.includes("m2")) {
+        document.body.innerHTML = `<div style=\"min-height:100vh;display:flex;align-items:center;justify-content:center;background:#080808;font-family:DM Sans,sans-serif;padding:24px;\"><div style=\"max-width:440px;text-align:center;background:#111;border:1px solid rgba(255,255,255,0.08);border-radius:20px;padding:48px;\"><div style=\"font-size:48px;margin-bottom:20px;\">&#128274;</div><div style=\"font-size:20px;font-weight:500;color:#f0f0f0;margin-bottom:12px;\">Module locked</div><div style=\"font-size:14px;color:#a0a0a0;margin-bottom:28px;line-height:1.6;\">Complete the previous module before continuing.</div><a href=\"perplexity-module-1.html\" style=\"display:inline-block;padding:12px 24px;background:#00ADB5;color:#fff;border-radius:10px;font-size:14px;font-weight:500;text-decoration:none;\">&#8592; Back to the course</a></div></div>`;
+      }
+    } catch(e) {}
+  });
+</script>
+</body>
+</html>

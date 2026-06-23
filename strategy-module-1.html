@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 1: The AI Strategic Landscape — AI Strategy for Leaders — Meridian Institute of AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#1E40AF;--accent-dim:rgba(30,64,175,0.1);--accent-dim2:rgba(30,64,175,0.05);--nav-bg:rgba(8,8,8,0.9);--callout-bg:rgba(30,64,175,0.07);--callout-border:rgba(30,64,175,0.25);--good-bg:rgba(34,197,94,0.07);--good-border:rgba(34,197,94,0.2);--warn-bg:rgba(251,146,60,0.07);--warn-border:rgba(251,146,60,0.2);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#1E3A8A;--accent-dim:rgba(30,58,138,0.08);--accent-dim2:rgba(30,58,138,0.04);--nav-bg:rgba(250,250,248,0.9);--callout-bg:rgba(30,58,138,0.05);--callout-border:rgba(30,58,138,0.2);--good-bg:rgba(22,163,74,0.06);--good-border:rgba(22,163,74,0.2);--warn-bg:rgba(234,88,12,0.05);--warn-border:rgba(234,88,12,0.2);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;overflow-x:hidden;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.7;overflow-x:hidden;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}
+  .nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}
+  .nav-back{font-size:13px;color:var(--text-2);text-decoration:none;transition:color 0.2s;}
+  .nav-back:hover{color:var(--text);}
+  .nav-label{font-size:13px;color:var(--text-3);}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;transition:all 0.2s;}
+  .theme-toggle:hover{background:var(--bg-3);color:var(--text);}
+  .progress-bar{position:fixed;top:60px;left:0;right:0;z-index:99;height:2px;background:var(--border);}
+  .progress-fill{height:100%;background:var(--accent);width:0%;transition:width 0.1s;}
+  .page-wrapper{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:100vh;padding-top:62px;overflow:hidden;}
+  .sidebar{position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto;border-right:1px solid var(--border);padding:32px 24px;background:var(--bg-2);}
+  .sidebar-course{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;}
+  .sidebar-course-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+  .sidebar-module{margin-bottom:4px;}
+  .sidebar-module-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:13px;color:var(--text-2);text-decoration:none;transition:all 0.2s;line-height:1.4;}
+  .sidebar-module-link:hover{background:var(--bg-3);color:var(--text);}
+  .sidebar-module-link.active{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-num{font-size:11px;font-weight:500;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--bg-4);color:var(--text-3);}
+  .sidebar-module-link.active .sidebar-num{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-divider{height:1px;background:var(--border);margin:20px 0;}
+  .sidebar-progress-label{font-size:12px;color:var(--text-3);margin-bottom:8px;display:flex;justify-content:space-between;}
+  .sidebar-progress-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sidebar-progress-fill{height:100%;width:10%;background:var(--accent);border-radius:2px;}
+  main{display:block;min-width:0;overflow:hidden;}
+  .content{max-width:760px;width:100%;padding:60px 64px 140px;margin:0 auto;}
+  .module-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+  .module-tag{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(30,64,175,0.2);padding:4px 12px;border-radius:100px;}
+  .module-meta{font-size:12px;color:var(--text-3);}
+  h1{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1.05;letter-spacing:-0.02em;color:var(--text);margin-bottom:24px;}
+  .intro-text{font-size:19px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+  h2{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:400;color:var(--text);margin:52px 0 18px;line-height:1.2;}
+  h3{font-size:16px;font-weight:500;color:var(--text);margin:32px 0 12px;}
+  p{font-size:16px;font-weight:300;color:var(--text-2);line-height:1.8;margin-bottom:20px;}
+  strong{font-weight:500;color:var(--text);}
+  em{font-style:italic;}
+  ul,ol{margin:0 0 20px 22px;color:var(--text-2);}
+  li{font-size:16px;font-weight:300;line-height:1.8;margin-bottom:8px;}
+  .callout{background:var(--callout-bg);border:1px solid var(--callout-border);border-radius:12px;padding:24px 28px;margin:32px 0;}
+  .callout-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+  .callout p{margin:0;font-size:15px;color:var(--text-2);}
+  .callout p+p{margin-top:12px;}
+  .good{background:var(--good-bg);border:1px solid var(--good-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .good-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#22c55e;margin-bottom:10px;}
+  .good p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn{background:var(--warn-bg);border:1px solid var(--warn-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .warn-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#fb923c;margin-bottom:10px;}
+  .warn p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn p+p{margin-top:12px;}
+  .principle-list{display:flex;flex-direction:column;gap:12px;margin:24px 0;}
+  .principle{background:var(--bg-2);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:0 12px 12px 0;padding:20px 24px;}
+  .principle-title{font-size:15px;font-weight:500;color:var(--text);margin-bottom:6px;}
+  .principle-desc{font-size:14px;color:var(--text-2);line-height:1.65;margin:0;}
+  .sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:var(--bg-2);border-top:1px solid var(--border-2);padding:14px 5%;display:flex;align-items:center;justify-content:space-between;gap:16px;backdrop-filter:blur(12px);}
+  .sticky-bar-track{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sticky-bar-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.2s;width:0%;}
+  .sticky-bar-label{font-size:12px;color:var(--text-3);white-space:nowrap;min-width:60px;text-align:right;}
+  .sticky-bar-btn{padding:10px 20px;border-radius:8px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;background:var(--accent);color:#fff;border:none;cursor:pointer;white-space:nowrap;transition:opacity 0.2s;display:none;}
+  .sticky-bar-btn:hover{opacity:0.88;}
+  .sticky-bar-reading{font-size:12px;color:var(--text-3);white-space:nowrap;}
+  @media(max-width:900px){.page-wrapper{grid-template-columns:1fr;}.sidebar{display:none;}.content{padding:40px 24px 120px;}h1{font-size:38px;}}
+  @media(max-width:600px){.content{padding:28px 16px 120px;}h1{font-size:30px;}h2{font-size:24px;}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="courses.html" class="nav-back">&#8592; AI Strategy for Leaders</a>
+    <div class="nav-divider"></div>
+    <span class="nav-label">Module 1</span>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">&#9728;</span></button>
+</nav>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+<div class="page-wrapper">
+<aside class="sidebar">
+  <div class="sidebar-course">Expert Track</div>
+  <div class="sidebar-course-name">AI Strategy for Leaders</div>
+  <div class="sidebar-module"><a href="strategy-module-1.html" class="sidebar-module-link active"><span class="sidebar-num">1</span>The AI Strategic Landscape</a></div>
+  <div class="sidebar-module"><a href="strategy-module-2.html" class="sidebar-module-link"><span class="sidebar-num">2</span>Identifying AI Opportunities</a></div>
+  <div class="sidebar-module"><a href="strategy-module-3.html" class="sidebar-module-link"><span class="sidebar-num">3</span>Build vs. Buy vs. Partner</a></div>
+  <div class="sidebar-module"><a href="strategy-module-4.html" class="sidebar-module-link"><span class="sidebar-num">4</span>Data Strategy as Competitive Advantage</a></div>
+  <div class="sidebar-module"><a href="strategy-module-5.html" class="sidebar-module-link"><span class="sidebar-num">5</span>AI Talent and Organizational Design</a></div>
+  <div class="sidebar-module"><a href="strategy-module-6.html" class="sidebar-module-link"><span class="sidebar-num">6</span>Managing AI Projects and Vendors</a></div>
+  <div class="sidebar-module"><a href="strategy-module-7.html" class="sidebar-module-link"><span class="sidebar-num">7</span>Measuring AI ROI</a></div>
+  <div class="sidebar-module"><a href="strategy-module-8.html" class="sidebar-module-link"><span class="sidebar-num">8</span>AI Risk Management</a></div>
+  <div class="sidebar-module"><a href="strategy-module-9.html" class="sidebar-module-link"><span class="sidebar-num">9</span>Change Management for AI</a></div>
+  <div class="sidebar-module"><a href="strategy-module-10.html" class="sidebar-module-link"><span class="sidebar-num">10</span>Building an AI-First Culture</a></div>
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-module"><a href="quiz-strategy.html" class="sidebar-module-link"><span class="sidebar-num">&#10003;</span>Final Assessment</a></div>
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-progress-label"><span>Course progress</span><span style="color:var(--accent);">1 / 10</span></div>
+  <div class="sidebar-progress-track"><div class="sidebar-progress-fill" style="width:10%;"></div></div>
+</aside>
+<main><div class="content">
+  <div class="module-eyebrow"><span class="module-tag">Module 1 · Expert Track</span><span class="module-meta">15 min read · AI Strategy for Leaders</span></div>
+  <h1>The AI Strategic Landscape</h1>
+  <p class="intro-text">Every technology wave produces winners who moved decisively and casualties who moved too late or in the wrong direction. AI is not different in that regard — but it is different in almost every other way. Understanding where AI sits in its adoption curve, how it reshapes competitive dynamics, and what you as a non-technical executive actually need to know is the prerequisite for every strategic decision that follows.</p>
+
+  <h2>Where AI Actually Sits in Its Adoption Curve</h2>
+  <p>Technology adoption curves are seductive oversimplifications, but they remain useful orientation tools. The question executives most commonly ask — "is AI hype or reality?" — misses the point. AI contains multitudes: some applications are fully mature, others are overpromised, and the frontier is advancing faster than any prior general-purpose technology.</p>
+  <p>Consider the contrast. <strong>Narrow AI applications</strong> — fraud detection, demand forecasting, image classification, recommendation engines — have been deployed at scale for more than a decade. Amazon's recommendation engine has been running since 1998. Credit card fraud detection using machine learning has been standard practice since the early 2000s. These applications are not experimental. They are infrastructure. If your competitors use them and you do not, you are operating at a structural disadvantage.</p>
+  <p><strong>Large language models and generative AI</strong> are a different story. The release of GPT-4 in 2023, followed by rapid capability gains across multiple frontier labs, created a step change in what AI can do with unstructured text, code, images, and increasingly video and audio. These capabilities are genuinely new. The application layer is still being discovered. Organizations that deployed generative AI tools in 2023–2024 were early adopters; by 2026, they are crossing the mainstream adoption threshold in most enterprise sectors.</p>
+  <p><strong>Agentic AI</strong> — systems that take sequences of actions autonomously, use tools, browse the web, write and execute code, and coordinate with other AI agents — is the next wave, currently moving from research prototypes to early enterprise deployment. The organizations building the operational capabilities to harness agentic AI now will have advantages that are genuinely difficult to replicate later.</p>
+
+  <div class="callout">
+    <div class="callout-label">Strategic Implication</div>
+    <p>Do not treat AI as a single phenomenon with a single adoption stage. Disaggregate your thinking: narrow AI is table stakes; generative AI is now mainstream for forward-leaning organizations; agentic AI is the next competitive frontier. Your strategy needs to address all three simultaneously.</p>
+  </div>
+
+  <h2>Competitive Dynamics: How AI Reshapes Advantage</h2>
+  <p>Michael Porter's framework of competitive advantage — cost leadership, differentiation, and focus — remains valid, but AI rewrites how each is achieved. The mechanisms of competitive advantage are being disrupted across all three dimensions simultaneously, which is why AI feels so strategically unsettling.</p>
+
+  <h3>Cost Dynamics</h3>
+  <p>AI dramatically compresses the marginal cost of cognitive work. Tasks that previously required human judgment at each instance — answering customer queries, drafting documents, analyzing data, reviewing code, generating marketing copy — can now be executed at near-zero marginal cost per unit. This fundamentally changes cost structures in knowledge-intensive industries. A law firm that deploys AI for initial document review is not just slightly more efficient: it has a structurally different cost model than one that does not. The same applies to software companies, consulting firms, financial services organizations, and healthcare providers.</p>
+  <p>But the cost advantage only compounds if you act on it. Organizations that capture AI-driven cost reductions and reinvest them in better service, lower prices, or expanded capability accelerate away from competitors. Organizations that capture the savings but do nothing else buy time without building advantage.</p>
+
+  <h3>Differentiation Dynamics</h3>
+  <p>AI also reshapes differentiation. Personalization at scale — previously available only to the largest consumer internet platforms — is now accessible to any organization with reasonable customer data. Netflix, Spotify, and Amazon built differentiation through recommendation algorithms that required enormous teams and infrastructure. Similar capabilities are now available via API for a few cents per query. The differentiation frontier has moved: what was distinctive two years ago is becoming commoditized. Sustained differentiation through AI requires proprietary data, proprietary workflows, or proprietary models — not just access to the same foundation models as competitors.</p>
+
+  <h3>Speed Dynamics</h3>
+  <p>Perhaps the most underappreciated shift is in the speed of iteration. Organizations that embed AI into their product development, customer feedback analysis, and decision-making processes can learn and adapt faster than those that do not. Speed of learning is increasingly the primary competitive variable. Amazon's famous "two-pizza team" structure was designed to maximize iteration speed in the pre-AI era. In the AI era, a team augmented by AI tools can do what previously required a much larger team — and iterate faster. This is not an incremental efficiency gain. It changes what is possible for small teams, startups, and resource-constrained organizations in ways that incumbent advantages cannot easily counteract.</p>
+
+  <h2>AI Capabilities: What Leaders Need to Understand</h2>
+  <p>You do not need to understand the mathematics of transformer architectures to make good AI strategy decisions. But you do need a functional mental model of what AI can and cannot do. Overestimating AI leads to failed projects and wasted capital. Underestimating AI leads to missed opportunities and competitive vulnerabilities.</p>
+
+  <h3>What AI Does Well</h3>
+  <p>Current AI systems — particularly large language models and their multimodal extensions — excel at tasks that involve:</p>
+  <ul>
+    <li><strong>Pattern recognition at scale</strong> — identifying regularities across large datasets that humans would take months to analyze</li>
+    <li><strong>Language generation and transformation</strong> — drafting, summarizing, translating, reformatting, and editing text</li>
+    <li><strong>Code generation and review</strong> — writing, debugging, and explaining software code across dozens of languages</li>
+    <li><strong>Information retrieval and synthesis</strong> — finding relevant information across large document sets and producing coherent summaries</li>
+    <li><strong>Classification and routing</strong> — categorizing inputs and directing them to appropriate responses or processes</li>
+    <li><strong>Multimodal understanding</strong> — interpreting images, charts, tables, and combinations of text and visual content</li>
+  </ul>
+
+  <h3>What AI Does Poorly</h3>
+  <p>The failure modes matter as much as the capabilities. AI systems struggle with:</p>
+  <ul>
+    <li><strong>Reliable factual grounding</strong> — language models hallucinate, presenting confident assertions that are factually incorrect. In any application where factual accuracy is critical, AI outputs require verification.</li>
+    <li><strong>Novel reasoning under genuine uncertainty</strong> — AI is excellent at pattern-matching against training data but does not generalize to genuinely novel situations the way a skilled expert does</li>
+    <li><strong>Stable performance in adversarial environments</strong> — AI systems can be manipulated by carefully crafted inputs (prompt injection, adversarial examples) in ways that human workers are not</li>
+    <li><strong>Nuanced judgment in high-stakes contexts</strong> — medical diagnosis, legal advice, crisis management — domains where the consequences of error are severe and irreversible require human judgment in the loop</li>
+    <li><strong>Up-to-date knowledge</strong> — most AI models have knowledge cutoffs and are unaware of recent events unless provided real-time retrieval</li>
+  </ul>
+
+  <div class="warn">
+    <div class="warn-label">Common Executive Mistake</div>
+    <p>The most dangerous AI strategy error is deploying AI in a context where its failure mode is invisible. When AI generates a plausible-sounding but incorrect answer, and no human reviews it, the error propagates. Design every AI deployment with a clear answer to: "What happens when this system is wrong, and how will we know?"</p>
+  </div>
+
+  <h2>Reading the Competitive Landscape as a Non-Technical Executive</h2>
+  <p>If you are not a technologist, you cannot evaluate AI systems by reading their architecture papers. You can, however, read the competitive landscape through a set of observable signals that reliably indicate where AI advantage is being built.</p>
+
+  <h3>Hiring Signals</h3>
+  <p>Where are competitors hiring? Machine learning engineers, data scientists, AI product managers, and AI safety specialists appearing in competitor job postings indicate where they are building AI capability. LinkedIn, Glassdoor, and specialized job boards give you real-time intelligence on where talent is being deployed. A competitor opening an AI center of excellence in a new city is a strategic signal that deserves attention.</p>
+
+  <h3>Partnership and Acquisition Signals</h3>
+  <p>AI capability can be acquired through partnerships and M&A as well as internal development. When Google acquired DeepMind in 2014, it was a decade-long AI bet that reshaped the company's capabilities. When Salesforce acquired Tableau and then Einstein AI capabilities, it was building AI into its core product. Track your competitors' partnerships with AI infrastructure companies, AI application vendors, and research institutions. These are forward-looking indicators of where they intend to compete.</p>
+
+  <h3>Product and Service Signals</h3>
+  <p>The most direct signal is product changes. When a competitor's product gets dramatically faster, more personalized, more accurate, or more capable in a way that cannot be explained by simple engineering work, AI is usually the explanation. Systematically testing competitor products is not just competitive intelligence — it is essential calibration for your own ambition level.</p>
+
+  <h3>Investor and Analyst Signals</h3>
+  <p>Venture capital investment patterns reveal where investors expect AI to create value. CB Insights, Pitchbook, and analyst reports from Gartner, Forrester, and McKinsey track AI investment by sector with granularity that is strategically useful. If your industry is seeing a surge in AI-focused venture investment, the competitive landscape is about to change — and the question is whether you will be a driver or a recipient of that change.</p>
+
+  <div class="principle-list">
+    <div class="principle">
+      <div class="principle-title">The Leader's AI Literacy Threshold</div>
+      <div class="principle-desc">You do not need to know how to build AI systems. You need to know what they can and cannot do, what they cost, how long they take to build or procure, what data they require, and what risks they carry. That is a learnable framework, not a technical credential — and this course builds exactly that.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Pace Matters Differently Than You Think</div>
+      <div class="principle-desc">The conventional wisdom says move fast. But moving fast in the wrong direction is expensive. The organizations that have gotten AI right moved thoughtfully: they piloted before scaling, built foundational data infrastructure before deploying models, and invested in governance before incidents forced their hand. Speed of learning beats speed of action.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">The Infrastructure Layer Is Not Optional</div>
+      <div class="principle-desc">AI capabilities are built on data infrastructure. Organizations that do not invest in data quality, data integration, and data governance cannot effectively deploy AI regardless of how much they spend on models. The most common AI strategy mistake is skipping the infrastructure and going straight to the application. The application fails without the infrastructure.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Geography Shapes the Playing Field</div>
+      <div class="principle-desc">AI competitive dynamics vary by geography and regulatory environment. The EU AI Act, US state privacy laws, China's AI regulations, and divergent data localization requirements mean that your AI strategy in Europe may need to be materially different from your strategy in Asia or North America. Regulatory asymmetries create both constraints and opportunities.</div>
+    </div>
+  </div>
+
+  <h2>The Industries Being Transformed Most Rapidly</h2>
+  <p>Not all industries are being disrupted at the same pace or in the same ways. Understanding which industries are at the leading edge of AI transformation helps calibrate ambition and identify best practices that are transferable across sectors.</p>
+  <p><strong>Financial services</strong> has been transforming via AI for decades — fraud detection, credit scoring, algorithmic trading, and compliance monitoring are all long-established. The current wave is adding generative AI to customer service, document processing, and investment research. JPMorgan's COiN (Contract Intelligence) system processes legal documents in seconds that previously took 360,000 hours of lawyer time annually. Morgan Stanley has deployed GPT-4 to assist financial advisors with client communications and research synthesis.</p>
+  <p><strong>Healthcare</strong> is experiencing perhaps the most consequential AI transformation. Medical imaging AI — detecting cancers, diabetic retinopathy, and cardiac conditions — has achieved FDA approval and is in clinical use. Drug discovery timelines are being compressed from decades to years through AI-powered molecular modeling. Administrative AI is attacking the US$800 billion administrative overhead in the US healthcare system. The stakes are uniquely high and the regulatory environment complex, but the transformation is unmistakable.</p>
+  <p><strong>Legal services</strong> is facing the kind of disruption that seemed impossible a decade ago. AI systems that can review contracts, conduct legal research, draft briefs, and predict litigation outcomes are shifting the economics of the industry. Goldman Sachs estimated in 2023 that 44% of legal work tasks could be automated. Firms that adapt by deploying AI to handle routine work and redeploying lawyers to high-value judgment-intensive work will thrive. Firms that resist will find their cost structures uncompetitive.</p>
+  <p><strong>Software development</strong> is being transformed from the inside, as AI coding assistants (GitHub Copilot, Cursor, and others) dramatically increase developer productivity. Studies suggest 20–50% productivity gains in code generation tasks. More significant is the shift in who can produce software: AI coding tools lower the barrier to writing functional code, meaning the supply of software is increasing while the cost is decreasing.</p>
+
+  <h2>What This Means Strategically</h2>
+  <p>The AI strategic landscape presents every leader with a set of choices that cannot be deferred indefinitely. Choosing not to invest in AI is itself a strategic choice — one that carries compounding costs as competitors build advantages you will eventually need to pay a premium to catch up to. But investing in AI without strategic clarity is equally dangerous: it generates cost without value.</p>
+  <p>The frame that is most useful for a leader surveying this landscape is not "how do I use AI?" but rather "where does AI most change the competitive dynamics of my business, and am I positioned to be a beneficiary or a casualty of that change?" That reframe — from tool adoption to competitive positioning — is the starting point for genuine AI strategy.</p>
+
+  <div class="callout">
+    <div class="callout-label">Before the Next Module</div>
+    <p>As you move into Module 2 on identifying AI opportunities, carry this framing with you: the strategic landscape is not uniform. Your industry has specific pain points, specific data assets, specific competitive dynamics. The frameworks in the next module will help you translate the broad landscape you now understand into specific, prioritized opportunities for your organization.</p>
+  </div>
+
+</div></main>
+</div>
+<div class="sticky-bar">
+  <div class="sticky-bar-reading" id="sticky-reading">Read to the end to unlock the next module</div>
+  <div class="sticky-bar-track"><div class="sticky-bar-fill" id="sticky-fill"></div></div>
+  <div class="sticky-bar-label" id="sticky-label">0%</div>
+  <button class="sticky-bar-btn" id="sticky-btn" onclick="completeAndNext()">Module 2: Identifying AI Opportunities &#8594;</button>
+</div>
+<script type="module">
+  import{initializeApp}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import{getAuth,onAuthStateChanged}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import{getFirestore,doc,setDoc,arrayUnion}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  const app=initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+  const auth=getAuth(app);const db=getFirestore(app);
+  let currentUser=null;
+  onAuthStateChanged(auth,u=>{currentUser=u;});
+  window.toggleTheme=function(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='&#9790;'):(h.setAttribute('data-theme','dark'),i.textContent='&#9728;');};
+  window.addEventListener('scroll',()=>{const d=document.documentElement,s=d.scrollTop||document.body.scrollTop,t=d.scrollHeight-d.clientHeight;document.getElementById('progress').style.width=(s/t*100)+'%';});
+  let unlocked=false;
+  function updateScrollProgress(){
+    const scrolled=window.scrollY+window.innerHeight;const total=document.documentElement.scrollHeight;
+    const pct=Math.min(100,Math.round((scrolled/total)*100));
+    const fill=document.getElementById('sticky-fill');const label=document.getElementById('sticky-label');
+    const btn=document.getElementById('sticky-btn');const reading=document.getElementById('sticky-reading');
+    if(fill)fill.style.width=pct+'%';if(label)label.textContent=pct+'%';
+    if(pct>=95&&!unlocked){unlocked=true;if(btn)btn.style.display='block';if(reading)reading.style.display='none';if(fill)fill.style.background='#22c55e';if(label)label.style.color='#22c55e';}
+  }
+  window.addEventListener('scroll',updateScrollProgress);updateScrollProgress();
+  window.completeAndNext=async function(){
+    if(currentUser){try{await setDoc(doc(db,'users',currentUser.uid),{strategyModules:arrayUnion('m1')},{merge:true});}catch(e){}}
+    window.location.href='strategy-module-2.html';
+  };
+</script>
+</body>
+</html>

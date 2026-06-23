@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 7: International AI Governance — AI in Governance — Meridian Institute of AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#92400E;--accent-dim:rgba(146,64,14,0.1);--accent-dim2:rgba(146,64,14,0.05);--nav-bg:rgba(8,8,8,0.9);--callout-bg:rgba(146,64,14,0.07);--callout-border:rgba(146,64,14,0.25);--good-bg:rgba(34,197,94,0.07);--good-border:rgba(34,197,94,0.2);--warn-bg:rgba(251,146,60,0.07);--warn-border:rgba(251,146,60,0.2);}
+:root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#78350F;--accent-dim:rgba(120,53,15,0.08);--accent-dim2:rgba(120,53,15,0.04);--nav-bg:rgba(250,250,248,0.9);--callout-bg:rgba(120,53,15,0.05);--callout-border:rgba(120,53,15,0.2);--good-bg:rgba(22,163,74,0.06);--good-border:rgba(22,163,74,0.2);--warn-bg:rgba(234,88,12,0.05);--warn-border:rgba(234,88,12,0.2);}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;overflow-x:hidden;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.7;overflow-x:hidden;transition:background 0.3s,color 0.3s;}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+.nav-left{display:flex;align-items:center;gap:16px;}
+.nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+.nav-divider{width:1px;height:16px;background:var(--border-2);}
+.nav-back{font-size:13px;color:var(--text-2);text-decoration:none;transition:color 0.2s;}
+.nav-back:hover{color:var(--text);}
+.nav-label{font-size:13px;color:var(--text-3);}
+.theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;transition:all 0.2s;}
+.theme-toggle:hover{background:var(--bg-3);color:var(--text);}
+.progress-bar{position:fixed;top:60px;left:0;right:0;z-index:99;height:2px;background:var(--border);}
+.progress-fill{height:100%;background:var(--accent);width:0%;transition:width 0.1s;}
+.page-wrapper{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:100vh;padding-top:62px;overflow:hidden;}
+.sidebar{position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto;border-right:1px solid var(--border);padding:32px 24px;background:var(--bg-2);}
+.sidebar-course{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;}
+.sidebar-course-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+.sidebar-module{margin-bottom:4px;}
+.sidebar-module-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:13px;color:var(--text-2);text-decoration:none;transition:all 0.2s;line-height:1.4;}
+.sidebar-module-link:hover{background:var(--bg-3);color:var(--text);}
+.sidebar-module-link.active{background:var(--accent-dim);color:var(--accent);}
+.sidebar-num{font-size:11px;font-weight:500;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--bg-4);color:var(--text-3);}
+.sidebar-module-link.active .sidebar-num{background:var(--accent-dim);color:var(--accent);}
+.sidebar-divider{height:1px;background:var(--border);margin:20px 0;}
+.sidebar-progress-label{font-size:12px;color:var(--text-3);margin-bottom:8px;display:flex;justify-content:space-between;}
+.sidebar-progress-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+.sidebar-progress-fill{height:100%;width:70%;background:var(--accent);border-radius:2px;}
+main{display:block;min-width:0;overflow:hidden;}
+.content{max-width:760px;width:100%;padding:60px 64px 140px;margin:0 auto;}
+.module-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+.module-tag{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(146,64,14,0.2);padding:4px 12px;border-radius:100px;}
+.module-meta{font-size:12px;color:var(--text-3);}
+h1{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1.05;letter-spacing:-0.02em;color:var(--text);margin-bottom:24px;}
+.intro-text{font-size:19px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+h2{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:400;color:var(--text);margin:52px 0 18px;line-height:1.2;}
+h3{font-size:16px;font-weight:500;color:var(--text);margin:32px 0 12px;}
+p{font-size:16px;font-weight:300;color:var(--text-2);line-height:1.8;margin-bottom:20px;}
+strong{font-weight:500;color:var(--text);}
+em{font-style:italic;}
+ul,ol{margin:0 0 20px 22px;color:var(--text-2);}
+li{font-size:16px;font-weight:300;line-height:1.8;margin-bottom:8px;}
+.callout{background:var(--callout-bg);border:1px solid var(--callout-border);border-radius:12px;padding:24px 28px;margin:32px 0;}
+.callout-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+.callout p{margin:0;font-size:15px;color:var(--text-2);}
+.callout p+p{margin-top:12px;}
+.good{background:var(--good-bg);border:1px solid var(--good-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+.good-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#22c55e;margin-bottom:10px;}
+.good p{margin:0;font-size:15px;color:var(--text-2);}
+.warn{background:var(--warn-bg);border:1px solid var(--warn-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+.warn-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#fb923c;margin-bottom:10px;}
+.warn p{margin:0;font-size:15px;color:var(--text-2);}
+.warn p+p{margin-top:12px;}
+.analogy{background:var(--bg-2);border:1px solid var(--border);border-radius:12px;padding:28px;margin:28px 0;}
+.principle-list{display:flex;flex-direction:column;gap:12px;margin:24px 0;}
+.principle{background:var(--bg-2);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:0 12px 12px 0;padding:20px 24px;}
+.principle-title{font-size:15px;font-weight:500;color:var(--text);margin-bottom:6px;}
+.principle-desc{font-size:14px;color:var(--text-2);line-height:1.65;margin:0;}
+.sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:var(--bg-2);border-top:1px solid var(--border-2);padding:14px 5%;display:flex;align-items:center;justify-content:space-between;gap:16px;backdrop-filter:blur(12px);}
+.sticky-bar-track{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+.sticky-bar-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.2s;width:0%;}
+.sticky-bar-label{font-size:12px;color:var(--text-3);white-space:nowrap;min-width:60px;text-align:right;}
+.sticky-bar-btn{padding:10px 20px;border-radius:8px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;background:var(--accent);color:#fff;border:none;cursor:pointer;white-space:nowrap;transition:opacity 0.2s;display:none;}
+.sticky-bar-btn:hover{opacity:0.88;}
+.sticky-bar-reading{font-size:12px;color:var(--text-3);white-space:nowrap;}
+@media(max-width:900px){.page-wrapper{grid-template-columns:1fr;}.sidebar{display:none;}.content{padding:40px 24px 120px;}h1{font-size:38px;}}
+@media(max-width:600px){.content{padding:28px 16px 120px;}h1{font-size:30px;}h2{font-size:24px;}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="courses.html" class="nav-back">← AI in Governance</a>
+    <div class="nav-divider"></div>
+    <span class="nav-label">Module 7</span>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">☀</span></button>
+</nav>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+
+<div class="page-wrapper">
+<aside class="sidebar">
+  <div class="sidebar-course">Course</div>
+  <div class="sidebar-course-name">AI in Governance</div>
+  <div class="sidebar-module"><a href="governance-module-1.html" class="sidebar-module-link"><span class="sidebar-num">1</span>AI in Public Service Delivery</a></div>
+  <div class="sidebar-module"><a href="governance-module-2.html" class="sidebar-module-link"><span class="sidebar-num">2</span>Algorithmic Government Decisions</a></div>
+  <div class="sidebar-module"><a href="governance-module-3.html" class="sidebar-module-link"><span class="sidebar-num">3</span>Smart Cities and AI</a></div>
+  <div class="sidebar-module"><a href="governance-module-4.html" class="sidebar-module-link"><span class="sidebar-num">4</span>AI and Democratic Accountability</a></div>
+  <div class="sidebar-module"><a href="governance-module-5.html" class="sidebar-module-link"><span class="sidebar-num">5</span>Government AI Procurement</a></div>
+  <div class="sidebar-module"><a href="governance-module-6.html" class="sidebar-module-link"><span class="sidebar-num">6</span>AI in Criminal Justice</a></div>
+  <div class="sidebar-module"><a href="governance-module-7.html" class="sidebar-module-link active"><span class="sidebar-num">7</span>International AI Governance</a></div>
+  <div class="sidebar-module"><a href="governance-module-8.html" class="sidebar-module-link"><span class="sidebar-num">8</span>Ethics of Automated Government</a></div>
+  <div class="sidebar-module"><a href="governance-module-9.html" class="sidebar-module-link"><span class="sidebar-num">9</span>AI in Social Services</a></div>
+  <div class="sidebar-module"><a href="governance-module-10.html" class="sidebar-module-link"><span class="sidebar-num">10</span>Trustworthy Government AI</a></div>
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-progress-label"><span>Course progress</span><span style="color:var(--accent);">7 / 10</span></div>
+  <div class="sidebar-progress-track"><div class="sidebar-progress-fill"></div></div>
+</aside>
+
+<main>
+<div class="content">
+  <div class="module-eyebrow"><span class="module-tag">Module 7</span><span class="module-meta">25 min read · AI in Governance</span></div>
+  <h1>International AI Governance Frameworks</h1>
+  <p class="intro-text">AI governance is happening simultaneously at every level — municipal ordinances, national statutes, regional regulations, and emerging international standards — and the resulting patchwork is both the most important and least understood layer of AI policy. How major jurisdictions choose to govern AI will shape not just their own technology sectors but the global development and deployment of these systems for decades.</p>
+
+  <h2>The global governance landscape</h2>
+  <p>The past several years have produced an extraordinary proliferation of AI governance initiatives. Every significant economy has either enacted AI legislation, published national AI strategies, established regulatory bodies, or done all three. International organizations from the OECD to the United Nations to the G7 have issued principles, recommendations, and standards. The pace of initiative has outrun the pace of implementation, and the diversity of approaches has created genuine complexity for organizations that operate across jurisdictions.</p>
+  <p>Three broad governance philosophies have emerged. <strong>Rights-based regulatory approaches</strong>, most fully expressed in the EU AI Act, define categories of harmful AI and impose legally binding requirements calibrated to risk. <strong>Principle-based soft law approaches</strong>, characteristic of the OECD and international standards bodies, articulate high-level values and best practices without creating enforceable mandates. <strong>Sectoral and context-specific approaches</strong>, more characteristic of the United States, apply existing domain-specific regulation to AI uses in particular contexts — healthcare, finance, employment — without enacting comprehensive AI-specific legislation.</p>
+  <p>None of these approaches is purely practiced; most jurisdictions mix elements of each. But the characterization helps clarify why regulatory fragmentation is so significant: organizations operating under multiple jurisdictions may face binding requirements from one, voluntary guidance from another, and complete regulatory silence on certain AI uses from a third.</p>
+
+  <h2>The EU AI Act: a risk-based regulatory framework</h2>
+  <p>The EU AI Act, formally adopted in 2024 after several years of negotiation, is the world's most comprehensive legally binding AI regulation. It applies to providers and deployers of AI systems in the EU market, regardless of where those systems are developed — a jurisdictional reach modeled on the GDPR that gives the Act significant global effect.</p>
+  <p>The Act's defining structure is a four-tier risk classification. <strong>Unacceptable risk</strong> AI practices are prohibited outright. These include AI systems that manipulate individuals through subliminal techniques, exploit vulnerabilities of specific groups, deploy untargeted facial recognition from databases using internet or CCTV footage, use AI for social scoring of individuals by public authorities, and — with narrow law enforcement exceptions — real-time remote biometric identification in public spaces. The prohibitions represent political consensus about AI uses incompatible with EU fundamental rights, not merely regulatory calibration of risk.</p>
+  <p><strong>High-risk</strong> AI systems are permitted but subject to significant obligations before they can be placed on the market. High-risk systems include those used in critical infrastructure, educational and vocational training, employment and worker management, access to essential services, law enforcement, migration and border control, administration of justice, and democratic processes. Providers of high-risk systems must: establish a risk management system; use high-quality training data with appropriate governance; maintain technical documentation; implement logging for traceability; provide transparency information to users; enable human oversight; achieve appropriate accuracy, robustness, and cybersecurity; and, for many systems, register in an EU database. Third-party conformity assessment is required for certain high-risk categories, including biometric systems and critical infrastructure AI.</p>
+
+  <div class="callout">
+    <div class="callout-label">General purpose AI under the EU Act</div>
+    <p>The final text of the EU AI Act includes provisions specifically addressing general-purpose AI models — large foundation models that can be adapted to many downstream uses. Providers of general-purpose AI models must provide technical documentation, comply with EU copyright law, and publish summaries of training data. Providers of models with "systemic risk" — defined by reference to training compute thresholds — face additional obligations including adversarial testing, serious incident reporting, and cybersecurity measures. This tier directly addresses the most capable frontier AI systems, including large language models.</p>
+  </div>
+
+  <p><strong>Limited-risk</strong> systems face transparency obligations — particularly disclosure requirements so users know they are interacting with AI, including chatbots and deepfake generators. <strong>Minimal-risk</strong> systems face no mandatory requirements, though voluntary codes of practice are encouraged.</p>
+  <p>The Act's enforcement structure pairs national market surveillance authorities with a new European AI Office at the Commission level, which has competence over general-purpose AI models and the power to conduct investigations and impose fines. Maximum fines for prohibited practices reach 35 million euros or 7 percent of global annual turnover, whichever is higher — a penalty structure designed to have deterrent effect on even large technology companies.</p>
+
+  <h2>The OECD AI Principles</h2>
+  <p>The Organisation for Economic Cooperation and Development adopted its Recommendation on Artificial Intelligence in 2019 — the first intergovernmental standard on AI endorsed by countries representing the majority of global AI investment. Updated in 2024 to reflect developments in foundation models and generative AI, the OECD Principles have been endorsed by more than fifty countries, including non-OECD members, and have served as a reference framework for many national AI strategies and policies.</p>
+  <p>The OECD Principles are organized around five value-based principles for trustworthy AI and five recommendations to governments. The value principles state that AI should be: beneficial to individuals and society and the planet; designed with respect for rule of law, human rights, and democratic values; transparent and explainable; robust, secure, and safe across the lifecycle; and governed by accountable actors. The governmental recommendations address investment in research and development, building digital infrastructure and skills, enabling a policy environment for deployment, building human capacity, and international cooperation for trustworthy AI.</p>
+  <p>The Principles' influence is in their framing more than their enforcement — they cannot be enforced, being a recommendation rather than binding law. But by establishing shared vocabulary and conceptual architecture before most countries had developed domestic AI policy, the OECD shaped how governments framed subsequent regulatory efforts. The EU AI Act, the UK's pro-innovation framework, Canada's Directive on Automated Decision-Making, and dozens of national AI strategies all explicitly reference OECD Principles or use their conceptual categories.</p>
+
+  <h2>UNESCO Recommendation on the Ethics of AI</h2>
+  <p>UNESCO adopted its Recommendation on the Ethics of Artificial Intelligence in November 2021, with endorsement from all 193 member states — the broadest multilateral consensus on AI governance to date. The Recommendation addresses AI ethics from a human rights and sustainable development perspective, with particular emphasis on issues often under-addressed in OECD-focused frameworks: gender equality, environmental sustainability, the rights of indigenous peoples, and the needs of low- and middle-income countries.</p>
+  <p>The UNESCO framework is notable for its explicit treatment of AI's environmental impact — recommending that member states assess and report on the energy and resource consumption of AI systems — and for its emphasis on cultural diversity, noting that AI systems trained predominantly on data from wealthy countries may not serve, and may actively harm, the interests of populations with different languages, cultures, and socioeconomic contexts. These dimensions remain underrepresented in most regulatory frameworks developed by high-income countries.</p>
+
+  <h2>The G7 Hiroshima AI Process</h2>
+  <p>The G7 Hiroshima AI Process, launched at the 2023 Hiroshima Summit, produced the first significant multilateral output on frontier AI governance: the International Guiding Principles on AI and a voluntary Code of Conduct for AI Developers, released in October 2023. The Process represented an effort by major democracies to develop shared governance norms for the most capable AI systems at a moment of rapid capability development — responding particularly to the public release of large language models that had demonstrated capabilities far beyond those of previous generation AI systems.</p>
+  <p>The Hiroshima Principles cover eleven areas including transparency, accountability, safety, and security. They explicitly address risks from the most advanced AI systems, including dual-use risks, disinformation capabilities, and potential for misuse in weapons development. The voluntary Code of Conduct asks developers to: identify and mitigate risks before deployment; invest in cybersecurity; develop trust mechanisms including labeling of AI-generated content; implement research on AI safety; and report serious incidents. While voluntary, the Code represents normative consensus among the world's largest AI-developing economies.</p>
+
+  <h2>The United States: executive action and sectoral regulation</h2>
+  <p>President Biden's Executive Order on the Safe, Secure, and Trustworthy Development and Use of Artificial Intelligence, signed in October 2023, was the most significant U.S. federal action on AI governance prior to any comprehensive legislation. The Order directed federal agencies to develop guidance, standards, and requirements across a wide range of AI applications; required developers of the most powerful AI systems to share safety test results with the federal government; directed the development of standards for AI-generated content authentication; addressed AI's implications for workers, civil rights, and national security; and sought to position the U.S. as a leader in international AI governance.</p>
+  <p>The Order's implementation was necessarily incremental — executive orders cannot create new statutory requirements on private actors without congressional authority, and many of its directives were to federal agencies about their own use of AI or about developing guidance that would subsequently inform rulemaking. The Biden Order was revoked by President Trump's executive order in January 2025, which directed a new national AI action plan oriented around "removing barriers to American AI leadership" — a significant shift in federal AI governance philosophy.</p>
+  <p>U.S. AI governance continues primarily through sectoral regulation: the Food and Drug Administration regulates AI in medical devices; the Equal Employment Opportunity Commission addresses AI in hiring; the Consumer Financial Protection Bureau governs AI in lending; the Federal Trade Commission has authority over deceptive and unfair practices including AI-generated deception. This sectoral approach has the advantage of applying specialized expertise and existing legal authority but creates gaps for AI applications that cross regulatory domains.</p>
+
+  <div class="principle-list">
+    <div class="principle">
+      <div class="principle-title">The EU model: comprehensive binding regulation</div>
+      <div class="principle-desc">Risk-based classification, prohibited practices, mandatory pre-market requirements for high-risk systems, conformity assessment, and independent enforcement with significant penalties. Offers legal certainty but may slow deployment of beneficial applications.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">The UK model: pro-innovation principles-based regulation</div>
+      <div class="principle-desc">Existing sector regulators apply AI-relevant interpretations of their existing mandates. Central coordination via government office. Emphasis on enabling innovation with voluntary sector-specific guidance rather than ex ante mandates.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">The US model: sectoral and enforcement-driven</div>
+      <div class="principle-desc">Domain-specific agencies apply existing statutory authority. FTC unfair practices enforcement as a backstop. Limited comprehensive legislation; much governance through standards bodies, executive action, and state law.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">The China model: sequential targeted regulation</div>
+      <div class="principle-desc">Specific regulations targeting specific capabilities: deep synthesis (deepfakes), recommendation algorithms, and generative AI each subject to separate regulations with registration, content requirements, and security assessments.</div>
+    </div>
+  </div>
+
+  <h2>China's AI regulatory approach</h2>
+  <p>China has taken a distinctive regulatory path: rather than comprehensive AI legislation, it has enacted a series of targeted regulations addressing specific AI capabilities as those capabilities became significant. The Provisions on the Management of Algorithmic Recommendations (effective March 2022) addressed recommendation systems, requiring transparency, the ability to opt out, and prohibiting discriminatory pricing and addiction-inducing design. The Provisions on Deep Synthesis Internet Information Services (effective January 2023) regulated deepfake and synthetic media generation, requiring labeling of synthetic content and prohibiting impersonation of specific individuals without consent. The Interim Measures for the Management of Generative AI Services (effective August 2023) addressed large language models and image generation, requiring security assessments, content filtering aligned with Chinese law and values, and user identity verification.</p>
+  <p>This sequential, capability-specific approach allows regulation to track actual technology deployment rather than anticipate hypothetical risks, but creates a patchwork that may not address cross-cutting concerns. It also reflects the particular governance concerns relevant in China: content control and alignment with state values, preventing manipulation of public opinion, and ensuring AI development serves national strategic goals.</p>
+
+  <h2>The UK's pro-innovation approach and AI Safety Institute</h2>
+  <p>The United Kingdom has positioned itself as offering an alternative to the EU's comprehensive regulatory approach, emphasizing principles-based guidance through existing sector regulators rather than new AI-specific legislation. The UK's AI Regulation White Paper, published in 2023, articulated five cross-sector principles — safety, security, robustness; transparency and explainability; fairness; accountability and governance; contestability and redress — while tasking existing sector regulators with interpreting their application in their domains.</p>
+  <p>In parallel, the UK established the AI Safety Institute (AISI) in November 2023 — the world's first government body specifically tasked with evaluating the safety of frontier AI systems before and after deployment. The AISI conducts evaluations of advanced AI models, including red-teaming for dangerous capabilities, and publishes findings. This focus on frontier AI safety — the risks from the most capable systems — rather than regulation of AI-enabled harms in particular sectors represents a distinctive contribution to the governance landscape.</p>
+
+  <h2>Rule-based versus principle-based governance</h2>
+  <p>The contrast between rule-based and principle-based governance approaches is fundamental to evaluating international AI frameworks. Rule-based approaches — like the EU AI Act's prohibited practices list and high-risk category definitions — offer predictability and enforceability. Organizations know in advance what they must do, can design compliance programs, and can be held to account against specific requirements. But rules may be overinclusive (prohibiting beneficial applications) or underinclusive (missing harmful applications the rule didn't anticipate), and they can become outdated as technology evolves.</p>
+  <p>Principle-based approaches — like the OECD Principles or the UK's cross-sector framework — offer flexibility and durability. A principle that AI should be transparent and accountable applies regardless of the specific technology or application. But principles offer less legal certainty, may be interpreted inconsistently across contexts, and can be difficult to enforce against organizations that claim compliance while engaging in harmful practices. The most sophisticated regulatory approaches combine both: binding rules for the clearest cases of harm and enforceable principles that capture the space rules cannot fully specify.</p>
+
+  <h2>Regulatory fragmentation and calls for international coordination</h2>
+  <p>The proliferation of AI governance frameworks has created genuine regulatory fragmentation — different and sometimes conflicting requirements across jurisdictions that make it difficult for organizations developing and deploying AI globally to navigate compliance. A facial recognition system lawful in one country may be prohibited in another; a training data practice acceptable under one jurisdiction's copyright law may violate another's; a transparency requirement in the EU may conflict with trade secret protections elsewhere.</p>
+  <p>Scholars and policymakers have increasingly called for some form of international coordination — whether through mutual recognition of comparable regulatory regimes, convergence around shared technical standards, or more ambitiously, an international AI governance body analogous to the IAEA (International Atomic Energy Agency) for nuclear technology. The Bletchley Declaration, signed by twenty-eight countries including the U.S., EU, UK, and China at the first AI Safety Summit in November 2023, acknowledged shared concern about frontier AI risks and committed to information sharing and joint evaluation — a modest but symbolically significant first step.</p>
+
+  <div class="warn">
+    <div class="warn-label">The fragmentation problem for government procurement</div>
+    <p>For government technology buyers, regulatory fragmentation creates specific challenges. An AI system procured for a national government use case may comply with domestic requirements while violating requirements in EU jurisdictions where agency data flows or where affected individuals are located. Agencies that procure AI from global vendors must assess not only their own jurisdiction's requirements but the compliance posture of the vendor's system against the regulatory frameworks of every jurisdiction in which the system operates or whose residents it affects.</p>
+    <p>This complexity argues strongly for requiring vendors to provide documentation sufficient to assess compliance across frameworks, rather than accepting vendor assertions of compliance with a single jurisdiction's requirements.</p>
+  </div>
+
+  <h2>What international frameworks mean for government technology procurement</h2>
+  <p>The international AI governance landscape has direct practical implications for governments procuring AI systems. The EU AI Act creates binding requirements for any AI system deployed in EU member states or affecting EU residents — public sector deployers are subject to the Act's obligations for high-risk systems, which include most AI used in law enforcement, border control, justice administration, and access to public services. Even governments outside the EU must consider these requirements when procuring systems from vendors who also supply EU markets, since vendor compliance architecture will reflect EU requirements.</p>
+  <p>The OECD Principles and Hiroshima Process outputs provide a normative baseline that procurement requirements can reference: requirements for transparency and explainability, human oversight, robustness and security, and accountability align with these international consensus documents and provide justification for procurement requirements that vendors might otherwise contest as going beyond what is legally required.</p>
+  <p>The emergence of the UK AI Safety Institute model — independent evaluation of AI systems against safety criteria — suggests a direction for government procurement: rather than relying solely on vendor-provided documentation and testing, procurement agencies could require that systems undergo independent evaluation by accredited testing organizations. The technical infrastructure for this is nascent but developing, and government procurement requirements could accelerate its development by creating market demand for independent AI system evaluation.</p>
+
+  <div class="good">
+    <div class="good-label">Convergence on core principles</div>
+    <p>Despite the diversity of governance approaches, there is striking convergence at the level of core principles across the EU AI Act, OECD Principles, UNESCO Recommendation, G7 Hiroshima Process, and national frameworks. All emphasize: human oversight of consequential AI decisions; transparency about AI use and AI-generated content; accountability for AI-caused harms; fairness and non-discrimination; and safety and robustness. Governments building AI governance frameworks can take these convergent principles as a stable foundation, even as the specific regulatory mechanisms for implementing them continue to evolve.</p>
+  </div>
+
+  <p>The international AI governance landscape is in its formative period. The frameworks enacted in the next few years — the implementation of the EU AI Act, the development of international standards through ISO and IEEE, the evolution of the OECD Principles, and whatever international coordination mechanisms emerge from the AI safety summits — will establish the institutional infrastructure within which AI governance operates for a generation. Government technology officials who understand this landscape are better positioned to participate in shaping it, rather than simply adapting to requirements developed without their input.</p>
+</div>
+</main>
+</div>
+
+<div class="sticky-bar" id="sticky-bar">
+  <div class="sticky-bar-reading" id="sticky-reading">Read to the end to unlock the next module</div>
+  <div class="sticky-bar-track"><div class="sticky-bar-fill" id="sticky-fill"></div></div>
+  <div class="sticky-bar-label" id="sticky-label">0%</div>
+  <button class="sticky-bar-btn" id="sticky-btn" onclick="completeAndNext()">Module 8: Ethics of Automated Government →</button>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import { getFirestore, doc, setDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+const app = initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+const auth = getAuth(app); const db = getFirestore(app);
+let currentUser = null;
+onAuthStateChanged(auth, u => { currentUser = u; });
+window.toggleTheme=function(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='☾'):(h.setAttribute('data-theme','dark'),i.textContent='☀');};
+window.addEventListener('scroll',()=>{const d=document.documentElement,s=d.scrollTop||document.body.scrollTop,t=d.scrollHeight-d.clientHeight;document.getElementById('progress').style.width=(s/t*100)+'%';});
+let unlocked=false;
+function updateScrollProgress(){
+  const scrolled=window.scrollY+window.innerHeight;
+  const total=document.documentElement.scrollHeight;
+  const pct=Math.min(100,Math.round((scrolled/total)*100));
+  const fill=document.getElementById('sticky-fill');
+  const label=document.getElementById('sticky-label');
+  const btn=document.getElementById('sticky-btn');
+  const reading=document.getElementById('sticky-reading');
+  if(fill)fill.style.width=pct+'%';
+  if(label)label.textContent=pct+'%';
+  if(pct>=95&&!unlocked){
+    unlocked=true;
+    if(btn)btn.style.display='block';
+    if(reading)reading.style.display='none';
+    if(fill)fill.style.background='#22c55e';
+    if(label)label.style.color='#22c55e';
+  }
+}
+window.addEventListener('scroll',updateScrollProgress);
+updateScrollProgress();
+window.completeAndNext=async function(){
+  if(currentUser){
+    try{
+      await setDoc(doc(db,'users',currentUser.uid),{
+        governanceModules: arrayUnion('m7')
+      }, { merge: true });
+    }catch(e){}
+  }
+  window.location.href='governance-module-8.html';
+};
+</script>
+</body>
+</html>

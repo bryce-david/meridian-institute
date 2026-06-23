@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 6: NLP and Transformers — Machine Learning Explained — Meridian Institute of AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#065F46;--accent-dim:rgba(6,95,70,0.1);--accent-dim2:rgba(6,95,70,0.05);--nav-bg:rgba(8,8,8,0.9);--callout-bg:rgba(6,95,70,0.07);--callout-border:rgba(6,95,70,0.25);--good-bg:rgba(34,197,94,0.07);--good-border:rgba(34,197,94,0.2);--warn-bg:rgba(251,146,60,0.07);--warn-border:rgba(251,146,60,0.2);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#064E3B;--accent-dim:rgba(6,78,59,0.08);--accent-dim2:rgba(6,78,59,0.04);--nav-bg:rgba(250,250,248,0.9);--callout-bg:rgba(6,78,59,0.05);--callout-border:rgba(6,78,59,0.2);--good-bg:rgba(22,163,74,0.06);--good-border:rgba(22,163,74,0.2);--warn-bg:rgba(234,88,12,0.05);--warn-border:rgba(234,88,12,0.2);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;overflow-x:hidden;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.7;overflow-x:hidden;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}
+  .nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}
+  .nav-back{font-size:13px;color:var(--text-2);text-decoration:none;transition:color 0.2s;}
+  .nav-back:hover{color:var(--text);}
+  .nav-label{font-size:13px;color:var(--text-3);}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;transition:all 0.2s;}
+  .theme-toggle:hover{background:var(--bg-3);color:var(--text);}
+  .progress-bar{position:fixed;top:60px;left:0;right:0;z-index:99;height:2px;background:var(--border);}
+  .progress-fill{height:100%;background:var(--accent);width:0%;transition:width 0.1s;}
+  .page-wrapper{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:100vh;padding-top:62px;overflow:hidden;}
+  .sidebar{position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto;border-right:1px solid var(--border);padding:32px 24px;background:var(--bg-2);}
+  .sidebar-course{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;}
+  .sidebar-course-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+  .sidebar-module{margin-bottom:4px;}
+  .sidebar-module-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:13px;color:var(--text-2);text-decoration:none;transition:all 0.2s;line-height:1.4;}
+  .sidebar-module-link:hover{background:var(--bg-3);color:var(--text);}
+  .sidebar-module-link.active{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-num{font-size:11px;font-weight:500;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--bg-4);color:var(--text-3);}
+  .sidebar-module-link.active .sidebar-num{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-divider{height:1px;background:var(--border);margin:20px 0;}
+  .sidebar-progress-label{font-size:12px;color:var(--text-3);margin-bottom:8px;display:flex;justify-content:space-between;}
+  .sidebar-progress-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sidebar-progress-fill{height:100%;width:60%;background:var(--accent);border-radius:2px;}
+  main{display:block;min-width:0;overflow:hidden;}
+  .content{max-width:760px;width:100%;padding:60px 64px 140px;margin:0 auto;}
+  .module-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+  .module-tag{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(6,95,70,0.2);padding:4px 12px;border-radius:100px;}
+  .module-meta{font-size:12px;color:var(--text-3);}
+  h1{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1.05;letter-spacing:-0.02em;color:var(--text);margin-bottom:24px;}
+  .intro-text{font-size:19px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+  h2{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:400;color:var(--text);margin:52px 0 18px;line-height:1.2;}
+  h3{font-size:16px;font-weight:500;color:var(--text);margin:32px 0 12px;}
+  p{font-size:16px;font-weight:300;color:var(--text-2);line-height:1.8;margin-bottom:20px;}
+  strong{font-weight:500;color:var(--text);}
+  em{font-style:italic;}
+  ul,ol{margin:0 0 20px 22px;color:var(--text-2);}
+  li{font-size:16px;font-weight:300;line-height:1.8;margin-bottom:8px;}
+  .callout{background:var(--callout-bg);border:1px solid var(--callout-border);border-radius:12px;padding:24px 28px;margin:32px 0;}
+  .callout-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+  .callout p{margin:0;font-size:15px;color:var(--text-2);}
+  .callout p+p{margin-top:12px;}
+  .good{background:var(--good-bg);border:1px solid var(--good-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .good-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#22c55e;margin-bottom:10px;}
+  .good p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn{background:var(--warn-bg);border:1px solid var(--warn-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .warn-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#fb923c;margin-bottom:10px;}
+  .warn p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn p+p{margin-top:12px;}
+  .analogy{background:var(--bg-2);border:1px solid var(--border);border-radius:12px;padding:28px;margin:28px 0;}
+  .analogy-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-3);margin-bottom:12px;}
+  .analogy p{margin:0;font-size:15px;color:var(--text-2);}
+  .principle-list{display:flex;flex-direction:column;gap:12px;margin:24px 0;}
+  .principle{background:var(--bg-2);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:0 12px 12px 0;padding:20px 24px;}
+  .principle-title{font-size:15px;font-weight:500;color:var(--text);margin-bottom:6px;}
+  .principle-desc{font-size:14px;color:var(--text-2);line-height:1.65;margin:0;}
+  .sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:var(--bg-2);border-top:1px solid var(--border-2);padding:14px 5%;display:flex;align-items:center;justify-content:space-between;gap:16px;backdrop-filter:blur(12px);}
+  .sticky-bar-track{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sticky-bar-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.2s;width:0%;}
+  .sticky-bar-label{font-size:12px;color:var(--text-3);white-space:nowrap;min-width:60px;text-align:right;}
+  .sticky-bar-btn{padding:10px 20px;border-radius:8px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;background:var(--accent);color:#fff;border:none;cursor:pointer;white-space:nowrap;transition:opacity 0.2s;display:none;}
+  .sticky-bar-btn:hover{opacity:0.88;}
+  .sticky-bar-reading{font-size:12px;color:var(--text-3);white-space:nowrap;}
+  @media(max-width:900px){.page-wrapper{grid-template-columns:1fr;}.sidebar{display:none;}.content{padding:40px 24px 120px;}h1{font-size:38px;}}
+  @media(max-width:600px){.content{padding:28px 16px 120px;}h1{font-size:30px;}h2{font-size:24px;}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="courses.html" class="nav-back">← Machine Learning Explained</a>
+    <div class="nav-divider"></div>
+    <span class="nav-label">Module 6</span>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">☀</span></button>
+</nav>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+
+<div class="page-wrapper">
+<aside class="sidebar">
+  <div class="sidebar-course">Expert Track</div>
+  <div class="sidebar-course-name">Machine Learning Explained</div>
+  <div class="sidebar-module"><a href="ml-module-1.html" class="sidebar-module-link"><span class="sidebar-num">1</span>How Machines Learn</a></div>
+  <div class="sidebar-module"><a href="ml-module-2.html" class="sidebar-module-link"><span class="sidebar-num">2</span>Data: The ML Foundation</a></div>
+  <div class="sidebar-module"><a href="ml-module-3.html" class="sidebar-module-link"><span class="sidebar-num">3</span>Supervised Learning Demystified</a></div>
+  <div class="sidebar-module"><a href="ml-module-4.html" class="sidebar-module-link"><span class="sidebar-num">4</span>Unsupervised Learning</a></div>
+  <div class="sidebar-module"><a href="ml-module-5.html" class="sidebar-module-link"><span class="sidebar-num">5</span>Neural Networks and Deep Learning</a></div>
+  <div class="sidebar-module"><a href="ml-module-6.html" class="sidebar-module-link active"><span class="sidebar-num">6</span>NLP and Transformers</a></div>
+  <div class="sidebar-module"><a href="ml-module-7.html" class="sidebar-module-link"><span class="sidebar-num">7</span>Computer Vision</a></div>
+  <div class="sidebar-module"><a href="ml-module-8.html" class="sidebar-module-link"><span class="sidebar-num">8</span>Model Evaluation</a></div>
+  <div class="sidebar-module"><a href="ml-module-9.html" class="sidebar-module-link"><span class="sidebar-num">9</span>ML in Production</a></div>
+  <div class="sidebar-module"><a href="ml-module-10.html" class="sidebar-module-link"><span class="sidebar-num">10</span>Foundation Models and the Frontier</a></div>
+  <div class="sidebar-module"><a href="quiz-ml.html" class="sidebar-module-link" style="color:var(--accent);margin-top:4px;"><span class="sidebar-num" style="background:var(--accent-dim);color:var(--accent);">✦</span>Final Assessment</a></div>
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-progress-label"><span>Course progress</span><span style="color:var(--accent);">6 / 10</span></div>
+  <div class="sidebar-progress-track"><div class="sidebar-progress-fill"></div></div>
+</aside>
+
+<main>
+<div class="content">
+  <div class="module-eyebrow"><span class="module-tag">Module 6 · Expert Track</span><span class="module-meta">25 min read · Machine Learning Explained</span></div>
+  <h1>NLP and Transformers</h1>
+
+  <p class="intro-text">Language is the hardest thing for computers to handle. It's ambiguous, context-dependent, culturally loaded, and infinite in its possible combinations. "I saw the man with the telescope" has two completely different meanings depending on who held the telescope. Computers need to turn language into numbers before they can process it at all — and the way we do that encoding has changed dramatically, culminating in the transformer architecture that powers every major language model today.</p>
+
+  <h2>The first challenge: making text into numbers</h2>
+  <p>Neural networks operate on numbers. Text is not numbers. The first step in any natural language processing pipeline is converting text into a numerical representation — a process that seems trivial but is actually full of consequential decisions.</p>
+  <p><strong>Tokenization</strong> is the process of breaking text into units that the model can work with. Early systems used words as tokens. "The cat sat on the mat" becomes six tokens: [The, cat, sat, on, the, mat]. But this creates problems. What about "don't" — is it one token or two? What about "unhappiness," "unhappy," "happier" — three separate tokens, or should the system recognize they share a root? What about Chinese, which has no spaces?</p>
+  <p>Modern systems use <strong>subword tokenization</strong>, which breaks words into smaller pieces. "Unhappiness" might become ["un", "happy", "ness"]. This lets the vocabulary stay manageable (most systems use 30,000–100,000 tokens) while still handling rare words, new words, and multiple languages. The model learns that "un-" tends to negate what follows and that "-ness" tends to create nouns from adjectives — even if it was never explicitly taught these rules.</p>
+  <p>Once text is tokenized, each token gets converted to a number (its ID in the vocabulary). But a single number carries no information about meaning. The word "cat" getting ID 4,291 and "dog" getting ID 7,832 tells the model nothing about how similar they are. We need richer representations.</p>
+
+  <h2>Word embeddings: words in geometric space</h2>
+  <p>The breakthrough insight of word embeddings, popularized by Google's Word2Vec in 2013, was this: give each word a position in a high-dimensional space — typically 100 to 300 dimensions — and arrange those positions so that words with similar meanings end up near each other.</p>
+  <p>How are these positions learned? By training a model to predict words from their context. If you take a huge corpus of text and train a model to predict "the blank sat on the mat" → "cat," then "the blank chased the mouse" → "cat," then do the same for "dog" across thousands of contexts, the model learns that "cat" and "dog" appear in similar contexts. It represents them with similar vectors. Meaning emerges from distribution — from what company a word keeps.</p>
+  <p>The results were remarkable. When researchers visualized these word vectors, "king" minus "man" plus "woman" equaled approximately "queen." Country names clustered near their capitals. Adjectives and their superlatives formed consistent directional patterns. The model had learned semantic relationships nobody programmed — they emerged from pure statistical patterns in text.</p>
+
+  <div class="analogy">
+    <div class="analogy-label">The city map analogy for semantic space</div>
+    <p>Imagine a city where every word has an address. Similar words live in similar neighborhoods: "cat," "dog," "hamster," and "parrot" all live in the pet district. "Run," "sprint," "jog," and "dash" are in the motion quarter. "Paris," "London," "Berlin" are in the European capital zone. The distance between two words' addresses captures how semantically related they are. Directions in this city have meaning: moving in the "capital of" direction always takes you from a country to its capital city. Moving in the "plural" direction always takes you from a singular noun to its plural. The geometry of the space encodes the grammar and semantics of the language.</p>
+  </div>
+
+  <h2>The problem word embeddings couldn't solve</h2>
+  <p>Classic word embeddings gave every word a single fixed vector. But "bank" in "I went to the bank to deposit money" and "bank" in "we fished from the river bank" are completely different concepts that happen to share a spelling. A fixed vector cannot be both at once.</p>
+  <p>Language is deeply context-dependent. The meaning of any word depends on what surrounds it — often on what came many sentences earlier, or what the whole document is about. Early systems tried to handle this with Recurrent Neural Networks (RNNs) — architectures designed to process text sequentially, maintaining a running "memory" of what they'd seen. RNNs worked, but they struggled with long-range dependencies. By the time an RNN got to the end of a long document, it had largely forgotten the beginning. And they were slow to train because each word had to be processed in sequence — you couldn't parallelize the computation.</p>
+
+  <h2>The attention mechanism: looking everywhere at once</h2>
+  <p>In 2017, a team at Google published a paper titled "Attention Is All You Need." It introduced the transformer architecture, and it changed everything.</p>
+  <p>The key innovation is the <strong>attention mechanism</strong>. Instead of processing words in sequence and maintaining a compressed memory, attention lets every word in a sequence look at every other word simultaneously and decide how much to "attend to" each one when figuring out its own meaning.</p>
+  <p>The mechanism works through three concepts: <strong>queries</strong>, <strong>keys</strong>, and <strong>values</strong>. Each word generates all three. The query is like a question: "what information do I need from the rest of the sentence?" The key is like an answer label: "here's what I contain." The value is the actual content. To figure out what "bank" means, it sends out its query and checks it against every other word's key. Words with matching keys (like "river" or "deposit") get high attention scores. The word then collects the values from high-attention words, weighted by those scores, to build a contextual representation that captures its meaning in this specific sentence.</p>
+
+  <div class="callout">
+    <div class="callout-label">The library analogy for attention</div>
+    <p>Imagine you're researching a topic (your query). You walk through a library where every book has a catalog card on the cover (the key) describing what's inside. You scan the cards and pull the most relevant books (high attention scores). You then read those books' content (the values) and synthesize them into your understanding. You do this for every word in the sentence simultaneously. The insight is that you don't have to read every book cover-to-cover in order — you can jump directly to what's relevant. This is why transformers handle long-range dependencies so much better than RNNs: "bank" can attend directly to "river" even if they're 200 words apart.</p>
+  </div>
+
+  <h2>Why transformers replaced RNNs so completely</h2>
+  <p>Transformers had three advantages that compounded dramatically with scale. First, parallelism: because every position in the sequence attends to every other position simultaneously, the entire computation can be run in parallel on GPU hardware. Training that would take months with RNNs takes days with transformers. Second, long-range dependencies: attention's ability to connect any two positions directly, regardless of distance, solved the fundamental limitation of sequential processing. Third, scalability: transformers got better with more data, more parameters, and more compute in a way that RNNs simply didn't. Every dollar of additional training made them measurably smarter.</p>
+  <p>Within a few years of the original paper, virtually every state-of-the-art NLP system had moved to transformer-based architectures. BERT, GPT, T5, XLNet, RoBERTa — the entire family of modern language models is built on the transformer foundation.</p>
+
+  <h2>BERT vs GPT: two ways to use the same architecture</h2>
+  <p>The transformer architecture can be configured in different ways depending on what you want the model to do. Two approaches dominate, and they lead to fundamentally different capabilities.</p>
+  <p><strong>BERT</strong> (Google, 2018) uses only the encoder portion of the transformer. It's trained to "understand" text by reading it in both directions simultaneously — it sees the whole sentence at once, context from both left and right. The training task: predict randomly masked words given all the surrounding context ("The cat [MASK] on the mat" → "sat"). BERT excels at understanding tasks — sentiment analysis, question answering, named entity recognition, classification. It reads text and produces a rich representation of what it means. It's terrible at generating new text, because it's built to read, not write.</p>
+  <p><strong>GPT</strong> (OpenAI, 2018 onward) uses only the decoder portion. It's trained to predict the next word given only what came before — it only sees context from the left. The training task: given every book and webpage on the internet, predict each next word. This is a generation task. GPT learned to write by practicing writing — across billions of documents, in every style, on every topic. GPT-family models are what power ChatGPT, Claude, and most large language models. They're generators, not understanders — though at sufficient scale, generation requires such deep understanding that the distinction blurs.</p>
+
+  <div class="principle-list">
+    <div class="principle">
+      <div class="principle-title">BERT-style (encoder-only): for understanding</div>
+      <div class="principle-desc">Reads text bidirectionally. Used for classification, search, question answering, named entity recognition. Produces embeddings that capture meaning. Does not generate new text.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">GPT-style (decoder-only): for generation</div>
+      <div class="principle-desc">Predicts text left to right. Used for writing, summarization, translation, conversation. Produces fluent coherent text. Foundation for ChatGPT, Claude, Gemini, and most LLMs.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">T5-style (encoder-decoder): for transformation</div>
+      <div class="principle-desc">Reads input with encoder, generates output with decoder. Used for translation, summarization (input a document, output a summary), question answering with generation. Google Translate uses a variant of this approach.</div>
+    </div>
+  </div>
+
+  <h2>What fine-tuning actually means</h2>
+  <p>Pre-training a large language model costs tens of millions of dollars and months of compute time. The result is a model that has internalized the statistical patterns of the entire internet. But "predict the next word" is not the same as "be helpful, harmless, and honest" or "classify customer support tickets into these 12 categories."</p>
+  <p><strong>Fine-tuning</strong> takes a pre-trained model and continues training it on a smaller, task-specific dataset. The model's vast general knowledge is preserved; new layers of specific behavior are added. A hospital takes a general language model and fine-tunes it on anonymized clinical notes and medical literature — the model now speaks medicine. A customer service platform fine-tunes on their ticket history — the model now knows the specific products, policies, and tone of that company.</p>
+  <p>Fine-tuning is far more efficient than training from scratch because the model doesn't need to re-learn language, grammar, world knowledge, or common sense. It already knows all of that. The fine-tuning process just specializes the existing knowledge for a specific task. This is why fine-tuning a capable base model on 10,000 examples can produce a specialized system that outperforms training a dedicated model from scratch on 10 million examples.</p>
+
+  <h2>What LLMs are actually doing when they respond</h2>
+  <p>When you ask a large language model a question, what is actually happening? The honest and demystifying answer: the model is predicting, token by token, the most likely continuation of the conversation so far.</p>
+  <p>Every response is built one token at a time. The model sees the entire conversation — your question, its previous responses, everything — and predicts the single most likely next token given all of that context. That token is appended to the context, and the process repeats. "The capital of France is" → most likely next token: "Paris." The model doesn't know what it's going to say at the end of the response when it starts — it discovers the answer one token at a time, the same way you discover the end of a sentence as you read it.</p>
+  <p>This sounds mechanistic, but the implications are profound. To predict the next word reliably across every possible topic, the model had to internalize enormous amounts of knowledge and reasoning ability. Predicting "The mitochondria is the" → "powerhouse" is easy. Predicting coherent multi-step reasoning across a complex analytical problem requires something that, functionally, looks a lot like understanding — even if the underlying mechanism is "just" next-token prediction.</p>
+
+  <div class="warn">
+    <div class="warn-label">The hallucination problem</div>
+    <p>LLMs predict likely continuations, not necessarily true ones. A model trained on text where "The capital of Australia is Sydney" appears many times (because people often confuse it) may confidently predict "Sydney" even though the correct answer is Canberra. The model has no ground truth oracle to check against — it only has the patterns it learned from training data. This is why LLMs sometimes "hallucinate" confident, fluent, plausible-sounding falsehoods. The generation mechanism and the knowledge mechanism are the same: next-token prediction. When they conflict, prediction wins.</p>
+  </div>
+
+</div>
+</main>
+</div>
+
+<div class="sticky-bar" id="sticky-bar">
+  <div class="sticky-bar-reading" id="sticky-reading">Read to the end to unlock the next module</div>
+  <div class="sticky-bar-track"><div class="sticky-bar-fill" id="sticky-fill"></div></div>
+  <div class="sticky-bar-label" id="sticky-label">0%</div>
+  <button class="sticky-bar-btn" id="sticky-btn" onclick="completeAndNext()">Module 7: Computer Vision →</button>
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import { getFirestore, doc, setDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  const app=initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+  const auth=getAuth(app);const db=getFirestore(app);
+  let currentUser=null;
+  onAuthStateChanged(auth,u=>{currentUser=u;});
+  window.toggleTheme=function(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='☾'):(h.setAttribute('data-theme','dark'),i.textContent='☀');};
+  window.addEventListener('scroll',()=>{const d=document.documentElement,s=d.scrollTop||document.body.scrollTop,t=d.scrollHeight-d.clientHeight;document.getElementById('progress').style.width=(s/t*100)+'%';});
+  let unlocked=false;
+  function updateScrollProgress(){
+    const pct=Math.min(100,Math.round(((window.scrollY+window.innerHeight)/document.documentElement.scrollHeight)*100));
+    const fill=document.getElementById('sticky-fill'),label=document.getElementById('sticky-label'),btn=document.getElementById('sticky-btn'),reading=document.getElementById('sticky-reading');
+    if(fill)fill.style.width=pct+'%';if(label)label.textContent=pct+'%';
+    if(pct>=95&&!unlocked){unlocked=true;if(btn)btn.style.display='block';if(reading)reading.style.display='none';if(fill)fill.style.background='#22c55e';if(label)label.style.color='#22c55e';}
+  }
+  window.addEventListener('scroll',updateScrollProgress);updateScrollProgress();
+  window.completeAndNext=async function(){
+    if(currentUser){try{await setDoc(doc(db,'users',currentUser.uid),{mlModules:arrayUnion('m6')},{merge:true});}catch(e){}}
+    window.location.href='ml-module-7.html';
+  };
+</script>
+</body>
+</html>

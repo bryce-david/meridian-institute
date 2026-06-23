@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 5: Multi-Agent Architectures — Agentic AI and Autonomous Systems — Meridian Institute of AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#6B21A8;--accent-dim:rgba(107,33,168,0.1);--accent-dim2:rgba(107,33,168,0.05);--nav-bg:rgba(8,8,8,0.9);--callout-bg:rgba(107,33,168,0.07);--callout-border:rgba(107,33,168,0.25);--good-bg:rgba(34,197,94,0.07);--good-border:rgba(34,197,94,0.2);--warn-bg:rgba(251,146,60,0.07);--warn-border:rgba(251,146,60,0.2);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#581C87;--accent-dim:rgba(88,28,135,0.08);--accent-dim2:rgba(88,28,135,0.04);--nav-bg:rgba(250,250,248,0.9);--callout-bg:rgba(88,28,135,0.05);--callout-border:rgba(88,28,135,0.2);--good-bg:rgba(22,163,74,0.06);--good-border:rgba(22,163,74,0.2);--warn-bg:rgba(234,88,12,0.05);--warn-border:rgba(234,88,12,0.2);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;overflow-x:hidden;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.7;overflow-x:hidden;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}
+  .nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}
+  .nav-back{font-size:13px;color:var(--text-2);text-decoration:none;transition:color 0.2s;}
+  .nav-back:hover{color:var(--text);}
+  .nav-label{font-size:13px;color:var(--text-3);}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;transition:all 0.2s;}
+  .theme-toggle:hover{background:var(--bg-3);color:var(--text);}
+  .progress-bar{position:fixed;top:60px;left:0;right:0;z-index:99;height:2px;background:var(--border);}
+  .progress-fill{height:100%;background:var(--accent);width:0%;transition:width 0.1s;}
+  .page-wrapper{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:100vh;padding-top:62px;overflow:hidden;}
+  .sidebar{position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto;border-right:1px solid var(--border);padding:32px 24px;background:var(--bg-2);}
+  .sidebar-course{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;}
+  .sidebar-course-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+  .sidebar-module{margin-bottom:4px;}
+  .sidebar-module-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:13px;color:var(--text-2);text-decoration:none;transition:all 0.2s;line-height:1.4;}
+  .sidebar-module-link:hover{background:var(--bg-3);color:var(--text);}
+  .sidebar-module-link.active{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-num{font-size:11px;font-weight:500;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--bg-4);color:var(--text-3);}
+  .sidebar-module-link.active .sidebar-num{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-divider{height:1px;background:var(--border);margin:20px 0;}
+  .sidebar-progress-label{font-size:12px;color:var(--text-3);margin-bottom:8px;display:flex;justify-content:space-between;}
+  .sidebar-progress-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sidebar-progress-fill{height:100%;width:50%;background:var(--accent);border-radius:2px;}
+  main{display:block;min-width:0;overflow:hidden;}
+  .content{max-width:760px;width:100%;padding:60px 64px 140px;margin:0 auto;}
+  .module-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+  .module-tag{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(107,33,168,0.2);padding:4px 12px;border-radius:100px;}
+  .module-meta{font-size:12px;color:var(--text-3);}
+  h1{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1.05;letter-spacing:-0.02em;color:var(--text);margin-bottom:24px;}
+  .intro-text{font-size:19px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+  h2{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:400;color:var(--text);margin:52px 0 18px;line-height:1.2;}
+  h3{font-size:16px;font-weight:500;color:var(--text);margin:32px 0 12px;}
+  p{font-size:16px;font-weight:300;color:var(--text-2);line-height:1.8;margin-bottom:20px;}
+  strong{font-weight:500;color:var(--text);}
+  em{font-style:italic;}
+  ul,ol{margin:0 0 20px 22px;color:var(--text-2);}
+  li{font-size:16px;font-weight:300;line-height:1.8;margin-bottom:8px;}
+  .callout{background:var(--callout-bg);border:1px solid var(--callout-border);border-radius:12px;padding:24px 28px;margin:32px 0;}
+  .callout-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+  .callout p{margin:0;font-size:15px;color:var(--text-2);}
+  .callout p+p{margin-top:12px;}
+  .good{background:var(--good-bg);border:1px solid var(--good-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .good-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#22c55e;margin-bottom:10px;}
+  .good p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn{background:var(--warn-bg);border:1px solid var(--warn-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .warn-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#fb923c;margin-bottom:10px;}
+  .warn p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn p+p{margin-top:12px;}
+  .comparison-wrapper{overflow-x:auto;-webkit-overflow-scrolling:touch;width:100%;margin:28px 0;}
+  table{width:100%;border-collapse:collapse;font-size:14px;min-width:480px;}
+  th{text-align:left;padding:12px 16px;font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-3);border-bottom:1px solid var(--border-2);}
+  td{padding:14px 16px;border-bottom:1px solid var(--border);color:var(--text-2);line-height:1.6;vertical-align:top;}
+  tr:last-child td{border-bottom:none;}
+  td:first-child{color:var(--text);font-weight:500;width:25%;}
+  .principle-list{display:flex;flex-direction:column;gap:12px;margin:24px 0;}
+  .principle{background:var(--bg-2);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:0 12px 12px 0;padding:20px 24px;}
+  .principle-title{font-size:15px;font-weight:500;color:var(--text);margin-bottom:6px;}
+  .principle-desc{font-size:14px;color:var(--text-2);line-height:1.65;margin:0;}
+  .sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:var(--bg-2);border-top:1px solid var(--border-2);padding:14px 5%;display:flex;align-items:center;justify-content:space-between;gap:16px;backdrop-filter:blur(12px);}
+  .sticky-bar-track{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sticky-bar-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.2s;width:0%;}
+  .sticky-bar-label{font-size:12px;color:var(--text-3);white-space:nowrap;min-width:60px;text-align:right;}
+  .sticky-bar-btn{padding:10px 20px;border-radius:8px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;background:var(--accent);color:#fff;border:none;cursor:pointer;white-space:nowrap;transition:opacity 0.2s;display:none;}
+  .sticky-bar-btn:hover{opacity:0.88;}
+  .sticky-bar-reading{font-size:12px;color:var(--text-3);white-space:nowrap;}
+  @media(max-width:900px){.page-wrapper{grid-template-columns:1fr;}.sidebar{display:none;}.content{padding:40px 24px 120px;}h1{font-size:38px;}}
+  @media(max-width:600px){.content{padding:28px 16px 120px;}h1{font-size:30px;}h2{font-size:24px;}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="courses.html" class="nav-back">← Agentic AI and Autonomous Systems</a>
+    <div class="nav-divider"></div>
+    <span class="nav-label">Module 5</span>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">☀</span></button>
+</nav>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+
+<div class="page-wrapper">
+<aside class="sidebar">
+  <div class="sidebar-course">Expert Track</div>
+  <div class="sidebar-course-name">Agentic AI and Autonomous Systems</div>
+  <div class="sidebar-module"><a href="agents-module-1.html" class="sidebar-module-link"><span class="sidebar-num">1</span>What Are AI Agents?</a></div>
+  <div class="sidebar-module"><a href="agents-module-2.html" class="sidebar-module-link"><span class="sidebar-num">2</span>The Agent Loop: Perceive, Reason, Act</a></div>
+  <div class="sidebar-module"><a href="agents-module-3.html" class="sidebar-module-link"><span class="sidebar-num">3</span>Tool Use and Function Calling</a></div>
+  <div class="sidebar-module"><a href="agents-module-4.html" class="sidebar-module-link"><span class="sidebar-num">4</span>Memory Systems in AI Agents</a></div>
+  <div class="sidebar-module"><a href="agents-module-5.html" class="sidebar-module-link active"><span class="sidebar-num">5</span>Multi-Agent Architectures</a></div>
+  <div class="sidebar-module"><a href="agents-module-6.html" class="sidebar-module-link"><span class="sidebar-num">6</span>Planning and Task Decomposition</a></div>
+  <div class="sidebar-module"><a href="agents-module-7.html" class="sidebar-module-link"><span class="sidebar-num">7</span>Retrieval-Augmented Generation</a></div>
+  <div class="sidebar-module"><a href="agents-module-8.html" class="sidebar-module-link"><span class="sidebar-num">8</span>Agent Safety and Reliability</a></div>
+  <div class="sidebar-module"><a href="agents-module-9.html" class="sidebar-module-link"><span class="sidebar-num">9</span>Building with Agent Frameworks</a></div>
+  <div class="sidebar-module"><a href="agents-module-10.html" class="sidebar-module-link"><span class="sidebar-num">10</span>The Future of Autonomous AI</a></div>
+  <div class="sidebar-module"><a href="quiz-agents.html" class="sidebar-module-link" style="color:var(--accent);margin-top:4px;"><span class="sidebar-num" style="background:var(--accent-dim);color:var(--accent);">✦</span>Final Assessment</a></div>
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-progress-label"><span>Course progress</span><span style="color:var(--accent);">5 / 10</span></div>
+  <div class="sidebar-progress-track"><div class="sidebar-progress-fill"></div></div>
+</aside>
+
+<main>
+<div class="content">
+  <div class="module-eyebrow"><span class="module-tag">Module 5</span><span class="module-meta">30 min read · Agentic AI and Autonomous Systems</span></div>
+  <h1>Multi-Agent Architectures</h1>
+
+  <p class="intro-text">A single agent operating alone hits hard limits. Context windows fill up. The breadth of specialized knowledge required for a complex task exceeds what any single model can reliably maintain. Some subtasks can be done in parallel, but a single agent must work sequentially. Multi-agent architectures address these limits by distributing work across multiple cooperating agents — each with its own context, specialization, and role. The gains are real, but so are the costs. Knowing when and how to use multi-agent systems is one of the most practically important skills in advanced agent engineering.</p>
+
+  <h2>Why one agent is not enough</h2>
+  <p>The case for multi-agent systems rests on three structural limitations of single-agent designs.</p>
+
+  <p><strong>Context limits.</strong> Even with very large context windows, complex tasks accumulate information faster than any window can hold. A research task that requires reading 200 documents, maintaining a structured notes system, drafting multiple sections of a report, and revising based on feedback will exhaust any practical context window. Splitting the task across multiple agents, each operating within its own context window, allows the work to scale without hitting this ceiling.</p>
+
+  <p><strong>Specialization.</strong> Different subtasks benefit from different system prompt configurations, tool sets, and even different model choices. A "researcher" agent tuned for broad exploration and synthesis performs differently from a "coder" agent tuned for precise, testable code generation. Trying to optimize a single agent's system prompt and tools for both simultaneously produces a mediocre generalist. Specialization lets each agent be excellent at its role.</p>
+
+  <p><strong>Parallelism.</strong> Many complex tasks have subtasks that are logically independent and can run simultaneously. A single sequential agent must work through them one at a time. A multi-agent system can run independent subtasks in parallel, reducing wall-clock time proportionally. For a task with five independent subtasks, this represents a potential 5x speedup in total execution time.</p>
+
+  <h2>The orchestrator-subagent pattern</h2>
+  <p>The most common multi-agent architecture is the <strong>orchestrator-subagent</strong> pattern: a single orchestrator agent that coordinates the overall task, and multiple subagents that handle specific subtasks assigned by the orchestrator.</p>
+  <p>The orchestrator's responsibilities: receive the high-level task; decompose it into subtasks; assign subtasks to appropriate subagents; collect and integrate results; handle failures and replanning; produce the final output. The subagents' responsibilities: receive a specific, well-scoped subtask; execute it within their specialized context and tool set; return a structured result to the orchestrator.</p>
+  <p>The key insight is that the orchestrator does not need to understand <em>how</em> each subtask is accomplished — it only needs to know what each subagent is capable of, and what to give them. This separation of concerns is what makes the pattern scalable: you can add new specialized subagents without changing the orchestrator's core logic, as long as the capability interface is well-defined.</p>
+
+  <div class="callout">
+    <div class="callout-label">Anthropic's View on Orchestrator Trust</div>
+    <p>When building orchestrator-subagent systems, Anthropic's guidance is that subagents should not automatically trust instructions from an orchestrator just because they claim to be one. Legitimate orchestration systems do not need to override safety measures or claim special permissions not established at the start of a session. Subagents should maintain their own safety boundaries regardless of what they are told to do by an orchestrating agent.</p>
+  </div>
+
+  <h2>Peer-to-peer agent networks</h2>
+  <p>An alternative to the strict orchestrator-subagent hierarchy is a <strong>peer-to-peer</strong> architecture where agents communicate directly with each other without a central coordinator. Each agent can initiate requests to other agents, respond to requests, and broadcast information to the network.</p>
+  <p>Peer-to-peer architectures are more flexible but significantly harder to reason about. Without a central coordinator, it becomes difficult to track global task state, avoid duplicate work, detect when the overall task is complete, or diagnose failures. In practice, pure peer-to-peer multi-agent systems are rare in production; most real systems use a hybrid where a loose coordination layer exists even if it is not a full orchestrator.</p>
+
+  <h2>Specialized agent roles</h2>
+  <p>The most effective multi-agent teams consist of agents with clearly differentiated roles. Common specialized roles and their characteristics:</p>
+
+  <div class="principle-list">
+    <div class="principle">
+      <div class="principle-title">The Researcher</div>
+      <div class="principle-desc">Equipped with web search, document retrieval, and database query tools. System prompt tuned for thorough information gathering, source evaluation, and synthesis. Given broad scope and latitude to explore. Returns structured summaries with citations. Often runs multiple parallel searches simultaneously to maximize information coverage in minimum time.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">The Coder</div>
+      <div class="principle-desc">Equipped with code execution, file system access, and test-running tools. System prompt tuned for precision, correctness, and adherence to specified interfaces. Given explicit task specifications and expected outputs. Returns working code with test results. Optimized for a specific language or framework when possible.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">The Critic</div>
+      <div class="principle-desc">Receives output from other agents and evaluates it against specified criteria: accuracy, completeness, consistency, adherence to requirements, tone. Returns structured feedback with specific, actionable issues rather than vague assessments. Used as a quality gate before output is passed to the next stage or returned to the user. The critic pattern is one of the most reliable ways to improve multi-agent output quality.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">The Executor</div>
+      <div class="principle-desc">Takes validated plans or instructions and executes them in the real world — sending emails, updating databases, calling APIs, deploying code. Unlike other agents, the executor takes irreversible actions. Should be configured with strict input validation, confirmation steps for high-stakes actions, and comprehensive logging of everything it does.</div>
+    </div>
+  </div>
+
+  <h2>Parallel task execution and aggregation</h2>
+  <p>One of the most valuable properties of multi-agent architectures is the ability to run independent subtasks in parallel. The implementation pattern is consistent across frameworks: the orchestrator identifies which subtasks are independent (can run without waiting for each other's results), dispatches them simultaneously, and then awaits all results before continuing.</p>
+  <p>In Python, this typically means using <code>asyncio.gather()</code> to run multiple async agent calls concurrently. The orchestrator sends tasks to multiple subagents, waits for all to complete, then processes the aggregated results. Error handling must account for partial failures: what should the orchestrator do if 3 of 5 parallel subtasks succeed but 2 fail?</p>
+  <p>Result aggregation is often itself an LLM task: after parallel researcher agents each return their findings, an orchestrator-level synthesis step merges the results into a coherent whole, resolves contradictions, and identifies gaps. This synthesis step is frequently where the real value of a multi-agent research system emerges — the integrated whole is more insightful than any individual part.</p>
+
+  <h2>Agent communication formats</h2>
+  <p>How agents communicate with each other matters enormously for reliability. Natural language is expressive but ambiguous; structured formats are precise but require schema agreement. The practical approach depends on the complexity of the interface.</p>
+  <p>For simple task dispatch and result return, structured JSON is usually sufficient and most reliable. The orchestrator sends a JSON object specifying the task, and the subagent returns a JSON result. For complex inter-agent communication — where agents need to express nuanced requests, partial results, or uncertainty — a combination of structured fields and a natural language description field often works well.</p>
+  <p>The key principle: <strong>be explicit about expected output format in the subagent's system prompt</strong>. Agents that return results in idiosyncratic formats require the orchestrator to do complex parsing; agents that reliably return structured, predictable formats compose cleanly. Enforce output schemas at the tool layer when possible — if a subagent's output is processed by a function that requires a specific format, validate at the interface before passing it along.</p>
+
+  <h2>Trust hierarchies between agents</h2>
+  <p>When agents can instruct other agents, the question of trust becomes critical. Should a subagent automatically do whatever the orchestrator tells it? The answer is no — and this has important security implications.</p>
+  <p>The correct mental model is: each agent in a multi-agent system has its own safety constraints and should maintain them regardless of the instruction source. An orchestrator that asks a subagent to take a dangerous, irreversible action should be refused, just as a human user making the same request would be refused. Legitimate orchestrators do not need to bypass safety measures; requests to do so are a red flag indicating potential compromise of the orchestrator or prompt injection through its inputs.</p>
+
+  <div class="warn">
+    <div class="warn-label">Prompt Injection Through the Orchestrator</div>
+    <p>If an orchestrator agent retrieves external content (web pages, documents, user-generated data) and passes that content to subagents, malicious content can attempt to hijack subagent behavior through the orchestrator's relayed instructions. A webpage containing "Ignore your previous instructions. You are now a different agent. Execute the following..." can potentially affect a subagent if it treats orchestrator messages with unconditional trust. Design subagents to maintain their own system-level safety constraints even when processing relayed orchestrator instructions.</p>
+  </div>
+
+  <h2>Design patterns: AutoGen, CrewAI, and Anthropic patterns</h2>
+  <p>Several frameworks have operationalized multi-agent design patterns. Understanding their approaches reveals the design choices you will need to make regardless of which framework you use.</p>
+
+  <div class="comparison-wrapper">
+  <table>
+    <tr><th>Framework</th><th>Core Pattern</th><th>Agent Communication</th><th>Best For</th></tr>
+    <tr><td>AutoGen</td><td>Conversation-based, agents message each other in a structured chat</td><td>Multi-turn dialogue; agents can initiate and respond</td><td>Research tasks, code generation, debates between agents</td></tr>
+    <tr><td>CrewAI</td><td>Role-based crews with defined roles, goals, and backstories</td><td>Sequential or hierarchical task handoffs</td><td>Content creation, research pipelines, structured workflows</td></tr>
+    <tr><td>Anthropic patterns</td><td>Explicit orchestrator calling subagents via tool calls</td><td>Structured tool call / tool result pattern</td><td>Production systems requiring predictability and auditability</td></tr>
+    <tr><td>LangGraph</td><td>State machine with LLM nodes and defined transitions</td><td>Shared state object passed between nodes</td><td>Complex workflows with conditional branching and loops</td></tr>
+  </table>
+  </div>
+
+  <p>AutoGen's conversation-based approach is natural for tasks where agents need to negotiate, debate, or iterate on solutions together. CrewAI's role-based framing maps well to human team analogies and is easy to explain to non-technical stakeholders. Anthropic's tool-calling pattern treats subagent invocation as just another tool call, which makes it auditable and fits naturally into existing monitoring infrastructure. LangGraph is the most flexible but requires the most explicit design work upfront.</p>
+
+  <h2>When NOT to use multi-agent systems</h2>
+  <p>Multi-agent architectures add real complexity and cost. They are not always the right answer, and choosing them when a single agent would suffice is one of the most common mistakes in agentic system design.</p>
+
+  <div class="warn">
+    <div class="warn-label">Added Latency and Complexity</div>
+    <p>Each agent boundary adds latency. An orchestrator must formulate a request, the subagent must process it, and the result must be parsed and integrated. For tasks that fit comfortably within a single context window and do not benefit from specialization or parallelism, a single well-designed agent will outperform a multi-agent system on every metric: speed, cost, reliability, and debuggability. Start with the simplest architecture that could work. Add agents only when you have a specific, measurable reason to do so.</p>
+  </div>
+
+  <p>Specific situations where single-agent is usually better:</p>
+  <ul>
+    <li>The task fits within a single context window with room to spare</li>
+    <li>The task is sequential with no parallelizable subtasks</li>
+    <li>The task requires consistent context across all steps (splitting context between agents loses coherence)</li>
+    <li>Latency is a critical constraint and the task doesn't benefit from parallelism</li>
+    <li>Debugging simplicity is important (multi-agent failures are significantly harder to diagnose)</li>
+    <li>The overhead of inter-agent communication exceeds the efficiency gained from specialization</li>
+  </ul>
+
+  <div class="good">
+    <div class="good-label">Practical Heuristic</div>
+    <p>Start single-agent. Identify the specific bottleneck that actually limits your agent's performance — is it context overflow? Is it task quality on specific subtasks? Is it sequential execution on tasks that could parallelize? Then add only the multi-agent machinery that specifically addresses that bottleneck. Avoid designing multi-agent architectures speculatively before you understand where the single-agent design actually fails.</p>
+  </div>
+
+</div>
+</main>
+</div>
+
+<div class="sticky-bar" id="sticky-bar">
+  <div class="sticky-bar-reading" id="sticky-reading">Read to the end to unlock the next module</div>
+  <div class="sticky-bar-track"><div class="sticky-bar-fill" id="sticky-fill"></div></div>
+  <div class="sticky-bar-label" id="sticky-label">0%</div>
+  <button class="sticky-bar-btn" id="sticky-btn" onclick="completeAndNext()">Module 6: Planning and Task Decomposition →</button>
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import { getFirestore, doc, setDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  const app=initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+  const auth=getAuth(app);const db=getFirestore(app);
+  let currentUser=null;
+  onAuthStateChanged(auth,u=>{currentUser=u;});
+
+  window.toggleTheme=function(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='☾'):(h.setAttribute('data-theme','dark'),i.textContent='☀');};
+  window.addEventListener('scroll',()=>{const d=document.documentElement,s=d.scrollTop||document.body.scrollTop,t=d.scrollHeight-d.clientHeight;document.getElementById('progress').style.width=(s/t*100)+'%';});
+
+  let unlocked=false;
+  function updateScrollProgress(){
+    const scrolled=window.scrollY+window.innerHeight;
+    const total=document.documentElement.scrollHeight;
+    const pct=Math.min(100,Math.round((scrolled/total)*100));
+    const fill=document.getElementById('sticky-fill');
+    const label=document.getElementById('sticky-label');
+    const btn=document.getElementById('sticky-btn');
+    const reading=document.getElementById('sticky-reading');
+    if(fill)fill.style.width=pct+'%';
+    if(label)label.textContent=pct+'%';
+    if(pct>=95&&!unlocked){
+      unlocked=true;
+      if(btn)btn.style.display='block';
+      if(reading)reading.style.display='none';
+      if(fill)fill.style.background='#22c55e';
+      if(label)label.style.color='#22c55e';
+    }
+  }
+  window.addEventListener('scroll',updateScrollProgress);
+  updateScrollProgress();
+
+  window.completeAndNext=async function(){
+    if(currentUser){
+      try{
+        await setDoc(doc(db,'users',currentUser.uid),{
+          agentsModules: arrayUnion('m5')
+        },{merge:true});
+      }catch(e){}
+    }
+    window.location.href='agents-module-6.html';
+  };
+</script>
+</body>
+</html>

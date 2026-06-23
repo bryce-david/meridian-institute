@@ -3,730 +3,117 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Free AI Courses — ChatGPT, Claude, Gemini & More | Meridian Institute of AI</title>
-<meta name="description" content="Master ChatGPT, Claude, Gemini &amp; more — 7 free AI courses with real certification. No subscription, no catch. Build skills that actually get you hired.">
-<meta name="robots" content="index, follow">
-<meta property="og:title" content="Free AI Courses — ChatGPT, Claude, Gemini & More | Meridian Institute of AI">
-<meta property="og:description" content="7 free AI courses. Learn ChatGPT, Claude, Gemini, Perplexity, AI in Finance, and AI in Law. Earn certification. No cost, no catch — start in minutes.">
-<meta property="og:url" content="https://meridianinstituteai.com/">
-<meta property="og:type" content="website">
-<link rel="canonical" href="https://meridianinstituteai.com/">
+<title>Meridian Institute of AI</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   :root[data-theme="dark"] {
-    --bg: #080808;
-    --bg-2: #111111;
-    --bg-3: #1a1a1a;
-    --bg-4: #222222;
-    --text: #f0f0f0;
-    --text-2: #a0a0a0;
-    --text-3: #606060;
-    --border: rgba(255,255,255,0.08);
-    --border-2: rgba(255,255,255,0.15);
-    --accent: #5b8ff8;
-    --accent-dim: rgba(91,143,248,0.1);
-    --accent-dim2: rgba(91,143,248,0.05);
-    --card-bg: #111111;
-    --card-bg-hover: #161616;
-    --pill-bg: rgba(255,255,255,0.06);
-    --nav-bg: rgba(8,8,8,0.85);
-    --hero-gradient: radial-gradient(ellipse 80% 60% at 50% -10%, rgba(91,143,248,0.12) 0%, transparent 70%);
-    --invert-logo: 0;
+    --bg: #080808; --bg-2: #111111; --bg-3: #1a1a1a; --bg-4: #222222;
+    --text: #f0f0f0; --text-2: #a0a0a0; --text-3: #606060;
+    --border: rgba(255,255,255,0.08); --border-2: rgba(255,255,255,0.15);
+    --accent: #5b8ff8; --accent-dim: rgba(91,143,248,0.1); --accent-dim2: rgba(91,143,248,0.05);
+    --card-bg: #111111; --card-bg-hover: #161616; --pill-bg: rgba(255,255,255,0.06);
+    --nav-bg: rgba(8,8,8,0.85); --hero-gradient: radial-gradient(ellipse 80% 60% at 50% -10%, rgba(91,143,248,0.12) 0%, transparent 70%);
   }
   :root[data-theme="light"] {
-    --bg: #fafaf8;
-    --bg-2: #f0f0ec;
-    --bg-3: #e8e8e2;
-    --bg-4: #ddddd6;
-    --text: #0a0a0a;
-    --text-2: #555550;
-    --text-3: #999990;
-    --border: rgba(0,0,0,0.08);
-    --border-2: rgba(0,0,0,0.15);
-    --accent: #2563eb;
-    --accent-dim: rgba(0,122,90,0.08);
-    --accent-dim2: rgba(0,122,90,0.04);
-    --card-bg: #ffffff;
-    --card-bg-hover: #f8f8f5;
-    --pill-bg: rgba(0,0,0,0.05);
-    --nav-bg: rgba(250,250,248,0.9);
-    --hero-gradient: radial-gradient(ellipse 80% 60% at 50% -10%, rgba(0,122,90,0.08) 0%, transparent 70%);
-    --invert-logo: 1;
+    --bg: #fafaf8; --bg-2: #f0f0ec; --bg-3: #e8e8e2; --bg-4: #ddddd6;
+    --text: #0a0a0a; --text-2: #555550; --text-3: #999990;
+    --border: rgba(0,0,0,0.08); --border-2: rgba(0,0,0,0.15);
+    --accent: #2563eb; --accent-dim: rgba(37,99,235,0.08); --accent-dim2: rgba(37,99,235,0.04);
+    --card-bg: #ffffff; --card-bg-hover: #f8f8f5; --pill-bg: rgba(0,0,0,0.05);
+    --nav-bg: rgba(250,250,248,0.9); --hero-gradient: radial-gradient(ellipse 80% 60% at 50% -10%, rgba(37,99,235,0.08) 0%, transparent 70%);
   }
-
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
   html { scroll-behavior: smooth; }
-
-  body {
-    font-family: 'DM Sans', sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    font-size: 16px;
-    line-height: 1.6;
-    transition: background 0.3s, color 0.3s;
-    overflow-x: hidden;
-  }
-
-  /* NAV */
-  nav {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 100;
-    background: var(--nav-bg);
-    backdrop-filter: blur(20px);
-    border-bottom: 1px solid var(--border);
-    padding: 0 5%;
-    height: 64px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    transition: background 0.3s;
-  }
-  .nav-logo {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    text-decoration: none;
-  }
-  .nav-logo-mark {
-    width: 32px;
-    height: 32px;
-    border: 1.5px solid var(--accent);
-    border-radius: 6px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 18px;
-    font-weight: 600;
-    color: var(--accent);
-    letter-spacing: -1px;
-  }
-  .nav-logo-text {
-    font-size: 14px;
-    font-weight: 500;
-    letter-spacing: 0.02em;
-    color: var(--text);
-  }
-  .nav-links {
-    display: flex;
-    align-items: center;
-    gap: 32px;
-    list-style: none;
-  }
-  .nav-links a {
-    font-size: 13px;
-    font-weight: 400;
-    color: var(--text-2);
-    text-decoration: none;
-    letter-spacing: 0.03em;
-    transition: color 0.2s;
-  }
+  body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); font-size: 16px; line-height: 1.6; transition: background 0.3s, color 0.3s; overflow-x: hidden; }
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: var(--nav-bg); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); padding: 0 5%; height: 64px; display: flex; align-items: center; justify-content: space-between; }
+  .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+  .nav-logo-mark { width: 32px; height: 32px; border: 1.5px solid var(--accent); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 600; color: var(--accent); }
+  .nav-logo-text { font-size: 14px; font-weight: 500; letter-spacing: 0.02em; color: var(--text); }
+  .nav-links { display: flex; align-items: center; gap: 32px; list-style: none; }
+  .nav-links a { font-size: 13px; color: var(--text-2); text-decoration: none; transition: color 0.2s; }
   .nav-links a:hover { color: var(--text); }
-  .nav-right {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-  }
-  .theme-toggle {
-    width: 36px;
-    height: 36px;
-    border-radius: 8px;
-    border: 1px solid var(--border-2);
-    background: transparent;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--text-2);
-    transition: all 0.2s;
-    font-size: 15px;
-  }
+  .nav-right { display: flex; align-items: center; gap: 16px; }
+  .theme-toggle { width: 36px; height: 36px; border-radius: 8px; border: 1px solid var(--border-2); background: transparent; cursor: pointer; display: flex; align-items: center; justify-content: center; color: var(--text-2); font-size: 15px; }
   .theme-toggle:hover { background: var(--bg-3); color: var(--text); }
-  .btn-nav {
-    padding: 8px 18px;
-    border-radius: 8px;
-    font-size: 13px;
-    font-weight: 500;
-    background: var(--accent);
-    color: #fff;
-    border: none;
-    cursor: pointer;
-    text-decoration: none;
-    transition: opacity 0.2s;
-    letter-spacing: 0.02em;
-  }
+  .btn-nav { padding: 8px 18px; border-radius: 8px; font-size: 13px; font-weight: 500; background: var(--accent); color: #fff; border: none; cursor: pointer; text-decoration: none; transition: opacity 0.2s; }
   .btn-nav:hover { opacity: 0.85; }
-
-  /* HERO */
-  .hero {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 120px 5% 80px;
-    position: relative;
-    overflow: hidden;
-  }
-  .hero::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: var(--hero-gradient);
-    pointer-events: none;
-  }
-  .hero-eyebrow {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--accent);
-    background: var(--accent-dim);
-    border: 1px solid rgba(91,143,248,0.2);
-    padding: 6px 16px;
-    border-radius: 100px;
-    margin-bottom: 36px;
-    opacity: 0;
-    animation: fadeUp 0.8s 0.2s forwards;
-  }
-  .hero h1 {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(48px, 8vw, 96px);
-    font-weight: 300;
-    line-height: 1.0;
-    letter-spacing: -0.02em;
-    color: var(--text);
-    max-width: 900px;
-    margin-bottom: 28px;
-    opacity: 0;
-    animation: fadeUp 0.8s 0.4s forwards;
-  }
-  .hero h1 em {
-    font-style: italic;
-    color: var(--accent);
-  }
-  .hero-sub {
-    font-size: 17px;
-    font-weight: 300;
-    color: var(--text-2);
-    max-width: 560px;
-    line-height: 1.7;
-    margin-bottom: 48px;
-    opacity: 0;
-    animation: fadeUp 0.8s 0.6s forwards;
-  }
-  .hero-actions {
-    display: flex;
-    gap: 14px;
-    justify-content: center;
-    flex-wrap: wrap;
-    opacity: 0;
-    animation: fadeUp 0.8s 0.8s forwards;
-  }
-  .btn-primary {
-    padding: 14px 32px;
-    border-radius: 10px;
-    font-size: 14px;
-    font-weight: 500;
-    background: var(--accent);
-    color: #fff;
-    border: none;
-    cursor: pointer;
-    text-decoration: none;
-    transition: opacity 0.2s, transform 0.2s;
-    letter-spacing: 0.02em;
-  }
+  .hero { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 120px 5% 80px; position: relative; overflow: hidden; }
+  .hero::before { content: ''; position: absolute; inset: 0; background: var(--hero-gradient); pointer-events: none; }
+  .hero-eyebrow { display: inline-flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); background: var(--accent-dim); border: 1px solid rgba(91,143,248,0.2); padding: 6px 16px; border-radius: 100px; margin-bottom: 36px; opacity: 0; animation: fadeUp 0.8s 0.2s forwards; }
+  .hero h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(48px, 8vw, 96px); font-weight: 300; line-height: 1.0; letter-spacing: -0.02em; color: var(--text); max-width: 900px; margin-bottom: 28px; opacity: 0; animation: fadeUp 0.8s 0.4s forwards; }
+  .hero h1 em { font-style: italic; color: var(--accent); }
+  .hero-sub { font-size: 17px; font-weight: 300; color: var(--text-2); max-width: 560px; line-height: 1.7; margin-bottom: 48px; opacity: 0; animation: fadeUp 0.8s 0.6s forwards; }
+  .hero-actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; opacity: 0; animation: fadeUp 0.8s 0.8s forwards; }
+  .btn-primary { padding: 14px 32px; border-radius: 10px; font-size: 14px; font-weight: 500; background: var(--accent); color: #fff; border: none; cursor: pointer; text-decoration: none; transition: opacity 0.2s, transform 0.2s; }
   .btn-primary:hover { opacity: 0.88; transform: translateY(-1px); }
-  .btn-ghost {
-    padding: 14px 32px;
-    border-radius: 10px;
-    font-size: 14px;
-    font-weight: 400;
-    background: transparent;
-    color: var(--text-2);
-    border: 1px solid var(--border-2);
-    cursor: pointer;
-    text-decoration: none;
-    transition: all 0.2s;
-    letter-spacing: 0.02em;
-  }
+  .btn-ghost { padding: 14px 32px; border-radius: 10px; font-size: 14px; font-weight: 400; background: transparent; color: var(--text-2); border: 1px solid var(--border-2); cursor: pointer; text-decoration: none; transition: all 0.2s; }
   .btn-ghost:hover { background: var(--bg-3); color: var(--text); }
-  .hero-stats {
-    margin-top: 72px;
-    display: flex;
-    gap: 48px;
-    justify-content: center;
-    opacity: 0;
-    animation: fadeUp 0.8s 1.0s forwards;
-    flex-wrap: wrap;
-  }
+  .hero-stats { margin-top: 72px; display: flex; gap: 48px; justify-content: center; opacity: 0; animation: fadeUp 0.8s 1.0s forwards; flex-wrap: wrap; }
   .stat-item { text-align: center; }
-  .stat-num {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 36px;
-    font-weight: 600;
-    color: var(--text);
-    line-height: 1;
-    display: block;
-  }
-  .stat-label {
-    font-size: 12px;
-    color: var(--text-3);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    margin-top: 6px;
-    display: block;
-  }
-  .stat-div {
-    width: 1px;
-    background: var(--border-2);
-    height: 40px;
-    margin: auto 0;
-  }
-
-  /* SECTIONS */
-  section {
-    padding: 100px 5%;
-  }
-  .section-eyebrow {
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 16px;
-  }
-  .section-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(36px, 5vw, 56px);
-    font-weight: 300;
-    line-height: 1.1;
-    letter-spacing: -0.01em;
-    color: var(--text);
-    max-width: 700px;
-    margin-bottom: 20px;
-  }
-  .section-sub {
-    font-size: 16px;
-    font-weight: 300;
-    color: var(--text-2);
-    max-width: 540px;
-    line-height: 1.7;
-    margin-bottom: 56px;
-  }
+  .stat-num { font-family: 'Cormorant Garamond', serif; font-size: 36px; font-weight: 600; color: var(--text); line-height: 1; display: block; }
+  .stat-label { font-size: 12px; color: var(--text-3); letter-spacing: 0.08em; text-transform: uppercase; margin-top: 6px; display: block; }
+  .stat-div { width: 1px; background: var(--border-2); height: 40px; margin: auto 0; }
+  section { padding: 100px 5%; }
+  .section-eyebrow { font-size: 11px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); margin-bottom: 16px; }
+  .section-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(36px, 5vw, 56px); font-weight: 300; line-height: 1.1; letter-spacing: -0.01em; color: var(--text); max-width: 700px; margin-bottom: 20px; }
+  .section-sub { font-size: 16px; font-weight: 300; color: var(--text-2); max-width: 540px; line-height: 1.7; margin-bottom: 56px; }
   .centered { text-align: center; margin-left: auto; margin-right: auto; }
-
-  /* TRACKS */
-  .tracks-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 1px;
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    overflow: hidden;
-    background: var(--border);
-  }
-  .track-card {
-    background: var(--card-bg);
-    padding: 36px;
-    transition: background 0.2s;
-    cursor: pointer;
-  }
+  .tracks-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1px; border: 1px solid var(--border); border-radius: 16px; overflow: hidden; background: var(--border); }
+  .track-card { background: var(--card-bg); padding: 36px; transition: background 0.2s; text-decoration: none; display: block; }
   .track-card:hover { background: var(--card-bg-hover); }
-  .track-icon {
-    width: 44px;
-    height: 44px;
-    border-radius: 10px;
-    background: var(--accent-dim);
-    border: 1px solid rgba(91,143,248,0.2);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 24px;
-    font-size: 20px;
-  }
-  .track-badge {
-    display: inline-block;
-    font-size: 10px;
-    font-weight: 500;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    padding: 4px 10px;
-    border-radius: 100px;
-    margin-bottom: 12px;
-  }
+  .track-icon { width: 44px; height: 44px; border-radius: 10px; background: var(--accent-dim); border: 1px solid rgba(91,143,248,0.2); display: flex; align-items: center; justify-content: center; margin-bottom: 24px; font-size: 20px; }
+  .track-badge { display: inline-block; font-size: 10px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; padding: 4px 10px; border-radius: 100px; margin-bottom: 12px; }
   .badge-free { background: rgba(91,143,248,0.12); color: var(--accent); border: 1px solid rgba(91,143,248,0.2); }
-  .badge-paid { background: var(--pill-bg); color: var(--text-2); border: 1px solid var(--border-2); }
-  .track-title {
-    font-size: 18px;
-    font-weight: 500;
-    color: var(--text);
-    margin-bottom: 10px;
-    line-height: 1.3;
-  }
-  .track-desc {
-    font-size: 14px;
-    font-weight: 300;
-    color: var(--text-2);
-    line-height: 1.65;
-    margin-bottom: 24px;
-  }
-  .track-price {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 24px;
-    font-weight: 600;
-    color: var(--text);
-  }
-  .track-price span {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 13px;
-    font-weight: 400;
-    color: var(--text-3);
-    margin-left: 4px;
-  }
-
-  /* SPECIALIZATIONS */
-  .spec-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 16px;
-  }
-  .spec-card {
-    background: var(--card-bg);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 28px 24px;
-    transition: all 0.25s;
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-  }
-  .spec-card::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: var(--accent-dim2);
-    opacity: 0;
-    transition: opacity 0.25s;
-  }
+  .badge-inter { background: rgba(217,119,87,0.1); color: #D97757; border: 1px solid rgba(217,119,87,0.2); }
+  .badge-adv { background: rgba(240,180,41,0.1); color: #F0B429; border: 1px solid rgba(240,180,41,0.2); }
+  .track-title { font-size: 18px; font-weight: 500; color: var(--text); margin-bottom: 10px; line-height: 1.3; }
+  .track-desc { font-size: 14px; font-weight: 300; color: var(--text-2); line-height: 1.65; margin-bottom: 24px; }
+  .track-cta { font-size: 14px; font-weight: 500; }
+  .spec-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
+  .spec-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 14px; padding: 28px 24px; transition: all 0.25s; text-decoration: none; display: block; position: relative; overflow: hidden; }
+  .spec-card::before { content: ''; position: absolute; inset: 0; background: var(--accent-dim2); opacity: 0; transition: opacity 0.25s; }
   .spec-card:hover { border-color: rgba(91,143,248,0.3); transform: translateY(-2px); }
   .spec-card:hover::before { opacity: 1; }
   .spec-icon { font-size: 26px; margin-bottom: 16px; }
-  .spec-name {
-    font-size: 15px;
-    font-weight: 500;
-    color: var(--text);
-    margin-bottom: 8px;
-  }
-  .spec-desc {
-    font-size: 13px;
-    color: var(--text-2);
-    line-height: 1.6;
-  }
-  .spec-arrow {
-    position: absolute;
-    top: 24px;
-    right: 24px;
-    font-size: 16px;
-    color: var(--text-3);
-    transition: all 0.2s;
-  }
+  .spec-name { font-size: 15px; font-weight: 500; color: var(--text); margin-bottom: 8px; }
+  .spec-desc { font-size: 13px; color: var(--text-2); line-height: 1.6; }
+  .spec-arrow { position: absolute; top: 24px; right: 24px; font-size: 16px; color: var(--text-3); transition: all 0.2s; }
   .spec-card:hover .spec-arrow { color: var(--accent); transform: translate(2px, -2px); }
-
-  /* WHY SECTION */
-  .why-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 80px;
-    align-items: center;
-  }
-  .why-visual {
-    background: var(--bg-2);
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    padding: 48px;
-    position: relative;
-    overflow: hidden;
-  }
-  .why-visual::before {
-    content: '';
-    position: absolute;
-    top: -40px; right: -40px;
-    width: 200px; height: 200px;
-    background: radial-gradient(circle, rgba(91,143,248,0.15) 0%, transparent 70%);
-    border-radius: 50%;
-  }
+  .why-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+  .why-visual { background: var(--bg-2); border: 1px solid var(--border); border-radius: 20px; padding: 48px; position: relative; overflow: hidden; }
+  .why-visual::before { content: ''; position: absolute; top: -40px; right: -40px; width: 200px; height: 200px; background: radial-gradient(circle, rgba(91,143,248,0.15) 0%, transparent 70%); border-radius: 50%; }
   .why-list { list-style: none; }
-  .why-item {
-    display: flex;
-    gap: 16px;
-    padding: 20px 0;
-    border-bottom: 1px solid var(--border);
-  }
+  .why-item { display: flex; gap: 16px; padding: 20px 0; border-bottom: 1px solid var(--border); }
   .why-item:last-child { border-bottom: none; }
-  .why-check {
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    background: var(--accent-dim);
-    border: 1px solid rgba(91,143,248,0.3);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    margin-top: 2px;
-    font-size: 12px;
-    color: var(--accent);
-  }
-  .why-item-title {
-    font-size: 15px;
-    font-weight: 500;
-    color: var(--text);
-    margin-bottom: 4px;
-  }
-  .why-item-desc {
-    font-size: 13px;
-    color: var(--text-2);
-    line-height: 1.6;
-  }
-
-  /* PRICING */
-  .pricing-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-    max-width: 960px;
-    margin: 0 auto;
-  }
-  .pricing-card {
-    background: var(--card-bg);
-    border: 1px solid var(--border);
-    border-radius: 18px;
-    padding: 40px 32px;
-    position: relative;
-    transition: transform 0.2s;
-  }
-  .pricing-card:hover { transform: translateY(-3px); }
-  .pricing-card.featured {
-    border-color: rgba(91,143,248,0.4);
-    background: var(--bg-2);
-  }
-  .pricing-featured-label {
-    position: absolute;
-    top: -1px; left: 50%; transform: translateX(-50%);
-    background: var(--accent);
-    color: #fff;
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    padding: 5px 18px;
-    border-radius: 0 0 10px 10px;
-  }
-  .pricing-tier {
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--text-3);
-    margin-bottom: 20px;
-  }
-  .pricing-price {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 52px;
-    font-weight: 300;
-    color: var(--text);
-    line-height: 1;
-    margin-bottom: 8px;
-  }
-  .pricing-price sup {
-    font-size: 24px;
-    vertical-align: super;
-    font-weight: 400;
-  }
-  .pricing-cadence {
-    font-size: 13px;
-    color: var(--text-3);
-    margin-bottom: 32px;
-  }
-  .pricing-divider {
-    height: 1px;
-    background: var(--border);
-    margin-bottom: 28px;
-  }
-  .pricing-features { list-style: none; margin-bottom: 36px; }
-  .pricing-feature {
-    display: flex;
-    align-items: flex-start;
-    gap: 12px;
-    padding: 8px 0;
-    font-size: 14px;
-    color: var(--text-2);
-  }
-  .pricing-feature-check { color: var(--accent); flex-shrink: 0; margin-top: 2px; }
-  .btn-pricing {
-    display: block;
-    width: 100%;
-    padding: 13px;
-    border-radius: 10px;
-    font-size: 14px;
-    font-weight: 500;
-    text-align: center;
-    cursor: pointer;
-    transition: all 0.2s;
-    text-decoration: none;
-    letter-spacing: 0.02em;
-  }
-  .btn-pricing-primary {
-    background: var(--accent);
-    color: #fff;
-    border: none;
-  }
-  .btn-pricing-primary:hover { opacity: 0.88; }
-  .btn-pricing-ghost {
-    background: transparent;
-    color: var(--text-2);
-    border: 1px solid var(--border-2);
-  }
-  .btn-pricing-ghost:hover { background: var(--bg-3); color: var(--text); }
-
-  /* CTA */
-  .cta-section {
-    background: var(--bg-2);
-    border-top: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-  }
-  .cta-section::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: var(--hero-gradient);
-    pointer-events: none;
-  }
-  .cta-section h2 {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(36px, 5vw, 58px);
-    font-weight: 300;
-    line-height: 1.1;
-    letter-spacing: -0.01em;
-    margin-bottom: 20px;
-  }
-  .cta-section p {
-    font-size: 16px;
-    font-weight: 300;
-    color: var(--text-2);
-    max-width: 480px;
-    margin: 0 auto 40px;
-    line-height: 1.7;
-  }
-
-  /* FOOTER */
-  footer {
-    padding: 60px 5%;
-    border-top: 1px solid var(--border);
-  }
-  .footer-inner {
-    display: grid;
-    grid-template-columns: 2fr 1fr 1fr 1fr;
-    gap: 48px;
-  }
-  .footer-brand p {
-    font-size: 13px;
-    font-weight: 300;
-    color: var(--text-3);
-    line-height: 1.7;
-    margin-top: 14px;
-    max-width: 260px;
-  }
-  .footer-col h4 {
-    font-size: 12px;
-    font-weight: 500;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--text-2);
-    margin-bottom: 20px;
-  }
+  .why-check { width: 24px; height: 24px; border-radius: 50%; background: var(--accent-dim); border: 1px solid rgba(91,143,248,0.3); display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; font-size: 12px; color: var(--accent); }
+  .why-item-title { font-size: 15px; font-weight: 500; color: var(--text); margin-bottom: 4px; }
+  .why-item-desc { font-size: 13px; color: var(--text-2); line-height: 1.6; }
+  .cta-section { background: var(--bg-2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); text-align: center; position: relative; overflow: hidden; }
+  .cta-section::before { content: ''; position: absolute; inset: 0; background: var(--hero-gradient); pointer-events: none; }
+  .cta-section h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(36px, 5vw, 58px); font-weight: 300; line-height: 1.1; letter-spacing: -0.01em; margin-bottom: 20px; }
+  .cta-section p { font-size: 16px; font-weight: 300; color: var(--text-2); max-width: 480px; margin: 0 auto 40px; line-height: 1.7; }
+  footer { padding: 60px 5%; border-top: 1px solid var(--border); }
+  .footer-inner { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; }
+  .footer-brand p { font-size: 13px; font-weight: 300; color: var(--text-3); line-height: 1.7; margin-top: 14px; max-width: 260px; }
+  .footer-col h4 { font-size: 12px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-2); margin-bottom: 20px; }
   .footer-col ul { list-style: none; }
   .footer-col li { margin-bottom: 12px; }
-  .footer-col a {
-    font-size: 13px;
-    color: var(--text-3);
-    text-decoration: none;
-    transition: color 0.2s;
-  }
+  .footer-col a { font-size: 13px; color: var(--text-3); text-decoration: none; transition: color 0.2s; }
   .footer-col a:hover { color: var(--text); }
-  .footer-bottom {
-    margin-top: 48px;
-    padding-top: 24px;
-    border-top: 1px solid var(--border);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  .footer-bottom p {
-    font-size: 12px;
-    color: var(--text-3);
-  }
-
-  /* ANIMATIONS */
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(24px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  .reveal {
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.7s, transform 0.7s;
-  }
-  .reveal.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  /* DIVIDER LINE */
-  .section-line {
-    width: 48px;
-    height: 1px;
-    background: var(--accent);
-    margin-bottom: 48px;
-  }
-  .section-line.centered { margin-left: auto; margin-right: auto; }
-
-  /* RESPONSIVE */
-  @media (max-width: 900px) {
-    .why-grid { grid-template-columns: 1fr; }
-    .pricing-grid { grid-template-columns: 1fr; max-width: 420px; }
-    .footer-inner { grid-template-columns: 1fr 1fr; }
-    .nav-links { display: none; }
-  }
-  @media (max-width: 600px) {
-    .footer-inner { grid-template-columns: 1fr; }
-    .hero-stats { gap: 28px; }
-    .stat-div { display: none; }
-  }
-
-  /* SCROLL BAR */
-  ::-webkit-scrollbar { width: 6px; }
-  ::-webkit-scrollbar-track { background: var(--bg); }
-  ::-webkit-scrollbar-thumb { background: var(--bg-4); border-radius: 3px; }
+  .footer-bottom { margin-top: 48px; padding-top: 24px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+  .footer-bottom p { font-size: 12px; color: var(--text-3); }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+  .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.7s, transform 0.7s; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .section-line { width: 48px; height: 1px; background: var(--accent); margin-bottom: 48px; }
+  @media (max-width: 900px) { .why-grid { grid-template-columns: 1fr; } .footer-inner { grid-template-columns: 1fr 1fr; } .nav-links { display: none; } }
+  @media (max-width: 600px) { .footer-inner { grid-template-columns: 1fr; } .hero-stats { gap: 28px; } .stat-div { display: none; } }
+  ::-webkit-scrollbar { width: 6px; } ::-webkit-scrollbar-track { background: var(--bg); } ::-webkit-scrollbar-thumb { background: var(--bg-4); border-radius: 3px; }
 </style>
-<link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="shortcut icon" href="/favicon.ico">
 </head>
 <body>
-
-<!-- NAV -->
 <nav>
-  <a href="#" class="nav-logo">
+  <a href="index.html" class="nav-logo">
     <div class="nav-logo-mark">M</div>
     <span class="nav-logo-text">Meridian Institute of AI</span>
   </a>
@@ -734,50 +121,33 @@
     <li><a href="#courses">Courses</a></li>
     <li><a href="#specializations">Specializations</a></li>
     <li><a href="#about">About</a></li>
-    <li><a href="blog/">Blog</a></li>
   </ul>
   <div class="nav-right" id="nav-right">
-    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
-      <span id="theme-icon">☀</span>
-    </button>
-    <a href="login.html" style="font-size:13px; font-weight:500; color:var(--text-2); text-decoration:none; padding:8px 16px; border-radius:8px; border:1px solid var(--border-2); transition:all 0.2s;" onmouseover="this.style.background='var(--bg-3)';this.style.color='var(--text)'" onmouseout="this.style.background='transparent';this.style.color='var(--text-2)'">Log in</a>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme"><span id="theme-icon">☀</span></button>
+    <a href="login.html" style="font-size:13px;font-weight:500;color:var(--text-2);text-decoration:none;padding:8px 16px;border-radius:8px;border:1px solid var(--border-2);transition:all 0.2s;" onmouseover="this.style.background='var(--bg-3)';this.style.color='var(--text)'" onmouseout="this.style.background='transparent';this.style.color='var(--text-2)'">Log in</a>
     <a href="signup.html" class="btn-nav">Sign up free</a>
   </div>
 </nav>
 
-<!-- HERO -->
 <section class="hero">
   <div class="hero-eyebrow">Artificial Intelligence Education</div>
   <h1>Knowledge at the<br><em>Meridian</em> of AI</h1>
-  <p class="hero-sub">From foundational principles to advanced applied intelligence — rigorous courses built for the next generation of AI-literate leaders.</p>
+  <p class="hero-sub">From foundational principles to advanced domain mastery — rigorous courses built for the next generation of AI-literate professionals.</p>
   <div class="hero-actions">
     <a href="courses.html" class="btn-primary">Explore Courses</a>
-    
+    <a href="signup.html" class="btn-ghost">Create Free Account</a>
   </div>
   <div class="hero-stats">
-    <div class="stat-item">
-      <span class="stat-num">7</span>
-      <span class="stat-label">Courses Available</span>
-    </div>
+    <div class="stat-item"><span class="stat-num">9+</span><span class="stat-label">Course Tracks</span></div>
     <div class="stat-div"></div>
-    <div class="stat-item">
-      <span class="stat-num">3</span>
-      <span class="stat-label">Skill Levels</span>
-    </div>
+    <div class="stat-item"><span class="stat-num">3</span><span class="stat-label">Skill Levels</span></div>
     <div class="stat-div"></div>
-    <div class="stat-item">
-      <span class="stat-num">Free</span>
-      <span class="stat-label">To Begin</span>
-    </div>
+    <div class="stat-item"><span class="stat-num">Free</span><span class="stat-label">To Begin</span></div>
     <div class="stat-div"></div>
-    <div class="stat-item">
-      <span class="stat-num">∞</span>
-      <span class="stat-label">Applications</span>
-    </div>
+    <div class="stat-item"><span class="stat-num">∞</span><span class="stat-label">Applications</span></div>
   </div>
 </section>
 
-<!-- COURSES -->
 <section id="courses">
   <div class="reveal">
     <div class="section-eyebrow">Learning Tracks</div>
@@ -785,116 +155,94 @@
     <p class="section-sub">Start free with foundations, advance into applied domains, and develop expert-level skills for real-world impact.</p>
   </div>
   <div class="tracks-grid reveal">
-    <a href="courses.html#beginner" class="track-card" style="text-decoration:none;display:block;">
+    <a href="module-1-what-ai-actually-is.html" class="track-card">
       <div class="track-icon">◈</div>
       <span class="track-badge badge-free">Free</span>
       <h3 class="track-title">Beginner</h3>
       <p class="track-desc">What AI is, how it works, and how to use it. Core concepts, prompt engineering, and ethical frameworks. No prerequisites required.</p>
-      <div class="track-price" style="color:var(--accent);font-size:15px;font-weight:500;">Start here →</div>
+      <div class="track-cta" style="color:var(--accent);">Start here →</div>
     </a>
-    <a href="courses.html#intermediate" class="track-card" style="text-decoration:none;display:block;">
+    <a href="courses.html#intermediate" class="track-card">
       <div class="track-icon">◉</div>
-      <span class="track-badge badge-paid">Intermediate</span>
+      <span class="track-badge badge-inter">Intermediate</span>
       <h3 class="track-title">Intermediate</h3>
-      <p class="track-desc">Domain-specific AI application across finance, law, healthcare, cybersecurity, and more. Real tools, real workflows, real outcomes.</p>
-      <div class="track-price" style="color:var(--text-3);font-size:15px;">Coming soon</div>
+      <p class="track-desc">Master Claude, ChatGPT, Gemini, and Perplexity. Real tools, real workflows, and four individual certificates that stack toward the capstone.</p>
+      <div class="track-cta" style="color:#D97757;">Explore courses →</div>
     </a>
-    <a href="courses.html#advanced" class="track-card" style="text-decoration:none;display:block;">
+    <a href="courses.html#advanced" class="track-card">
       <div class="track-icon">◎</div>
-      <span class="track-badge badge-paid">Advanced</span>
+      <span class="track-badge badge-adv">Advanced</span>
       <h3 class="track-title">Advanced</h3>
-      <p class="track-desc">Deep technical mastery, complex projects, and certification. For those building AI systems, policies, and institutions of the future.</p>
-      <div class="track-price" style="color:var(--text-3);font-size:15px;">Coming soon</div>
+      <p class="track-desc">Deep domain mastery across Finance, Law, Healthcare, Cybersecurity, Education, Governance, Politics, and Society. Each track earns its own certificate.</p>
+      <div class="track-cta" style="color:#F0B429;">Explore domains →</div>
     </a>
   </div>
 </section>
 
-<!-- SPECIALIZATIONS -->
 <section id="specializations" style="padding-top: 0;">
   <div class="reveal">
-    <div class="section-eyebrow">Available Now</div>
-    <h2 class="section-title">Seven courses.<br>Start today.</h2>
-    <p class="section-sub">Tool mastery and domain application — every course below is live and free to begin. More domains are in development.</p>
+    <div class="section-eyebrow">Applied Specializations</div>
+    <h2 class="section-title">AI in every domain<br>that shapes the world.</h2>
+    <p class="section-sub">Not just theory — practical intelligence for the fields that matter. Each track is built around real applications and real outcomes.</p>
   </div>
   <div class="spec-grid reveal">
-    <a href="courses/foundations/module-1.html" class="spec-card" style="text-decoration:none;">
-      <div class="spec-arrow">↗</div>
-      <div class="spec-icon">🧠</div>
-      <div class="spec-name">AI Foundations</div>
-      <div class="spec-desc">What AI is, how it works, and how to use it. The essential starting point — no prerequisites required.</div>
-    </a>
-    <a href="courses/chatgpt/module-1.html" class="spec-card" style="text-decoration:none;">
-      <div class="spec-arrow">↗</div>
-      <div class="spec-icon">💬</div>
-      <div class="spec-name">Mastering ChatGPT</div>
-      <div class="spec-desc">Prompting, reasoning, custom GPTs, and advanced workflows with OpenAI's flagship model.</div>
-    </a>
-    <a href="courses/claude/module-1.html" class="spec-card" style="text-decoration:none;">
-      <div class="spec-arrow">↗</div>
-      <div class="spec-icon">🤖</div>
-      <div class="spec-name">Mastering Claude</div>
-      <div class="spec-desc">Long-context analysis, structured reasoning, and professional applications with Anthropic's Claude.</div>
-    </a>
-    <a href="courses/gemini/module-1.html" class="spec-card" style="text-decoration:none;">
-      <div class="spec-arrow">↗</div>
-      <div class="spec-icon">✦</div>
-      <div class="spec-name">Mastering Gemini</div>
-      <div class="spec-desc">Multimodal intelligence, Google ecosystem integration, and deep research capabilities.</div>
-    </a>
-    <a href="courses/perplexity/module-1.html" class="spec-card" style="text-decoration:none;">
-      <div class="spec-arrow">↗</div>
-      <div class="spec-icon">🔍</div>
-      <div class="spec-name">Mastering Perplexity</div>
-      <div class="spec-desc">Real-time research, source verification, and building AI-powered knowledge workflows.</div>
-    </a>
-    <a href="courses/finance/module-1.html" class="spec-card" style="text-decoration:none;">
+    <a href="finance-module-1.html" class="spec-card">
       <div class="spec-arrow">↗</div>
       <div class="spec-icon">📈</div>
       <div class="spec-name">AI in Finance</div>
-      <div class="spec-desc">Stock analysis, pattern recognition, portfolio optimization, and market intelligence tools.</div>
+      <div class="spec-desc">Research, statement analysis, modeling, valuation, filings, risk, and compliance — built for analysts and investors.</div>
     </a>
-    <a href="courses/law/module-1.html" class="spec-card" style="text-decoration:none;">
+    <a href="law-module-1.html" class="spec-card">
       <div class="spec-arrow">↗</div>
       <div class="spec-icon">⚖️</div>
       <div class="spec-name">AI in Law</div>
-      <div class="spec-desc">Contract review, legal research automation, document summarization, and compliance analysis.</div>
+      <div class="spec-desc">Legal research, contract review, discovery, drafting, and the hard limits of AI in professional legal practice.</div>
     </a>
-  </div>
-
-  <div style="margin-top: 40px; opacity: 0.38;">
-    <div style="font-size: 11px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-3); margin-bottom: 16px;">In Development</div>
-    <div class="spec-grid">
-      <div class="spec-card" style="cursor:default;">
-        <div class="spec-icon">🛡️</div>
-        <div class="spec-name">AI in Cybersecurity</div>
-        <div class="spec-desc">Threat detection, vulnerability analysis, and security intelligence.</div>
-      </div>
-      <div class="spec-card" style="cursor:default;">
-        <div class="spec-icon">🏛️</div>
-        <div class="spec-name">AI in Governance</div>
-        <div class="spec-desc">Policy analysis, regulation frameworks, and civic AI applications.</div>
-      </div>
-      <div class="spec-card" style="cursor:default;">
-        <div class="spec-icon">🏥</div>
-        <div class="spec-name">AI in Healthcare</div>
-        <div class="spec-desc">Diagnostic support, medical research synthesis, and clinical decision tools.</div>
-      </div>
-      <div class="spec-card" style="cursor:default;">
-        <div class="spec-icon">🎓</div>
-        <div class="spec-name">AI in Education</div>
-        <div class="spec-desc">Personalized tutoring systems, curriculum design, and learning analytics.</div>
-      </div>
-    </div>
+    <a href="cybersecurity-module-1.html" class="spec-card">
+      <div class="spec-arrow">↗</div>
+      <div class="spec-icon">🛡️</div>
+      <div class="spec-name">AI in Cybersecurity</div>
+      <div class="spec-desc">Threat detection, vulnerability analysis, AI-powered attacks, incident response, and the future of security operations.</div>
+    </a>
+    <a href="governance-module-1.html" class="spec-card">
+      <div class="spec-arrow">↗</div>
+      <div class="spec-icon">🏛️</div>
+      <div class="spec-name">AI in Governance</div>
+      <div class="spec-desc">Regulatory frameworks, algorithmic accountability, public sector AI, and building responsible governance structures.</div>
+    </a>
+    <a href="healthcare-module-1.html" class="spec-card">
+      <div class="spec-arrow">↗</div>
+      <div class="spec-icon">🏥</div>
+      <div class="spec-name">AI in Healthcare</div>
+      <div class="spec-desc">Diagnostics, drug discovery, clinical research, patient data analytics, and the ethics of AI in medicine.</div>
+    </a>
+    <a href="education-module-1.html" class="spec-card">
+      <div class="spec-arrow">↗</div>
+      <div class="spec-icon">🎓</div>
+      <div class="spec-name">AI in Education</div>
+      <div class="spec-desc">Personalized learning, curriculum design, adaptive assessment, and implementing AI across educational institutions.</div>
+    </a>
+    <a href="politics-module-1.html" class="spec-card">
+      <div class="spec-arrow">↗</div>
+      <div class="spec-icon">🗳️</div>
+      <div class="spec-name">AI in Politics</div>
+      <div class="spec-desc">Disinformation, electoral targeting, policy analysis, national security, and the future of democratic governance.</div>
+    </a>
+    <a href="society-module-1.html" class="spec-card">
+      <div class="spec-arrow">↗</div>
+      <div class="spec-icon">🌐</div>
+      <div class="spec-name">AI and Society</div>
+      <div class="spec-desc">Labor, inequality, privacy, identity, media ecosystems, environmental impact, and the long-term human implications of AI.</div>
+    </a>
   </div>
 </section>
 
-<!-- WHY -->
 <section id="about">
   <div class="why-grid reveal">
     <div>
       <div class="section-eyebrow">Why Meridian</div>
       <h2 class="section-title">Built for depth,<br>not decoration.</h2>
-      <p class="section-sub">Most AI courses scratch the surface. Meridian was founded on a different premise: that genuine AI literacy requires rigor, application, and honest engagement with the real world.</p>
+      <p class="section-sub">Most AI courses scratch the surface. Meridian was founded on a different premise: genuine AI literacy requires rigor, application, and honest engagement with the real world.</p>
       <div class="section-line"></div>
       <ul class="why-list">
         <li class="why-item">
@@ -928,36 +276,34 @@
       </ul>
     </div>
     <div class="why-visual">
-      <div style="font-size: 12px; color: var(--text-3); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 32px;">Learning Approach</div>
-      <div style="display: flex; flex-direction: column; gap: 20px;">
-        <div style="padding: 20px; background: var(--bg-3); border-radius: 12px; border: 1px solid var(--border);">
-          <div style="font-size: 11px; color: var(--accent); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 8px;">Step 01</div>
-          <div style="font-size: 15px; font-weight: 500; color: var(--text); margin-bottom: 6px;">Build the foundation</div>
-          <div style="font-size: 13px; color: var(--text-2);">Understand what AI is, how it works, and where it fails.</div>
+      <div style="font-size:12px;color:var(--text-3);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:32px;">Learning Approach</div>
+      <div style="display:flex;flex-direction:column;gap:20px;">
+        <div style="padding:20px;background:var(--bg-3);border-radius:12px;border:1px solid var(--border);">
+          <div style="font-size:11px;color:var(--accent);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:8px;">Step 01</div>
+          <div style="font-size:15px;font-weight:500;color:var(--text);margin-bottom:6px;">Build the foundation</div>
+          <div style="font-size:13px;color:var(--text-2);">Understand what AI is, how it works, and where it fails.</div>
         </div>
-        <div style="padding: 20px; background: var(--bg-3); border-radius: 12px; border: 1px solid var(--border);">
-          <div style="font-size: 11px; color: var(--accent); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 8px;">Step 02</div>
-          <div style="font-size: 15px; font-weight: 500; color: var(--text); margin-bottom: 6px;">Enter your domain</div>
-          <div style="font-size: 13px; color: var(--text-2);">Apply AI to the field you're already in or building toward.</div>
+        <div style="padding:20px;background:var(--bg-3);border-radius:12px;border:1px solid var(--border);">
+          <div style="font-size:11px;color:var(--accent);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:8px;">Step 02</div>
+          <div style="font-size:15px;font-weight:500;color:var(--text);margin-bottom:6px;">Master the tools</div>
+          <div style="font-size:13px;color:var(--text-2);">Apply AI using the tools that define professional work today.</div>
         </div>
-        <div style="padding: 20px; background: var(--bg-3); border-radius: 12px; border: 1px solid var(--border);">
-          <div style="font-size: 11px; color: var(--accent); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 8px;">Step 03</div>
-          <div style="font-size: 15px; font-weight: 500; color: var(--text); margin-bottom: 6px;">Build and certify</div>
-          <div style="font-size: 13px; color: var(--text-2);">Complete real projects. Earn credentials that mean something.</div>
+        <div style="padding:20px;background:var(--bg-3);border-radius:12px;border:1px solid var(--border);">
+          <div style="font-size:11px;color:var(--accent);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:8px;">Step 03</div>
+          <div style="font-size:15px;font-weight:500;color:var(--text);margin-bottom:6px;">Enter your domain</div>
+          <div style="font-size:13px;color:var(--text-2);">Go deep in the field you're building toward. Earn credentials that mean something.</div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- CTA -->
 <section class="cta-section reveal">
-  <h2>The future belongs to<br><em style="font-family: 'Cormorant Garamond', serif; font-style: italic; color: var(--accent);">those who understand it.</em></h2>
+  <h2>The future belongs to<br><em style="font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--accent);">those who understand it.</em></h2>
   <p>Join Meridian and build the AI literacy that the next decade will demand.</p>
-  <a href="signup.html" class="btn-primary" style="display: inline-block;">Begin Your Path</a>
+  <a href="signup.html" class="btn-primary" style="display:inline-block;">Begin Your Path</a>
 </section>
 
-<!-- FOOTER -->
 <footer>
   <div class="footer-inner">
     <div class="footer-brand">
@@ -968,92 +314,70 @@
       <p>Rigorous AI education for the next generation of thinkers, builders, and leaders.</p>
     </div>
     <div class="footer-col">
-      <h4>Courses</h4>
+      <h4>Learn</h4>
       <ul>
-        <li><a href="courses/foundations/module-1.html">AI Foundations</a></li>
-        <li><a href="courses/chatgpt/module-1.html">Mastering ChatGPT</a></li>
-        <li><a href="courses/claude/module-1.html">Mastering Claude</a></li>
-        <li><a href="courses/gemini/module-1.html">Mastering Gemini</a></li>
-        <li><a href="courses/perplexity/module-1.html">Mastering Perplexity</a></li>
+        <li><a href="module-1-what-ai-actually-is.html">Foundations of AI</a></li>
+        <li><a href="courses.html#intermediate">Tool Mastery</a></li>
+        <li><a href="courses.html#advanced">Domain Mastery</a></li>
+        <li><a href="courses.html">All Courses</a></li>
       </ul>
     </div>
     <div class="footer-col">
       <h4>Domains</h4>
       <ul>
-        <li><a href="courses/finance/module-1.html">AI in Finance</a></li>
-        <li><a href="courses/law/module-1.html">AI in Law</a></li>
-        <li><a href="courses.html">All Courses</a></li>
+        <li><a href="finance-module-1.html">Finance</a></li>
+        <li><a href="law-module-1.html">Law</a></li>
+        <li><a href="healthcare-module-1.html">Healthcare</a></li>
+        <li><a href="cybersecurity-module-1.html">Cybersecurity</a></li>
+        <li><a href="governance-module-1.html">Governance</a></li>
+        <li><a href="politics-module-1.html">Politics</a></li>
+        <li><a href="education-module-1.html">Education</a></li>
+        <li><a href="society-module-1.html">Society</a></li>
       </ul>
     </div>
     <div class="footer-col">
       <h4>Institute</h4>
       <ul>
-        <li><a href="#about">About</a></li>
+        <li><a href="index.html#about">About</a></li>
+        <li><a href="dashboard.html">Dashboard</a></li>
+        <li><a href="login.html">Sign In</a></li>
         <li><a href="privacy.html">Privacy Policy</a></li>
         <li><a href="terms.html">Terms of Service</a></li>
       </ul>
     </div>
   </div>
   <div class="footer-bottom">
-    <p>© 2026 Meridian Institute of AI. All rights reserved.</p>
-    <p style="color: var(--text-3);"><a href="privacy.html" style="color:var(--text-3);text-decoration:none;">Privacy Policy</a> · <a href="terms.html" style="color:var(--text-3);text-decoration:none;">Terms of Service</a></p>
+    <p>© 2025 Meridian Institute of AI. All rights reserved.</p>
+    <p><a href="privacy.html" style="color:var(--text-3);text-decoration:none;">Privacy</a> · <a href="terms.html" style="color:var(--text-3);text-decoration:none;">Terms</a></p>
   </div>
 </footer>
 
 <script>
   function toggleTheme() {
-    const html = document.documentElement;
-    const icon = document.getElementById('theme-icon');
-    if (html.getAttribute('data-theme') === 'dark') {
-      html.setAttribute('data-theme', 'light');
-      icon.textContent = '☾';
-    } else {
-      html.setAttribute('data-theme', 'dark');
-      icon.textContent = '☀';
-    }
+    const h = document.documentElement, i = document.getElementById('theme-icon');
+    h.getAttribute('data-theme') === 'dark' ? (h.setAttribute('data-theme','light'), i.textContent='☾') : (h.setAttribute('data-theme','dark'), i.textContent='☀');
   }
-
   const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-      }
-    });
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
   }, { threshold: 0.1 });
-
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 </script>
-
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
   import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-
-  const firebaseConfig = {
-    apiKey: "AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",
-    authDomain: "meridian-institute.firebaseapp.com",
-    projectId: "meridian-institute",
-    storageBucket: "meridian-institute.firebasestorage.app",
-    messagingSenderId: "355371012929",
-    appId: "1:355371012929:web:244fc2f15ee8ac656887c0"
-  };
-
-  const app = initializeApp(firebaseConfig);
+  const app = initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
   const auth = getAuth(app);
-
   onAuthStateChanged(auth, (user) => {
     const navRight = document.getElementById('nav-right');
     if (user && navRight) {
       const firstName = user.displayName ? user.displayName.split(' ')[0] : 'Account';
       navRight.innerHTML = `
-        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
-          <span id="theme-icon">☀</span>
-        </button>
+        <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">☀</span></button>
         <a href="courses.html" style="font-size:13px;font-weight:500;color:var(--text-2);text-decoration:none;padding:8px 16px;border-radius:8px;border:1px solid var(--border-2);transition:all 0.2s;" onmouseover="this.style.background='var(--bg-3)';this.style.color='var(--text)'" onmouseout="this.style.background='transparent';this.style.color='var(--text-2)'">Courses</a>
-        <a href="dashboard.html" style="font-size:13px;font-weight:500;color:#fff;text-decoration:none;padding:8px 18px;border-radius:8px;background:var(--accent);transition:opacity 0.2s;" onmouseover="this.style.opacity=0.88" onmouseout="this.style.opacity=1">My Dashboard</a>
+        <a href="dashboard.html" style="font-size:13px;font-weight:500;color:#fff;text-decoration:none;padding:8px 18px;border-radius:8px;background:var(--accent);">My Dashboard</a>
       `;
     }
   });
 </script>
-
 </body>
 </html>

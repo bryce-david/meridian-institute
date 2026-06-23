@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Final Assessment — AI in Governance — Meridian Institute of AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#92400E;--accent-dim:rgba(146,64,14,0.1);--nav-bg:rgba(8,8,8,0.9);--success:#22c55e;--success-bg:rgba(34,197,94,0.08);--success-border:rgba(34,197,94,0.25);--fail-bg:rgba(239,68,68,0.08);--fail-border:rgba(239,68,68,0.25);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#78350F;--accent-dim:rgba(120,53,15,0.08);--nav-bg:rgba(250,250,248,0.9);--success:#16a34a;--success-bg:rgba(22,163,74,0.06);--success-border:rgba(22,163,74,0.25);--fail-bg:rgba(220,38,38,0.06);--fail-border:rgba(220,38,38,0.25);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}
+  .nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}.nav-back{font-size:13px;color:var(--text-2);text-decoration:none;}.nav-back:hover{color:var(--text);}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;}
+  .page{max-width:680px;margin:0 auto;padding:90px 24px 80px;}
+  .quiz-eyebrow{font-size:11px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:12px;}
+  .quiz-title{font-family:'Cormorant Garamond',serif;font-size:42px;font-weight:300;color:var(--text);line-height:1.1;margin-bottom:12px;}
+  .quiz-sub{font-size:15px;color:var(--text-2);line-height:1.7;margin-bottom:28px;}
+  .quiz-rules{background:var(--bg-2);border:1px solid var(--border);border-radius:12px;padding:18px 22px;margin-bottom:28px;display:flex;gap:20px;flex-wrap:wrap;}
+  .quiz-rule{font-size:13px;color:var(--text-2);display:flex;align-items:center;gap:8px;}
+  .btn-start{padding:14px 32px;background:var(--accent);color:#fff;border-radius:10px;font-size:15px;font-weight:500;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;margin-top:4px;}
+  #quiz-section{display:none;}
+  .progress-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;}
+  .progress-label{font-size:13px;color:var(--text-3);}
+  .progress-track{height:3px;background:var(--border);border-radius:2px;overflow:hidden;margin-bottom:36px;}
+  .progress-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.3s;}
+  .question-num{font-size:11px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:14px;}
+  .question-text{font-family:'Cormorant Garamond',serif;font-size:27px;font-weight:400;color:var(--text);line-height:1.35;margin-bottom:28px;}
+  .options{display:flex;flex-direction:column;gap:10px;margin-bottom:24px;}
+  .option{display:flex;align-items:flex-start;gap:14px;padding:15px 18px;border:1px solid var(--border-2);border-radius:12px;cursor:pointer;transition:all 0.18s;background:var(--bg-2);}
+  .option:hover{border-color:var(--accent);background:var(--accent-dim);}
+  .option.selected{border-color:var(--accent);background:var(--accent-dim);}
+  .option.correct{border-color:var(--success);background:var(--success-bg);cursor:default;}
+  .option.wrong{border-color:#ef4444;background:var(--fail-bg);cursor:default;}
+  .option.disabled{cursor:default;opacity:0.55;}
+  .option-letter{width:26px;height:26px;border-radius:6px;background:var(--bg-3);border:1px solid var(--border-2);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:500;color:var(--text-3);flex-shrink:0;margin-top:2px;}
+  .option.selected .option-letter{background:var(--accent);color:#fff;border-color:var(--accent);}
+  .option.correct .option-letter{background:var(--success);color:#fff;border-color:var(--success);}
+  .option.wrong .option-letter{background:#ef4444;color:#fff;border-color:#ef4444;}
+  .option-text{font-size:15px;color:var(--text-2);line-height:1.55;}
+  .option.selected .option-text,.option.correct .option-text{color:var(--text);}
+  .feedback{padding:16px 20px;border-radius:10px;font-size:14px;line-height:1.65;margin-bottom:20px;display:none;}
+  .feedback.show{display:block;}
+  .feedback.correct{background:var(--success-bg);border:1px solid var(--success-border);color:var(--success);}
+  .feedback.wrong{background:var(--fail-bg);border:1px solid var(--fail-border);color:#ef4444;}
+  .btn-next{padding:12px 28px;background:var(--accent);color:#fff;border-radius:9px;font-size:14px;font-weight:500;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;display:none;}
+  .btn-next.show{display:inline-block;}
+  #result-section{display:none;text-align:center;padding:20px 0;}
+  .result-icon{font-size:64px;margin-bottom:20px;}
+  .result-title{font-family:'Cormorant Garamond',serif;font-size:42px;font-weight:300;color:var(--text);margin-bottom:12px;}
+  .result-score{font-size:56px;font-weight:300;font-family:'Cormorant Garamond',serif;margin:20px 0;}
+  .result-score.pass{color:var(--success);}.result-score.fail{color:#ef4444;}
+  .result-message{font-size:16px;color:var(--text-2);line-height:1.7;max-width:520px;margin:0 auto 32px;}
+  .result-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
+  .btn-result{padding:13px 28px;border-radius:10px;font-size:14px;font-weight:500;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;text-decoration:none;display:inline-block;}
+  .btn-primary{background:var(--accent);color:#fff;}.btn-ghost{background:transparent;color:var(--text-2);border:1px solid var(--border-2);}
+  @media(max-width:600px){.quiz-title{font-size:34px;}.question-text{font-size:23px;}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="index.html" class="nav-back">🏠 Home</a>
+    <div class="nav-divider"></div>
+    <a href="courses.html" class="nav-back">← AI in Governance</a>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">☀</span></button>
+</nav>
+<div class="page">
+  <div id="start-section">
+    <div class="quiz-eyebrow">Final Assessment · AI in Governance</div>
+    <div class="quiz-title">Test Your Knowledge</div>
+    <div class="quiz-sub">25 questions covering algorithmic decision-making, AI regulation, public sector ethics, and governance frameworks. These questions test applied understanding appropriate for public servants and policy professionals. You need 70% to pass and earn your certificate.</div>
+    <div class="quiz-rules">
+      <div class="quiz-rule">📋 25 questions per attempt</div>
+      <div class="quiz-rule">✅ 70% to pass (18 of 25)</div>
+      <div class="quiz-rule">🔀 Randomized each attempt</div>
+      <div class="quiz-rule">🏆 Pass to earn your certificate</div>
+    </div>
+    <button class="btn-start" onclick="startQuiz()">Begin Assessment →</button>
+  </div>
+  <div id="quiz-section">
+    <div class="progress-header">
+      <span class="progress-label" id="progress-label">Question 1 of 25</span>
+      <span class="progress-label" id="score-label">0 correct</span>
+    </div>
+    <div class="progress-track"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+    <div class="question-num" id="question-num">Question 1</div>
+    <div class="question-text" id="question-text"></div>
+    <div class="options" id="options"></div>
+    <div class="feedback" id="feedback"></div>
+    <button class="btn-next" id="btn-next" onclick="nextQuestion()">Next Question →</button>
+  </div>
+  <div id="result-section">
+    <div class="result-icon" id="result-icon"></div>
+    <div class="result-title" id="result-title"></div>
+    <div class="result-score" id="result-score"></div>
+    <div class="result-message" id="result-message"></div>
+    <div class="result-actions" id="result-actions"></div>
+  </div>
+</div>
+<script type="module">
+import{initializeApp}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import{getAuth,onAuthStateChanged}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import{getFirestore,doc,setDoc,arrayUnion}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+const app=initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+const auth=getAuth(app);const db=getFirestore(app);let currentUser=null;
+onAuthStateChanged(auth,u=>{currentUser=u;});
+
+const ALL_QUESTIONS=[
+{"q":"Under GDPR Article 22, which right does an EU resident have when a decision affecting them is made solely by automated processing?","options":["The right to receive a full copy of the algorithm's source code before the decision is made","The right not to be subject to the decision, plus the right to obtain human review and to contest the outcome","The right to veto any government use of automated systems in their case regardless of safeguards","The right to financial compensation automatically triggered by any automated decision"],"answer":1,"explain":"GDPR Article 22 grants data subjects the right not to be subject to solely automated decisions with significant effects, plus rights to obtain human intervention, express their view, and contest the outcome. It does not require disclosure of source code."},
+{"q":"The EU AI Act defines four risk tiers. Which category covers AI systems whose risks are considered so severe they are outright prohibited?","options":["High risk","Limited risk","Minimal risk","Unacceptable risk"],"answer":3,"explain":"The EU AI Act's top tier is 'unacceptable risk,' covering systems such as social scoring by governments, real-time biometric surveillance in public spaces (with narrow exceptions), and AI that exploits vulnerabilities to manipulate behaviour. These are banned outright."},
+{"q":"A public agency deploys an AI system that decides eligibility for unemployment benefits without any human sign-off. Under the EU AI Act, how is this likely classified?","options":["Minimal risk, because benefits decisions are routine administrative matters","Limited risk, requiring only a transparency notice to applicants","High risk, because it operates in a domain with significant impact on people's livelihoods and rights","Unacceptable risk, because any AI that touches welfare payments is automatically prohibited"],"answer":2,"explain":"The EU AI Act places AI used in employment, benefits administration, and essential public services in the 'high risk' category. High-risk systems must meet requirements on data quality, documentation, human oversight, and conformity assessment before deployment."},
+{"q":"ProPublica's 2016 investigation of the COMPAS recidivism algorithm found a specific disparity. What was its central finding?","options":["COMPAS correctly predicted reoffending for all demographic groups at identical rates","Black defendants were nearly twice as likely as white defendants to be falsely flagged as future criminals","COMPAS systematically under-predicted risk for violent offenders regardless of race","The algorithm was trained exclusively on data from one US state, making it invalid nationally"],"answer":1,"explain":"ProPublica found that Black defendants in Broward County were approximately twice as likely as white defendants to be incorrectly labeled higher risk when they did not reoffend. The case became a defining example of algorithmic bias in criminal justice."},
+{"q":"In 2020 a Dutch court ordered the government to shut down the SyRI system. What was SyRI, and on what grounds was it struck down?","options":["SyRI was a facial recognition system struck down for lacking a statutory basis","SyRI was a welfare fraud detection algorithm that a court found violated the right to private life under the ECHR","SyRI was a predictive policing tool ruled unconstitutional because it targeted specific neighbourhoods","SyRI was a benefits eligibility tool shut down because it failed to meet GDPR accuracy requirements"],"answer":1,"explain":"SyRI (System Risk Indication) was a Dutch government algorithm that cross-referenced datasets to flag residents as high fraud risk. The Hague District Court struck it down as a violation of Article 8 ECHR (right to private life), citing lack of transparency and disproportionate interference."},
+{"q":"A city deploys a network of sensors, cameras, and licence-plate readers across its centre and sells the data to a private analytics firm. Which governance concern does this most directly raise?","options":["Vendor lock-in, because changing sensor suppliers later will be technically difficult","Mission creep and surveillance creep, where data collected for one purpose is repurposed without public consent","Accuracy drift, where the sensors gradually lose calibration without a maintenance schedule","Digital exclusion, because residents without smartphones cannot access the city's app"],"answer":1,"explain":"Smart city surveillance raises mission creep concerns when data gathered for traffic management or safety is repurposed for commercial analytics without residents' knowledge or consent — a core data governance and civil liberties issue."},
+{"q":"The OECD AI Principles adopted in 2019 identified five key values-based principles. Which of the following is NOT among them?","options":["AI should be robust, secure, and safe","AI should be transparent and explainable","AI should be free from any form of government regulation to promote innovation","AI should benefit people and the planet"],"answer":2,"explain":"The OECD Principles include: inclusive growth and sustainable development; human-centred values and fairness; transparency and explainability; robustness, security and safety; and accountability. Freedom from regulation is not a principle — accountability to oversight is."},
+{"q":"Canada's Directive on Automated Decision-Making uses impact levels to determine required safeguards. What does a Level III or IV impact assessment primarily trigger?","options":["An obligation to publish the algorithm's source code in the Canada Gazette before deployment","A requirement for mandatory human review of decisions, peer review, and a published assessment","Automatic exemption from access-to-information requests covering the system","A legal requirement to obtain parliamentary approval before the system goes live"],"answer":1,"explain":"Canada's Directive assigns impact levels I–IV based on the severity of potential effects on rights and welfare. Higher levels (III–IV) trigger stronger obligations: mandatory human-in-the-loop review, peer review of the system, and public release of the algorithmic impact assessment."},
+{"q":"The UK government's algorithmic transparency recording standard requires public bodies to publish what type of information?","options":["Full training datasets used to build each algorithmic tool","Structured records describing how algorithmic tools are used in public services, their purpose, and oversight arrangements","Quarterly performance audits conducted by an independent third party","The names and qualifications of every civil servant who interacted with the system"],"answer":1,"explain":"The UK Algorithmic Transparency Recording Standard requires public bodies to publish structured records explaining what the tool does, what data it uses, how decisions are overseen, and what safeguards are in place — increasing public accountability without requiring full code release."},
+{"q":"NIST's Face Recognition Vendor Testing (FRVT) programme found consistent disparities across demographic groups. What was the headline finding most relevant to government use?","options":["Asian faces were identified most accurately, so systems should be calibrated against that demographic baseline","False positive rates were substantially higher for Black and Asian women than for white men in many commercial systems","All tested systems performed within acceptable error margins when used in controlled indoor environments","Facial recognition accuracy has no meaningful relationship to image quality or lighting conditions"],"answer":1,"explain":"NIST's large-scale testing found that many commercial facial recognition algorithms produced false positive rates up to 10–100 times higher for Black and Asian women than for white men. This directly challenges the safety of deploying such systems in high-stakes government contexts."},
+{"q":"A judge uses a pretrial risk assessment tool's score as the primary basis for a detention decision without reviewing the underlying factors. What due process concern does this raise?","options":["The tool may not have been certified by a professional actuarial body, making the score inadmissible","The defendant has no meaningful opportunity to challenge opaque inputs driving a liberty-restricting outcome","Pretrial risk scores are protected proprietary information that courts are not permitted to use","The score is only valid if the defendant consented to have their data processed by the tool"],"answer":1,"explain":"When liberty decisions rest on opaque algorithmic scores with no disclosure of factors or methodology, defendants cannot meaningfully contest the basis of detention — a core due process concern affirmed in cases such as State v. Loomis (Wisconsin)."},
+{"q":"Australia's Robodebt scheme ran from 2016 to 2019. What was its central flaw, and what was the legal consequence?","options":["It used facial recognition to identify welfare recipients, which was ruled unlawful under privacy legislation","It automated debt notices by income-averaging across tax records, a method that unlawfully reversed the burden of proof and produced large numbers of false debts","It shared welfare data with private debt collectors without statutory authority, triggering a breach of confidence claim","It failed to notify recipients by registered post, making all notices procedurally void under administrative law"],"answer":1,"explain":"Robodebt automatically issued debt notices by averaging annual ATO income data across fortnightly pay periods — a method with no legal basis. It reversed the burden of proof (recipients had to disprove debts). A Royal Commission found it was unlawful, and the scheme resulted in a $1.8B settlement."},
+{"q":"The Allegheny Family Screening Tool (AFST) in Pennsylvania scores families for child welfare intervention risk. Which ethical concern has researchers most prominently raised about it?","options":["The tool is too expensive to operate and diverts funding from frontline social workers","It may compound existing disadvantage by disproportionately flagging low-income families already known to public services","The tool produces such high accuracy rates that social workers have stopped exercising independent judgment","It was built using facial recognition data, raising biometric privacy concerns"],"answer":1,"explain":"Researchers including Virginia Eubanks have argued that AFST risks a feedback loop: families already over-surveilled by public systems have more data points, making them score higher, potentially amplifying rather than correcting systemic bias in child protection."},
+{"q":"A government agency is procuring a commercial AI system for processing grant applications. Which procurement practice best protects the public interest?","options":["Accepting the vendor's standard terms without modification to speed deployment and lower costs","Requiring algorithmic impact assessments, audit rights, data portability clauses, and defined performance benchmarks before contract award","Selecting whichever vendor offers the lowest upfront licence fee as the primary evaluation criterion","Delegating all technical evaluation to the vendor and relying on their self-certification of compliance"],"answer":1,"explain":"Sound government AI procurement requires impact assessments before deployment, contractual audit rights, data portability to avoid lock-in, and enforceable performance benchmarks — not vendor self-certification or cost-first selection."},
+{"q":"A freedom of information request asks a government agency to release the decision rules used by an AI system that denied a citizen's housing benefit. The agency refuses, citing commercial confidentiality. What is the tension here?","options":["There is no tension — commercial confidentiality always overrides FOI rights for any privately developed system","There is a tension between legitimate trade secret protection and the public's right to understand decisions that affect their legal entitlements","The request is invalid because algorithmic rules are not 'information' within the scope of FOI legislation","Commercial confidentiality only applies to private companies, not to government agencies using commercial software"],"answer":1,"explain":"This is a well-documented tension: vendors invoke trade secrecy to protect proprietary algorithms, but citizens facing adverse decisions have a legitimate interest in understanding how those decisions were reached. Courts and regulators across jurisdictions are still working through the balance."},
+{"q":"Which statement best describes the concept of democratic accountability in the context of algorithmic public administration?","options":["Democratic accountability is satisfied as long as the algorithm was built by an elected government department","Elected officials and institutions must remain able to explain, justify, and if necessary override or dismantle algorithmic systems — accountability cannot be delegated to the system itself","Accountability is adequately addressed by publishing a general description of the algorithm's purpose on a government website","Algorithmic systems are inherently more accountable than human decision-makers because they apply rules consistently"],"answer":1,"explain":"Democratic accountability requires that elected officials can explain what systems do and why, that affected citizens have recourse, and that legislatures retain ultimate authority. Automation cannot discharge this responsibility — it can only change how it must be exercised."},
+{"q":"In high-stakes public sector AI (such as parole decisions or child removal), there is often a tradeoff between explainability and predictive accuracy. How do most governance frameworks resolve this tradeoff?","options":["They prioritise accuracy above all else, reasoning that more accurate predictions protect more people","They require that the most accurate model always be chosen, regardless of whether its reasoning can be explained","They lean toward explainability in high-stakes decisions, accepting some accuracy loss in exchange for interpretable, contestable reasoning","They treat the tradeoff as irrelevant because neural networks can always be fully explained with current tools"],"answer":2,"explain":"Most governance frameworks for high-stakes public decisions prioritise explainability and contestability over raw predictive accuracy, on the grounds that affected persons must be able to understand and challenge decisions that materially affect their rights."},
+{"q":"Several jurisdictions have found significant error rates in AI systems used to administer welfare benefits, leading to wrongful denials. What governance requirement does this most strongly support?","options":["A requirement to replace all human caseworkers with AI to reduce human error","A mandatory human review stage for consequential decisions, with a clear process for individuals to request reconsideration","A requirement to move all benefits administration to private sector contractors","A rule that benefits AI systems must be rebuilt from scratch every two years to prevent model drift"],"answer":1,"explain":"Error rates in welfare AI systems — including wrong benefit denials at scale — make mandatory human review and accessible appeals processes essential. The harm of an erroneous denial to an individual is severe and irreversible without a human backstop."},
+{"q":"The EU, US, and UK have each taken distinct approaches to AI governance. Which characterisation is most accurate as of 2024?","options":["The EU, US, and UK have all adopted identical binding regulations on AI with harmonised enforcement bodies","The EU has taken a binding horizontal regulatory approach (AI Act); the US has relied primarily on executive orders and sectoral guidance; the UK has taken a pro-innovation, principles-based approach through existing regulators","The US has the most stringent mandatory AI regulations globally, ahead of both the EU and UK","The UK has enacted comprehensive AI legislation modelled directly on the EU AI Act"],"answer":1,"explain":"The EU AI Act is a binding horizontal regulation. The US approach as of 2024 centred on executive orders and agency guidance without a comprehensive AI statute. The UK chose a principles-based approach channelled through existing sector regulators rather than new AI-specific legislation."},
+{"q":"A city signs a 15-year exclusive contract with a smart city platform provider for traffic management, including proprietary data formats and no exit provisions. What risk does this create?","options":["The contract may expose the city to GDPR liability for sharing traffic data with a commercial entity","The city becomes locked into a single vendor with no leverage to renegotiate terms or switch suppliers as technology evolves","The contract violates procurement rules because smart city contracts must be renewed annually","The proprietary data format ensures better long-term data security than open standards would provide"],"answer":1,"explain":"Long-term exclusive contracts with proprietary data formats and no exit provisions create vendor lock-in — the city loses bargaining power, cannot adopt better technology, and risks service disruption if the relationship breaks down. Open standards and exit clauses are key procurement safeguards."},
+{"q":"An asylum processing agency uses an AI tool to flag applications as low or high credibility. The system was trained on historical officer decisions. What is the core governance concern with this design?","options":["The system will be too slow because it must process each application individually","Training on past officer decisions encodes whatever biases or inconsistencies those officers had into the automated system","The system cannot legally process asylum applications without a separate data-sharing agreement","Credibility assessment requires facial recognition, which the system apparently lacks"],"answer":1,"explain":"Training on historical human decisions risks automating and scaling whatever biases those decisions contained — particularly serious in asylum, where bias correlates with nationality or ethnicity. This is a compounding disadvantage problem: past unfairness becomes future unfairness at scale."},
+{"q":"What does 'proportionality' mean as an ethical principle when applied to government deployment of AI?","options":["The AI system must process proportionally more data than a human caseworker to justify its cost","The intrusiveness and risks of the system must not exceed what is strictly necessary to achieve the legitimate public aim","Proportionality requires that AI systems be deployed to the same extent in all regions of a country","Government AI must be proportional in cost, meaning it must be cheaper than the human process it replaces"],"answer":1,"explain":"Proportionality in administrative law and ethics requires that the means (including the surveillance, data use, or harm risk of an AI system) be proportionate to the end pursued. A highly intrusive system cannot be justified by a minor administrative efficiency gain."},
+{"q":"A civil society organisation requests data about how a local council's housing allocation algorithm works, but the council says it has no obligation to disclose it. Which argument most strongly supports disclosure?","options":["Algorithms are always protected by intellectual property law, so no disclosure is ever required regardless of context","Where an algorithm determines access to public services and legal entitlements, the principle of open government and rule of law require that affected people can understand the basis of decisions","Disclosure is only required if the algorithm produces decisions in more than 1,000 cases per year","Councils are exempt from freedom of information obligations when using commercial third-party software"],"answer":1,"explain":"Open government principles and rule of law require that individuals affected by algorithmic public decisions can access enough information to understand and challenge them. The commercial origin of the software does not extinguish this obligation, though its scope is still contested in courts."},
+{"q":"Several national governments have created Chief AI Officer (CAIO) or equivalent roles. What is the primary function of this role in a government context?","options":["To personally approve every AI procurement contract before it is signed by a line ministry","To coordinate AI strategy, set standards for responsible use, and ensure AI deployment aligns with legal and ethical requirements across government","To replace the Chief Information Security Officer, since AI governance subsumes cybersecurity responsibilities","To advocate for maximum AI adoption without restriction, acting as an internal champion against regulatory barriers"],"answer":1,"explain":"The CAIO role is designed to provide cross-government coordination on AI strategy, set responsible use standards, manage risk, and ensure consistency across agencies — not to rubber-stamp procurements or eliminate safeguards."},
+{"q":"The G7 Hiroshima AI Process (2023) produced a set of guiding principles and a code of conduct. Which best describes their intended scope and status?","options":["Binding international treaty obligations enforceable before national courts of G7 member states","Voluntary principles and a code of conduct aimed at advanced AI developers, addressing safety, transparency, and risk management for frontier models","A mandatory certification scheme that AI companies must pass before selling products in G7 countries","A set of export controls on AI chips agreed by G7 finance ministers"],"answer":1,"explain":"The Hiroshima AI Process produced voluntary, non-binding principles and a code of conduct targeting developers of frontier AI systems. They address safety evaluation, transparency, incident reporting, and risk management — but are not legally enforceable treaties or certification requirements."},
+{"q":"An algorithmic impact assessment (AIA) for a new government AI system would typically include which of the following?","options":["A marketing analysis of competing AI vendors and a five-year total cost of ownership projection","An analysis of the system's purpose, affected populations, potential harms, bias risks, data sources, and proposed mitigation measures","A legal opinion confirming that the system's outputs are final and not subject to judicial review","A technical specification sufficient for a third party to replicate the model from scratch"],"answer":1,"explain":"An AIA examines what the system does, who it affects, what harms or biases it risks, what data it uses, and how those risks will be mitigated and monitored. It is a risk governance tool, not a cost-benefit or technical replication document."}
+];
+
+let questions=[],current=0,score=0,answered=false;
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+window.startQuiz=function(){
+  questions=shuffle([...ALL_QUESTIONS]).slice(0,25);current=0;score=0;
+  document.getElementById('start-section').style.display='none';
+  document.getElementById('quiz-section').style.display='block';renderQuestion();
+};
+function renderQuestion(){
+  answered=false;const q=questions[current];
+  document.getElementById('question-num').textContent=`Question ${current+1} of 25`;
+  document.getElementById('question-text').textContent=q.q;
+  document.getElementById('progress-label').textContent=`Question ${current+1} of 25`;
+  document.getElementById('score-label').textContent=`${score} correct`;
+  document.getElementById('progress-fill').style.width=`${(current/25)*100}%`;
+  document.getElementById('feedback').className='feedback';document.getElementById('btn-next').className='btn-next';
+  const letters=['A','B','C','D'];const optionsEl=document.getElementById('options');optionsEl.innerHTML='';
+  const indices=shuffle([0,1,2,3]);
+  indices.forEach((origIdx,displayIdx)=>{
+    const opt=document.createElement('div');opt.className='option';
+    opt.innerHTML=`<div class="option-letter">${letters[displayIdx]}</div><div class="option-text">${q.options[origIdx]}</div>`;
+    opt.onclick=()=>selectAnswer(opt,origIdx===q.answer,indices.indexOf(q.answer),q.explain);
+    optionsEl.appendChild(opt);
+  });
+}
+function selectAnswer(clickedEl,isCorrect,correctShuffledIdx,explain){
+  if(answered)return;answered=true;
+  document.querySelectorAll('.option').forEach((o,i)=>{o.classList.add('disabled');if(i===correctShuffledIdx)o.classList.add('correct');});
+  if(isCorrect){clickedEl.classList.add('correct');score++;}else{clickedEl.classList.add('wrong');}
+  document.getElementById('score-label').textContent=`${score} correct`;
+  const fb=document.getElementById('feedback');fb.className=`feedback ${isCorrect?'correct':'wrong'} show`;
+  fb.textContent=isCorrect?`✓ Correct. ${explain}`:`✗ ${explain}`;
+  const btn=document.getElementById('btn-next');btn.className='btn-next show';btn.textContent=current===24?'See Results →':'Next Question →';
+}
+window.nextQuestion=function(){current++;if(current>=25)showResults();else renderQuestion();};
+async function showResults(){
+  document.getElementById('quiz-section').style.display='none';document.getElementById('result-section').style.display='block';
+  const passed=score>=18;const pct=Math.round((score/25)*100);
+  document.getElementById('result-icon').textContent=passed?'🏆':'📚';
+  document.getElementById('result-title').textContent=passed?'Assessment Passed':'Not This Time';
+  document.getElementById('result-score').className=`result-score ${passed?'pass':'fail'}`;
+  document.getElementById('result-score').textContent=`${score} / 25`;
+  if(passed){
+    document.getElementById('result-message').textContent=`You scored ${pct}% — above the 70% threshold. Your AI in Governance certificate is being issued.`;
+    if(currentUser){
+      try{
+        const certId='GOV-'+Date.now();const completedDate=new Date();
+        await setDoc(doc(db,'users',currentUser.uid),{certificatesEarned:arrayUnion('governance'),governanceCompletedAt:completedDate,governanceCertId:certId},{merge:true});
+        await setDoc(doc(db,'certificates',certId),{name:currentUser.displayName||'Meridian Student',email:currentUser.email,course:'AI in Governance — Meridian Institute of AI',issuedAt:completedDate,certId:certId,valid:true});
+        document.getElementById('result-actions').innerHTML=`<a href="certificate.html?id=${certId}" class="btn-result btn-primary" target="_blank">View Certificate →</a><a href="dashboard.html" class="btn-result btn-ghost">Dashboard</a>`;
+      }catch(e){document.getElementById('result-actions').innerHTML=`<a href="dashboard.html" class="btn-result btn-primary">Dashboard</a>`;}
+    }
+  }else{
+    document.getElementById('result-message').textContent=`You scored ${pct}% — you need 70% to pass. Review the course material and try again when you are ready.`;
+    document.getElementById('result-actions').innerHTML=`<a href="governance-module-1.html" class="btn-result btn-primary">Review from Module 1</a><button class="btn-result btn-ghost" onclick="location.reload()">Try Again</button>`;
+  }
+}
+window.toggleTheme=function(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='☾'):(h.setAttribute('data-theme','dark'),i.textContent='☀');};
+</script>
+</body>
+</html>

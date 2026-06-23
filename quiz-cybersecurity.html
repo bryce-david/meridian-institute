@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Final Assessment — AI in Cybersecurity — Meridian Institute of AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#0E7490;--accent-dim:rgba(14,116,144,0.1);--nav-bg:rgba(8,8,8,0.9);--success:#22c55e;--success-bg:rgba(34,197,94,0.08);--success-border:rgba(34,197,94,0.25);--fail-bg:rgba(239,68,68,0.08);--fail-border:rgba(239,68,68,0.25);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#0C6280;--accent-dim:rgba(12,98,128,0.08);--nav-bg:rgba(250,250,248,0.9);--success:#16a34a;--success-bg:rgba(22,163,74,0.06);--success-border:rgba(22,163,74,0.25);--fail-bg:rgba(220,38,38,0.06);--fail-border:rgba(220,38,38,0.25);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}
+  .nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}.nav-back{font-size:13px;color:var(--text-2);text-decoration:none;}.nav-back:hover{color:var(--text);}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;}
+  .page{max-width:680px;margin:0 auto;padding:90px 24px 80px;}
+  .quiz-eyebrow{font-size:11px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:12px;}
+  .quiz-title{font-family:'Cormorant Garamond',serif;font-size:42px;font-weight:300;color:var(--text);line-height:1.1;margin-bottom:12px;}
+  .quiz-sub{font-size:15px;color:var(--text-2);line-height:1.7;margin-bottom:28px;}
+  .quiz-rules{background:var(--bg-2);border:1px solid var(--border);border-radius:12px;padding:18px 22px;margin-bottom:28px;display:flex;gap:20px;flex-wrap:wrap;}
+  .quiz-rule{font-size:13px;color:var(--text-2);display:flex;align-items:center;gap:8px;}
+  .btn-start{padding:14px 32px;background:var(--accent);color:#fff;border-radius:10px;font-size:15px;font-weight:500;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;margin-top:4px;}
+  #quiz-section{display:none;}
+  .progress-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;}
+  .progress-label{font-size:13px;color:var(--text-3);}
+  .progress-track{height:3px;background:var(--border);border-radius:2px;overflow:hidden;margin-bottom:36px;}
+  .progress-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.3s;}
+  .question-num{font-size:11px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:14px;}
+  .question-text{font-family:'Cormorant Garamond',serif;font-size:27px;font-weight:400;color:var(--text);line-height:1.35;margin-bottom:28px;}
+  .options{display:flex;flex-direction:column;gap:10px;margin-bottom:24px;}
+  .option{display:flex;align-items:flex-start;gap:14px;padding:15px 18px;border:1px solid var(--border-2);border-radius:12px;cursor:pointer;transition:all 0.18s;background:var(--bg-2);}
+  .option:hover{border-color:var(--accent);background:var(--accent-dim);}
+  .option.selected{border-color:var(--accent);background:var(--accent-dim);}
+  .option.correct{border-color:var(--success);background:var(--success-bg);cursor:default;}
+  .option.wrong{border-color:#ef4444;background:var(--fail-bg);cursor:default;}
+  .option.disabled{cursor:default;opacity:0.55;}
+  .option-letter{width:26px;height:26px;border-radius:6px;background:var(--bg-3);border:1px solid var(--border-2);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:500;color:var(--text-3);flex-shrink:0;margin-top:2px;}
+  .option.selected .option-letter{background:var(--accent);color:#fff;border-color:var(--accent);}
+  .option.correct .option-letter{background:var(--success);color:#fff;border-color:var(--success);}
+  .option.wrong .option-letter{background:#ef4444;color:#fff;border-color:#ef4444;}
+  .option-text{font-size:15px;color:var(--text-2);line-height:1.55;}
+  .option.selected .option-text,.option.correct .option-text{color:var(--text);}
+  .feedback{padding:16px 20px;border-radius:10px;font-size:14px;line-height:1.65;margin-bottom:20px;display:none;}
+  .feedback.show{display:block;}
+  .feedback.correct{background:var(--success-bg);border:1px solid var(--success-border);color:var(--success);}
+  .feedback.wrong{background:var(--fail-bg);border:1px solid var(--fail-border);color:#ef4444;}
+  .btn-next{padding:12px 28px;background:var(--accent);color:#fff;border-radius:9px;font-size:14px;font-weight:500;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;display:none;}
+  .btn-next.show{display:inline-block;}
+  #result-section{display:none;text-align:center;padding:20px 0;}
+  .result-icon{font-size:64px;margin-bottom:20px;}
+  .result-title{font-family:'Cormorant Garamond',serif;font-size:42px;font-weight:300;color:var(--text);margin-bottom:12px;}
+  .result-score{font-size:56px;font-weight:300;font-family:'Cormorant Garamond',serif;margin:20px 0;}
+  .result-score.pass{color:var(--success);}.result-score.fail{color:#ef4444;}
+  .result-message{font-size:16px;color:var(--text-2);line-height:1.7;max-width:520px;margin:0 auto 32px;}
+  .result-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
+  .btn-result{padding:13px 28px;border-radius:10px;font-size:14px;font-weight:500;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;text-decoration:none;display:inline-block;}
+  .btn-primary{background:var(--accent);color:#fff;}.btn-ghost{background:transparent;color:var(--text-2);border:1px solid var(--border-2);}
+  @media(max-width:600px){.quiz-title{font-size:34px;}.question-text{font-size:23px;}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="courses.html" class="nav-back">← AI in Cybersecurity</a>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">☀</span></button>
+</nav>
+<div class="page">
+  <div id="start-section">
+    <div class="quiz-eyebrow">Final Assessment · AI in Cybersecurity</div>
+    <div class="quiz-title">Test Your Knowledge</div>
+    <div class="quiz-sub">25 questions covering all 10 modules. These are application questions — they test whether you can reason with the concepts, not just recall them. You need 70% to pass and earn your certificate.</div>
+    <div class="quiz-rules">
+      <div class="quiz-rule">📋 25 questions per attempt</div>
+      <div class="quiz-rule">✅ 70% to pass (18 of 25)</div>
+      <div class="quiz-rule">🔀 Randomized each attempt</div>
+      <div class="quiz-rule">🏆 Pass to earn your certificate</div>
+    </div>
+    <button class="btn-start" onclick="startQuiz()">Begin Assessment →</button>
+  </div>
+  <div id="quiz-section">
+    <div class="progress-header">
+      <span class="progress-label" id="progress-label">Question 1 of 25</span>
+      <span class="progress-label" id="score-label">0 correct</span>
+    </div>
+    <div class="progress-track"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+    <div class="question-num" id="question-num">Question 1</div>
+    <div class="question-text" id="question-text"></div>
+    <div class="options" id="options"></div>
+    <div class="feedback" id="feedback"></div>
+    <button class="btn-next" id="btn-next" onclick="nextQuestion()">Next Question →</button>
+  </div>
+  <div id="result-section">
+    <div class="result-icon" id="result-icon"></div>
+    <div class="result-title" id="result-title"></div>
+    <div class="result-score" id="result-score"></div>
+    <div class="result-message" id="result-message"></div>
+    <div class="result-actions" id="result-actions"></div>
+  </div>
+</div>
+<script type="module">
+import{initializeApp}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import{getAuth,onAuthStateChanged}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import{getFirestore,doc,setDoc,arrayUnion}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+const app=initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+const auth=getAuth(app);const db=getFirestore(app);let currentUser=null;
+onAuthStateChanged(auth,u=>{currentUser=u;});
+
+const ALL_QUESTIONS=[
+  {
+    "q": "What fundamental shift has AI introduced to the modern cyber threat landscape?",
+    "options": [
+      "Automation that enables attackers to scale sophisticated attacks far beyond what human operators could execute alone",
+      "A permanent reduction in attack frequency because AI-powered defenses now block most intrusion attempts automatically",
+      "The elimination of social engineering as a viable attack vector, since AI detects manipulative content instantly",
+      "A shift toward purely nation-state actors, as AI tooling is too expensive for criminal organizations to access"
+    ],
+    "answer": 0,
+    "explain": "AI removes the human bottleneck from attacks. Reconnaissance, payload generation, and delivery that once required skilled teams can now be automated and executed at massive scale, fundamentally changing the threat calculus."
+  },
+  {
+    "q": "What is the primary limitation of traditional signature-based intrusion detection systems?",
+    "options": [
+      "They generate too many false positives when monitoring encrypted network traffic on modern enterprise networks",
+      "They cannot detect unknown or zero-day threats because they rely on matching patterns of previously observed attacks",
+      "They require dedicated hardware that is prohibitively expensive for most organizations to deploy and maintain",
+      "They can only monitor network traffic and are entirely blind to host-based activity and endpoint behavior"
+    ],
+    "answer": 1,
+    "explain": "Signature-based IDS works by matching traffic or file patterns against a database of known attack signatures. A novel or zero-day threat has no signature yet, so it passes through undetected — the fundamental blind spot these systems cannot overcome."
+  },
+  {
+    "q": "How does AI fundamentally change the economics of spear phishing attacks?",
+    "options": [
+      "It makes spear phishing cheaper to defend against by automating the detection of personalized malicious emails",
+      "It enables attackers to craft highly personalized, convincing messages and deliver them at mass scale simultaneously",
+      "It eliminates the research phase of spear phishing by replacing OSINT with fabricated but plausible target profiles",
+      "It shifts spear phishing costs to defenders by requiring constant retraining of email security models"
+    ],
+    "answer": 1,
+    "explain": "Traditionally, spear phishing required manual research per target, limiting scale. AI can ingest public data about thousands of targets and generate individually tailored lures at the same cost as sending one — personalisation at mass scale."
+  },
+  {
+    "q": "What is 'static analysis' in the context of ML-based malware detection?",
+    "options": [
+      "Observing a suspicious program's behavior in a sandboxed environment while it is actively running and executing",
+      "Analyzing a binary's code, structure, and metadata without ever executing the file itself",
+      "Comparing a file's network traffic patterns against a database of known malicious command-and-control signatures",
+      "Running multiple antivirus engines simultaneously against a file and aggregating their individual verdicts"
+    ],
+    "answer": 1,
+    "explain": "Static analysis inspects a binary — its byte sequences, imported functions, strings, and structural features — without execution. ML models trained on these features can classify malware families without risking detonation of the payload."
+  },
+  {
+    "q": "What is 'smart fuzzing' in AI-assisted vulnerability assessment?",
+    "options": [
+      "A technique that automatically patches discovered vulnerabilities before they can be exploited in production",
+      "ML-guided input generation that learns from code coverage feedback to reach deeper, harder-to-test program paths",
+      "A method of generating random inputs at very high speed using GPU-accelerated brute-force computation",
+      "An approach where AI prioritizes fuzzing targets based on their Common Vulnerability Scoring System ratings"
+    ],
+    "answer": 1,
+    "explain": "Traditional fuzzing sends random inputs blindly. Smart fuzzing uses ML to learn which mutations actually increase code coverage, intelligently steering toward unexplored branches and finding vulnerabilities traditional fuzzers miss."
+  },
+  {
+    "q": "What is an adversarial example in machine learning?",
+    "options": [
+      "A mislabeled training sample that causes a model to learn an incorrect association during the training process",
+      "A carefully crafted input with small, often imperceptible perturbations specifically designed to fool an ML classifier",
+      "An example drawn from a different data distribution than the model was trained on, causing distribution shift errors",
+      "A training sample contributed by a malicious researcher intending to insert a backdoor into an open-source model"
+    ],
+    "answer": 1,
+    "explain": "Adversarial examples exploit the geometry of the model's decision boundary. Tiny, deliberate perturbations — often invisible to humans — push an input across that boundary, causing confident misclassification. This is a fundamental vulnerability of gradient-based ML."
+  },
+  {
+    "q": "What problem does AI primarily solve in modern Security Operations Centers?",
+    "options": [
+      "The shortage of physical hardware needed to store and process the growing volume of security log data",
+      "Alert fatigue — AI correlates and prioritizes the enormous volume of security alerts that human analysts cannot triage manually",
+      "The legal complexity of attributing attacks to specific threat actors across international jurisdictions",
+      "The challenge of encrypting sensitive incident response communications between distributed SOC team members"
+    ],
+    "answer": 1,
+    "explain": "A large SOC can receive millions of alerts daily. Human analysts cannot triage them all, causing critical alerts to be buried. AI correlates events, suppresses low-fidelity noise, and surfaces genuine threats — solving the core alert fatigue problem."
+  },
+  {
+    "q": "What is differential privacy in the context of AI security systems?",
+    "options": [
+      "A network segmentation technique that prevents different user groups from accessing each other's security telemetry",
+      "A mathematical guarantee that individual records cannot be identified or inferred from the aggregate outputs of a model",
+      "An encryption standard that protects model weights from being extracted by adversaries with API access",
+      "A method of training separate models for different data sensitivity levels and ensembling their outputs at inference"
+    ],
+    "answer": 1,
+    "explain": "Differential privacy adds carefully calibrated noise to model outputs or training processes, providing a formal mathematical bound on how much any single individual's data can influence the result — making re-identification from aggregate statistics provably difficult."
+  },
+  {
+    "q": "What is the core principle of zero-trust architecture?",
+    "options": [
+      "All internal network traffic is encrypted end-to-end, while external traffic is blocked at the perimeter firewall",
+      "Never trust, always verify — no implicit trust is granted based on network location; every access request is authenticated and authorized",
+      "All user devices must be managed and enrolled in an MDM solution before any corporate resource access is permitted",
+      "Security policies are defined at the application layer only, removing the need for network-level access controls entirely"
+    ],
+    "answer": 1,
+    "explain": "Zero-trust abandons the castle-and-moat model where inside the perimeter meant trusted. Every request — regardless of source network, device, or user — must be explicitly authenticated, authorized, and continuously validated before access is granted."
+  },
+  {
+    "q": "What does 'AI red teaming' refer to in the security context?",
+    "options": [
+      "Using AI to automate the generation of penetration testing reports after a human red team completes an engagement",
+      "Systematically testing AI systems for vulnerabilities, biases, and failure modes using adversarial probing techniques",
+      "Replacing human red teamers entirely with autonomous AI agents that conduct offensive security operations",
+      "A regulatory compliance framework requiring AI vendors to disclose their model architectures to government reviewers"
+    ],
+    "answer": 1,
+    "explain": "AI red teaming applies the same adversarial mindset as traditional red teaming to AI systems themselves — probing for prompt injection, jailbreaks, data leakage, hallucinations under adversarial input, and other failure modes specific to ML systems."
+  },
+  {
+    "q": "What does UEBA (User and Entity Behavior Analytics) primarily use to detect insider threats and compromised accounts?",
+    "options": [
+      "A continuously updated signature database of known malicious user actions compiled from industry threat feeds",
+      "Behavioral baselines for each user and entity, flagging statistically anomalous deviations from their established patterns",
+      "Manual review queues where security analysts inspect raw authentication logs for suspicious login attempts",
+      "Network packet inspection to identify malicious payloads embedded in the traffic generated by internal users"
+    ],
+    "answer": 1,
+    "explain": "UEBA builds a statistical profile of normal behavior for every user and entity — typical login times, accessed resources, data volumes. Deviations from these baselines, such as accessing unusual systems at odd hours, trigger alerts even with no known signature."
+  },
+  {
+    "q": "What is a data poisoning attack against a machine learning model?",
+    "options": [
+      "Injecting adversarial examples into the model's inference pipeline to cause misclassification at prediction time",
+      "Deliberately corrupting or manipulating the training data to cause the model to learn incorrect or malicious behaviors",
+      "Extracting private training data from a model by querying it with carefully crafted adversarial prompts",
+      "Overloading a model's API endpoint with requests until it fails, denying service to legitimate users"
+    ],
+    "answer": 1,
+    "explain": "Poisoning attacks target the training phase. By injecting malicious samples into training data, an attacker can cause the resulting model to misclassify specific inputs, reduce overall accuracy, or embed a hidden backdoor — all without ever touching the deployed system."
+  },
+  {
+    "q": "How has AI elevated the threat posed by Business Email Compromise (BEC) attacks?",
+    "options": [
+      "AI has reduced BEC effectiveness by enabling email security gateways to detect all fraudulent wire transfer requests",
+      "AI enables attackers to generate highly convincing impersonations of executives using scraped writing style data, at scale",
+      "AI makes BEC attacks detectable by analyzing the metadata of emails to identify non-corporate sending infrastructure",
+      "AI has shifted BEC attacks away from email entirely toward voice calls, making the email vector largely obsolete"
+    ],
+    "answer": 1,
+    "explain": "BEC traditionally required crafting convincing impersonations manually. AI can analyze an executive's email corpus or LinkedIn posts, learn their writing style, and auto-generate convincing fraud requests targeting finance teams — scaling what was once a bespoke attack."
+  },
+  {
+    "q": "What is a model inversion attack?",
+    "options": [
+      "An attack that reverses the weights of a neural network to convert it from a classifier into a generator",
+      "An attack that queries a model repeatedly to reconstruct sensitive training data or private attributes about individuals",
+      "An attack that inverts the labels in a model's training set, causing it to predict the opposite of the intended output",
+      "An attack that exploits model versioning systems to roll back a deployed model to a less secure earlier version"
+    ],
+    "answer": 1,
+    "explain": "Model inversion exploits the fact that model outputs leak information about their training data. An attacker crafts queries to iteratively reconstruct sensitive inputs — such as reconstructing faces from a facial recognition model — violating privacy of training subjects."
+  },
+  {
+    "q": "What is the primary function of a SOAR (Security Orchestration, Automation and Response) platform in an AI-enhanced SOC?",
+    "options": [
+      "Storing raw security logs in a compressed format to reduce storage costs and improve forensic search performance",
+      "Automating repetitive response workflows and orchestrating actions across multiple security tools without manual intervention",
+      "Providing a threat intelligence subscription service that feeds curated indicators of compromise to security tools",
+      "Replacing the SIEM by ingesting and correlating all security telemetry in a single unified data pipeline"
+    ],
+    "answer": 1,
+    "explain": "SOAR platforms connect disparate security tools and automate response playbooks — isolating a host, blocking an IP, opening a ticket, notifying a team — without requiring a human to manually execute each step, dramatically reducing response time."
+  },
+  {
+    "q": "How does federated learning enable collaborative threat intelligence without sharing raw data?",
+    "options": [
+      "It encrypts threat intelligence feeds so that only authorized partner organizations can decrypt and read the indicators",
+      "It trains models locally at each organization and shares only model updates, never the underlying raw security data",
+      "It creates anonymized copies of each organization's data and stores them in a neutral third-party data lake",
+      "It uses blockchain to provide an immutable audit trail of all data shared between threat intelligence partners"
+    ],
+    "answer": 1,
+    "explain": "Federated learning keeps raw data on-premises at each organization. Only gradient updates or model weights are shared and aggregated. This allows multiple organizations to train a shared threat detection model without ever exposing their sensitive logs or events."
+  },
+  {
+    "q": "What role does microsegmentation play in a zero-trust architecture?",
+    "options": [
+      "It compresses network packets into smaller units to improve throughput on high-latency wide area network links",
+      "It divides the network into granular segments with strict per-segment access controls, limiting lateral movement after a breach",
+      "It automates the patching of network devices by segmenting update traffic from production data flows",
+      "It provides micro-level monitoring of individual packets to detect covert channel exfiltration in real time"
+    ],
+    "answer": 1,
+    "explain": "Once an attacker breaches the perimeter, flat networks let them move laterally freely. Microsegmentation creates fine-grained zones with explicit allow-rules, so a compromised endpoint in one segment cannot reach systems in another without re-authentication."
+  },
+  {
+    "q": "How has AI-powered voice cloning changed the threat landscape for vishing (voice phishing) attacks?",
+    "options": [
+      "It has made vishing obsolete by enabling organizations to authenticate callers biometrically using voice fingerprints",
+      "It allows attackers to impersonate trusted individuals — executives, IT staff, family members — convincingly in real-time calls",
+      "It has shifted vishing attacks to text-only channels because synthetic voices are still detectable by human listeners",
+      "It enables defenders to automatically flag calls from unknown numbers before any conversation takes place"
+    ],
+    "answer": 1,
+    "explain": "Voice cloning models can synthesize a convincing replica of any person's voice from a short audio sample. Attackers use this to impersonate a CFO authorizing a transfer or an IT worker requesting credentials — eroding the trust humans place in voice as an authentication channel."
+  },
+  {
+    "q": "What advantage does ML-based malware family classification offer over simple binary malware detection?",
+    "options": [
+      "It eliminates false positives entirely, since family classification models are trained on more data than binary detectors",
+      "It reveals which threat actor group and toolset is likely involved, enabling targeted incident response and attribution",
+      "It removes the need for dynamic analysis by identifying malware behavior from static features alone in all cases",
+      "It allows endpoint agents to automatically decrypt and neutralize encrypted malware payloads upon detection"
+    ],
+    "answer": 1,
+    "explain": "Knowing a file is malicious is step one. Knowing it belongs to the Lazarus Group's toolchain or is a variant of Emotet tells the SOC which TTPs to expect, which other systems may be affected, and which threat intel is relevant — dramatically accelerating response."
+  },
+  {
+    "q": "What is a backdoor (trojan) attack on a machine learning model, and why is it particularly dangerous?",
+    "options": [
+      "An attack where the adversary gains SSH access to the training server and directly modifies the saved model weights",
+      "A hidden trigger embedded during training that causes the model to misclassify any input containing that trigger, while behaving normally otherwise",
+      "A form of model stealing where an attacker uses API queries to reconstruct a functionally equivalent copy of the model",
+      "An attack where poisoned inference-time inputs gradually corrupt the model's internal representations over many queries"
+    ],
+    "answer": 1,
+    "explain": "A backdoored model behaves perfectly normally on clean inputs, passing all validation tests. Only inputs containing the secret trigger pattern — a specific pixel pattern, phrase, or feature — activate the malicious behavior. This makes detection extremely difficult without knowing what to look for."
+  },
+  {
+    "q": "How do AI systems improve Mean Time to Detect (MTTD) and Mean Time to Respond (MTTR) in SOC operations?",
+    "options": [
+      "By replacing human analysts entirely, removing the human decision-making latency from every step of the response process",
+      "By continuously correlating telemetry in real time and automating initial triage and containment steps, compressing both metrics",
+      "By predicting attacks before they happen, giving defenders weeks of advance warning before any breach attempt occurs",
+      "By outsourcing detection and response to cloud-based AI services that operate in different time zones around the clock"
+    ],
+    "answer": 1,
+    "explain": "AI reduces MTTD by detecting anomalies in real time across all telemetry rather than relying on humans reviewing dashboards. It reduces MTTR by triggering automated playbooks — isolating systems, blocking IPs — before a human even opens the alert."
+  },
+  {
+    "q": "What is the core tension between GDPR and AI-based security monitoring systems?",
+    "options": [
+      "GDPR prohibits any automated decision-making, making all AI security tools illegal in the European Union",
+      "Security monitoring requires processing behavioral data at scale, while GDPR mandates data minimization and purpose limitation",
+      "GDPR requires all security logs to be deleted within 24 hours, making forensic analysis after incidents impossible",
+      "AI security tools must be open-source under GDPR so regulators can audit their decision logic and training data"
+    ],
+    "answer": 1,
+    "explain": "Effective AI security monitoring thrives on rich behavioral data retained over time. GDPR's data minimization and purpose limitation principles create genuine tension — organizations must justify what they collect, why, and for how long, often requiring a documented legitimate interest basis."
+  },
+  {
+    "q": "Why are behavioral baselines critical to anomaly detection, and what is their key weakness?",
+    "options": [
+      "They are infallible because they are derived from cryptographic proofs of normal behavior rather than statistical estimates",
+      "They enable detection of novel threats without signatures, but an attacker who moves slowly can blend into an evolving baseline",
+      "They work best for detecting known malware families but fail entirely on network-based intrusion attempts",
+      "They eliminate false positives by design, since any deviation from baseline is by definition a confirmed attack"
+    ],
+    "answer": 1,
+    "explain": "Baselines catch threats that have no signature, which is their great strength. Their weakness is the slow-burn attacker who deliberately operates within normal thresholds, or who compromises a system long enough that their malicious behavior becomes incorporated into the new normal baseline."
+  },
+  {
+    "q": "What does the 'asymmetric advantage' in AI-enabled cyber offense mean for defenders?",
+    "options": [
+      "Defenders have an inherent advantage because they control the infrastructure and can observe all traffic on their own networks",
+      "Attackers only need to succeed once while defenders must succeed always — AI amplifies attacker efficiency, worsening this asymmetry",
+      "AI eliminates the asymmetry entirely by giving defenders the same automated capabilities as well-resourced nation-state actors",
+      "The asymmetry refers to defenders having more budget than attackers, which AI compounds by reducing defense costs further"
+    ],
+    "answer": 1,
+    "explain": "The defender's dilemma — succeed every time or lose — has always favored attackers. AI compounds this by dramatically lowering the cost, skill threshold, and time required to launch sophisticated attacks, while defenders must defend an ever-larger, more complex attack surface."
+  },
+  {
+    "q": "Why is post-quantum cryptography becoming a pressing concern for cybersecurity AI teams today, before quantum computers exist at scale?",
+    "options": [
+      "Quantum computers can already break RSA encryption at small scales, making migration to quantum-safe algorithms urgent now",
+      "Adversaries are harvesting encrypted data now to decrypt it later once quantum capability matures — a harvest-now, decrypt-later attack",
+      "AI systems require quantum-safe encryption because classical algorithms are too slow for the data volumes AI models process",
+      "Regulators have already mandated post-quantum cryptography adoption by all organizations handling sensitive data"
+    ],
+    "answer": 1,
+    "explain": "The harvest-now, decrypt-later threat is real and active. Nation-states are collecting encrypted communications today — VPN traffic, authentication sessions, sensitive data — with the intent to decrypt them once sufficiently powerful quantum computers become available, potentially years from now."
+  }
+];
+
+let questions=[],current=0,score=0,answered=false;
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+window.startQuiz=function(){
+  questions=shuffle([...ALL_QUESTIONS]);current=0;score=0;
+  document.getElementById('start-section').style.display='none';
+  document.getElementById('quiz-section').style.display='block';renderQuestion();
+};
+function renderQuestion(){
+  answered=false;const q=questions[current];
+  document.getElementById('question-num').textContent=`Question ${current+1} of 25`;
+  document.getElementById('question-text').textContent=q.q;
+  document.getElementById('progress-label').textContent=`Question ${current+1} of 25`;
+  document.getElementById('score-label').textContent=`${score} correct`;
+  document.getElementById('progress-fill').style.width=`${(current/25)*100}%`;
+  document.getElementById('feedback').className='feedback';document.getElementById('btn-next').className='btn-next';
+  const letters=['A','B','C','D'];const optionsEl=document.getElementById('options');optionsEl.innerHTML='';
+  const indices=shuffle([0,1,2,3]);
+  indices.forEach((origIdx,displayIdx)=>{
+    const opt=document.createElement('div');opt.className='option';
+    opt.innerHTML=`<div class="option-letter">${letters[displayIdx]}</div><div class="option-text">${q.options[origIdx]}</div>`;
+    opt.onclick=()=>selectAnswer(opt,origIdx===q.answer,indices.indexOf(q.answer),q.explain);
+    optionsEl.appendChild(opt);
+  });
+}
+function selectAnswer(clickedEl,isCorrect,correctShuffledIdx,explain){
+  if(answered)return;answered=true;
+  document.querySelectorAll('.option').forEach((o,i)=>{o.classList.add('disabled');if(i===correctShuffledIdx)o.classList.add('correct');});
+  if(isCorrect){clickedEl.classList.add('correct');score++;}else{clickedEl.classList.add('wrong');}
+  document.getElementById('score-label').textContent=`${score} correct`;
+  const fb=document.getElementById('feedback');fb.className=`feedback ${isCorrect?'correct':'wrong'} show`;
+  fb.textContent=isCorrect?`✓ Correct. ${explain}`:`✗ ${explain}`;
+  const btn=document.getElementById('btn-next');btn.className='btn-next show';btn.textContent=current===24?'See Results →':'Next Question →';
+}
+window.nextQuestion=function(){current++;if(current>=25)showResults();else renderQuestion();};
+async function showResults(){
+  document.getElementById('quiz-section').style.display='none';document.getElementById('result-section').style.display='block';
+  const passed=score>=18;const pct=Math.round((score/25)*100);
+  document.getElementById('result-icon').textContent=passed?'🏆':'📚';
+  document.getElementById('result-title').textContent=passed?'Assessment Passed':'Not This Time';
+  document.getElementById('result-score').className=`result-score ${passed?'pass':'fail'}`;
+  document.getElementById('result-score').textContent=`${score} / 25`;
+  if(passed){
+    document.getElementById('result-message').textContent=`You scored ${pct}% — above the 70% threshold. Your AI in Cybersecurity certificate is being issued.`;
+    if(currentUser){
+      try{
+        const cybersecurityCertId='CYB-'+Date.now();
+        await setDoc(doc(db,'users',currentUser.uid),{cybersecurityCertId:cybersecurityCertId,certificatesEarned:arrayUnion('cybersecurity')},{merge:true});
+        document.getElementById('result-actions').innerHTML=`<a href="certificate.html" class="btn-result btn-primary">View Certificate →</a><a href="dashboard.html" class="btn-result btn-ghost">Dashboard</a>`;
+      }catch(e){document.getElementById('result-actions').innerHTML=`<a href="dashboard.html" class="btn-result btn-primary">Dashboard</a>`;}
+    }else{
+      document.getElementById('result-actions').innerHTML=`<a href="certificate.html" class="btn-result btn-primary">View Certificate →</a><a href="dashboard.html" class="btn-result btn-ghost">Dashboard</a>`;
+    }
+  }else{
+    document.getElementById('result-message').textContent=`You scored ${pct}% — you need 70% to pass. Review the modules and try again.`;
+    document.getElementById('result-actions').innerHTML=`<a href="cybersecurity-module-1.html" class="btn-result btn-primary">Review from Module 1</a><button class="btn-result btn-ghost" onclick="location.reload()">Try Again</button>`;
+  }
+}
+window.toggleTheme=function(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='☾'):(h.setAttribute('data-theme','dark'),i.textContent='☀');};
+</script>
+</body>
+</html>

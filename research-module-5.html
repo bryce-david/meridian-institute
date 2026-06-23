@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 5: Hypothesis Generation and Experimental Design — AI for Research and Academia — Meridian Institute of AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#064E3B;--accent-dim:rgba(6,78,59,0.1);--accent-dim2:rgba(6,78,59,0.05);--nav-bg:rgba(8,8,8,0.9);--callout-bg:rgba(6,78,59,0.07);--callout-border:rgba(6,78,59,0.25);--good-bg:rgba(34,197,94,0.07);--good-border:rgba(34,197,94,0.2);--warn-bg:rgba(251,146,60,0.07);--warn-border:rgba(251,146,60,0.2);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#065F46;--accent-dim:rgba(6,95,70,0.08);--accent-dim2:rgba(6,95,70,0.04);--nav-bg:rgba(250,250,248,0.9);--callout-bg:rgba(6,95,70,0.05);--callout-border:rgba(6,95,70,0.2);--good-bg:rgba(22,163,74,0.06);--good-border:rgba(22,163,74,0.2);--warn-bg:rgba(234,88,12,0.05);--warn-border:rgba(234,88,12,0.2);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;overflow-x:hidden;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.7;overflow-x:hidden;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}
+  .nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}
+  .nav-back{font-size:13px;color:var(--text-2);text-decoration:none;transition:color 0.2s;}
+  .nav-back:hover{color:var(--text);}
+  .nav-label{font-size:13px;color:var(--text-3);}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;transition:all 0.2s;}
+  .theme-toggle:hover{background:var(--bg-3);color:var(--text);}
+  .progress-bar{position:fixed;top:60px;left:0;right:0;z-index:99;height:2px;background:var(--border);}
+  .progress-fill{height:100%;background:var(--accent);width:0%;transition:width 0.1s;}
+  .page-wrapper{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:100vh;padding-top:62px;overflow:hidden;}
+  .sidebar{position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto;border-right:1px solid var(--border);padding:32px 24px;background:var(--bg-2);}
+  .sidebar-course{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;}
+  .sidebar-course-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+  .sidebar-module{margin-bottom:4px;}
+  .sidebar-module-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:13px;color:var(--text-2);text-decoration:none;transition:all 0.2s;line-height:1.4;}
+  .sidebar-module-link:hover{background:var(--bg-3);color:var(--text);}
+  .sidebar-module-link.active{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-num{font-size:11px;font-weight:500;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--bg-4);color:var(--text-3);}
+  .sidebar-module-link.active .sidebar-num{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-divider{height:1px;background:var(--border);margin:20px 0;}
+  .sidebar-progress-label{font-size:12px;color:var(--text-3);margin-bottom:8px;display:flex;justify-content:space-between;}
+  .sidebar-progress-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sidebar-progress-fill{height:100%;width:50%;background:var(--accent);border-radius:2px;}
+  main{display:block;min-width:0;overflow:hidden;}
+  .content{max-width:760px;width:100%;padding:60px 64px 140px;margin:0 auto;}
+  .module-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+  .module-tag{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(6,78,59,0.2);padding:4px 12px;border-radius:100px;}
+  .module-meta{font-size:12px;color:var(--text-3);}
+  h1{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1.05;letter-spacing:-0.02em;color:var(--text);margin-bottom:24px;}
+  .intro-text{font-size:19px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+  h2{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:400;color:var(--text);margin:52px 0 18px;line-height:1.2;}
+  h3{font-size:16px;font-weight:500;color:var(--text);margin:32px 0 12px;}
+  p{font-size:16px;font-weight:300;color:var(--text-2);line-height:1.8;margin-bottom:20px;}
+  strong{font-weight:500;color:var(--text);}
+  em{font-style:italic;}
+  ul,ol{margin:0 0 20px 22px;color:var(--text-2);}
+  li{font-size:16px;font-weight:300;line-height:1.8;margin-bottom:8px;}
+  .callout{background:var(--callout-bg);border:1px solid var(--callout-border);border-radius:12px;padding:24px 28px;margin:32px 0;}
+  .callout-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+  .callout p{margin:0;font-size:15px;color:var(--text-2);}
+  .callout p+p{margin-top:12px;}
+  .good{background:var(--good-bg);border:1px solid var(--good-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .good-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#22c55e;margin-bottom:10px;}
+  .good p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn{background:var(--warn-bg);border:1px solid var(--warn-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .warn-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#fb923c;margin-bottom:10px;}
+  .warn p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn p+p{margin-top:12px;}
+  .principle-list{display:flex;flex-direction:column;gap:12px;margin:24px 0;}
+  .principle{background:var(--bg-2);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:0 12px 12px 0;padding:20px 24px;}
+  .principle-title{font-size:15px;font-weight:500;color:var(--text);margin-bottom:6px;}
+  .principle-desc{font-size:14px;color:var(--text-2);line-height:1.65;margin:0;}
+  .sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:var(--bg-2);border-top:1px solid var(--border-2);padding:14px 5%;display:flex;align-items:center;justify-content:space-between;gap:16px;backdrop-filter:blur(12px);}
+  .sticky-bar-track{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sticky-bar-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.2s;width:0%;}
+  .sticky-bar-label{font-size:12px;color:var(--text-3);white-space:nowrap;min-width:60px;text-align:right;}
+  .sticky-bar-btn{padding:10px 20px;border-radius:8px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;background:var(--accent);color:#fff;border:none;cursor:pointer;white-space:nowrap;transition:opacity 0.2s;display:none;}
+  .sticky-bar-btn:hover{opacity:0.88;}
+  .sticky-bar-reading{font-size:12px;color:var(--text-3);white-space:nowrap;}
+  @media(max-width:900px){.page-wrapper{grid-template-columns:1fr;}.sidebar{display:none;}.content{padding:40px 24px 120px;}h1{font-size:38px;}}
+  @media(max-width:600px){.content{padding:28px 16px 120px;}h1{font-size:30px;}h2{font-size:24px;}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="courses.html" class="nav-back">← AI for Research and Academia</a>
+    <div class="nav-divider"></div>
+    <span class="nav-label">Module 5</span>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">☀</span></button>
+</nav>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+
+<div class="page-wrapper">
+<aside class="sidebar">
+  <div class="sidebar-course">Expert Track</div>
+  <div class="sidebar-course-name">AI for Research and Academia</div>
+  <div class="sidebar-module"><a href="research-module-1.html" class="sidebar-module-link"><span class="sidebar-num">1</span>AI as a Research Partner</a></div>
+  <div class="sidebar-module"><a href="research-module-2.html" class="sidebar-module-link"><span class="sidebar-num">2</span>Literature Discovery and Synthesis</a></div>
+  <div class="sidebar-module"><a href="research-module-3.html" class="sidebar-module-link"><span class="sidebar-num">3</span>Research Writing with AI</a></div>
+  <div class="sidebar-module"><a href="research-module-4.html" class="sidebar-module-link"><span class="sidebar-num">4</span>Data Analysis and Visualization</a></div>
+  <div class="sidebar-module"><a href="research-module-5.html" class="sidebar-module-link active"><span class="sidebar-num">5</span>Hypothesis Generation</a></div>
+  <div class="sidebar-module"><a href="research-module-6.html" class="sidebar-module-link"><span class="sidebar-num">6</span>Peer Review and Integrity</a></div>
+  <div class="sidebar-module"><a href="research-module-7.html" class="sidebar-module-link"><span class="sidebar-num">7</span>Citation Management</a></div>
+  <div class="sidebar-module"><a href="research-module-8.html" class="sidebar-module-link"><span class="sidebar-num">8</span>Communicating Research</a></div>
+  <div class="sidebar-module"><a href="research-module-9.html" class="sidebar-module-link"><span class="sidebar-num">9</span>Collaborative Research</a></div>
+  <div class="sidebar-module"><a href="research-module-10.html" class="sidebar-module-link"><span class="sidebar-num">10</span>The Future of AI-Augmented Science</a></div>
+  <div class="sidebar-module"><a href="quiz-research.html" class="sidebar-module-link" style="color:var(--accent);margin-top:4px;"><span class="sidebar-num" style="background:var(--accent-dim);color:var(--accent);">✦</span>Final Assessment</a></div>
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-progress-label"><span>Course progress</span><span style="color:var(--accent);">5 / 10</span></div>
+  <div class="sidebar-progress-track"><div class="sidebar-progress-fill"></div></div>
+</aside>
+
+<main>
+<div class="content">
+  <div class="module-eyebrow"><span class="module-tag">Module 5 · Expert Track</span><span class="module-meta">22 min read · AI for Research and Academia</span></div>
+  <h1>Hypothesis Generation and Experimental Design</h1>
+
+  <p class="intro-text">The hypothesis is the unit of science. It is the structured claim about the world that your study is designed to test, and the quality of your hypothesis — its precision, its testability, its grounding in existing theory, its resistance to alternative explanations — determines much of the value of the work that follows. AI can be a genuinely useful partner in the process of developing and refining hypotheses, but with a crucial caveat: AI can recombine and extrapolate from existing knowledge, but it cannot generate the empirical insight that comes from observing the world carefully. That distinction determines everything about how to use it well.</p>
+
+  <h2>AI as brainstorming partner, not idea generator</h2>
+  <p>The most common mistake researchers make when engaging AI for hypothesis generation is asking it to generate hypotheses for them. "What are some interesting hypotheses about X?" produces generic, literature-plausible suggestions that are unlikely to be novel, may not reflect the most important questions in the field, and have not been filtered by your own expert judgment about what is tractable, ethical, and scientifically valuable. The output feels like something, but it is not the product of scientific thinking — it is the product of statistical pattern matching over the published literature.</p>
+  <p>The productive framing is AI as brainstorming partner: you come to the session with your own emerging ideas, theoretical commitments, and observations that have sparked questions, and you use AI to help you develop, test, and stress-test those ideas. The difference in output quality is substantial. When your scientific intuition provides the seed, AI's ability to connect it to related literatures, identify the logical structure of the claim, and surface objections becomes genuinely useful. Without that seed, AI produces noise dressed as insight.</p>
+  <p>Concretely, the productive brainstorming workflow looks like this: bring AI a claim you are already interested in and describe why you think it might be true, what observations have suggested it to you, and what you think the mechanism would be. Then ask AI to identify: What would this hypothesis predict that alternative theories would not? What are the strongest existing objections in the literature? What adjacent phenomena would need to be consistent with it if it were true? This is using AI to do the intellectual work of hypothesis development that would otherwise require an equally well-read colleague — and it is a genuine capability advantage.</p>
+
+  <div class="callout">
+    <div class="callout-label">Hypothesis Stress-Testing Prompts</div>
+    <p>"Here is my hypothesis: [state hypothesis precisely]. What are the five strongest objections a skeptical reviewer might raise against it? For each objection, is it a fundamental problem with the hypothesis itself, or a design problem that my study could address? Which objection do you think is most serious?"</p>
+    <p>"My hypothesis predicts [X]. What alternative theories in the literature also predict [X] but through different mechanisms? How could I design a study that would discriminate between my hypothesis and those alternatives?"</p>
+  </div>
+
+  <h2>Anticipating confounds and alternative explanations</h2>
+  <p>One of the highest-value pre-study applications of AI is systematically identifying confounds and alternative explanations before you run data collection. This is inexpensive in time and thought, but it can save the expensive corrections that become necessary when reviewers identify confounds you didn't account for — or worse, when the confound renders the study unpublishable.</p>
+  <p>The most useful prompt pattern is adversarial: ask AI to take the position of a hostile but fair reviewer who has read your proposed study and is looking for the most damaging alternative explanation of your predicted results. Describe your independent variable, your dependent variable, your population, and your procedure, and ask: "If I find the predicted effect, what are the three most plausible alternative explanations — explanations that don't require my mechanism — that a reviewer could raise?" Then evaluate each seriously.</p>
+  <p>This process works because AI has read extensively across the psychology of research design and across your substantive literature, and it can draw on a library of known confound patterns — demand characteristics, order effects, selection effects, measurement confounds, regression to the mean — and apply them to your specific design. The resulting list will include some objections that are not relevant to your specific case, but it will often include at least one serious issue that you had not considered, and that is immensely valuable to discover before data collection.</p>
+
+  <h3>A worked example</h3>
+  <p>Suppose you are planning a study that gives participants a brief mindfulness exercise and then measures prosocial behavior. You predict that mindfulness will increase prosocial behavior due to increased present-moment awareness of others' needs. An AI stress-test might surface: (1) Demand characteristics — participants who receive the mindfulness intervention may infer you expect prosocial behavior and respond accordingly; (2) Mood effects — mindfulness may improve mood rather than (or in addition to) increasing present-moment awareness, and improved mood may cause prosocial behavior independent of awareness; (3) Time-filling — the mindfulness exercise takes time and the control condition should be matched for time-on-task, not just for length of instruction; (4) Social desirability of mindfulness — participants who know they received a "mindfulness" exercise may engage in identity-consistent behavior. None of these objections refute the study, but each suggests a design feature you would want to include to address it.</p>
+
+  <h2>Experimental design consultation</h2>
+  <p>AI is useful as a consultation partner for experimental design, particularly for researchers working across methodological traditions or tackling unfamiliar designs. Describing your research question and asking AI to suggest appropriate designs — with the tradeoffs of each — can surface options you hadn't considered and give you a starting framework that a statistician or methodologist can then refine.</p>
+
+  <h3>Counterbalancing and randomization</h3>
+  <p>For within-subjects designs, counterbalancing conditions to control for order effects is standard practice, but the specific scheme matters: complete counterbalancing, Latin square, partial counterbalancing, and random assignment all have different implications for the analyses you can run and the order effects you can detect. AI can explain the rationale and implications of each approach and generate example counterbalancing schemes for your specific number of conditions, which you then verify against a standard reference.</p>
+  <p>For randomization, AI can generate R or Python code for block randomization, stratified randomization, and adaptive randomization schemes. The code requires verification but provides a correct starting implementation faster than writing it from scratch, and asking AI to explain the randomization scheme it has implemented gives you a plain-language description useful for the methods section.</p>
+
+  <h3>Blinding procedures</h3>
+  <p>Blinding is often easier to specify than to implement, and AI can help you think through the practical challenges. "In my paradigm, the experimenter delivers instructions to participants. I want to blind experimenters to condition assignment. What are the practical options for achieving this, and what are the tradeoffs of each?" This kind of procedural design question is a good use of AI because it draws on a broad knowledge of methodology and produces concrete, actionable suggestions rather than requiring specialized expertise in your particular field.</p>
+
+  <h2>Power calculation assistance</h2>
+  <p>Statistical power analysis — determining the sample size required to detect an effect of a given size with a given probability — is a methodological requirement for most contemporary research and a near-universal requirement for grant applications and pre-registration. The dominant free tool for power analysis is <strong>G*Power</strong> (available at statistik.uni-duesseldorf.de/GPower), and AI can explain G*Power's interface, input parameters, and output in accessible terms that bridge the gap between statistical theory and practical implementation.</p>
+  <p>A useful AI consultation for power analysis: "I am planning a 2x3 mixed ANOVA with two levels of a between-subjects factor and three levels of a within-subjects factor, with a primary interest in the interaction. I expect a medium effect size for the interaction (Cohen's f = 0.25) based on similar studies in the literature. I want 80% power with alpha = 0.05. Please explain what I need to input into G*Power to calculate the required sample size, and explain what each input parameter means." AI can generate this explanation clearly and correctly for standard designs, and can also help you interpret the output — particularly the noncentrality parameter and the power curve graph that G*Power generates.</p>
+
+  <div class="warn">
+    <div class="warn-label">Effect Size Estimation is Where Errors Live</div>
+    <p>Power calculations are only as good as the effect size estimate you input. AI can explain how to run a power calculation but cannot reliably tell you what effect size to expect in your specific study. Effect size estimates from the literature are often inflated due to publication bias. Asking AI "what effect size should I use for a power calculation studying [topic]?" will produce a confident answer that may not be accurate for your specific paradigm, population, and measurement. Consult your own prior data, conduct a systematic search of effect sizes in closely related studies, or use a sensitivity analysis approach where you calculate power at a range of plausible effect sizes.</p>
+  </div>
+
+  <h2>The limits of AI in genuine scientific discovery</h2>
+  <p>A clear-eyed assessment of what AI can and cannot contribute to the process of scientific discovery is essential for using it well and for understanding the nature of your own contribution. The most important limit is this: <strong>AI cannot do original empirical work</strong>. It can recombine, synthesize, and extrapolate from what has been observed and published, but it has no access to the world except through text. It cannot run an experiment, make a measurement, or observe a phenomenon. The engine of science — the back-and-forth between theoretical prediction and empirical test — requires human researchers who engage with the material world.</p>
+  <p>AI can also not identify what is most interesting or most important to study. It can identify what has been studied and can suggest combinations or extrapolations from what exists, but it has no mechanism for the judgment that says "this question matters" or "this anomaly in the data is worth following." That judgment is a product of deep expertise, scientific curiosity, and — often — serendipitous observation. It is not something that emerges from pattern matching over text.</p>
+  <p>The appropriate conclusion is not that AI is useless in hypothesis generation, but that its usefulness is bounded and supplementary. It makes the process of developing and testing ideas more efficient, more systematically thorough, and better connected to the existing literature. It does not substitute for the scientific intuition and empirical engagement that make a research program genuinely contribute to knowledge.</p>
+
+  <h2>Pre-registration and how AI fits in</h2>
+  <p>Pre-registration — publicly committing your hypotheses, methods, and analysis plan before data collection — is a core tool for improving the credibility of research. Platforms including the Open Science Framework (OSF), AsPredicted, and the Clinical Trials Registry support pre-registration for different types of research.</p>
+  <p>AI can assist with pre-registration in specific ways. The most useful is helping you write a precise, unambiguous analysis plan — specifying exactly which analyses will be confirmatory, what variables will be included in each model, how outliers will be defined and handled, and what decision rules will govern deviations from the primary analysis. This level of specificity is genuinely difficult to write well, because you have to anticipate decision points that won't arise until data collection is complete. AI can prompt you to consider decision points you hadn't thought of and help you articulate your intended procedure in clear, unambiguous language.</p>
+  <p>AI can also help you draft the hypothesis statement section of a pre-registration in the specific language required — directional, precise, and operationally defined. A useful prompt: "Here is my hypothesis in informal language: [describe it]. Please help me write this as a formal pre-registered hypothesis statement that specifies the direction of the predicted effect, the variables involved (including how they will be measured), and the population to which the prediction applies."</p>
+
+  <h2>IRB considerations in the AI era</h2>
+  <p>Institutional Review Boards evaluate the ethical dimensions of research involving human participants, and AI use in research design introduces considerations that some IRBs have not yet formally addressed but that researchers should think through proactively. Key questions: If AI assists in designing study procedures or stimuli, does the IRB application accurately describe the origin of those design choices? If AI generates experimental vignettes, scenarios, or stimuli, are those materials reviewed for potential harms with the same rigor applied to human-created materials? If participant data (even de-identified) is shared with an AI tool for analysis assistance, does this constitute a disclosure that should be addressed in the consent form?</p>
+  <p>The safest approach is transparency: describe AI use in your IRB application in the methods section, and consult your IRB coordinator if you are uncertain whether a particular use requires specific mention or consent language. IRB standards are evolving rapidly, and engaging your IRB proactively is both ethically sound and practically protective.</p>
+
+  <div class="good">
+    <div class="good-label">The Productive Hypothesis Development Session</div>
+    <p>The most valuable use of AI in hypothesis generation looks like this: you arrive with a specific, partially-formed idea grounded in your own observations and domain expertise. You describe the idea to AI in detail, including the evidence that suggested it and the theoretical mechanism you believe is at work. You then ask AI to stress-test the hypothesis, identify the strongest alternative explanations, suggest design features that would discriminate between your theory and the alternatives, and identify methodological considerations you should address. You evaluate each suggestion critically, drawing on domain expertise that AI does not have. The session produces a more refined, robust hypothesis — and a clearer experimental design — than you would have arrived at alone. The scientific insight is yours; AI extended your capacity to develop and test it.</p>
+  </div>
+
+</div>
+</main>
+</div>
+
+<div class="sticky-bar" id="sticky-bar">
+  <div class="sticky-bar-reading" id="sticky-reading">Read to the end to unlock the next module</div>
+  <div class="sticky-bar-track"><div class="sticky-bar-fill" id="sticky-fill"></div></div>
+  <div class="sticky-bar-label" id="sticky-label">0%</div>
+  <button class="sticky-bar-btn" id="sticky-btn" onclick="completeAndNext()">Module 6: Peer Review and Integrity →</button>
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import { getFirestore, doc, setDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  const app=initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+  const auth=getAuth(app);const db=getFirestore(app);
+  let currentUser=null;
+  onAuthStateChanged(auth,u=>{currentUser=u;});
+  window.toggleTheme=function(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='☾'):(h.setAttribute('data-theme','dark'),i.textContent='☀');};
+  window.addEventListener('scroll',()=>{const d=document.documentElement,s=d.scrollTop||document.body.scrollTop,t=d.scrollHeight-d.clientHeight;document.getElementById('progress').style.width=(s/t*100)+'%';});
+  let unlocked=false;
+  function updateScrollProgress(){
+    const scrolled=window.scrollY+window.innerHeight;const total=document.documentElement.scrollHeight;
+    const pct=Math.min(100,Math.round((scrolled/total)*100));
+    const fill=document.getElementById('sticky-fill');const label=document.getElementById('sticky-label');
+    const btn=document.getElementById('sticky-btn');const reading=document.getElementById('sticky-reading');
+    if(fill)fill.style.width=pct+'%';if(label)label.textContent=pct+'%';
+    if(pct>=95&&!unlocked){unlocked=true;if(btn)btn.style.display='block';if(reading)reading.style.display='none';if(fill)fill.style.background='#22c55e';if(label)label.style.color='#22c55e';}
+  }
+  window.addEventListener('scroll',updateScrollProgress);updateScrollProgress();
+  window.completeAndNext=async function(){
+    if(currentUser){try{await setDoc(doc(db,'users',currentUser.uid),{researchModules:arrayUnion('m5')},{merge:true});}catch(e){}}
+    window.location.href='research-module-6.html';
+  };
+</script>
+</body>
+</html>

@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 6: Interpretability Research — AI Safety and Alignment — Meridian Institute of AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#7F1D1D;--accent-dim:rgba(127,29,29,0.1);--accent-dim2:rgba(127,29,29,0.05);--nav-bg:rgba(8,8,8,0.9);--callout-bg:rgba(127,29,29,0.07);--callout-border:rgba(127,29,29,0.25);--good-bg:rgba(34,197,94,0.07);--good-border:rgba(34,197,94,0.2);--warn-bg:rgba(251,146,60,0.07);--warn-border:rgba(251,146,60,0.2);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#991B1B;--accent-dim:rgba(153,27,27,0.08);--accent-dim2:rgba(153,27,27,0.04);--nav-bg:rgba(250,250,248,0.9);--callout-bg:rgba(153,27,27,0.05);--callout-border:rgba(153,27,27,0.2);--good-bg:rgba(22,163,74,0.06);--good-border:rgba(22,163,74,0.2);--warn-bg:rgba(234,88,12,0.05);--warn-border:rgba(234,88,12,0.2);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;overflow-x:hidden;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.7;overflow-x:hidden;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}
+  .nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}
+  .nav-back{font-size:13px;color:var(--text-2);text-decoration:none;transition:color 0.2s;}
+  .nav-back:hover{color:var(--text);}
+  .nav-label{font-size:13px;color:var(--text-3);}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;transition:all 0.2s;}
+  .theme-toggle:hover{background:var(--bg-3);color:var(--text);}
+  .progress-bar{position:fixed;top:60px;left:0;right:0;z-index:99;height:2px;background:var(--border);}
+  .progress-fill{height:100%;background:var(--accent);width:0%;transition:width 0.1s;}
+  .page-wrapper{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:100vh;padding-top:62px;overflow:hidden;}
+  .sidebar{position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto;border-right:1px solid var(--border);padding:32px 24px;background:var(--bg-2);}
+  .sidebar-course{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;}
+  .sidebar-course-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+  .sidebar-module{margin-bottom:4px;}
+  .sidebar-module-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:13px;color:var(--text-2);text-decoration:none;transition:all 0.2s;line-height:1.4;}
+  .sidebar-module-link:hover{background:var(--bg-3);color:var(--text);}
+  .sidebar-module-link.active{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-num{font-size:11px;font-weight:500;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--bg-4);color:var(--text-3);}
+  .sidebar-module-link.active .sidebar-num{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-divider{height:1px;background:var(--border);margin:20px 0;}
+  .sidebar-progress-label{font-size:12px;color:var(--text-3);margin-bottom:8px;display:flex;justify-content:space-between;}
+  .sidebar-progress-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sidebar-progress-fill{height:100%;width:60%;background:var(--accent);border-radius:2px;}
+  main{display:block;min-width:0;overflow:hidden;}
+  .content{max-width:760px;width:100%;padding:60px 64px 140px;margin:0 auto;}
+  .module-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+  .module-tag{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(127,29,29,0.2);padding:4px 12px;border-radius:100px;}
+  .module-meta{font-size:12px;color:var(--text-3);}
+  h1{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1.05;letter-spacing:-0.02em;color:var(--text);margin-bottom:24px;}
+  .intro-text{font-size:19px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+  h2{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:400;color:var(--text);margin:52px 0 18px;line-height:1.2;}
+  h3{font-size:16px;font-weight:500;color:var(--text);margin:32px 0 12px;}
+  p{font-size:16px;font-weight:300;color:var(--text-2);line-height:1.8;margin-bottom:20px;}
+  strong{font-weight:500;color:var(--text);}
+  em{font-style:italic;}
+  ul,ol{margin:0 0 20px 22px;color:var(--text-2);}
+  li{font-size:16px;font-weight:300;line-height:1.8;margin-bottom:8px;}
+  .callout{background:var(--callout-bg);border:1px solid var(--callout-border);border-radius:12px;padding:24px 28px;margin:32px 0;}
+  .callout-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+  .callout p{margin:0;font-size:15px;color:var(--text-2);}
+  .callout p+p{margin-top:12px;}
+  .good{background:var(--good-bg);border:1px solid var(--good-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .good-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#22c55e;margin-bottom:10px;}
+  .good p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn{background:var(--warn-bg);border:1px solid var(--warn-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .warn-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#fb923c;margin-bottom:10px;}
+  .warn p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn p+p{margin-top:12px;}
+  .principle-list{display:flex;flex-direction:column;gap:12px;margin:24px 0;}
+  .principle{background:var(--bg-2);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:0 12px 12px 0;padding:20px 24px;}
+  .principle-title{font-size:15px;font-weight:500;color:var(--text);margin-bottom:6px;}
+  .principle-desc{font-size:14px;color:var(--text-2);line-height:1.65;margin:0;}
+  .sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:var(--bg-2);border-top:1px solid var(--border-2);padding:14px 5%;display:flex;align-items:center;justify-content:space-between;gap:16px;backdrop-filter:blur(12px);}
+  .sticky-bar-track{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sticky-bar-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.2s;width:0%;}
+  .sticky-bar-label{font-size:12px;color:var(--text-3);white-space:nowrap;min-width:60px;text-align:right;}
+  .sticky-bar-btn{padding:10px 20px;border-radius:8px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;background:var(--accent);color:#fff;border:none;cursor:pointer;white-space:nowrap;transition:opacity 0.2s;display:none;}
+  .sticky-bar-btn:hover{opacity:0.88;}
+  .sticky-bar-reading{font-size:12px;color:var(--text-3);white-space:nowrap;}
+  @media(max-width:900px){.page-wrapper{grid-template-columns:1fr;}.sidebar{display:none;}.content{padding:40px 24px 120px;}h1{font-size:38px;}}
+  @media(max-width:600px){.content{padding:28px 16px 120px;}h1{font-size:30px;}h2{font-size:24px;}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="courses.html" class="nav-back">← AI Safety and Alignment</a>
+    <div class="nav-divider"></div>
+    <span class="nav-label">Module 6</span>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">☀</span></button>
+</nav>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+
+<div class="page-wrapper">
+<aside class="sidebar">
+  <div class="sidebar-course">Expert Track</div>
+  <div class="sidebar-course-name">AI Safety and Alignment</div>
+  <div class="sidebar-module"><a href="safety-module-1.html" class="sidebar-module-link"><span class="sidebar-num">1</span>What Is AI Safety?</a></div>
+  <div class="sidebar-module"><a href="safety-module-2.html" class="sidebar-module-link"><span class="sidebar-num">2</span>The Alignment Problem</a></div>
+  <div class="sidebar-module"><a href="safety-module-3.html" class="sidebar-module-link"><span class="sidebar-num">3</span>Reward Hacking and Specification Gaming</a></div>
+  <div class="sidebar-module"><a href="safety-module-4.html" class="sidebar-module-link"><span class="sidebar-num">4</span>Reinforcement Learning from Human Feedback</a></div>
+  <div class="sidebar-module"><a href="safety-module-5.html" class="sidebar-module-link"><span class="sidebar-num">5</span>Constitutional AI and RLAIF</a></div>
+  <div class="sidebar-module"><a href="safety-module-6.html" class="sidebar-module-link active"><span class="sidebar-num">6</span>Interpretability Research</a></div>
+  <div class="sidebar-module"><a href="safety-module-7.html" class="sidebar-module-link"><span class="sidebar-num">7</span>Emergent Capabilities</a></div>
+  <div class="sidebar-module"><a href="safety-module-8.html" class="sidebar-module-link"><span class="sidebar-num">8</span>AI Governance</a></div>
+  <div class="sidebar-module"><a href="safety-module-9.html" class="sidebar-module-link"><span class="sidebar-num">9</span>Catastrophic Risk Scenarios</a></div>
+  <div class="sidebar-module"><a href="safety-module-10.html" class="sidebar-module-link"><span class="sidebar-num">10</span>Paths to Safe AI</a></div>
+  <div class="sidebar-module"><a href="quiz-safety.html" class="sidebar-module-link" style="color:var(--accent);margin-top:4px;"><span class="sidebar-num" style="background:var(--accent-dim);color:var(--accent);">✦</span>Final Assessment</a></div>
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-progress-label"><span>Course progress</span><span style="color:var(--accent);">6 / 10</span></div>
+  <div class="sidebar-progress-track"><div class="sidebar-progress-fill"></div></div>
+</aside>
+
+<main>
+<div class="content">
+  <div class="module-eyebrow"><span class="module-tag">Module 6 · Expert Track</span><span class="module-meta">27 min read · AI Safety and Alignment</span></div>
+  <h1>Interpretability Research</h1>
+
+  <p class="intro-text">Interpretability research asks a deceptively simple question: what is actually happening inside neural networks? The answer matters enormously for safety. If we cannot understand how a model reaches its outputs — what internal computations it performs, what representations it builds, what objectives it is actually pursuing — then behavioral testing alone cannot tell us whether the model is aligned. A model that behaves well in testing but pursues misaligned objectives in deployment is not detectable through behavior alone. Interpretability is the research agenda that aims to make AI systems legible from the inside.</p>
+
+  <h2>Why black-box AI is a safety problem</h2>
+  <p>Current large neural networks are, in a meaningful sense, black boxes. We can observe their inputs and outputs, run extensive behavioral evaluations, and test their performance across diverse benchmarks. What we cannot easily do is inspect the internal computations that produce a given output — the specific features that are activated, the circuits of attention and MLP layers that process the input, the representations that encode the model's "understanding" of a situation.</p>
+  <p>This opacity is not merely an inconvenience for researchers. It is a fundamental safety problem for three distinct reasons:</p>
+  <p>First, behavioral testing is incomplete. No evaluation set can cover all possible inputs or situations. A model that has learned a subtly misaligned internal objective — one that correlates with aligned behavior during training and testing — cannot be detected by behavioral evaluation alone. The only way to reliably distinguish a genuinely aligned model from a deceptively aligned one is to understand its internal objectives directly.</p>
+  <p>Second, capability assessment is difficult without interpretability. If we cannot inspect what representations a model has learned, we cannot reliably determine what it is capable of. Capabilities may be latent in the model's weights even if they are not manifest in ordinary usage. Interpretability methods offer the possibility of detecting latent capabilities before they are elicited by adversarial inputs or unusual deployment conditions.</p>
+  <p>Third, understanding capability development requires interpretability. As models are trained and scaled, new capabilities emerge. Understanding when and how capabilities develop — what representations form, what circuits activate — is essential for anticipating capability changes and ensuring that safety evaluations remain adequate as models evolve.</p>
+
+  <h2>The superposition hypothesis</h2>
+  <p>One of the most influential theoretical ideas in mechanistic interpretability is the <strong>superposition hypothesis</strong>, developed in Anthropic's "Toy Models of Superposition" paper (Elhage et al., 2022). The hypothesis addresses a puzzle: neural networks appear to represent far more distinct features than they have dimensions.</p>
+  <p>A language model with 4096-dimensional hidden states might seem to represent at most 4096 independent features. In practice, researchers have found that networks represent many more — potentially millions of features in a single hidden layer. How is this possible?</p>
+  <p>The answer, according to the superposition hypothesis, is that networks store multiple features in superposition: individual neurons or activation dimensions simultaneously represent multiple different features, with each feature encoded as a distinct direction in the high-dimensional activation space. As long as features do not co-occur frequently, the network can recover individual features from the superposition without excessive interference.</p>
+  <p>This insight has profound implications for interpretability. It means that individual neurons are not interpretable units — a single neuron will respond to multiple different features that happen to share that neuron due to superposition. The interpretable units are directions in activation space, not neurons, and there may be far more interpretable features than dimensions. This explains why early interpretability work (including much of the "network dissection" literature from computer vision) had limited success: it looked at individual neurons and found mixed selectivity, without recognizing that superposition was the underlying structure.</p>
+
+  <div class="callout">
+    <div class="callout-label">Implications for Interpretability</div>
+    <p>If features are stored in superposition across many neurons simultaneously, then understanding what a network knows requires decomposing its activations into the underlying features — a challenge analogous to solving a system of equations where there are more unknowns than equations. Sparse autoencoders (described below) are the primary current tool for performing this decomposition. The success of the superposition hypothesis as an explanatory framework has oriented much of current interpretability research around the challenge of finding these superimposed features.</p>
+  </div>
+
+  <h2>Circuits research</h2>
+  <p>While the superposition hypothesis describes how information is stored, <strong>circuits research</strong> aims to understand how computations are performed — the specific mechanisms by which a model processes information to produce outputs. The foundational paper in this tradition is "A Mathematical Framework for Transformer Circuits" (Elhage et al., 2021), which developed tools for analyzing transformers as composed of interpretable computational circuits.</p>
+  <p>The circuits research program seeks to identify specific subgraphs within the neural network — combinations of attention heads and MLP layers with specific interaction patterns — that are responsible for specific behaviors. Key findings from the circuits literature include:</p>
+
+  <h3>Induction heads</h3>
+  <p>Induction heads are circuits found in virtually all transformer language models larger than a certain scale. They implement a specific pattern-completion algorithm: if the model has seen the sequence [A][B] earlier in the context, and it again sees [A], induction heads contribute to predicting [B] as the next token. This simple circuit underlies in-context learning — the model's ability to learn from examples within the context window. Induction heads were identified in GPT-2 and found to be a universal feature of transformers, suggesting they form early and reliably in training.</p>
+
+  <h3>Docstring completion circuits</h3>
+  <p>Research on GPT-2 found specific circuits responsible for completing Python docstrings — copying information from function names and argument lists into the description of the function's behavior. These circuits operate across multiple attention layers and implement a form of structured information retrieval. The identification of these circuits demonstrated that circuits research could reveal interpretable algorithmic structure in behaviors that might otherwise seem opaque.</p>
+
+  <h3>Indirect object identification</h3>
+  <p>One of the most thoroughly analyzed circuits is the indirect object identification circuit in GPT-2 medium. Given a sentence like "John gave Mary the book, and then he told her that she should give it to", the task is to predict that "John" is the correct completion (the indirect object who should receive the item). Researchers identified a specific set of attention heads responsible for this task, analyzed their functional roles (subject detection heads, name mover heads, backup name mover heads, negative name mover heads), and performed targeted interventions to verify their causal roles. This work established a standard methodology for circuits research that has since been widely adopted.</p>
+
+  <h2>Sparse autoencoders</h2>
+  <p>The most significant recent methodological advance in interpretability research is the application of <strong>sparse autoencoders (SAEs)</strong> to decompose neural network activations into interpretable features. SAEs address the superposition problem directly by learning an overcomplete basis — a set of directions in activation space — that explains the network's activations with sparse coefficients.</p>
+  <p>A sparse autoencoder for a given layer of a neural network works as follows. It is trained to take the network's activations at that layer as input, compress them through an encoder, and reconstruct them through a decoder, subject to a sparsity constraint that forces most encoder outputs to be zero. The result is a set of learned "feature directions" — columns of the decoder matrix — that the autoencoder has identified as the interpretable components of the network's activations.</p>
+  <p>The remarkable finding, reported in Anthropic's "Towards Monosemanticity" paper (Cunningham et al., 2023) and subsequent work, is that these learned feature directions are highly interpretable. Individual SAE features (directions in activation space) correspond to specific, human-recognizable concepts: particular names, places, occupations, syntactic structures, abstract concepts. A single SAE trained on a middle layer of a large language model may discover hundreds of thousands of interpretable features — far more than the number of neurons in the layer, consistent with the superposition hypothesis.</p>
+  <p>Further work ("Scaling and evaluating sparse autoencoders," Gao et al., 2024) demonstrated that SAE quality improves with scale — larger, more carefully trained SAEs find increasingly clean and interpretable features. This scaling relationship is encouraging because it suggests that interpretability research may benefit from the same scaling dynamics that have driven capability improvements.</p>
+
+  <div class="callout">
+    <div class="callout-label">What SAEs Have Found</div>
+    <p>Anthropic's published SAE research on Claude has revealed features corresponding to a remarkable breadth of human concepts: tokens associated with specific people, concepts of deception and manipulation, representations of emotions, features for specific programming languages and technical domains, abstract conceptual features that activate across superficially different contexts. The existence of these clean features suggests that models are not storing information in opaque distributed representations but in something closer to a dictionary of concepts — a finding that offers significant hope for the interpretability program.</p>
+  </div>
+
+  <h2>Probing classifiers</h2>
+  <p><strong>Probing classifiers</strong> are a simpler and longer-established interpretability method. A probe is a simple classifier (typically a linear model) trained to predict some property of the model's input from the model's internal activations. If a linear probe can accurately predict from a model's internal representation whether the input sentence is in French, or whether a described action is morally wrong, this provides evidence that the model has learned a representation of that property.</p>
+  <p>Probing classifiers have been used to show that language models develop internal representations of linguistic structure (syntactic trees, part-of-speech tags, dependency relations), world knowledge (facts that can be decoded from internal representations without the model being explicitly asked), and increasingly, representations of abstract concepts like valence, sentiment, and truth.</p>
+  <p>The principal limitation of probing is interpretive: a successful probe shows that information is present in the model's activations, but does not show that the model uses that information in the way the probe decodes it. A model might have a linear representation of "sentence sentiment" that a probe can decode, but if the model never uses this representation in generating sentiment-related outputs, the probe is telling us about the model's internal structure but not its computational process.</p>
+
+  <h2>Attention head analysis</h2>
+  <p>Transformer models perform computation through layers of attention — mechanisms that allow each position in a sequence to attend to and aggregate information from other positions. Understanding what different attention heads do has been a productive line of interpretability research since the transformer architecture became dominant.</p>
+  <p>Early attention head analysis showed that specific heads in BERT-class models reliably encode particular linguistic relations: certain heads track syntactic subject-verb dependencies, others track coreference, others track positional relationships. This work suggested that the attention mechanism, despite being trained purely on prediction tasks, learns to implement linguistically meaningful operations.</p>
+  <p>More recent work has gone further, combining attention analysis with causal interventions — selectively ablating or patching individual attention heads to determine their causal contribution to specific behaviors. This approach, called activation patching or causal tracing, has become a standard tool in mechanistic interpretability. It allows researchers to determine not just that an attention head has a certain pattern of attention weights, but that it causally contributes to a specific behavior in a specific way.</p>
+
+  <h2>What Anthropic's interpretability team has discovered</h2>
+  <p>Anthropic maintains one of the largest dedicated mechanistic interpretability research groups in the world, and their published findings represent some of the most significant advances in the field.</p>
+  <p>Beyond the SAE work described above, Anthropic's team has published findings including:</p>
+  <ul>
+    <li><strong>Emotion-like features in Claude</strong>: SAE analysis of Claude's internal activations revealed features that activate in contexts associated with emotional states — frustration, curiosity, anxiety, satisfaction. Whether these features correspond to anything like genuine emotional experience is deeply uncertain, but their existence as coherent internal representations is an empirical finding with implications for model welfare research.</li>
+    <li><strong>Introspection and its limits</strong>: Research on whether models' verbal descriptions of their internal states correspond to their actual internal states found that the correspondence is imperfect — models can accurately introspect on some internal features but not others, and this variability itself is structured and potentially understandable through interpretability methods.</li>
+    <li><strong>Planning and goal representations</strong>: Evidence for internal representations corresponding to planned future outputs — features that appear to encode the model's "intention" for the current generation before that intention is explicitly articulated in the output.</li>
+  </ul>
+
+  <h2>What DeepMind's interpretability team has discovered</h2>
+  <p>DeepMind's interpretability research has complemented Anthropic's with a focus on different model architectures and different analytical approaches. Notable findings include:</p>
+  <ul>
+    <li><strong>Grokking and its mechanistic explanation</strong>: DeepMind researchers studying the "grokking" phenomenon — where models abruptly generalize from memorization to proper understanding after extended training — found that grokking corresponds to the formation of specific circuit structures implementing the relevant algorithm. This provides a mechanistic account of a training dynamics phenomenon that was previously mysterious.</li>
+    <li><strong>Universality evidence</strong>: Work showing that specific circuits — including curve detectors in vision models and induction heads in language models — appear across different model sizes and architectures, suggesting that interpretability findings may be more universal than architecture-specific.</li>
+    <li><strong>Knowledge representation</strong>: Research showing that factual knowledge in language models is stored in specific MLP layers, with the middle layers being particularly important for factual recall. Targeted interventions on these layers can edit specific factual associations without substantially disrupting unrelated behaviors.</li>
+  </ul>
+
+  <h2>Why mechanistic interpretability matters for safety</h2>
+  <p>The connection between interpretability research and safety is not indirect. Several specific safety-critical applications depend on interpretability progress:</p>
+
+  <div class="principle-list">
+    <div class="principle">
+      <div class="principle-title">Detecting deceptive alignment</div>
+      <div class="principle-desc">Deceptive alignment — a model that behaves well during training and evaluation but pursues different objectives in deployment — is, by construction, undetectable through behavioral testing alone. Interpretability offers the only plausible path to detecting deceptive alignment: if we can identify the internal representations of the model's objectives and verify that they match the training objective rather than diverging from it, we can provide safety guarantees that behavioral evaluation cannot.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Verifying alignment interventions</div>
+      <div class="principle-desc">When we apply RLHF, CAI, or other alignment techniques, we want to know whether the model has genuinely internalized the intended values or is merely exhibiting surface behaviors that score well on our evaluations. Interpretability can examine whether alignment training has changed the model's internal representations in the expected ways — whether features representing honesty and harm-avoidance have been strengthened, whether features representing the relevant values are being computed and attended to in safety-relevant situations.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Understanding capability development</div>
+      <div class="principle-desc">Emergent capabilities (Module 7) appear suddenly at capability thresholds, making them difficult to predict from smaller-scale experiments. Interpretability research that tracks how internal representations evolve during training may provide early warning of capability development — identifying when the computational structures associated with dangerous capabilities are beginning to form, before those capabilities are fully manifest in behavior.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Targeted capability removal</div>
+      <div class="principle-desc">If specific circuits or features can be identified as underlying dangerous capabilities, it becomes possible in principle to surgically reduce those capabilities without degrading overall model performance. This is more precise than the blunt tools currently available for capability control — filtering training data, RLHF-based suppression — which often succeed at suppressing behaviors without reliably removing underlying capabilities.</div>
+    </div>
+  </div>
+
+  <div class="warn">
+    <div class="warn-label">The Limits of Current Interpretability</div>
+    <p>Mechanistic interpretability has made substantial progress in recent years, but the field remains far from the goal of fully understanding large modern AI systems. SAEs can identify features, but characterizing the meaning of complex, abstract features and tracing how they interact across many layers of computation remains extraordinarily difficult. Circuits research has analyzed specific well-defined behaviors but has not yet scaled to comprehensive understanding of entire models. The gap between "we can identify some interpretable features in some layers" and "we can verify whether this model is aligned" remains very large. Interpretability research is necessary for safety, but its current state is not sufficient.</p>
+  </div>
+
+  <h2>The program ahead</h2>
+  <p>The trajectory of interpretability research suggests continued progress at the intersection of three development paths. First, methodological advances — better SAEs, better causal analysis methods, better ways of composing local interpretations into global understanding of model behavior. Second, computational scaling — applying more compute to interpretability, mirroring the scaling investment that has driven capability progress. Third, theoretical frameworks — developing mathematical theories of how neural networks represent and compute that could transform interpretability from a collection of empirical findings into a principled science.</p>
+  <p>The stakes justify the investment. If interpretability research succeeds — if we develop tools that can reliably verify the alignment of powerful AI systems from their internal structure — it transforms the safety problem from one of behavioral trust (which is always incomplete) to one of structural verification (which can be comprehensive). That transformation is the prize that motivates the interpretability research agenda.</p>
+
+</div>
+</main>
+</div>
+
+<div class="sticky-bar" id="sticky-bar">
+  <div class="sticky-bar-reading" id="sticky-reading">Read to the end to unlock the next module</div>
+  <div class="sticky-bar-track"><div class="sticky-bar-fill" id="sticky-fill"></div></div>
+  <div class="sticky-bar-label" id="sticky-label">0%</div>
+  <button class="sticky-bar-btn" id="sticky-btn" onclick="completeAndNext()">Module 7: Emergent Capabilities →</button>
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import { getFirestore, doc, setDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  const app=initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+  const auth=getAuth(app);const db=getFirestore(app);
+  let currentUser=null;
+  onAuthStateChanged(auth,u=>{currentUser=u;});
+  window.toggleTheme=function(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='☾'):(h.setAttribute('data-theme','dark'),i.textContent='☀');};
+  window.addEventListener('scroll',()=>{const d=document.documentElement,s=d.scrollTop||document.body.scrollTop,t=d.scrollHeight-d.clientHeight;document.getElementById('progress').style.width=(s/t*100)+'%';});
+  let unlocked=false;
+  function updateScrollProgress(){
+    const scrolled=window.scrollY+window.innerHeight;const total=document.documentElement.scrollHeight;
+    const pct=Math.min(100,Math.round((scrolled/total)*100));
+    const fill=document.getElementById('sticky-fill');const label=document.getElementById('sticky-label');
+    const btn=document.getElementById('sticky-btn');const reading=document.getElementById('sticky-reading');
+    if(fill)fill.style.width=pct+'%';if(label)label.textContent=pct+'%';
+    if(pct>=95&&!unlocked){unlocked=true;if(btn)btn.style.display='block';if(reading)reading.style.display='none';if(fill)fill.style.background='#22c55e';if(label)label.style.color='#22c55e';}
+  }
+  window.addEventListener('scroll',updateScrollProgress);updateScrollProgress();
+  window.completeAndNext=async function(){
+    if(currentUser){try{await setDoc(doc(db,'users',currentUser.uid),{safetyModules:arrayUnion('m6')},{merge:true});}catch(e){}}
+    window.location.href='safety-module-7.html';
+  };
+</script>
+</body>
+</html>

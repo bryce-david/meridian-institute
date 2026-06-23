@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 1: What Is AI Safety and Why It Matters — AI Safety and Alignment — Meridian Institute of AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#7F1D1D;--accent-dim:rgba(127,29,29,0.1);--accent-dim2:rgba(127,29,29,0.05);--nav-bg:rgba(8,8,8,0.9);--callout-bg:rgba(127,29,29,0.07);--callout-border:rgba(127,29,29,0.25);--good-bg:rgba(34,197,94,0.07);--good-border:rgba(34,197,94,0.2);--warn-bg:rgba(251,146,60,0.07);--warn-border:rgba(251,146,60,0.2);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#991B1B;--accent-dim:rgba(153,27,27,0.08);--accent-dim2:rgba(153,27,27,0.04);--nav-bg:rgba(250,250,248,0.9);--callout-bg:rgba(153,27,27,0.05);--callout-border:rgba(153,27,27,0.2);--good-bg:rgba(22,163,74,0.06);--good-border:rgba(22,163,74,0.2);--warn-bg:rgba(234,88,12,0.05);--warn-border:rgba(234,88,12,0.2);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;overflow-x:hidden;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.7;overflow-x:hidden;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}
+  .nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}
+  .nav-back{font-size:13px;color:var(--text-2);text-decoration:none;transition:color 0.2s;}
+  .nav-back:hover{color:var(--text);}
+  .nav-label{font-size:13px;color:var(--text-3);}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;transition:all 0.2s;}
+  .theme-toggle:hover{background:var(--bg-3);color:var(--text);}
+  .progress-bar{position:fixed;top:60px;left:0;right:0;z-index:99;height:2px;background:var(--border);}
+  .progress-fill{height:100%;background:var(--accent);width:0%;transition:width 0.1s;}
+  .page-wrapper{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:100vh;padding-top:62px;overflow:hidden;}
+  .sidebar{position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto;border-right:1px solid var(--border);padding:32px 24px;background:var(--bg-2);}
+  .sidebar-course{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;}
+  .sidebar-course-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+  .sidebar-module{margin-bottom:4px;}
+  .sidebar-module-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:13px;color:var(--text-2);text-decoration:none;transition:all 0.2s;line-height:1.4;}
+  .sidebar-module-link:hover{background:var(--bg-3);color:var(--text);}
+  .sidebar-module-link.active{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-num{font-size:11px;font-weight:500;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--bg-4);color:var(--text-3);}
+  .sidebar-module-link.active .sidebar-num{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-divider{height:1px;background:var(--border);margin:20px 0;}
+  .sidebar-progress-label{font-size:12px;color:var(--text-3);margin-bottom:8px;display:flex;justify-content:space-between;}
+  .sidebar-progress-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sidebar-progress-fill{height:100%;width:10%;background:var(--accent);border-radius:2px;}
+  main{display:block;min-width:0;overflow:hidden;}
+  .content{max-width:760px;width:100%;padding:60px 64px 140px;margin:0 auto;}
+  .module-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+  .module-tag{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(127,29,29,0.2);padding:4px 12px;border-radius:100px;}
+  .module-meta{font-size:12px;color:var(--text-3);}
+  h1{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1.05;letter-spacing:-0.02em;color:var(--text);margin-bottom:24px;}
+  .intro-text{font-size:19px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+  h2{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:400;color:var(--text);margin:52px 0 18px;line-height:1.2;}
+  h3{font-size:16px;font-weight:500;color:var(--text);margin:32px 0 12px;}
+  p{font-size:16px;font-weight:300;color:var(--text-2);line-height:1.8;margin-bottom:20px;}
+  strong{font-weight:500;color:var(--text);}
+  em{font-style:italic;}
+  ul,ol{margin:0 0 20px 22px;color:var(--text-2);}
+  li{font-size:16px;font-weight:300;line-height:1.8;margin-bottom:8px;}
+  .callout{background:var(--callout-bg);border:1px solid var(--callout-border);border-radius:12px;padding:24px 28px;margin:32px 0;}
+  .callout-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+  .callout p{margin:0;font-size:15px;color:var(--text-2);}
+  .callout p+p{margin-top:12px;}
+  .good{background:var(--good-bg);border:1px solid var(--good-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .good-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#22c55e;margin-bottom:10px;}
+  .good p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn{background:var(--warn-bg);border:1px solid var(--warn-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .warn-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#fb923c;margin-bottom:10px;}
+  .warn p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn p+p{margin-top:12px;}
+  .analogy{background:var(--bg-2);border:1px solid var(--border);border-radius:12px;padding:28px;margin:28px 0;}
+  .analogy-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-3);margin-bottom:12px;}
+  .analogy p{margin:0;font-size:15px;color:var(--text-2);}
+  .principle-list{display:flex;flex-direction:column;gap:12px;margin:24px 0;}
+  .principle{background:var(--bg-2);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:0 12px 12px 0;padding:20px 24px;}
+  .principle-title{font-size:15px;font-weight:500;color:var(--text);margin-bottom:6px;}
+  .principle-desc{font-size:14px;color:var(--text-2);line-height:1.65;margin:0;}
+  .sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:var(--bg-2);border-top:1px solid var(--border-2);padding:14px 5%;display:flex;align-items:center;justify-content:space-between;gap:16px;backdrop-filter:blur(12px);}
+  .sticky-bar-track{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sticky-bar-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.2s;width:0%;}
+  .sticky-bar-label{font-size:12px;color:var(--text-3);white-space:nowrap;min-width:60px;text-align:right;}
+  .sticky-bar-btn{padding:10px 20px;border-radius:8px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;background:var(--accent);color:#fff;border:none;cursor:pointer;white-space:nowrap;transition:opacity 0.2s;display:none;}
+  .sticky-bar-btn:hover{opacity:0.88;}
+  .sticky-bar-reading{font-size:12px;color:var(--text-3);white-space:nowrap;}
+  @media(max-width:900px){.page-wrapper{grid-template-columns:1fr;}.sidebar{display:none;}.content{padding:40px 24px 120px;}h1{font-size:38px;}}
+  @media(max-width:600px){.content{padding:28px 16px 120px;}h1{font-size:30px;}h2{font-size:24px;}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="courses.html" class="nav-back">← AI Safety and Alignment</a>
+    <div class="nav-divider"></div>
+    <span class="nav-label">Module 1</span>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">☀</span></button>
+</nav>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+
+<div class="page-wrapper">
+<aside class="sidebar">
+  <div class="sidebar-course">Expert Track</div>
+  <div class="sidebar-course-name">AI Safety and Alignment</div>
+  <div class="sidebar-module"><a href="safety-module-1.html" class="sidebar-module-link active"><span class="sidebar-num">1</span>What Is AI Safety?</a></div>
+  <div class="sidebar-module"><a href="safety-module-2.html" class="sidebar-module-link"><span class="sidebar-num">2</span>The Alignment Problem</a></div>
+  <div class="sidebar-module"><a href="safety-module-3.html" class="sidebar-module-link"><span class="sidebar-num">3</span>Reward Hacking and Specification Gaming</a></div>
+  <div class="sidebar-module"><a href="safety-module-4.html" class="sidebar-module-link"><span class="sidebar-num">4</span>Reinforcement Learning from Human Feedback</a></div>
+  <div class="sidebar-module"><a href="safety-module-5.html" class="sidebar-module-link"><span class="sidebar-num">5</span>Constitutional AI and RLAIF</a></div>
+  <div class="sidebar-module"><a href="safety-module-6.html" class="sidebar-module-link"><span class="sidebar-num">6</span>Interpretability Research</a></div>
+  <div class="sidebar-module"><a href="safety-module-7.html" class="sidebar-module-link"><span class="sidebar-num">7</span>Emergent Capabilities</a></div>
+  <div class="sidebar-module"><a href="safety-module-8.html" class="sidebar-module-link"><span class="sidebar-num">8</span>AI Governance</a></div>
+  <div class="sidebar-module"><a href="safety-module-9.html" class="sidebar-module-link"><span class="sidebar-num">9</span>Catastrophic Risk Scenarios</a></div>
+  <div class="sidebar-module"><a href="safety-module-10.html" class="sidebar-module-link"><span class="sidebar-num">10</span>Paths to Safe AI</a></div>
+  <div class="sidebar-module"><a href="quiz-safety.html" class="sidebar-module-link" style="color:var(--accent);margin-top:4px;"><span class="sidebar-num" style="background:var(--accent-dim);color:var(--accent);">✦</span>Final Assessment</a></div>
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-progress-label"><span>Course progress</span><span style="color:var(--accent);">1 / 10</span></div>
+  <div class="sidebar-progress-track"><div class="sidebar-progress-fill"></div></div>
+</aside>
+
+<main>
+<div class="content">
+  <div class="module-eyebrow"><span class="module-tag">Module 1 · Expert Track</span><span class="module-meta">22 min read · AI Safety and Alignment</span></div>
+  <h1>What Is AI Safety and Why It Matters</h1>
+
+  <p class="intro-text">AI safety is the field dedicated to ensuring that artificial intelligence systems behave in ways that are beneficial, reliable, and aligned with human intentions — not merely in controlled test environments, but robustly across the full range of situations they will actually encounter. Understanding what AI safety is, and why it is technically hard, is the necessary foundation for everything that follows in this course.</p>
+
+  <h2>Defining the field: safety, ethics, and governance</h2>
+  <p>The terms <strong>AI safety</strong>, <strong>AI ethics</strong>, and <strong>AI governance</strong> are frequently conflated in public discourse, but they refer to meaningfully different bodies of work with different methods, timescales, and communities of practice.</p>
+  <p><strong>AI ethics</strong> is the oldest and broadest of these fields, concerned with the moral dimensions of AI development and deployment. Questions of bias, fairness, transparency, accountability, and the distribution of AI's benefits and harms fall under its umbrella. AI ethics draws heavily from philosophy, social science, and law, and its practitioners typically focus on systems that exist today — facial recognition software that performs unequally across demographic groups, hiring algorithms that perpetuate historical discrimination, recommendation systems that amplify outrage. These are real problems causing real harm now, and they demand serious attention.</p>
+  <p><strong>AI governance</strong> refers to the policy, regulatory, and institutional frameworks that societies use to oversee AI development and deployment. It includes questions about liability, intellectual property, standards bodies, procurement rules, and international agreements. Governance work happens largely in legal, regulatory, and political domains and is concerned with structuring incentives and accountability mechanisms at a societal scale.</p>
+  <p><strong>AI safety</strong> is more specifically technical. It refers to the challenge of building AI systems that reliably do what their designers intend, remain under appropriate human control, and do not cause unintended harm — particularly as AI systems become more capable and autonomous. Safety research is concerned both with near-term issues (AI systems that fail in dangerous ways, that behave unexpectedly under distribution shift, that are vulnerable to adversarial attack) and with longer-term challenges that arise as AI systems approach and potentially exceed human-level performance across a broad range of tasks.</p>
+
+  <div class="callout">
+    <div class="callout-label">A useful distinction</div>
+    <p>Think of it this way: AI ethics asks "Is this AI system fair and just?" AI governance asks "How should society regulate AI?" AI safety asks "Will this AI system actually do what we want, reliably, even in novel situations and at high levels of capability?" The three questions overlap and inform each other, but they are distinct research programs.</p>
+  </div>
+
+  <h2>The spectrum from near-term to long-term risk</h2>
+  <p>One reason AI safety discussions can be confusing is that the field spans an enormous temporal and severity range. Practitioners differ significantly on which parts of this spectrum deserve the most attention, and those disagreements are substantive, not merely rhetorical.</p>
+  <p>At the near-term end of the spectrum sit risks that are already materializing: AI systems that produce confident misinformation, automated weapons systems with inadequate human oversight, AI-generated content used for fraud and manipulation, biometric surveillance enabling authoritarian control, and algorithmic systems that perpetuate discrimination in consequential decisions. These risks do not require speculative assumptions about future capabilities — they are documented phenomena in deployed systems today.</p>
+  <p>Moving toward the medium-term, researchers are concerned about AI systems that are increasingly capable but whose goals and values are poorly understood. A system powerful enough to significantly accelerate scientific research, manage critical infrastructure, or conduct sophisticated cyberoperations — but whose behavior in novel situations cannot be predicted with confidence — poses risks that are qualitatively different from a biased hiring algorithm. The asymmetry between capability and reliability becomes more dangerous as the stakes of deployment increase.</p>
+  <p>At the long-term end — the subject of the most heated debate — sit concerns about AI systems that might eventually exceed human capabilities across virtually all cognitively demanding tasks. Whether and when such systems might emerge is deeply uncertain, but if they did emerge before we had solved the fundamental problem of ensuring their goals aligned with human values, the consequences could be severe and difficult to reverse. This is the domain of what researchers sometimes call <strong>transformative AI risk</strong> or <strong>existential risk from AI</strong>.</p>
+
+  <div class="principle-list">
+    <div class="principle">
+      <div class="principle-title">Near-term safety: robustness and reliability</div>
+      <div class="principle-desc">Current AI systems fail in predictable ways under distribution shift, adversarial inputs, and deployment conditions that differ from training. Making systems reliably safe in the real world — not just in test sets — is an active and important research problem.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Medium-term safety: oversight and control</div>
+      <div class="principle-desc">As AI systems become more capable and autonomous, maintaining meaningful human oversight becomes both more important and more technically challenging. Research on corrigibility, interpretability, and value learning addresses this horizon.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Long-term safety: alignment at high capability</div>
+      <div class="principle-desc">If AI systems reach or exceed human-level capability before we have solved the alignment problem, the consequences could be catastrophic and irreversible. This possibility motivates a significant portion of safety research even though its probability and timeline are genuinely uncertain.</div>
+    </div>
+  </div>
+
+  <h2>Why safety is technically hard</h2>
+  <p>The difficulty of AI safety is not primarily a matter of political will or corporate irresponsibility, though both of those matter. It is fundamentally a hard technical problem. Several interconnected challenges make building reliably safe AI systems difficult in ways that are not yet fully solved.</p>
+  <p>The first challenge is the <strong>specification problem</strong>: it is very difficult to formally specify what we actually want an AI system to do. Human values are complex, contextual, and often contradictory. When we try to capture them in a reward function or a training objective, we almost inevitably create a specification that is imperfect — one that matches human values in the situations we anticipated but diverges from them in situations we did not. We will explore this in depth in Module 2.</p>
+  <p>The second challenge is <strong>distributional shift</strong>: AI systems are trained on data from some distribution of situations, but they are deployed in environments that may differ from that training distribution in unpredictable ways. A system that behaves safely in its training environment may behave unsafely when it encounters genuinely novel situations — exactly the situations where reliable behavior matters most.</p>
+  <p>The third challenge is <strong>interpretability</strong>: we do not understand in detail how modern large neural networks represent information and make decisions. We cannot look at a model's weights and verify that it has the values we intended to instill, or predict how it will behave in situations it has not yet encountered. Safety claims about AI systems are therefore necessarily somewhat empirical — based on testing rather than formal verification — and may miss failure modes that testing has not revealed.</p>
+  <p>The fourth challenge is <strong>scalable oversight</strong>: as AI systems become more capable, the task of verifying their outputs and maintaining meaningful oversight becomes harder. If an AI system is smarter than its overseers at some task, those overseers may be unable to catch errors or detect misalignment. The methods we use to supervise AI systems today may not scale to the systems we are building toward.</p>
+
+  <div class="warn">
+    <div class="warn-label">The capability-safety gap</div>
+    <p><strong>AI capabilities and AI safety are not developing at the same pace.</strong> Capabilities research — making AI systems smarter, faster, and more general — benefits from direct feedback: you know immediately whether the system performs better on the benchmark. Safety research is harder to evaluate: you rarely know definitively whether a system is safe until it fails in a costly way. This asymmetry in feedback creates institutional pressure that tends to favor capabilities over safety.</p>
+  </div>
+
+  <h2>Key researchers and their contributions</h2>
+  <p>AI safety as a distinct research field has developed primarily over the last two decades, though its conceptual roots trace back further. Several researchers have made foundational contributions that shaped how the field thinks about its core problems.</p>
+  <p><strong>Stuart Russell</strong>, a professor at UC Berkeley and co-author of the definitive AI textbook, has articulated one of the most influential frameworks for thinking about the alignment problem. In his 2019 book <em>Human Compatible</em>, Russell argues that the standard model of AI — in which we program a fixed objective for the AI to maximize — is fundamentally flawed. He proposes instead that AI systems should be uncertain about human preferences and designed to defer to humans when uncertain. His work on <strong>Cooperative AI</strong> and <strong>assistance games</strong> represents a formalization of this intuition.</p>
+  <p><strong>Paul Christiano</strong> is one of the most technically influential safety researchers of his generation. While at OpenAI, he developed the theoretical foundations of reinforcement learning from human feedback (RLHF), which became the dominant approach to aligning large language models. His research on <strong>amplification</strong> and <strong>debate</strong> as methods for scalable oversight has shaped the field's thinking about how to maintain alignment as systems grow more capable. He subsequently founded the Alignment Research Center (ARC).</p>
+  <p><strong>Jan Leike</strong> led the alignment team at OpenAI and has been central to operationalizing alignment research — translating theoretical concerns about alignment into tractable research programs and practical interventions in deployed systems. His work helped establish RLHF as a practical technique and has consistently pushed the field toward empirical, measurable progress.</p>
+  <p><strong>Yoshua Bengio</strong> is one of the founding figures of modern deep learning and a Turing Award recipient. His engagement with AI safety and existential risk, which became more prominent and public in 2023, has been significant in legitimizing these concerns within the mainstream machine learning community. Bengio has argued that the risks from advanced AI are serious enough to warrant substantial changes in how the field operates — a position that carries weight given his academic stature.</p>
+
+  <h2>Key organizations</h2>
+  <p>The institutional landscape of AI safety has evolved significantly and now includes both independent research organizations and safety teams embedded within AI labs.</p>
+  <p><strong>Anthropic</strong> was founded in 2021 by Dario Amodei, Daniela Amodei, and others who departed OpenAI, with an explicit mission centered on AI safety. Anthropic publishes substantial safety research — including Constitutional AI, work on interpretability, and Claude's model card — and its stated goal is to be at the frontier of AI capabilities specifically in order to do safety research on frontier models. Anthropic's approach is notable for integrating safety research deeply into its model development rather than treating it as a separate compliance function.</p>
+  <p><strong>The Alignment Research Center (ARC)</strong>, founded by Paul Christiano, focuses on making progress on what it considers the most technically hard aspects of the alignment problem, particularly scalable oversight and evaluation of dangerous capabilities. ARC's Evals project has developed methods for evaluating whether AI systems have dangerous capabilities, and has collaborated with major labs on pre-deployment evaluations.</p>
+  <p><strong>The Machine Intelligence Research Institute (MIRI)</strong>, founded in 2000, has focused on the longer-term theoretical challenges of building provably aligned AI systems. MIRI's early work on AI risk scenarios and its research on agent foundations have shaped the conceptual vocabulary of the field, though its approach — emphasizing mathematical rigor and formal guarantees — has been more influential conceptually than technically in the era of large neural networks.</p>
+  <p><strong>DeepMind Safety</strong> (now part of Google DeepMind) has produced important research on reward modeling, specification gaming, and scalable oversight. Their 2016 paper on concrete problems in AI safety, authored by Amodei, Olah, Steinhardt, Christiano, Schulman, and Mané, was instrumental in establishing a research agenda for the field and bringing safety concerns into the mainstream ML community.</p>
+
+  <div class="callout">
+    <div class="callout-label">The lab safety dilemma</div>
+    <p>There is an ongoing debate about whether AI safety research is best pursued inside frontier AI labs or at independent organizations. Labs have access to frontier models and the ability to directly influence what gets deployed. Independent organizations can pursue research without commercial pressure. Both models have produced important work, and both are necessary parts of a healthy research ecosystem.</p>
+  </div>
+
+  <h2>What different communities mean by "AI safety"</h2>
+  <p>One persistent source of confusion in discussions of AI safety is that the term means meaningfully different things to different communities. Understanding these differences is essential for engaging productively with debates in this space.</p>
+  <p>In the machine learning research community, "safety" often refers specifically to robustness — ensuring systems behave reliably under distribution shift, adversarial attack, and deployment conditions different from training. This is sometimes called "technical AI safety" in a narrow sense. Researchers working in this tradition are often skeptical of claims about longer-term existential risk, viewing them as speculative and a distraction from tractable near-term problems.</p>
+  <p>In the AI alignment community — influenced by researchers like Eliezer Yudkowsky, Paul Christiano, and others — "safety" refers primarily to the challenge of ensuring that very capable AI systems pursue goals that are actually beneficial to humanity, rather than goals that appear beneficial during training but diverge in deployment. This community tends to take long-term existential risk more seriously and places emphasis on theoretical foundations and on solving problems before they arise.</p>
+  <p>In the AI ethics and fairness community, "AI safety" often encompasses harm reduction for currently deployed systems: preventing discrimination, protecting privacy, ensuring accountability, and distributing AI's benefits equitably. This community is typically skeptical of long-term risk framings, which they sometimes view as distracting attention and resources from immediate, concrete harms being experienced by marginalized communities now.</p>
+  <p>In public policy circles, "AI safety" often means regulatory compliance, liability frameworks, and governance structures — a focus shaped by what is politically tractable and what existing legal frameworks can address.</p>
+
+  <div class="good">
+    <div class="good-label">Productive disagreement</div>
+    <p>These different meanings are not merely semantic confusion — they reflect genuine disagreements about where the most important risks lie, what timescales matter, and what kinds of solutions are tractable. The most productive researchers and policymakers in this space are able to engage seriously with perspectives they disagree with, rather than dismissing competing framings as simply wrong. This course aims to represent the full landscape of views fairly.</p>
+  </div>
+
+  <h2>Why safety is a prerequisite for beneficial AI</h2>
+  <p>One might ask: why is safety research necessary? If AI systems are trained to be helpful, and the organizations building them are well-intentioned, won't that be sufficient? The history of technology and the early history of AI deployment suggests the answer is no, for several reasons.</p>
+  <p>First, intent is not sufficient for safety. Well-intentioned designers can create systems with unintended failure modes. The history of software engineering, aviation, pharmaceutical development, and nuclear power is a history of catastrophic failures that nobody intended — failures that arose from the gap between designers' models of how systems behave and how they actually behave in complex, real-world conditions.</p>
+  <p>Second, competitive pressure creates incentives that can override good intentions. Organizations that slow down to invest in safety may lose market share to competitors who do not. Without shared norms, standards, and regulatory frameworks, safety investment is a competitive disadvantage — which is one of the core arguments for governance frameworks that level the playing field.</p>
+  <p>Third, the problem of ensuring that AI systems behave well in novel situations is genuinely unsolved. We do not yet have reliable methods for verifying that a trained AI system will behave safely across the full distribution of situations it might encounter. This is not a matter of insufficient effort; it is a research frontier with deep technical challenges that require serious investigation.</p>
+  <p>The field of AI safety exists because researchers recognized that making AI systems truly beneficial — not just useful in test environments, but reliably beneficial across the diverse and unpredictable conditions of real deployment — requires dedicated research and systematic effort. The technical challenges are real, the stakes are high, and the work is genuinely difficult. The remaining modules of this course examine these challenges in depth.</p>
+
+</div>
+</main>
+</div>
+
+<div class="sticky-bar" id="sticky-bar">
+  <div class="sticky-bar-reading" id="sticky-reading">Read to the end to unlock the next module</div>
+  <div class="sticky-bar-track"><div class="sticky-bar-fill" id="sticky-fill"></div></div>
+  <div class="sticky-bar-label" id="sticky-label">0%</div>
+  <button class="sticky-bar-btn" id="sticky-btn" onclick="completeAndNext()">Module 2: The Alignment Problem →</button>
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import { getFirestore, doc, setDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  const app=initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+  const auth=getAuth(app);const db=getFirestore(app);
+  let currentUser=null;
+  onAuthStateChanged(auth,u=>{currentUser=u;});
+  window.toggleTheme=function(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='☾'):(h.setAttribute('data-theme','dark'),i.textContent='☀');};
+  window.addEventListener('scroll',()=>{const d=document.documentElement,s=d.scrollTop||document.body.scrollTop,t=d.scrollHeight-d.clientHeight;document.getElementById('progress').style.width=(s/t*100)+'%';});
+  let unlocked=false;
+  function updateScrollProgress(){
+    const scrolled=window.scrollY+window.innerHeight;const total=document.documentElement.scrollHeight;
+    const pct=Math.min(100,Math.round((scrolled/total)*100));
+    const fill=document.getElementById('sticky-fill');const label=document.getElementById('sticky-label');
+    const btn=document.getElementById('sticky-btn');const reading=document.getElementById('sticky-reading');
+    if(fill)fill.style.width=pct+'%';if(label)label.textContent=pct+'%';
+    if(pct>=95&&!unlocked){unlocked=true;if(btn)btn.style.display='block';if(reading)reading.style.display='none';if(fill)fill.style.background='#22c55e';if(label)label.style.color='#22c55e';}
+  }
+  window.addEventListener('scroll',updateScrollProgress);updateScrollProgress();
+  window.completeAndNext=async function(){
+    if(currentUser){try{await setDoc(doc(db,'users',currentUser.uid),{safetyModules:arrayUnion('m1')},{merge:true});}catch(e){}}
+    window.location.href='safety-module-2.html';
+  };
+</script>
+</body>
+</html>

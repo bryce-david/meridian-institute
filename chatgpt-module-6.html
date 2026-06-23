@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 6: ChatGPT in the Real World — Mastering ChatGPT — Meridian Institute of AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#10a37f;--accent-dim:rgba(16,163,127,0.1);--nav-bg:rgba(8,8,8,0.9);--callout-bg:rgba(16,163,127,0.07);--callout-border:rgba(16,163,127,0.25);--good-bg:rgba(34,197,94,0.07);--good-border:rgba(34,197,94,0.2);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#0d9370;--accent-dim:rgba(13,147,112,0.08);--nav-bg:rgba(250,250,248,0.9);--callout-bg:rgba(13,147,112,0.05);--callout-border:rgba(13,147,112,0.2);--good-bg:rgba(22,163,74,0.06);--good-border:rgba(22,163,74,0.2);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;overflow-x:hidden;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.7;overflow-x:hidden;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}
+  .nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}
+  .nav-back{font-size:13px;color:var(--text-2);text-decoration:none;}
+  .nav-back:hover{color:var(--text);}
+  .nav-label{font-size:13px;color:var(--text-3);}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;}
+  .progress-bar{position:fixed;top:60px;left:0;right:0;z-index:99;height:2px;background:var(--border);}
+  .progress-fill{height:100%;background:var(--accent);width:0%;}
+  .page-wrapper{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:100vh;padding-top:62px;}
+  .sidebar{position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto;border-right:1px solid var(--border);padding:32px 24px;background:var(--bg-2);}
+  .sidebar-course{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;}
+  .sidebar-course-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+  .sidebar-module{margin-bottom:4px;}
+  .sidebar-module-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:13px;color:var(--text-2);text-decoration:none;transition:all 0.2s;line-height:1.4;}
+  .sidebar-module-link:hover{background:var(--bg-3);color:var(--text);}
+  .sidebar-module-link.active{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-num{font-size:11px;font-weight:500;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--bg-4);color:var(--text-3);}
+  .sidebar-module-link.active .sidebar-num{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-divider{height:1px;background:var(--border);margin:20px 0;}
+  .sidebar-progress-label{font-size:12px;color:var(--text-3);margin-bottom:8px;display:flex;justify-content:space-between;}
+  .sidebar-progress-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sidebar-progress-fill{height:100%;width:85%;background:var(--accent);border-radius:2px;}
+  main{display:block;min-width:0;}
+  .content{max-width:760px;width:100%;padding:60px 64px 140px;margin:0 auto;}
+  .module-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+  .module-tag{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(16,163,127,0.2);padding:4px 12px;border-radius:100px;}
+  .module-meta{font-size:12px;color:var(--text-3);}
+  h1{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1.05;letter-spacing:-0.02em;color:var(--text);margin-bottom:24px;}
+  .intro-text{font-size:19px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+  h2{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:400;color:var(--text);margin:52px 0 18px;line-height:1.2;}
+  h3{font-size:16px;font-weight:500;color:var(--text);margin:32px 0 12px;}
+  p{font-size:16px;font-weight:300;color:var(--text-2);line-height:1.8;margin-bottom:20px;}
+  strong{font-weight:500;color:var(--text);}
+  .callout{background:var(--callout-bg);border:1px solid var(--callout-border);border-radius:12px;padding:24px 28px;margin:32px 0;}
+  .callout-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+  .callout p{margin:0;font-size:15px;color:var(--text-2);}
+  .good{background:var(--good-bg);border:1px solid var(--good-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .good-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#22c55e;margin-bottom:10px;}
+  .good p{margin:0;font-size:15px;color:var(--text-2);}
+  .workflow{background:var(--bg-2);border:1px solid var(--border);border-radius:14px;padding:28px;margin:20px 0;}
+  .workflow-domain{font-size:11px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:8px;}
+  .workflow-title{font-size:17px;font-weight:500;color:var(--text);margin-bottom:12px;}
+  .workflow-prompt{background:var(--bg-3);border-radius:8px;padding:16px 20px;font-size:13px;color:var(--text-2);line-height:1.7;white-space:pre-wrap;font-family:'DM Sans',sans-serif;margin-bottom:12px;}
+  .workflow-why{font-size:13px;color:var(--text-3);line-height:1.6;padding-top:12px;border-top:1px solid var(--border);}
+  .sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:var(--bg-2);border-top:1px solid var(--border-2);padding:14px 5%;display:flex;align-items:center;justify-content:space-between;gap:16px;backdrop-filter:blur(12px);}
+  .sticky-bar-track{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sticky-bar-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.2s;width:0%;}
+  .sticky-bar-label{font-size:12px;color:var(--text-3);white-space:nowrap;min-width:60px;text-align:right;}
+  .sticky-bar-btn{padding:10px 20px;border-radius:8px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;background:var(--accent);color:#fff;border:none;cursor:pointer;white-space:nowrap;transition:opacity 0.2s;display:none;}
+  .sticky-bar-reading{font-size:12px;color:var(--text-3);white-space:nowrap;}
+  @media(max-width:900px){.page-wrapper{grid-template-columns:1fr;}.sidebar{display:none;}.content{padding:40px 24px 120px;}h1{font-size:38px;}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="index.html" class="nav-back">🏠 Home</a>
+    <div class="nav-divider"></div>
+    <a href="courses.html" class="nav-back">← Mastering ChatGPT</a>
+    <div class="nav-divider"></div>
+    <span class="nav-label">Module 6</span>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">☀</span></button>
+</nav>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+<div class="page-wrapper">
+<aside class="sidebar">
+  <div class="sidebar-course">Course</div>
+  <div class="sidebar-course-name">Mastering ChatGPT</div>
+  <div class="sidebar-module"><a href="chatgpt-module-1.html" class="sidebar-module-link"><span class="sidebar-num">1</span>Understanding ChatGPT</a></div>
+  <div class="sidebar-module"><a href="chatgpt-module-2.html" class="sidebar-module-link"><span class="sidebar-num">2</span>The GPT Model Lineup</a></div>
+  <div class="sidebar-module"><a href="chatgpt-module-3.html" class="sidebar-module-link"><span class="sidebar-num">3</span>Prompting ChatGPT Effectively</a></div>
+  <div class="sidebar-module"><a href="chatgpt-module-4.html" class="sidebar-module-link"><span class="sidebar-num">4</span>Custom GPTs</a></div>
+  <div class="sidebar-module"><a href="chatgpt-module-5.html" class="sidebar-module-link"><span class="sidebar-num">5</span>Advanced Features</a></div>
+  <div class="sidebar-module"><a href="chatgpt-module-6.html" class="sidebar-module-link active"><span class="sidebar-num">6</span>ChatGPT in the Real World</a></div>
+  <div class="sidebar-module"><a href="chatgpt-module-7.html" class="sidebar-module-link"><span class="sidebar-num">7</span>ChatGPT vs The Field</a></div>
+  <div class="sidebar-module"><a href="quiz-chatgpt.html" class="sidebar-module-link" style="color:var(--accent);margin-top:4px;"><span class="sidebar-num" style="background:var(--accent-dim);color:var(--accent);">✦</span>Final Assessment</a></div>
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-progress-label"><span>Course progress</span><span style="color:var(--accent);">6 / 7</span></div>
+  <div class="sidebar-progress-track"><div class="sidebar-progress-fill"></div></div>
+</aside>
+<main>
+<div class="content">
+  <div class="module-eyebrow"><span class="module-tag">Module 6</span><span class="module-meta">25 min read · Mastering ChatGPT</span></div>
+  <h1>ChatGPT in the Real World</h1>
+  <p class="intro-text">Concrete workflows for real tasks. These are tested prompts that work specifically in ChatGPT — taking advantage of its strengths in image generation, voice, breadth, and the code interpreter. Where a technique differs meaningfully from what you'd do in Claude, that difference is noted.</p>
+
+  <h2>Writing workflows</h2>
+
+  <div class="workflow">
+    <div class="workflow-domain">Writing</div>
+    <div class="workflow-title">Breaking through writer's block with voice</div>
+    <div class="workflow-prompt">Use Advanced Voice Mode. Say out loud:
+
+"I need to write [article/essay/email] about [topic]. I have some ideas but I can't figure out how to structure it. Let me talk through what I'm thinking and I want you to help me find the core argument and a structure that would work."
+
+Then just talk. Explain what you know, what you're unsure about, what you want the reader to feel. Let ChatGPT ask questions.</div>
+    <div class="workflow-why">Voice removes the pressure of forming perfect sentences before you type. The act of talking through your ideas out loud — with ChatGPT asking follow-up questions — surfaces the argument faster than staring at a blank document.</div>
+  </div>
+
+  <div class="workflow">
+    <div class="workflow-domain">Writing</div>
+    <div class="workflow-title">Creating visual content alongside written content</div>
+    <div class="workflow-prompt">I'm writing a blog post about [topic]. As we develop the content together, I'll ask you to generate header images for each section. For now, let's start with the introduction.
+
+Introduction topic: [describe]
+
+After we finalize the intro, generate a header image: professional, clean, relevant to the topic, suitable for a business blog, wide format (16:9), no text in the image.</div>
+    <div class="workflow-why">ChatGPT's unique strength here — Claude can't do this. Writing and visual content in one workflow, with ChatGPT maintaining context about the article as it generates images that match the content.</div>
+  </div>
+
+  <h2>Research workflows</h2>
+
+  <div class="workflow">
+    <div class="workflow-domain">Research</div>
+    <div class="workflow-title">Current-events research synthesis</div>
+    <div class="workflow-prompt">Search for the latest news and developments on [topic] from the past [week/month]. Then synthesize what you find into:
+
+1. What has actually happened (factual summary)
+2. Why it matters (significance and implications)
+3. What's contested or unclear (what experts disagree on)
+4. What to watch next (what developments to monitor)
+
+Cite your sources for each major claim.</div>
+    <div class="workflow-why">Combines ChatGPT's web browsing with its synthesis capability. Unlike Perplexity which just returns research, this produces a structured analysis you can act on — and the citation requirement keeps ChatGPT honest about its sources.</div>
+  </div>
+
+  <div class="workflow">
+    <div class="workflow-domain">Research</div>
+    <div class="workflow-title">Analyzing data files</div>
+    <div class="workflow-prompt">[Upload your CSV or Excel file]
+
+Analyze this data and tell me:
+1. What are the 3 most important patterns or trends?
+2. What anomalies or outliers should I investigate?
+3. What does this data suggest I should do?
+4. What important questions can this data NOT answer?
+
+Then generate a chart showing [the most important trend you identified].</div>
+    <div class="workflow-why">Code Interpreter runs the actual analysis — not predicted analysis. The "what can this data NOT answer" question is crucial and often skipped, but it prevents overconfident decisions based on incomplete data.</div>
+  </div>
+
+  <h2>Coding workflows</h2>
+
+  <div class="workflow">
+    <div class="workflow-domain">Coding</div>
+    <div class="workflow-title">Iterative debugging with real execution</div>
+    <div class="workflow-prompt">[Paste your code]
+
+This code is supposed to [describe what it should do] but instead it [describe the bug or unexpected behavior].
+
+Run it, identify what's going wrong, fix it, run the fixed version, and show me both the original error and the confirmation that the fix works. Then explain what caused the bug in plain language.</div>
+    <div class="workflow-why">Code Interpreter actually runs the code and sees the real error — not a predicted error. The fix gets verified before you see it. This is dramatically faster than the copy-paste-run cycle of debugging manually.</div>
+  </div>
+
+  <div class="workflow">
+    <div class="workflow-domain">Coding</div>
+    <div class="workflow-title">Using o4-mini for hard algorithmic problems</div>
+    <div class="workflow-prompt">[Switch to o4-mini model]
+
+I need to solve this problem: [describe the algorithmic or logic problem clearly with all constraints and requirements]
+
+Work through this carefully. Show me your reasoning about the approach before writing any code. Then write the solution and verify it handles the edge cases: [list specific edge cases].</div>
+    <div class="workflow-why">o4-mini's chain-of-thought reasoning handles algorithmic problems that GPT-4o stumbles on. Asking it to reason about the approach before coding catches flawed strategies early.</div>
+  </div>
+
+  <h2>Business and productivity workflows</h2>
+
+  <div class="workflow">
+    <div class="workflow-domain">Business</div>
+    <div class="workflow-title">Market research with web browsing</div>
+    <div class="workflow-prompt">I'm researching [market/industry/competitor]. Search for current information and build me a competitive landscape that includes:
+
+1. The major players and their positioning
+2. Recent moves or announcements (last 6 months)
+3. Gaps or underserved needs in the market
+4. What a new entrant would need to compete effectively
+5. The 2-3 biggest trends reshaping this space
+
+This is for [describe your purpose — investment research, product planning, etc.]</div>
+    <div class="workflow-why">The current information requirement is essential here — competitive landscapes go stale fast. ChatGPT's browsing gives you recent data that no static AI can provide, and the structured output format makes it immediately usable.</div>
+  </div>
+
+  <div class="workflow">
+    <div class="workflow-domain">Productivity</div>
+    <div class="workflow-title">Voice brainstorming on a walk</div>
+    <div class="workflow-prompt">Use Advanced Voice Mode. Start with:
+
+"I want to brainstorm [problem/opportunity/decision]. I'm going to talk through my thinking, and I want you to ask me sharp questions that push me further, challenge my assumptions, and help me find angles I'm missing. Don't just affirm what I say — push back when something doesn't hold up."
+
+Then walk and think out loud for 15-30 minutes.</div>
+    <div class="workflow-why">This is genuinely unique to ChatGPT. A 20-minute walking brainstorm with real-time AI pushback produces ideas that don't come from sitting at a desk. The movement and speech together unlock different thinking than typing does.</div>
+  </div>
+
+  <div class="good">
+    <div class="good-label">ChatGPT's specific workflow advantages</div>
+    <p>Notice what's unique about these workflows: image generation integrated into writing, voice-first brainstorming, real code execution, and current web data. These are things you genuinely cannot do in Claude. Use ChatGPT when the task benefits from these capabilities — and use Claude when you need depth, nuance, or honest pushback on complex analysis.</p>
+  </div>
+
+</div>
+</main>
+</div>
+<div class="sticky-bar">
+  <div class="sticky-bar-reading" id="sticky-reading">Read to the end to unlock the next module</div>
+  <div class="sticky-bar-track"><div class="sticky-bar-fill" id="sticky-fill"></div></div>
+  <div class="sticky-bar-label" id="sticky-label">0%</div>
+  <button class="sticky-bar-btn" id="sticky-btn" onclick="completeAndNext()">Module 7: ChatGPT vs The Field →</button>
+</div>
+<script>
+  function toggleTheme(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='☾'):(h.setAttribute('data-theme','dark'),i.textContent='☀');}
+  window.addEventListener('scroll',()=>{const d=document.documentElement,s=d.scrollTop||document.body.scrollTop,t=d.scrollHeight-d.clientHeight;document.getElementById('progress').style.width=(s/t*100)+'%';});
+  
+  let unlocked=false;
+  function updateScrollProgress(){const pct=Math.min(100,Math.round(((window.scrollY+window.innerHeight)/document.documentElement.scrollHeight)*100));document.getElementById('sticky-fill').style.width=pct+'%';document.getElementById('sticky-label').textContent=pct+'%';if(pct>=95&&!unlocked){unlocked=true;document.getElementById('sticky-btn').style.display='block';document.getElementById('sticky-reading').style.display='none';document.getElementById('sticky-fill').style.background='#22c55e';document.getElementById('sticky-label').style.color='#22c55e';}}
+  window.addEventListener('scroll',updateScrollProgress);updateScrollProgress();
+  function completeAndNext(){
+    if(window.__meridianSaveProgress){ try{ window.__meridianSaveProgress("m6"); }catch(e){} }
+    setTimeout(function(){ window.location.href="chatgpt-module-7.html"; }, 120);
+  }
+</script>
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import { getFirestore, doc, setDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  const app = initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+  const auth = getAuth(app); const db = getFirestore(app);
+  let meridianUser = null;
+  onAuthStateChanged(auth, u => { meridianUser = u; });
+  window.__meridianSaveProgress = async function(mValue){
+    if(!meridianUser) return;
+    try { await setDoc(doc(db,"users",meridianUser.uid), { chatgptModules: arrayUnion(mValue) }, { merge: true }); } catch(e) {}
+  };
+</script>
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  const _gapp = initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+  const _gauth = getAuth(_gapp); const _gdb = getFirestore(_gapp);
+  onAuthStateChanged(_gauth, async (u) => {
+    if (!u) return;
+    try {
+      const snap = await getDoc(doc(_gdb, "users", u.uid));
+      const data = snap.exists() ? snap.data() : {};
+      const done = Array.isArray(data.chatgptModules) ? data.chatgptModules : [];
+      if (!done.includes("m5")) {
+        document.body.innerHTML = `<div style=\"min-height:100vh;display:flex;align-items:center;justify-content:center;background:#080808;font-family:DM Sans,sans-serif;padding:24px;\"><div style=\"max-width:440px;text-align:center;background:#111;border:1px solid rgba(255,255,255,0.08);border-radius:20px;padding:48px;\"><div style=\"font-size:48px;margin-bottom:20px;\">&#128274;</div><div style=\"font-size:20px;font-weight:500;color:#f0f0f0;margin-bottom:12px;\">Module locked</div><div style=\"font-size:14px;color:#a0a0a0;margin-bottom:28px;line-height:1.6;\">Complete the previous module before continuing.</div><a href=\"chatgpt-module-1.html\" style=\"display:inline-block;padding:12px 24px;background:#10a37f;color:#fff;border-radius:10px;font-size:14px;font-weight:500;text-decoration:none;\">&#8592; Back to the course</a></div></div>`;
+      }
+    } catch(e) {}
+  });
+</script>
+</body>
+</html>

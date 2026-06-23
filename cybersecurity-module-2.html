@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 2: Intrusion Detection and AI — AI in Cybersecurity — Meridian Institute of AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#0E7490;--accent-dim:rgba(14,116,144,0.1);--accent-dim2:rgba(14,116,144,0.05);--nav-bg:rgba(8,8,8,0.9);--callout-bg:rgba(14,116,144,0.07);--callout-border:rgba(14,116,144,0.25);--good-bg:rgba(34,197,94,0.07);--good-border:rgba(34,197,94,0.2);--warn-bg:rgba(251,146,60,0.07);--warn-border:rgba(251,146,60,0.2);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#0C6280;--accent-dim:rgba(12,98,128,0.08);--accent-dim2:rgba(12,98,128,0.04);--nav-bg:rgba(250,250,248,0.9);--callout-bg:rgba(12,98,128,0.05);--callout-border:rgba(12,98,128,0.2);--good-bg:rgba(22,163,74,0.06);--good-border:rgba(22,163,74,0.2);--warn-bg:rgba(234,88,12,0.05);--warn-border:rgba(234,88,12,0.2);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;overflow-x:hidden;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.7;overflow-x:hidden;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}
+  .nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}
+  .nav-back{font-size:13px;color:var(--text-2);text-decoration:none;transition:color 0.2s;}
+  .nav-back:hover{color:var(--text);}
+  .nav-label{font-size:13px;color:var(--text-3);}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;transition:all 0.2s;}
+  .theme-toggle:hover{background:var(--bg-3);color:var(--text);}
+  .progress-bar{position:fixed;top:60px;left:0;right:0;z-index:99;height:2px;background:var(--border);}
+  .progress-fill{height:100%;background:var(--accent);width:0%;transition:width 0.1s;}
+  .page-wrapper{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:100vh;padding-top:62px;overflow:hidden;}
+  .sidebar{position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto;border-right:1px solid var(--border);padding:32px 24px;background:var(--bg-2);}
+  .sidebar-course{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;}
+  .sidebar-course-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+  .sidebar-module{margin-bottom:4px;}
+  .sidebar-module-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:13px;color:var(--text-2);text-decoration:none;transition:all 0.2s;line-height:1.4;}
+  .sidebar-module-link:hover{background:var(--bg-3);color:var(--text);}
+  .sidebar-module-link.active{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-num{font-size:11px;font-weight:500;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--bg-4);color:var(--text-3);}
+  .sidebar-module-link.active .sidebar-num{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-divider{height:1px;background:var(--border);margin:20px 0;}
+  .sidebar-progress-label{font-size:12px;color:var(--text-3);margin-bottom:8px;display:flex;justify-content:space-between;}
+  .sidebar-progress-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sidebar-progress-fill{height:100%;width:20%;background:var(--accent);border-radius:2px;}
+  main{display:block;min-width:0;overflow:hidden;}
+  .content{max-width:760px;width:100%;padding:60px 64px 140px;margin:0 auto;}
+  .module-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+  .module-tag{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(14,116,144,0.2);padding:4px 12px;border-radius:100px;}
+  .module-meta{font-size:12px;color:var(--text-3);}
+  h1{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1.05;letter-spacing:-0.02em;color:var(--text);margin-bottom:24px;}
+  .intro-text{font-size:19px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+  h2{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:400;color:var(--text);margin:52px 0 18px;line-height:1.2;}
+  h3{font-size:16px;font-weight:500;color:var(--text);margin:32px 0 12px;}
+  p{font-size:16px;font-weight:300;color:var(--text-2);line-height:1.8;margin-bottom:20px;}
+  strong{font-weight:500;color:var(--text);}
+  em{font-style:italic;}
+  ul,ol{margin:0 0 20px 22px;color:var(--text-2);}
+  li{font-size:16px;font-weight:300;line-height:1.8;margin-bottom:8px;}
+  .callout{background:var(--callout-bg);border:1px solid var(--callout-border);border-radius:12px;padding:24px 28px;margin:32px 0;}
+  .callout-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+  .callout p{margin:0;font-size:15px;color:var(--text-2);}
+  .callout p+p{margin-top:12px;}
+  .good{background:var(--good-bg);border:1px solid var(--good-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .good-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#22c55e;margin-bottom:10px;}
+  .good p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn{background:var(--warn-bg);border:1px solid var(--warn-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .warn-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#fb923c;margin-bottom:10px;}
+  .warn p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn p+p{margin-top:12px;}
+  .analogy{background:var(--bg-2);border:1px solid var(--border);border-radius:12px;padding:28px;margin:28px 0;}
+  .analogy-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-3);margin-bottom:12px;}
+  .analogy p{margin:0;font-size:15px;color:var(--text-2);}
+  .disclaimer{background:rgba(251,146,60,0.07);border:1px solid rgba(251,146,60,0.3);border-radius:12px;padding:24px 28px;margin:0 0 40px;}
+  .disclaimer-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#fb923c;margin-bottom:10px;}
+  .disclaimer p{margin:0;font-size:14px;color:var(--text-2);line-height:1.7;}
+  .disclaimer p+p{margin-top:10px;}
+  .comparison-wrapper{overflow-x:auto;-webkit-overflow-scrolling:touch;width:100%;margin:28px 0;}
+  table{width:100%;border-collapse:collapse;font-size:14px;min-width:480px;}
+  th{text-align:left;padding:12px 16px;font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-3);border-bottom:1px solid var(--border-2);}
+  td{padding:14px 16px;border-bottom:1px solid var(--border);color:var(--text-2);line-height:1.6;vertical-align:top;}
+  tr:last-child td{border-bottom:none;}
+  td:first-child{color:var(--text);font-weight:500;width:30%;}
+  .key-stat{background:var(--bg-2);border:1px solid var(--border);border-radius:12px;padding:20px 24px;margin:16px 0;display:flex;align-items:center;gap:20px;}
+  .key-stat-num{font-family:'Cormorant Garamond',serif;font-size:40px;font-weight:400;color:var(--accent);line-height:1;flex-shrink:0;}
+  .key-stat-label{font-size:14px;color:var(--text-2);line-height:1.6;}
+  .key-stat-label strong{display:block;font-size:15px;color:var(--text);margin-bottom:4px;}
+  .principle-list{display:flex;flex-direction:column;gap:12px;margin:24px 0;}
+  .principle{background:var(--bg-2);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:0 12px 12px 0;padding:20px 24px;}
+  .principle-title{font-size:15px;font-weight:500;color:var(--text);margin-bottom:6px;}
+  .principle-desc{font-size:14px;color:var(--text-2);line-height:1.65;margin:0;}
+  .sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:var(--bg-2);border-top:1px solid var(--border-2);padding:14px 5%;display:flex;align-items:center;justify-content:space-between;gap:16px;backdrop-filter:blur(12px);}
+  .sticky-bar-track{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sticky-bar-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.2s;width:0%;}
+  .sticky-bar-label{font-size:12px;color:var(--text-3);white-space:nowrap;min-width:60px;text-align:right;}
+  .sticky-bar-btn{padding:10px 20px;border-radius:8px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;background:var(--accent);color:#fff;border:none;cursor:pointer;white-space:nowrap;transition:opacity 0.2s;display:none;}
+  .sticky-bar-btn:hover{opacity:0.88;}
+  .sticky-bar-reading{font-size:12px;color:var(--text-3);white-space:nowrap;}
+  @media(max-width:900px){.page-wrapper{grid-template-columns:1fr;}.sidebar{display:none;}.content{padding:40px 24px 120px;}h1{font-size:38px;}}
+  @media(max-width:600px){.content{padding:28px 16px 120px;}h1{font-size:30px;}h2{font-size:24px;}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="courses.html" class="nav-back">← AI in Cybersecurity</a>
+    <div class="nav-divider"></div>
+    <span class="nav-label">Module 2</span>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">☀</span></button>
+</nav>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+
+<div class="page-wrapper">
+<aside class="sidebar">
+  <div class="sidebar-course">Course</div>
+  <div class="sidebar-course-name">AI in Cybersecurity</div>
+  <div class="sidebar-module"><a href="cybersecurity-module-1.html" class="sidebar-module-link"><span class="sidebar-num">1</span>The AI-Driven Threat Landscape</a></div>
+  <div class="sidebar-module"><a href="cybersecurity-module-2.html" class="sidebar-module-link active"><span class="sidebar-num">2</span>Intrusion Detection and AI</a></div>
+  <div class="sidebar-module"><a href="cybersecurity-module-3.html" class="sidebar-module-link"><span class="sidebar-num">3</span>AI-Powered Social Engineering</a></div>
+  <div class="sidebar-module"><a href="cybersecurity-module-4.html" class="sidebar-module-link"><span class="sidebar-num">4</span>Malware Analysis with ML</a></div>
+  <div class="sidebar-module"><a href="cybersecurity-module-5.html" class="sidebar-module-link"><span class="sidebar-num">5</span>Vulnerability Assessment and AI</a></div>
+  <div class="sidebar-module"><a href="cybersecurity-module-6.html" class="sidebar-module-link"><span class="sidebar-num">6</span>Adversarial AI Attacks</a></div>
+  <div class="sidebar-module"><a href="cybersecurity-module-7.html" class="sidebar-module-link"><span class="sidebar-num">7</span>AI in SOC Operations</a></div>
+  <div class="sidebar-module"><a href="cybersecurity-module-8.html" class="sidebar-module-link"><span class="sidebar-num">8</span>Privacy and Data Protection</a></div>
+  <div class="sidebar-module"><a href="cybersecurity-module-9.html" class="sidebar-module-link"><span class="sidebar-num">9</span>Zero-Trust and AI</a></div>
+  <div class="sidebar-module"><a href="cybersecurity-module-10.html" class="sidebar-module-link"><span class="sidebar-num">10</span>The Future of AI Security</a></div>
+  <div class="sidebar-module"><a href="quiz-cybersecurity.html" class="sidebar-module-link" style="color:var(--accent);margin-top:4px;"><span class="sidebar-num" style="background:var(--accent-dim);color:var(--accent);">✦</span>Final Assessment</a></div>
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-progress-label"><span>Course progress</span><span style="color:var(--accent);">2 / 10</span></div>
+  <div class="sidebar-progress-track"><div class="sidebar-progress-fill"></div></div>
+</aside>
+
+<main>
+<div class="content">
+  <div class="module-eyebrow"><span class="module-tag">Module 2</span><span class="module-meta">20 min read · AI in Cybersecurity</span></div>
+  <h1>Intrusion Detection and Prevention</h1>
+
+  <p class="intro-text">The ability to detect an attacker who has entered your network — before they achieve their objective — is one of the most consequential capabilities in cybersecurity. For decades, intrusion detection relied on matching observed activity against known attack signatures. That model has reached its operational limits. AI and machine learning have fundamentally changed what is detectable, how fast detection happens, and what security teams can do with the time they gain.</p>
+
+  <h2>The limits of signature-based detection</h2>
+  <p>Signature-based intrusion detection systems (IDS) work on a simple principle: maintain a database of known attack patterns, and alert when observed network traffic or system activity matches one of those patterns. Snort, Suricata, and similar tools have used this approach for decades, and they remain part of many security architectures today.</p>
+  <p>The fundamental weakness of signature-based detection is that it is entirely reactive. A signature can only exist after an attack has been observed, analyzed, and documented — a process that takes time. During that window, every system running the same software is vulnerable, and an attacker who has never been caught has no signature to match. Novel attacks, zero-day exploits, and custom malware developed for specific targets all slip through signature-based detection by definition.</p>
+  <p>The volume problem compounds this. As described in Module 1, AI enables attackers to generate millions of unique malware variants. A detection system that requires a signature for each variant simply cannot keep pace. The signature database grows, the matching overhead increases, and coverage still degrades because the attack surface is now measured in millions of unique samples per day, not thousands.</p>
+
+  <div class="warn">
+    <div class="warn-label">The signature coverage gap</div>
+    <p><strong>Zero-day attacks have no signature.</strong> By definition, a signature-based system cannot detect an attack that has never been seen before. Nation-state actors and sophisticated criminal groups deliberately develop new tools specifically to exploit this gap, knowing that the first uses of a novel exploit will be invisible to signature detection.</p>
+    <p><strong>Polymorphic malware evades all signature approaches.</strong> When malware rewrites its own code on each execution or each propagation, no static signature can match it. The behavior remains malicious but the detectable pattern changes constantly.</p>
+  </div>
+
+  <h2>ML-based anomaly detection: the behavioral paradigm</h2>
+  <p>Machine learning fundamentally reframes the intrusion detection problem. Instead of asking "does this activity match a known bad pattern?", ML-based anomaly detection asks "does this activity deviate from normal behavior in ways that are statistically significant?" This shift has profound consequences for what is detectable.</p>
+  <p>An ML-based anomaly detector does not need to have seen the specific attack before. It needs only to understand what normal looks like — and flag deviations from that normal as worthy of investigation. A novel malware variant that has never been seen before will still generate anomalous process behavior, unusual network connections, and irregular file system activity. These deviations are detectable even without a signature, because they diverge from the learned baseline of normal system behavior.</p>
+  <p>This approach requires a period of learning before it can detect effectively. The system must observe normal activity long enough to build a robust statistical model of what "normal" looks like for this specific environment. That model is not generic — a normal baseline for a software development environment looks completely different from a normal baseline for a manufacturing operations network. The specificity is a strength: it means the model is calibrated to the actual environment it is protecting.</p>
+
+  <div class="callout">
+    <div class="callout-label">The baseline insight</div>
+    <p>A well-trained anomaly detection model knows that your database server normally makes outbound connections only to your application servers — never to IP addresses on another continent at 3 AM. It knows that your finance director's account downloads reports in business hours, not gigabytes of data on a Saturday night. These patterns are invisible to signature-based detection but obvious to a system that understands what normal looks like.</p>
+  </div>
+
+  <h2>Behavioral baselines in practice</h2>
+  <p>Building accurate behavioral baselines is more complex than it might appear. Normal behavior is not static — it changes with business cycles, personnel changes, software updates, and organizational growth. A naive baseline model that treats any deviation from historical norms as suspicious will generate unacceptably high false positive rates as the legitimate environment evolves.</p>
+  <p>Modern ML-based detection systems address this through <strong>adaptive baselines</strong> that continuously update their models as the environment changes. Rather than establishing a fixed normal and alerting on all deviations, adaptive systems distinguish between gradual legitimate drift (an organization adopting a new cloud service) and sudden anomalous changes (an account suddenly exfiltrating data at unusual hours).</p>
+  <p>Seasonal and temporal patterns are also incorporated into sophisticated baseline models. A retail organization's normal includes a significant increase in transaction volume during the holiday period. A university's normal includes dramatically different patterns during examination periods versus summer break. ML models trained on sufficient historical data can account for these predictable variations and avoid treating legitimate seasonal activity as suspicious.</p>
+
+  <h2>Network traffic analysis with deep learning</h2>
+  <p>Network traffic analysis (NTA) represents one of the richest applications of deep learning in cybersecurity defense. Modern enterprise networks generate enormous volumes of traffic — petabytes per day in large organizations — that no human team could meaningfully analyze. Deep learning models can process this traffic in real time, identifying patterns that indicate compromise.</p>
+  <p>Convolutional neural networks (CNNs) have been applied to network traffic analysis by treating traffic flows as image-like matrices of features — packet sizes, inter-arrival times, protocol distributions, and connection graphs — and learning to classify them as benign or malicious. Recurrent neural networks (RNNs) and their derivatives like LSTMs are particularly well-suited to analyzing the temporal sequence of network connections, capturing patterns like command-and-control beaconing that occur at regular intervals over time.</p>
+  <p>Encrypted traffic presents a particular challenge that AI has helped address. As TLS encryption has become universal, traditional deep packet inspection — examining the contents of network communications — has become impossible without breaking encryption, which creates its own security and privacy problems. Machine learning models that analyze traffic <em>metadata</em> rather than content — packet timing, size distributions, connection patterns, certificate characteristics — have proven capable of identifying malicious traffic even when the payload is encrypted.</p>
+
+  <div class="principle-list">
+    <div class="principle">
+      <div class="principle-title">Flow-based analysis</div>
+      <div class="principle-desc">Rather than inspecting individual packets, flow-based analysis examines the aggregate characteristics of network conversations — duration, total bytes, packet counts, timing patterns — to identify anomalous communications without requiring decryption.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Graph-based network modeling</div>
+      <div class="principle-desc">Graph neural networks model the relationships between network entities — devices, users, services — to detect unusual communication patterns. A device that has never communicated with a particular server suddenly establishing a connection is visible in the relationship graph even if the traffic itself is encrypted and benign-looking.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">DNS analytics</div>
+      <div class="principle-desc">DNS queries are often unencrypted and reveal enormous amounts about network activity. ML models trained on DNS traffic can identify domain generation algorithm (DGA) domains used by malware for C2 communication, DNS tunneling used for data exfiltration, and newly registered domains associated with phishing infrastructure.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Lateral movement detection</div>
+      <div class="principle-desc">Once attackers gain initial access, they move laterally through the network seeking high-value targets. ML models trained to recognize lateral movement patterns — unusual authentication attempts, novel connection paths between internal hosts, credential reuse across systems — can detect this phase before attackers reach their objective.</div>
+    </div>
+  </div>
+
+  <h2>EDR tools and AI</h2>
+  <p>Endpoint Detection and Response (EDR) tools represent the application of ML-based behavioral detection at the endpoint level — on individual computers, servers, and mobile devices rather than at the network perimeter. Modern EDR platforms from vendors like CrowdStrike, SentinelOne, and Microsoft Defender for Endpoint deploy lightweight agents on each endpoint that collect detailed telemetry about process behavior, file system activity, registry modifications, and network connections.</p>
+  <p>This telemetry is processed by machine learning models that evaluate behavior in real time. When a process executes in an unusual sequence — for example, a Word document spawning a PowerShell process that initiates a network connection — the EDR model recognizes this as a pattern consistent with a macro-based malware infection and can terminate the process chain before it completes its malicious activity.</p>
+  <p>The depth of telemetry available to EDR systems is one of their key advantages. Rather than seeing only what crosses the network perimeter, EDR has visibility into exactly which processes are running, what files they are accessing, what registry keys they are modifying, and what network connections they are establishing. This granular visibility enables behavioral detection that would be impossible with network-only data.</p>
+
+  <h2>The false positive problem</h2>
+  <p>Every detection system faces a fundamental tension between sensitivity and specificity. Increase sensitivity to catch more attacks, and the false positive rate rises — legitimate activity gets flagged as suspicious. Reduce false positives, and some attacks slip through. In security operations, this tension has very real operational consequences.</p>
+  <p>A security operations center (SOC) that receives thousands of alerts per day cannot meaningfully investigate each one. Alert fatigue is a well-documented phenomenon: when analysts are overwhelmed by false positives, genuine alerts get buried in the noise, and eventually analysts begin to tune out even high-confidence alerts. The 2020 SolarWinds attack persisted undetected for months in part because the attacker deliberately moved slowly enough to stay within the noise floor of monitoring systems.</p>
+  <p>AI contributes to false positive reduction in several ways. First, more sophisticated models with richer feature sets can make finer distinctions between genuinely suspicious behavior and unusual-but-legitimate activity. Second, ML models can incorporate additional context — the identity of the user, the time of day, the recent history of the device, the sensitivity of the data being accessed — to score alerts more accurately. Third, unsupervised clustering can group similar alerts together, helping analysts process batches of related activity rather than individually triaging each alert.</p>
+
+  <div class="good">
+    <div class="good-label">The precision-recall trade-off in practice</div>
+    <p>Leading ML-based EDR platforms now achieve false positive rates that are one to two orders of magnitude lower than signature-based predecessors while maintaining equal or better detection rates for real threats. This is not because the models are perfect — it is because they have access to far richer feature sets and can incorporate context that was invisible to signature-based systems.</p>
+  </div>
+
+  <h2>UEBA: User and Entity Behavior Analytics</h2>
+  <p>User and Entity Behavior Analytics (UEBA) extends behavioral ML to the specific domain of user activity and identity-based threat detection. While network-level and endpoint-level detection focuses on technical indicators, UEBA focuses on whether users — and non-human entities like service accounts and automated processes — are behaving consistently with their established patterns.</p>
+  <p>UEBA systems ingest data from identity providers, HR systems, email platforms, file sharing services, VPN logs, badge access records, and endpoint agents to build rich behavioral profiles of each user. These profiles capture patterns like: what time of day does this user typically log in? From which locations? Which systems do they access? What volume of data do they typically transfer? Who do they communicate with?</p>
+  <p>Deviations from these patterns — an employee accessing systems they have never accessed before, downloading files in categories unrelated to their role, logging in from an unusual location at an unusual time — generate risk scores that trigger investigation. The power of UEBA lies in its ability to detect <strong>insider threats</strong> and <strong>compromised credentials</strong> that would be invisible to perimeter-focused detection, because the attacker is using legitimate credentials and generating network traffic that looks normal from the outside.</p>
+
+  <h2>Supervised vs. unsupervised detection approaches</h2>
+  <p>Machine learning approaches to intrusion detection divide broadly into supervised and unsupervised methods, and understanding the distinction is essential for evaluating detection systems.</p>
+  <p><strong>Supervised learning</strong> requires labeled training data — examples of malicious activity labeled as such, and examples of benign activity labeled as benign. The model learns to distinguish between the two classes and can classify new observations. Supervised models tend to have high precision for attack types that resemble those in the training data, but they share a fundamental limitation with signature-based systems: they can only reliably detect what they have been trained on. Novel attack types that differ significantly from the training examples may be classified as benign.</p>
+  <p><strong>Unsupervised learning</strong> — particularly anomaly detection approaches — does not require labeled examples of attacks. Instead, the model learns the distribution of normal behavior and flags observations that fall outside that distribution. Unsupervised approaches are theoretically capable of detecting novel attack types that have never been seen before, because they are detecting deviation from normal rather than matching to known malicious patterns. The trade-off is that unsupervised models tend to generate more false positives, since legitimate but unusual activity also deviates from normal.</p>
+  <p>Most production detection systems combine both approaches: unsupervised anomaly detection provides broad coverage and catches novel threats, while supervised models provide high-confidence, low-false-positive detection for known attack patterns. Ensemble methods that combine outputs from multiple models — each with different strengths and weaknesses — have proven particularly effective in reducing both false positive and false negative rates simultaneously.</p>
+
+  <h2>Real-time response automation</h2>
+  <p>Detection without response is intelligence without action. One of the most significant operational advantages of AI-powered security systems is the ability to automate initial response actions in real time — at machine speed, without waiting for human review of each alert.</p>
+  <p>Automated response actions range from low-impact containment steps — isolating a suspicious endpoint from the network while preserving forensic evidence — to more aggressive responses like blocking an IP address at the firewall, revoking an authentication token, or quarantining a file. The appropriate response depends on the confidence level of the detection, the sensitivity of the affected asset, and the potential impact of the response action itself.</p>
+  <p>Security Orchestration, Automation, and Response (SOAR) platforms integrate with detection systems to execute predefined response playbooks automatically. When an EDR detects a ransomware infection pattern, the SOAR platform can simultaneously isolate the endpoint, notify the security team, snapshot the affected systems for forensic analysis, and begin scanning other endpoints for the same indicators — all within seconds of initial detection.</p>
+
+  <div class="callout">
+    <div class="callout-label">The response speed imperative</div>
+    <p>Modern ransomware can encrypt thousands of files per minute. The difference between a contained incident affecting a single endpoint and an organization-wide catastrophe is often measured in minutes. Automated response that acts in seconds is not a convenience — it is a prerequisite for meaningful containment. Human-in-the-loop review cycles measured in hours are simply too slow for the modern attack tempo.</p>
+  </div>
+
+  <div class="warn">
+    <div class="warn-label">The automation risk</div>
+    <p><strong>Automated response can be weaponized.</strong> An attacker who understands that a particular behavior triggers automatic network isolation can deliberately trigger that behavior against a critical system, causing an attacker-induced outage. Response automation must be carefully scoped with circuit breakers that prevent cascade failures.</p>
+    <p><strong>False positives have real costs when automated.</strong> An automated system that isolates a critical production server in response to a false positive can cause significant operational disruption. High-impact response actions should require elevated detection confidence thresholds or asynchronous human approval.</p>
+  </div>
+
+  <h2>Building an AI-enhanced detection strategy</h2>
+  <p>The practical path to deploying AI-enhanced intrusion detection is rarely a wholesale replacement of existing infrastructure. Most mature organizations layer AI-based detection on top of existing controls, using it to enrich and prioritize alerts from existing tools rather than replacing them outright.</p>
+  <p>The most important foundation for effective ML-based detection is high-quality, comprehensive telemetry. Models can only learn from data they can see — gaps in telemetry coverage create blind spots in detection. A common failure mode is deploying sophisticated ML detection on incomplete data, generating models that appear to perform well in testing because the training data shares the same blind spots as the evaluation data.</p>
+  <p>Equally important is a commitment to continuous model evaluation and retraining. The threat landscape changes, the legitimate environment evolves, and detection models drift in accuracy over time. Organizations that deploy ML-based detection without ongoing model maintenance will find their detection rates degrading quietly as the gap between training data and current reality widens.</p>
+
+  <div class="good">
+    <div class="good-label">The layered detection architecture</div>
+    <p>The most resilient detection strategies combine: signature-based detection for known threats at the perimeter, ML-based anomaly detection for network and endpoint behavioral analysis, UEBA for identity-based threat detection, and threat intelligence integration to correlate observed activity with known attack campaigns. No single layer catches everything — the combination provides coverage that is greater than the sum of its parts.</p>
+  </div>
+
+</div>
+</main>
+</div>
+
+<div class="sticky-bar" id="sticky-bar">
+  <div class="sticky-bar-reading" id="sticky-reading">Read to the end to unlock the next module</div>
+  <div class="sticky-bar-track"><div class="sticky-bar-fill" id="sticky-fill"></div></div>
+  <div class="sticky-bar-label" id="sticky-label">0%</div>
+  <button class="sticky-bar-btn" id="sticky-btn" onclick="completeAndNext()">Module 3: AI-Powered Social Engineering →</button>
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import { getFirestore, doc, setDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  const app = initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+  const auth = getAuth(app); const db = getFirestore(app);
+  let currentUser = null;
+  onAuthStateChanged(auth, u => { currentUser = u; });
+
+  window.toggleTheme=function(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='☾'):(h.setAttribute('data-theme','dark'),i.textContent='☀');};
+  window.addEventListener('scroll',()=>{const d=document.documentElement,s=d.scrollTop||document.body.scrollTop,t=d.scrollHeight-d.clientHeight;document.getElementById('progress').style.width=(s/t*100)+'%';});
+
+  let unlocked=false;
+  function updateScrollProgress(){
+    const scrolled=window.scrollY+window.innerHeight;
+    const total=document.documentElement.scrollHeight;
+    const pct=Math.min(100,Math.round((scrolled/total)*100));
+    const fill=document.getElementById('sticky-fill');
+    const label=document.getElementById('sticky-label');
+    const btn=document.getElementById('sticky-btn');
+    const reading=document.getElementById('sticky-reading');
+    if(fill)fill.style.width=pct+'%';
+    if(label)label.textContent=pct+'%';
+    if(pct>=95&&!unlocked){
+      unlocked=true;
+      if(btn)btn.style.display='block';
+      if(reading)reading.style.display='none';
+      if(fill)fill.style.background='#22c55e';
+      if(label)label.style.color='#22c55e';
+    }
+  }
+  window.addEventListener('scroll',updateScrollProgress);
+  updateScrollProgress();
+
+  window.completeAndNext=async function(){
+    if(currentUser){
+      try{
+        await setDoc(doc(db,'users',currentUser.uid),{
+          cybersecurityModules: arrayUnion('m2')
+        }, { merge: true });
+      }catch(e){ /* progress save best-effort */ }
+    }
+    window.location.href='cybersecurity-module-3.html';
+  };
+</script>
+</body>
+</html>

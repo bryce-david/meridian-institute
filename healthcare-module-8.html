@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 8: AI and Public Health Surveillance — AI in Healthcare — Meridian Institute of AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#BE185D;--accent-dim:rgba(190,24,93,0.1);--accent-dim2:rgba(190,24,93,0.05);--nav-bg:rgba(8,8,8,0.9);--callout-bg:rgba(190,24,93,0.07);--callout-border:rgba(190,24,93,0.25);--good-bg:rgba(34,197,94,0.07);--good-border:rgba(34,197,94,0.2);--warn-bg:rgba(251,146,60,0.07);--warn-border:rgba(251,146,60,0.2);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#9D174D;--accent-dim:rgba(157,23,77,0.08);--accent-dim2:rgba(157,23,77,0.04);--nav-bg:rgba(250,250,248,0.9);--callout-bg:rgba(157,23,77,0.05);--callout-border:rgba(157,23,77,0.2);--good-bg:rgba(22,163,74,0.06);--good-border:rgba(22,163,74,0.2);--warn-bg:rgba(234,88,12,0.05);--warn-border:rgba(234,88,12,0.2);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;overflow-x:hidden;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.7;overflow-x:hidden;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}
+  .nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}
+  .nav-back{font-size:13px;color:var(--text-2);text-decoration:none;transition:color 0.2s;}
+  .nav-back:hover{color:var(--text);}
+  .nav-label{font-size:13px;color:var(--text-3);}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;transition:all 0.2s;}
+  .theme-toggle:hover{background:var(--bg-3);color:var(--text);}
+  .progress-bar{position:fixed;top:60px;left:0;right:0;z-index:99;height:2px;background:var(--border);}
+  .progress-fill{height:100%;background:var(--accent);width:0%;transition:width 0.1s;}
+  .page-wrapper{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:100vh;padding-top:62px;overflow:hidden;}
+  .sidebar{position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto;border-right:1px solid var(--border);padding:32px 24px;background:var(--bg-2);}
+  .sidebar-course{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;}
+  .sidebar-course-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+  .sidebar-module{margin-bottom:4px;}
+  .sidebar-module-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:13px;color:var(--text-2);text-decoration:none;transition:all 0.2s;line-height:1.4;}
+  .sidebar-module-link:hover{background:var(--bg-3);color:var(--text);}
+  .sidebar-module-link.active{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-num{font-size:11px;font-weight:500;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--bg-4);color:var(--text-3);}
+  .sidebar-module-link.active .sidebar-num{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-divider{height:1px;background:var(--border);margin:20px 0;}
+  .sidebar-progress-label{font-size:12px;color:var(--text-3);margin-bottom:8px;display:flex;justify-content:space-between;}
+  .sidebar-progress-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sidebar-progress-fill{height:100%;width:80%;background:var(--accent);border-radius:2px;}
+  main{display:block;min-width:0;overflow:hidden;}
+  .content{max-width:760px;width:100%;padding:60px 64px 140px;margin:0 auto;}
+  .module-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+  .module-tag{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(190,24,93,0.2);padding:4px 12px;border-radius:100px;}
+  .module-meta{font-size:12px;color:var(--text-3);}
+  h1{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1.05;letter-spacing:-0.02em;color:var(--text);margin-bottom:24px;}
+  .intro-text{font-size:19px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+  h2{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:400;color:var(--text);margin:52px 0 18px;line-height:1.2;}
+  h3{font-size:16px;font-weight:500;color:var(--text);margin:32px 0 12px;}
+  p{font-size:16px;font-weight:300;color:var(--text-2);line-height:1.8;margin-bottom:20px;}
+  strong{font-weight:500;color:var(--text);}
+  em{font-style:italic;}
+  ul,ol{margin:0 0 20px 22px;color:var(--text-2);}
+  li{font-size:16px;font-weight:300;line-height:1.8;margin-bottom:8px;}
+  .callout{background:var(--callout-bg);border:1px solid var(--callout-border);border-radius:12px;padding:24px 28px;margin:32px 0;}
+  .callout-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+  .callout p{margin:0;font-size:15px;color:var(--text-2);}
+  .callout p+p{margin-top:12px;}
+  .good{background:var(--good-bg);border:1px solid var(--good-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .good-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#22c55e;margin-bottom:10px;}
+  .good p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn{background:var(--warn-bg);border:1px solid var(--warn-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .warn-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#fb923c;margin-bottom:10px;}
+  .warn p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn p+p{margin-top:12px;}
+  .analogy{background:var(--bg-2);border:1px solid var(--border);border-radius:12px;padding:28px;margin:28px 0;}
+  .analogy-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-3);margin-bottom:12px;}
+  .analogy p{margin:0;font-size:15px;color:var(--text-2);}
+  .disclaimer{background:rgba(251,146,60,0.07);border:1px solid rgba(251,146,60,0.3);border-radius:12px;padding:24px 28px;margin:0 0 40px;}
+  .disclaimer-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#fb923c;margin-bottom:10px;}
+  .disclaimer p{margin:0;font-size:14px;color:var(--text-2);line-height:1.7;}
+  .disclaimer p+p{margin-top:10px;}
+  .comparison-wrapper{overflow-x:auto;-webkit-overflow-scrolling:touch;width:100%;margin:28px 0;}
+  table{width:100%;border-collapse:collapse;font-size:14px;min-width:480px;}
+  th{text-align:left;padding:12px 16px;font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-3);border-bottom:1px solid var(--border-2);}
+  td{padding:14px 16px;border-bottom:1px solid var(--border);color:var(--text-2);line-height:1.6;vertical-align:top;}
+  tr:last-child td{border-bottom:none;}
+  td:first-child{color:var(--text);font-weight:500;width:30%;}
+  .key-stat{background:var(--bg-2);border:1px solid var(--border);border-radius:12px;padding:20px 24px;margin:16px 0;display:flex;align-items:center;gap:20px;}
+  .key-stat-num{font-family:'Cormorant Garamond',serif;font-size:40px;font-weight:400;color:var(--accent);line-height:1;flex-shrink:0;}
+  .key-stat-label{font-size:14px;color:var(--text-2);line-height:1.6;}
+  .key-stat-label strong{display:block;font-size:15px;color:var(--text);margin-bottom:4px;}
+  .principle-list{display:flex;flex-direction:column;gap:12px;margin:24px 0;}
+  .principle{background:var(--bg-2);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:0 12px 12px 0;padding:20px 24px;}
+  .principle-title{font-size:15px;font-weight:500;color:var(--text);margin-bottom:6px;}
+  .principle-desc{font-size:14px;color:var(--text-2);line-height:1.65;margin:0;}
+  .sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:var(--bg-2);border-top:1px solid var(--border-2);padding:14px 5%;display:flex;align-items:center;justify-content:space-between;gap:16px;backdrop-filter:blur(12px);}
+  .sticky-bar-track{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sticky-bar-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.2s;width:0%;}
+  .sticky-bar-label{font-size:12px;color:var(--text-3);white-space:nowrap;min-width:60px;text-align:right;}
+  .sticky-bar-btn{padding:10px 20px;border-radius:8px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;background:var(--accent);color:#fff;border:none;cursor:pointer;white-space:nowrap;transition:opacity 0.2s;display:none;}
+  .sticky-bar-btn:hover{opacity:0.88;}
+  .sticky-bar-reading{font-size:12px;color:var(--text-3);white-space:nowrap;}
+  @media(max-width:900px){.page-wrapper{grid-template-columns:1fr;}.sidebar{display:none;}.content{padding:40px 24px 120px;}h1{font-size:38px;}}
+  @media(max-width:600px){.content{padding:28px 16px 120px;}h1{font-size:30px;}h2{font-size:24px;}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="index.html" class="nav-back">🏠 Home</a>
+    <div class="nav-divider"></div>
+    <a href="courses.html" class="nav-back">← AI in Healthcare</a>
+    <div class="nav-divider"></div>
+    <span class="nav-label">Module 8</span>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">☀</span></button>
+</nav>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+
+<div class="page-wrapper">
+<aside class="sidebar">
+  <div class="sidebar-course">Course</div>
+  <div class="sidebar-course-name">AI in Healthcare</div>
+  <div class="sidebar-module"><a href="healthcare-module-1.html" class="sidebar-module-link "><span class="sidebar-num">1</span>AI in Clinical Diagnosis</a></div>
+  <div class="sidebar-module"><a href="healthcare-module-2.html" class="sidebar-module-link "><span class="sidebar-num">2</span>Medical Imaging and AI</a></div>
+  <div class="sidebar-module"><a href="healthcare-module-3.html" class="sidebar-module-link "><span class="sidebar-num">3</span>AI in Drug Discovery</a></div>
+  <div class="sidebar-module"><a href="healthcare-module-4.html" class="sidebar-module-link "><span class="sidebar-num">4</span>EHR and Predictive Analytics</a></div>
+  <div class="sidebar-module"><a href="healthcare-module-5.html" class="sidebar-module-link "><span class="sidebar-num">5</span>AI in Mental Health</a></div>
+  <div class="sidebar-module"><a href="healthcare-module-6.html" class="sidebar-module-link "><span class="sidebar-num">6</span>Robotic Surgery and Precision Medicine</a></div>
+  <div class="sidebar-module"><a href="healthcare-module-7.html" class="sidebar-module-link "><span class="sidebar-num">7</span>Patient Data and Privacy</a></div>
+  <div class="sidebar-module"><a href="healthcare-module-8.html" class="sidebar-module-link active"><span class="sidebar-num">8</span>AI and Public Health</a></div>
+  <div class="sidebar-module"><a href="healthcare-module-9.html" class="sidebar-module-link "><span class="sidebar-num">9</span>Medical AI Regulation</a></div>
+  <div class="sidebar-module"><a href="healthcare-module-10.html" class="sidebar-module-link "><span class="sidebar-num">10</span>The Future of Healthcare AI</a></div>
+  <div class="sidebar-module"><a href="quiz-healthcare.html" class="sidebar-module-link" style="color:var(--accent);margin-top:4px;"><span class="sidebar-num" style="background:var(--accent-dim);color:var(--accent);">✦</span>Final Assessment</a></div>
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-progress-label"><span>Course progress</span><span style="color:var(--accent);">8 / 10</span></div>
+  <div class="sidebar-progress-track"><div class="sidebar-progress-fill"></div></div>
+</aside>
+
+<main>
+<div class="content">
+  <div class="module-eyebrow"><span class="module-tag">Module 8</span><span class="module-meta">20 min read · AI in Healthcare</span></div>
+  <h1>AI and Public Health Surveillance</h1>
+
+  <p class="intro-text">Public health operates at population scale — and AI gives epidemiologists tools to detect outbreaks, model spread, and allocate resources faster than ever before.</p>
+
+  <h2>Traditional disease surveillance systems</h2>
+  <p>For most of the twentieth century, disease surveillance operated through a laborious chain of clinical reporting. A physician would diagnose a notifiable condition, complete a paper form, which would be collected by a local health department, aggregated at the state level, and eventually transmitted to the CDC — a process that could take days to weeks. The CDC's National Notifiable Diseases Surveillance System (NNDSS) and the WHO's global surveillance networks were built on this foundation of mandatory clinical reporting.</p>
+  <p>This system had obvious strengths: data was clinically validated, diagnoses were confirmed, and reporting was legally mandated for a defined list of dangerous pathogens. But its speed limitations were severe. By the time influenza cases were being tallied at the CDC, the wave had already crested in many cities. Rare or novel pathogens that didn't appear on the notifiable list could circulate undetected until they produced a cluster conspicuous enough to prompt investigation. Emerging threats moved faster than the reporting infrastructure designed to catch them.</p>
+  <p>The H1N1 influenza pandemic of 2009, the Ebola outbreaks in West Africa, and most dramatically the SARS-CoV-2 pandemic revealed the critical bottlenecks in traditional surveillance: lag time, geographic gaps in reporting capacity, dependence on clinical care-seeking behavior, and the inability to detect pre-symptomatic or asymptomatic spread.</p>
+
+  <h2>Syndromic surveillance: signals before diagnoses</h2>
+  <p>Syndromic surveillance was developed to address the lag between clinical diagnosis and disease reporting by monitoring for illness-consistent behaviors before formal diagnoses occur. Rather than waiting for a laboratory-confirmed case, syndromic surveillance systems monitor emergency department chief complaints, over-the-counter pharmacy sales of fever reducers and antidiarrheals, school and workplace absenteeism, and ambulance dispatch calls.</p>
+  <p>The logic is that when an unusual pathogen begins circulating, it generates behavioral signals before it generates clinical confirmations. People buy more cold medicine before they see a doctor. Emergency departments log chief complaints like "fever and cough" before those patients have test results. Absenteeism rises before employers report it. These are weak, noisy signals individually, but at population scale, processed by AI algorithms that know the expected seasonal baselines, they can detect anomalous elevations days or weeks before traditional reporting would catch them.</p>
+  <p>The CDC's BioSense Platform and New York City's syndromic surveillance system are operational examples that have detected genuine outbreaks earlier than traditional reporting. AI-enhanced versions of these systems use machine learning to model complex seasonal patterns, detect geographic clustering, and reduce false alarms — the persistent challenge of syndromic surveillance, where many anomalous signals turn out to be reporting artifacts or weather-related patterns rather than disease.</p>
+
+  <div class="callout">
+    <div class="callout-label">BlueDot and the COVID-19 Early Warning</div>
+    <p>On December 31, 2019, the same day the WHO received the first official report of unusual pneumonia cases in Wuhan, a Toronto-based company called BlueDot had already alerted its clients. BlueDot's AI system — built on natural language processing of news reports in 65 languages, airline ticketing data, animal disease databases, and climate records — had flagged the Wuhan cluster as a significant risk and predicted which cities were most likely to receive infected travelers first. Its predictions included Bangkok, Seoul, Tokyo, Taipei, and Hong Kong. The WHO's formal alert to member states came nine days later. This was not a perfect early warning, but it demonstrated that AI-integrated surveillance of non-traditional data sources could meaningfully compress the timeline between emergence and detection.</p>
+  </div>
+
+  <h2>Wastewater epidemiology and AI signal processing</h2>
+  <p>One of the most consequential surveillance advances of the COVID-19 era was the rapid expansion of wastewater epidemiology. Viruses, including SARS-CoV-2, are shed in feces before individuals develop symptoms and often by asymptomatic individuals who never develop symptoms at all. Municipal wastewater represents a pooled sample of a community's collective disease burden — a population-level signal that doesn't depend on individuals seeking care or testing.</p>
+  <p>Raw wastewater signal, however, is noisy. Viral concentrations fluctuate with precipitation, wastewater flow rates, temperature, and the population served by each treatment plant. The signal requires normalization against multiple covariates before it becomes epidemiologically interpretable. This is where AI makes a critical contribution: machine learning models trained on historical viral concentration data alongside known case counts, population mobility data, temperature, and flow metrics can extract meaningful trend signals from what would otherwise be uninterpretable noise.</p>
+  <p>The CDC's National Wastewater Surveillance System, launched in 2020 and now covering hundreds of jurisdictions, has demonstrated that wastewater SARS-CoV-2 concentrations lead clinical case counts by four to seven days on average. The same infrastructure is now being adapted for influenza, RSV, mpox, and routine monitoring of antibiotic-resistant bacteria — creating a continuous, low-cost, population-level disease intelligence system that operates independently of individual care-seeking behavior.</p>
+
+  <h2>Forecasting: modeling infectious disease spread</h2>
+  <p>Epidemic forecasting has been transformed by the integration of classical epidemiological models with machine learning approaches. Traditional compartmental models — particularly the SEIR framework (Susceptible, Exposed, Infectious, Recovered) — provide mechanistic structure grounded in disease biology. They encode assumptions about how pathogens spread: the basic reproduction number (R0), the incubation period, the infectious period, the rate of immunity development.</p>
+  <p>The limitation of classical SEIR models is that their parameters must be estimated and held fixed, and they struggle to capture the complex behavioral and social dynamics that shape real epidemics — school calendars, holiday travel, political responses to outbreak news, population heterogeneity in contact rates. Machine learning approaches can learn these complex patterns from historical epidemic data but lack the mechanistic interpretability and extrapolation ability of compartmental models.</p>
+  <p>Hybrid approaches that embed machine learning components within epidemiological model structures — sometimes called "mechanistic-statistical" models — have produced the best forecasting results in CDC forecasting challenges. These models use ML to estimate time-varying parameters (like an effective reproduction number that changes as behavior changes) while retaining the structural constraints that prevent epidemiologically impossible predictions.</p>
+
+  <div class="principle-list">
+    <div class="principle">
+      <div class="principle-title">Short-term incidence forecasting</div>
+      <div class="principle-desc">Predicting case counts one to four weeks ahead — the most practically useful horizon for hospital surge planning, supply chain management, and public communication. Ensemble models combining multiple independent forecasts consistently outperform individual models, a finding robust across influenza, COVID-19, and dengue.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Outbreak peak timing and magnitude</div>
+      <div class="principle-desc">Predicting when and how severely an outbreak will peak is critical for resource allocation — ventilator stockpiling, healthcare worker deployment, vaccination campaign timing. This is harder than short-term forecasting and substantially more uncertain as the forecast horizon extends.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Geographic spread modeling</div>
+      <div class="principle-desc">Predicting which locations will see significant transmission next, informed by mobility networks, transportation infrastructure, and demographic patterns. Airline and commuting data have become essential inputs, with AI methods identifying the community-level features that predict rapid versus slow spread.</div>
+    </div>
+  </div>
+
+  <h2>Social media mining for health signals</h2>
+  <p>The promise of social media for disease surveillance was vivid and intuitive: billions of people describing their symptoms in real time, searchable at scale. Google Flu Trends, launched in 2008, attempted to predict influenza activity from search query volumes — and initially appeared to outperform CDC surveillance by weeks. It became a landmark example of "big data" public health and attracted enormous attention.</p>
+  <p>Then it failed, catastrophically and publicly. Google Flu Trends overestimated influenza prevalence by more than double during the 2012-2013 season. The reasons were instructive: the model had overfit to correlations between search terms and flu activity that were not causally robust. Media coverage of flu seasons drove search activity independent of actual flu burden. Seasonal behavior changes affected searches in ways the model misinterpreted. The model was not tested against adversarial conditions and collapsed when those conditions arrived.</p>
+  <p>The Google Flu Trends experience became a cautionary tale about the difference between correlation and causation in big data epidemiology. Subsequent research on Twitter-based flu surveillance found similar limitations — high noise, platform-specific biases, and failure modes tied to non-health events that drove disease-related content. The lesson was not that social media signals are useless but that they require careful validation against clinical ground truth and should be treated as supplementary signals rather than primary data sources.</p>
+
+  <div class="warn">
+    <div class="warn-label">The Social Media Surveillance Trap</div>
+    <p><strong>Platform bias.</strong> Social media users are not representative of the general population — they skew younger, more urban, and in many countries more affluent. Disease patterns visible in social media data reflect the demographics of social media users, not community-wide burden.</p>
+    <p><strong>Infodemic contamination.</strong> During high-profile outbreaks, media coverage drives symptom-related posts and searches independent of actual disease prevalence. Models trained on data from non-outbreak periods may dramatically overestimate burden when an outbreak receives prominent media coverage.</p>
+  </div>
+
+  <h2>AI in vaccine distribution and cold chain optimization</h2>
+  <p>Vaccine logistics present a complex optimization problem that AI approaches are well-suited to address. Many vaccines require continuous refrigeration or freezing throughout the supply chain — the "cold chain" — and breaks in the cold chain destroy vaccine efficacy invisibly, resulting in vaccinated populations that are not actually protected. Managing cold chain integrity across thousands of facilities in resource-limited settings requires real-time monitoring and rapid response.</p>
+  <p>AI systems trained on historical cold chain performance data, temperature sensor readings, facility characteristics, and local power reliability can predict which facilities are at highest risk of cold chain failure before failures occur — enabling proactive maintenance, pre-emptive stock reallocation, and targeted intervention. During COVID-19 vaccine deployment, logistics optimization tools used reinforcement learning to dynamically reallocate doses across jurisdictions as uptake patterns diverged from predictions, reducing waste and improving equity in the allocation of limited supply.</p>
+  <p>Equity in vaccine distribution is itself an optimization target that AI can operationalize. Models that optimize purely for efficiency — minimizing waste or travel distance — may systematically under-serve populations with lower baseline health care access. Explicitly encoding equity constraints into distribution optimization models, weighting allocation toward underserved populations, is both technically feasible and increasingly being demanded by public health authorities.</p>
+
+  <h2>Health equity and surveillance gaps</h2>
+  <p>Surveillance systems are only as good as the data they can access — and access to health data is profoundly unequal. Communities with limited access to formal healthcare generate fewer laboratory-confirmed diagnoses, fewer electronic health records, and less complete vital statistics data. Surveillance systems built on clinical reporting therefore systematically undercount disease burden in exactly the populations that are most vulnerable to it.</p>
+  <p>This is not a new problem, but AI amplifies it in important ways. Machine learning models trained on surveillance data from well-connected populations may produce predictions that systematically underperform in under-resourced communities, exactly where accurate early warning matters most. Wastewater surveillance, notably, partially addresses this gap — it captures disease burden regardless of whether individuals seek care — but it requires wastewater infrastructure that itself is unevenly distributed.</p>
+  <p>Addressing surveillance equity requires active investment in data collection infrastructure in underserved communities, approaches that can function with limited or absent electronic data (community health worker reporting, mobile surveillance platforms), and model development processes that explicitly test for differential performance across demographic and geographic subgroups. Health equity is not a separate consideration from AI surveillance quality — it is central to whether surveillance actually works.</p>
+
+  <h2>Privacy versus public good in surveillance</h2>
+  <p>Public health surveillance has always required some compromise of individual privacy in service of collective safety — this is the foundational justification for mandatory disease reporting. The arrival of AI surveillance capabilities, however, has substantially extended the scope of what is technically possible and intensified the ethical tensions around what should be permitted.</p>
+  <p>Location tracking for contact tracing, social graph analysis to identify transmission networks, and individual-level behavioral monitoring can all provide genuine public health value. They also create surveillance infrastructure that can be repurposed for political control, immigration enforcement, or commercial targeting — and in many countries, has been. The COVID-19 pandemic produced a rapid global expansion of population surveillance capabilities, some of which were deployed with inadequate oversight and some of which were not dismantled when the emergency receded.</p>
+
+  <div class="good">
+    <div class="good-label">Principled Surveillance Design</div>
+    <p>The most defensible public health surveillance systems are designed with built-in privacy constraints from the outset: data minimization (collect only what is necessary for the public health function), purpose limitation (use data only for the stated public health purpose), time limitation (delete individual-level data after it is no longer needed), and oversight mechanisms (independent review of surveillance programs). Privacy-preserving AI techniques — differential privacy, federated analysis, secure multiparty computation — enable meaningful surveillance capability with substantially reduced individual privacy cost. The goal is surveillance that is powerful enough to protect public health and constrained enough to preserve individual rights.</p>
+  </div>
+
+</div>
+</main>
+</div>
+
+<div class="sticky-bar" id="sticky-bar">
+  <div class="sticky-bar-reading" id="sticky-reading">Read to the end to unlock the next module</div>
+  <div class="sticky-bar-track"><div class="sticky-bar-fill" id="sticky-fill"></div></div>
+  <div class="sticky-bar-label" id="sticky-label">0%</div>
+  <button class="sticky-bar-btn" id="sticky-btn" onclick="completeAndNext()">Module 9: Medical AI Regulation →</button>
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import { getFirestore, doc, updateDoc, setDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  const app = initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+  const auth = getAuth(app); const db = getFirestore(app);
+  let currentUser = null;
+  onAuthStateChanged(auth, u => { currentUser = u; });
+
+  window.toggleTheme=function(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='☾'):(h.setAttribute('data-theme','dark'),i.textContent='☀');};
+  window.addEventListener('scroll',()=>{const d=document.documentElement,s=d.scrollTop||document.body.scrollTop,t=d.scrollHeight-d.clientHeight;document.getElementById('progress').style.width=(s/t*100)+'%';});
+
+  let unlocked=false;
+  function updateScrollProgress(){
+    const scrolled=window.scrollY+window.innerHeight;
+    const total=document.documentElement.scrollHeight;
+    const pct=Math.min(100,Math.round((scrolled/total)*100));
+    const fill=document.getElementById('sticky-fill');
+    const label=document.getElementById('sticky-label');
+    const btn=document.getElementById('sticky-btn');
+    const reading=document.getElementById('sticky-reading');
+    if(fill)fill.style.width=pct+'%';
+    if(label)label.textContent=pct+'%';
+    if(pct>=95&&!unlocked){
+      unlocked=true;
+      if(btn)btn.style.display='block';
+      if(reading)reading.style.display='none';
+      if(fill)fill.style.background='#22c55e';
+      if(label)label.style.color='#22c55e';
+    }
+  }
+  window.addEventListener('scroll',updateScrollProgress);
+  updateScrollProgress();
+
+  window.completeAndNext=async function(){
+    // Save progress to Firestore — cross-device, no browser storage
+    if(currentUser){
+      try{
+        await setDoc(doc(db,'users',currentUser.uid),{
+          healthcareModules: arrayUnion('m8')
+        }, { merge: true });
+      }catch(e){ /* progress save best-effort */ }
+    }
+    window.location.href='healthcare-module-9.html';
+  };
+</script>
+</body>
+</html>

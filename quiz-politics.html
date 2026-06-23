@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Final Assessment — AI in Politics — Meridian Institute of AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#9D174D;--accent-dim:rgba(157,23,77,0.1);--nav-bg:rgba(8,8,8,0.9);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#881337;--accent-dim:rgba(136,19,55,0.08);--nav-bg:rgba(250,250,248,0.9);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}.nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}.nav-back{font-size:13px;color:var(--text-2);text-decoration:none;}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;}
+  .quiz-wrap{max-width:720px;margin:0 auto;padding:100px 32px 80px;}
+  .quiz-header{text-align:center;margin-bottom:48px;}
+  .quiz-tag{display:inline-block;font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(157,23,77,0.2);padding:4px 14px;border-radius:100px;margin-bottom:20px;}
+  h1{font-family:'Cormorant Garamond',serif;font-size:44px;font-weight:300;line-height:1.1;margin-bottom:16px;}
+  .quiz-subhead{font-size:16px;color:var(--text-2);font-weight:300;}
+  .quiz-meta{display:flex;gap:24px;justify-content:center;margin-top:20px;padding-top:20px;border-top:1px solid var(--border);}
+  .quiz-meta-item{font-size:13px;color:var(--text-3);}
+  .start-btn{display:block;width:100%;max-width:320px;margin:32px auto 0;padding:14px 0;background:var(--accent);color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:500;font-family:'DM Sans',sans-serif;cursor:pointer;transition:opacity 0.2s;}.start-btn:hover{opacity:0.88;}
+  #quiz-area{display:none;}
+  .q-block{background:var(--bg-2);border:1px solid var(--border);border-radius:14px;padding:28px 32px;margin-bottom:20px;}
+  .q-num{font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-3);margin-bottom:10px;}
+  .q-text{font-size:17px;font-weight:400;color:var(--text);line-height:1.55;margin-bottom:20px;}
+  .q-options{display:flex;flex-direction:column;gap:10px;}
+  .q-opt{display:flex;align-items:flex-start;gap:12px;padding:12px 16px;border-radius:9px;border:1px solid var(--border);cursor:pointer;transition:all 0.15s;font-size:15px;color:var(--text-2);line-height:1.5;background:var(--bg-3);}
+  .q-opt:hover{border-color:var(--accent);color:var(--text);}.q-opt input[type=radio]{accent-color:var(--accent);margin-top:3px;flex-shrink:0;}
+  .q-opt.selected{border-color:var(--accent);background:var(--accent-dim);color:var(--text);}
+  .progress-track{height:3px;background:var(--border);border-radius:2px;margin-bottom:32px;overflow:hidden;}.progress-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.3s;}
+  .quiz-submit{display:block;width:100%;padding:15px 0;background:var(--accent);color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:500;font-family:'DM Sans',sans-serif;cursor:pointer;margin-top:12px;transition:opacity 0.2s;}.quiz-submit:hover{opacity:0.88;}.quiz-submit:disabled{opacity:0.4;cursor:not-allowed;}
+  #result-screen{display:none;text-align:center;padding:60px 0;}
+  .result-icon{font-size:56px;margin-bottom:16px;}.result-title{font-family:'Cormorant Garamond',serif;font-size:40px;font-weight:400;margin-bottom:12px;}
+  .result-score{font-size:20px;color:var(--text-2);margin-bottom:8px;}.result-msg{font-size:15px;color:var(--text-3);margin-bottom:36px;max-width:480px;margin-left:auto;margin-right:auto;line-height:1.6;}
+  .cert-box{background:var(--bg-2);border:1px solid var(--border);border-radius:14px;padding:24px 28px;margin:0 auto 32px;max-width:440px;}
+  .cert-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:8px;}.cert-id{font-size:14px;color:var(--text-2);font-family:monospace;word-break:break-all;}
+  .result-btn{display:inline-block;padding:12px 28px;border-radius:9px;font-size:14px;font-weight:500;cursor:pointer;border:none;font-family:'DM Sans',sans-serif;}
+  .result-btn-primary{background:var(--accent);color:#fff;margin-right:10px;}.result-btn-primary:hover{opacity:0.88;}
+  .result-btn-secondary{background:var(--bg-2);color:var(--text-2);border:1px solid var(--border);}.result-btn-secondary:hover{color:var(--text);}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="courses.html" class="nav-back">← All Courses</a>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">☀</span></button>
+</nav>
+<div class="quiz-wrap">
+  <div class="quiz-header">
+    <div class="quiz-tag">Final Assessment</div>
+    <h1>AI in Politics</h1>
+    <p class="quiz-subhead">25 questions · 70% required to pass · Earn your certificate</p>
+    <div class="quiz-meta">
+      <span class="quiz-meta-item">25 questions</span>
+      <span class="quiz-meta-item">~15 minutes</span>
+      <span class="quiz-meta-item">Passing: 18 / 25</span>
+    </div>
+  </div>
+  <div id="start-screen">
+    <button class="start-btn" onclick="startQuiz()">Begin Assessment</button>
+  </div>
+  <div id="quiz-area">
+    <div class="progress-track"><div class="progress-fill" id="q-progress"></div></div>
+    <div id="questions-container"></div>
+    <button class="quiz-submit" id="submit-btn" onclick="submitQuiz()" disabled>Submit Assessment</button>
+  </div>
+  <div id="result-screen">
+    <div class="result-icon" id="result-icon"></div>
+    <div class="result-title" id="result-title"></div>
+    <div class="result-score" id="result-score"></div>
+    <div class="result-msg" id="result-msg"></div>
+    <div class="cert-box" id="cert-box" style="display:none;"><div class="cert-label">Certificate ID</div><div class="cert-id" id="cert-id-text"></div></div>
+    <button class="result-btn result-btn-primary" onclick="window.location.href='courses.html'">Back to Courses</button>
+    <button class="result-btn result-btn-secondary" id="retry-btn" onclick="retryQuiz()" style="display:none;">Retry Assessment</button>
+  </div>
+</div>
+<script type="module">
+import{initializeApp}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import{getAuth,onAuthStateChanged}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import{getFirestore,doc,setDoc}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+const app=initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+const auth=getAuth(app);const db=getFirestore(app);let currentUser=null;
+onAuthStateChanged(auth,u=>{currentUser=u;});
+window.toggleTheme=function(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='☾'):(h.setAttribute('data-theme','dark'),i.textContent='☀');};
+
+const ALL_QUESTIONS=[
+  {q:"What is a 'deepfake' in the political context?",opts:["A leaked government document","AI-generated synthetic media that realistically depicts real people saying or doing things they never did","A type of voter ID fraud","An encrypted political communication"],a:1},
+  {q:"How does AI enable micro-targeting in political campaigns?",opts:["By broadcasting identical messages to all voters","By analyzing vast data about individuals to craft personalized political messages","By reducing campaign advertising costs","By eliminating the need for political polling"],a:1},
+  {q:"What is 'algorithmic amplification' in social media?",opts:["Making algorithms run faster","When platform algorithms disproportionately spread certain content — often outrage-inducing — because it drives engagement","When companies pay to amplify political ads","A technique for detecting bots"],a:1},
+  {q:"Which best describes the 'filter bubble' phenomenon?",opts:["A spam filter for political emails","When users are algorithmically shown primarily content that confirms existing beliefs, reducing exposure to opposing views","A government censorship tool","When political ads are blocked by browsers"],a:1},
+  {q:"What challenge does AI-generated disinformation pose to democratic discourse?",opts:["It makes elections more competitive","It enables the mass production of convincing false content that can undermine public understanding of political reality","It reduces voter turnout only","It primarily affects local elections"],a:1},
+  {q:"What is 'computational propaganda'?",opts:["Using computers to count ballots","The use of algorithms, automation, and big data to shape public opinion at scale","AI that writes political speeches","Propaganda against technology companies"],a:1},
+  {q:"How might AI be used to analyze legislation?",opts:["AI cannot read legal text","By processing bill text to identify provisions, conflicts, affected populations, and likely impacts at scale","By replacing legislative staff entirely","Only for counting votes on bills"],a:1},
+  {q:"What is a 'social bot' in the political context?",opts:["A government chatbot for citizen services","An automated account designed to simulate human political participation and influence public discourse","A political party's official social media account","A platform for political fundraising"],a:1},
+  {q:"What does 'surveillance capitalism' mean?",opts:["Government monitoring of corporations","A business model based on the extraction, analysis, and monetization of personal data to predict and influence behavior","Military surveillance technology","An economic system based on CCTV infrastructure"],a:1},
+  {q:"Why is voter data particularly sensitive in the AI era?",opts:["Because it reveals who is a citizen","Because it can be combined with other datasets to create detailed profiles enabling highly personalized political manipulation","Because it is publicly available","Because it is stored on government servers"],a:1},
+  {q:"What is the key concern about using AI in predictive policing?",opts:["It is too expensive","It can entrench racial and socioeconomic biases embedded in historical data, producing discriminatory targeting","It is not accurate enough","It generates too many false negatives"],a:1},
+  {q:"How can AI affect political polarization?",opts:["It always reduces polarization","Engagement-optimizing algorithms may amplify extreme and outrage-generating content, deepening political divisions","It has no measurable effect","Only in developing countries"],a:1},
+  {q:"What is 'platform governance' in the context of AI and politics?",opts:["Government-run social media platforms","The rules, algorithms, and enforcement mechanisms that determine what speech is permitted and amplified on tech platforms","Platforms for governing AI development","Corporate governance of AI companies"],a:1},
+  {q:"Which is an example of AI applied to national security?",opts:["AI for school curriculum design","Automated analysis of signals intelligence and satellite imagery to detect threats","AI for electoral redistricting","Social media algorithms"],a:1},
+  {q:"What is 'regulatory capture' and why does it concern AI governance?",opts:["When a government captures AI systems","When regulated industries gain undue influence over regulatory bodies, potentially weakening oversight","When AI systems capture regulatory data","A type of data breach"],a:1},
+  {q:"What does 'autonomous weapons system' mean?",opts:["A weapon operated remotely by a human","A weapon system that can select and engage targets without direct human control","A defensive system only","A cybersecurity tool"],a:1},
+  {q:"How might AI change political campaign strategy?",opts:["By making campaigns cheaper universally","By enabling real-time personalization of messaging, identification of persuadable voters, and prediction of turnout","By eliminating the need for candidate debates","By automating candidate selection"],a:1},
+  {q:"What is 'gerrymandering' and how might AI affect it?",opts:["A campaign funding strategy","The drawing of district lines to benefit a political party — AI can optimize this to make gerrymandering more precise and harder to detect","A type of voter suppression through technology","An AI-based polling method"],a:1},
+  {q:"Why are civil liberties organizations concerned about facial recognition in political contexts?",opts:["It is unreliable in dark conditions","It enables tracking of individuals at political events, protests, and religious gatherings — chilling free expression and assembly","It is too expensive for government use","It only works on crowds"],a:1},
+  {q:"What is 'foreign interference' in elections via AI?",opts:["Foreign countries observing elections","State or non-state actors using AI to create disinformation, amplify divisive content, or manipulate public opinion in another country's political process","Overseas citizens voting in foreign elections","International AI regulation"],a:1},
+  {q:"What does 'transparency' require of political AI systems?",opts:["Making all government data public","That citizens and regulators can understand how AI influences decisions affecting them — including targeting, content moderation, and automated government decisions","That all AI code is open source","That only AI researchers can access the systems"],a:1},
+  {q:"How can AI support participatory democracy?",opts:["By replacing elected representatives","By enabling large-scale civic engagement, organizing public input on policy, and making government information more accessible","By automating all voting","By reducing the number of elected positions"],a:1},
+  {q:"What is the 'chilling effect' in the context of AI surveillance?",opts:["AI that tracks temperature data","When awareness of surveillance causes people to self-censor political speech and avoid associations — undermining democratic participation","A type of AI processing bottleneck","A technique for reducing AI energy consumption"],a:1},
+  {q:"What challenge do 'information operations' pose to democratic elections?",opts:["They make campaigns more expensive","Coordinated campaigns using AI to spread disinformation, suppress turnout, or manufacture false consensus can undermine the informed public deliberation elections require","They only affect incumbent candidates","They have minimal impact in democracies with free press"],a:1},
+  {q:"What principle should guide the use of AI in democratic governance?",opts:["Maximizing efficiency above all else","Human oversight, transparency, and accountability — AI should support democratic processes, not replace or undermine them","Deploying the most advanced AI available","Minimizing government cost"],a:1}
+];
+
+let activeQuestions=[];let userAnswers={};
+function shuffle(arr){const a=[...arr];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+window.startQuiz=function(){activeQuestions=shuffle(ALL_QUESTIONS).slice(0,25);userAnswers={};document.getElementById('start-screen').style.display='none';document.getElementById('quiz-area').style.display='block';renderQuestions();};
+function renderQuestions(){const c=document.getElementById('questions-container');c.innerHTML=activeQuestions.map((q,qi)=>`<div class="q-block" id="qb-${qi}"><div class="q-num">Question ${qi+1} of ${activeQuestions.length}</div><div class="q-text">${q.q}</div><div class="q-options">${q.opts.map((o,oi)=>`<label class="q-opt" id="opt-${qi}-${oi}"><input type="radio" name="q${qi}" value="${oi}" onchange="selectOpt(${qi},${oi})">${o}</label>`).join('')}</div></div>`).join('');}
+window.selectOpt=function(qi,oi){userAnswers[qi]=oi;activeQuestions[qi].opts.forEach((_,i)=>{const el=document.getElementById(`opt-${qi}-${i}`);if(el)el.classList.toggle('selected',i===oi);});const answered=Object.keys(userAnswers).length;document.getElementById('q-progress').style.width=(answered/activeQuestions.length*100)+'%';document.getElementById('submit-btn').disabled=answered<activeQuestions.length;};
+window.submitQuiz=async function(){let correct=0;activeQuestions.forEach((q,i)=>{if(userAnswers[i]===q.a)correct++;});const pct=Math.round(correct/activeQuestions.length*100);const passed=pct>=70;if(passed&&currentUser){try{const id='POL-'+Date.now();await setDoc(doc(db,'users',currentUser.uid),{politicsCertId:id},{merge:true});document.getElementById('cert-id-text').textContent=id;document.getElementById('cert-box').style.display='block';}catch(e){}}document.getElementById('quiz-area').style.display='none';document.getElementById('result-icon').textContent=passed?'🎓':'📖';document.getElementById('result-title').textContent=passed?'Certificate Earned':'Keep Studying';document.getElementById('result-score').textContent=`${correct} / ${activeQuestions.length} correct (${pct}%)`;document.getElementById('result-msg').textContent=passed?'Congratulations! You\'ve demonstrated a solid understanding of AI in Politics.':'You need 70% to pass. Review the modules and try again when you\'re ready.';if(!passed){document.getElementById('retry-btn').style.display='inline-block';}document.getElementById('result-screen').style.display='block';};
+window.retryQuiz=function(){document.getElementById('result-screen').style.display='none';document.getElementById('cert-box').style.display='none';document.getElementById('retry-btn').style.display='none';window.startQuiz();};
+</script>
+</body>
+</html>

@@ -19,16 +19,11 @@
   .nav-btn-signout{font-size:13px;font-weight:500;color:#ef4444;background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.15);padding:7px 14px;border-radius:8px;cursor:pointer;font-family:'DM Sans',sans-serif;margin-left:4px;}
   .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;color:var(--text-2);font-size:14px;margin-left:6px;}
   .page{max-width:960px;margin:0 auto;padding:80px 5% 80px;}
-
-  /* Welcome */
   .welcome{margin-bottom:36px;}
   .welcome-eyebrow{font-size:11px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-3);margin-bottom:8px;}
   .welcome-name{font-family:'Cormorant Garamond',serif;font-size:42px;font-weight:300;color:var(--text);margin-bottom:4px;}
   .welcome-sub{font-size:14px;color:var(--text-3);}
-
-  /* Capstone banner */
   .capstone-banner{background:linear-gradient(135deg,rgba(240,180,41,0.06) 0%,transparent 60%),var(--bg-2);border:1px solid rgba(240,180,41,0.2);border-radius:14px;padding:22px 28px;display:flex;align-items:center;justify-content:space-between;gap:20px;margin-bottom:36px;}
-  .capstone-banner-text{}
   .capstone-banner-eyebrow{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#F0B429;margin-bottom:6px;}
   .capstone-banner-title{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:300;color:var(--text);margin-bottom:4px;}
   .capstone-banner-sub{font-size:13px;color:var(--text-2);}
@@ -36,11 +31,7 @@
   .capstone-banner-btn.locked{background:var(--bg-3);color:var(--text-3);border:1px solid var(--border-2);cursor:default;}
   .capstone-banner-btn.ready{background:#F0B429;color:#080808;}
   .capstone-banner-btn.earned{background:rgba(34,197,94,0.12);color:#22c55e;border:1px solid rgba(34,197,94,0.25);}
-
-  /* Section label */
   .section-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-3);margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid var(--border);}
-
-  /* Course rows */
   .course-list{display:flex;flex-direction:column;gap:10px;margin-bottom:36px;}
   .course-row{background:var(--bg-2);border:1px solid var(--border);border-radius:12px;padding:16px 20px;display:flex;align-items:center;gap:16px;text-decoration:none;transition:border-color 0.2s;}
   .course-row:hover{border-color:var(--border-2);}
@@ -57,8 +48,6 @@
   .cert-badge.earned{background:rgba(34,197,94,0.1);color:#22c55e;border:1px solid rgba(34,197,94,0.2);}
   .cert-badge.not-earned{background:var(--bg-3);color:var(--text-3);border:1px solid var(--border);}
   .cert-badge.in-progress{background:rgba(240,180,41,0.08);color:#F0B429;border:1px solid rgba(240,180,41,0.2);}
-
-  /* Certificate cards */
   .cert-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;}
   .cert-card{background:var(--bg-2);border:1px solid var(--border);border-radius:12px;padding:18px;}
   .cert-card.earned{border-color:rgba(34,197,94,0.2);}
@@ -68,17 +57,12 @@
   .cert-card-status{font-size:12px;color:var(--text-3);}
   .cert-card-link{font-size:12px;font-weight:500;text-decoration:none;display:inline-block;margin-top:6px;}
   .cert-card-link:hover{text-decoration:underline;}
-
   @media(max-width:640px){.capstone-banner{flex-direction:column;align-items:flex-start;}.course-row{flex-wrap:wrap;}.progress-wrap{min-width:100%;order:5;}}
 </style>
-<link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="shortcut icon" href="/favicon.ico">
 </head>
 <body>
 <nav>
-  <a href="index.html" class="nav-logo">
-    <div class="nav-logo-mark">M</div>
-    <span class="nav-logo-text">Meridian</span>
-  </a>
+  <a href="index.html" class="nav-logo"><div class="nav-logo-mark">M</div><span class="nav-logo-text">Meridian</span></a>
   <div class="nav-links">
     <a href="courses.html" class="nav-link">Courses</a>
     <a href="dashboard.html" class="nav-link active">Dashboard</a>
@@ -94,123 +78,111 @@
     <div class="welcome-sub" id="welcome-sub">Loading your progress...</div>
   </div>
 
-  <!-- Capstone banner -->
   <div class="capstone-banner">
     <div class="capstone-banner-text">
       <div class="capstone-banner-eyebrow" id="cap-eyebrow">★ Capstone Certification</div>
       <div class="capstone-banner-title">AI Systems Proficiency Certification</div>
-      <div class="capstone-banner-sub" id="cap-sub">Complete all 5 courses to unlock.</div>
+      <div class="capstone-banner-sub" id="cap-sub">Complete all 5 core courses to unlock.</div>
     </div>
     <a href="quiz-proficiency.html" class="capstone-banner-btn locked" id="cap-btn">🔒 Locked</a>
   </div>
 
-  <!-- Courses -->
-  <div class="section-label">Your Courses</div>
-  <div class="course-list" id="course-list">
-
-    <a href="courses/foundations/module-1.html" class="course-row" id="row-foundations">
+  <div class="section-label">Beginner</div>
+  <div class="course-list">
+    <a href="module-1-what-ai-actually-is.html" class="course-row" id="row-foundations">
       <div class="course-dot" style="background:#5b8ff8;"></div>
-      <div class="course-info">
-        <div class="course-title">Foundations of AI</div>
-        <div class="course-sub">6 modules · Beginner</div>
-        <div class="course-continue" id="continue-foundations" style="display:none;color:#5b8ff8;"></div>
-      </div>
-      <div class="progress-wrap">
-        <div class="progress-track"><div class="progress-fill" id="prog-foundations" style="width:0%;background:#5b8ff8;"></div></div>
-        <div class="progress-label" id="prog-label-foundations">Not started</div>
-      </div>
+      <div class="course-info"><div class="course-title">Foundations of AI</div><div class="course-sub">6 modules · Beginner</div><div class="course-continue" id="continue-foundations" style="display:none;color:#5b8ff8;"></div></div>
+      <div class="progress-wrap"><div class="progress-track"><div class="progress-fill" id="prog-foundations" style="width:0%;background:#5b8ff8;"></div></div><div class="progress-label" id="prog-label-foundations">Not started</div></div>
       <div class="cert-badge not-earned" id="badge-foundations">Certificate</div>
     </a>
-
-    <a href="courses/claude/module-1.html" class="course-row" id="row-claude">
-      <div class="course-dot" style="background:#D97757;"></div>
-      <div class="course-info">
-        <div class="course-title">Mastering Claude</div>
-        <div class="course-sub">7 modules · Intermediate</div>
-        <div class="course-continue" id="continue-claude" style="display:none;color:#D97757;"></div>
-      </div>
-      <div class="progress-wrap">
-        <div class="progress-track"><div class="progress-fill" id="prog-claude" style="width:0%;background:#D97757;"></div></div>
-        <div class="progress-label" id="prog-label-claude">Not started</div>
-      </div>
-      <div class="cert-badge not-earned" id="badge-claude">Certificate</div>
-    </a>
-
-    <a href="courses/chatgpt/module-1.html" class="course-row" id="row-chatgpt">
-      <div class="course-dot" style="background:#10a37f;"></div>
-      <div class="course-info">
-        <div class="course-title">Mastering ChatGPT</div>
-        <div class="course-sub">7 modules · Intermediate</div>
-        <div class="course-continue" id="continue-chatgpt" style="display:none;color:#10a37f;"></div>
-      </div>
-      <div class="progress-wrap">
-        <div class="progress-track"><div class="progress-fill" id="prog-chatgpt" style="width:0%;background:#10a37f;"></div></div>
-        <div class="progress-label" id="prog-label-chatgpt">Not started</div>
-      </div>
-      <div class="cert-badge not-earned" id="badge-chatgpt">Certificate</div>
-    </a>
-
-    <a href="courses/gemini/module-1.html" class="course-row" id="row-gemini">
-      <div class="course-dot" style="background:#4285f4;"></div>
-      <div class="course-info">
-        <div class="course-title">Mastering Gemini</div>
-        <div class="course-sub">7 modules · Intermediate</div>
-        <div class="course-continue" id="continue-gemini" style="display:none;color:#4285f4;"></div>
-      </div>
-      <div class="progress-wrap">
-        <div class="progress-track"><div class="progress-fill" id="prog-gemini" style="width:0%;background:#4285f4;"></div></div>
-        <div class="progress-label" id="prog-label-gemini">Not started</div>
-      </div>
-      <div class="cert-badge not-earned" id="badge-gemini">Certificate</div>
-    </a>
-
-    <a href="courses/perplexity/module-1.html" class="course-row" id="row-perplexity">
-      <div class="course-dot" style="background:#00ADB5;"></div>
-      <div class="course-info">
-        <div class="course-title">Mastering Perplexity</div>
-        <div class="course-sub">7 modules · Intermediate</div>
-        <div class="course-continue" id="continue-perplexity" style="display:none;color:#00ADB5;"></div>
-      </div>
-      <div class="progress-wrap">
-        <div class="progress-track"><div class="progress-fill" id="prog-perplexity" style="width:0%;background:#00ADB5;"></div></div>
-        <div class="progress-label" id="prog-label-perplexity">Not started</div>
-      </div>
-      <div class="cert-badge not-earned" id="badge-perplexity">Certificate</div>
-    </a>
-
-    <div class="section-label" style="margin-top:36px;">Advanced — Domain Mastery</div>
-
-    <a href="courses/finance/module-1.html" class="course-row" id="row-finance">
-      <div class="course-dot" style="background:#2D7D46;"></div>
-      <div class="course-info">
-        <div class="course-title">AI in Finance</div>
-        <div class="course-sub">10 modules · Advanced</div>
-        <div class="course-continue" id="continue-finance" style="display:none;color:#2D7D46;"></div>
-      </div>
-      <div class="progress-wrap">
-        <div class="progress-track"><div class="progress-fill" id="prog-finance" style="width:0%;background:#2D7D46;"></div></div>
-        <div class="progress-label" id="prog-label-finance">Not started</div>
-      </div>
-      <div class="cert-badge not-earned" id="badge-finance">Certificate</div>
-    </a>
-
-    <a href="courses/law/module-1.html" class="course-row" id="row-law">
-      <div class="course-dot" style="background:#8B2E3C;"></div>
-      <div class="course-info">
-        <div class="course-title">AI in Law</div>
-        <div class="course-sub">10 modules · Advanced</div>
-        <div class="course-continue" id="continue-law" style="display:none;color:#8B2E3C;"></div>
-      </div>
-      <div class="progress-wrap">
-        <div class="progress-track"><div class="progress-fill" id="prog-law" style="width:0%;background:#8B2E3C;"></div></div>
-        <div class="progress-label" id="prog-label-law">Not started</div>
-      </div>
-      <div class="cert-badge not-earned" id="badge-law">Certificate</div>
-    </a>
-
   </div>
 
-  <!-- Certificates -->
+  <div class="section-label">Intermediate — Tool Mastery</div>
+  <div class="course-list">
+    <a href="claude-module-1.html" class="course-row" id="row-claude">
+      <div class="course-dot" style="background:#D97757;"></div>
+      <div class="course-info"><div class="course-title">Mastering Claude</div><div class="course-sub">7 modules · Intermediate</div><div class="course-continue" id="continue-claude" style="display:none;color:#D97757;"></div></div>
+      <div class="progress-wrap"><div class="progress-track"><div class="progress-fill" id="prog-claude" style="width:0%;background:#D97757;"></div></div><div class="progress-label" id="prog-label-claude">Not started</div></div>
+      <div class="cert-badge not-earned" id="badge-claude">Certificate</div>
+    </a>
+    <a href="chatgpt-module-1.html" class="course-row" id="row-chatgpt">
+      <div class="course-dot" style="background:#10a37f;"></div>
+      <div class="course-info"><div class="course-title">Mastering ChatGPT</div><div class="course-sub">7 modules · Intermediate</div><div class="course-continue" id="continue-chatgpt" style="display:none;color:#10a37f;"></div></div>
+      <div class="progress-wrap"><div class="progress-track"><div class="progress-fill" id="prog-chatgpt" style="width:0%;background:#10a37f;"></div></div><div class="progress-label" id="prog-label-chatgpt">Not started</div></div>
+      <div class="cert-badge not-earned" id="badge-chatgpt">Certificate</div>
+    </a>
+    <a href="gemini-module-1.html" class="course-row" id="row-gemini">
+      <div class="course-dot" style="background:#4285f4;"></div>
+      <div class="course-info"><div class="course-title">Mastering Gemini</div><div class="course-sub">7 modules · Intermediate</div><div class="course-continue" id="continue-gemini" style="display:none;color:#4285f4;"></div></div>
+      <div class="progress-wrap"><div class="progress-track"><div class="progress-fill" id="prog-gemini" style="width:0%;background:#4285f4;"></div></div><div class="progress-label" id="prog-label-gemini">Not started</div></div>
+      <div class="cert-badge not-earned" id="badge-gemini">Certificate</div>
+    </a>
+    <a href="perplexity-module-1.html" class="course-row" id="row-perplexity">
+      <div class="course-dot" style="background:#00ADB5;"></div>
+      <div class="course-info"><div class="course-title">Mastering Perplexity</div><div class="course-sub">7 modules · Intermediate</div><div class="course-continue" id="continue-perplexity" style="display:none;color:#00ADB5;"></div></div>
+      <div class="progress-wrap"><div class="progress-track"><div class="progress-fill" id="prog-perplexity" style="width:0%;background:#00ADB5;"></div></div><div class="progress-label" id="prog-label-perplexity">Not started</div></div>
+      <div class="cert-badge not-earned" id="badge-perplexity">Certificate</div>
+    </a>
+  </div>
+
+  <div class="section-label">Advanced — Domain Mastery</div>
+  <div class="course-list">
+    <a href="students-module-1.html" class="course-row" id="row-students">
+      <div class="course-dot" style="background:#6D4AFF;"></div>
+      <div class="course-info"><div class="course-title">AI for Students</div><div class="course-sub">10 modules · Advanced</div><div class="course-continue" id="continue-students" style="display:none;color:#6D4AFF;"></div></div>
+      <div class="progress-wrap"><div class="progress-track"><div class="progress-fill" id="prog-students" style="width:0%;background:#6D4AFF;"></div></div><div class="progress-label" id="prog-label-students">Not started</div></div>
+      <div class="cert-badge not-earned" id="badge-students">Certificate</div>
+    </a>
+    <a href="finance-module-1.html" class="course-row" id="row-finance">
+      <div class="course-dot" style="background:#2D7D46;"></div>
+      <div class="course-info"><div class="course-title">AI in Finance</div><div class="course-sub">10 modules · Advanced</div><div class="course-continue" id="continue-finance" style="display:none;color:#2D7D46;"></div></div>
+      <div class="progress-wrap"><div class="progress-track"><div class="progress-fill" id="prog-finance" style="width:0%;background:#2D7D46;"></div></div><div class="progress-label" id="prog-label-finance">Not started</div></div>
+      <div class="cert-badge not-earned" id="badge-finance">Certificate</div>
+    </a>
+    <a href="law-module-1.html" class="course-row" id="row-law">
+      <div class="course-dot" style="background:#8B2E3C;"></div>
+      <div class="course-info"><div class="course-title">AI in Law</div><div class="course-sub">10 modules · Advanced</div><div class="course-continue" id="continue-law" style="display:none;color:#8B2E3C;"></div></div>
+      <div class="progress-wrap"><div class="progress-track"><div class="progress-fill" id="prog-law" style="width:0%;background:#8B2E3C;"></div></div><div class="progress-label" id="prog-label-law">Not started</div></div>
+      <div class="cert-badge not-earned" id="badge-law">Certificate</div>
+    </a>
+    <a href="healthcare-module-1.html" class="course-row" id="row-healthcare">
+      <div class="course-dot" style="background:#BE185D;"></div>
+      <div class="course-info"><div class="course-title">AI in Healthcare</div><div class="course-sub">10 modules · Advanced</div><div class="course-continue" id="continue-healthcare" style="display:none;color:#BE185D;"></div></div>
+      <div class="progress-wrap"><div class="progress-track"><div class="progress-fill" id="prog-healthcare" style="width:0%;background:#BE185D;"></div></div><div class="progress-label" id="prog-label-healthcare">Not started</div></div>
+      <div class="cert-badge not-earned" id="badge-healthcare">Certificate</div>
+    </a>
+    <a href="cybersecurity-module-1.html" class="course-row" id="row-cybersecurity">
+      <div class="course-dot" style="background:#0E7490;"></div>
+      <div class="course-info"><div class="course-title">AI in Cybersecurity</div><div class="course-sub">10 modules · Advanced</div><div class="course-continue" id="continue-cybersecurity" style="display:none;color:#0E7490;"></div></div>
+      <div class="progress-wrap"><div class="progress-track"><div class="progress-fill" id="prog-cybersecurity" style="width:0%;background:#0E7490;"></div></div><div class="progress-label" id="prog-label-cybersecurity">Not started</div></div>
+      <div class="cert-badge not-earned" id="badge-cybersecurity">Certificate</div>
+    </a>
+    <a href="education-module-1.html" class="course-row" id="row-education">
+      <div class="course-dot" style="background:#0284C7;"></div>
+      <div class="course-info"><div class="course-title">AI in Education</div><div class="course-sub">10 modules · Advanced</div><div class="course-continue" id="continue-education" style="display:none;color:#0284C7;"></div></div>
+      <div class="progress-wrap"><div class="progress-track"><div class="progress-fill" id="prog-education" style="width:0%;background:#0284C7;"></div></div><div class="progress-label" id="prog-label-education">Not started</div></div>
+      <div class="cert-badge not-earned" id="badge-education">Certificate</div>
+    </a>
+    <a href="politics-module-1.html" class="course-row" id="row-politics">
+      <div class="course-dot" style="background:#9D174D;"></div>
+      <div class="course-info"><div class="course-title">AI in Politics</div><div class="course-sub">10 modules · Advanced</div><div class="course-continue" id="continue-politics" style="display:none;color:#9D174D;"></div></div>
+      <div class="progress-wrap"><div class="progress-track"><div class="progress-fill" id="prog-politics" style="width:0%;background:#9D174D;"></div></div><div class="progress-label" id="prog-label-politics">Not started</div></div>
+      <div class="cert-badge not-earned" id="badge-politics">Certificate</div>
+    </a>
+    <a href="governance-module-1.html" class="course-row" id="row-governance">
+      <div class="course-dot" style="background:#92400E;"></div>
+      <div class="course-info"><div class="course-title">AI in Governance</div><div class="course-sub">10 modules · Advanced</div><div class="course-continue" id="continue-governance" style="display:none;color:#92400E;"></div></div>
+      <div class="progress-wrap"><div class="progress-track"><div class="progress-fill" id="prog-governance" style="width:0%;background:#92400E;"></div></div><div class="progress-label" id="prog-label-governance">Not started</div></div>
+      <div class="cert-badge not-earned" id="badge-governance">Certificate</div>
+    </a>
+    <a href="society-module-1.html" class="course-row" id="row-society">
+      <div class="course-dot" style="background:#7C3AED;"></div>
+      <div class="course-info"><div class="course-title">AI and Society</div><div class="course-sub">10 modules · Advanced</div><div class="course-continue" id="continue-society" style="display:none;color:#7C3AED;"></div></div>
+      <div class="progress-wrap"><div class="progress-track"><div class="progress-fill" id="prog-society" style="width:0%;background:#7C3AED;"></div></div><div class="progress-label" id="prog-label-society">Not started</div></div>
+      <div class="cert-badge not-earned" id="badge-society">Certificate</div>
+    </a>
+  </div>
+
   <div class="section-label">Your Certificates</div>
   <div class="cert-grid">
     <div class="cert-card" id="cc-foundations"><div class="cert-card-dot" style="background:#5b8ff8;"></div><div class="cert-card-title">Foundations of AI</div><div class="cert-card-status" id="cs-foundations">Not yet earned</div></div>
@@ -218,9 +190,16 @@
     <div class="cert-card" id="cc-chatgpt"><div class="cert-card-dot" style="background:#10a37f;"></div><div class="cert-card-title">Mastering ChatGPT</div><div class="cert-card-status" id="cs-chatgpt">Not yet earned</div></div>
     <div class="cert-card" id="cc-gemini"><div class="cert-card-dot" style="background:#4285f4;"></div><div class="cert-card-title">Mastering Gemini</div><div class="cert-card-status" id="cs-gemini">Not yet earned</div></div>
     <div class="cert-card" id="cc-perplexity"><div class="cert-card-dot" style="background:#00ADB5;"></div><div class="cert-card-title">Mastering Perplexity</div><div class="cert-card-status" id="cs-perplexity">Not yet earned</div></div>
+    <div class="cert-card" id="cc-students"><div class="cert-card-dot" style="background:#6D4AFF;"></div><div class="cert-card-title">AI for Students</div><div class="cert-card-status" id="cs-students">Not yet earned</div></div>
     <div class="cert-card" id="cc-finance"><div class="cert-card-dot" style="background:#2D7D46;"></div><div class="cert-card-title">AI in Finance</div><div class="cert-card-status" id="cs-finance">Not yet earned</div></div>
     <div class="cert-card" id="cc-law"><div class="cert-card-dot" style="background:#8B2E3C;"></div><div class="cert-card-title">AI in Law</div><div class="cert-card-status" id="cs-law">Not yet earned</div></div>
-    <div class="cert-card" id="cc-proficiency"><div class="cert-card-dot" style="background:#F0B429;"></div><div class="cert-card-title">AI Systems Proficiency Certification</div><div class="cert-card-status" id="cs-proficiency">🔒 Complete all 5 courses</div></div>
+    <div class="cert-card" id="cc-healthcare"><div class="cert-card-dot" style="background:#BE185D;"></div><div class="cert-card-title">AI in Healthcare</div><div class="cert-card-status" id="cs-healthcare">Not yet earned</div></div>
+    <div class="cert-card" id="cc-cybersecurity"><div class="cert-card-dot" style="background:#0E7490;"></div><div class="cert-card-title">AI in Cybersecurity</div><div class="cert-card-status" id="cs-cybersecurity">Not yet earned</div></div>
+    <div class="cert-card" id="cc-education"><div class="cert-card-dot" style="background:#0284C7;"></div><div class="cert-card-title">AI in Education</div><div class="cert-card-status" id="cs-education">Not yet earned</div></div>
+    <div class="cert-card" id="cc-politics"><div class="cert-card-dot" style="background:#9D174D;"></div><div class="cert-card-title">AI in Politics</div><div class="cert-card-status" id="cs-politics">Not yet earned</div></div>
+    <div class="cert-card" id="cc-governance"><div class="cert-card-dot" style="background:#92400E;"></div><div class="cert-card-title">AI in Governance</div><div class="cert-card-status" id="cs-governance">Not yet earned</div></div>
+    <div class="cert-card" id="cc-society"><div class="cert-card-dot" style="background:#7C3AED;"></div><div class="cert-card-title">AI and Society</div><div class="cert-card-status" id="cs-society">Not yet earned</div></div>
+    <div class="cert-card" id="cc-proficiency"><div class="cert-card-dot" style="background:#F0B429;"></div><div class="cert-card-title">AI Systems Proficiency Certification</div><div class="cert-card-status" id="cs-proficiency">🔒 Complete all 5 core courses</div></div>
   </div>
 </div>
 
@@ -233,30 +212,26 @@ const auth=getAuth(app);const db=getFirestore(app);
 window.signOut=async()=>{await fbSignOut(auth);window.location.href='login.html';};
 window.toggleTheme=function(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='☾'):(h.setAttribute('data-theme','dark'),i.textContent='☀');};
 
-// All courses now use FIRESTORE for progress — cross-device, no browser storage.
-// Each course writes a `{course}Modules` array of 'm1','m2',... via setDoc+arrayUnion.
-const FIRESTORE_COURSES={
-  foundations:{total:6, arrayField:'foundationsModules', certField:'foundationsCertId',
-    moduleUrl:(n)=>['module-1-what-ai-actually-is.html','module-2-how-ai-models-work.html','module-3-tools-that-exist.html','module-4-prompt-engineering.html','module-5-ai-ethics.html','module-6-your-first-ai-project.html'][n]||'module-1-what-ai-actually-is.html',
-    quizUrl:'quiz-foundations.html', color:'#5b8ff8'},
-  claude:{total:7, arrayField:'claudeModules', certField:'claudeCertId',
-    moduleUrl:(n)=>`claude-module-${n+1}.html`, quizUrl:'quiz-claude.html', color:'#D97757'},
-  chatgpt:{total:7, arrayField:'chatgptModules', certField:'chatgptCertId',
-    moduleUrl:(n)=>`chatgpt-module-${n+1}.html`, quizUrl:'quiz-chatgpt.html', color:'#10a37f'},
-  gemini:{total:7, arrayField:'geminiModules', certField:'geminiCertId',
-    moduleUrl:(n)=>`gemini-module-${n+1}.html`, quizUrl:'quiz-gemini.html', color:'#4285f4'},
-  perplexity:{total:7, arrayField:'perplexityModules', certField:'perplexityCertId',
-    moduleUrl:(n)=>`perplexity-module-${n+1}.html`, quizUrl:'quiz-perplexity.html', color:'#00ADB5'},
-  finance:{total:10, arrayField:'financeModules', certField:'financeCertId',
-    moduleUrl:(n)=>`finance-module-${n+1}.html`, quizUrl:'quiz-finance.html', color:'#2D7D46'},
-  law:{total:10, arrayField:'lawModules', certField:'lawCertId',
-    moduleUrl:(n)=>`law-module-${n+1}.html`, quizUrl:'quiz-law.html', color:'#8B2E3C'}
+const COURSES={
+  foundations:{total:6,arrayField:'foundationsModules',certField:'foundationsCertId',moduleUrl:(n)=>['module-1-what-ai-actually-is.html','module-2-how-ai-models-work.html','module-3-tools-that-exist.html','module-4-prompt-engineering.html','module-5-ai-ethics.html','module-6-your-first-ai-project.html'][n]||'module-1-what-ai-actually-is.html',quizUrl:'quiz-foundations.html',color:'#5b8ff8'},
+  claude:{total:7,arrayField:'claudeModules',certField:'claudeCertId',moduleUrl:(n)=>`claude-module-${n+1}.html`,quizUrl:'quiz-claude.html',color:'#D97757'},
+  chatgpt:{total:7,arrayField:'chatgptModules',certField:'chatgptCertId',moduleUrl:(n)=>`chatgpt-module-${n+1}.html`,quizUrl:'quiz-chatgpt.html',color:'#10a37f'},
+  gemini:{total:7,arrayField:'geminiModules',certField:'geminiCertId',moduleUrl:(n)=>`gemini-module-${n+1}.html`,quizUrl:'quiz-gemini.html',color:'#4285f4'},
+  perplexity:{total:7,arrayField:'perplexityModules',certField:'perplexityCertId',moduleUrl:(n)=>`perplexity-module-${n+1}.html`,quizUrl:'quiz-perplexity.html',color:'#00ADB5'},
+  students:{total:10,arrayField:'studentsModules',certField:'studentsCertId',moduleUrl:(n)=>`students-module-${n+1}.html`,quizUrl:'quiz-students.html',color:'#6D4AFF'},
+  finance:{total:10,arrayField:'financeModules',certField:'financeCertId',moduleUrl:(n)=>`finance-module-${n+1}.html`,quizUrl:'quiz-finance.html',color:'#2D7D46'},
+  law:{total:10,arrayField:'lawModules',certField:'lawCertId',moduleUrl:(n)=>`law-module-${n+1}.html`,quizUrl:'quiz-law.html',color:'#8B2E3C'},
+  healthcare:{total:10,arrayField:'healthcareModules',certField:'healthcareCertId',moduleUrl:(n)=>`healthcare-module-${n+1}.html`,quizUrl:'quiz-healthcare.html',color:'#BE185D'},
+  cybersecurity:{total:10,arrayField:'cybersecurityModules',certField:'cybersecurityCertId',moduleUrl:(n)=>`cybersecurity-module-${n+1}.html`,quizUrl:'quiz-cybersecurity.html',color:'#0E7490'},
+  education:{total:10,arrayField:'educationModules',certField:'educationCertId',moduleUrl:(n)=>`education-module-${n+1}.html`,quizUrl:'quiz-education.html',color:'#0284C7'},
+  politics:{total:10,arrayField:'politicsModules',certField:'politicsCertId',moduleUrl:(n)=>`politics-module-${n+1}.html`,quizUrl:'quiz-politics.html',color:'#9D174D'},
+  governance:{total:10,arrayField:'governanceModules',certField:'governanceCertId',moduleUrl:(n)=>`governance-module-${n+1}.html`,quizUrl:'quiz-governance.html',color:'#92400E'},
+  society:{total:10,arrayField:'societyModules',certField:'societyCertId',moduleUrl:(n)=>`society-module-${n+1}.html`,quizUrl:'quiz-society.html',color:'#7C3AED'}
 };
 
-// Apply Firestore-based progress for ALL courses. Returns total modules completed.
-function applyFirestoreProgress(data){
+function applyProgress(data){
   let total=0;
-  for(const[id,cfg]of Object.entries(FIRESTORE_COURSES)){
+  for(const[id,cfg]of Object.entries(COURSES)){
     const arr=Array.isArray(data[cfg.arrayField])?data[cfg.arrayField]:[];
     const completed=Math.min(new Set(arr).size,cfg.total);
     total+=completed;
@@ -267,77 +242,47 @@ function applyFirestoreProgress(data){
     const badge=document.getElementById('badge-'+id);
     if(badge&&completed<cfg.total){badge.className='cert-badge in-progress';badge.textContent='In Progress';}
     const row=document.getElementById('row-'+id);
-    const continueEl=document.getElementById('continue-'+id);
+    const cont=document.getElementById('continue-'+id);
     if(completed>=cfg.total){
       if(row)row.href=cfg.quizUrl;
-      if(continueEl){continueEl.style.display='block';continueEl.textContent='→ Take the final quiz';}
+      if(cont){cont.style.display='block';cont.textContent='→ Take the final quiz';}
     } else {
-      // next module = (count of completed) since modules are done in order
       const nextUrl=cfg.moduleUrl(completed);
       if(row)row.href=nextUrl;
-      if(continueEl){continueEl.style.display='block';continueEl.textContent=`→ Continue: Module ${completed+1}`;}
+      if(cont){cont.style.display='block';cont.textContent=`→ Continue: Module ${completed+1}`;}
     }
   }
   return total;
 }
 
 function markCertEarned(id,certId,color){
-  // Progress bar to 100%
-  const prog=document.getElementById('prog-'+id);
-  if(prog){prog.style.width='100%';}
-  const lbl=document.getElementById('prog-label-'+id);
-  const cfg=FIRESTORE_COURSES[id];
-  if(lbl&&cfg)lbl.textContent=`${cfg.total} / ${cfg.total} modules`;
-  // Badge
-  const badge=document.getElementById('badge-'+id);
-  if(badge){badge.className='cert-badge earned';badge.textContent='✓ Certified';}
-  // Row — link to quiz to retake or just mark done
-  const row=document.getElementById('row-'+id);
-  const continueEl=document.getElementById('continue-'+id);
-  if(continueEl){continueEl.style.display='none';}
-  // Cert card
-  const card=document.getElementById('cc-'+id);
-  if(card)card.classList.add('earned');
-  const status=document.getElementById('cs-'+id);
-  if(status){status.style.color='#22c55e';status.textContent='✓ Earned';}
-  if(certId){
-    const link=document.createElement('a');
-    link.href='certificate.html?id='+certId;
-    link.target='_blank';
-    link.className='cert-card-link';
-    link.style.color=color||'#22c55e';
-    link.textContent='View certificate →';
-    if(card)card.appendChild(link);
-  }
+  const cfg=COURSES[id];
+  const prog=document.getElementById('prog-'+id);if(prog)prog.style.width='100%';
+  const lbl=document.getElementById('prog-label-'+id);if(lbl&&cfg)lbl.textContent=`${cfg.total} / ${cfg.total} modules`;
+  const badge=document.getElementById('badge-'+id);if(badge){badge.className='cert-badge earned';badge.textContent='✓ Certified';}
+  const cont=document.getElementById('continue-'+id);if(cont)cont.style.display='none';
+  const card=document.getElementById('cc-'+id);if(card)card.classList.add('earned');
+  const status=document.getElementById('cs-'+id);if(status){status.style.color='#22c55e';status.textContent='✓ Earned';}
+  if(certId&&card){const link=document.createElement('a');link.href='certificate.html?id='+certId;link.target='_blank';link.className='cert-card-link';link.style.color=color||'#22c55e';link.textContent='View certificate →';card.appendChild(link);}
 }
 
 onAuthStateChanged(auth,async u=>{
   if(!u){window.location.href='login.html';return;}
   document.getElementById('welcome-name').textContent='Welcome back, '+(u.displayName||'there')+'.';
-
   try{
     const snap=await getDoc(doc(db,'users',u.uid));
-    if(!snap.exists()){
-      document.getElementById('welcome-sub').textContent='Start a course below.';
-      return;
-    }
+    if(!snap.exists()){document.getElementById('welcome-sub').textContent='Start a course below.';return;}
     const data=snap.data();
-    // Unified Firestore progress for ALL courses
-    const totalModules=applyFirestoreProgress(data);
-    // Core 5 certificates (count toward the capstone)
-    const certFields={foundations:'foundationsCertId',claude:'claudeCertId',chatgpt:'chatgptCertId',gemini:'geminiCertId',perplexity:'perplexityCertId'};
-    const certColors={foundations:'#5b8ff8',claude:'#D97757',chatgpt:'#10a37f',gemini:'#4285f4',perplexity:'#00ADB5'};
+    const totalModules=applyProgress(data);
+    const coreCertFields={foundations:'foundationsCertId',claude:'claudeCertId',chatgpt:'chatgptCertId',gemini:'geminiCertId',perplexity:'perplexityCertId'};
+    const coreColors={foundations:'#5b8ff8',claude:'#D97757',chatgpt:'#10a37f',gemini:'#4285f4',perplexity:'#00ADB5'};
     let earnedCount=0;
-    for(const[id,field]of Object.entries(certFields)){
-      if(data[field]){markCertEarned(id,data[field],certColors[id]);earnedCount++;}
+    for(const[id,field]of Object.entries(coreCertFields)){
+      if(data[field]){markCertEarned(id,data[field],coreColors[id]);earnedCount++;}
     }
-    // Advanced course certs (finance, law) — tracked separately from the 5-course capstone requirement
-    const advancedCerts={finance:{field:'financeCertId',color:'#2D7D46'},law:{field:'lawCertId',color:'#8B2E3C'}};
-    let advancedEarned=0;
-    for(const[id,info]of Object.entries(advancedCerts)){
-      if(data[info.field]){markCertEarned(id,data[info.field],info.color);advancedEarned++;}
-    }
-    // Capstone
+    const advCerts={students:{field:'studentsCertId',color:'#6D4AFF'},finance:{field:'financeCertId',color:'#2D7D46'},law:{field:'lawCertId',color:'#8B2E3C'},healthcare:{field:'healthcareCertId',color:'#BE185D'},cybersecurity:{field:'cybersecurityCertId',color:'#0E7490'},education:{field:'educationCertId',color:'#0284C7'},politics:{field:'politicsCertId',color:'#9D174D'},governance:{field:'governanceCertId',color:'#92400E'},society:{field:'societyCertId',color:'#7C3AED'}};
+    let advEarned=0;
+    for(const[id,info]of Object.entries(advCerts)){if(data[info.field]){markCertEarned(id,data[info.field],info.color);advEarned++;}}
     if(data.proficiencyCertId){
       document.getElementById('cap-eyebrow').textContent='★ Capstone — Earned';
       document.getElementById('cap-sub').textContent='Congratulations. You hold the full Meridian credential stack.';
@@ -346,17 +291,15 @@ onAuthStateChanged(auth,async u=>{
       const status=document.getElementById('cs-proficiency');status.style.color='#F0B429';status.textContent='✓ Earned';
       const link=document.createElement('a');link.href='certificate.html?id='+data.proficiencyCertId;link.target='_blank';link.className='cert-card-link';link.style.color='#F0B429';link.textContent='View certificate →';card.appendChild(link);
     } else if(earnedCount===5){
-      document.getElementById('cap-sub').textContent='All 5 courses complete — take the assessment now.';
+      document.getElementById('cap-sub').textContent='All 5 core courses complete — take the assessment now.';
       const btn=document.getElementById('cap-btn');btn.className='capstone-banner-btn ready';btn.textContent='Take Assessment →';
       document.getElementById('cs-proficiency').textContent='Eligible — take the assessment';document.getElementById('cs-proficiency').style.color='#F0B429';
     } else {
-      document.getElementById('cap-sub').textContent=`${earnedCount} of 5 certificates earned. Finish the remaining courses to unlock.`;
+      document.getElementById('cap-sub').textContent=`${earnedCount} of 5 core certificates earned. Finish the remaining courses to unlock.`;
     }
-    const totalCerts=earnedCount+advancedEarned;
-    document.getElementById('welcome-sub').textContent=`${totalCerts} certificate${totalCerts===1?'':'s'} earned · ${totalModules} of 52 modules completed`;
-  }catch(e){
-    document.getElementById('welcome-sub').textContent='Start a course below.';
-  }
+    const totalCerts=earnedCount+advEarned+(data.proficiencyCertId?1:0);
+    document.getElementById('welcome-sub').textContent=`${totalCerts} certificate${totalCerts===1?'':'s'} earned · ${totalModules} modules completed`;
+  }catch(e){document.getElementById('welcome-sub').textContent='Start a course below.';}
 });
 </script>
 </body>
