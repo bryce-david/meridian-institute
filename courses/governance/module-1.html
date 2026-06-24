@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>What AI Governance Is and Why It Matters — AI Governance — Meridian Institute of AI</title>
+<meta name="description" content="Free AI Governance course — module 1. Understand what AI governance is, who the stakeholders are, and why the governance gap matters for every organization building or using AI.">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="What AI Governance Is and Why It Matters — AI Governance — Meridian Institute of AI">
+<meta property="og:description" content="Free AI Governance course — module 1. Understand what AI governance is, who the stakeholders are, and why the governance gap matters for every organization building or using AI.">
+<meta property="og:url" content="https://meridianinstituteai.com/courses/governance/module-1.html">
+<meta property="og:type" content="website">
+<link rel="canonical" href="https://meridianinstituteai.com/courses/governance/module-1.html">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#8b5cf6;--accent-dim:rgba(139,92,246,0.1);--nav-bg:rgba(8,8,8,0.9);--callout-bg:rgba(139,92,246,0.07);--callout-border:rgba(139,92,246,0.25);--good-bg:rgba(34,197,94,0.07);--good-border:rgba(34,197,94,0.2);--warn-bg:rgba(251,146,60,0.07);--warn-border:rgba(251,146,60,0.2);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#7c3aed;--accent-dim:rgba(124,58,237,0.08);--nav-bg:rgba(250,250,248,0.9);--callout-bg:rgba(124,58,237,0.05);--callout-border:rgba(124,58,237,0.2);--good-bg:rgba(22,163,74,0.06);--good-border:rgba(22,163,74,0.2);--warn-bg:rgba(234,88,12,0.05);--warn-border:rgba(234,88,12,0.2);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;overflow-x:hidden;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.7;overflow-x:hidden;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}
+  .nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}
+  .nav-back{font-size:13px;color:var(--text-2);text-decoration:none;transition:color 0.2s;}
+  .nav-back:hover{color:var(--text);}
+  .nav-label{font-size:13px;color:var(--text-3);}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;transition:all 0.2s;}
+  .progress-bar{position:fixed;top:60px;left:0;right:0;z-index:99;height:2px;background:var(--border);}
+  .progress-fill{height:100%;background:var(--accent);width:0%;transition:width 0.1s;}
+  .page-wrapper{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:100vh;padding-top:62px;}
+  .sidebar{position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto;border-right:1px solid var(--border);padding:32px 24px;background:var(--bg-2);}
+  .sidebar-course{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;}
+  .sidebar-course-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+  .sidebar-module{margin-bottom:4px;}
+  .sidebar-module-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:13px;color:var(--text-2);text-decoration:none;transition:all 0.2s;line-height:1.4;}
+  .sidebar-module-link:hover{background:var(--bg-3);color:var(--text);}
+  .sidebar-module-link.active{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-num{font-size:11px;font-weight:500;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--bg-4);color:var(--text-3);}
+  .sidebar-module-link.active .sidebar-num{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-divider{height:1px;background:var(--border);margin:20px 0;}
+  .sidebar-progress-label{font-size:12px;color:var(--text-3);margin-bottom:8px;display:flex;justify-content:space-between;}
+  .sidebar-progress-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sidebar-progress-fill{height:100%;width:14%;background:var(--accent);border-radius:2px;}
+  main{display:block;min-width:0;}
+  .content{max-width:760px;width:100%;padding:60px 64px 140px;margin:0 auto;}
+  .module-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+  .module-tag{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(139,92,246,0.2);padding:4px 12px;border-radius:100px;}
+  .module-meta{font-size:12px;color:var(--text-3);}
+  h1{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1.05;letter-spacing:-0.02em;color:var(--text);margin-bottom:24px;}
+  .intro-text{font-size:19px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+  h2{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:400;color:var(--text);margin:52px 0 18px;line-height:1.2;}
+  h3{font-size:16px;font-weight:500;color:var(--text);margin:32px 0 12px;}
+  p{font-size:16px;font-weight:300;color:var(--text-2);line-height:1.8;margin-bottom:20px;}
+  strong{font-weight:500;color:var(--text);}
+  .callout{background:var(--callout-bg);border:1px solid var(--callout-border);border-radius:12px;padding:24px 28px;margin:32px 0;}
+  .callout-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+  .callout p{margin:0;font-size:15px;color:var(--text-2);}
+  .callout p+p{margin-top:12px;}
+  .good{background:var(--good-bg);border:1px solid var(--good-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .good-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#22c55e;margin-bottom:10px;}
+  .good p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn{background:var(--warn-bg);border:1px solid var(--warn-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .warn-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#fb923c;margin-bottom:10px;}
+  .warn p{margin:0;font-size:15px;color:var(--text-2);}
+  .principle-list{display:flex;flex-direction:column;gap:12px;margin:24px 0;}
+  .principle{background:var(--bg-2);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:0 12px 12px 0;padding:20px 24px;}
+  .principle-title{font-size:15px;font-weight:500;color:var(--text);margin-bottom:6px;}
+  .principle-desc{font-size:14px;color:var(--text-2);line-height:1.65;margin:0;}
+  .comparison-wrapper{overflow-x:auto;-webkit-overflow-scrolling:touch;width:100%;margin:28px 0;}
+  table{width:100%;border-collapse:collapse;font-size:14px;min-width:480px;}
+  th{text-align:left;padding:12px 16px;font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-3);border-bottom:1px solid var(--border-2);}
+  td{padding:14px 16px;border-bottom:1px solid var(--border);color:var(--text-2);line-height:1.6;vertical-align:top;}
+  tr:last-child td{border-bottom:none;}
+  td:first-child{color:var(--text);font-weight:500;}
+  .sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:var(--bg-2);border-top:1px solid var(--border-2);padding:14px 5%;display:flex;align-items:center;justify-content:space-between;gap:16px;backdrop-filter:blur(12px);}
+  .sticky-bar-track{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sticky-bar-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.2s;width:0%;}
+  .sticky-bar-label{font-size:12px;color:var(--text-3);white-space:nowrap;min-width:60px;text-align:right;}
+  .sticky-bar-btn{padding:10px 20px;border-radius:8px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;background:var(--accent);color:#fff;border:none;cursor:pointer;white-space:nowrap;transition:opacity 0.2s;display:none;}
+  .sticky-bar-btn:hover{opacity:0.88;}
+  .sticky-bar-reading{font-size:12px;color:var(--text-3);white-space:nowrap;}
+  @media(max-width:900px){.page-wrapper{grid-template-columns:1fr;}.sidebar{display:none;}.content{padding:40px 24px 120px;}h1{font-size:38px;}}
+  @media(max-width:600px){.content{padding:28px 16px 120px;}h1{font-size:30px;}h2{font-size:24px;}}
+</style>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="shortcut icon" href="/favicon.ico">
+<style>@media(max-width:480px){.nav-divider{display:none}.nav-left{gap:8px}}</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="../../index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="../../index.html" class="nav-back">&#8962; Home</a>
+    <div class="nav-divider"></div>
+    <a href="../../courses.html" class="nav-back">&#8592; AI Governance</a>
+    <div class="nav-divider"></div>
+    <span class="nav-label">Module 1</span>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">&#9728;</span></button>
+</nav>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+
+<div class="page-wrapper">
+<aside class="sidebar">
+  <div class="sidebar-course">Course</div>
+  <div class="sidebar-course-name">AI Governance</div>
+  <div class="sidebar-module"><a href="module-1.html" class="sidebar-module-link active"><span class="sidebar-num">1</span>What AI Governance Is</a></div>
+  <div class="sidebar-module"><a href="module-2.html" class="sidebar-module-link"><span class="sidebar-num">2</span>The EU AI Act</a></div>
+  <div class="sidebar-module"><a href="module-3.html" class="sidebar-module-link"><span class="sidebar-num">3</span>US AI Policy</a></div>
+  <div class="sidebar-module"><a href="module-4.html" class="sidebar-module-link"><span class="sidebar-num">4</span>AI Ethics</a></div>
+  <div class="sidebar-module"><a href="module-5.html" class="sidebar-module-link"><span class="sidebar-num">5</span>Corporate AI Governance</a></div>
+  <div class="sidebar-module"><a href="module-6.html" class="sidebar-module-link"><span class="sidebar-num">6</span>International AI Policy</a></div>
+  <div class="sidebar-module"><a href="module-7.html" class="sidebar-module-link"><span class="sidebar-num">7</span>Implementing Responsible AI</a></div>
+  <div class="sidebar-module"><a href="quiz.html" class="sidebar-module-link" style="color:var(--accent);margin-top:4px;"><span class="sidebar-num" style="background:var(--accent-dim);color:var(--accent);">&#10022;</span>Final Assessment</a></div>
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-progress-label"><span>Course progress</span><span style="color:var(--accent);">1 / 7</span></div>
+  <div class="sidebar-progress-track"><div class="sidebar-progress-fill"></div></div>
+</aside>
+
+<main>
+<div class="content">
+  <div class="module-eyebrow"><span class="module-tag">Module 1</span><span class="module-meta">22 min read &middot; AI Governance</span></div>
+  <h1>What AI Governance Is and Why It Matters</h1>
+  <p class="intro-text">In three years, AI governance went from an academic footnote to one of the most contested policy arenas on earth. Governments are passing laws. Companies are building ethics teams. Standards bodies are issuing frameworks. And the decisions being made right now will shape how AI develops for decades. This module gives you the foundation to understand what governance actually means, who the players are, and why this domain is both urgent and consequential.</p>
+
+  <h2>Defining AI governance</h2>
+  <p>AI governance is not a single thing. It is the collection of <strong>rules, norms, institutions, and processes</strong> that shape how artificial intelligence systems are developed, deployed, and used. It operates simultaneously at multiple levels: inside individual companies, within national governments, across international bodies, and through professional and civil society organizations.</p>
+  <p>A useful working definition: <strong>AI governance is any mechanism — formal or informal — through which societies make collective decisions about how AI should behave, who bears responsibility for its outcomes, and which uses are permitted or prohibited.</strong></p>
+  <p>This definition is deliberately broad. It includes:</p>
+  <div class="principle-list">
+    <div class="principle">
+      <div class="principle-title">Hard law</div>
+      <div class="principle-desc">Binding legislation with penalties — the EU AI Act, China's Algorithm Recommendation Regulations, US state AI laws. These carry legal force and create enforceable obligations.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Soft law</div>
+      <div class="principle-desc">Voluntary frameworks, guidelines, and standards that shape behavior without legal mandate — the NIST AI Risk Management Framework, the OECD AI Principles, ISO/IEC standards. Often becomes de facto required through procurement, insurance, and contracting.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Corporate self-governance</div>
+      <div class="principle-desc">Internal policies, ethics boards, model review processes, and usage policies that companies adopt unilaterally — whether from genuine values, reputational concern, or preemptive regulatory positioning.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Technical standards</div>
+      <div class="principle-desc">Engineering norms about how AI systems should be built, tested, and audited. Bodies like IEEE, NIST, and ISO/IEC produce these. They translate high-level principles into implementable requirements.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Social norms</div>
+      <div class="principle-desc">The informal expectations of users, civil society, journalists, and the public that constrain what companies will actually do regardless of legal requirements. Public backlash is a governance mechanism.</div>
+    </div>
+  </div>
+
+  <h2>Why governance became urgent: 2022–2025</h2>
+  <p>AI governance was a niche concern among academics and policy specialists for decades. It became a mainstream policy priority in roughly 18 months, driven by a series of convergent forces.</p>
+
+  <p><strong>November 2022: ChatGPT</strong> demonstrated to the general public — not just technologists — that AI had crossed a capability threshold. Within months, every government, major company, and international institution felt compelled to respond. The "this is theoretical" phase of AI policy ended.</p>
+  <p><strong>2023:</strong> Generative AI proliferated across every sector simultaneously. Medical AI generating diagnoses. AI writing legal briefs. Autonomous systems making consequential decisions about loans, hiring, content moderation. The governance gap — the distance between AI's actual deployment and society's ability to understand or regulate it — widened faster than any prior technology.</p>
+  <p><strong>2024:</strong> The EU AI Act entered into force, creating the world's first comprehensive AI legal framework. The US issued an Executive Order on AI. China expanded its AI regulatory regime. G7 countries adopted AI governance principles. The era of binding law arrived.</p>
+  <p><strong>2025:</strong> Agentic AI — systems capable of taking sustained sequences of actions in the world — began widespread deployment. The governance stakes escalated: AI systems that can browse the web, execute code, send emails, and make purchases on behalf of users raise questions no existing regulatory framework fully addresses.</p>
+
+  <div class="callout">
+    <div class="callout-label">The governance gap</div>
+    <p>The governance gap describes the lag between what technology can do and what society has decided about how it should be used, who is responsible when it fails, and what uses should be prohibited. For most technologies, this gap closes gradually. For AI, the gap is unusually large — and the pace of AI capability development is making it larger faster than most governance institutions can respond.</p>
+    <p>Understanding this gap is the central challenge of AI governance. The question is not just "what rules should we write?" but "how do we build institutions capable of keeping pace with a technology that changes faster than law?"</p>
+  </div>
+
+  <h2>Stakeholders: who governs AI?</h2>
+  <p>AI governance is not a government monopoly. It is a genuinely multi-stakeholder domain, with power distributed across actors who often have conflicting interests.</p>
+
+  <div class="comparison-wrapper">
+    <table>
+      <tr><th>Stakeholder</th><th>Primary interest</th><th>Tools of influence</th></tr>
+      <tr><td>National governments</td><td>Economic competitiveness, national security, citizen protection, political legitimacy</td><td>Legislation, regulation, procurement, funding, export controls</td></tr>
+      <tr><td>AI companies (frontier)</td><td>Market position, capital access, talent, regulatory environment that favors incumbents</td><td>Lobbying, voluntary commitments, standards participation, self-regulation</td></tr>
+      <tr><td>AI companies (deployers)</td><td>Legal certainty, operational continuity, liability limitation</td><td>Industry associations, compliance spending, public positioning</td></tr>
+      <tr><td>Civil society organizations</td><td>Rights protection, harm prevention, accountability, public interest</td><td>Litigation, advocacy, public pressure, technical research, journalism</td></tr>
+      <tr><td>Academic researchers</td><td>Knowledge production, access to systems and data, research freedom</td><td>Publications, expert testimony, advisory roles, whistleblowing</td></tr>
+      <tr><td>International organizations</td><td>Coordination, norm-setting, capacity building in developing countries</td><td>Frameworks, treaties (rare), technical assistance, convening</td></tr>
+      <tr><td>The public</td><td>Safety, fairness, economic opportunity, privacy, autonomy</td><td>Voting, consumer choice, social pressure, litigation, labor organizing</td></tr>
+    </table>
+  </div>
+
+  <p>The power dynamics among these stakeholders are not equal and not static. In 2023, frontier AI companies had unusual influence over early governance discussions — partly because they were the primary sources of technical expertise and partly because governments were still calibrating. By 2025, that dynamic had shifted as regulators developed in-house expertise and governments moved to binding frameworks.</p>
+
+  <h2>The three core tensions</h2>
+  <p>Most AI governance debates can be understood as variations on three fundamental tensions. Recognizing these tensions makes it easier to understand why governance is hard and why the same policy can look wise from one angle and foolish from another.</p>
+
+  <h3>Innovation vs. safety</h3>
+  <p>Every governance requirement that constrains how AI is built or deployed has the potential to slow development. Mandatory conformity assessments take time and money. Transparency obligations reveal competitive information. Liability rules create uncertainty that chills investment. Regulators face a genuine dilemma: govern too loosely and harmful systems deploy at scale; govern too tightly and innovation moves to less regulated jurisdictions.</p>
+  <p>This tension is not resolvable through argument — it requires empirical judgments about how likely various harms are, how large their consequences would be, and how much regulatory burden genuinely slows beneficial development versus primarily protecting incumbents from competition.</p>
+
+  <div class="warn">
+    <div class="warn-label">The precautionary trap</div>
+    <p>One risk in AI governance is excessive precaution: blocking beneficial AI applications because of theoretical harms that are uncertain or small relative to the foregone benefits. Medical AI that could improve diagnosis, agricultural AI that could reduce food insecurity, infrastructure AI that could prevent accidents — over-regulation that delays these applications has real costs that are often invisible precisely because they are counterfactual. Good governance weighs both sides of the ledger.</p>
+  </div>
+
+  <h3>National competitiveness vs. global coordination</h3>
+  <p>AI is simultaneously a national security asset, an economic driver, and a global infrastructure. This creates a fundamental coordination problem. If the US imposes strict safety requirements that China does not, AI development may migrate to China — potentially producing less safe systems at greater scale. If the EU requires extensive transparency obligations that the US does not, European companies may be disadvantaged in global markets.</p>
+  <p>Yet AI's harms do not respect borders. Disinformation generated by an AI system in one country affects citizens in another. Autonomous weapons developed without safety standards threaten global stability. Climate impacts of AI compute are shared globally. The argument for international coordination is strong; the mechanisms to achieve it are weak.</p>
+
+  <h3>Industry self-regulation vs. legal mandate</h3>
+  <p>The fastest path to AI governance is companies governing themselves — voluntary commitments, internal ethics processes, industry codes of conduct. These can be updated quickly, adapted to technical realities, and implemented without legislative cycles. The US approach through 2024 leaned heavily on voluntary commitments from major AI companies.</p>
+  <p>The problem: voluntary commitments are only as strong as the incentives that support them. When competitive pressure conflicts with ethical commitments, the commitment tends to lose. Self-regulation also tends to be captured by incumbents who design rules that favor their existing systems and raise barriers to new entrants. Binding law provides enforcement mechanisms that voluntary commitments lack — but law moves slowly and technical experts are rarely the ones writing it.</p>
+
+  <h2>The global regulatory landscape</h2>
+  <p>AI regulation has developed differently across major jurisdictions, reflecting different political systems, economic positions, and risk philosophies. The overview below captures the state of play as of mid-2025.</p>
+
+  <div class="comparison-wrapper">
+    <table>
+      <tr><th>Jurisdiction</th><th>Approach</th><th>Key development</th></tr>
+      <tr><td>European Union</td><td>Comprehensive, risk-tiered, binding</td><td>EU AI Act in force; phased implementation 2024–2026</td></tr>
+      <tr><td>United States</td><td>Sectoral, voluntary-first, federally fragmented</td><td>Biden EO (2023); NIST framework; state-level experimentation</td></tr>
+      <tr><td>China</td><td>State-directed, sector-by-sector, security-focused</td><td>Algorithm recommendation regs (2022); generative AI regs (2023)</td></tr>
+      <tr><td>United Kingdom</td><td>Pro-innovation, principles-based, sector-led</td><td>AI Safety Institute; no comprehensive bill as of 2025</td></tr>
+      <tr><td>Canada</td><td>Risk-based, voluntary transitioning to binding</td><td>Voluntary Code of Conduct; AIDA legislation in progress</td></tr>
+      <tr><td>India</td><td>Advisory guidelines; comprehensive law under development</td><td>Advisory on responsible AI; Digital India Act upcoming</td></tr>
+      <tr><td>Brazil</td><td>Comprehensive bill modeled partly on EU AI Act</td><td>AI Bill advancing through legislature</td></tr>
+    </table>
+  </div>
+
+  <div class="good">
+    <div class="good-label">The Brussels effect in AI</div>
+    <p>The EU AI Act is likely to have outsized global influence through the "Brussels effect" — the tendency of stringent EU regulation to become de facto global standards because multinational companies find it more efficient to build one product that complies with the strictest requirements than separate products for each market. US and Asian companies serving European customers must comply with the EU AI Act even if their home regulators impose no equivalent requirements. This is one reason the EU's regulatory choices matter far beyond its borders.</p>
+  </div>
+
+  <h2>Why AI governance matters for your career</h2>
+  <p>Every organization that builds or uses AI — which is to say, virtually every organization — now needs governance expertise. This demand is new and growing faster than the supply of people who understand both the technology and the policy landscape.</p>
+  <p>The roles emerging at the intersection of AI and governance include: policy analysts who advise governments on AI legislation, AI ethics officers who build internal governance programs at companies, compliance specialists who help organizations navigate regulatory requirements, trust and safety engineers who build technical systems to enforce governance decisions, researchers who study AI's societal impacts, and lawyers who advise on liability, intellectual property, and regulatory compliance.</p>
+  <p>What makes someone valuable in this space is not just policy knowledge or technical knowledge, but the rare ability to hold both simultaneously — to understand what the algorithm is actually doing and what the regulation actually requires, and to translate between engineers and legislators who often talk past each other.</p>
+
+  <div class="callout">
+    <div class="callout-label">What this course covers</div>
+    <p><strong>Module 2</strong> is a deep dive into the EU AI Act — the world's first comprehensive AI law and a model other jurisdictions are studying closely.</p>
+    <p><strong>Module 3</strong> covers US AI policy: executive orders, NIST frameworks, sectoral regulation, and the political dynamics shaping what comes next.</p>
+    <p><strong>Module 4</strong> addresses AI ethics — the foundational concepts of bias, fairness, transparency, and accountability that underpin every governance framework.</p>
+    <p><strong>Module 5</strong> turns to corporate governance: how organizations build internal AI governance programs, conduct risk assessments, and respond to failures.</p>
+    <p><strong>Module 6</strong> examines international AI policy — China's approach, the UK's pro-innovation model, the G7 process, and the geopolitics of AI.</p>
+    <p><strong>Module 7</strong> is practical: how to implement responsible AI in an organization, what tools exist, and what career paths look like in this field.</p>
+  </div>
+
+</div>
+</main>
+</div>
+
+<div class="sticky-bar">
+  <div class="sticky-bar-reading" id="sticky-reading">Read to the end to unlock the next module</div>
+  <div class="sticky-bar-track"><div class="sticky-bar-fill" id="sticky-fill"></div></div>
+  <div class="sticky-bar-label" id="sticky-label">0%</div>
+  <button class="sticky-bar-btn" id="sticky-btn" onclick="completeAndNext()">Module 2: The EU AI Act &#8594;</button>
+</div>
+
+<script>
+  function toggleTheme(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='☾'):(h.setAttribute('data-theme','dark'),i.textContent='☀');}
+  window.addEventListener('scroll',()=>{const d=document.documentElement,s=d.scrollTop||document.body.scrollTop,t=d.scrollHeight-d.clientHeight;document.getElementById('progress').style.width=(s/t*100)+'%';});
+  let unlocked=false;
+  function updateScrollProgress(){
+    const pct=Math.min(100,Math.round(((window.scrollY+window.innerHeight)/document.documentElement.scrollHeight)*100));
+    document.getElementById('sticky-fill').style.width=pct+'%';
+    document.getElementById('sticky-label').textContent=pct+'%';
+    if(pct>=95&&!unlocked){unlocked=true;document.getElementById('sticky-btn').style.display='block';document.getElementById('sticky-reading').style.display='none';document.getElementById('sticky-fill').style.background='#22c55e';document.getElementById('sticky-label').style.color='#22c55e';}
+  }
+  window.addEventListener('scroll',updateScrollProgress);updateScrollProgress();
+  function completeAndNext(){
+    if(window.__meridianSaveProgress){try{window.__meridianSaveProgress("m1");}catch(e){}}
+    setTimeout(function(){window.location.href="module-2.html";},120);
+  }
+</script>
+<script type="module">
+  import{initializeApp}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import{getAuth,onAuthStateChanged}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import{getFirestore,doc,setDoc,arrayUnion}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  const app=initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+  const auth=getAuth(app);const db=getFirestore(app);
+  let meridianUser=null;
+  onAuthStateChanged(auth,u=>{meridianUser=u;});
+  window.__meridianSaveProgress=async function(mValue){
+    if(!meridianUser)return;
+    try{await setDoc(doc(db,"users",meridianUser.uid),{governanceModules:arrayUnion(mValue)},{merge:true});}catch(e){}
+  };
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Course","name":"AI Governance","description":"A free, comprehensive course on AI governance — regulation, ethics, policy, and responsible AI implementation.","provider":{"@type":"Organization","name":"Meridian Institute of AI","url":"https://meridianinstituteai.com"},"url":"https://meridianinstituteai.com/courses/governance/module-1.html","isAccessibleForFree":true,"educationalLevel":"Intermediate","inLanguage":"en","teaches":"AI governance, regulation, ethics, policy frameworks, and responsible AI"}
+</script>
+</body>
+</html>

@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 10: The Future of Autonomous AI — Agentic AI and Autonomous Systems — Meridian Institute of AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#6B21A8;--accent-dim:rgba(107,33,168,0.1);--accent-dim2:rgba(107,33,168,0.05);--nav-bg:rgba(8,8,8,0.9);--callout-bg:rgba(107,33,168,0.07);--callout-border:rgba(107,33,168,0.25);--good-bg:rgba(34,197,94,0.07);--good-border:rgba(34,197,94,0.2);--warn-bg:rgba(251,146,60,0.07);--warn-border:rgba(251,146,60,0.2);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#581C87;--accent-dim:rgba(88,28,135,0.08);--accent-dim2:rgba(88,28,135,0.04);--nav-bg:rgba(250,250,248,0.9);--callout-bg:rgba(88,28,135,0.05);--callout-border:rgba(88,28,135,0.2);--good-bg:rgba(22,163,74,0.06);--good-border:rgba(22,163,74,0.2);--warn-bg:rgba(234,88,12,0.05);--warn-border:rgba(234,88,12,0.2);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;overflow-x:hidden;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.7;overflow-x:hidden;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}
+  .nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}
+  .nav-back{font-size:13px;color:var(--text-2);text-decoration:none;transition:color 0.2s;}
+  .nav-back:hover{color:var(--text);}
+  .nav-label{font-size:13px;color:var(--text-3);}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;transition:all 0.2s;}
+  .theme-toggle:hover{background:var(--bg-3);color:var(--text);}
+  .progress-bar{position:fixed;top:60px;left:0;right:0;z-index:99;height:2px;background:var(--border);}
+  .progress-fill{height:100%;background:var(--accent);width:0%;transition:width 0.1s;}
+  .page-wrapper{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:100vh;padding-top:62px;overflow:hidden;}
+  .sidebar{position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto;border-right:1px solid var(--border);padding:32px 24px;background:var(--bg-2);}
+  .sidebar-course{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;}
+  .sidebar-course-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+  .sidebar-module{margin-bottom:4px;}
+  .sidebar-module-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:13px;color:var(--text-2);text-decoration:none;transition:all 0.2s;line-height:1.4;}
+  .sidebar-module-link:hover{background:var(--bg-3);color:var(--text);}
+  .sidebar-module-link.active{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-num{font-size:11px;font-weight:500;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--bg-4);color:var(--text-3);}
+  .sidebar-module-link.active .sidebar-num{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-divider{height:1px;background:var(--border);margin:20px 0;}
+  .sidebar-progress-label{font-size:12px;color:var(--text-3);margin-bottom:8px;display:flex;justify-content:space-between;}
+  .sidebar-progress-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sidebar-progress-fill{height:100%;width:100%;background:var(--accent);border-radius:2px;}
+  main{display:block;min-width:0;overflow:hidden;}
+  .content{max-width:760px;width:100%;padding:60px 64px 140px;margin:0 auto;}
+  .module-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+  .module-tag{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(107,33,168,0.2);padding:4px 12px;border-radius:100px;}
+  .module-meta{font-size:12px;color:var(--text-3);}
+  h1{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1.05;letter-spacing:-0.02em;color:var(--text);margin-bottom:24px;}
+  .intro-text{font-size:19px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+  h2{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:400;color:var(--text);margin:52px 0 18px;line-height:1.2;}
+  h3{font-size:16px;font-weight:500;color:var(--text);margin:32px 0 12px;}
+  p{font-size:16px;font-weight:300;color:var(--text-2);line-height:1.8;margin-bottom:20px;}
+  strong{font-weight:500;color:var(--text);}
+  em{font-style:italic;}
+  ul,ol{margin:0 0 20px 22px;color:var(--text-2);}
+  li{font-size:16px;font-weight:300;line-height:1.8;margin-bottom:8px;}
+  .callout{background:var(--callout-bg);border:1px solid var(--callout-border);border-radius:12px;padding:24px 28px;margin:32px 0;}
+  .callout-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+  .callout p{margin:0;font-size:15px;color:var(--text-2);}
+  .callout p+p{margin-top:12px;}
+  .good{background:var(--good-bg);border:1px solid var(--good-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .good-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#22c55e;margin-bottom:10px;}
+  .good p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn{background:var(--warn-bg);border:1px solid var(--warn-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .warn-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#fb923c;margin-bottom:10px;}
+  .warn p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn p+p{margin-top:12px;}
+  .principle-list{display:flex;flex-direction:column;gap:12px;margin:24px 0;}
+  .principle{background:var(--bg-2);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:0 12px 12px 0;padding:20px 24px;}
+  .principle-title{font-size:15px;font-weight:500;color:var(--text);margin-bottom:6px;}
+  .principle-desc{font-size:14px;color:var(--text-2);line-height:1.65;margin:0;}
+  .sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:var(--bg-2);border-top:1px solid var(--border-2);padding:14px 5%;display:flex;align-items:center;justify-content:space-between;gap:16px;backdrop-filter:blur(12px);}
+  .sticky-bar-track{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sticky-bar-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.2s;width:0%;}
+  .sticky-bar-label{font-size:12px;color:var(--text-3);white-space:nowrap;min-width:60px;text-align:right;}
+  .sticky-bar-btn{padding:10px 20px;border-radius:8px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;background:var(--accent);color:#fff;border:none;cursor:pointer;white-space:nowrap;transition:opacity 0.2s;display:none;}
+  .sticky-bar-btn:hover{opacity:0.88;}
+  .sticky-bar-reading{font-size:12px;color:var(--text-3);white-space:nowrap;}
+  @media(max-width:900px){.page-wrapper{grid-template-columns:1fr;}.sidebar{display:none;}.content{padding:40px 24px 120px;}h1{font-size:38px;}}
+  @media(max-width:600px){.content{padding:28px 16px 120px;}h1{font-size:30px;}h2{font-size:24px;}}
+</style>
+<style>@media(max-width:480px){.nav-divider{display:none}.nav-left{gap:8px}}</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="courses.html" class="nav-back">← Agentic AI and Autonomous Systems</a>
+    <div class="nav-divider"></div>
+    <span class="nav-label">Module 10</span>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">☀</span></button>
+</nav>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+
+<div class="page-wrapper">
+<aside class="sidebar">
+  <div class="sidebar-course">Expert Track</div>
+  <div class="sidebar-course-name">Agentic AI and Autonomous Systems</div>
+  <div class="sidebar-module"><a href="agents-module-1.html" class="sidebar-module-link"><span class="sidebar-num">1</span>What Are AI Agents?</a></div>
+  <div class="sidebar-module"><a href="agents-module-2.html" class="sidebar-module-link"><span class="sidebar-num">2</span>The Agent Loop: Perceive, Reason, Act</a></div>
+  <div class="sidebar-module"><a href="agents-module-3.html" class="sidebar-module-link"><span class="sidebar-num">3</span>Tool Use and Function Calling</a></div>
+  <div class="sidebar-module"><a href="agents-module-4.html" class="sidebar-module-link"><span class="sidebar-num">4</span>Memory Systems in AI Agents</a></div>
+  <div class="sidebar-module"><a href="agents-module-5.html" class="sidebar-module-link"><span class="sidebar-num">5</span>Multi-Agent Architectures</a></div>
+  <div class="sidebar-module"><a href="agents-module-6.html" class="sidebar-module-link"><span class="sidebar-num">6</span>Planning and Task Decomposition</a></div>
+  <div class="sidebar-module"><a href="agents-module-7.html" class="sidebar-module-link"><span class="sidebar-num">7</span>Retrieval-Augmented Generation</a></div>
+  <div class="sidebar-module"><a href="agents-module-8.html" class="sidebar-module-link"><span class="sidebar-num">8</span>Agent Safety and Reliability</a></div>
+  <div class="sidebar-module"><a href="agents-module-9.html" class="sidebar-module-link"><span class="sidebar-num">9</span>Building with Agent Frameworks</a></div>
+  <div class="sidebar-module"><a href="agents-module-10.html" class="sidebar-module-link active"><span class="sidebar-num">10</span>The Future of Autonomous AI</a></div>
+  <div class="sidebar-module"><a href="quiz-agents.html" class="sidebar-module-link" style="color:var(--accent);margin-top:4px;"><span class="sidebar-num" style="background:var(--accent-dim);color:var(--accent);">✦</span>Final Assessment</a></div>
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-progress-label"><span>Course progress</span><span style="color:var(--accent);">10 / 10</span></div>
+  <div class="sidebar-progress-track"><div class="sidebar-progress-fill"></div></div>
+</aside>
+
+<main>
+<div class="content">
+  <div class="module-eyebrow"><span class="module-tag">Module 10</span><span class="module-meta">30 min read · Agentic AI and Autonomous Systems</span></div>
+  <h1>The Future of Autonomous AI</h1>
+
+  <p class="intro-text">We are at the beginning of a fundamental shift in how AI systems participate in the world. The agents you have studied throughout this course — tool-using, memory-equipped, multi-step reasoning systems — represent the current frontier. But the trajectory of this technology suggests that the agents of 2027 or 2030 will be qualitatively different from what we can build today: more capable, longer-horizon, more autonomous, and integrated into economic and social systems in ways that are difficult to fully anticipate. This final module examines where autonomous AI is heading, what constraints will shape that trajectory, and what it means to build responsibly as these systems become more powerful.</p>
+
+  <h2>The near-term trajectory: agents doing knowledge work</h2>
+  <p>The most concrete near-term development is the extension of agent capabilities across the full scope of knowledge work. Today, agents can execute specific, well-defined tasks: searching the web, writing and running code, managing files, interacting with APIs. The bottleneck is the length and coherence of tasks they can handle reliably — most production agents are still best suited to tasks that can be completed in minutes rather than hours, and to tasks where the success criteria are unambiguous.</p>
+  <p>The research directions that will extend this boundary are well-established. <strong>Longer context windows</strong> allow agents to hold more working memory, reducing the need to externalize information into retrieval systems and enabling more coherent reasoning over longer task horizons. <strong>Improved tool use</strong> — more reliable function calling, better handling of error cases, more sophisticated planning over sequences of tool invocations — will increase the complexity of tasks agents can complete without human intervention. <strong>Better world models</strong> — AI systems that have more accurate representations of how actions affect environments — will reduce the frequency of confident failures where an agent takes an action based on a mistaken premise.</p>
+  <p>The practical implication: within the next two to three years, agents will be capable of performing many knowledge work tasks that currently require sustained human attention — literature reviews, code refactoring projects, data analysis pipelines, document processing workflows — with high reliability and minimal oversight. The economic and organizational consequences of this are substantial.</p>
+
+  <h2>Multi-agent systems at scale</h2>
+  <p>The most significant architectural development in near-term agentic AI is the shift from single agents to coordinated networks of agents. Individual agents are constrained by context windows and the serialized nature of the agent loop. Networks of agents can parallelize work, specialize by domain, and tackle problems too large for any single agent to hold in memory.</p>
+  <p>Early versions of this exist today: agent orchestration frameworks route subtasks to specialized agents, multi-agent debate systems use disagreement between agents to improve the quality of reasoning, and pipeline architectures use one agent's output as another's input. But these are still relatively shallow networks — typically two or three layers, with limited coordination sophistication.</p>
+  <p>The research frontier involves much deeper coordination: agents that maintain persistent shared world models, that negotiate over resource allocation, that develop trust relationships based on track records of reliability, and that can identify when a task requires escalation to a more capable agent or to a human. This is not speculative — the components exist today and the integration problem is primarily engineering rather than fundamental research. Large-scale multi-agent systems doing complex knowledge work in coordinated pipelines are a near-term development, not a distant aspiration.</p>
+
+  <div class="callout">
+    <div class="callout-label">What this means for practitioners</div>
+    <p>The shift to multi-agent systems changes the skills that matter for AI practitioners. Building individual agents is increasingly abstracted by frameworks. The distinctive value will increasingly come from: designing agent architectures that decompose problems well, defining the interfaces and protocols between agents, managing the quality and consistency of agent outputs at pipeline scale, and building the evaluation infrastructure to detect failures in complex multi-agent systems. The orchestration layer is where the hard problems live.</p>
+  </div>
+
+  <h2>Embodied and computer-use agents</h2>
+  <p>The agents in this course have been purely digital — they interact with the world through API calls and text outputs. A second major direction is agents that interact with the world through graphical interfaces (computer-use agents) or physical actuators (embodied AI). Both categories represent substantial expansions in the scope of what agents can do and, correspondingly, in the consequences of agent failures.</p>
+  <p><strong>Computer-use agents</strong> — systems that can see a screen, move a cursor, click, type, and navigate arbitrary software interfaces — remove the dependency on API access. An agent that can use a browser like a human can interact with any web-based system, regardless of whether that system has an API. Anthropic's Claude with computer use, OpenAI's Operator, and Google's Project Mariner represent the current frontier of this capability. The near-term implications are significant: computer-use agents can automate workflows in legacy software systems, execute multi-step processes across multiple applications, and perform tasks that currently require human visual interpretation of interfaces.</p>
+  <p><strong>Embodied AI</strong> — physical robots with AI decision-making — is advancing through projects like Figure AI's humanoid robot, Boston Dynamics' developments in manipulation, and Google DeepMind's RT-2 work on vision-language-action models. The integration of large language models with robotic systems is enabling more flexible, instruction-following physical agents that can generalize to novel situations rather than executing only pre-programmed sequences. The pace of progress in physical AI has accelerated substantially since 2023.</p>
+
+  <h2>The autonomy expansion problem</h2>
+  <p>As agents become more capable, there is a systematic pressure toward expanding their autonomy. More capable agents can handle more decision-making without human input, and the economic value of removing human oversight bottlenecks is clear. But this creates a dynamic that safety researchers describe as the autonomy expansion problem: the incentive structure pushes toward more autonomy before the reliability and alignment verification required to justify that autonomy has been demonstrated.</p>
+  <p>The pattern appears at every level. Individual developers give agents more tools and more autonomy as they see the agents perform well in testing, without always having robust mechanisms to detect the failure cases that weren't encountered in testing. Organizations grant agentic systems more operational authority as they demonstrate capability in limited deployments, without fully understanding the failure modes at higher autonomy levels. Industry competitive dynamics push toward shipping more autonomous products faster, because first-mover advantages in autonomous AI applications appear significant.</p>
+
+  <div class="warn">
+    <div class="warn-label">The competence-trust gap</div>
+    <p>The most dangerous phase in the development of autonomous systems is when they are competent enough to operate without obvious failures in most cases but not yet reliable enough to be trusted without oversight in all cases. In this regime, the absence of observed failures is not evidence of safety — it may simply reflect that the rare failure conditions haven't been encountered yet. Building trust through demonstrated reliability in progressively higher-stakes situations — rather than through capability demonstration alone — is the appropriate model, but it requires deliberate institutional commitment to resist the pressure to expand autonomy faster than reliability has been established.</p>
+  </div>
+
+  <h2>Economic and labor market implications</h2>
+  <p>The economic implications of capable autonomous agents are not speculative — they are beginning to materialize in specific domains and will expand. The clearest near-term impacts are in knowledge work that involves well-defined, repeatable cognitive tasks: data analysis, document review, code generation, customer support triage, content production, and research assistance.</p>
+  <p>The economic dynamic is different from previous waves of automation. Software automation replaced specific procedural tasks while leaving judgment, synthesis, and novel problem-solving to humans. Agentic AI systems are beginning to perform judgment-requiring tasks: determining which search results are relevant, deciding how to structure an analysis, choosing how to handle a novel customer situation. This places the automation pressure higher in the skill distribution than previous technologies.</p>
+  <p>The implications are contested. Optimistic projections emphasize productivity expansion: agents amplify human capabilities rather than replacing them, freeing people for higher-order work while making existing workers substantially more productive. Pessimistic projections emphasize displacement: if an agent can perform 80% of the tasks in a knowledge work role reliably, the demand for humans in that role contracts substantially. The historical precedent for technology-driven labor displacement suggests both dynamics will occur simultaneously in different sectors and skill levels, with net effects that depend heavily on the pace of transition and the capacity of workers to adapt.</p>
+
+  <h2>Governance and responsible development</h2>
+  <p>The governance questions raised by autonomous AI are genuinely difficult and not adequately resolved by current frameworks. Several dimensions deserve attention from anyone building or deploying agentic systems.</p>
+
+  <div class="principle-list">
+    <div class="principle">
+      <div class="principle-title">Attribution and accountability</div>
+      <div class="principle-desc">When an autonomous agent takes a harmful action — sends a defamatory message, executes a fraudulent transaction, gives dangerous medical advice — who is responsible? The user who deployed the agent? The organization that built it? The developer of the underlying model? Current legal frameworks were not designed for multi-party AI systems, and the attribution question is unresolved in most jurisdictions. Responsible builders should think proactively about accountability design: building systems that log every action with enough context to reconstruct responsibility chains, and being explicit with users about the limits of agent reliability and the user's responsibility for supervising agent behavior.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Access and power concentration</div>
+      <div class="principle-desc">Highly capable autonomous agents represent economic power. If access to the most capable agentic systems is concentrated in a small number of organizations or individuals, the technology amplifies existing inequalities in productive capacity. The governance challenge is designing access models — pricing, licensing, open-source availability, regulatory constraints on concentration — that prevent autonomous AI from becoming a mechanism for further concentrating economic and political power in systems that are already highly concentrated.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Transparency in deployment</div>
+      <div class="principle-desc">People interacting with agentic systems deserve to know they are interacting with AI, to understand what data the agent has access to and how it uses that data, and to have meaningful recourse when agent actions cause harm. Transparency is not just an ethical requirement — it is a practical safety mechanism, because informed users are better positioned to catch and report agent failures than users who are unaware of or deceived about the nature of the system they are interacting with.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Preserving human oversight</div>
+      <div class="principle-desc">The most important near-term governance principle for autonomous AI is maintaining meaningful human oversight of consequential decisions. "Meaningful" oversight is not human rubber-stamping of agent outputs — it requires that humans have the information, time, and authority to actually redirect agents when they are making mistakes. As agents become more capable and their outputs more voluminous, the practical challenge of maintaining meaningful oversight increases. Designing systems, processes, and incentives that preserve real oversight rather than nominal oversight is one of the central challenges of responsible agentic AI deployment.</div>
+    </div>
+  </div>
+
+  <h2>What it means to build well</h2>
+  <p>This course has equipped you with the technical concepts to build sophisticated agentic systems. The final question is not technical — it is about what kind of builder you want to be.</p>
+  <p>Building agents that work is not the same as building agents that are good to deploy. An agent can be technically capable — reliably completing tasks, managing state, coordinating with other agents — while still being deployed in ways that create real harms: automating decisions that should have human judgment, concentrating capabilities in ways that are unfair, operating at a level of autonomy that outpaces the reliability verification that would justify it.</p>
+  <p>The disposition that produces good agents is not primarily technical. It involves taking seriously the safety concerns developed in Module 8 before deployment rather than after. It involves building evaluation infrastructure that catches failure modes rather than only measuring success cases. It involves maintaining appropriate humility about what the agent can and cannot do reliably. And it involves staying engaged with the governance, safety, and alignment research that is working to make these systems trustworthy at the scale and autonomy levels the technology is moving toward.</p>
+
+  <div class="good">
+    <div class="good-label">You are ready for the final assessment</div>
+    <p>You have now completed all ten modules of Agentic AI and Autonomous Systems. You understand the architecture of agents — the loop, tool use, memory systems, and multi-agent coordination. You understand the failure modes and safety principles that govern responsible agentic deployment. You understand the frameworks available for building production agents and the trade-offs between them. And you understand the trajectory this technology is on and the governance questions it raises. The final assessment will test the full scope of these concepts. Good luck.</p>
+  </div>
+</div>
+</main>
+</div>
+
+<div class="sticky-bar" id="sticky-bar">
+  <div class="sticky-bar-reading" id="sticky-reading">Read to the end to unlock the final assessment</div>
+  <div class="sticky-bar-track"><div class="sticky-bar-fill" id="sticky-fill"></div></div>
+  <div class="sticky-bar-label" id="sticky-label">0%</div>
+  <button class="sticky-bar-btn" id="sticky-btn" onclick="completeAndNext()">Take the Final Assessment →</button>
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import { getFirestore, doc, setDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  const app=initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+  const auth=getAuth(app);const db=getFirestore(app);
+  let currentUser=null;
+  onAuthStateChanged(auth,u=>{currentUser=u;});
+
+  window.toggleTheme=function(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='☾'):(h.setAttribute('data-theme','dark'),i.textContent='☀');};
+  window.addEventListener('scroll',()=>{const d=document.documentElement,s=d.scrollTop||document.body.scrollTop,t=d.scrollHeight-d.clientHeight;document.getElementById('progress').style.width=(s/t*100)+'%';});
+
+  let unlocked=false;
+  function updateScrollProgress(){
+    const scrolled=window.scrollY+window.innerHeight;
+    const total=document.documentElement.scrollHeight;
+    const pct=Math.min(100,Math.round((scrolled/total)*100));
+    const fill=document.getElementById('sticky-fill');
+    const label=document.getElementById('sticky-label');
+    const btn=document.getElementById('sticky-btn');
+    const reading=document.getElementById('sticky-reading');
+    if(fill)fill.style.width=pct+'%';
+    if(label)label.textContent=pct+'%';
+    if(pct>=95&&!unlocked){
+      unlocked=true;
+      if(btn)btn.style.display='block';
+      if(reading)reading.style.display='none';
+      if(fill)fill.style.background='#22c55e';
+      if(label)label.style.color='#22c55e';
+    }
+  }
+  window.addEventListener('scroll',updateScrollProgress);
+  updateScrollProgress();
+
+  window.completeAndNext=async function(){
+    if(currentUser){
+      try{
+        await setDoc(doc(db,'users',currentUser.uid),{
+          agentsModules: arrayUnion('m10')
+        },{merge:true});
+      }catch(e){}
+    }
+    window.location.href='quiz-agents.html';
+  };
+</script>
+</body>
+</html>

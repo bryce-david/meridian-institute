@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Clinical Decision Support — AI in Healthcare — Meridian Institute of AI</title>
+<meta name="description" content="Free AI in Healthcare course — module 4. How AI-powered clinical decision support is transforming from passive alerts to active reasoning partners.">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="Clinical Decision Support — AI in Healthcare — Meridian Institute of AI">
+<meta property="og:description" content="Free AI in Healthcare course — module 4. How AI-powered clinical decision support is transforming from passive alerts to active reasoning partners.">
+<meta property="og:url" content="https://meridianinstituteai.com/courses/healthcare/module-4.html">
+<meta property="og:type" content="website">
+<link rel="canonical" href="https://meridianinstituteai.com/courses/healthcare/module-4.html">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#06b6d4;--accent-dim:rgba(6,182,212,0.1);--nav-bg:rgba(8,8,8,0.9);--callout-bg:rgba(6,182,212,0.07);--callout-border:rgba(6,182,212,0.25);--good-bg:rgba(34,197,94,0.07);--good-border:rgba(34,197,94,0.2);--warn-bg:rgba(251,146,60,0.07);--warn-border:rgba(251,146,60,0.2);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#0891b2;--accent-dim:rgba(8,145,178,0.08);--nav-bg:rgba(250,250,248,0.9);--callout-bg:rgba(8,145,178,0.05);--callout-border:rgba(8,145,178,0.2);--good-bg:rgba(22,163,74,0.06);--good-border:rgba(22,163,74,0.2);--warn-bg:rgba(234,88,12,0.05);--warn-border:rgba(234,88,12,0.2);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;overflow-x:hidden;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.7;overflow-x:hidden;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}
+  .nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}
+  .nav-back{font-size:13px;color:var(--text-2);text-decoration:none;transition:color 0.2s;}
+  .nav-back:hover{color:var(--text);}
+  .nav-label{font-size:13px;color:var(--text-3);}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;transition:all 0.2s;}
+  .progress-bar{position:fixed;top:60px;left:0;right:0;z-index:99;height:2px;background:var(--border);}
+  .progress-fill{height:100%;background:var(--accent);width:0%;transition:width 0.1s;}
+  .page-wrapper{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:100vh;padding-top:62px;}
+  .sidebar{position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto;border-right:1px solid var(--border);padding:32px 24px;background:var(--bg-2);}
+  .sidebar-course{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;}
+  .sidebar-course-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+  .sidebar-module{margin-bottom:4px;}
+  .sidebar-module-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:13px;color:var(--text-2);text-decoration:none;transition:all 0.2s;line-height:1.4;}
+  .sidebar-module-link:hover{background:var(--bg-3);color:var(--text);}
+  .sidebar-module-link.active{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-num{font-size:11px;font-weight:500;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--bg-4);color:var(--text-3);}
+  .sidebar-module-link.active .sidebar-num{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-divider{height:1px;background:var(--border);margin:20px 0;}
+  .sidebar-progress-label{font-size:12px;color:var(--text-3);margin-bottom:8px;display:flex;justify-content:space-between;}
+  .sidebar-progress-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sidebar-progress-fill{height:100%;width:38%;background:var(--accent);border-radius:2px;}
+  main{display:block;min-width:0;}
+  .content{max-width:760px;width:100%;padding:60px 64px 140px;margin:0 auto;}
+  .module-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+  .module-tag{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(6,182,212,0.2);padding:4px 12px;border-radius:100px;}
+  .module-meta{font-size:12px;color:var(--text-3);}
+  h1{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1.05;letter-spacing:-0.02em;color:var(--text);margin-bottom:24px;}
+  .intro-text{font-size:19px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+  h2{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:400;color:var(--text);margin:52px 0 18px;line-height:1.2;}
+  h3{font-size:16px;font-weight:500;color:var(--text);margin:32px 0 12px;}
+  p{font-size:16px;font-weight:300;color:var(--text-2);line-height:1.8;margin-bottom:20px;}
+  strong{font-weight:500;color:var(--text);}
+  .callout{background:var(--callout-bg);border:1px solid var(--callout-border);border-radius:12px;padding:24px 28px;margin:32px 0;}
+  .callout-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+  .callout p{margin:0;font-size:15px;color:var(--text-2);}
+  .callout p+p{margin-top:12px;}
+  .good{background:var(--good-bg);border:1px solid var(--good-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .good-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#22c55e;margin-bottom:10px;}
+  .good p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn{background:var(--warn-bg);border:1px solid var(--warn-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .warn-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#fb923c;margin-bottom:10px;}
+  .warn p{margin:0;font-size:15px;color:var(--text-2);}
+  .comparison-wrapper{overflow-x:auto;-webkit-overflow-scrolling:touch;width:100%;margin:28px 0;}
+  table{width:100%;border-collapse:collapse;font-size:14px;min-width:480px;}
+  th{text-align:left;padding:12px 16px;font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-3);border-bottom:1px solid var(--border-2);}
+  td{padding:14px 16px;border-bottom:1px solid var(--border);color:var(--text-2);line-height:1.6;vertical-align:top;}
+  tr:last-child td{border-bottom:none;}
+  td:first-child{color:var(--text);font-weight:500;}
+  .principle-list{display:flex;flex-direction:column;gap:12px;margin:24px 0;}
+  .principle{background:var(--bg-2);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:0 12px 12px 0;padding:20px 24px;}
+  .principle-title{font-size:15px;font-weight:500;color:var(--text);margin-bottom:6px;}
+  .principle-desc{font-size:14px;color:var(--text-2);line-height:1.65;margin:0;}
+  .sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:var(--bg-2);border-top:1px solid var(--border-2);padding:14px 5%;display:flex;align-items:center;justify-content:space-between;gap:16px;backdrop-filter:blur(12px);}
+  .sticky-bar-track{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sticky-bar-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.2s;width:0%;}
+  .sticky-bar-label{font-size:12px;color:var(--text-3);white-space:nowrap;min-width:60px;text-align:right;}
+  .sticky-bar-btn{padding:10px 20px;border-radius:8px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;background:var(--accent);color:#fff;border:none;cursor:pointer;white-space:nowrap;transition:opacity 0.2s;display:none;}
+  .sticky-bar-btn:hover{opacity:0.88;}
+  .sticky-bar-reading{font-size:12px;color:var(--text-3);white-space:nowrap;}
+  @media(max-width:900px){.page-wrapper{grid-template-columns:1fr;}.sidebar{display:none;}.content{padding:40px 24px 120px;}h1{font-size:38px;}}
+  @media(max-width:600px){.content{padding:28px 16px 120px;}h1{font-size:30px;}h2{font-size:24px;}}
+</style>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="shortcut icon" href="/favicon.ico">
+<style>@media(max-width:480px){.nav-divider{display:none}.nav-left{gap:8px}}</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="../../index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="../../index.html" class="nav-back">&#x2302; Home</a>
+    <div class="nav-divider"></div>
+    <a href="../../courses.html" class="nav-back">← AI in Healthcare</a>
+    <div class="nav-divider"></div>
+    <span class="nav-label">Module 4</span>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">☀</span></button>
+</nav>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+
+<div class="page-wrapper">
+<aside class="sidebar">
+  <div class="sidebar-course">Course</div>
+  <div class="sidebar-course-name">AI in Healthcare</div>
+  <div class="sidebar-module"><a href="module-1.html" class="sidebar-module-link"><span class="sidebar-num">1</span>AI's Transformation of Medicine</a></div>
+  <div class="sidebar-module"><a href="module-2.html" class="sidebar-module-link"><span class="sidebar-num">2</span>Diagnostic AI</a></div>
+  <div class="sidebar-module"><a href="module-3.html" class="sidebar-module-link"><span class="sidebar-num">3</span>Drug Discovery and AI</a></div>
+  <div class="sidebar-module"><a href="module-4.html" class="sidebar-module-link active"><span class="sidebar-num">4</span>Clinical Decision Support</a></div>
+  <div class="sidebar-module"><a href="module-5.html" class="sidebar-module-link"><span class="sidebar-num">5</span>AI in Mental Health</a></div>
+  <div class="sidebar-module"><a href="module-6.html" class="sidebar-module-link"><span class="sidebar-num">6</span>Genomics and Personalized Medicine</a></div>
+  <div class="sidebar-module"><a href="module-7.html" class="sidebar-module-link"><span class="sidebar-num">7</span>Healthcare Operations</a></div>
+  <div class="sidebar-module"><a href="module-8.html" class="sidebar-module-link"><span class="sidebar-num">8</span>Regulation, Ethics, and the Future</a></div>
+  <div class="sidebar-module"><a href="quiz.html" class="sidebar-module-link" style="color:var(--accent);margin-top:4px;"><span class="sidebar-num" style="background:var(--accent-dim);color:var(--accent);">✦</span>Final Assessment</a></div>
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-progress-label"><span>Course progress</span><span style="color:var(--accent);">3 / 8</span></div>
+  <div class="sidebar-progress-track"><div class="sidebar-progress-fill"></div></div>
+</aside>
+
+<main>
+<div class="content">
+  <div class="module-eyebrow"><span class="module-tag">Module 4</span><span class="module-meta">22 min read · AI in Healthcare</span></div>
+  <h1>Clinical Decision Support</h1>
+  <p class="intro-text">Clinical decision support systems have existed for decades — drug interaction alerts, dosing calculators, evidence-based guidelines. AI has transformed these systems from passive references into active partners in clinical reasoning. The difference between a static decision support tool and an AI-powered clinical partner is the difference between a textbook and a consultant: one provides information, the other reasons with you about your specific patient.</p>
+
+  <h2>From Alerts to Active Reasoning</h2>
+  <p>Traditional clinical decision support operated on a simple logic: when a condition is met, fire an alert. Drug interaction detected — alert. Patient meets criteria for a sepsis protocol — alert. Lab value out of range — alert. This rule-based architecture was a genuine advance over no system at all. But it had a fundamental failure mode: volume. When every alert is equally urgent, none are.</p>
+  <p>A 2019 JAMA study quantified what clinicians already knew from experience: physicians override 69% of drug-drug interaction alerts. More troubling, that same study found evidence of alert fatigue carrying real cost — clinicians who received high volumes of non-actionable alerts were more likely to miss the genuine ones. The system designed to prevent harm was creating new pathways to harm through cognitive overload.</p>
+  <p>AI-powered clinical decision support solves this by doing what the rule-based systems could not: synthesizing multiple data streams simultaneously, weighting alerts by patient-specific risk, and providing reasoning rather than just a flag. Instead of "drug interaction detected," an AI system might flag: "This patient's renal function has declined 30% over 48 hours, which combined with the new metformin prescription carries elevated lactic acidosis risk — review creatinine before dispensing." Epic's Cognitive Computing platform and the AI tools developed during IBM Watson Health's active period were early attempts at this reasoning architecture, with Watson providing the cautionary tale about what happens when ambition outruns validation.</p>
+
+  <div class="callout">
+    <div class="callout-label">Clinical Evidence</div>
+    <p>A study at Duke Health found that an AI clinical decision support system for sepsis detection reduced 30-day mortality by 18% compared to standard care — by flagging deteriorating patients an average of 6 hours earlier than human clinicians would have identified them. That 6-hour window is the difference between early intervention and crisis management.</p>
+  </div>
+
+  <h2>Sepsis Detection: The Proof-of-Concept Case</h2>
+  <p>Sepsis kills approximately 270,000 Americans annually and is the most expensive hospital condition to treat, consuming $24 billion per year. It is also one of the hardest conditions to catch early. Sepsis begins when the body's response to infection turns against its own tissues — but its initial signs are nonspecific: elevated heart rate, fever, slightly elevated white blood cell count. These same findings accompany dozens of non-life-threatening conditions. The clinical skill of identifying early sepsis is essentially the skill of finding a signal in noise.</p>
+  <p>This is precisely the problem ML is best suited to solve. AI models that continuously analyze vital signs, laboratory values, fluid balance, clinical notes, and medication history can identify the pattern of early sepsis with a sensitivity that no human clinician can match across an entire hospital floor simultaneously. Epic's Sepsis Model — deployed across hundreds of hospitals — uses logistic regression trained on millions of patient-hours of EHR data to generate continuous sepsis risk scores. The UPMC deployment showed AI-identified sepsis patients had significantly better outcomes when clinical teams followed the alert and intervened early. Michigan Medicine reported similar results, with the AI alerting an average of 3-4 hours before clinical deterioration would have triggered conventional identification.</p>
+  <p>Sepsis became the proof-of-concept case for AI clinical decision support for a specific reason: the outcome is measurable, the stakes are high enough to justify validation investment, and the mechanism is defensible — the AI is doing real-time pattern recognition across data streams no human can monitor simultaneously. It demonstrated that AI CDS could produce genuine clinical value, not just marginal efficiency gains.</p>
+
+  <h2>AI in Medication Management</h2>
+  <p>Dosing optimization is one of the most mature clinical AI applications, and one of the clearest cases where AI outperforms standard approaches on a measurable outcome. For drugs with narrow therapeutic windows — where too little is ineffective and too much is toxic — getting dosing right quickly matters enormously. Warfarin, vancomycin in serious infections, and tacrolimus in transplant patients are the canonical examples. Standard weight-based dosing protocols treat patients as population averages. Individual patients metabolize these drugs very differently based on genetics, renal function, age, body composition, and concurrent medications.</p>
+  <p>AI models that incorporate pharmacokinetic parameters alongside patient-specific lab values and clinical history can individualize dosing with a precision that standard protocols cannot approach. Clinical pharmacists at Vanderbilt and Stanford have reported 30–40% reductions in sub- and supra-therapeutic drug levels with AI-assisted dosing compared to standard weight-based protocols. For vancomycin in particular, a drug where under-dosing fails to clear serious infections and over-dosing causes permanent kidney damage, this kind of precision has direct patient safety implications.</p>
+
+  <div class="comparison-wrapper">
+    <table>
+      <tr><th>Dosing Approach</th><th>Method</th><th>Time to Target</th><th>Adverse Events</th></tr>
+      <tr><td>Standard Weight-Based</td><td>Fixed formula</td><td>2–4 days</td><td>Baseline</td></tr>
+      <tr><td>Protocol-Adjusted</td><td>Stepwise titration</td><td>1–3 days</td><td>Moderate reduction</td></tr>
+      <tr><td>AI-Optimized</td><td>Individualized pharmacokinetic modeling</td><td>&lt;24 hours</td><td>Significant reduction</td></tr>
+    </table>
+  </div>
+
+  <h2>Challenges: Integration and Liability</h2>
+  <p>The technical performance of AI clinical decision support tools often exceeds their adoption rate — and the gap is explained by barriers that are organizational, legal, and workflow-structural rather than scientific. The three most significant: EHR integration, clinical workflow fit, and liability.</p>
+  <p>EHR integration is a harder problem than it sounds. Most U.S. hospitals run on Epic or Oracle Health (formerly Cerner), which control their own data architectures. An AI tool built by a third-party vendor must either access data through the EHR's API — which is limited — or integrate directly into the EHR workflow, which requires vendor cooperation that can be slow and expensive. The result is that many AI CDS tools that perform well in research settings sit unused in clinical settings because clinicians have to leave their primary workflow to access them. Tools that don't fit workflow don't get used, regardless of their accuracy.</p>
+  <p>The liability question remains unresolved. When a physician follows an AI recommendation and the patient is harmed, who bears responsibility? The physician, for failing to exercise independent judgment? The hospital, for deploying the tool? The AI vendor? The FDA has created a regulatory framework for AI/ML-based Software as a Medical Device (SaMD), but the liability questions sit largely in common law rather than statute, and have not been tested in enough high-profile cases to produce clear precedent. This uncertainty makes risk-averse institutions cautious about deployment.</p>
+
+  <div class="warn">
+    <div class="warn-label">The Explainability Problem</div>
+    <p>A 2023 study published in NEJM AI found that 43% of clinicians said they would distrust an AI recommendation if they couldn't understand the reasoning behind it. This highlights explainability as a core adoption barrier — not just a theoretical concern. An AI system that generates accurate recommendations that clinicians ignore because the reasoning is opaque produces no clinical value.</p>
+  </div>
+
+  <h2>What Effective CDS Looks Like</h2>
+  <p>The AI clinical decision support tools that actually get used share a set of characteristics that go beyond raw accuracy. Accuracy is necessary but not sufficient — a highly accurate tool that fires at the wrong moment, can't be understood, or requires extra steps to act on will be ignored. The tools that get adopted are those designed around the clinical workflow rather than imposed upon it.</p>
+  <p>Contextual timing matters more than most CDS designers initially appreciate. An alert that fires when a physician is in the middle of documenting a different patient, or when they've just left the patient's room, arrives at a moment when nothing can be done about it. An alert that fires at the medication ordering screen — when the physician is actively making the decision the alert is relevant to — arrives at the exact moment of decision. The best AI CDS is designed around clinical workflow touchpoints, not data availability.</p>
+  <p>The principle-level framework that distinguishes effective AI CDS from systems that generate data without changing outcomes is worth articulating explicitly:</p>
+
+  <div class="principle-list">
+    <div class="principle">
+      <div class="principle-title">Timing</div>
+      <div class="principle-desc">Present information when the clinician can act on it. An alert delivered after the relevant decision has already been made provides no value and adds to cognitive load.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Specificity</div>
+      <div class="principle-desc">Provide patient-specific recommendations, not generic guidelines. Telling a clinician their patient meets criteria for a sepsis bundle is less useful than telling them which specific elements of that patient's presentation are driving the risk score.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Explainability</div>
+      <div class="principle-desc">Show the reasoning, not just the output. Clinicians need to be able to agree or disagree with the AI's reasoning — not just accept or reject a black-box recommendation. Explainable AI is not optional in a domain where clinicians bear legal and ethical responsibility for outcomes.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Actionability</div>
+      <div class="principle-desc">Make it easy to act on the recommendation. If acting on an AI alert requires navigating to a different screen, calling a pharmacist, or entering data in a separate system, the alert will be dismissed. The best CDS tools include one-click order sets or built-in escalation pathways.</div>
+    </div>
+  </div>
+
+</div>
+</main>
+</div>
+
+<div class="sticky-bar">
+  <div class="sticky-bar-reading" id="sticky-reading">Read to the end to unlock the next module</div>
+  <div class="sticky-bar-track"><div class="sticky-bar-fill" id="sticky-fill"></div></div>
+  <div class="sticky-bar-label" id="sticky-label">0%</div>
+  <button class="sticky-bar-btn" id="sticky-btn" onclick="completeAndNext()">Module 5: AI in Mental Health →</button>
+</div>
+
+<script>
+  function toggleTheme(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='☾'):(h.setAttribute('data-theme','dark'),i.textContent='☀');}
+  window.addEventListener('scroll',()=>{const d=document.documentElement,s=d.scrollTop||document.body.scrollTop,t=d.scrollHeight-d.clientHeight;document.getElementById('progress').style.width=(s/t*100)+'%';});
+  let unlocked=false;
+  function updateScrollProgress(){
+    const pct=Math.min(100,Math.round(((window.scrollY+window.innerHeight)/document.documentElement.scrollHeight)*100));
+    document.getElementById('sticky-fill').style.width=pct+'%';
+    document.getElementById('sticky-label').textContent=pct+'%';
+    if(pct>=95&&!unlocked){unlocked=true;document.getElementById('sticky-btn').style.display='block';document.getElementById('sticky-reading').style.display='none';document.getElementById('sticky-fill').style.background='#22c55e';document.getElementById('sticky-label').style.color='#22c55e';}
+  }
+  window.addEventListener('scroll',updateScrollProgress);updateScrollProgress();
+  function completeAndNext(){
+    if(window.__meridianSaveProgress){ try{ window.__meridianSaveProgress("m4"); }catch(e){} }
+    setTimeout(function(){ window.location.href="module-5.html"; }, 120);
+  }
+</script>
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import { getFirestore, doc, setDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  const app = initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+  const auth = getAuth(app); const db = getFirestore(app);
+  let meridianUser = null;
+  onAuthStateChanged(auth, u => { meridianUser = u; });
+  window.__meridianSaveProgress = async function(mValue){
+    if(!meridianUser) return;
+    try { await setDoc(doc(db,"users",meridianUser.uid), { healthcareModules: arrayUnion(mValue) }, { merge: true }); } catch(e) {}
+  };
+</script>
+</body>
+</html>

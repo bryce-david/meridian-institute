@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Regulation, Ethics, and the Future — AI in Healthcare — Meridian Institute of AI</title>
+<meta name="description" content="Free AI in Healthcare course — module 8. The FDA's AI framework, HIPAA in the AI era, algorithmic bias, and where healthcare AI is heading.">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="Regulation, Ethics, and the Future — AI in Healthcare — Meridian Institute of AI">
+<meta property="og:description" content="Free AI in Healthcare course — module 8. The FDA's AI framework, HIPAA in the AI era, algorithmic bias, and where healthcare AI is heading.">
+<meta property="og:url" content="https://meridianinstituteai.com/courses/healthcare/module-8.html">
+<meta property="og:type" content="website">
+<link rel="canonical" href="https://meridianinstituteai.com/courses/healthcare/module-8.html">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#06b6d4;--accent-dim:rgba(6,182,212,0.1);--nav-bg:rgba(8,8,8,0.9);--callout-bg:rgba(6,182,212,0.07);--callout-border:rgba(6,182,212,0.25);--good-bg:rgba(34,197,94,0.07);--good-border:rgba(34,197,94,0.2);--warn-bg:rgba(251,146,60,0.07);--warn-border:rgba(251,146,60,0.2);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#0891b2;--accent-dim:rgba(8,145,178,0.08);--nav-bg:rgba(250,250,248,0.9);--callout-bg:rgba(8,145,178,0.05);--callout-border:rgba(8,145,178,0.2);--good-bg:rgba(22,163,74,0.06);--good-border:rgba(22,163,74,0.2);--warn-bg:rgba(234,88,12,0.05);--warn-border:rgba(234,88,12,0.2);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;overflow-x:hidden;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.7;overflow-x:hidden;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}
+  .nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}
+  .nav-back{font-size:13px;color:var(--text-2);text-decoration:none;transition:color 0.2s;}
+  .nav-back:hover{color:var(--text);}
+  .nav-label{font-size:13px;color:var(--text-3);}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;transition:all 0.2s;}
+  .progress-bar{position:fixed;top:60px;left:0;right:0;z-index:99;height:2px;background:var(--border);}
+  .progress-fill{height:100%;background:var(--accent);width:0%;transition:width 0.1s;}
+  .page-wrapper{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:100vh;padding-top:62px;}
+  .sidebar{position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto;border-right:1px solid var(--border);padding:32px 24px;background:var(--bg-2);}
+  .sidebar-course{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;}
+  .sidebar-course-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+  .sidebar-module{margin-bottom:4px;}
+  .sidebar-module-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:13px;color:var(--text-2);text-decoration:none;transition:all 0.2s;line-height:1.4;}
+  .sidebar-module-link:hover{background:var(--bg-3);color:var(--text);}
+  .sidebar-module-link.active{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-num{font-size:11px;font-weight:500;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--bg-4);color:var(--text-3);}
+  .sidebar-module-link.active .sidebar-num{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-divider{height:1px;background:var(--border);margin:20px 0;}
+  .sidebar-progress-label{font-size:12px;color:var(--text-3);margin-bottom:8px;display:flex;justify-content:space-between;}
+  .sidebar-progress-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sidebar-progress-fill{height:100%;width:88%;background:var(--accent);border-radius:2px;}
+  main{display:block;min-width:0;}
+  .content{max-width:760px;width:100%;padding:60px 64px 140px;margin:0 auto;}
+  .module-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+  .module-tag{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(6,182,212,0.2);padding:4px 12px;border-radius:100px;}
+  .module-meta{font-size:12px;color:var(--text-3);}
+  h1{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1.05;letter-spacing:-0.02em;color:var(--text);margin-bottom:24px;}
+  .intro-text{font-size:19px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+  h2{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:400;color:var(--text);margin:52px 0 18px;line-height:1.2;}
+  h3{font-size:16px;font-weight:500;color:var(--text);margin:32px 0 12px;}
+  p{font-size:16px;font-weight:300;color:var(--text-2);line-height:1.8;margin-bottom:20px;}
+  strong{font-weight:500;color:var(--text);}
+  .callout{background:var(--callout-bg);border:1px solid var(--callout-border);border-radius:12px;padding:24px 28px;margin:32px 0;}
+  .callout-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+  .callout p{margin:0;font-size:15px;color:var(--text-2);}
+  .callout p+p{margin-top:12px;}
+  .good{background:var(--good-bg);border:1px solid var(--good-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .good-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#22c55e;margin-bottom:10px;}
+  .good p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn{background:var(--warn-bg);border:1px solid var(--warn-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .warn-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#fb923c;margin-bottom:10px;}
+  .warn p{margin:0;font-size:15px;color:var(--text-2);}
+  .comparison-wrapper{overflow-x:auto;-webkit-overflow-scrolling:touch;width:100%;margin:28px 0;}
+  table{width:100%;border-collapse:collapse;font-size:14px;min-width:480px;}
+  th{text-align:left;padding:12px 16px;font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-3);border-bottom:1px solid var(--border-2);}
+  td{padding:14px 16px;border-bottom:1px solid var(--border);color:var(--text-2);line-height:1.6;vertical-align:top;}
+  tr:last-child td{border-bottom:none;}
+  td:first-child{color:var(--text);font-weight:500;}
+  .principle-list{display:flex;flex-direction:column;gap:12px;margin:24px 0;}
+  .principle{background:var(--bg-2);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:0 12px 12px 0;padding:20px 24px;}
+  .principle-title{font-size:15px;font-weight:500;color:var(--text);margin-bottom:6px;}
+  .principle-desc{font-size:14px;color:var(--text-2);line-height:1.65;margin:0;}
+  .sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:var(--bg-2);border-top:1px solid var(--border-2);padding:14px 5%;display:flex;align-items:center;justify-content:space-between;gap:16px;backdrop-filter:blur(12px);}
+  .sticky-bar-track{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sticky-bar-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.2s;width:0%;}
+  .sticky-bar-label{font-size:12px;color:var(--text-3);white-space:nowrap;min-width:60px;text-align:right;}
+  .sticky-bar-btn{padding:10px 20px;border-radius:8px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;background:var(--accent);color:#fff;border:none;cursor:pointer;white-space:nowrap;transition:opacity 0.2s;display:none;}
+  .sticky-bar-btn:hover{opacity:0.88;}
+  .sticky-bar-reading{font-size:12px;color:var(--text-3);white-space:nowrap;}
+  @media(max-width:900px){.page-wrapper{grid-template-columns:1fr;}.sidebar{display:none;}.content{padding:40px 24px 120px;}h1{font-size:38px;}}
+  @media(max-width:600px){.content{padding:28px 16px 120px;}h1{font-size:30px;}h2{font-size:24px;}}
+</style>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="shortcut icon" href="/favicon.ico">
+<style>@media(max-width:480px){.nav-divider{display:none}.nav-left{gap:8px}}</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="../../index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="../../index.html" class="nav-back">&#x2302; Home</a>
+    <div class="nav-divider"></div>
+    <a href="../../courses.html" class="nav-back">← AI in Healthcare</a>
+    <div class="nav-divider"></div>
+    <span class="nav-label">Module 8</span>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">☀</span></button>
+</nav>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+
+<div class="page-wrapper">
+<aside class="sidebar">
+  <div class="sidebar-course">Course</div>
+  <div class="sidebar-course-name">AI in Healthcare</div>
+  <div class="sidebar-module"><a href="module-1.html" class="sidebar-module-link"><span class="sidebar-num">1</span>AI's Transformation of Medicine</a></div>
+  <div class="sidebar-module"><a href="module-2.html" class="sidebar-module-link"><span class="sidebar-num">2</span>Diagnostic AI</a></div>
+  <div class="sidebar-module"><a href="module-3.html" class="sidebar-module-link"><span class="sidebar-num">3</span>Drug Discovery and AI</a></div>
+  <div class="sidebar-module"><a href="module-4.html" class="sidebar-module-link"><span class="sidebar-num">4</span>Clinical Decision Support</a></div>
+  <div class="sidebar-module"><a href="module-5.html" class="sidebar-module-link"><span class="sidebar-num">5</span>AI in Mental Health</a></div>
+  <div class="sidebar-module"><a href="module-6.html" class="sidebar-module-link"><span class="sidebar-num">6</span>Genomics and Personalized Medicine</a></div>
+  <div class="sidebar-module"><a href="module-7.html" class="sidebar-module-link"><span class="sidebar-num">7</span>Healthcare Operations</a></div>
+  <div class="sidebar-module"><a href="module-8.html" class="sidebar-module-link active"><span class="sidebar-num">8</span>Regulation, Ethics, and the Future</a></div>
+  <div class="sidebar-module"><a href="quiz.html" class="sidebar-module-link" style="color:var(--accent);margin-top:4px;"><span class="sidebar-num" style="background:var(--accent-dim);color:var(--accent);">✦</span>Final Assessment</a></div>
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-progress-label"><span>Course progress</span><span style="color:var(--accent);">7 / 8</span></div>
+  <div class="sidebar-progress-track"><div class="sidebar-progress-fill"></div></div>
+</aside>
+
+<main>
+<div class="content">
+  <div class="module-eyebrow"><span class="module-tag">Module 8</span><span class="module-meta">22 min read · AI in Healthcare</span></div>
+  <h1>Regulation, Ethics, and the Future</h1>
+  <p class="intro-text">Healthcare AI operates at the intersection of the most regulated industry in the United States and the least regulated technology in recent history. The tension between those two facts defines the regulatory landscape: an FDA that has built a century of regulatory infrastructure for drugs and devices trying to apply that infrastructure to software that can update itself in continuous deployment. Understanding where the rules are clear, where they are developing, and where they don't yet exist is essential for anyone working in this field.</p>
+
+  <h2>The FDA's Approach to AI Medical Devices</h2>
+  <p>The FDA regulates AI in medical devices through its Software as a Medical Device (SaMD) framework. SaMD is defined as software that performs a medical purpose without being part of a hardware medical device — a diagnostic AI running on a standard computer qualifies, whereas software controlling a pacemaker does not. Within SaMD, the FDA has drawn a critical distinction that shapes its regulatory approach: <strong>locked algorithms</strong> versus <strong>adaptive algorithms</strong>.</p>
+  <p>Locked algorithms are fixed at deployment. Once the model is trained, validated, and cleared, it does not change. This maps reasonably well onto the traditional device regulatory framework: test the product, clear it, sell it. Adaptive algorithms — including continuously learning AI systems that update their parameters based on new data post-deployment — present a fundamentally different challenge. The product that received clearance is not the same product that runs six months later. The FDA's traditional framework, designed for static devices, does not apply cleanly.</p>
+  <p>By 2024, the FDA had approved or cleared over 950 AI/ML-enabled medical devices, with the rate of approvals accelerating year-over-year. The vast majority are in radiology — AI reads medical images — where locked algorithms and clear performance metrics make the regulatory path more tractable. Adaptive AI in real-time clinical decision-making remains the harder regulatory problem.</p>
+
+  <div class="callout">
+    <div class="callout-label">A Significant Regulatory Innovation</div>
+    <p>The FDA's total product lifecycle (TPLC) approach for AI medical devices requires manufacturers to submit Predetermined Change Control Plans — essentially pre-approving the types of changes that can be made post-deployment without requiring full re-review. A manufacturer can specify in advance: "We will retrain this model quarterly on new data, using the same architecture and within these performance bounds." If the changes stay within the pre-approved envelope, they don't require a new clearance submission. This is a genuine regulatory innovation designed for the realities of adaptive AI.</p>
+  </div>
+
+  <h2>HIPAA and Data Privacy in Healthcare AI</h2>
+  <p>Healthcare AI creates HIPAA compliance challenges that the law's original architects did not anticipate. The core question is straightforward: patient health information is protected under HIPAA, and any entity that handles it must comply with the Privacy Rule, Security Rule, and Breach Notification Rule. AI changes the scope and nature of that handling in ways that create new compliance risks at scale.</p>
+  <p>Training AI on patient data requires either de-identification — removing enough identifying information to meet HIPAA's strict de-identification standard — or a Business Associate Agreement with the AI vendor. The de-identification standard is demanding; data that appears de-identified can often be re-identified by combining fields that are individually benign. Using a large language model or a third-party AI tool to process patient information without a BAA in place constitutes a HIPAA violation regardless of intent. The HHS Office for Civil Rights has signaled increased enforcement of AI-related HIPAA violations, and healthcare organizations are updating their AI governance policies to address this explicitly.</p>
+  <p>The consumer app problem is its own category. Health apps that are not covered entities or business associates of covered entities are not subject to HIPAA at all. A mental health app that collects sensitive symptom data, a fertility tracking app that stores menstrual health information, a glucose monitoring app that captures blood sugar data — none of these may be subject to HIPAA. The FTC's Health Breach Notification Rule provides some coverage, but the regulatory gap between what HIPAA protects and what healthcare apps actually collect is substantial.</p>
+
+  <div class="warn">
+    <div class="warn-label">Policy Without Practice</div>
+    <p>In 2023, a major hospital system was fined $1.25 million by OCR after it was discovered that staff were inputting patient information into non-BAA AI tools — a violation that occurred despite the hospital having an AI governance policy that explicitly prohibited the practice. The fine illustrates that having a policy is not the same as enforcing it, and that the gap between written governance and actual behavior in complex organizations is a real compliance and patient privacy risk.</p>
+  </div>
+
+  <h2>Algorithmic Bias in Healthcare AI</h2>
+  <p>Healthcare AI has produced some of the most consequential documented cases of algorithmic bias of any industry. The canonical case: an algorithm developed by Optum and used by major US health insurers to allocate care management resources — determining which patients should be enrolled in programs that provide additional support for complex chronic conditions — was found to systematically under-refer Black patients for those programs relative to equally-sick white patients. The root cause was the choice of proxy variable: the algorithm used healthcare cost as a proxy for healthcare need. Because Black patients historically have faced barriers to accessing care — including cost barriers, geographic barriers, and documented discrimination in clinical settings — they had lower historical costs despite equivalent or greater actual health burden. The algorithm read lower costs as lower need and allocated resources accordingly.</p>
+  <p>The study, published in Science in 2019, became the canonical healthcare AI bias case study for a reason. The bias was not in the algorithm's math — it was in the choice of training label. Healthcare cost is a plausible proxy for healthcare need in a world where access to care is uniform. It is a bad proxy in a world where access is stratified by race and income. The designers may not have intended to build a discriminatory system. They built one anyway by using a training label that encoded historical inequity.</p>
+  <p>The implications extend beyond Optum. Any healthcare AI system that uses historical utilization data as a training signal inherits whatever biases are encoded in that utilization history. This includes sepsis prediction models, readmission risk scores, and resource allocation tools. Organizations deploying these systems have an obligation to evaluate their performance disaggregated by race, ethnicity, income, and geography before deploying them at scale.</p>
+
+  <div class="principle-list">
+    <div class="principle">
+      <div class="principle-title">Disaggregated Performance Metrics</div>
+      <div class="principle-desc">Evaluate accuracy, sensitivity, and specificity separately for different demographic groups. An algorithm that achieves 90% overall accuracy but 70% accuracy in Black patients is not performing at 90% — it is performing at 70% where it matters for equity.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Appropriate Proxy Variables</div>
+      <div class="principle-desc">Avoid using variables that are proxies for race or socioeconomic status when those variables carry historical inequity. Healthcare cost, zip code, insurance type, and prior utilization can all encode structural inequality if used uncritically as training labels.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Representative Training Data</div>
+      <div class="principle-desc">Ensure training data reflects the population the model will serve. A model trained primarily on data from academic medical centers in affluent urban areas may perform poorly in rural community hospitals or safety-net facilities serving low-income populations.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Ongoing Monitoring</div>
+      <div class="principle-desc">Track outcomes by demographic group post-deployment, not just at validation. Population drift, changes in care patterns, and deployment in new settings can introduce or amplify bias that was not present in the original validation cohort.</div>
+    </div>
+  </div>
+
+  <h2>The Future: Five Developments to Watch</h2>
+  <p>Healthcare AI is not a static field. The developments most likely to define the next decade fall into five categories, each building on the technical and regulatory infrastructure developed in the previous decade.</p>
+  <p>Foundation models for healthcare — large models trained on clinical data that can power multiple downstream applications — are already producing landmark results. Google's Med-PaLM 2 achieved physician-level performance on the US Medical Licensing Exam and demonstrated the ability to answer clinical questions at a level comparable to clinical specialists. These models are not deployed as autonomous clinical decision-makers; they are deployed as tools that clinical teams use, with appropriate guardrails. The frontier of AI-designed clinical trials represents a different kind of potential efficiency gain: using AI to identify optimal patient populations, endpoints, and dosing regimens for trials that are faster to recruit, more likely to produce actionable results, and less likely to fail due to poor patient selection. AI-driven insulin dosing for type 1 diabetes — combining continuous glucose monitoring with predictive dosing algorithms — has achieved near-normal blood glucose in closed-loop studies without hypoglycemia, a result that manual insulin management cannot reliably achieve.</p>
+  <p>Surgical AI represents the frontier of AI in procedural medicine. Intuitive Surgical's da Vinci platform is already in widespread use for robotic surgery; the integration of AI assistance — providing real-time guidance, flagging anatomical landmarks, and detecting early signs of complications — is the logical next step. Global health AI may represent the largest potential impact in aggregate: AI diagnostic tools designed for low-resource settings, where physician shortages are most severe and where the tools can operate where human specialists are simply unavailable. Google's AI-powered tuberculosis screening for chest X-rays, deployed in South Africa, demonstrates that the technology can function effectively in these settings when designed for them.</p>
+
+  <div class="callout">
+    <div class="callout-label">The Global Opportunity</div>
+    <p>WHO's report on AI in health (2023) identified low- and middle-income countries as the highest-potential beneficiaries of healthcare AI — where physician shortages are most severe and where AI diagnostic tools can operate where human specialists are unavailable. A country with one radiologist per million people and a functional AI chest X-ray reader is fundamentally different from a country with one radiologist per million people without one.</p>
+  </div>
+
+  <h2>What It Means to Work in Healthcare AI</h2>
+  <p>The professionals who will define healthcare AI over the next two decades are not purely technical and not purely clinical. They are people who understand both domains well enough to bridge them — who can sit in a room with clinicians and understand why a technically accurate AI recommendation gets ignored because it fires at the wrong moment in workflow, and who can also sit with engineers and understand why the model's performance on a validation dataset does not predict its performance in a community hospital with different patient demographics.</p>
+  <p>The specific roles at the intersection include Clinical AI Scientist (designing and validating AI tools with clinical rigor), Healthcare AI Product Manager (translating clinical needs into product requirements and managing the workflow integration that determines adoption), AI Ethics Officer for healthcare (ensuring fairness, explainability, and bias monitoring), Health Data Scientist (building and maintaining the data infrastructure that training and monitoring require), and Clinical Informaticist (the bridge between clinical workflow and information systems). The regulatory knowledge, clinical workflow understanding, and technical literacy required in any of these roles makes this a genuinely interdisciplinary field where narrow specialization is a disadvantage.</p>
+  <p>The career case for entering healthcare AI is not speculative. These are roles with real demand, growing faster than the supply of people qualified to fill them, in a domain that is both economically significant and genuinely consequential. The work matters because the outcomes matter — better-deployed healthcare AI means earlier cancer diagnoses, better-dosed medications, faster sepsis identification, and more time for physicians to practice medicine rather than administer it.</p>
+
+  <div class="good">
+    <div class="good-label">A Field Worth Entering</div>
+    <p>Healthcare AI is projected to be an $188 billion market by 2030 (Grand View Research). The professionals who understand both the clinical realities and the AI capabilities — and can bridge those worlds — will be among the most valuable in medicine for the next two decades. This is not a prediction about a distant future. The roles exist now, the demand is real now, and the supply of people who genuinely understand both sides of the problem is still thin enough that entering this field with real depth is a meaningful career advantage.</p>
+  </div>
+
+</div>
+</main>
+</div>
+
+<div class="sticky-bar">
+  <div class="sticky-bar-reading" id="sticky-reading">Read to the end to unlock the final assessment</div>
+  <div class="sticky-bar-track"><div class="sticky-bar-fill" id="sticky-fill"></div></div>
+  <div class="sticky-bar-label" id="sticky-label">0%</div>
+  <button class="sticky-bar-btn" id="sticky-btn" onclick="completeAndNext()">Final Assessment →</button>
+</div>
+
+<script>
+  function toggleTheme(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='☾'):(h.setAttribute('data-theme','dark'),i.textContent='☀');}
+  window.addEventListener('scroll',()=>{const d=document.documentElement,s=d.scrollTop||document.body.scrollTop,t=d.scrollHeight-d.clientHeight;document.getElementById('progress').style.width=(s/t*100)+'%';});
+  let unlocked=false;
+  function updateScrollProgress(){
+    const pct=Math.min(100,Math.round(((window.scrollY+window.innerHeight)/document.documentElement.scrollHeight)*100));
+    document.getElementById('sticky-fill').style.width=pct+'%';
+    document.getElementById('sticky-label').textContent=pct+'%';
+    if(pct>=95&&!unlocked){unlocked=true;document.getElementById('sticky-btn').style.display='block';document.getElementById('sticky-reading').style.display='none';document.getElementById('sticky-fill').style.background='#22c55e';document.getElementById('sticky-label').style.color='#22c55e';}
+  }
+  window.addEventListener('scroll',updateScrollProgress);updateScrollProgress();
+  function completeAndNext(){
+    if(window.__meridianSaveProgress){ try{ window.__meridianSaveProgress("m8"); }catch(e){} }
+    setTimeout(function(){ window.location.href="quiz.html"; }, 120);
+  }
+</script>
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import { getFirestore, doc, setDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  const app = initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+  const auth = getAuth(app); const db = getFirestore(app);
+  let meridianUser = null;
+  onAuthStateChanged(auth, u => { meridianUser = u; });
+  window.__meridianSaveProgress = async function(mValue){
+    if(!meridianUser) return;
+    try { await setDoc(doc(db,"users",meridianUser.uid), { healthcareModules: arrayUnion(mValue) }, { merge: true }); } catch(e) {}
+  };
+</script>
+</body>
+</html>

@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Diagnostic AI — AI in Healthcare — Meridian Institute of AI</title>
+<meta name="description" content="Free AI in Healthcare course — module 2. How AI reads medical images, FDA-cleared tools, accuracy data, and the bias problem in diagnostic AI.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://meridianinstituteai.com/courses/healthcare/module-2.html">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#06b6d4;--accent-dim:rgba(6,182,212,0.1);--nav-bg:rgba(8,8,8,0.9);--callout-bg:rgba(6,182,212,0.07);--callout-border:rgba(6,182,212,0.25);--good-bg:rgba(34,197,94,0.07);--good-border:rgba(34,197,94,0.2);--warn-bg:rgba(251,146,60,0.07);--warn-border:rgba(251,146,60,0.2);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#0891b2;--accent-dim:rgba(8,145,178,0.08);--nav-bg:rgba(250,250,248,0.9);--callout-bg:rgba(8,145,178,0.05);--callout-border:rgba(8,145,178,0.2);--good-bg:rgba(22,163,74,0.06);--good-border:rgba(22,163,74,0.2);--warn-bg:rgba(234,88,12,0.05);--warn-border:rgba(234,88,12,0.2);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;overflow-x:hidden;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.7;overflow-x:hidden;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}
+  .nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}
+  .nav-back{font-size:13px;color:var(--text-2);text-decoration:none;transition:color 0.2s;}
+  .nav-back:hover{color:var(--text);}
+  .nav-label{font-size:13px;color:var(--text-3);}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;transition:all 0.2s;}
+  .progress-bar{position:fixed;top:60px;left:0;right:0;z-index:99;height:2px;background:var(--border);}
+  .progress-fill{height:100%;background:var(--accent);width:0%;transition:width 0.1s;}
+  .page-wrapper{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:100vh;padding-top:62px;}
+  .sidebar{position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto;border-right:1px solid var(--border);padding:32px 24px;background:var(--bg-2);}
+  .sidebar-course{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;}
+  .sidebar-course-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+  .sidebar-module{margin-bottom:4px;}
+  .sidebar-module-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:13px;color:var(--text-2);text-decoration:none;transition:all 0.2s;line-height:1.4;}
+  .sidebar-module-link:hover{background:var(--bg-3);color:var(--text);}
+  .sidebar-module-link.active{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-num{font-size:11px;font-weight:500;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--bg-4);color:var(--text-3);}
+  .sidebar-module-link.active .sidebar-num{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-divider{height:1px;background:var(--border);margin:20px 0;}
+  .sidebar-progress-label{font-size:12px;color:var(--text-3);margin-bottom:8px;display:flex;justify-content:space-between;}
+  .sidebar-progress-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sidebar-progress-fill{height:100%;width:25%;background:var(--accent);border-radius:2px;}
+  main{display:block;min-width:0;}
+  .content{max-width:760px;width:100%;padding:60px 64px 140px;margin:0 auto;}
+  .module-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+  .module-tag{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(6,182,212,0.2);padding:4px 12px;border-radius:100px;}
+  .module-meta{font-size:12px;color:var(--text-3);}
+  h1{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1.05;letter-spacing:-0.02em;color:var(--text);margin-bottom:24px;}
+  .intro-text{font-size:19px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+  h2{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:400;color:var(--text);margin:52px 0 18px;line-height:1.2;}
+  h3{font-size:16px;font-weight:500;color:var(--text);margin:32px 0 12px;}
+  p{font-size:16px;font-weight:300;color:var(--text-2);line-height:1.8;margin-bottom:20px;}
+  strong{font-weight:500;color:var(--text);}
+  .callout{background:var(--callout-bg);border:1px solid var(--callout-border);border-radius:12px;padding:24px 28px;margin:32px 0;}
+  .callout-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+  .callout p{margin:0;font-size:15px;color:var(--text-2);}
+  .callout p+p{margin-top:12px;}
+  .good{background:var(--good-bg);border:1px solid var(--good-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .good-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#22c55e;margin-bottom:10px;}
+  .good p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn{background:var(--warn-bg);border:1px solid var(--warn-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .warn-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#fb923c;margin-bottom:10px;}
+  .warn p{margin:0;font-size:15px;color:var(--text-2);}
+  .comparison-wrapper{overflow-x:auto;-webkit-overflow-scrolling:touch;width:100%;margin:28px 0;}
+  table{width:100%;border-collapse:collapse;font-size:14px;min-width:480px;}
+  th{text-align:left;padding:12px 16px;font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-3);border-bottom:1px solid var(--border-2);}
+  td{padding:14px 16px;border-bottom:1px solid var(--border);color:var(--text-2);line-height:1.6;vertical-align:top;}
+  tr:last-child td{border-bottom:none;}
+  td:first-child{color:var(--text);font-weight:500;}
+  .principle-list{display:flex;flex-direction:column;gap:12px;margin:24px 0;}
+  .principle{background:var(--bg-2);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:0 12px 12px 0;padding:20px 24px;}
+  .principle-title{font-size:15px;font-weight:500;color:var(--text);margin-bottom:6px;}
+  .principle-desc{font-size:14px;color:var(--text-2);line-height:1.65;margin:0;}
+  .sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:var(--bg-2);border-top:1px solid var(--border-2);padding:14px 5%;display:flex;align-items:center;justify-content:space-between;gap:16px;backdrop-filter:blur(12px);}
+  .sticky-bar-track{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sticky-bar-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.2s;width:0%;}
+  .sticky-bar-label{font-size:12px;color:var(--text-3);white-space:nowrap;min-width:60px;text-align:right;}
+  .sticky-bar-btn{padding:10px 20px;border-radius:8px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;background:var(--accent);color:#fff;border:none;cursor:pointer;white-space:nowrap;transition:opacity 0.2s;display:none;}
+  .sticky-bar-btn:hover{opacity:0.88;}
+  .sticky-bar-reading{font-size:12px;color:var(--text-3);white-space:nowrap;}
+  @media(max-width:900px){.page-wrapper{grid-template-columns:1fr;}.sidebar{display:none;}.content{padding:40px 24px 120px;}h1{font-size:38px;}}
+  @media(max-width:600px){.content{padding:28px 16px 120px;}h1{font-size:30px;}h2{font-size:24px;}}
+</style>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="shortcut icon" href="/favicon.ico">
+<style>@media(max-width:480px){.nav-divider{display:none}.nav-left{gap:8px}}</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="../../index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="../../index.html" class="nav-back">&#x2302; Home</a>
+    <div class="nav-divider"></div>
+    <a href="module-1.html" class="nav-back">← Module 1</a>
+    <div class="nav-divider"></div>
+    <span class="nav-label">Module 2</span>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">☀</span></button>
+</nav>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+
+<div class="page-wrapper">
+<aside class="sidebar">
+  <div class="sidebar-course">Course</div>
+  <div class="sidebar-course-name">AI in Healthcare</div>
+  <div class="sidebar-module"><a href="module-1.html" class="sidebar-module-link"><span class="sidebar-num">1</span>AI's Transformation of Medicine</a></div>
+  <div class="sidebar-module"><a href="module-2.html" class="sidebar-module-link active"><span class="sidebar-num">2</span>Diagnostic AI</a></div>
+  <div class="sidebar-module"><a href="module-3.html" class="sidebar-module-link"><span class="sidebar-num">3</span>Drug Discovery and AI</a></div>
+  <div class="sidebar-module"><a href="module-4.html" class="sidebar-module-link"><span class="sidebar-num">4</span>Clinical Decision Support</a></div>
+  <div class="sidebar-module"><a href="module-5.html" class="sidebar-module-link"><span class="sidebar-num">5</span>AI in Mental Health</a></div>
+  <div class="sidebar-module"><a href="module-6.html" class="sidebar-module-link"><span class="sidebar-num">6</span>Genomics and Personalized Medicine</a></div>
+  <div class="sidebar-module"><a href="module-7.html" class="sidebar-module-link"><span class="sidebar-num">7</span>Healthcare Operations</a></div>
+  <div class="sidebar-module"><a href="module-8.html" class="sidebar-module-link"><span class="sidebar-num">8</span>Regulation, Ethics, and the Future</a></div>
+  <div class="sidebar-module"><a href="quiz.html" class="sidebar-module-link" style="color:var(--accent);margin-top:4px;"><span class="sidebar-num" style="background:var(--accent-dim);color:var(--accent);">✦</span>Final Assessment</a></div>
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-progress-label"><span>Course progress</span><span style="color:var(--accent);">2 / 8</span></div>
+  <div class="sidebar-progress-track"><div class="sidebar-progress-fill"></div></div>
+</aside>
+
+<main>
+<div class="content">
+  <div class="module-eyebrow"><span class="module-tag">Module 2</span><span class="module-meta">24 min read · AI in Healthcare</span></div>
+  <h1>Diagnostic AI</h1>
+  <p class="intro-text">The most visible application of AI in medicine is diagnostic imaging: AI that reads chest X-rays, detects tumors in mammograms, identifies diabetic retinopathy from retinal scans, and classifies skin lesions from photographs. This module explains how these systems actually work, what the performance data shows, and what the significant limitations are that get underplayed in coverage of AI diagnostic breakthroughs.</p>
+
+  <h2>How AI reads medical images</h2>
+  <p>At the core of diagnostic imaging AI is the <strong>convolutional neural network (CNN)</strong>. Unlike traditional image processing that relies on hand-coded rules ("look for circular objects of this diameter range"), CNNs learn features directly from labeled training data. A CNN trained on chest X-rays learns to detect pneumonia not because a radiologist programmed in "look for consolidation in the lower lobes," but because the network, trained on hundreds of thousands of labeled scans, learned on its own which patterns correlate with pneumonia diagnoses.</p>
+  <p>The key architectural insight behind CNNs is local connectivity and weight sharing. Rather than connecting every neuron to every pixel (which would be computationally intractable for high-resolution medical images), convolutional layers apply small learned filters across the image, detecting local features — edges, textures, shapes — at progressively higher levels of abstraction. Early layers detect low-level features like edges. Middle layers detect structures like nodules or lesions. Later layers integrate these into disease classifications.</p>
+
+  <h3>Vision transformers in radiology</h3>
+  <p>More recently, <strong>vision transformers (ViTs)</strong> have shown strong performance on medical imaging tasks. Where CNNs process images through local convolutions, transformers process images in "patches" and use self-attention mechanisms to capture relationships between distant parts of the image simultaneously. This makes them particularly strong at tasks requiring global context — identifying whether a subtle finding in the right lung relates to a pattern in the left, for example. Many current state-of-the-art medical imaging systems use hybrid architectures that combine CNN and transformer components.</p>
+
+  <div class="callout">
+    <div class="callout-label">What "training" means in practice</div>
+    <p>When a diagnostic AI company says their system was "trained on 1 million chest X-rays," they mean the model processed 1 million images, each labeled by radiologists, and iteratively adjusted its internal parameters to minimize prediction errors. The resulting model contains billions of numerical weights that collectively encode what "pneumonia looks like" — not as explicit rules, but as patterns across the dataset. The model doesn't "know" medicine; it has learned statistical associations between image features and diagnoses.</p>
+  </div>
+
+  <h2>Landmark applications</h2>
+
+  <h3>Diabetic retinopathy — the landmark Google study</h3>
+  <p>In 2016, a team at Google published a study in JAMA demonstrating an AI system that detected diabetic retinopathy from retinal fundus photographs with sensitivity and specificity comparable to ophthalmologists. The system was trained on 128,175 retinal images graded by 54 ophthalmologists. On a validation set of 12,522 images, it achieved an area under the ROC curve of 0.99 — essentially perfect discrimination — and matched or exceeded the median ophthalmologist on both sensitivity and specificity for detecting referable diabetic retinopathy.</p>
+  <p>This was significant for reasons beyond the accuracy numbers. Diabetic retinopathy is the leading cause of blindness in working-age adults globally, and it's entirely preventable with regular screening and early treatment. The problem is that most of the world's diabetic population has no access to ophthalmologists. An AI system that could be deployed on a smartphone camera in a primary care clinic in rural India or sub-Saharan Africa could prevent enormous amounts of blindness. Google followed the 2016 paper with a prospective clinical study in actual clinics in Thailand and India, demonstrating real-world deployment feasibility.</p>
+
+  <h3>Lung cancer detection</h3>
+  <p>Lung cancer has one of the worst prognoses of any cancer — largely because it's typically diagnosed in late stages when treatment options are limited. Low-dose CT screening can catch it early, but radiologists face the challenge of identifying small nodules in scans containing hundreds of slices, with enormous volume and high false-positive rates. In 2019, Google published a study in Nature Medicine showing their AI system exceeded the performance of six radiologists at detecting malignant lung nodules, with an AUC of 0.94. On patients with prior CT scans (where comparison is crucial for identifying growth), the AI matched radiologist performance. On patients without prior scans, the AI significantly outperformed radiologists.</p>
+
+  <h3>Mammography AI</h3>
+  <p>Breast cancer screening via mammography is one of the most contentious areas in diagnostic AI. A 2020 study in Nature by a DeepMind-led team showed their AI system reducing false positives by 5.7% and false negatives by 9.4% compared to standard double reading (two radiologists). This is a genuinely significant reduction — false negatives in mammography are missed cancers, which means delayed diagnosis and worse outcomes. False positives are unnecessary biopsies, which cause patient anxiety, cost, and physical harm.</p>
+
+  <h3>Skin cancer classification</h3>
+  <p>A 2017 study in Nature trained a CNN on 129,450 clinical images across 2,032 diseases. Tested on a subset of 1,942 images with dermoscopy evaluation by 21 board-certified dermatologists, the CNN matched dermatologist performance on distinguishing malignant melanomas from benign nevi and malignant carcinomas from benign seborrheic keratoses. The implications are significant: a smartphone-deployable dermatology AI could provide diagnostic support in settings with limited access to dermatologists — which includes most of the world.</p>
+
+  <h2>The FDA-cleared diagnostic AI landscape</h2>
+  <p>By 2025, the FDA has cleared over 500 AI/ML-based medical devices, the large majority of them in radiology and pathology. A sample of significant cleared systems:</p>
+
+  <div class="comparison-wrapper">
+    <table>
+      <tr><th>System</th><th>Company</th><th>Application</th><th>FDA Status</th></tr>
+      <tr><td>IDx-DR</td><td>Digital Diagnostics</td><td>Autonomous diabetic retinopathy detection — no physician required to interpret</td><td>De Novo clearance 2018 — first autonomous AI diagnostic</td></tr>
+      <tr><td>Aidoc</td><td>Aidoc</td><td>Radiology triage — flags critical findings (PE, intracranial hemorrhage, fractures) for immediate radiologist attention</td><td>Multiple 510(k) clearances</td></tr>
+      <tr><td>Caption AI</td><td>Caption Health</td><td>AI-guided cardiac ultrasound — guides non-specialist users to capture diagnostic-quality echo images</td><td>De Novo clearance 2020</td></tr>
+      <tr><td>ProFound AI</td><td>iCAD</td><td>Mammography AI for cancer detection and density assessment</td><td>510(k) cleared</td></tr>
+      <tr><td>Paige Prostate</td><td>Paige</td><td>Prostate cancer detection in pathology slides — first FDA-cleared AI for pathology</td><td>De Novo clearance 2021</td></tr>
+    </table>
+  </div>
+
+  <h2>AI vs. radiologist accuracy — what the data actually shows</h2>
+  <p>The media narrative around diagnostic AI often presents a binary: either "AI beats doctors" or "AI is overhyped." The reality is more nuanced and more interesting than either framing.</p>
+  <p>Most well-designed studies show AI performing at approximately <strong>specialist level</strong> on well-defined classification tasks — detecting a specific pathology in a standardized imaging protocol. This is significant because it means AI can serve as a competent second reader in settings where a human specialist is unavailable or overburdened.</p>
+  <p>What AI doesn't do well: <strong>handle distribution shift</strong>. When you train a diagnostic AI on images from one scanner type, one patient population, or one clinical setting, and then deploy it in a different setting, performance often drops significantly. A model trained on high-resolution digital mammograms from academic medical centers may perform substantially worse on analog-converted mammograms from rural clinics. This is not a minor caveat — it's a fundamental limitation that creates real deployment challenges.</p>
+  <p>Another crucial distinction: most AI studies test AI in isolation on carefully curated datasets. In actual clinical practice, radiologists are not just classifying one finding per image — they're integrating findings across multiple scans, considering clinical history, communicating with ordering physicians, and often reading hundreds of studies per shift under time pressure. Comparing isolated AI accuracy to isolated radiologist accuracy on a curated test set tells you something, but it doesn't fully capture the real-world deployment context.</p>
+
+  <div class="good">
+    <div class="good-label">AI as a "Second Reader"</div>
+    <p>The most defensible and most widely deployed model for diagnostic AI is "AI as second reader" — the AI reads every scan and flags findings for radiologist review, with the radiologist making the final call. This model reduces radiologist workload (the AI can dismiss clearly normal scans), ensures high-priority findings get seen immediately (AI can triage by urgency), and provides error-catching without creating full AI autonomy in diagnosis. It doesn't require resolving the "AI vs. radiologist" debate — it makes the combination better than either alone.</p>
+  </div>
+
+  <h2>Limitations: demographic bias and performance gaps</h2>
+  <p>The most serious known limitation of current diagnostic AI is differential performance across demographic groups. Multiple studies have documented significant performance gaps:</p>
+  <p>A 2022 study examining 14 chest X-ray AI systems found that most performed significantly better on images from white patients than Black patients, better on male patients than female patients, and better on young patients than elderly patients. These aren't small differences — in some cases the gap in sensitivity exceeded 10 percentage points. The root cause is training data: if a model is trained mostly on images from a particular population, it will perform better on that population.</p>
+  <p>Skin cancer AI has a well-documented bias problem — most training datasets are heavily weighted toward lighter skin tones, and performance on darker skin tones is substantially worse. This is a serious public health concern because skin cancer on darker skin is already systematically underdiagnosed relative to lighter skin.</p>
+
+  <div class="warn">
+    <div class="warn-label">Bias Compounds Existing Inequity</div>
+    <p>Deploying a biased diagnostic AI doesn't just fail to improve equity — it can actively worsen it. If an AI system designed to increase access to diagnostic capability performs substantially worse on the populations most underserved by current healthcare systems, it entrenches rather than corrects existing disparities. Responsible deployment requires demographic performance data across all subgroups, not just aggregate accuracy.</p>
+  </div>
+
+  <h2>Pathology AI — digital slides and whole slide imaging</h2>
+  <p>While radiology AI has received more attention, pathology AI may ultimately be more transformative. Pathology — the examination of tissue samples under a microscope — is central to cancer diagnosis, treatment planning, and disease characterization. Pathologists examine glass slides under microscopes, a process that is time-intensive, subject to inter-rater variability, and increasingly constrained by a global shortage of pathologists.</p>
+  <p>Whole slide imaging (WSI) converts physical glass slides into gigapixel digital images that can be analyzed computationally. AI trained on WSI can identify cancerous regions, grade tumor aggressiveness, detect rare mutations from morphology, and provide quantitative biomarker measurements with high reproducibility.</p>
+  <p>The FDA cleared Paige Prostate in 2021 — the first AI system cleared for primary pathology diagnosis. It detects prostate cancer with sensitivity exceeding pathologist-level performance and shows reduced variability compared to human readers. Multiple similar systems for breast, lung, and colorectal cancer are in development or regulatory review.</p>
+  <p>A particularly exciting development is the emergence of <strong>AI pathology systems that predict molecular features from morphology</strong>. TCGA studies have shown that AI can predict gene mutations, molecular subtypes, and treatment response from standard H&E slides — information that currently requires expensive molecular testing. If validated at scale, this could dramatically expand access to precision oncology information in settings that can't afford extensive genomic testing.</p>
+
+  <div class="callout">
+    <div class="callout-label">The Pathologist Shortage</div>
+    <p>The United States is projected to face a shortage of several thousand pathologists by 2030. Globally, the shortage is severe — many low and middle-income countries have almost no pathologists at all. AI that can augment pathologist capacity — handling routine, straightforward cases while flagging complex cases for human expert review — could have enormous population health impact in both resource-rich and resource-limited settings.</p>
+  </div>
+
+</div>
+</main>
+</div>
+
+<div class="sticky-bar">
+  <div class="sticky-bar-reading" id="sticky-reading">Read to the end to unlock the next module</div>
+  <div class="sticky-bar-track"><div class="sticky-bar-fill" id="sticky-fill"></div></div>
+  <div class="sticky-bar-label" id="sticky-label">0%</div>
+  <button class="sticky-bar-btn" id="sticky-btn" onclick="completeAndNext()">Module 3: Drug Discovery →</button>
+</div>
+
+<script>
+  function toggleTheme(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='☾'):(h.setAttribute('data-theme','dark'),i.textContent='☀');}
+  window.addEventListener('scroll',()=>{const d=document.documentElement,s=d.scrollTop||document.body.scrollTop,t=d.scrollHeight-d.clientHeight;document.getElementById('progress').style.width=(s/t*100)+'%';});
+  let unlocked=false;
+  function updateScrollProgress(){
+    const pct=Math.min(100,Math.round(((window.scrollY+window.innerHeight)/document.documentElement.scrollHeight)*100));
+    document.getElementById('sticky-fill').style.width=pct+'%';
+    document.getElementById('sticky-label').textContent=pct+'%';
+    if(pct>=95&&!unlocked){unlocked=true;document.getElementById('sticky-btn').style.display='block';document.getElementById('sticky-reading').style.display='none';document.getElementById('sticky-fill').style.background='#22c55e';document.getElementById('sticky-label').style.color='#22c55e';}
+  }
+  window.addEventListener('scroll',updateScrollProgress);updateScrollProgress();
+  function completeAndNext(){
+    if(window.__meridianSaveProgress){ try{ window.__meridianSaveProgress("m2"); }catch(e){} }
+    setTimeout(function(){ window.location.href="module-3.html"; }, 120);
+  }
+</script>
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import { getFirestore, doc, setDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  const app = initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+  const auth = getAuth(app); const db = getFirestore(app);
+  let meridianUser = null;
+  onAuthStateChanged(auth, u => { meridianUser = u; });
+  window.__meridianSaveProgress = async function(mValue){
+    if(!meridianUser) return;
+    try { await setDoc(doc(db,"users",meridianUser.uid), { healthcareModules: arrayUnion(mValue) }, { merge: true }); } catch(e) {}
+  };
+</script>
+</body>
+</html>

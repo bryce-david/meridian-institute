@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Tools for Educators — AI in Education — Meridian Institute of AI</title>
+<meta name="description" content="Free AI in Education course — module 4. Discover how AI tools save educators time and transform lesson planning, assessment, and differentiated instruction.">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="AI Tools for Educators — AI in Education — Meridian Institute of AI">
+<meta property="og:description" content="Free AI in Education course — module 4. Discover how AI tools save educators time and transform lesson planning, assessment, and differentiated instruction.">
+<meta property="og:url" content="https://meridianinstituteai.com/courses/education/module-4.html">
+<meta property="og:type" content="website">
+<link rel="canonical" href="https://meridianinstituteai.com/courses/education/module-4.html">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#f59e0b;--accent-dim:rgba(245,158,11,0.1);--nav-bg:rgba(8,8,8,0.9);--callout-bg:rgba(245,158,11,0.07);--callout-border:rgba(245,158,11,0.25);--good-bg:rgba(34,197,94,0.07);--good-border:rgba(34,197,94,0.2);--warn-bg:rgba(251,146,60,0.07);--warn-border:rgba(251,146,60,0.2);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#d97706;--accent-dim:rgba(217,119,6,0.08);--nav-bg:rgba(250,250,248,0.9);--callout-bg:rgba(217,119,6,0.05);--callout-border:rgba(217,119,6,0.2);--good-bg:rgba(22,163,74,0.06);--good-border:rgba(22,163,74,0.2);--warn-bg:rgba(234,88,12,0.05);--warn-border:rgba(234,88,12,0.2);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;overflow-x:hidden;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.7;overflow-x:hidden;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}
+  .nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}
+  .nav-back{font-size:13px;color:var(--text-2);text-decoration:none;transition:color 0.2s;}
+  .nav-back:hover{color:var(--text);}
+  .nav-label{font-size:13px;color:var(--text-3);}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;transition:all 0.2s;}
+  .progress-bar{position:fixed;top:60px;left:0;right:0;z-index:99;height:2px;background:var(--border);}
+  .progress-fill{height:100%;background:var(--accent);width:0%;transition:width 0.1s;}
+  .page-wrapper{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:100vh;padding-top:62px;}
+  .sidebar{position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto;border-right:1px solid var(--border);padding:32px 24px;background:var(--bg-2);}
+  .sidebar-course{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;}
+  .sidebar-course-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+  .sidebar-module{margin-bottom:4px;}
+  .sidebar-module-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:13px;color:var(--text-2);text-decoration:none;transition:all 0.2s;line-height:1.4;}
+  .sidebar-module-link:hover{background:var(--bg-3);color:var(--text);}
+  .sidebar-module-link.active{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-num{font-size:11px;font-weight:500;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--bg-4);color:var(--text-3);}
+  .sidebar-module-link.active .sidebar-num{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-divider{height:1px;background:var(--border);margin:20px 0;}
+  .sidebar-progress-label{font-size:12px;color:var(--text-3);margin-bottom:8px;display:flex;justify-content:space-between;}
+  .sidebar-progress-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sidebar-progress-fill{height:100%;width:43%;background:var(--accent);border-radius:2px;}
+  main{display:block;min-width:0;}
+  .content{max-width:760px;width:100%;padding:60px 64px 140px;margin:0 auto;}
+  .module-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+  .module-tag{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(245,158,11,0.2);padding:4px 12px;border-radius:100px;}
+  .module-meta{font-size:12px;color:var(--text-3);}
+  h1{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1.05;letter-spacing:-0.02em;color:var(--text);margin-bottom:24px;}
+  .intro-text{font-size:19px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+  h2{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:400;color:var(--text);margin:52px 0 18px;line-height:1.2;}
+  h3{font-size:16px;font-weight:500;color:var(--text);margin:32px 0 12px;}
+  p{font-size:16px;font-weight:300;color:var(--text-2);line-height:1.8;margin-bottom:20px;}
+  strong{font-weight:500;color:var(--text);}
+  .callout{background:var(--callout-bg);border:1px solid var(--callout-border);border-radius:12px;padding:24px 28px;margin:32px 0;}
+  .callout-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+  .callout p{margin:0;font-size:15px;color:var(--text-2);}
+  .callout p+p{margin-top:12px;}
+  .good{background:var(--good-bg);border:1px solid var(--good-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .good-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#22c55e;margin-bottom:10px;}
+  .good p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn{background:var(--warn-bg);border:1px solid var(--warn-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .warn-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#fb923c;margin-bottom:10px;}
+  .warn p{margin:0;font-size:15px;color:var(--text-2);}
+  .comparison-wrapper{overflow-x:auto;-webkit-overflow-scrolling:touch;width:100%;margin:28px 0;}
+  table{width:100%;border-collapse:collapse;font-size:14px;min-width:480px;}
+  th{text-align:left;padding:12px 16px;font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-3);border-bottom:1px solid var(--border-2);}
+  td{padding:14px 16px;border-bottom:1px solid var(--border);color:var(--text-2);line-height:1.6;vertical-align:top;}
+  tr:last-child td{border-bottom:none;}
+  td:first-child{color:var(--text);font-weight:500;}
+  .principle-list{display:flex;flex-direction:column;gap:12px;margin:24px 0;}
+  .principle{background:var(--bg-2);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:0 12px 12px 0;padding:20px 24px;}
+  .principle-title{font-size:15px;font-weight:500;color:var(--text);margin-bottom:6px;}
+  .principle-desc{font-size:14px;color:var(--text-2);line-height:1.65;margin:0;}
+  .sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:var(--bg-2);border-top:1px solid var(--border-2);padding:14px 5%;display:flex;align-items:center;justify-content:space-between;gap:16px;backdrop-filter:blur(12px);}
+  .sticky-bar-track{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sticky-bar-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.2s;width:0%;}
+  .sticky-bar-label{font-size:12px;color:var(--text-3);white-space:nowrap;min-width:60px;text-align:right;}
+  .sticky-bar-btn{padding:10px 20px;border-radius:8px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;background:var(--accent);color:#fff;border:none;cursor:pointer;white-space:nowrap;transition:opacity 0.2s;display:none;}
+  .sticky-bar-btn:hover{opacity:0.88;}
+  .sticky-bar-reading{font-size:12px;color:var(--text-3);white-space:nowrap;}
+  @media(max-width:900px){.page-wrapper{grid-template-columns:1fr;}.sidebar{display:none;}.content{padding:40px 24px 120px;}h1{font-size:38px;}}
+  @media(max-width:600px){.content{padding:28px 16px 120px;}h1{font-size:30px;}h2{font-size:24px;}}
+</style>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="shortcut icon" href="/favicon.ico">
+<style>@media(max-width:480px){.nav-divider{display:none}.nav-left{gap:8px}}</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="../../index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="../../index.html" class="nav-back">Home</a>
+    <div class="nav-divider"></div>
+    <a href="../../courses.html" class="nav-back">← AI in Education</a>
+    <div class="nav-divider"></div>
+    <span class="nav-label">Module 4</span>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">☀</span></button>
+</nav>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+
+<div class="page-wrapper">
+<aside class="sidebar">
+  <div class="sidebar-course">Course</div>
+  <div class="sidebar-course-name">AI in Education</div>
+  <div class="sidebar-module"><a href="module-1.html" class="sidebar-module-link"><span class="sidebar-num">1</span>How AI is Transforming Education</a></div>
+  <div class="sidebar-module"><a href="module-2.html" class="sidebar-module-link"><span class="sidebar-num">2</span>AI Tutoring and Personalized Learning</a></div>
+  <div class="sidebar-module"><a href="module-3.html" class="sidebar-module-link"><span class="sidebar-num">3</span>Using AI as a Student</a></div>
+  <div class="sidebar-module"><a href="module-4.html" class="sidebar-module-link active"><span class="sidebar-num">4</span>AI Tools for Educators</a></div>
+  <div class="sidebar-module"><a href="module-5.html" class="sidebar-module-link"><span class="sidebar-num">5</span>Academic Integrity in the AI Era</a></div>
+  <div class="sidebar-module"><a href="module-6.html" class="sidebar-module-link"><span class="sidebar-num">6</span>The Future Classroom</a></div>
+  <div class="sidebar-module"><a href="module-7.html" class="sidebar-module-link"><span class="sidebar-num">7</span>Building Your AI Literacy</a></div>
+  <div class="sidebar-module"><a href="quiz.html" class="sidebar-module-link" style="color:var(--accent);margin-top:4px;"><span class="sidebar-num" style="background:var(--accent-dim);color:var(--accent);">✦</span>Final Assessment</a></div>
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-progress-label"><span>Course progress</span><span style="color:var(--accent);">3 / 7</span></div>
+  <div class="sidebar-progress-track"><div class="sidebar-progress-fill"></div></div>
+</aside>
+
+<main>
+<div class="content">
+  <div class="module-eyebrow"><span class="module-tag">Module 4</span><span class="module-meta">20 min read · AI in Education</span></div>
+  <h1>AI Tools for Educators</h1>
+  <p class="intro-text">AI is not just changing what students do — it's transforming what teachers can do. From lesson planning to differentiated instruction to administrative burden reduction, the practical toolkit available to educators in 2025 is radically more powerful than anything available five years ago. The question is no longer whether these tools are useful — it's how to use them well.</p>
+
+  <h2>The Administrative Burden Problem</h2>
+  <p>Teaching has always been two jobs in one: the work of actually teaching — building relationships, facilitating learning, explaining difficult concepts — and the work of administering the classroom — grading, documentation, communication, planning, compliance. The second job has been growing for decades. A 2023 RAND Corporation study found that teachers spend between 40 and 50 percent of their working hours on tasks that don't involve direct student instruction. That's not a rounding error. It's the majority of the job.</p>
+  <p>The administrative load falls unevenly. New teachers, teachers in under-resourced schools, and teachers working with high-need populations carry a disproportionate burden. Writing individualized education program (IEP) documentation alone can consume hours per student per cycle. Parent communication, progress reports, rubric construction, substitute lesson planning — none of it is trivial, and all of it competes with the actual work of teaching.</p>
+  <p>AI changes the arithmetic. Tools built on large language models can generate first drafts of rubrics, lesson plans, feedback comments, parent communication templates, and IEP goal language in seconds. A McKinsey analysis of AI's potential impact on K-12 education estimated that AI could automate 20 to 40 percent of teacher administrative time — potentially returning more than 10 hours per week to direct instruction and student relationship-building. That is a substantial gain if realized.</p>
+
+  <h2>AI-Powered Lesson Planning and Differentiation</h2>
+  <p>One of the hardest structural problems in classroom teaching is differentiation — the requirement that a single teacher produce learning experiences tailored to students reading at a 4th-grade level, students reading at a 10th-grade level, and everyone in between, simultaneously, in a single 45-minute class period. Teachers have always known what good differentiation looks like; they've rarely had time to produce it. AI changes that constraint directly.</p>
+  <p>Tools like MagicSchool AI, Khanmigo, and ChatGPT allow teachers to input a single learning objective and receive differentiated versions of the same material at multiple reading levels within seconds. A social studies teacher can generate the same primary source document adapted for struggling readers, on-level students, and advanced students without spending the weekend doing it manually. The quality of the output requires teacher review and judgment, but the first draft — historically the hardest and most time-consuming part — arrives instantly.</p>
+  <p>The time savings are real and measurable. Educators who have integrated these tools into their workflows consistently report recapturing hours per week that previously went to preparation tasks. That time is fungible: it goes back into student interaction, feedback, and the relationship-building that no AI can replicate. The table below summarizes how different AI tools are being used across subjects.</p>
+
+  <div class="comparison-wrapper">
+    <table>
+      <tr><th>Subject Area</th><th>AI Tool</th><th>Specific Use Case</th><th>Time Saved</th></tr>
+      <tr><td>English / ELA</td><td>MagicSchool AI</td><td>Rubric generation, differentiated reading levels, writing prompt scaffolding</td><td>3–4 hrs/week</td></tr>
+      <tr><td>Math</td><td>Khanmigo</td><td>Step-by-step problem scaffolding, practice set generation, misconception identification</td><td>2–3 hrs/week</td></tr>
+      <tr><td>Science</td><td>ChatGPT-4o</td><td>Lab report templates, grading criteria generation, concept explanation drafts</td><td>2–4 hrs/week</td></tr>
+      <tr><td>History</td><td>Claude</td><td>Primary source analysis guides, document-based question scaffolding, contextual background summaries</td><td>2–3 hrs/week</td></tr>
+    </table>
+  </div>
+
+  <h2>Formative Assessment and Real-Time Feedback</h2>
+  <p>The research on learning is unambiguous: frequent, low-stakes feedback produces better outcomes than infrequent, high-stakes testing. Students learn more when they receive information about their thinking early and often, when they still have time to correct misconceptions and try again. The problem is practical: a single teacher cannot give meaningful feedback to 30 students on every piece of work they produce. High-stakes summative assessment is partly a concession to that constraint.</p>
+  <p>AI disrupts that constraint. Platforms like Formative, Nearpod with AI integration, and Writable provide real-time writing feedback that students receive immediately rather than days later. Students can see where their argument weakens, where their evidence is thin, and where their grammar breaks down while they're still in the act of writing — not after the assignment has been graded and forgotten. Teachers receive dashboards showing where the class as a whole is struggling, allowing mid-lesson pivots rather than post-hoc reteaching.</p>
+
+  <div class="callout">
+    <div class="callout-label">Research finding</div>
+    <p>A 2024 RAND Corporation study found that classrooms using AI-assisted formative assessment showed 18% higher student achievement gains compared to control classrooms. The effect was concentrated in students who had previously received the least individualized attention — suggesting that AI-assisted feedback matters most precisely where teacher bandwidth had historically been most stretched.</p>
+  </div>
+
+  <p>The implications are significant for equity. Students who already receive a lot of individualized attention — those in small classes, those with engaged parents who review their work — benefit less from AI formative feedback because they already have that feedback loop. Students in large, under-resourced classrooms, where teacher attention per student is limited, see the largest gains. That is the right distribution of benefit.</p>
+
+  <h2>Special Education and Accessibility</h2>
+  <p>Students with individualized education programs represent one of the highest-need, highest-documentation populations in any school. A special education teacher's administrative load can be two to three times that of a general education teacher — IEP documentation, accommodation tracking, progress monitoring, legal compliance, parent communication. AI tools are beginning to address this directly. AI can generate first drafts of IEP goal language based on student assessment data that teachers then review, customize, and sign off on — turning a multi-hour writing task into a 20-minute review task.</p>
+  <p>For students themselves, AI is expanding the accessibility toolkit. Text-to-speech tools like NaturalReader have improved dramatically with neural voice synthesis, making them genuinely usable rather than robotically painful. Learning Ally provides AI-powered reading support for students with dyslexia. Otter.ai enables real-time automated captioning in classroom settings for students with hearing impairments. Proloquo4Text supports communication for nonverbal students by predicting intended words and phrases. These tools do not replace specialized instruction — they lower the barrier to participation in learning environments that were not designed for students who process information differently.</p>
+
+  <h2>What Teachers Must Still Do</h2>
+  <p>There is a version of the AI-in-education story that treats teachers as primarily information delivery systems — narrators of content, generators of exercises, graders of papers — and concludes that AI can do most of that and therefore teachers are partially redundant. This is wrong, and it is worth being precise about why.</p>
+  <p>Teaching is a relational profession. What a teacher does that no AI can replicate is know a specific child: what happened to that student last weekend, why they've been withdrawn this week, what kind of encouragement makes them lean in versus shut down, which parent dynamic is affecting their homework completion, what their face looks like right before they're about to understand something. That knowledge is not in any database. It's built through presence, attention, and time — over months and years. An AI that has processed every textbook ever written cannot tell you that a particular student needs to be challenged today because she's been coasting, or needs to be handled gently today because something happened at home. The teacher in the room knows that.</p>
+  <p>Professional judgment in education is also irreducible. The decision to push a student versus support them, to let a class struggle productively versus intervene, to call a parent versus give a student another chance — these are ethical decisions made under uncertainty with incomplete information, and they require a human being who is accountable for the outcome. AI is a tool that extends what teachers can do. It is not a substitute for the professional who decides what to do.</p>
+
+  <div class="principle-list">
+    <div class="principle">
+      <div class="principle-title">Human Relationship</div>
+      <div class="principle-desc">Trust between teacher and student is built through presence, consistency, and genuine care over time. It is the foundation of every learning breakthrough and cannot be simulated or shortcut.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Contextual Judgment</div>
+      <div class="principle-desc">Reading individual student situations — knowing when to push, when to support, when to call home, when to let something go — requires knowing the specific human in front of you in ways AI cannot access.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Motivational Insight</div>
+      <div class="principle-desc">Knowing what will inspire a specific student — which challenge will ignite them, which framing will make them care — is deeply personal knowledge built over months of interaction.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Ethical Modeling</div>
+      <div class="principle-desc">Teachers model what an engaged, curious, ethical adult looks like. Students learn not just content but what it looks like to care about truth, to treat others fairly, and to take intellectual work seriously — by watching a human being do it.</div>
+    </div>
+  </div>
+
+</div>
+</main>
+</div>
+
+<div class="sticky-bar">
+  <div class="sticky-bar-reading" id="sticky-reading">Read to the end to unlock the next module</div>
+  <div class="sticky-bar-track"><div class="sticky-bar-fill" id="sticky-fill"></div></div>
+  <div class="sticky-bar-label" id="sticky-label">0%</div>
+  <button class="sticky-bar-btn" id="sticky-btn" onclick="completeAndNext()">Module 5: Academic Integrity in the AI Era →</button>
+</div>
+
+<script>
+  function toggleTheme(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='☾'):(h.setAttribute('data-theme','dark'),i.textContent='☀');}
+  window.addEventListener('scroll',()=>{const d=document.documentElement,s=d.scrollTop||document.body.scrollTop,t=d.scrollHeight-d.clientHeight;document.getElementById('progress').style.width=(s/t*100)+'%';});
+  let unlocked=false;
+  function updateScrollProgress(){
+    const pct=Math.min(100,Math.round(((window.scrollY+window.innerHeight)/document.documentElement.scrollHeight)*100));
+    document.getElementById('sticky-fill').style.width=pct+'%';
+    document.getElementById('sticky-label').textContent=pct+'%';
+    if(pct>=95&&!unlocked){unlocked=true;document.getElementById('sticky-btn').style.display='block';document.getElementById('sticky-reading').style.display='none';document.getElementById('sticky-fill').style.background='#22c55e';document.getElementById('sticky-label').style.color='#22c55e';}
+  }
+  window.addEventListener('scroll',updateScrollProgress);updateScrollProgress();
+  function completeAndNext(){
+    if(window.__meridianSaveProgress){ try{ window.__meridianSaveProgress("m4"); }catch(e){} }
+    setTimeout(function(){ window.location.href="module-5.html"; }, 120);
+  }
+</script>
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import { getFirestore, doc, setDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  const app = initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+  const auth = getAuth(app); const db = getFirestore(app);
+  let meridianUser = null;
+  onAuthStateChanged(auth, u => { meridianUser = u; });
+  window.__meridianSaveProgress = async function(mValue){
+    if(!meridianUser) return;
+    try { await setDoc(doc(db,"users",meridianUser.uid), { educationModules: arrayUnion(mValue) }, { merge: true }); } catch(e) {}
+  };
+</script>
+</body>
+</html>

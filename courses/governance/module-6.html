@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>International AI Policy — AI Governance — Meridian Institute of AI</title>
+<meta name="description" content="Free AI Governance course — module 6. Understand international AI policy: the EU, US, China, and UK models, Bletchley Declaration, Global South, and geopolitical stakes.">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="International AI Policy — AI Governance — Meridian Institute of AI">
+<meta property="og:description" content="Free AI Governance course — module 6. Understand international AI policy: the EU, US, China, and UK models, Bletchley Declaration, Global South, and geopolitical stakes.">
+<meta property="og:url" content="https://meridianinstituteai.com/courses/governance/module-6.html">
+<meta property="og:type" content="website">
+<link rel="canonical" href="https://meridianinstituteai.com/courses/governance/module-6.html">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#8b5cf6;--accent-dim:rgba(139,92,246,0.1);--nav-bg:rgba(8,8,8,0.9);--callout-bg:rgba(139,92,246,0.07);--callout-border:rgba(139,92,246,0.25);--good-bg:rgba(34,197,94,0.07);--good-border:rgba(34,197,94,0.2);--warn-bg:rgba(251,146,60,0.07);--warn-border:rgba(251,146,60,0.2);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#7c3aed;--accent-dim:rgba(124,58,237,0.08);--nav-bg:rgba(250,250,248,0.9);--callout-bg:rgba(124,58,237,0.05);--callout-border:rgba(124,58,237,0.2);--good-bg:rgba(22,163,74,0.06);--good-border:rgba(22,163,74,0.2);--warn-bg:rgba(234,88,12,0.05);--warn-border:rgba(234,88,12,0.2);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;overflow-x:hidden;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.7;overflow-x:hidden;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}
+  .nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}
+  .nav-back{font-size:13px;color:var(--text-2);text-decoration:none;transition:color 0.2s;}
+  .nav-back:hover{color:var(--text);}
+  .nav-label{font-size:13px;color:var(--text-3);}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;transition:all 0.2s;}
+  .progress-bar{position:fixed;top:60px;left:0;right:0;z-index:99;height:2px;background:var(--border);}
+  .progress-fill{height:100%;background:var(--accent);width:0%;transition:width 0.1s;}
+  .page-wrapper{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:100vh;padding-top:62px;}
+  .sidebar{position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto;border-right:1px solid var(--border);padding:32px 24px;background:var(--bg-2);}
+  .sidebar-course{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;}
+  .sidebar-course-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+  .sidebar-module{margin-bottom:4px;}
+  .sidebar-module-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:13px;color:var(--text-2);text-decoration:none;transition:all 0.2s;line-height:1.4;}
+  .sidebar-module-link:hover{background:var(--bg-3);color:var(--text);}
+  .sidebar-module-link.active{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-num{font-size:11px;font-weight:500;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--bg-4);color:var(--text-3);}
+  .sidebar-module-link.active .sidebar-num{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-divider{height:1px;background:var(--border);margin:20px 0;}
+  .sidebar-progress-label{font-size:12px;color:var(--text-3);margin-bottom:8px;display:flex;justify-content:space-between;}
+  .sidebar-progress-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sidebar-progress-fill{height:100%;width:71%;background:var(--accent);border-radius:2px;}
+  main{display:block;min-width:0;}
+  .content{max-width:760px;width:100%;padding:60px 64px 140px;margin:0 auto;}
+  .module-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+  .module-tag{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(139,92,246,0.2);padding:4px 12px;border-radius:100px;}
+  .module-meta{font-size:12px;color:var(--text-3);}
+  h1{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1.05;letter-spacing:-0.02em;color:var(--text);margin-bottom:24px;}
+  .intro-text{font-size:19px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+  h2{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:400;color:var(--text);margin:52px 0 18px;line-height:1.2;}
+  h3{font-size:16px;font-weight:500;color:var(--text);margin:32px 0 12px;}
+  p{font-size:16px;font-weight:300;color:var(--text-2);line-height:1.8;margin-bottom:20px;}
+  strong{font-weight:500;color:var(--text);}
+  .callout{background:var(--callout-bg);border:1px solid var(--callout-border);border-radius:12px;padding:24px 28px;margin:32px 0;}
+  .callout-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+  .callout p{margin:0;font-size:15px;color:var(--text-2);}
+  .callout p+p{margin-top:12px;}
+  .good{background:var(--good-bg);border:1px solid var(--good-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .good-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#22c55e;margin-bottom:10px;}
+  .good p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn{background:var(--warn-bg);border:1px solid var(--warn-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .warn-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#fb923c;margin-bottom:10px;}
+  .warn p{margin:0;font-size:15px;color:var(--text-2);}
+  .principle-list{display:flex;flex-direction:column;gap:12px;margin:24px 0;}
+  .principle{background:var(--bg-2);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:0 12px 12px 0;padding:20px 24px;}
+  .principle-title{font-size:15px;font-weight:500;color:var(--text);margin-bottom:6px;}
+  .principle-desc{font-size:14px;color:var(--text-2);line-height:1.65;margin:0;}
+  .comparison-wrapper{overflow-x:auto;-webkit-overflow-scrolling:touch;width:100%;margin:28px 0;}
+  table{width:100%;border-collapse:collapse;font-size:14px;min-width:480px;}
+  th{text-align:left;padding:12px 16px;font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-3);border-bottom:1px solid var(--border-2);}
+  td{padding:14px 16px;border-bottom:1px solid var(--border);color:var(--text-2);line-height:1.6;vertical-align:top;}
+  tr:last-child td{border-bottom:none;}
+  td:first-child{color:var(--text);font-weight:500;}
+  .sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:var(--bg-2);border-top:1px solid var(--border-2);padding:14px 5%;display:flex;align-items:center;justify-content:space-between;gap:16px;backdrop-filter:blur(12px);}
+  .sticky-bar-track{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sticky-bar-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.2s;width:0%;}
+  .sticky-bar-label{font-size:12px;color:var(--text-3);white-space:nowrap;min-width:60px;text-align:right;}
+  .sticky-bar-btn{padding:10px 20px;border-radius:8px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;background:var(--accent);color:#fff;border:none;cursor:pointer;white-space:nowrap;transition:opacity 0.2s;display:none;}
+  .sticky-bar-btn:hover{opacity:0.88;}
+  .sticky-bar-reading{font-size:12px;color:var(--text-3);white-space:nowrap;}
+  @media(max-width:900px){.page-wrapper{grid-template-columns:1fr;}.sidebar{display:none;}.content{padding:40px 24px 120px;}h1{font-size:38px;}}
+  @media(max-width:600px){.content{padding:28px 16px 120px;}h1{font-size:30px;}h2{font-size:24px;}}
+</style>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="shortcut icon" href="/favicon.ico">
+<style>@media(max-width:480px){.nav-divider{display:none}.nav-left{gap:8px}}</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="../../index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="../../index.html" class="nav-back">&#8962; Home</a>
+    <div class="nav-divider"></div>
+    <a href="../../courses.html" class="nav-back">&#8592; AI Governance</a>
+    <div class="nav-divider"></div>
+    <span class="nav-label">Module 6</span>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">&#9728;</span></button>
+</nav>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+
+<div class="page-wrapper">
+<aside class="sidebar">
+  <div class="sidebar-course">Course</div>
+  <div class="sidebar-course-name">AI Governance</div>
+  <div class="sidebar-module"><a href="module-1.html" class="sidebar-module-link"><span class="sidebar-num">1</span>What AI Governance Is</a></div>
+  <div class="sidebar-module"><a href="module-2.html" class="sidebar-module-link"><span class="sidebar-num">2</span>The EU AI Act</a></div>
+  <div class="sidebar-module"><a href="module-3.html" class="sidebar-module-link"><span class="sidebar-num">3</span>US AI Policy</a></div>
+  <div class="sidebar-module"><a href="module-4.html" class="sidebar-module-link"><span class="sidebar-num">4</span>AI Ethics</a></div>
+  <div class="sidebar-module"><a href="module-5.html" class="sidebar-module-link"><span class="sidebar-num">5</span>Corporate AI Governance</a></div>
+  <div class="sidebar-module"><a href="module-6.html" class="sidebar-module-link active"><span class="sidebar-num">6</span>International AI Policy</a></div>
+  <div class="sidebar-module"><a href="module-7.html" class="sidebar-module-link"><span class="sidebar-num">7</span>Implementing Responsible AI</a></div>
+  <div class="sidebar-module"><a href="quiz.html" class="sidebar-module-link" style="color:var(--accent);margin-top:4px;"><span class="sidebar-num" style="background:var(--accent-dim);color:var(--accent);">&#10022;</span>Final Assessment</a></div>
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-progress-label"><span>Course progress</span><span style="color:var(--accent);">5 / 7</span></div>
+  <div class="sidebar-progress-track"><div class="sidebar-progress-fill"></div></div>
+</aside>
+
+<main>
+<div class="content">
+  <div class="module-eyebrow"><span class="module-tag">Module 6</span><span class="module-meta">20 min read &middot; AI Governance</span></div>
+  <h1>International AI Policy</h1>
+  <p class="intro-text">AI governance is not happening in a single country or a single framework — it is happening simultaneously across jurisdictions with different values, different regulatory traditions, and different strategic interests. Understanding the international landscape is essential for any organization operating globally and for anyone who wants to understand where the global rules of AI will ultimately come from.</p>
+
+  <h2>Three Regulatory Models</h2>
+  <p>Three distinct governance philosophies have emerged as the primary reference points for global AI policy. They differ not just in their specific rules but in their foundational assumptions about the relationship between technology, markets, individuals, and the state — assumptions that reflect deep differences in political culture that will not be resolved by negotiation.</p>
+  <p>The <strong>EU model</strong> is precautionary and rights-based. Its starting assumption is that AI poses real risks to fundamental rights — dignity, privacy, non-discrimination, due process — and that these risks require preemptive regulatory protection regardless of whether harm has yet occurred. The EU AI Act expresses this philosophy: classify AI systems by risk level, impose ex-ante conformity requirements on high-risk applications, and enforce through national market surveillance authorities with significant fines. The <strong>US model</strong> (at least in its pre-2025 form) was sectoral and market-led, trusting existing sector regulators and market mechanisms to address AI risks as they emerged, with federal coordination provided by voluntary frameworks rather than binding law. The <strong>China model</strong> is state-directed: AI development is a national strategic priority, and AI governance is designed not to slow development but to align it with state objectives — national security, social stability, content control, and technological competitiveness. Chinese AI regulations have been fast, targeted, and focused on politically sensitive applications rather than economic risk.</p>
+  <p>None of these models is simply "right." Each reflects genuine value trade-offs and different assessments of where AI risks are concentrated. Understanding which model is shaping any particular regulatory context is essential for organizations operating across borders.</p>
+
+  <div class="comparison-wrapper">
+    <table>
+      <tr><th>Jurisdiction</th><th>Approach</th><th>Primary Instrument</th><th>Core Value</th></tr>
+      <tr><td>European Union</td><td>Precautionary, risk-based</td><td>EU AI Act</td><td>Fundamental rights protection</td></tr>
+      <tr><td>United States</td><td>Sectoral, market-led</td><td>Executive orders + agency guidance</td><td>Innovation and competitiveness</td></tr>
+      <tr><td>China</td><td>State-directed</td><td>Algorithm + Generative AI Regulations</td><td>State control and competitiveness</td></tr>
+      <tr><td>United Kingdom</td><td>Pro-innovation, principles-based</td><td>AI Safety Institute + sector guidance</td><td>Economic growth</td></tr>
+    </table>
+  </div>
+
+  <h2>The Bletchley Declaration and International Coordination</h2>
+  <p>The AI Safety Summit at Bletchley Park in November 2023 produced the first international political agreement on frontier AI risks. Twenty-nine countries signed the Bletchley Declaration, including the United States, the European Union, China, and the United Kingdom — a striking coalition given the geopolitical tensions between several signatories. The declaration acknowledged that frontier AI models pose "serious, potentially catastrophic" risks and established the principle that these risks require international coordination to address effectively.</p>
+  <p>The Bletchley process produced concrete institutional outcomes. The UK established the AI Safety Institute — the world's first government body dedicated to frontier AI safety evaluation — with a mandate to develop testing methodologies for frontier models. The Seoul AI Summit in May 2024 extended the process, producing commitments from major AI companies to share safety information with AI Safety Institutes before deploying new frontier models. The Paris AI Action Summit in February 2025 continued the series, with increasing focus on governance implementation rather than just principles.</p>
+  <p>The significance of the Bletchley Declaration is not its specific commitments, which are largely non-binding, but the precedent it establishes: that frontier AI safety is a legitimate subject of international coordination and that even geopolitical rivals have common interests in preventing the worst AI outcomes. Whether this precedent leads to binding international agreements remains an open question — but the alternative, in which each jurisdiction manages frontier AI risks entirely independently, is plainly inadequate given AI's borderless character.</p>
+
+  <h2>China's AI Governance Approach</h2>
+  <p>China has developed the most rapid and targeted AI regulatory program of any major jurisdiction — publishing binding AI regulations in roughly the time it took other governments to complete consultation processes. The approach is sector-by-sector, targeting specific AI applications rather than comprehensive frameworks: Algorithm Recommendation Regulations (March 2022) addressed recommendation systems and were the first national regulations targeting recommendation algorithms anywhere in the world; Deep Synthesis Regulations (December 2022) addressed deepfakes and synthetic media; Generative AI Regulations (August 2023) addressed large language models and generative systems, requiring that outputs "reflect socialist core values" and prohibiting content that "subverts state power, endangers national security, or undermines social stability."</p>
+  <p>China's AI governance serves multiple simultaneous purposes. It addresses genuine safety and content risks that the government has determined require regulatory intervention. It provides a legal framework for the state's ongoing role in directing AI development toward national strategic priorities. And it provides content and political control mechanisms that are consistent with the broader regulatory approach to internet and media platforms in China. International observers who evaluate Chinese AI governance purely through the lens of safety or rights miss the extent to which it is simultaneously an industrial policy and a censorship mechanism.</p>
+  <p>For international companies, Chinese AI regulations create significant compliance complexity: the content requirements for generative AI systems in China are fundamentally incompatible with the transparency and free expression standards required in EU and US markets, making a single global AI product strategy difficult to maintain for companies serving Chinese users.</p>
+
+  <h2>The Global South and AI Governance</h2>
+  <p>Africa, Latin America, and Southeast Asia are conspicuously underrepresented in the major international AI governance frameworks, despite being regions where AI deployment is expanding rapidly and where governance capacity is most constrained. The Bletchley Declaration was signed by 29 countries, but the majority were wealthy Western democracies — only a handful of African, Latin American, or Southeast Asian nations participated. The EU AI Act's requirements, if they become global standards through the Brussels effect, were written with European contexts and institutional capacities in mind, not the realities of deploying AI in Kenya, Indonesia, or Colombia.</p>
+  <p>Two governance initiatives represent the beginning of a Global South AI governance voice. The African Union's AI Continental Strategy, adopted in 2024, is the first continental AI governance framework from the Global South — addressing AI development, data governance, and capacity building across 55 member states. UNESCO's Recommendation on the Ethics of AI (2021) is the only truly global AI ethics instrument, having been adopted by all 193 UNESCO member states; it addresses AI in ways explicitly attentive to development contexts and non-Western value frameworks. Neither instrument has the binding force of the EU AI Act, but they represent emerging normative claims about what AI governance should look like from perspectives other than wealthy Western regulators.</p>
+
+  <h2>The AI Race and Geopolitical Stakes</h2>
+  <p>AI governance cannot be separated from the broader geopolitical competition between the United States and China over technological leadership. US export controls imposed in 2022 and expanded in 2023 restrict the sale of advanced AI chips — specifically NVIDIA's A100 and H100 processors — to China, in an effort to slow Chinese AI development by limiting access to the hardware necessary to train frontier models. China has responded by accelerating domestic chip development and by demonstrating, through models like DeepSeek, that frontier AI capability can be achieved with constrained hardware through architectural and training efficiency innovations. The chip war and the AI race are now inextricably linked.</p>
+  <p>The EU faces a distinct tension: its precautionary regulatory approach reflects genuine commitments to fundamental rights that have broad democratic support, but it creates competitive disadvantages relative to the US and China, where AI development faces fewer pre-deployment constraints. EU policymakers are actively aware of this tension, and the EU AI Act was designed to minimize compliance burdens on innovation while protecting against the most serious risks — but whether that balance is correctly calibrated remains actively debated.</p>
+  <p>The deeper geopolitical stakes are about whose values shape AI's development globally. If US companies dominate global AI deployment, American assumptions about free expression, market governance, and privacy will be embedded in AI systems used worldwide. If Chinese AI systems become dominant in the Global South — as they are in some domains — Chinese assumptions about content, state authority, and social order will be embedded instead. The governance question is not just about safety or rights in the narrow sense; it is about which civilization's values become the default in the world's most powerful technology.</p>
+
+  <div class="warn">
+    <div class="warn-label">Regulatory fragmentation risk</div>
+    <p>The risk of regulatory fragmentation — where different jurisdictions produce incompatible AI requirements — is real and growing. The EU AI Act requires transparency, human oversight, and risk assessments that create documentation obligations. Chinese Generative AI Regulations require content controls that would violate free expression standards in Western markets. US sector regulations impose different obligations than EU horizontal regulation. A company deploying AI globally may face requirements that directly contradict each other across the EU, US, and China — a compliance environment that rewards large incumbents with the resources to maintain multiple product variants and penalizes smaller organizations attempting to compete internationally.</p>
+  </div>
+
+</div>
+</main>
+</div>
+
+<div class="sticky-bar">
+  <div class="sticky-bar-reading" id="sticky-reading">Read to the end to unlock the next module</div>
+  <div class="sticky-bar-track"><div class="sticky-bar-fill" id="sticky-fill"></div></div>
+  <div class="sticky-bar-label" id="sticky-label">0%</div>
+  <button class="sticky-bar-btn" id="sticky-btn" onclick="completeAndNext()">Module 7: Implementing Responsible AI &#8594;</button>
+</div>
+
+<script>
+  function toggleTheme(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='☾'):(h.setAttribute('data-theme','dark'),i.textContent='☀');}
+  window.addEventListener('scroll',()=>{const d=document.documentElement,s=d.scrollTop||document.body.scrollTop,t=d.scrollHeight-d.clientHeight;document.getElementById('progress').style.width=(s/t*100)+'%';});
+  let unlocked=false;
+  function updateScrollProgress(){
+    const pct=Math.min(100,Math.round(((window.scrollY+window.innerHeight)/document.documentElement.scrollHeight)*100));
+    document.getElementById('sticky-fill').style.width=pct+'%';
+    document.getElementById('sticky-label').textContent=pct+'%';
+    if(pct>=95&&!unlocked){unlocked=true;document.getElementById('sticky-btn').style.display='block';document.getElementById('sticky-reading').style.display='none';document.getElementById('sticky-fill').style.background='#22c55e';document.getElementById('sticky-label').style.color='#22c55e';}
+  }
+  window.addEventListener('scroll',updateScrollProgress);updateScrollProgress();
+  function completeAndNext(){
+    if(window.__meridianSaveProgress){try{window.__meridianSaveProgress("m6");}catch(e){}}
+    setTimeout(function(){window.location.href="module-7.html";},120);
+  }
+</script>
+<script type="module">
+  import{initializeApp}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import{getAuth,onAuthStateChanged}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import{getFirestore,doc,setDoc,arrayUnion}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  const app=initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+  const auth=getAuth(app);const db=getFirestore(app);
+  let meridianUser=null;
+  onAuthStateChanged(auth,u=>{meridianUser=u;});
+  window.__meridianSaveProgress=async function(mValue){
+    if(!meridianUser)return;
+    try{await setDoc(doc(db,"users",meridianUser.uid),{governanceModules:arrayUnion(mValue)},{merge:true});}catch(e){}
+  };
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Course","name":"AI Governance","description":"A free, comprehensive course on AI governance — regulation, ethics, policy, and responsible AI implementation.","provider":{"@type":"Organization","name":"Meridian Institute of AI","url":"https://meridianinstituteai.com"},"url":"https://meridianinstituteai.com/courses/governance/module-6.html","isAccessibleForFree":true,"educationalLevel":"Intermediate","inLanguage":"en","teaches":"International AI policy, Bletchley Declaration, EU AI Act, China AI regulation, global AI governance"}
+</script>
+</body>
+</html>

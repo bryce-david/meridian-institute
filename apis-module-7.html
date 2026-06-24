@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 7: Embeddings and Semantic Search — Building with AI APIs — Meridian Institute of AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#0F4C81;--accent-dim:rgba(15,76,129,0.1);--accent-dim2:rgba(15,76,129,0.05);--nav-bg:rgba(8,8,8,0.9);--callout-bg:rgba(15,76,129,0.07);--callout-border:rgba(15,76,129,0.25);--good-bg:rgba(34,197,94,0.07);--good-border:rgba(34,197,94,0.2);--warn-bg:rgba(251,146,60,0.07);--warn-border:rgba(251,146,60,0.2);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#1E40AF;--accent-dim:rgba(30,64,175,0.08);--accent-dim2:rgba(30,64,175,0.04);--nav-bg:rgba(250,250,248,0.9);--callout-bg:rgba(30,64,175,0.05);--callout-border:rgba(30,64,175,0.2);--good-bg:rgba(22,163,74,0.06);--good-border:rgba(22,163,74,0.2);--warn-bg:rgba(234,88,12,0.05);--warn-border:rgba(234,88,12,0.2);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;overflow-x:hidden;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.7;overflow-x:hidden;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}
+  .nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}
+  .nav-back{font-size:13px;color:var(--text-2);text-decoration:none;transition:color 0.2s;}
+  .nav-back:hover{color:var(--text);}
+  .nav-label{font-size:13px;color:var(--text-3);}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;transition:all 0.2s;}
+  .theme-toggle:hover{background:var(--bg-3);color:var(--text);}
+  .progress-bar{position:fixed;top:60px;left:0;right:0;z-index:99;height:2px;background:var(--border);}
+  .progress-fill{height:100%;background:var(--accent);width:0%;transition:width 0.1s;}
+  .page-wrapper{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:100vh;padding-top:62px;overflow:hidden;}
+  .sidebar{position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto;border-right:1px solid var(--border);padding:32px 24px;background:var(--bg-2);}
+  .sidebar-course{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;}
+  .sidebar-course-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+  .sidebar-module{margin-bottom:4px;}
+  .sidebar-module-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:13px;color:var(--text-2);text-decoration:none;transition:all 0.2s;line-height:1.4;}
+  .sidebar-module-link:hover{background:var(--bg-3);color:var(--text);}
+  .sidebar-module-link.active{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-num{font-size:11px;font-weight:500;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--bg-4);color:var(--text-3);}
+  .sidebar-module-link.active .sidebar-num{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-divider{height:1px;background:var(--border);margin:20px 0;}
+  .sidebar-progress-label{font-size:12px;color:var(--text-3);margin-bottom:8px;display:flex;justify-content:space-between;}
+  .sidebar-progress-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sidebar-progress-fill{height:100%;width:70%;background:var(--accent);border-radius:2px;}
+  main{display:block;min-width:0;overflow:hidden;}
+  .content{max-width:760px;width:100%;padding:60px 64px 140px;margin:0 auto;}
+  .module-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+  .module-tag{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(15,76,129,0.2);padding:4px 12px;border-radius:100px;}
+  .module-meta{font-size:12px;color:var(--text-3);}
+  h1{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1.05;letter-spacing:-0.02em;color:var(--text);margin-bottom:24px;}
+  .intro-text{font-size:19px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+  h2{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:400;color:var(--text);margin:52px 0 18px;line-height:1.2;}
+  h3{font-size:16px;font-weight:500;color:var(--text);margin:32px 0 12px;}
+  p{font-size:16px;font-weight:300;color:var(--text-2);line-height:1.8;margin-bottom:20px;}
+  strong{font-weight:500;color:var(--text);}
+  em{font-style:italic;}
+  ul,ol{margin:0 0 20px 22px;color:var(--text-2);}
+  li{font-size:16px;font-weight:300;line-height:1.8;margin-bottom:8px;}
+  .callout{background:var(--callout-bg);border:1px solid var(--callout-border);border-radius:12px;padding:24px 28px;margin:32px 0;}
+  .callout-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+  .callout p{margin:0;font-size:15px;color:var(--text-2);}
+  .callout p+p{margin-top:12px;}
+  .good{background:var(--good-bg);border:1px solid var(--good-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .good-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#22c55e;margin-bottom:10px;}
+  .good p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn{background:var(--warn-bg);border:1px solid var(--warn-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .warn-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#fb923c;margin-bottom:10px;}
+  .warn p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn p+p{margin-top:12px;}
+  .principle-list{display:flex;flex-direction:column;gap:12px;margin:24px 0;}
+  .principle{background:var(--bg-2);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:0 12px 12px 0;padding:20px 24px;}
+  .principle-title{font-size:15px;font-weight:500;color:var(--text);margin-bottom:6px;}
+  .principle-desc{font-size:14px;color:var(--text-2);line-height:1.65;margin:0;}
+  .sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:var(--bg-2);border-top:1px solid var(--border-2);padding:14px 5%;display:flex;align-items:center;justify-content:space-between;gap:16px;backdrop-filter:blur(12px);}
+  .sticky-bar-track{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sticky-bar-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.2s;width:0%;}
+  .sticky-bar-label{font-size:12px;color:var(--text-3);white-space:nowrap;min-width:60px;text-align:right;}
+  .sticky-bar-btn{padding:10px 20px;border-radius:8px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;background:var(--accent);color:#fff;border:none;cursor:pointer;white-space:nowrap;transition:opacity 0.2s;display:none;}
+  .sticky-bar-btn:hover{opacity:0.88;}
+  .sticky-bar-reading{font-size:12px;color:var(--text-3);white-space:nowrap;}
+  @media(max-width:900px){.page-wrapper{grid-template-columns:1fr;}.sidebar{display:none;}.content{padding:40px 24px 120px;}h1{font-size:38px;}}
+  @media(max-width:600px){.content{padding:28px 16px 120px;}h1{font-size:30px;}h2{font-size:24px;}}
+</style>
+<style>@media(max-width:480px){.nav-divider{display:none}.nav-left{gap:8px}}</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="courses.html" class="nav-back">← Building with AI APIs</a>
+    <div class="nav-divider"></div>
+    <span class="nav-label">Module 7</span>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">☀</span></button>
+</nav>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+
+<div class="page-wrapper">
+<aside class="sidebar">
+  <div class="sidebar-course">Expert Track</div>
+  <div class="sidebar-course-name">Building with AI APIs</div>
+  <div class="sidebar-module"><a href="apis-module-1.html" class="sidebar-module-link"><span class="sidebar-num">1</span>API Fundamentals</a></div>
+  <div class="sidebar-module"><a href="apis-module-2.html" class="sidebar-module-link"><span class="sidebar-num">2</span>Your First API Call</a></div>
+  <div class="sidebar-module"><a href="apis-module-3.html" class="sidebar-module-link"><span class="sidebar-num">3</span>Chat Completions in Depth</a></div>
+  <div class="sidebar-module"><a href="apis-module-4.html" class="sidebar-module-link"><span class="sidebar-num">4</span>Tokens and Cost Optimization</a></div>
+  <div class="sidebar-module"><a href="apis-module-5.html" class="sidebar-module-link"><span class="sidebar-num">5</span>Structured Outputs</a></div>
+  <div class="sidebar-module"><a href="apis-module-6.html" class="sidebar-module-link"><span class="sidebar-num">6</span>Streaming Responses</a></div>
+  <div class="sidebar-module"><a href="apis-module-7.html" class="sidebar-module-link active"><span class="sidebar-num">7</span>Embeddings and Semantic Search</a></div>
+  <div class="sidebar-module"><a href="apis-module-8.html" class="sidebar-module-link"><span class="sidebar-num">8</span>Function Calling and Tool Use</a></div>
+  <div class="sidebar-module"><a href="apis-module-9.html" class="sidebar-module-link"><span class="sidebar-num">9</span>Production-Ready AI Apps</a></div>
+  <div class="sidebar-module"><a href="apis-module-10.html" class="sidebar-module-link"><span class="sidebar-num">10</span>Multi-Provider Strategies</a></div>
+  <div class="sidebar-module"><a href="quiz-apis.html" class="sidebar-module-link" style="color:var(--accent);margin-top:4px;"><span class="sidebar-num" style="background:var(--accent-dim);color:var(--accent);">&#10022;</span>Final Assessment</a></div>
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-progress-label"><span>Course progress</span><span style="color:var(--accent);">7 / 10</span></div>
+  <div class="sidebar-progress-track"><div class="sidebar-progress-fill"></div></div>
+</aside>
+
+<main>
+<div class="content">
+  <div class="module-eyebrow"><span class="module-tag">Module 7</span><span class="module-meta">28 min read · Building with AI APIs</span></div>
+  <h1>Embeddings and Semantic Search</h1>
+
+  <p class="intro-text">Every API call so far in this course has sent text in and received text back. Embeddings are different: you send text in and receive a dense numerical vector back — a list of floating-point numbers, typically 1,536 or 3,072 of them, that encodes the meaning of that text in a high-dimensional geometric space. The power of this representation is that meaning becomes distance: semantically similar texts map to vectors that are close together, semantically different texts map to vectors that are far apart. This enables a fundamentally new kind of search — one that finds relevant content by meaning rather than by keyword matching.</p>
+
+  <h2>What an embedding is, precisely</h2>
+  <p>An embedding model is a neural network trained to convert variable-length text into a fixed-length vector of floats. The training objective rewards the model for producing vectors where semantically related texts cluster together and unrelated texts spread apart. The result is a learned geometric representation of meaning: "dog" and "puppy" end up nearby, "bank" (financial) and "bank" (riverbank) end up in different regions depending on context, and "Paris is the capital of France" and "France's capital city is Paris" end up nearly identical despite using different words.</p>
+  <p>The dimensionality of the vector (1,536 for OpenAI's text-embedding-3-small, 3,072 for text-embedding-3-large) determines the resolution of the semantic space — higher dimensions can encode more fine-grained distinctions but require more storage and compute. The specific numbers in the vector have no human-interpretable meaning individually; the meaning is encoded in the relationships between vectors, not in any single dimension.</p>
+  <p>Critically, embedding models are distinct from completion models. You cannot use <code>gpt-4o</code> to generate embeddings — you need a model specifically trained for embedding (like <code>text-embedding-3-small</code> from OpenAI or <code>embed-english-v3.0</code> from Cohere). Each provider's embeddings live in their own geometric space and are not interoperable: you cannot compare an OpenAI embedding to a Cohere embedding using cosine similarity and get a meaningful result.</p>
+
+  <h2>Generating embeddings via API</h2>
+  <p>The API call is simple — simpler than a chat completion. You provide an input string (or list of strings for batch embedding) and the model ID, and receive a list of floats.</p>
+  <p>With the OpenAI Python SDK:</p>
+  <pre style="background:var(--bg-3);border:1px solid var(--border);border-radius:8px;padding:20px;font-size:13px;color:var(--text-2);overflow-x:auto;margin:0 0 20px;"><code>from openai import OpenAI
+client = OpenAI()
+
+response = client.embeddings.create(
+    input="The mitochondria is the powerhouse of the cell",
+    model="text-embedding-3-small"
+)
+
+vector = response.data[0].embedding  # list of 1536 floats
+print(len(vector))  # 1536</code></pre>
+  <p>For batch embedding — embedding many texts in a single API call — pass a list as <code>input</code>. Batch embedding is significantly more cost-efficient than making one API call per text: the same token count processed in batch costs the same as individual calls, but you save on per-request overhead and rate limit headroom.</p>
+
+  <h2>Measuring similarity: cosine similarity</h2>
+  <p>The standard way to measure how similar two embedding vectors are is <strong>cosine similarity</strong>: the cosine of the angle between the two vectors. Cosine similarity ranges from -1 (opposite directions, maximally dissimilar) to 1 (same direction, maximally similar), with 0 representing orthogonality (unrelated). For text embeddings from modern models, scores above 0.85 typically indicate strong semantic similarity, scores between 0.7 and 0.85 indicate topical relatedness, and scores below 0.5 indicate little semantic connection.</p>
+  <p>Computing cosine similarity between two numpy arrays:</p>
+  <pre style="background:var(--bg-3);border:1px solid var(--border);border-radius:8px;padding:20px;font-size:13px;color:var(--text-2);overflow-x:auto;margin:0 0 20px;"><code>import numpy as np
+
+def cosine_similarity(a, b):
+    return np.dot(a, b) / (np.linalg.norm(a) * np.linalg.norm(b))
+
+# If embeddings are already L2-normalized (most modern models normalize),
+# cosine similarity reduces to a simple dot product:
+def cosine_sim_normalized(a, b):
+    return np.dot(a, b)</code></pre>
+
+  <h2>Building a semantic search system</h2>
+  <p>Semantic search has three components: an <strong>index</strong> (a stored collection of embeddings for your documents), a <strong>query</strong> (an embedding of the user's question), and a <strong>retrieval step</strong> (finding the stored embeddings closest to the query embedding). The simplest possible implementation stores embeddings in memory and uses brute-force nearest-neighbor search.</p>
+
+  <div class="callout">
+    <div class="callout-label">The full pipeline</div>
+    <p><strong>At index time:</strong> for each document in your corpus, call the embeddings API and store the resulting vector alongside the document text and any metadata. Do this once, offline, and cache the results. Re-embed only when documents change.</p>
+    <p><strong>At query time:</strong> embed the user's query using the same model (critical — you must use the same model for queries and documents). Compute cosine similarity between the query vector and every stored document vector. Return the top-k documents by similarity score, along with their text.</p>
+  </div>
+
+  <h3>Scaling with vector databases</h3>
+  <p>Brute-force search over stored embeddings works fine up to tens of thousands of documents. Above that scale, you need a vector database — a specialized data store designed to efficiently find the nearest neighbors of a query vector in a large collection. Popular vector databases include <strong>Pinecone</strong> (managed cloud service), <strong>Weaviate</strong> (open-source, can self-host), <strong>Qdrant</strong> (open-source, Rust-based, very fast), and <strong>pgvector</strong> (a PostgreSQL extension that adds vector similarity search to a standard relational database). If you already use PostgreSQL, pgvector is often the pragmatic choice — you get vector search without adding another infrastructure component.</p>
+  <p>Vector databases use approximate nearest neighbor (ANN) algorithms — typically HNSW (Hierarchical Navigable Small World graphs) — that trade a small amount of recall accuracy for dramatically faster search. At one million documents, an ANN index finds the 10 most similar documents in milliseconds; brute-force search would take seconds. At ten million documents, only ANN search is practical.</p>
+
+  <h2>Retrieval-Augmented Generation (RAG)</h2>
+  <p>Embeddings and semantic search are the foundation of RAG — the pattern where you retrieve relevant documents from a knowledge base and inject them into the context of an LLM completion call. This is how you give an LLM access to information that is too large to fit in a context window, updated after the model's training cutoff, or proprietary to your organization.</p>
+  <p>The basic RAG loop: user asks a question → embed the question → find the top-k most relevant documents → concatenate those documents into the LLM's context → ask the LLM to answer the question based on the provided context. The LLM's answer is grounded in your retrieved documents rather than solely in its training data, which reduces hallucination and enables factual answers about private or recent information.</p>
+
+  <div class="good">
+    <div class="good-label">When RAG outperforms fine-tuning</div>
+    <p>For knowledge that changes frequently or is specific to your organization, RAG almost always outperforms fine-tuning. Fine-tuning bakes knowledge into model weights, which means the knowledge is static after training and updating requires an expensive retraining run. RAG updates the knowledge base by updating the document index — no model training required. If your knowledge base changes daily or weekly, RAG is the right architecture.</p>
+  </div>
+
+  <h2>Chunking strategies</h2>
+  <p>Documents are rarely embedded as a whole. A 10-page PDF embedded as a single vector loses all internal structure — the retrieval system cannot surface the specific paragraph that answers a question, only indicate that the document is broadly relevant. Chunking — splitting documents into smaller pieces before embedding — gives the retrieval system finer granularity.</p>
+  <p>The main chunking strategies:</p>
+  <ul>
+    <li><strong>Fixed-size chunking:</strong> split every N tokens or characters, optionally with overlap between chunks. Simple to implement, works reasonably well for uniform text. Overlap (e.g., 50 token overlap between 200-token chunks) reduces the chance of splitting a sentence or concept across chunk boundaries.</li>
+    <li><strong>Semantic chunking:</strong> split at natural boundaries — paragraph breaks, section headings, sentence boundaries. Preserves the semantic coherence of each chunk at the cost of variable chunk sizes.</li>
+    <li><strong>Recursive chunking:</strong> split first by large delimiters (double newlines), then by smaller ones (single newlines), then by sentences, until all chunks are under the target size. This is LangChain's <code>RecursiveCharacterTextSplitter</code> approach and works well for most document types.</li>
+  </ul>
+  <p>Chunk size is a hyperparameter to tune. Smaller chunks (100–200 tokens) give more precise retrieval but may lack context for the LLM to answer. Larger chunks (500–1,000 tokens) provide more context but may include irrelevant content that dilutes the LLM's focus. A common practical approach: retrieve small chunks for relevance, then expand to the surrounding paragraphs for LLM context.</p>
+
+  <div class="warn">
+    <div class="warn-label">Embedding model consistency</div>
+    <p>If you change your embedding model — for instance, upgrading from text-embedding-3-small to text-embedding-3-large for better quality — you must re-embed your entire document corpus. The new model's vectors live in a different geometric space, and comparing old-model document vectors to new-model query vectors will produce meaningless similarity scores. This re-embedding cost is worth budgeting for in your architecture — it is a predictable maintenance event, not an edge case.</p>
+  </div>
+
+  <p>In Module 8, we take the API capabilities further: function calling and tool use, which let LLMs take actions rather than just generate text. This is the foundation of agent systems and opens up applications that go far beyond question-answering.</p>
+</div>
+</main>
+</div>
+
+<div class="sticky-bar" id="sticky-bar">
+  <div class="sticky-bar-reading" id="sticky-reading">Read to the end to unlock the next module</div>
+  <div class="sticky-bar-track"><div class="sticky-bar-fill" id="sticky-fill"></div></div>
+  <div class="sticky-bar-label" id="sticky-label">0%</div>
+  <button class="sticky-bar-btn" id="sticky-btn" onclick="completeAndNext()">Module 8: Function Calling and Tool Use →</button>
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import { getFirestore, doc, setDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  const app=initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+  const auth=getAuth(app);const db=getFirestore(app);
+  let currentUser=null;
+  onAuthStateChanged(auth,u=>{currentUser=u;});
+
+  window.toggleTheme=function(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='☾'):(h.setAttribute('data-theme','dark'),i.textContent='☀');};
+  window.addEventListener('scroll',()=>{const d=document.documentElement,s=d.scrollTop||document.body.scrollTop,t=d.scrollHeight-d.clientHeight;document.getElementById('progress').style.width=(s/t*100)+'%';});
+
+  let unlocked=false;
+  function updateScrollProgress(){
+    const scrolled=window.scrollY+window.innerHeight;
+    const total=document.documentElement.scrollHeight;
+    const pct=Math.min(100,Math.round((scrolled/total)*100));
+    const fill=document.getElementById('sticky-fill');
+    const label=document.getElementById('sticky-label');
+    const btn=document.getElementById('sticky-btn');
+    const reading=document.getElementById('sticky-reading');
+    if(fill)fill.style.width=pct+'%';
+    if(label)label.textContent=pct+'%';
+    if(pct>=95&&!unlocked){
+      unlocked=true;
+      if(btn)btn.style.display='block';
+      if(reading)reading.style.display='none';
+      if(fill)fill.style.background='#22c55e';
+      if(label)label.style.color='#22c55e';
+    }
+  }
+  window.addEventListener('scroll',updateScrollProgress);
+  updateScrollProgress();
+
+  window.completeAndNext=async function(){
+    if(currentUser){
+      try{
+        await setDoc(doc(db,'users',currentUser.uid),{
+          apisModules: arrayUnion('m7')
+        },{merge:true});
+      }catch(e){}
+    }
+    window.location.href='apis-module-8.html';
+  };
+</script>
+</body>
+</html>

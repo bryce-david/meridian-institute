@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI in Offensive Security — AI in Cybersecurity — Meridian Institute of AI</title>
+<meta name="description" content="Understand how red teams and penetration testers use AI, including vulnerability scanning, exploit generation, AI-assisted fuzzing, and the ethics of offensive AI.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://meridianinstituteai.com/courses/cybersecurity/module-3.html">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#ef4444;--accent-dim:rgba(239,68,68,0.1);--nav-bg:rgba(8,8,8,0.9);--callout-bg:rgba(239,68,68,0.07);--callout-border:rgba(239,68,68,0.25);--good-bg:rgba(34,197,94,0.07);--good-border:rgba(34,197,94,0.2);--warn-bg:rgba(251,146,60,0.07);--warn-border:rgba(251,146,60,0.2);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#dc2626;--accent-dim:rgba(220,38,38,0.08);--nav-bg:rgba(250,250,248,0.9);--callout-bg:rgba(220,38,38,0.05);--callout-border:rgba(220,38,38,0.2);--good-bg:rgba(22,163,74,0.06);--good-border:rgba(22,163,74,0.2);--warn-bg:rgba(234,88,12,0.05);--warn-border:rgba(234,88,12,0.2);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;overflow-x:hidden;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.7;overflow-x:hidden;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}
+  .nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}
+  .nav-back{font-size:13px;color:var(--text-2);text-decoration:none;transition:color 0.2s;}
+  .nav-back:hover{color:var(--text);}
+  .nav-label{font-size:13px;color:var(--text-3);}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;transition:all 0.2s;}
+  .progress-bar{position:fixed;top:60px;left:0;right:0;z-index:99;height:2px;background:var(--border);}
+  .progress-fill{height:100%;background:var(--accent);width:0%;transition:width 0.1s;}
+  .page-wrapper{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:100vh;padding-top:62px;}
+  .sidebar{position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto;border-right:1px solid var(--border);padding:32px 24px;background:var(--bg-2);}
+  .sidebar-course{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;}
+  .sidebar-course-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+  .sidebar-module{margin-bottom:4px;}
+  .sidebar-module-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:13px;color:var(--text-2);text-decoration:none;transition:all 0.2s;line-height:1.4;}
+  .sidebar-module-link:hover{background:var(--bg-3);color:var(--text);}
+  .sidebar-module-link.active{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-num{font-size:11px;font-weight:500;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--bg-4);color:var(--text-3);}
+  .sidebar-module-link.active .sidebar-num{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-divider{height:1px;background:var(--border);margin:20px 0;}
+  .sidebar-progress-label{font-size:12px;color:var(--text-3);margin-bottom:8px;display:flex;justify-content:space-between;}
+  .sidebar-progress-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sidebar-progress-fill{height:100%;background:var(--accent);border-radius:2px;}
+  main{display:block;min-width:0;}
+  .content{max-width:760px;width:100%;padding:60px 64px 140px;margin:0 auto;}
+  .module-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+  .module-tag{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(239,68,68,0.2);padding:4px 12px;border-radius:100px;}
+  .module-meta{font-size:12px;color:var(--text-3);}
+  h1{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1.05;letter-spacing:-0.02em;color:var(--text);margin-bottom:24px;}
+  .intro-text{font-size:19px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+  h2{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:400;color:var(--text);margin:52px 0 18px;line-height:1.2;}
+  h3{font-size:16px;font-weight:500;color:var(--text);margin:32px 0 12px;}
+  p{font-size:16px;font-weight:300;color:var(--text-2);line-height:1.8;margin-bottom:20px;}
+  strong{font-weight:500;color:var(--text);}
+  .callout{background:var(--callout-bg);border:1px solid var(--callout-border);border-radius:12px;padding:24px 28px;margin:32px 0;}
+  .callout-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+  .callout p{margin:0;font-size:15px;color:var(--text-2);}
+  .good{background:var(--good-bg);border:1px solid var(--good-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .good-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#22c55e;margin-bottom:10px;}
+  .good p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn{background:var(--warn-bg);border:1px solid var(--warn-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .warn-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#fb923c;margin-bottom:10px;}
+  .warn p{margin:0;font-size:15px;color:var(--text-2);}
+  .principle-list{display:flex;flex-direction:column;gap:12px;margin:24px 0;}
+  .principle{background:var(--bg-2);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:0 12px 12px 0;padding:20px 24px;}
+  .principle-title{font-size:15px;font-weight:500;color:var(--text);margin-bottom:6px;}
+  .principle-desc{font-size:14px;color:var(--text-2);line-height:1.65;margin:0;}
+  .comparison-wrapper{overflow-x:auto;margin:28px 0;}
+  table{width:100%;border-collapse:collapse;font-size:14px;min-width:480px;}
+  th{text-align:left;padding:12px 16px;font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-3);border-bottom:1px solid var(--border-2);}
+  td{padding:14px 16px;border-bottom:1px solid var(--border);color:var(--text-2);line-height:1.6;vertical-align:top;}
+  tr:last-child td{border-bottom:none;}
+  td:first-child{color:var(--text);font-weight:500;}
+  .sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:var(--bg-2);border-top:1px solid var(--border-2);padding:14px 5%;display:flex;align-items:center;justify-content:space-between;gap:16px;backdrop-filter:blur(12px);}
+  .sticky-bar-track{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sticky-bar-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.2s;width:0%;}
+  .sticky-bar-label{font-size:12px;color:var(--text-3);white-space:nowrap;min-width:60px;text-align:right;}
+  .sticky-bar-btn{padding:10px 20px;border-radius:8px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;background:var(--accent);color:#fff;border:none;cursor:pointer;white-space:nowrap;transition:opacity 0.2s;display:none;}
+  .sticky-bar-btn:hover{opacity:0.88;}
+  .sticky-bar-reading{font-size:12px;color:var(--text-3);white-space:nowrap;}
+  @media(max-width:900px){.page-wrapper{grid-template-columns:1fr;}.sidebar{display:none;}.content{padding:40px 24px 120px;}h1{font-size:38px;}}
+</style>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="shortcut icon" href="/favicon.ico">
+<style>@media(max-width:480px){.nav-divider{display:none}.nav-left{gap:8px}}</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="../../index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="../../index.html" class="nav-back">Home</a>
+    <div class="nav-divider"></div>
+    <a href="../../courses.html" class="nav-back">← AI in Cybersecurity</a>
+    <div class="nav-divider"></div>
+    <span class="nav-label">Module 3</span>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">☀</span></button>
+</nav>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+<div class="page-wrapper">
+<aside class="sidebar">
+  <div class="sidebar-course">Course</div>
+  <div class="sidebar-course-name">AI in Cybersecurity</div>
+  <div class="sidebar-module"><a href="module-1.html" class="sidebar-module-link"><span class="sidebar-num">1</span>The AI-Cybersecurity Intersection</a></div>
+  <div class="sidebar-module"><a href="module-2.html" class="sidebar-module-link"><span class="sidebar-num">2</span>AI-Powered Threat Detection</a></div>
+  <div class="sidebar-module"><a href="module-3.html" class="sidebar-module-link active"><span class="sidebar-num">3</span>AI in Offensive Security</a></div>
+  <div class="sidebar-module"><a href="module-4.html" class="sidebar-module-link"><span class="sidebar-num">4</span>Social Engineering and AI</a></div>
+  <div class="sidebar-module"><a href="module-5.html" class="sidebar-module-link"><span class="sidebar-num">5</span>Defending Against AI Attacks</a></div>
+  <div class="sidebar-module"><a href="module-6.html" class="sidebar-module-link"><span class="sidebar-num">6</span>AI in Identity and Access</a></div>
+  <div class="sidebar-module"><a href="module-7.html" class="sidebar-module-link"><span class="sidebar-num">7</span>The Future of AI Security</a></div>
+  <div class="sidebar-module"><a href="quiz.html" class="sidebar-module-link" style="color:var(--accent);margin-top:4px;"><span class="sidebar-num" style="background:var(--accent-dim);color:var(--accent);">✦</span>Final Assessment</a></div>
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-progress-label"><span>Course progress</span><span style="color:var(--accent);">2 / 7</span></div>
+  <div class="sidebar-progress-track"><div class="sidebar-progress-fill" style="width:28%"></div></div>
+</aside>
+<main>
+<div class="content">
+  <div class="module-eyebrow"><span class="module-tag">Module 3</span><span class="module-meta">20 min read · AI in Cybersecurity</span></div>
+  <h1>AI in Offensive Security</h1>
+  <p class="intro-text">To defend effectively, you must understand how attackers operate. AI is not just a tool for defenders — it is actively reshaping the offensive toolkit available to red teams, penetration testers, and malicious actors alike. Understanding offensive AI is not optional for anyone serious about security.</p>
+
+  <h2>The Red Team's New Toolkit</h2>
+  <p>Red teams — security professionals hired to attack their own organizations — have always relied on staying ahead of defenders by thinking like adversaries. AI dramatically expands what red teams can accomplish in the time allocated for an engagement.</p>
+  <p>Traditional penetration testing is time-constrained. A red team might have two to four weeks to assess an organization's defenses. Much of that time is spent on reconnaissance: mapping the network, identifying systems, researching vulnerabilities in specific software versions, crafting payloads. AI compresses every phase of this process, allowing red teams to cover more ground in the same timeframe — and producing a more thorough assessment for the organization.</p>
+  <p>This compression cuts both ways. It means legitimate red teams produce better work. It also means malicious actors with access to AI tools can run attacks at a speed and sophistication that would previously have required a well-resourced criminal organization or nation-state team.</p>
+
+  <div class="callout">
+    <div class="callout-label">Democratization of Capability</div>
+    <p>AI tools have significantly lowered the skill floor for offensive security. Tasks that previously required years of specialized expertise — reading assembly code, identifying memory corruption bugs, writing shellcode — can now be partially automated. This means the average capability level of attackers has risen substantially, even without a proportional increase in attacker expertise.</p>
+  </div>
+
+  <h2>AI-Powered Vulnerability Scanning</h2>
+  <p>Traditional vulnerability scanning works from databases of known vulnerabilities. Tools like Nessus and Qualys check whether specific software versions with known CVEs are present, then report those findings. This approach is valuable but fundamentally retrospective — it only catches vulnerabilities that have already been discovered and catalogued.</p>
+  <p>AI-powered scanning goes further. Tools like <strong>GitHub Copilot</strong> and dedicated security-focused models can analyze code directly, identifying patterns that suggest vulnerability classes — buffer overflow conditions, SQL injection points, missing authentication checks — without requiring those specific vulnerabilities to be previously documented. The model reasons about the code's behavior rather than matching it against a database of known bad patterns.</p>
+  <p>More sophisticated AI vulnerability scanners combine static analysis (reading the code) with dynamic analysis (running the code and observing behavior) to produce results neither approach achieves alone. Hybrid approaches catch the vulnerabilities that only manifest at runtime — race conditions, logic errors that depend on state — which static analysis misses entirely.</p>
+
+  <h2>AI-Assisted Fuzzing</h2>
+  <p><strong>Fuzzing</strong> is the practice of feeding random or semi-random inputs to a program and observing whether it crashes or produces unexpected behavior. Crashes often indicate memory safety vulnerabilities — buffer overflows, use-after-free bugs — that can be turned into exploits. Traditional fuzzing is a brute-force technique: generate inputs randomly, run the program, record any crashes, repeat millions of times.</p>
+  <p>AI transforms fuzzing in several ways. Coverage-guided fuzzing tools like <strong>LibFuzzer</strong> and <strong>AFL (American Fuzzy Lop)</strong> use feedback from program execution to intelligently mutate inputs — pushing the fuzzer toward code paths that haven't been tested yet. Newer ML-based fuzzers go further, training models on corpora of valid inputs to generate fuzz inputs that are more likely to reach deep code paths that simple mutation cannot reach.</p>
+  <p>The results are significant: AI-assisted fuzzing finds more bugs, in less time, in code that traditional fuzzing would never reach. Google's OSS-Fuzz project, which applies these techniques to widely-used open-source software, has found over 10,000 vulnerabilities since 2016 — many of which existed for years in widely-deployed code.</p>
+
+  <h3>Code Vulnerability Scanners</h3>
+  <p>Several AI-native code security tools have emerged specifically for finding vulnerabilities in source code at scale. <strong>Semgrep</strong> allows writing patterns that flag specific vulnerability classes across large codebases. <strong>Snyk Code</strong> uses deep learning models trained on millions of open-source vulnerabilities to identify similar patterns in new code. <strong>CodeQL</strong>, developed by GitHub, allows querying code as data — expressing vulnerability patterns as queries that run against an entire repository.</p>
+  <p>These tools are used by both attackers scanning for exploitable targets and defenders auditing their own code. The same scan that a red team runs against a target's public GitHub repository, a defender should be running automatically on every pull request.</p>
+
+  <h2>Automated Exploit Generation: Capabilities and Limits</h2>
+  <p>The most concerning capability on the offensive AI frontier is automated exploit generation — AI systems that do not just find vulnerabilities, but generate working exploits for them. This field is advancing rapidly but remains imperfect.</p>
+  <p>Current AI systems can reliably generate working exploits for <em>simple, well-understood vulnerability classes</em> — SQL injection, cross-site scripting, command injection — when provided with clear evidence of the vulnerability. For memory corruption vulnerabilities like buffer overflows and use-after-free bugs, AI can suggest exploit patterns but typically requires significant human refinement to produce a working exploit, because the details of heap layout, ASLR bypass, and ROP chain construction are highly environment-specific.</p>
+  <p>The trajectory is clear even if the current state is limited. Systems like <strong>Pentest-GPT</strong> and specialized fine-tuned models demonstrate that AI assistance significantly accelerates exploitation timelines even when full automation is not yet achievable. A human attacker using AI assistance can develop exploits faster than they could working alone.</p>
+
+  <div class="warn">
+    <div class="warn-label">The Legal Boundary</div>
+    <p>Penetration testing and red teaming are legal only with explicit written authorization from the organization being tested. Running the same tools without authorization — even as a "test" — constitutes unauthorized computer access under laws including the Computer Fraud and Abuse Act (US), the Computer Misuse Act (UK), and equivalent statutes globally. Ignorance of this boundary is not a defense.</p>
+  </div>
+
+  <h2>The Ethics of Offensive AI</h2>
+  <p>The ethical framework for offensive security has not changed with the introduction of AI, but the stakes have increased. The same principles apply: scope is defined in writing before engagement begins, actions remain within that scope, vulnerabilities discovered are disclosed to the client and remediated, findings are not shared beyond the engagement team without permission.</p>
+  <p>AI introduces new risks to this framework. Automated scanning tools can drift outside scope more easily than human testers. An AI-powered reconnaissance tool that automatically follows discovered links might inadvertently touch systems outside the agreed scope. Responsible use of offensive AI requires more careful configuration of boundaries, not less.</p>
+  <p>The responsible disclosure question also becomes more complex. If an AI system discovers a critical zero-day vulnerability in widely-deployed software during a client engagement, the ethical obligation to disclose that vulnerability to the affected vendor may conflict with confidentiality obligations to the client. This tension is not new — but AI's ability to discover vulnerabilities in large volumes makes these situations more frequent.</p>
+
+  <div class="principle-list">
+    <div class="principle">
+      <div class="principle-title">Written Authorization First</div>
+      <div class="principle-desc">No offensive tool — AI-assisted or otherwise — should be deployed without explicit written authorization defining the scope, timeline, and rules of engagement.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Scope Discipline</div>
+      <div class="principle-desc">AI tools that automatically expand scope (following links, resolving hostnames, scanning adjacent systems) must be configured with hard boundaries before deployment.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Responsible Disclosure</div>
+      <div class="principle-desc">Vulnerabilities discovered in third-party software during authorized engagements carry a separate ethical obligation to notify affected vendors through standard disclosure processes.</div>
+    </div>
+  </div>
+
+  <h2>How Offensive AI Makes You a Better Defender</h2>
+  <p>The security professionals who understand offensive AI tools most deeply are also the most effective at building defenses against them. This is not accidental — it reflects a fundamental principle of security: you cannot reliably defend against attacks you do not understand.</p>
+  <p>A defender who has run AI-assisted vulnerability scans against their own codebase has a concrete understanding of what an attacker with those tools would find. A defender who has used AI-assisted fuzzing knows which parts of their attack surface are most likely to contain memory safety vulnerabilities. A defender who understands how AI-generated phishing works can build training programs that target the specific features of AI-generated content that humans can still detect.</p>
+  <p>The most valuable security professionals in the AI era will be those who move fluidly between offensive and defensive perspectives — using each to strengthen the other. The career path in AI security increasingly rewards T-shaped expertise: deep understanding of AI both as an attack capability and as a defense tool.</p>
+
+  <div class="good">
+    <div class="good-label">Learning Path</div>
+    <p>If you are building toward a career in AI security, hands-on experience with offensive AI tools in controlled, authorized environments is essential. Platforms like HackTheBox, TryHackMe, and SANS Cyber Ranges provide legal, authorized environments specifically designed for practicing these skills. The legal path is also the better learning path — controlled environments give you feedback that real engagements do not.</p>
+  </div>
+</div>
+</main>
+</div>
+<div class="sticky-bar">
+  <div class="sticky-bar-reading" id="sticky-reading">Read to the end to unlock the next module</div>
+  <div class="sticky-bar-track"><div class="sticky-bar-fill" id="sticky-fill"></div></div>
+  <div class="sticky-bar-label" id="sticky-label">0%</div>
+  <button class="sticky-bar-btn" id="sticky-btn" onclick="completeAndNext()">Module 4: Social Engineering and AI →</button>
+</div>
+<script>
+  function toggleTheme(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='☾'):(h.setAttribute('data-theme','dark'),i.textContent='☀');}
+  window.addEventListener('scroll',()=>{const d=document.documentElement,s=d.scrollTop||document.body.scrollTop,t=d.scrollHeight-d.clientHeight;document.getElementById('progress').style.width=(s/t*100)+'%';});
+  let unlocked=false;
+  function updateScrollProgress(){const pct=Math.min(100,Math.round(((window.scrollY+window.innerHeight)/document.documentElement.scrollHeight)*100));document.getElementById('sticky-fill').style.width=pct+'%';document.getElementById('sticky-label').textContent=pct+'%';if(pct>=95&&!unlocked){unlocked=true;document.getElementById('sticky-btn').style.display='block';document.getElementById('sticky-reading').style.display='none';document.getElementById('sticky-fill').style.background='#22c55e';document.getElementById('sticky-label').style.color='#22c55e';}}
+  window.addEventListener('scroll',updateScrollProgress);updateScrollProgress();
+  function completeAndNext(){if(window.__meridianSaveProgress){try{window.__meridianSaveProgress("m3");}catch(e){}}setTimeout(function(){window.location.href="module-4.html";},120);}
+</script>
+<script type="module">
+  import{initializeApp}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import{getAuth,onAuthStateChanged}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import{getFirestore,doc,setDoc,arrayUnion}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  const app=initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+  const auth=getAuth(app);const db=getFirestore(app);let meridianUser=null;
+  onAuthStateChanged(auth,u=>{meridianUser=u;});
+  window.__meridianSaveProgress=async function(mValue){if(!meridianUser)return;try{await setDoc(doc(db,"users",meridianUser.uid),{cybersecurityModules:arrayUnion(mValue)},{merge:true});}catch(e){}};
+</script>
+</body>
+</html>

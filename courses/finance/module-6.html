@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 6: Earnings, Filings &amp; Document Analysis — AI in Finance — Meridian Institute of AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#2D7D46;--accent-dim:rgba(45,125,70,0.1);--accent-dim2:rgba(45,125,70,0.05);--nav-bg:rgba(8,8,8,0.9);--callout-bg:rgba(45,125,70,0.07);--callout-border:rgba(45,125,70,0.25);--good-bg:rgba(34,197,94,0.07);--good-border:rgba(34,197,94,0.2);--warn-bg:rgba(251,146,60,0.07);--warn-border:rgba(251,146,60,0.2);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#1f6e3a;--accent-dim:rgba(31,110,58,0.08);--accent-dim2:rgba(31,110,58,0.04);--nav-bg:rgba(250,250,248,0.9);--callout-bg:rgba(31,110,58,0.05);--callout-border:rgba(31,110,58,0.2);--good-bg:rgba(22,163,74,0.06);--good-border:rgba(22,163,74,0.2);--warn-bg:rgba(234,88,12,0.05);--warn-border:rgba(234,88,12,0.2);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;overflow-x:hidden;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.7;overflow-x:hidden;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}
+  .nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}
+  .nav-back{font-size:13px;color:var(--text-2);text-decoration:none;transition:color 0.2s;}
+  .nav-back:hover{color:var(--text);}
+  .nav-label{font-size:13px;color:var(--text-3);}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;transition:all 0.2s;}
+  .theme-toggle:hover{background:var(--bg-3);color:var(--text);}
+  .progress-bar{position:fixed;top:60px;left:0;right:0;z-index:99;height:2px;background:var(--border);}
+  .progress-fill{height:100%;background:var(--accent);width:0%;transition:width 0.1s;}
+  .page-wrapper{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:100vh;padding-top:62px;overflow:hidden;}
+  .sidebar{position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto;border-right:1px solid var(--border);padding:32px 24px;background:var(--bg-2);}
+  .sidebar-course{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;}
+  .sidebar-course-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+  .sidebar-module{margin-bottom:4px;}
+  .sidebar-module-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:13px;color:var(--text-2);text-decoration:none;transition:all 0.2s;line-height:1.4;}
+  .sidebar-module-link:hover{background:var(--bg-3);color:var(--text);}
+  .sidebar-module-link.active{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-num{font-size:11px;font-weight:500;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--bg-4);color:var(--text-3);}
+  .sidebar-module-link.active .sidebar-num{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-divider{height:1px;background:var(--border);margin:20px 0;}
+  .sidebar-progress-label{font-size:12px;color:var(--text-3);margin-bottom:8px;display:flex;justify-content:space-between;}
+  .sidebar-progress-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sidebar-progress-fill{height:100%;width:60%;background:var(--accent);border-radius:2px;}
+  main{display:block;min-width:0;overflow:hidden;}
+  .content{max-width:760px;width:100%;padding:60px 64px 140px;margin:0 auto;}
+  .module-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+  .module-tag{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(45,125,70,0.2);padding:4px 12px;border-radius:100px;}
+  .module-meta{font-size:12px;color:var(--text-3);}
+  h1{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1.05;letter-spacing:-0.02em;color:var(--text);margin-bottom:24px;}
+  .intro-text{font-size:19px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+  h2{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:400;color:var(--text);margin:52px 0 18px;line-height:1.2;}
+  h3{font-size:16px;font-weight:500;color:var(--text);margin:32px 0 12px;}
+  p{font-size:16px;font-weight:300;color:var(--text-2);line-height:1.8;margin-bottom:20px;}
+  strong{font-weight:500;color:var(--text);}
+  em{font-style:italic;}
+  ul,ol{margin:0 0 20px 22px;color:var(--text-2);}
+  li{font-size:16px;font-weight:300;line-height:1.8;margin-bottom:8px;}
+  .callout{background:var(--callout-bg);border:1px solid var(--callout-border);border-radius:12px;padding:24px 28px;margin:32px 0;}
+  .callout-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+  .callout p{margin:0;font-size:15px;color:var(--text-2);}
+  .callout p+p{margin-top:12px;}
+  .good{background:var(--good-bg);border:1px solid var(--good-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .good-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#22c55e;margin-bottom:10px;}
+  .good p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn{background:var(--warn-bg);border:1px solid var(--warn-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .warn-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#fb923c;margin-bottom:10px;}
+  .warn p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn p+p{margin-top:12px;}
+  .analogy{background:var(--bg-2);border:1px solid var(--border);border-radius:12px;padding:28px;margin:28px 0;}
+  .analogy-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-3);margin-bottom:12px;}
+  .analogy p{margin:0;font-size:15px;color:var(--text-2);}
+  .disclaimer{background:rgba(251,146,60,0.07);border:1px solid rgba(251,146,60,0.3);border-radius:12px;padding:24px 28px;margin:0 0 40px;}
+  .disclaimer-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#fb923c;margin-bottom:10px;}
+  .disclaimer p{margin:0;font-size:14px;color:var(--text-2);line-height:1.7;}
+  .disclaimer p+p{margin-top:10px;}
+  .comparison-wrapper{overflow-x:auto;-webkit-overflow-scrolling:touch;width:100%;margin:28px 0;}
+  table{width:100%;border-collapse:collapse;font-size:14px;min-width:480px;}
+  th{text-align:left;padding:12px 16px;font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-3);border-bottom:1px solid var(--border-2);}
+  td{padding:14px 16px;border-bottom:1px solid var(--border);color:var(--text-2);line-height:1.6;vertical-align:top;}
+  tr:last-child td{border-bottom:none;}
+  td:first-child{color:var(--text);font-weight:500;width:30%;}
+  .key-stat{background:var(--bg-2);border:1px solid var(--border);border-radius:12px;padding:20px 24px;margin:16px 0;display:flex;align-items:center;gap:20px;}
+  .key-stat-num{font-family:'Cormorant Garamond',serif;font-size:40px;font-weight:400;color:var(--accent);line-height:1;flex-shrink:0;}
+  .key-stat-label{font-size:14px;color:var(--text-2);line-height:1.6;}
+  .key-stat-label strong{display:block;font-size:15px;color:var(--text);margin-bottom:4px;}
+  .principle-list{display:flex;flex-direction:column;gap:12px;margin:24px 0;}
+  .principle{background:var(--bg-2);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:0 12px 12px 0;padding:20px 24px;}
+  .principle-title{font-size:15px;font-weight:500;color:var(--text);margin-bottom:6px;}
+  .principle-desc{font-size:14px;color:var(--text-2);line-height:1.65;margin:0;}
+  .sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:var(--bg-2);border-top:1px solid var(--border-2);padding:14px 5%;display:flex;align-items:center;justify-content:space-between;gap:16px;backdrop-filter:blur(12px);}
+  .sticky-bar-track{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sticky-bar-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.2s;width:0%;}
+  .sticky-bar-label{font-size:12px;color:var(--text-3);white-space:nowrap;min-width:60px;text-align:right;}
+  .sticky-bar-btn{padding:10px 20px;border-radius:8px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;background:var(--accent);color:#fff;border:none;cursor:pointer;white-space:nowrap;transition:opacity 0.2s;display:none;}
+  .sticky-bar-btn:hover{opacity:0.88;}
+  .sticky-bar-reading{font-size:12px;color:var(--text-3);white-space:nowrap;}
+  @media(max-width:900px){.page-wrapper{grid-template-columns:1fr;}.sidebar{display:none;}.content{padding:40px 24px 120px;}h1{font-size:38px;}}
+  @media(max-width:600px){.content{padding:28px 16px 120px;}h1{font-size:30px;}h2{font-size:24px;}}
+</style>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="shortcut icon" href="/favicon.ico">
+<style>@media(max-width:480px){.nav-divider{display:none}.nav-left{gap:8px}}</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="../../index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="../../index.html" class="nav-back">Home</a>
+    <div class="nav-divider"></div>
+    <a href="../../courses.html" class="nav-back">← AI in Finance</a>
+    <div class="nav-divider"></div>
+    <span class="nav-label">Module 6</span>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">☀</span></button>
+</nav>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+
+<div class="page-wrapper">
+<aside class="sidebar">
+  <div class="sidebar-course">Course</div>
+  <div class="sidebar-course-name">AI in Finance</div>
+  <div class="sidebar-module"><a href="module-1.html" class="sidebar-module-link "><span class="sidebar-num">1</span>The AI-in-Finance Landscape</a></div>
+  <div class="sidebar-module"><a href="module-2.html" class="sidebar-module-link "><span class="sidebar-num">2</span>How LLMs Actually Handle Numbers</a></div>
+  <div class="sidebar-module"><a href="module-3.html" class="sidebar-module-link "><span class="sidebar-num">3</span>Market &amp; Company Research with AI</a></div>
+  <div class="sidebar-module"><a href="module-4.html" class="sidebar-module-link "><span class="sidebar-num">4</span>Financial Statement Analysis</a></div>
+  <div class="sidebar-module"><a href="module-5.html" class="sidebar-module-link "><span class="sidebar-num">5</span>Building Financial Models with AI</a></div>
+  <div class="sidebar-module"><a href="module-6.html" class="sidebar-module-link active"><span class="sidebar-num">6</span>Earnings, Filings &amp; Document Analysis</a></div>
+  <div class="sidebar-module"><a href="module-7.html" class="sidebar-module-link "><span class="sidebar-num">7</span>Valuation and Scenario Analysis</a></div>
+  <div class="sidebar-module"><a href="module-8.html" class="sidebar-module-link "><span class="sidebar-num">8</span>Risk, Compliance &amp; the Regulatory Reality</a></div>
+  <div class="sidebar-module"><a href="module-9.html" class="sidebar-module-link "><span class="sidebar-num">9</span>Building a Personal AI Research Workflow</a></div>
+  <div class="sidebar-module"><a href="module-10.html" class="sidebar-module-link "><span class="sidebar-num">10</span>Limits, Ethics &amp; the Human-in-the-Loop</a></div>
+  <div class="sidebar-module"><a href="quiz.html" class="sidebar-module-link" style="color:var(--accent);margin-top:4px;"><span class="sidebar-num" style="background:var(--accent-dim);color:var(--accent);">✦</span>Final Assessment</a></div>
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-progress-label"><span>Course progress</span><span style="color:var(--accent);">6 / 10</span></div>
+  <div class="sidebar-progress-track"><div class="sidebar-progress-fill"></div></div>
+</aside>
+
+<main>
+<div class="content">
+  <div class="module-eyebrow"><span class="module-tag">Module 6</span><span class="module-meta">20 min read · AI in Finance</span></div>
+  <h1>Earnings, Filings &amp; Document Analysis</h1>
+  
+  <p class="intro-text">If there's one place AI saves finance professionals the most raw time, it's here: reading long documents. A 10-K can run 200 pages. An earnings call transcript is an hour of dense talk. A credit agreement is impenetrable legalese. AI can read all of it in seconds and surface exactly what matters. This module is a deep, practical guide to document analysis — the techniques, the prompts, and the verification discipline that keeps it reliable.</p>
+
+  <h2>The documents that matter and what they contain</h2>
+  <div class="principle-list">
+    <div class="principle">
+      <div class="principle-title">The 10-K (annual report)</div>
+      <div class="principle-desc">The comprehensive annual filing. Business description, risk factors, management discussion and analysis (MD&amp;A), audited financials, and footnotes. The footnotes and risk factors are where the real information often hides — and where AI excels at surfacing what you'd miss.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">The 10-Q (quarterly report)</div>
+      <div class="principle-desc">The quarterly update — lighter than the 10-K, unaudited, but timely. Good for tracking how things are trending between annual reports.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">The 8-K (material events)</div>
+      <div class="principle-desc">Filed when something significant happens — executive changes, major deals, restructuring. The early-warning filing.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Earnings call transcripts</div>
+      <div class="principle-desc">Management's prepared remarks plus the analyst Q&amp;A. The Q&amp;A is gold — it's where management is pushed off-script and where tone and evasion reveal things the numbers don't.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">The proxy statement (DEF 14A)</div>
+      <div class="principle-desc">Executive compensation, board structure, governance. Essential for understanding incentives and governance quality.</div>
+    </div>
+  </div>
+
+  <div class="callout">
+    <div class="callout-label">Where to get primary documents</div>
+    <p>Always work from primary sources. SEC filings are free at <strong>SEC EDGAR</strong>. Earnings transcripts and investor presentations are on the company's investor relations page. Download the real document and upload it to the AI — don't rely on the AI's training-data memory of what a filing "probably" says.</p>
+  </div>
+
+  <h2>The tool choice for long documents</h2>
+  <p>Document length determines the tool. Both context window size and reasoning quality matter.</p>
+  <div class="comparison-wrapper">
+    <table>
+      <tr><th>Document situation</th><th>Best tool</th><th>Why</th></tr>
+      <tr><td>Standard filing or transcript</td><td>Claude</td><td>200K context handles most filings; best analytical nuance</td></tr>
+      <tr><td>Very large document or many at once</td><td>Gemini</td><td>1M token context holds enormous or multiple documents</td></tr>
+      <tr><td>Need to run calculations on extracted data</td><td>ChatGPT (ADA)</td><td>Extract figures then compute them with real code</td></tr>
+      <tr><td>Need current context around the filing</td><td>Perplexity</td><td>Live search for what happened since and market reaction</td></tr>
+    </table>
+  </div>
+
+  <h2>High-value document analysis techniques</h2>
+  <h3>The targeted extraction</h3>
+  <p>Instead of "summarize this 10-K" (which gives a generic summary), be specific: "From this 10-K, extract everything related to (1) revenue concentration and customer dependence, (2) changes in risk factors versus what you'd expect, and (3) any unusual items in the footnotes. Quote the relevant passages." Specificity transforms output quality.</p>
+
+  <h3>The risk-factor deep read</h3>
+  <p>Risk factor sections are long and often boilerplate — but changes year over year are meaningful. "Compare the risk factors in this year's 10-K to standard industry risk factors. Which risks are unusual, newly added, or more strongly emphasized than typical?" This surfaces what management is genuinely worried about.</p>
+
+  <h3>The earnings-call tone analysis</h3>
+  <p>"Analyze the Q&amp;A portion of this earnings call. Where did management give direct, confident answers, and where were they evasive or vague? What topics did analysts press on most?" AI is genuinely good at detecting hedging and deflection in management language.</p>
+
+  <h3>The MD&amp;A reality check</h3>
+  <p>"In the MD&amp;A, how does management explain the change in revenue and margins? Does their explanation match what the actual numbers show, or are they spinning?" Comparing management narrative to the hard numbers is exactly the kind of cross-referencing AI accelerates.</p>
+
+  <div class="warn">
+    <div class="warn-label">The verification discipline for documents</div>
+    <p>When AI quotes or cites a specific figure or passage from a document you uploaded, it's far more reliable than recalling from training data — but still not infallible. For any figure or quote that will drive a decision or appear in your own work, locate it in the actual document and confirm. AI can misattribute, blend passages, or subtly misstate. Trust but verify, especially for direct quotes and specific numbers.</p>
+  </div>
+
+  <h2>The multi-document synthesis</h2>
+  <p>The real power move: analyzing several documents together. Upload three years of 10-Ks and ask how the risk factors and strategy language evolved. Upload a company's filing alongside two competitors' and ask for a structured comparison. This cross-document synthesis is where AI does in minutes what would take a junior analyst days.</p>
+
+  <div class="good">
+    <div class="good-label">The time math that makes this worth mastering</div>
+    <p>A thorough manual read of a 10-K with notes might take three to four hours. A skilled AI-assisted read — targeted extraction, risk analysis, cross-referencing against the numbers, then verifying the critical findings — can deliver deeper insight in 30 to 45 minutes. That's not a marginal improvement; it's a different way of working. The analysts who master this read ten companies in the time others read two.</p>
+  </div>
+
+  <h2>Next</h2>
+  <p>Module 7 brings the analytical pieces together into valuation and scenario analysis — using AI to think through what a company or asset is actually worth, and the intellectual honesty that valuation demands.</p>
+
+</div>
+</main>
+</div>
+
+<div class="sticky-bar" id="sticky-bar">
+  <div class="sticky-bar-reading" id="sticky-reading">Read to the end to unlock the next module</div>
+  <div class="sticky-bar-track"><div class="sticky-bar-fill" id="sticky-fill"></div></div>
+  <div class="sticky-bar-label" id="sticky-label">0%</div>
+  <button class="sticky-bar-btn" id="sticky-btn" onclick="completeAndNext()">Module 7: Valuation and Scenario Analysis →</button>
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import { getFirestore, doc, updateDoc, setDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  const app = initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+  const auth = getAuth(app); const db = getFirestore(app);
+  let currentUser = null;
+  onAuthStateChanged(auth, u => { currentUser = u; });
+
+  window.toggleTheme=function(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='☾'):(h.setAttribute('data-theme','dark'),i.textContent='☀');};
+  window.addEventListener('scroll',()=>{const d=document.documentElement,s=d.scrollTop||document.body.scrollTop,t=d.scrollHeight-d.clientHeight;document.getElementById('progress').style.width=(s/t*100)+'%';});
+
+  let unlocked=false;
+  function updateScrollProgress(){
+    const scrolled=window.scrollY+window.innerHeight;
+    const total=document.documentElement.scrollHeight;
+    const pct=Math.min(100,Math.round((scrolled/total)*100));
+    const fill=document.getElementById('sticky-fill');
+    const label=document.getElementById('sticky-label');
+    const btn=document.getElementById('sticky-btn');
+    const reading=document.getElementById('sticky-reading');
+    if(fill)fill.style.width=pct+'%';
+    if(label)label.textContent=pct+'%';
+    if(pct>=95&&!unlocked){
+      unlocked=true;
+      if(btn)btn.style.display='block';
+      if(reading)reading.style.display='none';
+      if(fill)fill.style.background='#22c55e';
+      if(label)label.style.color='#22c55e';
+    }
+  }
+  window.addEventListener('scroll',updateScrollProgress);
+  updateScrollProgress();
+
+  window.completeAndNext=async function(){
+    // Save progress to Firestore — cross-device, no browser storage
+    if(currentUser){
+      try{
+        await setDoc(doc(db,'users',currentUser.uid),{
+          financeModules: arrayUnion('m6')
+        }, { merge: true });
+      }catch(e){ /* progress save best-effort */ }
+    }
+    window.location.href='finance-module-7.html';
+  };
+</script>
+</body>
+</html>

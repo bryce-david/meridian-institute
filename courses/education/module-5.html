@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Academic Integrity in the AI Era — AI in Education — Meridian Institute of AI</title>
+<meta name="description" content="Free AI in Education course — module 5. Why AI detection fails, how to redesign assignments, and what academic integrity policy actually works in an AI-saturated world.">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="Academic Integrity in the AI Era — AI in Education — Meridian Institute of AI">
+<meta property="og:description" content="Free AI in Education course — module 5. Why AI detection fails, how to redesign assignments, and what academic integrity policy actually works in an AI-saturated world.">
+<meta property="og:url" content="https://meridianinstituteai.com/courses/education/module-5.html">
+<meta property="og:type" content="website">
+<link rel="canonical" href="https://meridianinstituteai.com/courses/education/module-5.html">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#f59e0b;--accent-dim:rgba(245,158,11,0.1);--nav-bg:rgba(8,8,8,0.9);--callout-bg:rgba(245,158,11,0.07);--callout-border:rgba(245,158,11,0.25);--good-bg:rgba(34,197,94,0.07);--good-border:rgba(34,197,94,0.2);--warn-bg:rgba(251,146,60,0.07);--warn-border:rgba(251,146,60,0.2);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#d97706;--accent-dim:rgba(217,119,6,0.08);--nav-bg:rgba(250,250,248,0.9);--callout-bg:rgba(217,119,6,0.05);--callout-border:rgba(217,119,6,0.2);--good-bg:rgba(22,163,74,0.06);--good-border:rgba(22,163,74,0.2);--warn-bg:rgba(234,88,12,0.05);--warn-border:rgba(234,88,12,0.2);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;overflow-x:hidden;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.7;overflow-x:hidden;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}
+  .nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}
+  .nav-back{font-size:13px;color:var(--text-2);text-decoration:none;transition:color 0.2s;}
+  .nav-back:hover{color:var(--text);}
+  .nav-label{font-size:13px;color:var(--text-3);}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;transition:all 0.2s;}
+  .progress-bar{position:fixed;top:60px;left:0;right:0;z-index:99;height:2px;background:var(--border);}
+  .progress-fill{height:100%;background:var(--accent);width:0%;transition:width 0.1s;}
+  .page-wrapper{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:100vh;padding-top:62px;}
+  .sidebar{position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto;border-right:1px solid var(--border);padding:32px 24px;background:var(--bg-2);}
+  .sidebar-course{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;}
+  .sidebar-course-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+  .sidebar-module{margin-bottom:4px;}
+  .sidebar-module-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:13px;color:var(--text-2);text-decoration:none;transition:all 0.2s;line-height:1.4;}
+  .sidebar-module-link:hover{background:var(--bg-3);color:var(--text);}
+  .sidebar-module-link.active{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-num{font-size:11px;font-weight:500;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--bg-4);color:var(--text-3);}
+  .sidebar-module-link.active .sidebar-num{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-divider{height:1px;background:var(--border);margin:20px 0;}
+  .sidebar-progress-label{font-size:12px;color:var(--text-3);margin-bottom:8px;display:flex;justify-content:space-between;}
+  .sidebar-progress-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sidebar-progress-fill{height:100%;width:57%;background:var(--accent);border-radius:2px;}
+  main{display:block;min-width:0;}
+  .content{max-width:760px;width:100%;padding:60px 64px 140px;margin:0 auto;}
+  .module-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+  .module-tag{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(245,158,11,0.2);padding:4px 12px;border-radius:100px;}
+  .module-meta{font-size:12px;color:var(--text-3);}
+  h1{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1.05;letter-spacing:-0.02em;color:var(--text);margin-bottom:24px;}
+  .intro-text{font-size:19px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+  h2{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:400;color:var(--text);margin:52px 0 18px;line-height:1.2;}
+  h3{font-size:16px;font-weight:500;color:var(--text);margin:32px 0 12px;}
+  p{font-size:16px;font-weight:300;color:var(--text-2);line-height:1.8;margin-bottom:20px;}
+  strong{font-weight:500;color:var(--text);}
+  .callout{background:var(--callout-bg);border:1px solid var(--callout-border);border-radius:12px;padding:24px 28px;margin:32px 0;}
+  .callout-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+  .callout p{margin:0;font-size:15px;color:var(--text-2);}
+  .callout p+p{margin-top:12px;}
+  .good{background:var(--good-bg);border:1px solid var(--good-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .good-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#22c55e;margin-bottom:10px;}
+  .good p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn{background:var(--warn-bg);border:1px solid var(--warn-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .warn-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#fb923c;margin-bottom:10px;}
+  .warn p{margin:0;font-size:15px;color:var(--text-2);}
+  .comparison-wrapper{overflow-x:auto;-webkit-overflow-scrolling:touch;width:100%;margin:28px 0;}
+  table{width:100%;border-collapse:collapse;font-size:14px;min-width:480px;}
+  th{text-align:left;padding:12px 16px;font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-3);border-bottom:1px solid var(--border-2);}
+  td{padding:14px 16px;border-bottom:1px solid var(--border);color:var(--text-2);line-height:1.6;vertical-align:top;}
+  tr:last-child td{border-bottom:none;}
+  td:first-child{color:var(--text);font-weight:500;}
+  .principle-list{display:flex;flex-direction:column;gap:12px;margin:24px 0;}
+  .principle{background:var(--bg-2);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:0 12px 12px 0;padding:20px 24px;}
+  .principle-title{font-size:15px;font-weight:500;color:var(--text);margin-bottom:6px;}
+  .principle-desc{font-size:14px;color:var(--text-2);line-height:1.65;margin:0;}
+  .sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:var(--bg-2);border-top:1px solid var(--border-2);padding:14px 5%;display:flex;align-items:center;justify-content:space-between;gap:16px;backdrop-filter:blur(12px);}
+  .sticky-bar-track{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sticky-bar-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.2s;width:0%;}
+  .sticky-bar-label{font-size:12px;color:var(--text-3);white-space:nowrap;min-width:60px;text-align:right;}
+  .sticky-bar-btn{padding:10px 20px;border-radius:8px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;background:var(--accent);color:#fff;border:none;cursor:pointer;white-space:nowrap;transition:opacity 0.2s;display:none;}
+  .sticky-bar-btn:hover{opacity:0.88;}
+  .sticky-bar-reading{font-size:12px;color:var(--text-3);white-space:nowrap;}
+  @media(max-width:900px){.page-wrapper{grid-template-columns:1fr;}.sidebar{display:none;}.content{padding:40px 24px 120px;}h1{font-size:38px;}}
+  @media(max-width:600px){.content{padding:28px 16px 120px;}h1{font-size:30px;}h2{font-size:24px;}}
+</style>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="shortcut icon" href="/favicon.ico">
+<style>@media(max-width:480px){.nav-divider{display:none}.nav-left{gap:8px}}</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="../../index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="../../index.html" class="nav-back">Home</a>
+    <div class="nav-divider"></div>
+    <a href="../../courses.html" class="nav-back">← AI in Education</a>
+    <div class="nav-divider"></div>
+    <span class="nav-label">Module 5</span>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">☀</span></button>
+</nav>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+
+<div class="page-wrapper">
+<aside class="sidebar">
+  <div class="sidebar-course">Course</div>
+  <div class="sidebar-course-name">AI in Education</div>
+  <div class="sidebar-module"><a href="module-1.html" class="sidebar-module-link"><span class="sidebar-num">1</span>How AI is Transforming Education</a></div>
+  <div class="sidebar-module"><a href="module-2.html" class="sidebar-module-link"><span class="sidebar-num">2</span>AI Tutoring and Personalized Learning</a></div>
+  <div class="sidebar-module"><a href="module-3.html" class="sidebar-module-link"><span class="sidebar-num">3</span>Using AI as a Student</a></div>
+  <div class="sidebar-module"><a href="module-4.html" class="sidebar-module-link"><span class="sidebar-num">4</span>AI Tools for Educators</a></div>
+  <div class="sidebar-module"><a href="module-5.html" class="sidebar-module-link active"><span class="sidebar-num">5</span>Academic Integrity in the AI Era</a></div>
+  <div class="sidebar-module"><a href="module-6.html" class="sidebar-module-link"><span class="sidebar-num">6</span>The Future Classroom</a></div>
+  <div class="sidebar-module"><a href="module-7.html" class="sidebar-module-link"><span class="sidebar-num">7</span>Building Your AI Literacy</a></div>
+  <div class="sidebar-module"><a href="quiz.html" class="sidebar-module-link" style="color:var(--accent);margin-top:4px;"><span class="sidebar-num" style="background:var(--accent-dim);color:var(--accent);">✦</span>Final Assessment</a></div>
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-progress-label"><span>Course progress</span><span style="color:var(--accent);">4 / 7</span></div>
+  <div class="sidebar-progress-track"><div class="sidebar-progress-fill"></div></div>
+</aside>
+
+<main>
+<div class="content">
+  <div class="module-eyebrow"><span class="module-tag">Module 5</span><span class="module-meta">20 min read · AI in Education</span></div>
+  <h1>Academic Integrity in the AI Era</h1>
+  <p class="intro-text">The question "did a student write this or did AI write this?" is becoming unanswerable with certainty — and institutions that have built their academic integrity frameworks around that question are in trouble. The only durable response is not better detection, but better assignment design and clearer policies that make AI use either explicitly authorized or structurally impossible to substitute for genuine learning.</p>
+
+  <h2>Why AI Detection Doesn't Work</h2>
+  <p>The market for AI detection tools expanded rapidly after ChatGPT's release in late 2022. GPTZero, Turnitin's AI Detector, Copyleaks, and a dozen smaller tools promised to identify whether text was AI-generated. Institutions adopted them quickly — and discovered a problem. Researchers at Stanford tested leading AI detectors on essays written by non-native English speakers and found that Turnitin's AI detector flagged more than 50 percent of them as AI-generated. The tools were not detecting AI — they were detecting concise, clear writing that didn't match the stylistic fingerprints of native English academic prose.</p>
+  <p>The fundamental reason detection is unreliable is statistical. Large language models generate text by predicting the most probable next token given the preceding context. Human writers, particularly trained academic writers, also tend toward high-probability word choices in formal writing. There is no crisp boundary between "AI text" and "human text" — they exist on the same statistical continuum. A human writing a clear, direct argumentative essay looks statistically similar to an AI writing one. A human writing in an unusual or idiosyncratic style looks less like AI output — but the detector then rewards stylistic eccentricity over clarity, which is the wrong incentive.</p>
+  <p>Watermarking approaches represent a partial technical solution. Google's SynthID embeds imperceptible statistical watermarks in AI-generated content that can theoretically be detected later without degrading output quality. OpenAI has explored similar approaches. The limitation is straightforward: any watermark that survives paraphrasing and editing is either imperceptible at the cost of being easy to remove, or detectable at the cost of distorting output quality. Simple paraphrasing — ask AI to rewrite the text, or rewrite it yourself — defeats current watermarking implementations.</p>
+
+  <div class="warn">
+    <div class="warn-label">False positive risk</div>
+    <p>Turnitin publicly reported that its AI detection tool had a false positive rate of approximately 4% — identifying human-written text as AI-generated. In a class of 100 students, that means roughly 4 students are wrongly accused per assignment. Accusing a student of academic dishonesty has serious consequences: damaged relationships, formal disciplinary proceedings, and lasting reputational harm. A detection system that wrongly accuses 4% of honest students is not a reliable instrument of academic integrity enforcement.</p>
+  </div>
+
+  <h2>The Assignment Redesign Imperative</h2>
+  <p>If AI can complete an assignment, the assignment needs to be redesigned — not because AI use is inherently wrong, but because the assignment is no longer doing what it was designed to do. The purpose of a writing assignment is to develop and assess a student's ability to construct an argument, synthesize sources, and communicate ideas. If AI can produce a passing submission without the student having done any of that thinking, the assessment is broken regardless of what policy exists around AI use.</p>
+  <p>Assignment types that are structurally resistant to AI substitution share common features: they require specific lived experience, real-time performance, or iterative dialogue that AI cannot replicate from a text prompt. Oral defenses — where a student presents work and then fields questions about it — test genuine understanding because a student who didn't do the thinking cannot answer probing follow-ups about their own argument. Socratic questioning in a teacher-student conference serves the same function. In-class writing with process documentation, where students submit drafts, annotations, and revision notes alongside a final piece, creates a paper trail of thinking that AI cannot fake without the student doing nearly as much work as they would have otherwise.</p>
+  <p>Assignments anchored in local, specific, or personal context are also harder to outsource to AI. An essay analyzing your school's specific discipline policy is harder to AI-generate than an essay on school discipline generally. A reflection on a specific classroom debate that happened last Tuesday is harder than a reflection on the value of debate. The more specific the required context, the less leverage a generic AI tool provides — and the more the assignment actually tests whether the student was present and engaged.</p>
+
+  <h2>Policy Frameworks That Actually Work</h2>
+  <p>The policy landscape in education has fragmented since 2022. Institutions have adopted positions ranging from total prohibition to full integration, and the evidence is beginning to accumulate about which approaches produce learning outcomes rather than just compliance signals. Three distinct policy models have emerged as the primary frameworks.</p>
+  <p>The prohibition model — AI is not permitted — is defensible in specific contexts. For assignments that are designed to build foundational skills, the case for prohibition is genuine: a student learning to write argumentative essays needs to do the cognitive work of writing argumentative essays, and allowing AI to do it defeats the purpose entirely. The problem is enforcement. Prohibition without an enforcement strategy is not a policy — it is wishful thinking. If students can use AI and the institution cannot reliably detect it, prohibition creates a competitive advantage for students who are willing to violate the policy over students who comply with it.</p>
+  <p>The citation model — AI is permitted with disclosure — treats AI like any other tool or source. Students who use AI must document what they used, how they used it, and what their own contribution was. This approach is practical and teachable, but it requires instructors to actually evaluate the disclosed AI use rather than just acknowledging that disclosure happened. It also requires clarity about what "disclosure" means — citing a conversation with ChatGPT is less informative than describing what prompts were used, what output was received, and how the student edited or built on that output.</p>
+  <p>The integration model — assignments explicitly require AI use as part of the learning process — is the most pedagogically ambitious. It asks students to use AI, reflect on what it produced, critique it, and demonstrate understanding that the AI alone could not provide. This approach treats AI as a subject of learning rather than just a shortcut to avoid.</p>
+
+  <div class="comparison-wrapper">
+    <table>
+      <tr><th>Policy Model</th><th>Best Use Case</th><th>Enforcement Challenge</th><th>Learning Outcome</th></tr>
+      <tr><td>AI Prohibited</td><td>Foundational skill-building where the struggle produces the learning (early writing, basic math)</td><td>Unreliable detection; creates compliance theater; advantages rule-breakers</td><td>High if enforced; low if not — creates incentive to circumvent</td></tr>
+      <tr><td>AI Permitted with Citation</td><td>Research, drafting, synthesis tasks where AI is a legitimate accelerator</td><td>Requires evaluating quality of disclosed use, not just fact of disclosure</td><td>Develops transparency and source literacy alongside subject knowledge</td></tr>
+      <tr><td>AI Integrated</td><td>AI literacy courses, advanced writing, critical thinking development</td><td>Requires instructors trained in AI pedagogy; harder to design well</td><td>Highest ceiling — teaches meta-skills alongside content if designed well</td></tr>
+    </table>
+  </div>
+
+  <h2>Teaching Students to Use AI With Integrity</h2>
+  <p>The frame that most institutional policies miss is metacognitive: the goal is not just to control AI use but to develop students' awareness of what they actually learned versus what AI produced. A student who uses AI to generate an essay outline, then researches and writes the essay themselves, engaging with the AI output critically, has learned something. A student who submits AI output with light editing has learned nothing and is also not prepared for any professional context where they'll be asked to think independently.</p>
+  <p>The analogy to calculators is precise here. Using a calculator without understanding what multiplication is doesn't produce mathematical competence — it produces calculator dependence. Using AI to draft without understanding what argument construction is doesn't produce writing competence — it produces AI dependence. The integrity issue is downstream of the learning issue. If students understand why the cognitive work matters, they are less likely to shortcut it entirely. If they're only being told "don't use AI" without being given a reason beyond "because rules," the rule becomes an obstacle rather than a principle.</p>
+
+  <div class="callout">
+    <div class="callout-label">The training gap</div>
+    <p>A 2024 survey by the American Association of Colleges and Universities found that 87% of faculty believed AI literacy was a core competency students needed — but only 23% had received any training in how to teach it. The institution knows AI matters and has not equipped its instructors to address it. Policies that require instructors to teach, model, and evaluate AI use without training or support are policies that will fail in implementation regardless of how well they're written.</p>
+  </div>
+
+  <h2>Institutional Response Strategies</h2>
+  <p>The institutions that have responded most effectively to AI and academic integrity share a common approach: they treated it as a curriculum and pedagogy problem rather than a detection and enforcement problem. Harvard, MIT, and Stanford all published nuanced AI policies within the first year of ChatGPT's release — none of them blanket bans, all of them framework-based approaches that acknowledged variation by course, assignment type, and learning objective. Each deferred final policy decisions to faculty with subject-matter expertise about what their assignments were actually designed to test.</p>
+  <p>K-12 districts have shown greater variation. Some large urban districts issued immediate blanket bans — New York City public schools famously banned ChatGPT from school devices in January 2023, then reversed course five months later. Districts that developed tiered policies by grade level and subject type have generally fared better: prohibition in lower grades where foundational skills are being built, graduated permission with disclosure requirements in upper grades, explicit integration in elective courses. The tiered approach matches policy to learning objectives rather than applying a single rule to a diverse range of educational contexts.</p>
+  <p>What the research is beginning to show is that the specific policy matters less than whether the policy is clearly communicated, consistently applied, and paired with actual instruction about AI use. Students who are taught what AI is, how it works, and why using it in certain ways undermines their learning are more likely to comply with policies they understand than with rules they experience as arbitrary restrictions on a tool they use in every other domain of their lives.</p>
+
+  <div class="principle-list">
+    <div class="principle">
+      <div class="principle-title">Clarity</div>
+      <div class="principle-desc">Policies must be specific about what is and isn't allowed — by assignment type, by course, and by what counts as AI use. Vague policies produce inconsistent enforcement and student confusion.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Consistency</div>
+      <div class="principle-desc">Enforcement must be fair across student groups. Policies that are applied more aggressively to certain students — whether by race, language background, or socioeconomic status — cause harm that exceeds any benefit from deterrence.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Education</div>
+      <div class="principle-desc">Students must be taught the policy and the reasoning behind it, not just threatened with consequences. A student who understands why the rule exists is a fundamentally different enforcement problem than one who only fears getting caught.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Proportionality</div>
+      <div class="principle-desc">Consequences must match the violation. A student who used AI to brainstorm but wrote the essay themselves is in a different situation than a student who submitted AI output verbatim. Policy frameworks that treat all AI use as equivalent plagiarism produce unjust outcomes.</div>
+    </div>
+  </div>
+
+</div>
+</main>
+</div>
+
+<div class="sticky-bar">
+  <div class="sticky-bar-reading" id="sticky-reading">Read to the end to unlock the next module</div>
+  <div class="sticky-bar-track"><div class="sticky-bar-fill" id="sticky-fill"></div></div>
+  <div class="sticky-bar-label" id="sticky-label">0%</div>
+  <button class="sticky-bar-btn" id="sticky-btn" onclick="completeAndNext()">Module 6: The Future Classroom →</button>
+</div>
+
+<script>
+  function toggleTheme(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='☾'):(h.setAttribute('data-theme','dark'),i.textContent='☀');}
+  window.addEventListener('scroll',()=>{const d=document.documentElement,s=d.scrollTop||document.body.scrollTop,t=d.scrollHeight-d.clientHeight;document.getElementById('progress').style.width=(s/t*100)+'%';});
+  let unlocked=false;
+  function updateScrollProgress(){
+    const pct=Math.min(100,Math.round(((window.scrollY+window.innerHeight)/document.documentElement.scrollHeight)*100));
+    document.getElementById('sticky-fill').style.width=pct+'%';
+    document.getElementById('sticky-label').textContent=pct+'%';
+    if(pct>=95&&!unlocked){unlocked=true;document.getElementById('sticky-btn').style.display='block';document.getElementById('sticky-reading').style.display='none';document.getElementById('sticky-fill').style.background='#22c55e';document.getElementById('sticky-label').style.color='#22c55e';}
+  }
+  window.addEventListener('scroll',updateScrollProgress);updateScrollProgress();
+  function completeAndNext(){
+    if(window.__meridianSaveProgress){ try{ window.__meridianSaveProgress("m5"); }catch(e){} }
+    setTimeout(function(){ window.location.href="module-6.html"; }, 120);
+  }
+</script>
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import { getFirestore, doc, setDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  const app = initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+  const auth = getAuth(app); const db = getFirestore(app);
+  let meridianUser = null;
+  onAuthStateChanged(auth, u => { meridianUser = u; });
+  window.__meridianSaveProgress = async function(mValue){
+    if(!meridianUser) return;
+    try { await setDoc(doc(db,"users",meridianUser.uid), { educationModules: arrayUnion(mValue) }, { merge: true }); } catch(e) {}
+  };
+</script>
+</body>
+</html>

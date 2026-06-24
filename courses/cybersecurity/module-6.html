@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI in Identity and Access — AI in Cybersecurity — Meridian Institute of AI</title>
+<meta name="description" content="Explore how AI is transforming identity verification, behavioral biometrics, and access management — and how deepfakes are creating new authentication threats.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://meridianinstituteai.com/courses/cybersecurity/module-6.html">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#ef4444;--accent-dim:rgba(239,68,68,0.1);--nav-bg:rgba(8,8,8,0.9);--callout-bg:rgba(239,68,68,0.07);--callout-border:rgba(239,68,68,0.25);--good-bg:rgba(34,197,94,0.07);--good-border:rgba(34,197,94,0.2);--warn-bg:rgba(251,146,60,0.07);--warn-border:rgba(251,146,60,0.2);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#dc2626;--accent-dim:rgba(220,38,38,0.08);--nav-bg:rgba(250,250,248,0.9);--callout-bg:rgba(220,38,38,0.05);--callout-border:rgba(220,38,38,0.2);--good-bg:rgba(22,163,74,0.06);--good-border:rgba(22,163,74,0.2);--warn-bg:rgba(234,88,12,0.05);--warn-border:rgba(234,88,12,0.2);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;overflow-x:hidden;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.7;overflow-x:hidden;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}
+  .nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}
+  .nav-back{font-size:13px;color:var(--text-2);text-decoration:none;transition:color 0.2s;}
+  .nav-back:hover{color:var(--text);}
+  .nav-label{font-size:13px;color:var(--text-3);}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;transition:all 0.2s;}
+  .progress-bar{position:fixed;top:60px;left:0;right:0;z-index:99;height:2px;background:var(--border);}
+  .progress-fill{height:100%;background:var(--accent);width:0%;transition:width 0.1s;}
+  .page-wrapper{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:100vh;padding-top:62px;}
+  .sidebar{position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto;border-right:1px solid var(--border);padding:32px 24px;background:var(--bg-2);}
+  .sidebar-course{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;}
+  .sidebar-course-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+  .sidebar-module{margin-bottom:4px;}
+  .sidebar-module-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:13px;color:var(--text-2);text-decoration:none;transition:all 0.2s;line-height:1.4;}
+  .sidebar-module-link:hover{background:var(--bg-3);color:var(--text);}
+  .sidebar-module-link.active{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-num{font-size:11px;font-weight:500;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--bg-4);color:var(--text-3);}
+  .sidebar-module-link.active .sidebar-num{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-divider{height:1px;background:var(--border);margin:20px 0;}
+  .sidebar-progress-label{font-size:12px;color:var(--text-3);margin-bottom:8px;display:flex;justify-content:space-between;}
+  .sidebar-progress-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sidebar-progress-fill{height:100%;background:var(--accent);border-radius:2px;}
+  main{display:block;min-width:0;}
+  .content{max-width:760px;width:100%;padding:60px 64px 140px;margin:0 auto;}
+  .module-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+  .module-tag{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(239,68,68,0.2);padding:4px 12px;border-radius:100px;}
+  .module-meta{font-size:12px;color:var(--text-3);}
+  h1{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1.05;letter-spacing:-0.02em;color:var(--text);margin-bottom:24px;}
+  .intro-text{font-size:19px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+  h2{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:400;color:var(--text);margin:52px 0 18px;line-height:1.2;}
+  h3{font-size:16px;font-weight:500;color:var(--text);margin:32px 0 12px;}
+  p{font-size:16px;font-weight:300;color:var(--text-2);line-height:1.8;margin-bottom:20px;}
+  strong{font-weight:500;color:var(--text);}
+  .callout{background:var(--callout-bg);border:1px solid var(--callout-border);border-radius:12px;padding:24px 28px;margin:32px 0;}
+  .callout-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+  .callout p{margin:0;font-size:15px;color:var(--text-2);}
+  .good{background:var(--good-bg);border:1px solid var(--good-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .good-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#22c55e;margin-bottom:10px;}
+  .good p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn{background:var(--warn-bg);border:1px solid var(--warn-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .warn-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#fb923c;margin-bottom:10px;}
+  .warn p{margin:0;font-size:15px;color:var(--text-2);}
+  .principle-list{display:flex;flex-direction:column;gap:12px;margin:24px 0;}
+  .principle{background:var(--bg-2);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:0 12px 12px 0;padding:20px 24px;}
+  .principle-title{font-size:15px;font-weight:500;color:var(--text);margin-bottom:6px;}
+  .principle-desc{font-size:14px;color:var(--text-2);line-height:1.65;margin:0;}
+  .comparison-wrapper{overflow-x:auto;margin:28px 0;}
+  table{width:100%;border-collapse:collapse;font-size:14px;min-width:480px;}
+  th{text-align:left;padding:12px 16px;font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-3);border-bottom:1px solid var(--border-2);}
+  td{padding:14px 16px;border-bottom:1px solid var(--border);color:var(--text-2);line-height:1.6;vertical-align:top;}
+  tr:last-child td{border-bottom:none;}
+  td:first-child{color:var(--text);font-weight:500;}
+  .sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:var(--bg-2);border-top:1px solid var(--border-2);padding:14px 5%;display:flex;align-items:center;justify-content:space-between;gap:16px;backdrop-filter:blur(12px);}
+  .sticky-bar-track{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sticky-bar-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.2s;width:0%;}
+  .sticky-bar-label{font-size:12px;color:var(--text-3);white-space:nowrap;min-width:60px;text-align:right;}
+  .sticky-bar-btn{padding:10px 20px;border-radius:8px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;background:var(--accent);color:#fff;border:none;cursor:pointer;white-space:nowrap;transition:opacity 0.2s;display:none;}
+  .sticky-bar-btn:hover{opacity:0.88;}
+  .sticky-bar-reading{font-size:12px;color:var(--text-3);white-space:nowrap;}
+  @media(max-width:900px){.page-wrapper{grid-template-columns:1fr;}.sidebar{display:none;}.content{padding:40px 24px 120px;}h1{font-size:38px;}}
+</style>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="shortcut icon" href="/favicon.ico">
+<style>@media(max-width:480px){.nav-divider{display:none}.nav-left{gap:8px}}</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="../../index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="../../index.html" class="nav-back">Home</a>
+    <div class="nav-divider"></div>
+    <a href="../../courses.html" class="nav-back">← AI in Cybersecurity</a>
+    <div class="nav-divider"></div>
+    <span class="nav-label">Module 6</span>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">☀</span></button>
+</nav>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+<div class="page-wrapper">
+<aside class="sidebar">
+  <div class="sidebar-course">Course</div>
+  <div class="sidebar-course-name">AI in Cybersecurity</div>
+  <div class="sidebar-module"><a href="module-1.html" class="sidebar-module-link"><span class="sidebar-num">1</span>The AI-Cybersecurity Intersection</a></div>
+  <div class="sidebar-module"><a href="module-2.html" class="sidebar-module-link"><span class="sidebar-num">2</span>AI-Powered Threat Detection</a></div>
+  <div class="sidebar-module"><a href="module-3.html" class="sidebar-module-link"><span class="sidebar-num">3</span>AI in Offensive Security</a></div>
+  <div class="sidebar-module"><a href="module-4.html" class="sidebar-module-link"><span class="sidebar-num">4</span>Social Engineering and AI</a></div>
+  <div class="sidebar-module"><a href="module-5.html" class="sidebar-module-link"><span class="sidebar-num">5</span>Defending Against AI Attacks</a></div>
+  <div class="sidebar-module"><a href="module-6.html" class="sidebar-module-link active"><span class="sidebar-num">6</span>AI in Identity and Access</a></div>
+  <div class="sidebar-module"><a href="module-7.html" class="sidebar-module-link"><span class="sidebar-num">7</span>The Future of AI Security</a></div>
+  <div class="sidebar-module"><a href="quiz.html" class="sidebar-module-link" style="color:var(--accent);margin-top:4px;"><span class="sidebar-num" style="background:var(--accent-dim);color:var(--accent);">✦</span>Final Assessment</a></div>
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-progress-label"><span>Course progress</span><span style="color:var(--accent);">5 / 7</span></div>
+  <div class="sidebar-progress-track"><div class="sidebar-progress-fill" style="width:71%"></div></div>
+</aside>
+<main>
+<div class="content">
+  <div class="module-eyebrow"><span class="module-tag">Module 6</span><span class="module-meta">20 min read · AI in Cybersecurity</span></div>
+  <h1>AI in Identity and Access</h1>
+  <p class="intro-text">Identity is the new perimeter. As organizations moved to cloud and hybrid work, the network edge became meaningless as a security boundary. Who someone is — and whether they are who they claim to be — is now the fundamental security question, and AI is transforming every layer of how that question gets answered.</p>
+
+  <h2>The Identity Crisis in Modern Security</h2>
+  <p>The dominance of identity-based attacks is not incidental — it is the logical consequence of where security investment went for the last two decades. Organizations hardened their network perimeters, encrypted their traffic, and deployed endpoint protection, so attackers moved to the weakest link: <strong>the human with legitimate credentials</strong>. Credential theft, session hijacking, pass-the-hash attacks, and MFA fatigue (bombarding a user with authentication prompts until they accidentally approve one) now account for the majority of successful breaches. The Verizon Data Breach Investigations Report has consistently found that <strong>more than 80% of breaches involve stolen or compromised credentials</strong> — a figure that has held roughly constant even as other attack vectors fluctuated.</p>
+  <p>The core problem with traditional Identity and Access Management (IAM) systems is that they are fundamentally static and rule-based. They verify identity at the point of login — check the password, check the MFA token, grant access — and then largely trust the session that follows. This model was designed for an era when employees logged in from a known office IP address to access a handful of on-premises applications. It cannot cope with a world where the same user connects from a coffee shop in Berlin at 9 AM and from a corporate VPN in Singapore at 11 AM, accesses a mix of SaaS and on-premises tools, and delegates session tokens to automated workflows.</p>
+  <p>Static rules cannot detect when <strong>legitimate credentials are used maliciously</strong>. If an attacker steals a valid username, password, and MFA token — increasingly possible through adversary-in-the-middle phishing proxies like Evilginx — they authenticate successfully and the traditional IAM system sees nothing wrong. The session looks identical to any other legitimate session. This is the gap that AI-driven identity security is built to close.</p>
+
+  <h2>Behavioral Biometrics and Continuous Authentication</h2>
+  <p>Behavioral biometrics represent a fundamentally different approach to identity verification. Rather than verifying a secret (password) or a possession (hardware token) at a single point in time, behavioral biometrics continuously verify <strong>the way a person interacts with a device</strong>. This includes keystroke dynamics (the timing, pressure, and rhythm of typing), mouse movement patterns (velocity, acceleration, path characteristics between clicks), touchscreen gesture patterns, and even gait recognition from accelerometer data on mobile devices. These signals combine into a behavioral fingerprint that is extraordinarily difficult to replicate — far harder to steal than a password.</p>
+  <p>The key word is continuous. A behavioral biometrics system does not check identity once at login; it scores the behavioral plausibility of every interaction throughout a session. If a user's typing rhythm changes abruptly — as it would if a different person took over the keyboard mid-session — the system detects that anomaly and can trigger silent re-authentication, step-up verification, or session termination without disrupting legitimate users. Companies like <strong>BioCatch</strong> (focused on financial services fraud prevention) and <strong>TypingDNA</strong> (focused on enterprise authentication) have operationalized these capabilities at scale. BioCatch processes behavioral signals from hundreds of millions of sessions monthly, using AI models trained on billions of behavioral data points to distinguish genuine users from impostors, bots, and malware-controlled sessions.</p>
+  <p>The technology is not limited to detecting external attackers. Behavioral biometrics can also flag insider threats — employees who authenticate legitimately but whose subsequent behavior diverges from their established baseline in ways that suggest they are acting outside their normal role. This is a capability that no rule-based system can replicate without generating paralyzing false positive rates.</p>
+
+  <div class="callout">
+    <div class="callout-label">Key Stat</div>
+    <p>A 2024 study found that behavioral biometrics reduced account takeover fraud by up to 70% at financial institutions that deployed the technology — compared to institutions relying solely on knowledge-based authentication and static MFA. The reduction was most pronounced against sophisticated attackers who had successfully stolen valid credentials and MFA tokens.</p>
+  </div>
+
+  <h2>AI-Powered Identity Threat Detection</h2>
+  <p><strong>Identity Threat Detection and Response (ITDR)</strong> has emerged as a distinct security category addressing the specific challenge of detecting attacks that operate through legitimate identity channels. ITDR platforms ingest signals from identity providers, directory services, endpoint agents, and application logs to build behavioral baselines for every user and service account, then flag deviations that match known attack patterns. <strong>CrowdStrike Falcon Identity Protection</strong> and <strong>Microsoft Entra ID Protection</strong> (formerly Azure AD Identity Protection) are among the leading platforms in this space, each processing identity-related telemetry across thousands of customer environments to train detection models.</p>
+  <p>The specific detections that AI enables would be impossible to replicate with static rules. <strong>Impossible travel</strong> — a user authenticating from New York at 8 AM and from Tokyo at 9 AM — is a straightforward signal, but AI systems go much further: detecting anomalous access to resources the user has never touched, privilege escalation attempts that don't match the user's historical pattern, service account activity at unusual hours, and lateral movement through internal systems that follows a path inconsistent with legitimate administrative workflows. These signals individually might be explained away; AI models correlate them across identity, endpoint, and network telemetry to produce high-confidence detections that a human analyst would take hours to assemble manually.</p>
+  <p>The response capabilities in modern ITDR platforms are equally important. Detected threats can trigger automated responses — revoke the session token, force re-authentication, quarantine the device, notify the SOC — without waiting for a human decision. In the context of credential-based attacks that can move from initial access to data exfiltration in minutes, the difference between automated and human-in-the-loop response can be the difference between a contained incident and a reportable breach.</p>
+
+  <div class="comparison-wrapper">
+    <table>
+      <tr><th>Authentication Model</th><th>Threat Detection</th><th>Response Speed</th><th>Lateral Movement Defense</th></tr>
+      <tr><td>Traditional IAM</td><td>Point-in-time; validates credentials at login only</td><td>No native threat detection; relies on SIEM correlation after the fact</td><td>Hours; human analyst must investigate and escalate</td><td>Minimal; valid credentials grant access regardless of behavior</td></tr>
+      <tr><td>AI-Powered IAM</td><td>Continuous; evaluates every access request against behavioral baseline</td><td>Real-time ML detection of impossible travel, anomalous access, privilege abuse</td><td>Seconds to minutes; automated session revocation on high-confidence detections</td><td>Strong; anomalous access patterns flag lateral movement even with valid credentials</td></tr>
+    </table>
+  </div>
+
+  <h2>Privileged Access Management and AI</h2>
+  <p><strong>Privileged Access Management (PAM)</strong> addresses the most sensitive class of credentials in any organization: accounts with administrative, root, or elevated access to critical systems. A compromised privileged account is catastrophically more damaging than a compromised standard user account — it can access sensitive databases, deploy ransomware across the entire environment, exfiltrate configuration data, and cover its own tracks. PAM platforms like <strong>BeyondTrust</strong> and <strong>CyberArk</strong> have long managed the vaulting, rotation, and auditing of privileged credentials. AI extends these capabilities significantly by adding continuous behavioral analytics to privileged sessions.</p>
+  <p>Where traditional PAM recorded sessions and flagged policy violations, AI-augmented PAM systems analyze privileged user behavior in real time — detecting commands that deviate from a system administrator's historical pattern, database queries that access tables the user has never touched, file access that suggests data staging for exfiltration, and tool usage inconsistent with the stated purpose of a privileged session. <strong>Just-in-time (JIT) access provisioning</strong> reduces the attack surface by eliminating standing privileged access entirely: administrators request elevated permissions for a specific task, the system grants them for a defined window, and revokes them automatically when the window expires. This means a stolen privileged credential is useful for at most a few minutes rather than indefinitely.</p>
+
+  <div class="principle-list">
+    <div class="principle">
+      <div class="principle-title">Just-in-Time Access</div>
+      <div class="principle-desc">Privileged credentials are provisioned on demand for specific tasks and time windows, then automatically revoked. There are no standing privileged accounts that persist indefinitely and can be stolen and used at leisure.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Session Analytics</div>
+      <div class="principle-desc">AI models continuously analyze privileged session activity against behavioral baselines. Commands, queries, file operations, and network connections that deviate from established patterns trigger real-time alerts or automated session termination.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Anomaly-Based Revocation</div>
+      <div class="principle-desc">Rather than waiting for policy violations defined in advance, AI systems can revoke privileged access based on behavioral anomalies that match known attack patterns — even if no specific rule was written for that exact behavior.</div>
+    </div>
+  </div>
+
+  <h2>Deepfake Authentication Attacks and Countermeasures</h2>
+  <p>Biometric authentication — face recognition, voice recognition, fingerprint scanning — was once considered the gold standard of identity verification because biometrics are tied to physical characteristics that cannot be stolen the way a password can. The rise of generative AI has materially undermined this assumption. High-quality AI-generated facial imagery and voice synthesis have become accessible enough that they are now being actively deployed against biometric authentication systems. In 2024, attackers demonstrated AI-generated face bypass techniques against banking facial recognition systems, using synthetic imagery to defeat liveness checks that relied on 2D facial matching without adequate depth or motion analysis. Voice synthesis attacks against voice-based authentication systems have been documented at multiple financial institutions.</p>
+  <p>The countermeasure landscape has responded with increasing sophistication. <strong>Liveness detection</strong> — verifying that a biometric sample comes from a live human being rather than a photograph, video, or synthetic rendering — is now a mandatory component of any serious biometric authentication deployment. <strong>iBeta</strong> provides independent certification for liveness detection systems, testing them against presentation attacks under standardized protocols (ISO 30107-3). Multi-factor liveness combines multiple modalities — requiring a user to perform a random head movement, speak a random phrase, and present a face simultaneously — making synthetic bypass exponentially more difficult. <strong>Hardware-backed authentication</strong> via the FIDO2 standard (WebAuthn + CTAP) uses cryptographic keys stored in secure hardware enclaves that cannot be extracted or replicated, providing a strong complement to biometrics that is not susceptible to synthetic media attacks.</p>
+  <p>The deeper challenge is that this is an active arms race. As liveness detection improves, generative AI models are trained to produce synthetic media that defeats the specific detection methods in use. Organizations deploying biometric authentication today need to plan for this escalation and build update cycles into their authentication infrastructure — liveness detection systems that were sufficient in 2022 may not be sufficient in 2026.</p>
+
+  <div class="warn">
+    <div class="warn-label">NIST Warning</div>
+    <p>NIST has flagged deepfake-based authentication bypass as a critical emerging threat, noting that face recognition systems without liveness detection are vulnerable to presentation attacks using 2D images or video — attacks that require no specialized hardware and are accessible to low-sophistication adversaries. NIST SP 800-76-2 and the ongoing work of the Face Recognition Vendor Test (FRVT) program specifically address liveness and presentation attack detection as mandatory evaluation criteria.</p>
+  </div>
+</div>
+</main>
+</div>
+<div class="sticky-bar">
+  <div class="sticky-bar-reading" id="sticky-reading">Read to the end to unlock the next module</div>
+  <div class="sticky-bar-track"><div class="sticky-bar-fill" id="sticky-fill"></div></div>
+  <div class="sticky-bar-label" id="sticky-label">0%</div>
+  <button class="sticky-bar-btn" id="sticky-btn" onclick="completeAndNext()">Module 7: The Future of AI Security &rarr;</button>
+</div>
+<script>
+  function toggleTheme(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='☾'):(h.setAttribute('data-theme','dark'),i.textContent='☀');}
+  window.addEventListener('scroll',()=>{const d=document.documentElement,s=d.scrollTop||document.body.scrollTop,t=d.scrollHeight-d.clientHeight;document.getElementById('progress').style.width=(s/t*100)+'%';});
+  let unlocked=false;
+  function updateScrollProgress(){const pct=Math.min(100,Math.round(((window.scrollY+window.innerHeight)/document.documentElement.scrollHeight)*100));document.getElementById('sticky-fill').style.width=pct+'%';document.getElementById('sticky-label').textContent=pct+'%';if(pct>=95&&!unlocked){unlocked=true;document.getElementById('sticky-btn').style.display='block';document.getElementById('sticky-reading').style.display='none';document.getElementById('sticky-fill').style.background='#22c55e';document.getElementById('sticky-label').style.color='#22c55e';}}
+  window.addEventListener('scroll',updateScrollProgress);updateScrollProgress();
+  function completeAndNext(){if(window.__meridianSaveProgress){try{window.__meridianSaveProgress("m6");}catch(e){}}setTimeout(function(){window.location.href="module-7.html";},120);}
+</script>
+<script type="module">
+  import{initializeApp}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import{getAuth,onAuthStateChanged}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import{getFirestore,doc,setDoc,arrayUnion}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  const app=initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+  const auth=getAuth(app);const db=getFirestore(app);let meridianUser=null;
+  onAuthStateChanged(auth,u=>{meridianUser=u;});
+  window.__meridianSaveProgress=async function(mValue){if(!meridianUser)return;try{await setDoc(doc(db,"users",meridianUser.uid),{cybersecurityModules:arrayUnion(mValue)},{merge:true});}catch(e){}};
+</script>
+</body>
+</html>

@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 3: Prompting Claude Effectively — Mastering Claude — Meridian Institute of AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#5b8ff8;--accent-dim:rgba(91,143,248,0.1);--nav-bg:rgba(8,8,8,0.9);--callout-bg:rgba(91,143,248,0.07);--callout-border:rgba(91,143,248,0.25);--good-bg:rgba(34,197,94,0.07);--good-border:rgba(34,197,94,0.2);--bad-bg:rgba(239,68,68,0.07);--bad-border:rgba(239,68,68,0.2);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#2563eb;--accent-dim:rgba(37,99,235,0.08);--nav-bg:rgba(250,250,248,0.9);--callout-bg:rgba(37,99,235,0.05);--callout-border:rgba(37,99,235,0.2);--good-bg:rgba(22,163,74,0.06);--good-border:rgba(22,163,74,0.2);--bad-bg:rgba(220,38,38,0.05);--bad-border:rgba(220,38,38,0.2);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;overflow-x:hidden;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.7;overflow-x:hidden;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}
+  .nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}
+  .nav-back{font-size:13px;color:var(--text-2);text-decoration:none;transition:color 0.2s;}
+  .nav-back:hover{color:var(--text);}
+  .nav-label{font-size:13px;color:var(--text-3);}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;transition:all 0.2s;}
+  .theme-toggle:hover{background:var(--bg-3);color:var(--text);}
+  .progress-bar{position:fixed;top:60px;left:0;right:0;z-index:99;height:2px;background:var(--border);}
+  .progress-fill{height:100%;background:var(--accent);width:0%;transition:width 0.1s;}
+  .page-wrapper{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:100vh;padding-top:62px;overflow:hidden;}
+  .sidebar{position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto;border-right:1px solid var(--border);padding:32px 24px;background:var(--bg-2);}
+  .sidebar-course{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;}
+  .sidebar-course-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+  .sidebar-module{margin-bottom:4px;}
+  .sidebar-module-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:13px;color:var(--text-2);text-decoration:none;transition:all 0.2s;line-height:1.4;}
+  .sidebar-module-link:hover{background:var(--bg-3);color:var(--text);}
+  .sidebar-module-link.active{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-num{font-size:11px;font-weight:500;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--bg-4);color:var(--text-3);}
+  .sidebar-module-link.active .sidebar-num{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-divider{height:1px;background:var(--border);margin:20px 0;}
+  .sidebar-progress-label{font-size:12px;color:var(--text-3);margin-bottom:8px;display:flex;justify-content:space-between;}
+  .sidebar-progress-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sidebar-progress-fill{height:100%;width:42%;background:var(--accent);border-radius:2px;}
+  main{display:block;min-width:0;overflow:hidden;}
+  .content{max-width:760px;width:100%;padding:60px 64px 140px;margin:0 auto;}
+  .module-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+  .module-tag{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(91,143,248,0.2);padding:4px 12px;border-radius:100px;}
+  .module-meta{font-size:12px;color:var(--text-3);}
+  h1{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1.05;letter-spacing:-0.02em;color:var(--text);margin-bottom:24px;}
+  .intro-text{font-size:19px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+  h2{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:400;color:var(--text);margin:52px 0 18px;line-height:1.2;}
+  h3{font-size:16px;font-weight:500;color:var(--text);margin:32px 0 12px;}
+  p{font-size:16px;font-weight:300;color:var(--text-2);line-height:1.8;margin-bottom:20px;}
+  strong{font-weight:500;color:var(--text);}
+  code{font-family:monospace;font-size:13px;background:var(--bg-3);padding:2px 6px;border-radius:4px;color:var(--accent);}
+  pre{background:var(--bg-2);border:1px solid var(--border);border-radius:10px;padding:20px 24px;margin:20px 0;overflow-x:auto;font-family:monospace;font-size:13px;color:var(--text-2);line-height:1.7;white-space:pre-wrap;}
+  .callout{background:var(--callout-bg);border:1px solid var(--callout-border);border-radius:12px;padding:24px 28px;margin:32px 0;}
+  .callout-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+  .callout p{margin:0;font-size:15px;color:var(--text-2);}
+  .callout p+p{margin-top:12px;}
+  .good{background:var(--good-bg);border:1px solid var(--good-border);border-radius:12px;padding:20px 24px;margin:12px 0;}
+  .good-label{font-size:10px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:#22c55e;margin-bottom:10px;}
+  .bad{background:var(--bad-bg);border:1px solid var(--bad-border);border-radius:12px;padding:20px 24px;margin:12px 0;}
+  .bad-label{font-size:10px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:#ef4444;margin-bottom:10px;}
+  .prompt-text{font-size:14px;color:var(--text-2);line-height:1.7;white-space:pre-wrap;font-family:'DM Sans',sans-serif;}
+  .xml-block{background:var(--bg-2);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:0 10px 10px 0;padding:20px 24px;margin:20px 0;font-family:monospace;font-size:13px;color:var(--text-2);line-height:1.8;white-space:pre-wrap;}
+  .technique-num{font-size:11px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+  .sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:var(--bg-2);border-top:1px solid var(--border-2);padding:14px 5%;display:flex;align-items:center;justify-content:space-between;gap:16px;backdrop-filter:blur(12px);}
+  .sticky-bar-track{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sticky-bar-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.2s;width:0%;}
+  .sticky-bar-label{font-size:12px;color:var(--text-3);white-space:nowrap;min-width:60px;text-align:right;}
+  .sticky-bar-btn{padding:10px 20px;border-radius:8px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;background:var(--accent);color:#fff;border:none;cursor:pointer;white-space:nowrap;transition:opacity 0.2s;display:none;}
+  .sticky-bar-btn:hover{opacity:0.88;}
+  .sticky-bar-reading{font-size:12px;color:var(--text-3);white-space:nowrap;}
+  @media(max-width:900px){.page-wrapper{grid-template-columns:1fr;}.sidebar{display:none;}.content{padding:40px 24px 120px;}h1{font-size:38px;}}
+  @media(max-width:600px){.content{padding:28px 16px 120px;}h1{font-size:30px;}h2{font-size:24px;}}
+</style>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="shortcut icon" href="/favicon.ico">
+<style>@media(max-width:480px){.nav-divider{display:none}.nav-left{gap:8px}}</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="../../index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="../../index.html" class="nav-back">Home</a>
+    <div class="nav-divider"></div>
+    <a href="../../courses.html" class="nav-back">← Mastering Claude</a>
+    <div class="nav-divider"></div>
+    <span class="nav-label">Module 3</span>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">☀</span></button>
+</nav>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+
+<div class="page-wrapper">
+<aside class="sidebar">
+  <div class="sidebar-course">Course</div>
+  <div class="sidebar-course-name">Mastering Claude</div>
+  <div class="sidebar-module"><a href="module-1.html" class="sidebar-module-link"><span class="sidebar-num">1</span>Understanding Claude</a></div>
+  <div class="sidebar-module"><a href="module-2.html" class="sidebar-module-link"><span class="sidebar-num">2</span>Claude's Model Lineup</a></div>
+  <div class="sidebar-module"><a href="module-3.html" class="sidebar-module-link active"><span class="sidebar-num">3</span>Prompting Claude Effectively</a></div>
+  <div class="sidebar-module"><a href="module-4.html" class="sidebar-module-link"><span class="sidebar-num">4</span>Claude Projects & Memory</a></div>
+  <div class="sidebar-module"><a href="module-5.html" class="sidebar-module-link"><span class="sidebar-num">5</span>Advanced Claude Features</a></div>
+  <div class="sidebar-module"><a href="module-6.html" class="sidebar-module-link"><span class="sidebar-num">6</span>Claude in the Real World</a></div>
+  <div class="sidebar-module"><a href="module-7.html" class="sidebar-module-link"><span class="sidebar-num">7</span>Claude vs The Field</a></div>
+  <div class="sidebar-module"><a href="quiz.html" class="sidebar-module-link" style="color:var(--accent);margin-top:4px;"><span class="sidebar-num" style="background:var(--accent-dim);color:var(--accent);">✦</span>Final Assessment</a></div>
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-progress-label"><span>Course progress</span><span style="color:var(--accent);">3 / 7</span></div>
+  <div class="sidebar-progress-track"><div class="sidebar-progress-fill"></div></div>
+</aside>
+
+<main>
+<div class="content">
+  <div class="module-eyebrow"><span class="module-tag">Module 3</span><span class="module-meta">25 min read · Mastering Claude</span></div>
+  <h1>Prompting Claude Effectively</h1>
+  <p class="intro-text">The Foundations course covered prompt engineering broadly. This module goes deeper — specifically into techniques that work especially well with Claude's architecture and training. Some of these are Claude-specific. All of them will produce noticeably better results than generic prompting advice.</p>
+
+  <h2>Why Claude responds differently than other models</h2>
+  <p>Claude's Constitutional AI training creates some behaviors that affect how you should prompt it. Understanding these makes you significantly more effective.</p>
+  <p><strong>Claude is trained to be direct.</strong> It won't pad responses with unnecessary affirmations or filler. If you ask a yes/no question, it will often give you a direct yes or no rather than a paragraph of hedging. This is a feature — lean into it by asking direct questions.</p>
+  <p><strong>Claude will push back.</strong> If you ask Claude to do something it finds problematic, or if your reasoning has a flaw it notices, it will say so rather than quietly complying. Don't fight this — engage with it. Claude's pushback is often pointing at something genuinely worth considering.</p>
+  <p><strong>Claude respects context length.</strong> Unlike models that effectively ignore content beyond a certain point in long prompts, Claude is trained to reason across its full context window. You can put critical instructions at the beginning or end and they'll stick — but you can also put supporting context in the middle knowing it won't get lost.</p>
+
+  <h2>XML tags — Claude's native structure</h2>
+  <p>This is the single most underused Claude-specific technique. Claude is trained on structured data and responds significantly better when you use XML tags to organize complex prompts. This isn't a workaround or a trick — it's how Claude's training was structured, and using it explicitly unlocks noticeably better results.</p>
+
+  <div class="bad">
+    <div class="bad-label">❌ Without XML tags</div>
+    <div class="prompt-text">Here is some background on our company: we sell software to hospitals. Here is some customer feedback: "The system crashes during peak hours and support is slow." Here is what I want you to do: Write a response to this customer that is professional and empathetic. Make sure to address their specific concerns.</div>
+  </div>
+
+  <div class="good">
+    <div class="good-label">✓ With XML tags — Claude handles this significantly better</div>
+    <div class="prompt-text">&lt;context&gt;
+We sell software to hospitals. Our product is used for patient record management.
+&lt;/context&gt;
+
+&lt;customer_feedback&gt;
+"The system crashes during peak hours and support is slow to respond."
+&lt;/customer_feedback&gt;
+
+&lt;task&gt;
+Write a professional, empathetic response to this customer that:
+- Acknowledges their specific concerns (crashes and slow support)
+- Takes responsibility without making promises we may not keep
+- Outlines concrete next steps
+- Maintains a tone that builds trust
+&lt;/task&gt;</div>
+  </div>
+
+  <p>The improvement isn't subtle. Claude processes the structured version more cleanly, separates the different types of information correctly, and produces a more focused output. Use XML tags whenever your prompt has distinct sections — context, instructions, examples, constraints, or output requirements.</p>
+
+  <h3>Common XML tag patterns that work well with Claude</h3>
+  <div class="xml-block">&lt;context&gt; — background information Claude needs to know
+&lt;task&gt; — what you want Claude to do
+&lt;constraints&gt; — what Claude should avoid or limitations to respect
+&lt;examples&gt; — sample inputs and outputs showing what good looks like
+&lt;format&gt; — how you want the output structured
+&lt;document&gt; — a piece of content Claude should analyze
+&lt;user_input&gt; — in system prompt design, separates user content from instructions
+&lt;thinking&gt; — sometimes used to ask Claude to show its reasoning first</div>
+
+  <h2>System prompts — the invisible layer</h2>
+  <p>In Claude.ai, the system prompt runs silently in the background of every conversation. In Projects (covered next module), you set it once and it persists. Understanding how to write effective system prompts transforms Claude from a generic assistant into a specialized tool tuned to your specific needs.</p>
+
+  <h3>What a great system prompt contains</h3>
+  <p><strong>Role and identity:</strong> Who Claude is in this context. Not just "you are a helpful assistant" — be specific. "You are a direct, technically rigorous code reviewer specializing in Python and security vulnerabilities."</p>
+  <p><strong>Behavioral rules:</strong> What Claude should always do and never do. "Always suggest a test case for any code you write. Never suggest a solution without explaining the tradeoff it makes."</p>
+  <p><strong>Context:</strong> What Claude needs to know about the situation, user, or domain. "The user is a junior developer who understands syntax but may not know design patterns. Explain concepts at that level."</p>
+  <p><strong>Output format:</strong> How responses should be structured. "Respond with: 1) A direct answer, 2) The reasoning behind it, 3) One potential downside to consider."</p>
+  <p><strong>Tone:</strong> How Claude should communicate. "Be direct and technical. Skip the pleasantries. If the code is bad, say so."</p>
+
+  <h3>A complete example system prompt</h3>
+  <div class="xml-block">You are a ruthlessly honest college application essay coach helping ambitious high school students write compelling, authentic essays.
+
+&lt;identity&gt;
+You are former admissions officer turned independent counselor. You've read thousands of essays and know what actually moves readers versus what sounds impressive to parents. You value authenticity over polish.
+&lt;/identity&gt;
+
+&lt;rules&gt;
+- Always ask what the student is actually trying to say before you start rewriting anything
+- Never rewrite in a way that removes the student's voice — improve structure and clarity, not personality
+- Be honest about weak essays — say "this opening isn't working" not "here's a small tweak"
+- If an essay is good, say so explicitly — false modesty wastes time
+- Always end feedback with one specific, actionable next step
+&lt;/rules&gt;
+
+&lt;context&gt;
+Students are typically applying to competitive universities. They are 17-18 years old and stressed. They may need encouragement but they need honest feedback more.
+&lt;/context&gt;
+
+When the student shares an essay, read it fully before commenting. Lead with what is working before addressing what isn't.</div>
+
+  <h2>Working with Claude's honesty training</h2>
+  <p>Claude is specifically trained to avoid sycophancy — agreeing with you just because you seem to want agreement. This is actually a powerful feature you can exploit deliberately.</p>
+
+  <h3>Asking Claude to steelman and critique</h3>
+  <p>One of Claude's most valuable capabilities is rigorous adversarial analysis. Ask it to find the strongest argument against your own position, to play devil's advocate, or to identify every flaw in your plan. Because Claude is trained to be honest rather than agreeable, this produces genuinely useful pushback rather than token "on the other hand" statements.</p>
+
+  <div class="good">
+    <div class="good-label">✓ Effective critique prompt</div>
+    <div class="prompt-text">Here is my business plan for an AI education platform. I need you to find every significant flaw in it — not nitpicks, but real problems that could cause this to fail. Be harsh. I'm sharing this with investors in two weeks and I'd rather hear the problems from you than from them.
+
+[business plan]</div>
+  </div>
+
+  <h3>Calibrating Claude's confidence</h3>
+  <p>Claude is designed to express appropriate uncertainty. If you want it to commit to a position rather than hedge, tell it explicitly: "Give me your best answer and commit to it — I understand it might be wrong, I need a concrete recommendation." Conversely, if you want it to surface its uncertainty explicitly, ask: "Walk me through how confident you are in each part of this answer."</p>
+
+  <h2>Handling Claude's refusals effectively</h2>
+  <p>Claude will decline some requests. The least effective response is trying to trick or pressure it. The most effective response is understanding why it's declining and addressing that directly.</p>
+  <p>When Claude declines, try these approaches in order:</p>
+  <p><strong>Add context that addresses the underlying concern.</strong> If Claude declines to explain how a security vulnerability works, explaining that you're a security researcher testing your own system often resolves it.</p>
+  <p><strong>Reframe the request around your actual goal.</strong> Sometimes the way you asked for something triggers caution that your actual goal doesn't warrant. Ask for the underlying thing you need rather than the specific framing that got declined.</p>
+  <p><strong>Ask Claude what it would need to help.</strong> Literally ask: "What information would I need to provide for you to help me with this?" This often surfaces the specific concern Claude has, which you can then address directly.</p>
+
+  <div class="callout">
+    <div class="callout-label">The cardinal rule of working with Claude's refusals</div>
+    <p>Don't try to trick it. Claude's safety training is specifically designed to recognize manipulation attempts, and triggering that recognition makes it more cautious, not less. Honest engagement — providing real context about who you are and why you need something — is consistently more effective than clever workarounds.</p>
+  </div>
+
+  <h2>Long conversation management</h2>
+  <p>Claude's 200K context window is large but not infinite, and performance can vary across very long conversations. Here's how to manage long sessions effectively.</p>
+
+  <h3>Front-loading critical context</h3>
+  <p>Put the most important instructions and context at the beginning of your conversation or system prompt. Claude's attention is strongest at the start and end of its context. Mid-conversation instructions will be followed, but critical behavioral rules belong at the top.</p>
+
+  <h3>Periodic context refreshes</h3>
+  <p>In very long conversations, periodically summarize what's been decided or established: "To confirm what we've agreed so far: X, Y, and Z. Now let's continue with..." This keeps Claude anchored to your key decisions without requiring it to re-process the full conversation history.</p>
+
+  <h3>Starting fresh vs. continuing</h3>
+  <p>Know when to start a new conversation. If a conversation has gone off track, accumulated confusion, or grown so long that responses feel less coherent, starting fresh with a well-structured prompt is almost always better than trying to rescue a deteriorating thread.</p>
+
+  <h2>Claude-specific power techniques</h2>
+
+  <h3>The "think before you answer" instruction</h3>
+  <p>Adding "think through this carefully before giving your final answer" or "before responding, consider..." measurably improves accuracy on complex tasks. This prompts Claude to reason explicitly rather than pattern-match to the most immediate response. For hard problems, this single addition can dramatically improve output quality.</p>
+
+  <h3>Iterative refinement with specific feedback</h3>
+  <p>Claude responds exceptionally well to specific feedback on its outputs. Not "make this better" but "the third paragraph is too abstract — give me a concrete example. The tone in the conclusion shifts from confident to hedging — fix that." The more specific your feedback, the better the revision.</p>
+
+  <h3>Multi-perspective analysis</h3>
+  <p>Ask Claude to analyze something from multiple explicitly named perspectives in sequence. "Analyze this policy proposal from the perspective of: 1) a small business owner, 2) a civil liberties advocate, 3) a fiscal conservative, 4) an implementation specialist." Claude handles this structured multi-perspective analysis better than most models because its training emphasizes balance and nuance across different viewpoints.</p>
+
+  <div class="good">
+    <div class="good-label">The technique that makes the biggest difference</div>
+    <p>Treat Claude as a collaborator, not a query engine. Share your actual goals, not just the task. Explain why you're doing something. Give it permission to push back. Ask follow-up questions. The quality ceiling on what Claude can help you accomplish rises dramatically when it understands the full picture of what you're trying to achieve.</p>
+  </div>
+
+</div>
+</main>
+</div>
+
+<div class="sticky-bar" id="sticky-bar">
+  <div class="sticky-bar-reading" id="sticky-reading">Read to the end to unlock the next module</div>
+  <div class="sticky-bar-track"><div class="sticky-bar-fill" id="sticky-fill"></div></div>
+  <div class="sticky-bar-label" id="sticky-label">0%</div>
+  <button class="sticky-bar-btn" id="sticky-btn" onclick="completeAndNext()">Module 4: Claude Projects & Memory →</button>
+</div>
+
+<script>
+  function toggleTheme(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='☾'):(h.setAttribute('data-theme','dark'),i.textContent='☀');}
+  window.addEventListener('scroll',()=>{const d=document.documentElement,s=d.scrollTop||document.body.scrollTop,t=d.scrollHeight-d.clientHeight;document.getElementById('progress').style.width=(s/t*100)+'%';});
+
+  let unlocked = false;
+  function updateScrollProgress() {
+    const scrolled = window.scrollY + window.innerHeight;
+    const total = document.documentElement.scrollHeight;
+    const pct = Math.min(100, Math.round((scrolled / total) * 100));
+    const fill = document.getElementById('sticky-fill');
+    const label = document.getElementById('sticky-label');
+    const btn = document.getElementById('sticky-btn');
+    const reading = document.getElementById('sticky-reading');
+    if (fill) fill.style.width = pct + '%';
+    if (label) label.textContent = pct + '%';
+    if (pct >= 95 && !unlocked) {
+      unlocked = true;
+      if (btn) btn.style.display = 'block';
+      if (reading) reading.style.display = 'none';
+      if (fill) fill.style.background = '#22c55e';
+      if (label) label.style.color = '#22c55e';
+    }
+  }
+  window.addEventListener('scroll', updateScrollProgress);
+  updateScrollProgress();
+  function completeAndNext(){
+    if(window.__meridianSaveProgress){ try{ window.__meridianSaveProgress("m3"); }catch(e){} }
+    setTimeout(function(){ window.location.href="module-4.html"; }, 120);
+  }
+</script>
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import { getFirestore, doc, setDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  const app = initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+  const auth = getAuth(app); const db = getFirestore(app);
+  let meridianUser = null;
+  onAuthStateChanged(auth, u => { meridianUser = u; });
+  window.__meridianSaveProgress = async function(mValue){
+    if(!meridianUser) return;
+    try { await setDoc(doc(db,"users",meridianUser.uid), { claudeModules: arrayUnion(mValue) }, { merge: true }); } catch(e) {}
+  };
+</script>
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  const _gapp = initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+  const _gauth = getAuth(_gapp); const _gdb = getFirestore(_gapp);
+  onAuthStateChanged(_gauth, async (u) => {
+    if (!u) return;
+    try {
+      const snap = await getDoc(doc(_gdb, "users", u.uid));
+      const data = snap.exists() ? snap.data() : {};
+      const done = Array.isArray(data.claudeModules) ? data.claudeModules : [];
+      if (!done.includes("m2")) {
+        document.body.innerHTML = `<div style=\"min-height:100vh;display:flex;align-items:center;justify-content:center;background:#080808;font-family:DM Sans,sans-serif;padding:24px;\"><div style=\"max-width:440px;text-align:center;background:#111;border:1px solid rgba(255,255,255,0.08);border-radius:20px;padding:48px;\"><div style=\"font-size:48px;margin-bottom:20px;\">&#128274;</div><div style=\"font-size:20px;font-weight:500;color:#f0f0f0;margin-bottom:12px;\">Module locked</div><div style=\"font-size:14px;color:#a0a0a0;margin-bottom:28px;line-height:1.6;\">Complete the previous module before continuing.</div><a href=\"claude-module-1.html\" style=\"display:inline-block;padding:12px 24px;background:#D97757;color:#fff;border-radius:10px;font-size:14px;font-weight:500;text-decoration:none;\">&#8592; Back to the course</a></div></div>`;
+      }
+    } catch(e) {}
+  });
+</script>
+</body>
+</html>

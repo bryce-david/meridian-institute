@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Ethics — AI Governance — Meridian Institute of AI</title>
+<meta name="description" content="Free AI Governance course — module 4. Understand AI ethics: bias, fairness, transparency, explainability, and how ethics principles translate into operational practice.">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="AI Ethics — AI Governance — Meridian Institute of AI">
+<meta property="og:description" content="Free AI Governance course — module 4. Understand AI ethics: bias, fairness, transparency, explainability, and how ethics principles translate into operational practice.">
+<meta property="og:url" content="https://meridianinstituteai.com/courses/governance/module-4.html">
+<meta property="og:type" content="website">
+<link rel="canonical" href="https://meridianinstituteai.com/courses/governance/module-4.html">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#8b5cf6;--accent-dim:rgba(139,92,246,0.1);--nav-bg:rgba(8,8,8,0.9);--callout-bg:rgba(139,92,246,0.07);--callout-border:rgba(139,92,246,0.25);--good-bg:rgba(34,197,94,0.07);--good-border:rgba(34,197,94,0.2);--warn-bg:rgba(251,146,60,0.07);--warn-border:rgba(251,146,60,0.2);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#7c3aed;--accent-dim:rgba(124,58,237,0.08);--nav-bg:rgba(250,250,248,0.9);--callout-bg:rgba(124,58,237,0.05);--callout-border:rgba(124,58,237,0.2);--good-bg:rgba(22,163,74,0.06);--good-border:rgba(22,163,74,0.2);--warn-bg:rgba(234,88,12,0.05);--warn-border:rgba(234,88,12,0.2);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;overflow-x:hidden;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.7;overflow-x:hidden;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}
+  .nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}
+  .nav-back{font-size:13px;color:var(--text-2);text-decoration:none;transition:color 0.2s;}
+  .nav-back:hover{color:var(--text);}
+  .nav-label{font-size:13px;color:var(--text-3);}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;transition:all 0.2s;}
+  .progress-bar{position:fixed;top:60px;left:0;right:0;z-index:99;height:2px;background:var(--border);}
+  .progress-fill{height:100%;background:var(--accent);width:0%;transition:width 0.1s;}
+  .page-wrapper{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:100vh;padding-top:62px;}
+  .sidebar{position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto;border-right:1px solid var(--border);padding:32px 24px;background:var(--bg-2);}
+  .sidebar-course{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;}
+  .sidebar-course-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+  .sidebar-module{margin-bottom:4px;}
+  .sidebar-module-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:13px;color:var(--text-2);text-decoration:none;transition:all 0.2s;line-height:1.4;}
+  .sidebar-module-link:hover{background:var(--bg-3);color:var(--text);}
+  .sidebar-module-link.active{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-num{font-size:11px;font-weight:500;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--bg-4);color:var(--text-3);}
+  .sidebar-module-link.active .sidebar-num{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-divider{height:1px;background:var(--border);margin:20px 0;}
+  .sidebar-progress-label{font-size:12px;color:var(--text-3);margin-bottom:8px;display:flex;justify-content:space-between;}
+  .sidebar-progress-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sidebar-progress-fill{height:100%;width:43%;background:var(--accent);border-radius:2px;}
+  main{display:block;min-width:0;}
+  .content{max-width:760px;width:100%;padding:60px 64px 140px;margin:0 auto;}
+  .module-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+  .module-tag{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(139,92,246,0.2);padding:4px 12px;border-radius:100px;}
+  .module-meta{font-size:12px;color:var(--text-3);}
+  h1{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1.05;letter-spacing:-0.02em;color:var(--text);margin-bottom:24px;}
+  .intro-text{font-size:19px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+  h2{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:400;color:var(--text);margin:52px 0 18px;line-height:1.2;}
+  h3{font-size:16px;font-weight:500;color:var(--text);margin:32px 0 12px;}
+  p{font-size:16px;font-weight:300;color:var(--text-2);line-height:1.8;margin-bottom:20px;}
+  strong{font-weight:500;color:var(--text);}
+  .callout{background:var(--callout-bg);border:1px solid var(--callout-border);border-radius:12px;padding:24px 28px;margin:32px 0;}
+  .callout-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+  .callout p{margin:0;font-size:15px;color:var(--text-2);}
+  .callout p+p{margin-top:12px;}
+  .good{background:var(--good-bg);border:1px solid var(--good-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .good-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#22c55e;margin-bottom:10px;}
+  .good p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn{background:var(--warn-bg);border:1px solid var(--warn-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .warn-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#fb923c;margin-bottom:10px;}
+  .warn p{margin:0;font-size:15px;color:var(--text-2);}
+  .principle-list{display:flex;flex-direction:column;gap:12px;margin:24px 0;}
+  .principle{background:var(--bg-2);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:0 12px 12px 0;padding:20px 24px;}
+  .principle-title{font-size:15px;font-weight:500;color:var(--text);margin-bottom:6px;}
+  .principle-desc{font-size:14px;color:var(--text-2);line-height:1.65;margin:0;}
+  .comparison-wrapper{overflow-x:auto;-webkit-overflow-scrolling:touch;width:100%;margin:28px 0;}
+  table{width:100%;border-collapse:collapse;font-size:14px;min-width:480px;}
+  th{text-align:left;padding:12px 16px;font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-3);border-bottom:1px solid var(--border-2);}
+  td{padding:14px 16px;border-bottom:1px solid var(--border);color:var(--text-2);line-height:1.6;vertical-align:top;}
+  tr:last-child td{border-bottom:none;}
+  td:first-child{color:var(--text);font-weight:500;}
+  .sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:var(--bg-2);border-top:1px solid var(--border-2);padding:14px 5%;display:flex;align-items:center;justify-content:space-between;gap:16px;backdrop-filter:blur(12px);}
+  .sticky-bar-track{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sticky-bar-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.2s;width:0%;}
+  .sticky-bar-label{font-size:12px;color:var(--text-3);white-space:nowrap;min-width:60px;text-align:right;}
+  .sticky-bar-btn{padding:10px 20px;border-radius:8px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;background:var(--accent);color:#fff;border:none;cursor:pointer;white-space:nowrap;transition:opacity 0.2s;display:none;}
+  .sticky-bar-btn:hover{opacity:0.88;}
+  .sticky-bar-reading{font-size:12px;color:var(--text-3);white-space:nowrap;}
+  @media(max-width:900px){.page-wrapper{grid-template-columns:1fr;}.sidebar{display:none;}.content{padding:40px 24px 120px;}h1{font-size:38px;}}
+  @media(max-width:600px){.content{padding:28px 16px 120px;}h1{font-size:30px;}h2{font-size:24px;}}
+</style>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="shortcut icon" href="/favicon.ico">
+<style>@media(max-width:480px){.nav-divider{display:none}.nav-left{gap:8px}}</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="../../index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="../../index.html" class="nav-back">&#8962; Home</a>
+    <div class="nav-divider"></div>
+    <a href="../../courses.html" class="nav-back">&#8592; AI Governance</a>
+    <div class="nav-divider"></div>
+    <span class="nav-label">Module 4</span>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">&#9728;</span></button>
+</nav>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+
+<div class="page-wrapper">
+<aside class="sidebar">
+  <div class="sidebar-course">Course</div>
+  <div class="sidebar-course-name">AI Governance</div>
+  <div class="sidebar-module"><a href="module-1.html" class="sidebar-module-link"><span class="sidebar-num">1</span>What AI Governance Is</a></div>
+  <div class="sidebar-module"><a href="module-2.html" class="sidebar-module-link"><span class="sidebar-num">2</span>The EU AI Act</a></div>
+  <div class="sidebar-module"><a href="module-3.html" class="sidebar-module-link"><span class="sidebar-num">3</span>US AI Policy</a></div>
+  <div class="sidebar-module"><a href="module-4.html" class="sidebar-module-link active"><span class="sidebar-num">4</span>AI Ethics</a></div>
+  <div class="sidebar-module"><a href="module-5.html" class="sidebar-module-link"><span class="sidebar-num">5</span>Corporate AI Governance</a></div>
+  <div class="sidebar-module"><a href="module-6.html" class="sidebar-module-link"><span class="sidebar-num">6</span>International AI Policy</a></div>
+  <div class="sidebar-module"><a href="module-7.html" class="sidebar-module-link"><span class="sidebar-num">7</span>Implementing Responsible AI</a></div>
+  <div class="sidebar-module"><a href="quiz.html" class="sidebar-module-link" style="color:var(--accent);margin-top:4px;"><span class="sidebar-num" style="background:var(--accent-dim);color:var(--accent);">&#10022;</span>Final Assessment</a></div>
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-progress-label"><span>Course progress</span><span style="color:var(--accent);">3 / 7</span></div>
+  <div class="sidebar-progress-track"><div class="sidebar-progress-fill"></div></div>
+</aside>
+
+<main>
+<div class="content">
+  <div class="module-eyebrow"><span class="module-tag">Module 4</span><span class="module-meta">20 min read &middot; AI Governance</span></div>
+  <h1>AI Ethics</h1>
+  <p class="intro-text">AI ethics is not a soft subject. It is the systematic analysis of how AI systems affect human welfare, rights, and dignity — and it produces concrete, operational decisions about how systems should be designed, deployed, and constrained. Every significant AI ethics failure — biased hiring algorithms, discriminatory facial recognition, manipulative recommendation systems — was also a governance failure, a design failure, and ultimately a business failure.</p>
+
+  <h2>The Core Ethical Dimensions of AI</h2>
+  <p>Four foundational concerns appear consistently across every major AI ethics framework: <strong>fairness and non-discrimination</strong>, <strong>transparency and explainability</strong>, <strong>privacy and autonomy</strong>, and <strong>accountability and responsibility</strong>. Each is both technically and socially complex — requiring not just engineering solutions but normative judgments about what outcomes are acceptable and who bears the cost of errors.</p>
+  <p>Fairness alone resists simple definition. Computer scientists have formally defined at least seven distinct mathematical notions of fairness — demographic parity, equalized odds, predictive parity, individual fairness, calibration, and others — and proven that these definitions cannot all be satisfied simultaneously when base rates differ across groups. This is not a solvable engineering problem; it is a values problem requiring explicit choices about which type of fairness to optimize for in a specific context and whose interests take priority when they conflict.</p>
+  <p>Transparency and explainability are similarly multidimensional. Being transparent about what data a model was trained on is different from being able to explain why it made a specific prediction. Privacy involves both the protection of training data and the risk of a deployed model revealing information about individuals. Accountability requires specifying who is responsible when an AI system causes harm — the developer, the deployer, the data provider, or the operator — a question that existing legal frameworks were not designed to answer for complex multi-party AI systems.</p>
+
+  <div class="callout">
+    <div class="callout-label">Canonical case</div>
+    <p>Amazon's AI hiring tool, scrapped in 2018 after it was discovered to systematically downrank women's resumes, has become the defining example of algorithmic bias. The system was trained on a decade of Amazon's historical hiring decisions — data that reflected the company's historically male-dominated engineering workforce. The model learned to treat indicators of female identity (women's colleges, the word "women's" in resume text) as negative signals. The system did not develop bias spontaneously; it faithfully learned and automated the bias already present in the historical record.</p>
+    <p>The lesson is structural: AI systems trained on human-generated data inherit human biases. The question is not whether bias exists in training data but how to detect, measure, and mitigate it before deployment — and what to do when it cannot be fully eliminated.</p>
+  </div>
+
+  <h2>Bias in AI Systems</h2>
+  <p>Bias enters AI systems at multiple points in the development pipeline, not just in training data selection. <strong>Historical bias</strong> is encoded in data that reflects past human decisions — hiring data that reflects past discrimination, criminal justice data that reflects historical over-policing of certain communities, medical data that reflects historical underrepresentation of women and minorities in clinical trials. <strong>Representation bias</strong> occurs when training data underrepresents certain populations — a facial recognition system trained primarily on lighter-skinned faces will perform worse on darker-skinned faces regardless of the training labels' accuracy. <strong>Measurement bias</strong> occurs when the features used as proxies introduce disparities — using credit score as a proxy for loan repayment reliability inherits all of the historical inequities baked into the credit scoring system.</p>
+  <p>The COMPAS recidivism algorithm controversy illustrated these dynamics at scale. COMPAS (Correctional Offender Management Profiling for Alternative Sanctions) was used in several US jurisdictions to predict recidivism risk, influencing bail, sentencing, and parole decisions. ProPublica's 2016 analysis found that COMPAS predicted higher recidivism rates for Black defendants at roughly twice the rate as for white defendants when controlling for prior offense history — a disparity the algorithm's developers disputed using a different fairness metric. Both analyses were technically correct; they simply measured different things. The controversy exposed a real problem: when two different definitions of fairness produce contradictory results, choosing between them is a political and ethical decision, not a technical one.</p>
+  <p>Facial recognition bias has been documented with extraordinary precision. NIST's Face Recognition Vendor Test (FRVT), published in 2019, evaluated 189 commercial facial recognition algorithms and found that error rates were 10 to 100 times higher for darker-skinned women compared to lighter-skinned men for most tested systems. These systems were not experimental — they were deployed by law enforcement agencies, border control, and private security operations, meaning the performance disparity translated directly into a disparity in false accusation rates and wrongful stops.</p>
+
+  <h2>Transparency and Explainability</h2>
+  <p>The "black box" problem is one of the defining technical challenges of modern AI governance. High-performing machine learning models — particularly deep neural networks — achieve their accuracy through patterns distributed across millions or billions of parameters in ways that cannot be reduced to human-interpretable rules. A neural network that diagnoses cancer from medical images with 95% accuracy may be unable to provide a clinician with a reason for a specific diagnosis beyond the equivalent of "because the pixel values looked like this." This creates a fundamental tension between performance and interpretability that has no universal resolution.</p>
+  <p>Regulators have responded by requiring explainability for certain high-stakes applications. The EU's GDPR Article 22 establishes a right to explanation for automated decisions that significantly affect individuals, though the legal scope of this right has been actively litigated. The EU AI Act requires high-risk AI systems to maintain logs sufficient to enable post-hoc review of specific decisions. The US CFPB requires that adverse action notices in credit decisions explain the specific reasons for denial — a requirement that technically applies to AI-generated decisions but was written for rule-based systems.</p>
+  <p>The field of Explainable AI (XAI) has developed practical techniques for approximating explanations even when true mechanistic explanation is unavailable. LIME (Local Interpretable Model-agnostic Explanations) creates simplified local approximations of complex model behavior around a specific prediction. SHAP (SHapley Additive exPlanations) attributes prediction contributions to individual features using game-theoretic Shapley values. These techniques produce explanations that are useful for auditing and debugging but are approximations rather than causal accounts of model behavior.</p>
+
+  <div class="principle-list">
+    <div class="principle">
+      <div class="principle-title">Process Transparency</div>
+      <div class="principle-desc">Can you see how the system was built? This covers training data sources, feature selection, model architecture, evaluation methodology, and known limitations. Process transparency enables independent auditing and comparison of design choices.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Outcome Transparency</div>
+      <div class="principle-desc">Can you see what decisions were made? This covers audit logs, decision rates disaggregated by demographic group, error rates, and aggregate statistics about the system's outputs. Outcome transparency enables detection of discriminatory patterns even without access to model internals.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Reason Transparency</div>
+      <div class="principle-desc">Can you understand why a specific decision was made? This is the hardest level to achieve and the one individuals most need when a consequential decision affects them. It is what GDPR's right to explanation attempts to guarantee, and what XAI techniques attempt to approximate.</div>
+    </div>
+  </div>
+
+  <h2>AI and Human Autonomy</h2>
+  <p>The deeper ethical concern about AI systems — beyond discrimination or explainability — is the risk they pose to human autonomy: the capacity to form preferences, make decisions, and live according to one's own values rather than those induced by external systems. Social media recommendation algorithms optimized for engagement have been documented to progressively radicalize users toward more extreme content not because users explicitly chose this content but because engagement with emotionally provocative material is behaviorally predictable. The algorithm is not deceiving users — it is predicting and reinforcing their behavioral tendencies in ways that systematically shape their beliefs and preferences over time.</p>
+  <p>In hiring, lending, and criminal justice, AI systems are increasingly making or materially influencing decisions that determine whether someone gets a job, a mortgage, or their freedom — without meaningful human review of individual cases and often without the affected person's knowledge that an AI system is involved. The ethical question is not simply whether the AI is accurate but whether accuracy alone justifies removing human judgment from decisions with profound consequences for individuals. Several European jurisdictions have concluded it does not, requiring human review of consequential AI decisions; US law has not reached this conclusion except in narrow domains.</p>
+
+  <h2>From Ethics to Practice</h2>
+  <p>The most common failure mode in AI ethics is the gap between stated principles and institutional practice. An organization can publish a detailed AI ethics framework — citing fairness, transparency, accountability, and human oversight — while building systems that violate each of those principles at the engineering and product level. This happens not because the principles are insincere but because principles without operational implementation mechanisms are wishes, not constraints.</p>
+  <p>Concrete ethics operationalization requires embedding governance into the development process itself. <strong>Algorithmic impact assessments</strong> — structured pre-deployment analyses of a system's likely effects on different demographic groups — have been adopted by several jurisdictions as mandatory for high-risk AI applications. <strong>Red teaming</strong> subjects AI systems to adversarial testing by people actively trying to find failure modes, bias patterns, and safety issues before deployment. <strong>External audits</strong> bring independent reviewers with access to model internals, training data, and deployment context to assess whether claimed properties hold. <strong>Post-deployment monitoring</strong> tracks model performance disaggregated by demographic group over time, because model behavior drifts as real-world conditions change from training conditions.</p>
+  <p>The institutional requirement is that someone in the organization has both the responsibility and the authority to act on ethics findings. An ethics team that can identify problems but cannot block deployment, or that is organizationally positioned too far from engineering decisions to influence them early, provides reputational cover rather than risk management.</p>
+
+  <div class="good">
+    <div class="good-label">Best practice</div>
+    <p>The most robust AI ethics programs are those that treat ethics as an engineering constraint, not an afterthought — designing fairness metrics into model evaluation criteria from the start of development, requiring explainability for high-stakes decisions as a specification requirement rather than a retrofitted feature, and building audit trails from day one rather than attempting to reconstruct decision logs after a harm has occurred. Organizations that integrate ethics at the problem-definition stage consistently outperform those that add ethics review as a final deployment gate.</p>
+  </div>
+
+</div>
+</main>
+</div>
+
+<div class="sticky-bar">
+  <div class="sticky-bar-reading" id="sticky-reading">Read to the end to unlock the next module</div>
+  <div class="sticky-bar-track"><div class="sticky-bar-fill" id="sticky-fill"></div></div>
+  <div class="sticky-bar-label" id="sticky-label">0%</div>
+  <button class="sticky-bar-btn" id="sticky-btn" onclick="completeAndNext()">Module 5: Corporate AI Governance &#8594;</button>
+</div>
+
+<script>
+  function toggleTheme(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='☾'):(h.setAttribute('data-theme','dark'),i.textContent='☀');}
+  window.addEventListener('scroll',()=>{const d=document.documentElement,s=d.scrollTop||document.body.scrollTop,t=d.scrollHeight-d.clientHeight;document.getElementById('progress').style.width=(s/t*100)+'%';});
+  let unlocked=false;
+  function updateScrollProgress(){
+    const pct=Math.min(100,Math.round(((window.scrollY+window.innerHeight)/document.documentElement.scrollHeight)*100));
+    document.getElementById('sticky-fill').style.width=pct+'%';
+    document.getElementById('sticky-label').textContent=pct+'%';
+    if(pct>=95&&!unlocked){unlocked=true;document.getElementById('sticky-btn').style.display='block';document.getElementById('sticky-reading').style.display='none';document.getElementById('sticky-fill').style.background='#22c55e';document.getElementById('sticky-label').style.color='#22c55e';}
+  }
+  window.addEventListener('scroll',updateScrollProgress);updateScrollProgress();
+  function completeAndNext(){
+    if(window.__meridianSaveProgress){try{window.__meridianSaveProgress("m4");}catch(e){}}
+    setTimeout(function(){window.location.href="module-5.html";},120);
+  }
+</script>
+<script type="module">
+  import{initializeApp}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import{getAuth,onAuthStateChanged}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import{getFirestore,doc,setDoc,arrayUnion}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  const app=initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+  const auth=getAuth(app);const db=getFirestore(app);
+  let meridianUser=null;
+  onAuthStateChanged(auth,u=>{meridianUser=u;});
+  window.__meridianSaveProgress=async function(mValue){
+    if(!meridianUser)return;
+    try{await setDoc(doc(db,"users",meridianUser.uid),{governanceModules:arrayUnion(mValue)},{merge:true});}catch(e){}
+  };
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Course","name":"AI Governance","description":"A free, comprehensive course on AI governance — regulation, ethics, policy, and responsible AI implementation.","provider":{"@type":"Organization","name":"Meridian Institute of AI","url":"https://meridianinstituteai.com"},"url":"https://meridianinstituteai.com/courses/governance/module-4.html","isAccessibleForFree":true,"educationalLevel":"Intermediate","inLanguage":"en","teaches":"AI ethics, algorithmic bias, fairness, transparency, explainability, accountability"}
+</script>
+</body>
+</html>

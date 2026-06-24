@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 3: Prompting Gemini Effectively — Mastering Gemini — Meridian Institute of AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#4285f4;--accent-dim:rgba(66,133,244,0.1);--nav-bg:rgba(8,8,8,0.9);--callout-bg:rgba(66,133,244,0.07);--callout-border:rgba(66,133,244,0.25);--good-bg:rgba(34,197,94,0.07);--good-border:rgba(34,197,94,0.2);--bad-bg:rgba(239,68,68,0.07);--bad-border:rgba(239,68,68,0.2);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#1a73e8;--accent-dim:rgba(26,115,232,0.08);--nav-bg:rgba(250,250,248,0.9);--callout-bg:rgba(26,115,232,0.05);--callout-border:rgba(26,115,232,0.2);--good-bg:rgba(22,163,74,0.06);--good-border:rgba(22,163,74,0.2);--bad-bg:rgba(220,38,38,0.05);--bad-border:rgba(220,38,38,0.2);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;overflow-x:hidden;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.7;overflow-x:hidden;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}
+  .nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}
+  .nav-back{font-size:13px;color:var(--text-2);text-decoration:none;}
+  .nav-label{font-size:13px;color:var(--text-3);}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;}
+  .progress-bar{position:fixed;top:60px;left:0;right:0;z-index:99;height:2px;background:var(--border);}
+  .progress-fill{height:100%;background:var(--accent);width:0%;}
+  .page-wrapper{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:100vh;padding-top:62px;}
+  .sidebar{position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto;border-right:1px solid var(--border);padding:32px 24px;background:var(--bg-2);}
+  .sidebar-course{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;}
+  .sidebar-course-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+  .sidebar-module{margin-bottom:4px;}
+  .sidebar-module-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:13px;color:var(--text-2);text-decoration:none;transition:all 0.2s;line-height:1.4;}
+  .sidebar-module-link:hover{background:var(--bg-3);color:var(--text);}
+  .sidebar-module-link.active{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-num{font-size:11px;font-weight:500;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--bg-4);color:var(--text-3);}
+  .sidebar-module-link.active .sidebar-num{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-divider{height:1px;background:var(--border);margin:20px 0;}
+  .sidebar-progress-label{font-size:12px;color:var(--text-3);margin-bottom:8px;display:flex;justify-content:space-between;}
+  .sidebar-progress-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sidebar-progress-fill{height:100%;width:42%;background:var(--accent);border-radius:2px;}
+  main{display:block;min-width:0;}
+  .content{max-width:760px;width:100%;padding:60px 64px 140px;margin:0 auto;}
+  .module-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+  .module-tag{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(66,133,244,0.2);padding:4px 12px;border-radius:100px;}
+  .module-meta{font-size:12px;color:var(--text-3);}
+  h1{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1.05;letter-spacing:-0.02em;color:var(--text);margin-bottom:24px;}
+  .intro-text{font-size:19px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+  h2{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:400;color:var(--text);margin:52px 0 18px;line-height:1.2;}
+  h3{font-size:16px;font-weight:500;color:var(--text);margin:32px 0 12px;}
+  p{font-size:16px;font-weight:300;color:var(--text-2);line-height:1.8;margin-bottom:20px;}
+  strong{font-weight:500;color:var(--text);}
+  .callout{background:var(--callout-bg);border:1px solid var(--callout-border);border-radius:12px;padding:24px 28px;margin:32px 0;}
+  .callout-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+  .callout p{margin:0;font-size:15px;color:var(--text-2);}
+  .callout p+p{margin-top:12px;}
+  .good{background:var(--good-bg);border:1px solid var(--good-border);border-radius:12px;padding:20px 24px;margin:12px 0;}
+  .good-label{font-size:10px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:#22c55e;margin-bottom:10px;}
+  .bad{background:var(--bad-bg);border:1px solid var(--bad-border);border-radius:12px;padding:20px 24px;margin:12px 0;}
+  .bad-label{font-size:10px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:#ef4444;margin-bottom:10px;}
+  .good p,.bad p{margin:0;font-size:15px;color:var(--text-2);}
+  .prompt-text{font-size:14px;color:var(--text-2);line-height:1.7;white-space:pre-wrap;font-family:'DM Sans',sans-serif;}
+  .technique{background:var(--bg-2);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:0 12px 12px 0;padding:20px 24px;margin:16px 0;}
+  .technique-title{font-size:15px;font-weight:500;color:var(--text);margin-bottom:8px;}
+  .technique-desc{font-size:14px;color:var(--text-2);line-height:1.65;margin:0;}
+  .sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:var(--bg-2);border-top:1px solid var(--border-2);padding:14px 5%;display:flex;align-items:center;justify-content:space-between;gap:16px;backdrop-filter:blur(12px);}
+  .sticky-bar-track{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sticky-bar-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.2s;width:0%;}
+  .sticky-bar-label{font-size:12px;color:var(--text-3);white-space:nowrap;min-width:60px;text-align:right;}
+  .sticky-bar-btn{padding:10px 20px;border-radius:8px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;background:var(--accent);color:#fff;border:none;cursor:pointer;white-space:nowrap;transition:opacity 0.2s;display:none;}
+  .sticky-bar-reading{font-size:12px;color:var(--text-3);white-space:nowrap;}
+  @media(max-width:900px){.page-wrapper{grid-template-columns:1fr;}.sidebar{display:none;}.content{padding:40px 24px 120px;}h1{font-size:38px;}}
+</style>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="shortcut icon" href="/favicon.ico">
+<style>@media(max-width:480px){.nav-divider{display:none}.nav-left{gap:8px}}</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="../../index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="../../index.html" class="nav-back">Home</a>
+    <div class="nav-divider"></div>
+    <a href="../../courses.html" class="nav-back">← Mastering Gemini</a>
+    <div class="nav-divider"></div>
+    <span class="nav-label">Module 3</span>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">☀</span></button>
+</nav>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+<div class="page-wrapper">
+<aside class="sidebar">
+  <div class="sidebar-course">Course</div>
+  <div class="sidebar-course-name">Mastering Gemini</div>
+  <div class="sidebar-module"><a href="module-1.html" class="sidebar-module-link"><span class="sidebar-num">1</span>Understanding Gemini</a></div>
+  <div class="sidebar-module"><a href="module-2.html" class="sidebar-module-link"><span class="sidebar-num">2</span>The Gemini Model Lineup</a></div>
+  <div class="sidebar-module"><a href="module-3.html" class="sidebar-module-link active"><span class="sidebar-num">3</span>Prompting Gemini Effectively</a></div>
+  <div class="sidebar-module"><a href="module-4.html" class="sidebar-module-link"><span class="sidebar-num">4</span>Google Workspace Integration</a></div>
+  <div class="sidebar-module"><a href="module-5.html" class="sidebar-module-link"><span class="sidebar-num">5</span>Multimodal Capabilities</a></div>
+  <div class="sidebar-module"><a href="module-6.html" class="sidebar-module-link"><span class="sidebar-num">6</span>Gemini in the Real World</a></div>
+  <div class="sidebar-module"><a href="module-7.html" class="sidebar-module-link"><span class="sidebar-num">7</span>Gemini vs The Field</a></div>
+  <div class="sidebar-module"><a href="quiz.html" class="sidebar-module-link" style="color:var(--accent);margin-top:4px;"><span class="sidebar-num" style="background:var(--accent-dim);color:var(--accent);">✦</span>Final Assessment</a></div>
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-progress-label"><span>Course progress</span><span style="color:var(--accent);">3 / 7</span></div>
+  <div class="sidebar-progress-track"><div class="sidebar-progress-fill"></div></div>
+</aside>
+<main>
+<div class="content">
+  <div class="module-eyebrow"><span class="module-tag">Module 3</span><span class="module-meta">22 min read · Mastering Gemini</span></div>
+  <h1>Prompting Gemini Effectively</h1>
+  <p class="intro-text">Gemini has a distinct personality and set of strengths compared to Claude and ChatGPT. Its training on diverse multimodal data, its real-time grounding in Google Search, and its optimization for Google's product ecosystem create specific behaviors you should understand and prompt around. This module covers what works differently in Gemini and the techniques that unlock its best outputs.</p>
+
+  <h2>How Gemini's training shapes its behavior</h2>
+  <p>Gemini was trained on a significantly larger and more diverse multimodal dataset than most competitors — including text, images, audio, video, and code — processed simultaneously rather than separately. This creates a model that's naturally comfortable with cross-modal reasoning but sometimes less focused on pure text depth than Claude.</p>
+  <p><strong>Gemini thinks in connections.</strong> It naturally draws relationships across different types of information — connecting a concept in text to visual examples, linking code to documentation, relating current search results to underlying knowledge. Use this by giving it cross-modal tasks rather than purely sequential ones.</p>
+  <p><strong>Gemini leans toward current information.</strong> Its Search grounding makes it default toward referencing recent information when available. This is useful for current-events queries but can mean it cites recent sources when established knowledge would serve better. Specify when you want established knowledge vs. current information.</p>
+  <p><strong>Gemini is verbose by default.</strong> More so than Claude, Gemini tends toward comprehensive responses. If you want concision, specify it explicitly and enforce it — "Answer in 3 sentences. No more."</p>
+
+  <h2>Leveraging Google Search grounding</h2>
+  <p>One of Gemini's most distinctive prompting opportunities is its real-time connection to Google Search. When grounding is enabled, Gemini can pull current information into its responses in a way that goes beyond a training cutoff.</p>
+
+  <div class="technique">
+    <div class="technique-title">Explicitly triggering grounded research</div>
+    <div class="technique-desc">Phrases like "based on current information," "search for the latest," or "what is the current status of" signal Gemini to use search grounding rather than training data alone. For time-sensitive topics, always prompt for current information explicitly.</div>
+  </div>
+
+  <div class="technique">
+    <div class="technique-title">Asking for sourced responses</div>
+    <div class="technique-desc">Gemini cites sources when grounding is active. You can ask it to prioritize certain source types: "Find current information from peer-reviewed research" or "Cite only primary sources for these claims." This gives you more control over information quality than generic web search.</div>
+  </div>
+
+  <div class="technique">
+    <div class="technique-title">Separating search from synthesis</div>
+    <div class="technique-desc">Sometimes it's better to research and synthesize in separate steps: "First, search for and summarize the current landscape of [topic]. Then, based on that information, help me [specific task]." This gives you visibility into what Gemini found before it moves to synthesis.</div>
+  </div>
+
+  <h2>Prompting for the 1 million token context</h2>
+  <p>Gemini's long context window unlocks workflows that require explicit prompting strategies to use well.</p>
+
+  <h3>Loading documents at the start</h3>
+  <p>When working with long documents, load them at the beginning of the conversation with a brief framing statement: "I'm going to share [X documents] about [topic]. Please read all of them before responding to any questions." This signals that Gemini should fully process all content before answering rather than responding to whichever part it processes first.</p>
+
+  <h3>Asking cross-document questions</h3>
+  <p>With long context, Gemini can hold multiple documents simultaneously. Frame questions explicitly as cross-document: "Across all three documents I've shared, identify where they contradict each other" or "Compare how each document handles the question of [topic]." These questions are impossible without a large context window — and Gemini handles them well.</p>
+
+  <div class="good">
+    <div class="good-label">✓ Effective long-context prompt</div>
+    <div class="prompt-text">I'm sharing 5 quarterly earnings reports from [company]. Please read all of them before responding.
+
+[documents]
+
+Now: identify the three most significant trends across all five quarters, note any inconsistencies in how management discusses performance between quarters, and flag any forward-looking statements that didn't materialize in subsequent reports.</div>
+  </div>
+
+  <h2>Gemini's multimodal prompting</h2>
+  <p>Because Gemini is natively multimodal, you can prompt it to reason across different types of content simultaneously rather than treating each modality separately.</p>
+
+  <div class="bad">
+    <div class="bad-label">❌ Treating modalities separately</div>
+    <div class="prompt-text">Describe this image. [separate prompt] Now relate it to the text I shared earlier.</div>
+  </div>
+
+  <div class="good">
+    <div class="good-label">✓ Cross-modal reasoning prompt</div>
+    <div class="prompt-text">I'm sharing a design mockup image and the written product requirements document for the same product. Analyze them together and identify: where the design faithfully implements the requirements, where it deviates, and what requirements appear unaddressed in the design.</div>
+  </div>
+
+  <h2>Working with Gemini in Extensions</h2>
+  <p>When Gemini has access to your Google data through Extensions (Gmail, Drive, Docs, YouTube, etc.), your prompts can reference your actual data rather than hypotheticals. This changes what good prompting looks like.</p>
+  <p>Instead of providing context in the prompt, you can reference context that Gemini can find: "Look through my recent emails and find any threads related to [project]" or "Check my Drive for the proposal I was working on last week."</p>
+  <p>The key skill is being specific enough about what to find without being so specific that you'd have to remember the exact file name. "The Q3 budget proposal" works better than "a financial document" (too vague) or "Q3_Budget_Final_v3_REVISED.xlsx" (too exact).</p>
+
+  <h2>Gems — system prompts for recurring tasks</h2>
+  <p>Gems are Gemini's Custom Assistant feature (available on Gemini Advanced). You create a Gem once with specific instructions, and every conversation within that Gem starts with those instructions active. This is Gemini's version of Claude Projects or ChatGPT's Custom GPTs.</p>
+  <p>Effective Gem instructions follow the same principles as good system prompts: specify the role explicitly, define always-do and never-do behaviors, describe the output format, and give examples of what good looks like.</p>
+
+  <div class="good">
+    <div class="good-label">The prompting advantage that's unique to Gemini</div>
+    <p>Gemini's real-time search integration combined with its long context window creates a prompting capability no other tool has: you can load a large body of your own documents AND have Gemini ground its analysis in current external information simultaneously. Prompting that combines both — "Given these internal documents and current market research, analyze..." — is something Gemini can do that Claude and ChatGPT cannot match natively.</p>
+  </div>
+
+</div>
+</main>
+</div>
+<div class="sticky-bar">
+  <div class="sticky-bar-reading" id="sticky-reading">Read to the end to unlock the next module</div>
+  <div class="sticky-bar-track"><div class="sticky-bar-fill" id="sticky-fill"></div></div>
+  <div class="sticky-bar-label" id="sticky-label">0%</div>
+  <button class="sticky-bar-btn" id="sticky-btn" onclick="completeAndNext()">Module 4: Google Workspace Integration →</button>
+</div>
+<script>
+  function toggleTheme(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='☾'):(h.setAttribute('data-theme','dark'),i.textContent='☀');}
+  window.addEventListener('scroll',()=>{const d=document.documentElement,s=d.scrollTop||document.body.scrollTop,t=d.scrollHeight-d.clientHeight;document.getElementById('progress').style.width=(s/t*100)+'%';});
+  
+  let unlocked=false;
+  function updateScrollProgress(){const pct=Math.min(100,Math.round(((window.scrollY+window.innerHeight)/document.documentElement.scrollHeight)*100));document.getElementById('sticky-fill').style.width=pct+'%';document.getElementById('sticky-label').textContent=pct+'%';if(pct>=95&&!unlocked){unlocked=true;document.getElementById('sticky-btn').style.display='block';document.getElementById('sticky-reading').style.display='none';document.getElementById('sticky-fill').style.background='#22c55e';document.getElementById('sticky-label').style.color='#22c55e';}}
+  window.addEventListener('scroll',updateScrollProgress);updateScrollProgress();
+  function completeAndNext(){
+    if(window.__meridianSaveProgress){ try{ window.__meridianSaveProgress("m3"); }catch(e){} }
+    setTimeout(function(){ window.location.href="module-4.html"; }, 120);
+  }
+</script>
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import { getFirestore, doc, setDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  const app = initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+  const auth = getAuth(app); const db = getFirestore(app);
+  let meridianUser = null;
+  onAuthStateChanged(auth, u => { meridianUser = u; });
+  window.__meridianSaveProgress = async function(mValue){
+    if(!meridianUser) return;
+    try { await setDoc(doc(db,"users",meridianUser.uid), { geminiModules: arrayUnion(mValue) }, { merge: true }); } catch(e) {}
+  };
+</script>
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  const _gapp = initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+  const _gauth = getAuth(_gapp); const _gdb = getFirestore(_gapp);
+  onAuthStateChanged(_gauth, async (u) => {
+    if (!u) return;
+    try {
+      const snap = await getDoc(doc(_gdb, "users", u.uid));
+      const data = snap.exists() ? snap.data() : {};
+      const done = Array.isArray(data.geminiModules) ? data.geminiModules : [];
+      if (!done.includes("m2")) {
+        document.body.innerHTML = `<div style=\"min-height:100vh;display:flex;align-items:center;justify-content:center;background:#080808;font-family:DM Sans,sans-serif;padding:24px;\"><div style=\"max-width:440px;text-align:center;background:#111;border:1px solid rgba(255,255,255,0.08);border-radius:20px;padding:48px;\"><div style=\"font-size:48px;margin-bottom:20px;\">&#128274;</div><div style=\"font-size:20px;font-weight:500;color:#f0f0f0;margin-bottom:12px;\">Module locked</div><div style=\"font-size:14px;color:#a0a0a0;margin-bottom:28px;line-height:1.6;\">Complete the previous module before continuing.</div><a href=\"gemini-module-1.html\" style=\"display:inline-block;padding:12px 24px;background:#4285f4;color:#fff;border-radius:10px;font-size:14px;font-weight:500;text-decoration:none;\">&#8592; Back to the course</a></div></div>`;
+      }
+    } catch(e) {}
+  });
+</script>
+</body>
+</html>

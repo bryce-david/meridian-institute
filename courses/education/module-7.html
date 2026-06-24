@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Building Your AI Literacy — AI in Education — Meridian Institute of AI</title>
+<meta name="description" content="Free AI in Education course — module 7. Build a lasting framework for evaluating AI, using it as a thinking partner, and staying ahead as the field evolves.">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="Building Your AI Literacy — AI in Education — Meridian Institute of AI">
+<meta property="og:description" content="Free AI in Education course — module 7. Build a lasting framework for evaluating AI, using it as a thinking partner, and staying ahead as the field evolves.">
+<meta property="og:url" content="https://meridianinstituteai.com/courses/education/module-7.html">
+<meta property="og:type" content="website">
+<link rel="canonical" href="https://meridianinstituteai.com/courses/education/module-7.html">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#f59e0b;--accent-dim:rgba(245,158,11,0.1);--nav-bg:rgba(8,8,8,0.9);--callout-bg:rgba(245,158,11,0.07);--callout-border:rgba(245,158,11,0.25);--good-bg:rgba(34,197,94,0.07);--good-border:rgba(34,197,94,0.2);--warn-bg:rgba(251,146,60,0.07);--warn-border:rgba(251,146,60,0.2);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#d97706;--accent-dim:rgba(217,119,6,0.08);--nav-bg:rgba(250,250,248,0.9);--callout-bg:rgba(217,119,6,0.05);--callout-border:rgba(217,119,6,0.2);--good-bg:rgba(22,163,74,0.06);--good-border:rgba(22,163,74,0.2);--warn-bg:rgba(234,88,12,0.05);--warn-border:rgba(234,88,12,0.2);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;overflow-x:hidden;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.7;overflow-x:hidden;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}
+  .nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}
+  .nav-back{font-size:13px;color:var(--text-2);text-decoration:none;transition:color 0.2s;}
+  .nav-back:hover{color:var(--text);}
+  .nav-label{font-size:13px;color:var(--text-3);}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;transition:all 0.2s;}
+  .progress-bar{position:fixed;top:60px;left:0;right:0;z-index:99;height:2px;background:var(--border);}
+  .progress-fill{height:100%;background:var(--accent);width:0%;transition:width 0.1s;}
+  .page-wrapper{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:100vh;padding-top:62px;}
+  .sidebar{position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto;border-right:1px solid var(--border);padding:32px 24px;background:var(--bg-2);}
+  .sidebar-course{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;}
+  .sidebar-course-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+  .sidebar-module{margin-bottom:4px;}
+  .sidebar-module-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:13px;color:var(--text-2);text-decoration:none;transition:all 0.2s;line-height:1.4;}
+  .sidebar-module-link:hover{background:var(--bg-3);color:var(--text);}
+  .sidebar-module-link.active{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-num{font-size:11px;font-weight:500;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--bg-4);color:var(--text-3);}
+  .sidebar-module-link.active .sidebar-num{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-divider{height:1px;background:var(--border);margin:20px 0;}
+  .sidebar-progress-label{font-size:12px;color:var(--text-3);margin-bottom:8px;display:flex;justify-content:space-between;}
+  .sidebar-progress-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sidebar-progress-fill{height:100%;width:86%;background:var(--accent);border-radius:2px;}
+  main{display:block;min-width:0;}
+  .content{max-width:760px;width:100%;padding:60px 64px 140px;margin:0 auto;}
+  .module-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+  .module-tag{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(245,158,11,0.2);padding:4px 12px;border-radius:100px;}
+  .module-meta{font-size:12px;color:var(--text-3);}
+  h1{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1.05;letter-spacing:-0.02em;color:var(--text);margin-bottom:24px;}
+  .intro-text{font-size:19px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+  h2{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:400;color:var(--text);margin:52px 0 18px;line-height:1.2;}
+  h3{font-size:16px;font-weight:500;color:var(--text);margin:32px 0 12px;}
+  p{font-size:16px;font-weight:300;color:var(--text-2);line-height:1.8;margin-bottom:20px;}
+  strong{font-weight:500;color:var(--text);}
+  .callout{background:var(--callout-bg);border:1px solid var(--callout-border);border-radius:12px;padding:24px 28px;margin:32px 0;}
+  .callout-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+  .callout p{margin:0;font-size:15px;color:var(--text-2);}
+  .callout p+p{margin-top:12px;}
+  .good{background:var(--good-bg);border:1px solid var(--good-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .good-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#22c55e;margin-bottom:10px;}
+  .good p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn{background:var(--warn-bg);border:1px solid var(--warn-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .warn-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#fb923c;margin-bottom:10px;}
+  .warn p{margin:0;font-size:15px;color:var(--text-2);}
+  .comparison-wrapper{overflow-x:auto;-webkit-overflow-scrolling:touch;width:100%;margin:28px 0;}
+  table{width:100%;border-collapse:collapse;font-size:14px;min-width:480px;}
+  th{text-align:left;padding:12px 16px;font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-3);border-bottom:1px solid var(--border-2);}
+  td{padding:14px 16px;border-bottom:1px solid var(--border);color:var(--text-2);line-height:1.6;vertical-align:top;}
+  tr:last-child td{border-bottom:none;}
+  td:first-child{color:var(--text);font-weight:500;}
+  .principle-list{display:flex;flex-direction:column;gap:12px;margin:24px 0;}
+  .principle{background:var(--bg-2);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:0 12px 12px 0;padding:20px 24px;}
+  .principle-title{font-size:15px;font-weight:500;color:var(--text);margin-bottom:6px;}
+  .principle-desc{font-size:14px;color:var(--text-2);line-height:1.65;margin:0;}
+  .sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:var(--bg-2);border-top:1px solid var(--border-2);padding:14px 5%;display:flex;align-items:center;justify-content:space-between;gap:16px;backdrop-filter:blur(12px);}
+  .sticky-bar-track{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sticky-bar-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.2s;width:0%;}
+  .sticky-bar-label{font-size:12px;color:var(--text-3);white-space:nowrap;min-width:60px;text-align:right;}
+  .sticky-bar-btn{padding:10px 20px;border-radius:8px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;background:var(--accent);color:#fff;border:none;cursor:pointer;white-space:nowrap;transition:opacity 0.2s;display:none;}
+  .sticky-bar-btn:hover{opacity:0.88;}
+  .sticky-bar-reading{font-size:12px;color:var(--text-3);white-space:nowrap;}
+  @media(max-width:900px){.page-wrapper{grid-template-columns:1fr;}.sidebar{display:none;}.content{padding:40px 24px 120px;}h1{font-size:38px;}}
+  @media(max-width:600px){.content{padding:28px 16px 120px;}h1{font-size:30px;}h2{font-size:24px;}}
+</style>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="shortcut icon" href="/favicon.ico">
+<style>@media(max-width:480px){.nav-divider{display:none}.nav-left{gap:8px}}</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="../../index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="../../index.html" class="nav-back">Home</a>
+    <div class="nav-divider"></div>
+    <a href="../../courses.html" class="nav-back">← AI in Education</a>
+    <div class="nav-divider"></div>
+    <span class="nav-label">Module 7</span>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">☀</span></button>
+</nav>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+
+<div class="page-wrapper">
+<aside class="sidebar">
+  <div class="sidebar-course">Course</div>
+  <div class="sidebar-course-name">AI in Education</div>
+  <div class="sidebar-module"><a href="module-1.html" class="sidebar-module-link"><span class="sidebar-num">1</span>How AI is Transforming Education</a></div>
+  <div class="sidebar-module"><a href="module-2.html" class="sidebar-module-link"><span class="sidebar-num">2</span>AI Tutoring and Personalized Learning</a></div>
+  <div class="sidebar-module"><a href="module-3.html" class="sidebar-module-link"><span class="sidebar-num">3</span>Using AI as a Student</a></div>
+  <div class="sidebar-module"><a href="module-4.html" class="sidebar-module-link"><span class="sidebar-num">4</span>AI Tools for Educators</a></div>
+  <div class="sidebar-module"><a href="module-5.html" class="sidebar-module-link"><span class="sidebar-num">5</span>Academic Integrity in the AI Era</a></div>
+  <div class="sidebar-module"><a href="module-6.html" class="sidebar-module-link"><span class="sidebar-num">6</span>The Future Classroom</a></div>
+  <div class="sidebar-module"><a href="module-7.html" class="sidebar-module-link active"><span class="sidebar-num">7</span>Building Your AI Literacy</a></div>
+  <div class="sidebar-module"><a href="quiz.html" class="sidebar-module-link" style="color:var(--accent);margin-top:4px;"><span class="sidebar-num" style="background:var(--accent-dim);color:var(--accent);">✦</span>Final Assessment</a></div>
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-progress-label"><span>Course progress</span><span style="color:var(--accent);">6 / 7</span></div>
+  <div class="sidebar-progress-track"><div class="sidebar-progress-fill"></div></div>
+</aside>
+
+<main>
+<div class="content">
+  <div class="module-eyebrow"><span class="module-tag">Module 7</span><span class="module-meta">20 min read · AI in Education</span></div>
+  <h1>Building Your AI Literacy</h1>
+  <p class="intro-text">AI literacy is not a fixed credential — it is a continuous practice. The tools will change, the models will improve, and the applications will expand. What remains constant is the need for a mental framework: understanding what AI can and cannot do, how to evaluate its outputs, how to use it as a thinking partner rather than a crutch, and how to stay ahead of the changes rather than always catching up.</p>
+
+  <h2>What AI Literacy Actually Means</h2>
+  <p>AI literacy is frequently confused with technical knowledge — the ability to write code, train models, or understand transformer architectures. That is AI expertise, and it matters for the people building AI systems. AI literacy is different: it is the set of conceptual and practical capabilities that any educated person needs to navigate a world where AI is a pervasive tool and infrastructure. A doctor who prescribes medication does not need to be a pharmacologist. A driver does not need to be a mechanical engineer. A person who uses AI tools daily does not need to understand backpropagation.</p>
+  <p>What AI literacy does require is a conceptual understanding of what AI systems do — that they generate plausible continuations of patterns based on training data, that they have no access to real-time information unless given tools to retrieve it, that they can be confidently wrong, that their outputs reflect the distribution of their training data and its biases. With that conceptual foundation, a person can evaluate AI outputs critically rather than accepting them as authoritative. They can understand why AI hallucinates, why it performs differently across languages and domains, and why its ethical blind spots exist.</p>
+  <p>The National AI Literacy Project identifies five competencies that together constitute AI literacy: Know (understanding what AI is and how it works at a conceptual level), Use (being able to operate AI tools effectively for real goals), Evaluate (assessing AI output critically for accuracy, bias, and completeness), Ethics (understanding the social and ethical implications of AI in context), and Action (being able to make informed decisions about how and when to use AI, and how to advocate for responsible AI in your community). These five competencies describe a genuinely literate person in an AI-saturated world.</p>
+
+  <h2>A Framework for Critical AI Evaluation</h2>
+  <p>The most practical skill in AI literacy is knowing how to evaluate what an AI gives you. AI tools generate output with a confidence that does not correlate with accuracy. A model that produces a fluent, well-structured paragraph about the causes of World War I is applying the same mechanism as one that produces a fluent, well-structured paragraph about a historical event that didn't happen. The output looks identical. The reliability is not.</p>
+  <p>A four-step evaluation framework provides a repeatable process for any AI output. The source check asks: did the AI cite specific, verifiable sources, and do those sources actually say what the AI claims? Models frequently hallucinate citations — producing plausible-sounding journal articles, court cases, or statistics that don't exist. The logic check asks: does the reasoning actually hold, or does the argument have gaps that the confident tone obscures? AI can produce internally consistent-sounding arguments that contain logical fallacies or unjustified leaps. The bias check asks: does the framing of this response reflect a particular perspective that should be named? Models trained predominantly on English-language Western data have systematic blind spots about other cultural and regional contexts. The completeness check asks: what important perspective, fact, or consideration is missing from this answer?</p>
+  <p>These four checks do not require expert knowledge. They require the habit of treating AI output as a starting point rather than an endpoint — a first draft to be interrogated, not a final answer to be accepted. Students who develop this habit are better positioned to use AI as a genuine cognitive tool rather than a shortcut that bypasses their own thinking.</p>
+
+  <div class="comparison-wrapper">
+    <table>
+      <tr><th>Evaluation Type</th><th>Question to Ask</th><th>Common Failure Mode</th></tr>
+      <tr><td>Source Check</td><td>Are the cited sources real and do they actually support this claim?</td><td>Hallucinated citations — plausible-looking references that don't exist or don't say what's claimed</td></tr>
+      <tr><td>Logic Check</td><td>Does the reasoning actually hold, or does the confident tone obscure a gap?</td><td>Fluent non sequiturs — arguments that sound coherent but contain unjustified leaps</td></tr>
+      <tr><td>Bias Check</td><td>Does this framing reflect a particular cultural or ideological perspective that should be named?</td><td>Unmarked Western or English-language defaults presented as universal truths</td></tr>
+      <tr><td>Completeness Check</td><td>What important perspective, fact, or counterargument is missing from this answer?</td><td>Truncated complexity — accurate as far as it goes, but omitting the parts that make the question hard</td></tr>
+    </table>
+  </div>
+
+  <h2>Building Your Personal Learning System with AI</h2>
+  <p>The most powerful use of AI in personal learning is not as a replacement for thinking but as a Socratic partner that accelerates the thinking process. The Feynman technique — explaining a concept in plain language as if teaching it to someone unfamiliar — is one of the most reliable methods for identifying gaps in your own understanding. AI makes this dramatically more actionable: explain a concept to an AI, then ask it to probe your explanation, ask follow-up questions, and identify where your understanding is thin. The AI's pushback is not always accurate, but the process of defending your explanation forces you to encounter the limits of what you actually know.</p>
+  <p>AI as Socratic partner is a related technique: rather than asking AI to explain something to you, ask it to challenge your current understanding. Give it your position on a question and ask it to argue the strongest possible counterargument. Ask it to identify three things your view fails to account for. This approach uses AI's capacity to generate strong counterarguments to strengthen your own reasoning rather than to replace it. The goal is not to find out what the AI thinks — it's to stress-test what you think.</p>
+  <p>Spaced repetition — practicing retrieval of material at increasing time intervals — is the most evidence-backed method for long-term retention. AI makes spaced repetition generation trivially easy: after learning any concept, ask an AI to generate 10 practice questions at different difficulty levels, then return to those questions 24 hours later, 3 days later, and a week later. The cognitive work of retrieving and answering, rather than passively rereading, is what produces durable memory.</p>
+
+  <div class="callout">
+    <div class="callout-label">Research on active retrieval</div>
+    <p>Research from Carnegie Mellon found that students who used AI to generate practice questions and then explained their answers aloud retained material at rates 35% higher than students who reviewed notes passively. The key variable was not the AI — it was the active retrieval combined with the self-explanation. AI made the process easier to initiate, but the learning mechanism was the student's own cognitive effort.</p>
+  </div>
+
+  <h2>Staying Current in a Fast-Moving Field</h2>
+  <p>The volume of AI developments has made staying current feel impossible. A new model releases. A new benchmark is set. A new application category emerges. A paper claims a major breakthrough. Most of this noise is not signal. The goal is not to track every announcement but to develop pattern recognition for what matters — new capabilities that change what AI can do, new evidence that changes what we know about AI's impacts, and new policy developments that change how AI can be used in educational or professional contexts.</p>
+  <p>The most reliable signal sources are primary ones: arXiv for research papers (the cs.AI and cs.LG sections filter for the relevant work), major AI lab blogs (Anthropic, OpenAI, Google DeepMind publish substantive technical updates), and curated newsletters that apply editorial judgment. The Batch by Andrew Ng's deeplearning.ai team provides weekly synthesis that prioritizes what matters over what's merely new. Import AI by Jack Clark gives technically rigorous coverage of research developments. LMSYS Chatbot Arena provides continuously updated, crowd-sourced benchmarks for comparing model capabilities across tasks. Following these sources while ignoring the breathless tech journalism that amplifies each minor update gives you genuine signal without exhausting noise.</p>
+
+  <h2>From Literacy to Action</h2>
+  <p>AI literacy without application is just trivia. The framework, the evaluation habits, the Socratic techniques, the awareness of where AI is and isn't reliable — these matter because they change how you work, learn, and think. The students and professionals who will be most effective in an AI-saturated world are not those who know the most about AI abstractly but those who have built the practical habits of using it as a genuine cognitive tool: prompting with specificity, evaluating outputs with rigor, building on AI-generated drafts with their own judgment, and knowing when to set AI aside entirely and think without it.</p>
+  <p>Completing this course puts you in a small minority. Most students who encounter AI use it reactively — they paste in an assignment prompt and accept the output. Most teachers who are concerned about AI focus on detection rather than integration. Most administrators writing AI policies are copying language from other institutions rather than thinking carefully about what learning objectives their policies are designed to protect. The conceptual framework this course provides — understanding what AI is, how to evaluate it, how to use it for learning rather than against it, and how to think about the policy and ethical dimensions — is not widely held.</p>
+  <p>The field will continue to move. Models will improve. New applications will emerge. Some tools that exist today will be obsolete in two years. What will remain stable is the need for the foundational literacy this course has built: critical evaluation of AI output, understanding of where AI fails and why, the ability to use AI as a thinking partner while preserving your own independent thinking, and the judgment to know when AI is helpful and when it isn't. These are durable skills in a field where the specific tools change constantly.</p>
+
+  <div class="good">
+    <div class="good-label">Your competitive advantage</div>
+    <p>The World Economic Forum estimates that AI literacy will be among the top 5 most demanded skills across industries by 2027. Students who develop it now are positioned years ahead of where the labor market will formally demand it. The employers, graduate schools, and institutions you will encounter in the next several years are building the infrastructure to assess and reward AI competency. Having that competency before it becomes a standard requirement is a genuine advantage — and you've built the foundation for it here.</p>
+  </div>
+
+</div>
+</main>
+</div>
+
+<div class="sticky-bar">
+  <div class="sticky-bar-reading" id="sticky-reading">Read to the end to unlock the final assessment</div>
+  <div class="sticky-bar-track"><div class="sticky-bar-fill" id="sticky-fill"></div></div>
+  <div class="sticky-bar-label" id="sticky-label">0%</div>
+  <button class="sticky-bar-btn" id="sticky-btn" onclick="completeAndNext()">Final Assessment →</button>
+</div>
+
+<script>
+  function toggleTheme(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='☾'):(h.setAttribute('data-theme','dark'),i.textContent='☀');}
+  window.addEventListener('scroll',()=>{const d=document.documentElement,s=d.scrollTop||document.body.scrollTop,t=d.scrollHeight-d.clientHeight;document.getElementById('progress').style.width=(s/t*100)+'%';});
+  let unlocked=false;
+  function updateScrollProgress(){
+    const pct=Math.min(100,Math.round(((window.scrollY+window.innerHeight)/document.documentElement.scrollHeight)*100));
+    document.getElementById('sticky-fill').style.width=pct+'%';
+    document.getElementById('sticky-label').textContent=pct+'%';
+    if(pct>=95&&!unlocked){unlocked=true;document.getElementById('sticky-btn').style.display='block';document.getElementById('sticky-reading').style.display='none';document.getElementById('sticky-fill').style.background='#22c55e';document.getElementById('sticky-label').style.color='#22c55e';}
+  }
+  window.addEventListener('scroll',updateScrollProgress);updateScrollProgress();
+  function completeAndNext(){
+    if(window.__meridianSaveProgress){ try{ window.__meridianSaveProgress("m7"); }catch(e){} }
+    setTimeout(function(){ window.location.href="quiz.html"; }, 120);
+  }
+</script>
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import { getFirestore, doc, setDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  const app = initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+  const auth = getAuth(app); const db = getFirestore(app);
+  let meridianUser = null;
+  onAuthStateChanged(auth, u => { meridianUser = u; });
+  window.__meridianSaveProgress = async function(mValue){
+    if(!meridianUser) return;
+    try { await setDoc(doc(db,"users",meridianUser.uid), { educationModules: arrayUnion(mValue) }, { merge: true }); } catch(e) {}
+  };
+</script>
+</body>
+</html>

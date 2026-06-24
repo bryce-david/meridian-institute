@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Final Assessment — AI in Cybersecurity — Meridian Institute of AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#ef4444;--accent-dim:rgba(239,68,68,0.1);--nav-bg:rgba(8,8,8,0.9);--success:#22c55e;--success-bg:rgba(34,197,94,0.08);--success-border:rgba(34,197,94,0.25);--fail-bg:rgba(239,68,68,0.08);--fail-border:rgba(239,68,68,0.25);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#dc2626;--accent-dim:rgba(220,38,38,0.08);--nav-bg:rgba(250,250,248,0.9);--success:#16a34a;--success-bg:rgba(22,163,74,0.06);--success-border:rgba(22,163,74,0.25);--fail-bg:rgba(220,38,38,0.06);--fail-border:rgba(220,38,38,0.25);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}
+  .nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}.nav-back{font-size:13px;color:var(--text-2);text-decoration:none;}.nav-back:hover{color:var(--text);}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;}
+  .page{max-width:680px;margin:0 auto;padding:90px 24px 80px;}
+  .quiz-eyebrow{font-size:11px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:12px;}
+  .quiz-title{font-family:'Cormorant Garamond',serif;font-size:42px;font-weight:300;color:var(--text);line-height:1.1;margin-bottom:12px;}
+  .quiz-sub{font-size:15px;color:var(--text-2);line-height:1.7;margin-bottom:28px;}
+  .quiz-rules{background:var(--bg-2);border:1px solid var(--border);border-radius:12px;padding:18px 22px;margin-bottom:28px;display:flex;gap:20px;flex-wrap:wrap;}
+  .quiz-rule{font-size:13px;color:var(--text-2);display:flex;align-items:center;gap:8px;}
+  .btn-start{padding:14px 32px;background:var(--accent);color:#fff;border-radius:10px;font-size:15px;font-weight:500;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;margin-top:4px;}
+  #quiz-section{display:none;}
+  .progress-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;}
+  .progress-label{font-size:13px;color:var(--text-3);}
+  .progress-track{height:3px;background:var(--border);border-radius:2px;overflow:hidden;margin-bottom:36px;}
+  .progress-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.3s;}
+  .question-num{font-size:11px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:14px;}
+  .question-text{font-family:'Cormorant Garamond',serif;font-size:27px;font-weight:400;color:var(--text);line-height:1.35;margin-bottom:28px;}
+  .options{display:flex;flex-direction:column;gap:10px;margin-bottom:24px;}
+  .option{display:flex;align-items:flex-start;gap:14px;padding:15px 18px;border:1px solid var(--border-2);border-radius:12px;cursor:pointer;transition:all 0.18s;background:var(--bg-2);}
+  .option:hover{border-color:var(--accent);background:var(--accent-dim);}
+  .option.selected{border-color:var(--accent);background:var(--accent-dim);}
+  .option.correct{border-color:var(--success);background:var(--success-bg);cursor:default;}
+  .option.wrong{border-color:#ef4444;background:var(--fail-bg);cursor:default;}
+  .option.disabled{cursor:default;opacity:0.55;}
+  .option-letter{width:26px;height:26px;border-radius:6px;background:var(--bg-3);border:1px solid var(--border-2);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:500;color:var(--text-3);flex-shrink:0;margin-top:2px;}
+  .option.selected .option-letter{background:var(--accent);color:#fff;border-color:var(--accent);}
+  .option.correct .option-letter{background:var(--success);color:#fff;border-color:var(--success);}
+  .option.wrong .option-letter{background:#ef4444;color:#fff;border-color:#ef4444;}
+  .option-text{font-size:15px;color:var(--text-2);line-height:1.55;}
+  .option.selected .option-text,.option.correct .option-text{color:var(--text);}
+  .feedback{padding:16px 20px;border-radius:10px;font-size:14px;line-height:1.65;margin-bottom:20px;display:none;}
+  .feedback.show{display:block;}
+  .feedback.correct{background:var(--success-bg);border:1px solid var(--success-border);color:var(--success);}
+  .feedback.wrong{background:var(--fail-bg);border:1px solid var(--fail-border);color:#ef4444;}
+  .btn-next{padding:12px 28px;background:var(--accent);color:#fff;border-radius:9px;font-size:14px;font-weight:500;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;display:none;}
+  .btn-next.show{display:inline-block;}
+  #result-section{display:none;text-align:center;padding:20px 0;}
+  .result-icon{font-size:64px;margin-bottom:20px;}
+  .result-title{font-family:'Cormorant Garamond',serif;font-size:42px;font-weight:300;color:var(--text);margin-bottom:12px;}
+  .result-score{font-size:56px;font-weight:300;font-family:'Cormorant Garamond',serif;margin:20px 0;}
+  .result-score.pass{color:var(--success);}.result-score.fail{color:#ef4444;}
+  .result-message{font-size:16px;color:var(--text-2);line-height:1.7;max-width:520px;margin:0 auto 32px;}
+  .result-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
+  .btn-result{padding:13px 28px;border-radius:10px;font-size:14px;font-weight:500;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;text-decoration:none;display:inline-block;}
+  .btn-primary{background:var(--accent);color:#fff;}.btn-ghost{background:transparent;color:var(--text-2);border:1px solid var(--border-2);}
+  @media(max-width:600px){.quiz-title{font-size:34px;}.question-text{font-size:23px;}}
+</style>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="shortcut icon" href="/favicon.ico">
+<style>@media(max-width:480px){.nav-divider{display:none}.nav-left{gap:8px}}</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="../../index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="../../index.html" class="nav-back">Home</a>
+    <div class="nav-divider"></div>
+    <a href="../../courses.html" class="nav-back">← AI in Cybersecurity</a>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">☀</span></button>
+</nav>
+<div class="page">
+  <div id="start-section">
+    <div class="quiz-eyebrow">Final Assessment · AI in Cybersecurity</div>
+    <div class="quiz-title">Test Your Knowledge</div>
+    <div class="quiz-sub">25 questions drawn from a pool of 30+. These are application questions — they test whether you can use the concepts, not just recall them. You need 70% to pass and earn your certificate.</div>
+    <div class="quiz-rules">
+      <div class="quiz-rule">📋 25 of 30+ questions per attempt</div>
+      <div class="quiz-rule">✅ 70% to pass (18 of 25)</div>
+      <div class="quiz-rule">🔀 Randomized each attempt</div>
+      <div class="quiz-rule">🏆 Pass to earn your certificate</div>
+    </div>
+    <button class="btn-start" onclick="startQuiz()">Begin Assessment →</button>
+  </div>
+  <div id="quiz-section">
+    <div class="progress-header">
+      <span class="progress-label" id="progress-label">Question 1 of 25</span>
+      <span class="progress-label" id="score-label">0 correct</span>
+    </div>
+    <div class="progress-track"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+    <div class="question-num" id="question-num">Question 1</div>
+    <div class="question-text" id="question-text"></div>
+    <div class="options" id="options"></div>
+    <div class="feedback" id="feedback"></div>
+    <button class="btn-next" id="btn-next" onclick="nextQuestion()">Next Question →</button>
+  </div>
+  <div id="result-section">
+    <div class="result-icon" id="result-icon"></div>
+    <div class="result-title" id="result-title"></div>
+    <div class="result-score" id="result-score"></div>
+    <div class="result-message" id="result-message"></div>
+    <div class="result-actions" id="result-actions"></div>
+  </div>
+</div>
+<script type="module">
+import{initializeApp}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import{getAuth,onAuthStateChanged}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import{getFirestore,doc,updateDoc,setDoc,arrayUnion}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+const app=initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+const auth=getAuth(app);const db=getFirestore(app);let currentUser=null;
+onAuthStateChanged(auth,u=>{currentUser=u;});
+
+const ALL_QUESTIONS=[
+{"q":"The global AI in cybersecurity market was valued at $24.8 billion in 2024. What is the primary driver of this growth?","options":["AI reduces the need for human security staff, cutting costs dramatically","The same AI capabilities that power attacks also power defenses, making AI investment mandatory for both sides","Government mandates require all enterprises to adopt AI security tools by 2026","AI security tools are cheaper than traditional signature-based systems"],"answer":1,"explain":"The dual-use nature of AI — equally powerful for offense and defense — means both attackers and defenders must invest in AI capabilities, driving the market expansion."},
+{"q":"What is the fundamental weakness of signature-based security that AI-native security addresses?","options":["Signature-based systems are too expensive for most organizations","Signature systems are completely blind to threats they haven't seen before; AI detects anomalous patterns without prior knowledge","Signature-based systems require too much computing power","Signature systems cannot protect cloud environments"],"answer":1,"explain":"Signature-based detection must know a threat to recognize it. AI-native systems identify anomalous behavior patterns, catching novel threats that have no existing signature."},
+{"q":"CrowdStrike recorded a breakout time of 2 minutes and 7 seconds. What does this statistic specifically mean?","options":["The time for CrowdStrike's AI to detect and respond to an intrusion","The time from initial compromise to lateral movement across an enterprise network by a threat actor","The time required to deploy a security patch after a vulnerability is discovered","The time for a human analyst to review and escalate a security alert"],"answer":1,"explain":"Breakout time measures how fast an attacker moves from initial access to lateral movement within a network — 2 minutes 7 seconds is faster than any human-in-the-loop security process can respond."},
+{"q":"Why is the dual-use nature of AI in security described as having 'no clean resolution'?","options":["Because AI tools are too expensive for defenders but cheap for attackers","Because the same algorithms used to detect threats can be used to evade detection, and advances propagate to both sides rapidly","Because AI security tools are classified and cannot be shared between organizations","Because international law prohibits defensive AI but allows offensive AI"],"answer":1,"explain":"The underlying techniques are identical for offense and defense. When defenders publish advances, attackers begin probing those specific systems. There is no way to make AI defensive-only."},
+{"q":"What does an AI-native SIEM platform do differently from a traditional SIEM?","options":["It replaces human analysts entirely with automated responses","It continuously trains on organizational telemetry and prioritizes alerts by patient-specific risk context instead of firing on every rule match","It only monitors cloud environments while traditional SIEMs handle on-premises","It requires no configuration, using out-of-the-box rules for all environments"],"answer":1,"explain":"AI-native SIEMs learn normal patterns for a specific organization and use ML to prioritize alerts by actual risk, dramatically reducing alert fatigue compared to rule-based systems."},
+{"q":"What is a data poisoning attack against an AI security model?","options":["An attacker deletes the training data used by a security model","An attacker injects malicious samples into the training data so the model learns to misclassify certain threats as benign","An attacker overwhelms the model with too many queries to cause a denial of service","An attacker steals the model's weights to use in their own systems"],"answer":1,"explain":"Data poisoning involves injecting carefully crafted malicious examples into the training set, causing the model to learn incorrect decision boundaries — for example, treating a specific malware variant as benign traffic."},
+{"q":"Zero Trust architecture is based on which foundational principle?","options":["Trust internal users but verify external users","Verify every access request regardless of network location, and assume any system may be compromised","Build stronger perimeter firewalls to keep attackers out of the network","Encrypt all data at rest and in transit to make breaches less harmful"],"answer":1,"explain":"Zero Trust's core principle is 'never trust, always verify' — no user, device, or system receives standing trust based on location or prior authentication. Every access request is verified."},
+{"q":"How does AI enhance Zero Trust's 'continuous validation' principle?","options":["AI replaces the need for MFA by analyzing behavioral patterns instead of requiring passwords","AI enables real-time behavioral authentication that continuously monitors for anomalous patterns throughout a session, not just at login","AI reduces the computational cost of encryption, making continuous validation affordable","AI generates the access policies that define what is and isn't allowed in a Zero Trust environment"],"answer":1,"explain":"Traditional authentication is a one-time gate at login. AI-powered behavioral authentication continuously monitors user and entity behavior throughout the session, revoking access if patterns become anomalous."},
+{"q":"What is the MITRE ATT&CK framework and how does AI use it?","options":["A proprietary AI system for detecting malware, licensed to enterprises","A knowledge base of adversary tactics, techniques, and procedures; AI systems map observed behaviors to ATT&CK entries to identify attack patterns","A government certification standard for AI security tools","A framework for training security analysts on AI tools"],"answer":1,"explain":"MITRE ATT&CK is a publicly available knowledge base of real-world adversary TTPs. AI systems automatically map detected behaviors to ATT&CK entries, enabling faster identification of attack campaigns and threat actor attribution."},
+{"q":"According to IBM X-Force research, what was the impact of AI-augmented SOC teams on mean time to respond?","options":["AI-augmented teams responded 15% faster on average","AI-augmented SOC teams reduced mean time to respond by 55% compared to all-human teams","AI-augmented teams had no significant impact on response time but improved alert accuracy","AI-augmented teams responded faster but with a higher false positive rate"],"answer":1,"explain":"IBM X-Force found that AI-augmented SOC teams reduced mean time to respond by 55% — a dramatic improvement enabled by AI handling tier-1 triage automatically so humans can focus on complex investigation."},
+{"q":"What percentage of major enterprise breaches involve stolen credentials, according to the Verizon Data Breach Report?","options":["About 40% of breaches involve stolen credentials","More than 80% of breaches involve stolen or compromised credentials","Stolen credentials account for about 20% of breaches","Credentials are involved in roughly 60% of breaches"],"answer":1,"explain":"The Verizon DBIR consistently reports that 80%+ of breaches involve stolen or compromised credentials — which is why identity has become the new perimeter in modern security architecture."},
+{"q":"What is behavioral biometrics and why is it harder to steal than passwords?","options":["Biometrics tied to physical characteristics like fingerprints, which can be copied from surfaces","Continuous analysis of how a user interacts with a device — keystroke dynamics, mouse movement, typing rhythm — creating a behavioral fingerprint unique to each individual","A form of multi-factor authentication using a hardware token","Voice-based authentication using recorded speech patterns"],"answer":1,"explain":"Behavioral biometrics measure subtle interaction patterns that are difficult to consciously imitate and impossible to capture from a database breach — unlike passwords or even fingerprints, which can be stolen and replayed."},
+{"q":"What is Identity Threat Detection and Response (ITDR)?","options":["A category of tools that reset compromised passwords automatically","A security discipline and toolset focused on detecting and responding to identity-based attacks — like impossible travel, privilege escalation, and lateral movement using legitimate credentials","A regulatory compliance framework for identity verification","An MFA system that requires multiple forms of identity proof before granting access"],"answer":1,"explain":"ITDR focuses specifically on detecting when legitimate credentials are being used maliciously — anomalous patterns that traditional IAM systems, which only verify identity at login, completely miss."},
+{"q":"A user logs in from New York at 9am and then from Tokyo at 10am. What AI security concept flags this?","options":["Password spraying detection","Impossible travel detection — a signal that credentials have been stolen and are being used from a different location","Privilege escalation detection","Session hijacking detection"],"answer":1,"explain":"Impossible travel detection identifies when a credential is used from locations that would require physical travel time that doesn't match the login gap — a strong indicator of stolen credentials being used by an attacker in a different location."},
+{"q":"How did deepfakes enable the 2024 Hong Kong fraud that cost HK$200 million?","options":["Attackers used deepfakes to create a fake website impersonating the company's CFO","An employee attended a video conference where all participants — including the CFO and colleagues — were AI-generated deepfakes convincing enough to authorize a $25 million transfer","Attackers used deepfake audio in a phone call to authorize a wire transfer","Deepfaked documents were submitted to the bank as transfer authorization"],"answer":1,"explain":"The employee saw and heard what appeared to be a video call with his actual CFO and colleagues. All were deepfakes. This case represents the frontier of video deepfake-enabled fraud — defeating even in-person visual and audio verification."},
+{"q":"What is liveness detection in biometric authentication and why does it matter?","options":["A test that verifies the user is awake during the authentication process","A technique that determines whether the biometric sample being presented is from a live person or a reproduction (photo, video, or 3D mask) — preventing presentation attacks","A continuous monitoring system that verifies the same person who logged in is still using the system","An AI system that detects if a voice recording is being used instead of live speech"],"answer":1,"explain":"Liveness detection prevents presentation attacks — using a photo, video replay, or 3D mask to fool a facial recognition system. Without liveness detection, even high-accuracy facial recognition is vulnerable to simple spoofing with a photograph."},
+{"q":"What is 'harvest now, decrypt later' and why is post-quantum cryptography urgent?","options":["A strategy for collecting log data now to analyze for threats later","Adversaries are capturing encrypted network traffic today with the intent to decrypt it when quantum computers become capable of breaking current encryption — making current data already at risk","A data backup strategy that prioritizes current backups over historical archives","A technique for extracting decryption keys from compromised systems"],"answer":1,"explain":"If an adversary captures RSA-encrypted traffic today and stores it, a future quantum computer could decrypt it retroactively. Data encrypted now that needs to remain secret for 10+ years is already at risk from this strategy."},
+{"q":"NIST finalized post-quantum cryptographic standards in 2024. Which algorithms were selected?","options":["AES-256 and SHA-3, which were already quantum-resistant","CRYSTALS-Kyber for key encapsulation and CRYSTALS-Dilithium for digital signatures","RSA-4096 and ECC P-521, with increased key lengths for quantum resistance","NTRU and McEliece, which had been developed in the 1990s"],"answer":1,"explain":"NIST's 2024 post-quantum standards selected CRYSTALS-Kyber (ML-KEM) for key encapsulation and CRYSTALS-Dilithium (ML-DSA) for digital signatures — both based on lattice cryptography that is computationally hard for both classical and quantum computers."},
+{"q":"The EU AI Act creates mandatory security requirements for which category of AI systems?","options":["All AI systems deployed in EU member states regardless of risk level","High-risk AI systems — those in regulated sectors or making decisions that significantly affect individuals","Only AI systems developed by companies with more than 1,000 employees","AI systems that process personal data of EU citizens"],"answer":1,"explain":"The EU AI Act takes a risk-based approach. High-risk AI systems — including those in healthcare, education, employment, and critical infrastructure — face mandatory conformity assessments, documentation, and security requirements."},
+{"q":"What does the SEC's cybersecurity disclosure rule require of public companies?","options":["Annual disclosure of all cybersecurity tools and vendors used","Reporting material cybersecurity incidents within 4 business days of determining materiality","Quarterly cybersecurity risk assessments filed with the SEC","Mandatory disclosure of any AI tools used for security purposes"],"answer":1,"explain":"The SEC's 2023 cybersecurity disclosure rule requires public companies to disclose material cybersecurity incidents within 4 business days of determining the incident is material — and to make annual disclosures about cybersecurity risk management."},
+{"q":"According to Gartner, what percentage of organizations will deploy autonomous AI security response by 2028?","options":["About 15% of organizations","40% of organizations — up from less than 5% in 2024","Nearly all major enterprises — over 80%","Only government and defense organizations will deploy autonomous response"],"answer":1,"explain":"Gartner projects 40% autonomous AI security response deployment by 2028, up from under 5% in 2024 — representing rapid adoption as the technology matures and the speed advantage of autonomous response becomes undeniable."},
+{"q":"What is adversarial machine learning and what is the primary defense against it?","options":["Hackers training competing AI models to replace security models; defense is stronger encryption","Crafting inputs specifically designed to fool an AI model's classification; defenses include adversarial training (training on adversarial examples), input validation, and ensemble models","Malware that targets the hardware running AI security systems; defense is hardware security modules","SQL injection attacks against AI training databases; defense is parameterized queries"],"answer":1,"explain":"Adversarial examples are inputs crafted with imperceptible perturbations that cause models to misclassify them confidently. Adversarial training — including adversarial examples in the training set — is the primary defense, alongside input validation and ensemble approaches."},
+{"q":"What is the primary function of just-in-time access provisioning in AI-enhanced PAM?","options":["Granting permanent access to privileged accounts upon role assignment","Eliminating standing privileged access by provisioning rights only for specific tasks and revoking them immediately after — reducing the attack surface of privileged credentials","Automating the creation of privileged accounts for new employees","Scheduling privileged access windows to occur only during business hours"],"answer":1,"explain":"JIT access means privileged rights exist only for the duration of a specific task, then are automatically revoked. This eliminates standing privileged accounts — a primary target for attackers — without reducing operational capability."},
+{"q":"Why does the course describe AI security professionals as commanding salary premiums of 40-60% over traditional security roles?","options":["AI security certifications are expensive, so employers compensate for the cost","Demand for professionals who understand both AI and security significantly exceeds supply, and the skills are genuinely rare and difficult to develop","AI security roles involve more on-call hours than traditional security positions","AI security professionals are required to hold active security clearances"],"answer":1,"explain":"The combination of deep AI expertise and cybersecurity knowledge is rare, and demand is growing faster than the talent pipeline. The skills gap creates genuine market scarcity, which drives premium compensation."},
+{"q":"An organization's AI threat detection model begins flagging normal user behavior as malicious at increasing rates over time. What has most likely occurred?","options":["The model has been deliberately replaced by an attacker with a compromised version","Model drift — the statistical distribution of real-world traffic has shifted from the model's training data, causing degraded accuracy","The model was never properly calibrated and the errors have always been present","The organization's user behavior has become genuinely malicious due to an insider threat campaign"],"answer":1,"explain":"Model drift occurs when the real-world data distribution shifts after deployment — new applications, changed user behavior, network changes. The model's learned decision boundaries no longer fit the current environment, causing increased false positives."},
+{"q":"What is the 'AI arms race' and why is it described as having no endpoint?","options":["A competition between AI companies to build the largest models, driven by market competition","A permanent escalation cycle where offensive AI capabilities and defensive AI capabilities continuously improve in response to each other, with no stable equilibrium","A regulatory race between countries to be the first to pass AI security legislation","A competition for AI security talent between the private sector and government agencies"],"answer":1,"explain":"Because attack and defense use the same underlying technology, advances in either direction are rapidly adopted by the other side. There is no moment at which either side achieves permanent advantage — the cycle continues indefinitely."},
+{"q":"What makes spear phishing at scale newly possible with AI, compared to the pre-AI era?","options":["AI enables phishing emails to bypass email authentication protocols that previously stopped bulk attacks","AI collapses the cost of research and personalization, removing the economic constraint that previously limited spear phishing to high-value individual targets","AI makes phishing emails undetectable by all current email security platforms","AI allows attackers to register domain names that are visually identical to legitimate domains at scale"],"answer":1,"explain":"Pre-AI spear phishing was expensive — hours of research per target. AI pipelines that ingest public data and generate personalized messages allow every employee in an organization to receive a unique, contextually accurate spear phish simultaneously."},
+{"q":"Microsoft research found that 80% of organizations using AI for security had experienced adversarial attacks on their ML models. What is the primary implication?","options":["Organizations should avoid deploying AI for security until the adversarial robustness problem is solved","Adversarial attacks on AI security models are not theoretical — they are happening at scale, and any AI security deployment must include adversarial robustness testing and ongoing monitoring","AI security models should be kept secret to prevent attackers from probing them","Organizations should use AI only for low-risk security tasks, not for critical detection functions"],"answer":1,"explain":"If 80% of organizations deploying AI for security are already being probed adversarially, robustness testing and ongoing monitoring are mandatory — not optional — components of any AI security deployment."},
+{"q":"What is the significance of behavioral biometrics reducing account takeover by 70% at financial institutions?","options":["It demonstrates that passwords are no longer needed and should be eliminated entirely","It shows that continuous authentication throughout a session is dramatically more effective than one-time authentication at login for preventing fraud where attackers have stolen valid credentials","It proves that biometrics are more secure than MFA for all use cases","It indicates that behavioral systems have reached perfect accuracy and no longer produce false positives"],"answer":1,"explain":"Account takeover fraud typically uses stolen valid credentials — bypassing traditional authentication. Behavioral biometrics detect that the legitimate user is not the one currently operating the account, catching fraud that one-time login authentication misses entirely."},
+{"q":"The NSA has mandated post-quantum migration for National Security Systems by 2035. What should commercial organizations take from this timeline?","options":["Commercial organizations have until 2035 before post-quantum cryptography becomes necessary","The 2035 deadline is the endpoint — organizations that start migration in 2034 will have sufficient time","Migration is complex and time-consuming; organizations should begin planning and phased implementation now, not wait until the deadline","Post-quantum migration is only necessary for organizations that handle classified government data"],"answer":1,"explain":"Government mandates are trailing indicators. The 'harvest now, decrypt later' threat is present today. Complex cryptographic migrations across large organizations take years. Starting now is the only responsible approach."},
+];
+
+let questions=[],current=0,score=0,answered=false;
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+window.startQuiz=function(){
+  questions=shuffle([...ALL_QUESTIONS]).slice(0,25);current=0;score=0;
+  document.getElementById('start-section').style.display='none';
+  document.getElementById('quiz-section').style.display='block';renderQuestion();
+};
+function renderQuestion(){
+  answered=false;const q=questions[current];
+  document.getElementById('question-num').textContent=`Question ${current+1} of 25`;
+  document.getElementById('question-text').textContent=q.q;
+  document.getElementById('progress-label').textContent=`Question ${current+1} of 25`;
+  document.getElementById('score-label').textContent=`${score} correct`;
+  document.getElementById('progress-fill').style.width=`${(current/25)*100}%`;
+  document.getElementById('feedback').className='feedback';document.getElementById('btn-next').className='btn-next';
+  const letters=['A','B','C','D'];const optionsEl=document.getElementById('options');optionsEl.innerHTML='';
+  const indices=shuffle([0,1,2,3]);
+  indices.forEach((origIdx,displayIdx)=>{
+    const opt=document.createElement('div');opt.className='option';
+    opt.innerHTML=`<div class="option-letter">${letters[displayIdx]}</div><div class="option-text">${q.options[origIdx]}</div>`;
+    opt.onclick=()=>selectAnswer(opt,origIdx===q.answer,indices.indexOf(q.answer),q.explain);
+    optionsEl.appendChild(opt);
+  });
+}
+function selectAnswer(clickedEl,isCorrect,correctShuffledIdx,explain){
+  if(answered)return;answered=true;
+  document.querySelectorAll('.option').forEach((o,i)=>{o.classList.add('disabled');if(i===correctShuffledIdx)o.classList.add('correct');});
+  if(isCorrect){clickedEl.classList.add('correct');score++;}else{clickedEl.classList.add('wrong');}
+  document.getElementById('score-label').textContent=`${score} correct`;
+  const fb=document.getElementById('feedback');fb.className=`feedback ${isCorrect?'correct':'wrong'} show`;
+  fb.textContent=isCorrect?`✓ Correct. ${explain}`:`✗ ${explain}`;
+  const btn=document.getElementById('btn-next');btn.className='btn-next show';btn.textContent=current===24?'See Results →':'Next Question →';
+}
+window.nextQuestion=function(){current++;if(current>=25)showResults();else renderQuestion();};
+async function showResults(){
+  document.getElementById('quiz-section').style.display='none';document.getElementById('result-section').style.display='block';
+  const passed=score>=18;const pct=Math.round((score/25)*100);
+  document.getElementById('result-icon').textContent=passed?'🏆':'📚';
+  document.getElementById('result-title').textContent=passed?'Assessment Passed':'Not This Time';
+  document.getElementById('result-score').className=`result-score ${passed?'pass':'fail'}`;
+  document.getElementById('result-score').textContent=`${score} / 25`;
+  if(passed){
+    document.getElementById('result-message').textContent=`You scored ${pct}% — above the 70% threshold. Your AI in Cybersecurity certificate is being issued.`;
+    if(currentUser){
+      try{
+        const certId=currentUser.uid+'-cybersecurity';const completedDate=new Date();
+        await setDoc(doc(db,'users',currentUser.uid),{certificatesEarned:arrayUnion('cybersecurity'),cybersecurityCompletedAt:completedDate,cybersecurityCertId:certId,cybersecurityCertificate:true},{merge:true});
+        await setDoc(doc(db,'certificates',certId),{name:currentUser.displayName||'Meridian Student',email:currentUser.email,course:'AI in Cybersecurity — Meridian Institute of AI',issuedAt:completedDate,certId:certId,valid:true});
+        document.getElementById('result-actions').innerHTML=`<a href="../../certificate.html?id=${certId}" class="btn-result btn-primary" target="_blank">View Certificate →</a><a href="../../dashboard.html" class="btn-result btn-ghost">Dashboard</a>`;
+      }catch(e){document.getElementById('result-actions').innerHTML=`<a href="../../dashboard.html" class="btn-result btn-primary">Dashboard</a>`;}
+    }
+  }else{
+    document.getElementById('result-message').textContent=`You scored ${pct}% — you need 70% to pass. Review the modules where your answers were weakest and try again.`;
+    document.getElementById('result-actions').innerHTML=`<a href="module-1.html" class="btn-result btn-primary">Review from Module 1</a><button class="btn-result btn-ghost" onclick="location.reload()">Try Again</button>`;
+  }
+}
+window.toggleTheme=function(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='☾'):(h.setAttribute('data-theme','dark'),i.textContent='☀');};
+</script>
+</body>
+</html>

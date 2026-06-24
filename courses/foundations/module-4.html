@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 4: Prompt Engineering — Meridian Institute of AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#5b8ff8;--accent-dim:rgba(91,143,248,0.1);--nav-bg:rgba(8,8,8,0.9);--callout-bg:rgba(91,143,248,0.07);--callout-border:rgba(91,143,248,0.25);--highlight-bg:rgba(91,143,248,0.08);--good-bg:rgba(34,197,94,0.07);--good-border:rgba(34,197,94,0.2);--bad-bg:rgba(239,68,68,0.07);--bad-border:rgba(239,68,68,0.2);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#2563eb;--accent-dim:rgba(37,99,235,0.08);--nav-bg:rgba(250,250,248,0.9);--callout-bg:rgba(37,99,235,0.05);--callout-border:rgba(37,99,235,0.2);--highlight-bg:rgba(37,99,235,0.06);--good-bg:rgba(22,163,74,0.06);--good-border:rgba(22,163,74,0.2);--bad-bg:rgba(220,38,38,0.05);--bad-border:rgba(220,38,38,0.2);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;overflow-x:hidden;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.7;overflow-x:hidden;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}
+  .nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}
+  .nav-back{font-size:13px;color:var(--text-2);text-decoration:none;transition:color 0.2s;}
+  .nav-back:hover{color:var(--text);}
+  .nav-label{font-size:13px;color:var(--text-3);}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;transition:all 0.2s;}
+  .theme-toggle:hover{background:var(--bg-3);color:var(--text);}
+  .progress-bar{position:fixed;top:60px;left:0;right:0;z-index:99;height:2px;background:var(--border);}
+  .progress-fill{height:100%;background:var(--accent);width:0%;transition:width 0.1s;}
+  .page-wrapper{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:100vh;padding-top:62px;overflow:hidden;}
+  .sidebar{position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto;border-right:1px solid var(--border);padding:32px 24px;background:var(--bg-2);}
+  .sidebar-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-3);margin-bottom:16px;}
+  .sidebar-module{margin-bottom:4px;}
+  .sidebar-module-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:13px;color:var(--text-2);text-decoration:none;transition:all 0.2s;line-height:1.4;}
+  .sidebar-module-link:hover{background:var(--bg-3);color:var(--text);}
+  .sidebar-module-link.active{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-num{font-size:11px;font-weight:500;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--bg-4);color:var(--text-3);}
+  .sidebar-module-link.active .sidebar-num{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-divider{height:1px;background:var(--border);margin:20px 0;}
+  .sidebar-progress-label{font-size:12px;color:var(--text-3);margin-bottom:8px;display:flex;justify-content:space-between;}
+  .sidebar-progress-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sidebar-progress-fill{height:100%;width:66%;background:var(--accent);border-radius:2px;}
+  main{display:block;min-width:0;overflow:hidden;}
+  .content{max-width:760px;width:100%;padding:60px 64px 120px;margin:0 auto;}
+  .module-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+  .module-tag{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(91,143,248,0.2);padding:4px 12px;border-radius:100px;}
+  .module-meta{font-size:12px;color:var(--text-3);}
+  h1{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1.05;letter-spacing:-0.02em;color:var(--text);margin-bottom:24px;}
+  .intro-text{font-size:19px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+  h2{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:400;color:var(--text);margin:52px 0 18px;line-height:1.2;}
+  h3{font-size:16px;font-weight:500;color:var(--text);margin:32px 0 12px;}
+  p{font-size:16px;font-weight:300;color:var(--text-2);line-height:1.8;margin-bottom:20px;}
+  strong{font-weight:500;color:var(--text);}
+  .callout{background:var(--callout-bg);border:1px solid var(--callout-border);border-radius:12px;padding:24px 28px;margin:32px 0;}
+  .callout-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+  .callout p{margin:0;font-size:15px;color:var(--text-2);}
+  .callout p+p{margin-top:12px;}
+  .prompt-example{border-radius:12px;padding:20px 24px;margin:16px 0;font-size:14px;font-family:'DM Sans',sans-serif;line-height:1.7;}
+  .prompt-bad{background:var(--bad-bg);border:1px solid var(--bad-border);}
+  .prompt-good{background:var(--good-bg);border:1px solid var(--good-border);}
+  .prompt-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:10px;}
+  .prompt-bad .prompt-label{color:#ef4444;}
+  .prompt-good .prompt-label{color:#22c55e;}
+  .prompt-text{color:var(--text-2);white-space:pre-wrap;}
+  .technique-card{background:var(--bg-2);border:1px solid var(--border);border-radius:14px;padding:28px;margin:16px 0;}
+  .technique-num{font-size:11px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+  .technique-title{font-size:18px;font-weight:500;color:var(--text);margin-bottom:10px;}
+  .technique-desc{font-size:14px;color:var(--text-2);line-height:1.7;margin-bottom:0;}
+  .lesson-nav{display:flex;justify-content:space-between;align-items:center;margin-top:60px;padding-top:40px;border-top:1px solid var(--border);}
+  .btn-lesson{display:flex;align-items:center;gap:8px;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:500;text-decoration:none;transition:all 0.2s;cursor:pointer;border:none;font-family:'DM Sans',sans-serif;}
+  .btn-next{background:var(--accent);color:#fff;}
+  .btn-next:hover{opacity:0.88;}
+  .btn-prev{background:transparent;color:var(--text-2);border:1px solid var(--border-2)!important;}
+  .btn-prev:hover{background:var(--bg-3);color:var(--text);}
+  @media(max-width:900px){.page-wrapper{grid-template-columns:1fr;}.sidebar{display:none;}.content{padding:40px 24px 80px;}h1{font-size:38px;}}
+  @media(max-width:600px){.content{padding:28px 16px 80px;}h1{font-size:30px;}h2{font-size:24px;}}
+
+  .sticky-bar {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    z-index: 200;
+    background: var(--bg-2);
+    border-top: 1px solid var(--border-2);
+    padding: 14px 5%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    backdrop-filter: blur(12px);
+    transition: all 0.3s;
+  }
+  .sticky-bar-track {
+    flex: 1;
+    height: 4px;
+    background: var(--border);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .sticky-bar-fill {
+    height: 100%;
+    background: var(--accent);
+    border-radius: 2px;
+    transition: width 0.2s;
+    width: 0%;
+  }
+  .sticky-bar-label {
+    font-size: 12px;
+    color: var(--text-3);
+    white-space: nowrap;
+    min-width: 60px;
+    text-align: right;
+  }
+  .sticky-bar-btn {
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    font-family: 'DM Sans', sans-serif;
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: opacity 0.2s;
+    display: none;
+  }
+  .sticky-bar-btn:hover { opacity: 0.88; }
+  .sticky-bar-reading {
+    font-size: 12px;
+    color: var(--text-3);
+    white-space: nowrap;
+  }
+</style>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="shortcut icon" href="/favicon.ico">
+<style>@media(max-width:480px){.nav-divider{display:none}.nav-left{gap:8px}}</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="../../index.html" style="display:flex;align-items:center;text-decoration:none;">
+      <div class="nav-logo-mark">M</div>
+    </a>
+    <div class="nav-divider"></div>
+    <a href="../../index.html" class="nav-back" style="font-size:12px;">Home</a>
+    <div class="nav-divider"></div>
+    <a href="../../courses.html" class="nav-back">← Foundations of AI</a>
+    <div class="nav-divider"></div>
+    <span class="nav-label">Module 4</span>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">☀</span></button>
+</nav>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+<div class="page-wrapper">
+<aside class="sidebar">
+  <div class="sidebar-label">Foundations of AI</div>
+  <div class="sidebar-module"><a href="module-1.html" class="sidebar-module-link"><span class="sidebar-num">1</span>What AI Actually Is</a></div>
+  <div class="sidebar-module"><a href="module-2.html" class="sidebar-module-link"><span class="sidebar-num">2</span>How AI Models Work</a></div>
+  <div class="sidebar-module"><a href="module-3.html" class="sidebar-module-link"><span class="sidebar-num">3</span>Tools That Exist Right Now</a></div>
+  <div class="sidebar-module"><a href="module-4.html" class="sidebar-module-link active"><span class="sidebar-num">4</span>Prompt Engineering</a></div>
+  <div class="sidebar-module"><a href="module-5.html" class="sidebar-module-link"><span class="sidebar-num">5</span>AI Ethics & Real Risks</a></div>
+  <div class="sidebar-module"><a href="module-6.html" class="sidebar-module-link"><span class="sidebar-num">6</span>Your First AI Project</a></div>
+  <div class="sidebar-module"><a href="quiz.html" class="sidebar-module-link" style="color:var(--accent);margin-top:4px;"><span class="sidebar-num" style="background:var(--accent-dim);color:var(--accent);">✦</span>Final Assessment</a></div>
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-progress-label"><span>Course progress</span><span style="color:var(--accent);">4 / 6</span></div>
+  <div class="sidebar-progress-track"><div class="sidebar-progress-fill"></div></div>
+</aside>
+<main>
+<div class="content">
+  <div class="module-eyebrow"><span class="module-tag">Module 4</span><span class="module-meta">25 min read · Foundations</span></div>
+  <h1>Prompt Engineering</h1>
+  <p class="intro-text">The quality of what you get from an AI is almost entirely determined by the quality of what you give it. Prompt engineering isn't a technical skill — it's a communication skill. And like all communication skills, the gap between someone who does it well and someone who doesn't is enormous.</p>
+
+  <h2>Why this matters more than which tool you use</h2>
+  <p>Most people spend their time debating which AI is best. The people who actually get the most out of AI spend their time getting better at prompting. The same model that produces a mediocre answer to a vague question will produce a genuinely useful answer to a well-constructed one.</p>
+  <p>Here's the same request, written two different ways:</p>
+
+  <div class="prompt-example prompt-bad">
+    <div class="prompt-label">❌ Weak prompt</div>
+    <div class="prompt-text">Tell me about investing.</div>
+  </div>
+
+  <div class="prompt-example prompt-good">
+    <div class="prompt-label">✓ Strong prompt</div>
+    <div class="prompt-text">I'm 17 years old with $5,000 invested in index funds and individual tech stocks. Explain the concept of compound interest and why starting early matters — use concrete numbers to show what $5,000 growing at 10% annually looks like at age 30, 40, and 65. Keep it under 300 words and avoid financial jargon.</div>
+  </div>
+
+  <p>Same model. Completely different outputs. The second prompt tells the AI exactly who is asking, what they want to know, how to illustrate it, how long the response should be, and what language to use. Every one of those constraints makes the output better.</p>
+
+  <h2>The six elements of a strong prompt</h2>
+
+  <div class="technique-card">
+    <div class="technique-num">Element 01</div>
+    <div class="technique-title">Role and context</div>
+    <div class="technique-desc">Tell the AI who it's talking to and what situation you're in. "I'm a high school student writing a college application essay" produces a different response than no context at all. The AI will calibrate vocabulary, depth, and tone based on who it thinks it's talking to.</div>
+  </div>
+
+  <div class="technique-card">
+    <div class="technique-num">Element 02</div>
+    <div class="technique-title">Specific task</div>
+    <div class="technique-desc">State exactly what you want. Not "help me with my essay" but "rewrite this paragraph to be more concise while keeping the central argument intact." Verbs matter: explain, compare, rewrite, summarize, critique, draft, list — each one signals a different kind of output.</div>
+  </div>
+
+  <div class="technique-card">
+    <div class="technique-num">Element 03</div>
+    <div class="technique-title">Format and length</div>
+    <div class="technique-desc">Tell the AI how you want the output structured. "Give me three bullet points" vs. "write three full paragraphs" vs. "write a table comparing these options" — all produce dramatically different results. If you don't specify, the AI guesses, and it often guesses wrong.</div>
+  </div>
+
+  <div class="technique-card">
+    <div class="technique-num">Element 04</div>
+    <div class="technique-title">Examples</div>
+    <div class="technique-desc">Show the AI what good looks like. If you want a specific tone, paste an example of writing in that tone. If you want a specific format, show one instance of it. Examples are often more powerful than descriptions — the AI can extract patterns from what you show it better than from what you tell it.</div>
+  </div>
+
+  <div class="technique-card">
+    <div class="technique-num">Element 05</div>
+    <div class="technique-title">Constraints and exclusions</div>
+    <div class="technique-desc">Tell the AI what NOT to do. "Don't use bullet points." "Avoid technical jargon." "Don't suggest I see a doctor — I need practical information." Constraints are just as important as instructions. Without them, the AI fills in gaps with defaults that may not match what you want.</div>
+  </div>
+
+  <div class="technique-card">
+    <div class="technique-num">Element 06</div>
+    <div class="technique-title">Step-by-step reasoning</div>
+    <div class="technique-desc">For complex problems, ask the AI to think through the problem step by step before giving an answer. This simple instruction — "think through this carefully before answering" or "walk me through your reasoning" — measurably improves accuracy on reasoning tasks. The AI produces better answers when it works through a problem explicitly rather than jumping to a conclusion.</div>
+  </div>
+
+  <h2>Advanced techniques</h2>
+
+  <h3>Chain of thought prompting</h3>
+  <p>For problems that require reasoning — math, logic, complex decisions — tell the AI to show its work. "Solve this step by step" or "explain your reasoning as you go" produces more accurate results than asking for a direct answer. This works because generating the intermediate steps helps the model arrive at better conclusions.</p>
+
+  <div class="prompt-example prompt-good">
+    <div class="prompt-label">✓ Chain of thought example</div>
+    <div class="prompt-text">I have $500/month to invest. Should I put it all in an S&P 500 index fund, split it between index funds and individual stocks, or keep it in a high-yield savings account? Think through the tradeoffs of each option step by step, then give me your recommendation with reasoning.</div>
+  </div>
+
+  <h3>Iterative refinement</h3>
+  <p>Don't expect the first response to be perfect. The best AI users treat it as a conversation — get a first draft, then refine. "Make this more concise." "The third paragraph is too vague — rewrite it with a specific example." "Change the tone from formal to conversational." Each instruction moves the output closer to what you actually want.</p>
+
+  <h3>Assigning a persona</h3>
+  <p>Asking the AI to take on a specific role can dramatically improve the quality and relevance of the output. "You are an experienced venture capitalist reviewing a pitch deck" produces very different feedback than no framing at all. The persona shapes what knowledge the AI draws on and what perspective it takes.</p>
+
+  <div class="prompt-example prompt-good">
+    <div class="prompt-label">✓ Persona prompting example</div>
+    <div class="prompt-text">You are a ruthlessly honest college admissions officer at Georgetown University. Review this essay opening and tell me what a real admissions reader would think in the first 10 seconds — and whether they'd keep reading. Be direct, not encouraging.</div>
+  </div>
+
+  <h3>The "what am I missing" prompt</h3>
+  <p>One of the most underused prompting techniques: after you get an answer, ask "What important considerations did I not ask about?" or "What would push back on this argument?" AI models are often better at identifying gaps and counterarguments when explicitly asked than when trying to give a comprehensive answer upfront.</p>
+
+  <h2>Common mistakes</h2>
+  <p><strong>Being too vague.</strong> "Help me write better" tells the AI nothing. "Help me make this email more direct and cut it from 200 words to 80" is actionable.</p>
+  <p><strong>Not iterating.</strong> If the first response isn't right, refine it. The conversation is the tool — not any single exchange.</p>
+  <p><strong>Accepting everything without verification.</strong> AI is a drafting and thinking tool, not a source of truth. Anything factual that matters should be verified independently.</p>
+  <p><strong>Not giving enough context.</strong> The AI doesn't know who you are, what you're trying to accomplish, or what you've already tried. The more relevant context you provide, the better the output.</p>
+
+  <div class="callout">
+    <div class="callout-label">The single most important insight</div>
+    <p>Treat prompting like writing a good brief for a talented contractor. They can't read your mind. They will do exactly what you ask, no more and no less. Give them everything they need to do the job right — and be specific about what "right" looks like.</p>
+  </div>
+</div>
+</main>
+</div>
+<div class="sticky-bar" id="sticky-bar">
+  <div class="sticky-bar-reading" id="sticky-reading">Read to the end to unlock the next module</div>
+  <div class="sticky-bar-track">
+    <div class="sticky-bar-fill" id="sticky-fill"></div>
+  </div>
+  <div class="sticky-bar-label" id="sticky-label">0%</div>
+  <button class="sticky-bar-btn" id="sticky-btn" onclick="completeAndNext()">
+    Module 5: AI Ethics &#8594;
+  </button>
+</div>
+<script>
+  function toggleTheme(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='☾'):(h.setAttribute('data-theme','dark'),i.textContent='☀');}
+  window.addEventListener('scroll',()=>{const d=document.documentElement,s=d.scrollTop||document.body.scrollTop,t=d.scrollHeight-d.clientHeight;const p=document.getElementById('progress');if(p)p.style.width=(s/t*100)+'%';});
+  let unlocked=false;
+  function updateScrollProgress(){
+    const scrolled=window.scrollY+window.innerHeight;
+    const total=document.documentElement.scrollHeight;
+    const pct=Math.min(100,Math.round((scrolled/total)*100));
+    const fill=document.getElementById('sticky-fill');
+    const label=document.getElementById('sticky-label');
+    const btn=document.getElementById('sticky-btn');
+    const reading=document.getElementById('sticky-reading');
+    if(fill)fill.style.width=pct+'%';
+    if(label)label.textContent=pct+'%';
+    if(pct>=95&&!unlocked){unlocked=true;if(btn)btn.style.display='block';if(reading)reading.style.display='none';if(fill)fill.style.background='#22c55e';if(label)label.style.color='#22c55e';}
+  }
+  window.addEventListener('scroll',updateScrollProgress);
+  updateScrollProgress();
+  function completeAndNext(){
+    if(window.__meridianSaveProgress){ try{ window.__meridianSaveProgress("m4"); }catch(e){} }
+    setTimeout(function(){ window.location.href="module-5.html"; }, 120);
+  }
+</script>
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import { getFirestore, doc, getDoc, setDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  const app = initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+  const auth = getAuth(app); const db = getFirestore(app);
+  let meridianUser = null;
+  window.__meridianSaveProgress = async function(mValue){
+    if(!meridianUser) return;
+    try { await setDoc(doc(db,"users",meridianUser.uid), { foundationsModules: arrayUnion(mValue) }, { merge: true }); } catch(e) {}
+  };
+  onAuthStateChanged(auth, async (u) => {
+    meridianUser = u;
+    if (!u) return;
+    try {
+      const snap = await getDoc(doc(db, "users", u.uid));
+      const data = snap.exists() ? snap.data() : {};
+      const done = Array.isArray(data.foundationsModules) ? data.foundationsModules : [];
+      if (!done.includes("m3")) { document.body.innerHTML = `<div style=\"min-height:100vh;display:flex;align-items:center;justify-content:center;background:#080808;font-family:DM Sans,sans-serif;padding:24px;\"><div style=\"max-width:440px;text-align:center;background:#111;border:1px solid rgba(255,255,255,0.08);border-radius:20px;padding:48px;\"><div style=\"font-size:48px;margin-bottom:20px;\">&#128274;</div><div style=\"font-size:20px;font-weight:500;color:#f0f0f0;margin-bottom:12px;\">Module locked</div><div style=\"font-size:14px;color:#a0a0a0;margin-bottom:28px;line-height:1.6;\">Complete the previous module before continuing. Each module builds on the last.</div><a href=\"module-1-what-ai-actually-is.html\" style=\"display:inline-block;padding:12px 24px;background:#5b8ff8;color:#fff;border-radius:10px;font-size:14px;font-weight:500;text-decoration:none;\">&#8592; Back to the course</a></div></div>`; }
+    } catch(e) {}
+  });
+</script>
+</body>
+</html>

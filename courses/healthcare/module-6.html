@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Genomics and Personalized Medicine — AI in Healthcare — Meridian Institute of AI</title>
+<meta name="description" content="Free AI in Healthcare course — module 6. How AI is powering genomic medicine — from AlphaFold's protein folding breakthrough to precision oncology and AI-designed therapeutics.">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="Genomics and Personalized Medicine — AI in Healthcare — Meridian Institute of AI">
+<meta property="og:description" content="Free AI in Healthcare course — module 6. How AI is powering genomic medicine — from AlphaFold's protein folding breakthrough to precision oncology and AI-designed therapeutics.">
+<meta property="og:url" content="https://meridianinstituteai.com/courses/healthcare/module-6.html">
+<meta property="og:type" content="website">
+<link rel="canonical" href="https://meridianinstituteai.com/courses/healthcare/module-6.html">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#06b6d4;--accent-dim:rgba(6,182,212,0.1);--nav-bg:rgba(8,8,8,0.9);--callout-bg:rgba(6,182,212,0.07);--callout-border:rgba(6,182,212,0.25);--good-bg:rgba(34,197,94,0.07);--good-border:rgba(34,197,94,0.2);--warn-bg:rgba(251,146,60,0.07);--warn-border:rgba(251,146,60,0.2);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#0891b2;--accent-dim:rgba(8,145,178,0.08);--nav-bg:rgba(250,250,248,0.9);--callout-bg:rgba(8,145,178,0.05);--callout-border:rgba(8,145,178,0.2);--good-bg:rgba(22,163,74,0.06);--good-border:rgba(22,163,74,0.2);--warn-bg:rgba(234,88,12,0.05);--warn-border:rgba(234,88,12,0.2);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;overflow-x:hidden;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.7;overflow-x:hidden;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}
+  .nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}
+  .nav-back{font-size:13px;color:var(--text-2);text-decoration:none;transition:color 0.2s;}
+  .nav-back:hover{color:var(--text);}
+  .nav-label{font-size:13px;color:var(--text-3);}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;transition:all 0.2s;}
+  .progress-bar{position:fixed;top:60px;left:0;right:0;z-index:99;height:2px;background:var(--border);}
+  .progress-fill{height:100%;background:var(--accent);width:0%;transition:width 0.1s;}
+  .page-wrapper{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:100vh;padding-top:62px;}
+  .sidebar{position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto;border-right:1px solid var(--border);padding:32px 24px;background:var(--bg-2);}
+  .sidebar-course{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;}
+  .sidebar-course-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+  .sidebar-module{margin-bottom:4px;}
+  .sidebar-module-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:13px;color:var(--text-2);text-decoration:none;transition:all 0.2s;line-height:1.4;}
+  .sidebar-module-link:hover{background:var(--bg-3);color:var(--text);}
+  .sidebar-module-link.active{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-num{font-size:11px;font-weight:500;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--bg-4);color:var(--text-3);}
+  .sidebar-module-link.active .sidebar-num{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-divider{height:1px;background:var(--border);margin:20px 0;}
+  .sidebar-progress-label{font-size:12px;color:var(--text-3);margin-bottom:8px;display:flex;justify-content:space-between;}
+  .sidebar-progress-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sidebar-progress-fill{height:100%;width:63%;background:var(--accent);border-radius:2px;}
+  main{display:block;min-width:0;}
+  .content{max-width:760px;width:100%;padding:60px 64px 140px;margin:0 auto;}
+  .module-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+  .module-tag{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(6,182,212,0.2);padding:4px 12px;border-radius:100px;}
+  .module-meta{font-size:12px;color:var(--text-3);}
+  h1{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1.05;letter-spacing:-0.02em;color:var(--text);margin-bottom:24px;}
+  .intro-text{font-size:19px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+  h2{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:400;color:var(--text);margin:52px 0 18px;line-height:1.2;}
+  h3{font-size:16px;font-weight:500;color:var(--text);margin:32px 0 12px;}
+  p{font-size:16px;font-weight:300;color:var(--text-2);line-height:1.8;margin-bottom:20px;}
+  strong{font-weight:500;color:var(--text);}
+  .callout{background:var(--callout-bg);border:1px solid var(--callout-border);border-radius:12px;padding:24px 28px;margin:32px 0;}
+  .callout-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+  .callout p{margin:0;font-size:15px;color:var(--text-2);}
+  .callout p+p{margin-top:12px;}
+  .good{background:var(--good-bg);border:1px solid var(--good-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .good-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#22c55e;margin-bottom:10px;}
+  .good p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn{background:var(--warn-bg);border:1px solid var(--warn-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .warn-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#fb923c;margin-bottom:10px;}
+  .warn p{margin:0;font-size:15px;color:var(--text-2);}
+  .comparison-wrapper{overflow-x:auto;-webkit-overflow-scrolling:touch;width:100%;margin:28px 0;}
+  table{width:100%;border-collapse:collapse;font-size:14px;min-width:480px;}
+  th{text-align:left;padding:12px 16px;font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-3);border-bottom:1px solid var(--border-2);}
+  td{padding:14px 16px;border-bottom:1px solid var(--border);color:var(--text-2);line-height:1.6;vertical-align:top;}
+  tr:last-child td{border-bottom:none;}
+  td:first-child{color:var(--text);font-weight:500;}
+  .principle-list{display:flex;flex-direction:column;gap:12px;margin:24px 0;}
+  .principle{background:var(--bg-2);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:0 12px 12px 0;padding:20px 24px;}
+  .principle-title{font-size:15px;font-weight:500;color:var(--text);margin-bottom:6px;}
+  .principle-desc{font-size:14px;color:var(--text-2);line-height:1.65;margin:0;}
+  .sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:var(--bg-2);border-top:1px solid var(--border-2);padding:14px 5%;display:flex;align-items:center;justify-content:space-between;gap:16px;backdrop-filter:blur(12px);}
+  .sticky-bar-track{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sticky-bar-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.2s;width:0%;}
+  .sticky-bar-label{font-size:12px;color:var(--text-3);white-space:nowrap;min-width:60px;text-align:right;}
+  .sticky-bar-btn{padding:10px 20px;border-radius:8px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;background:var(--accent);color:#fff;border:none;cursor:pointer;white-space:nowrap;transition:opacity 0.2s;display:none;}
+  .sticky-bar-btn:hover{opacity:0.88;}
+  .sticky-bar-reading{font-size:12px;color:var(--text-3);white-space:nowrap;}
+  @media(max-width:900px){.page-wrapper{grid-template-columns:1fr;}.sidebar{display:none;}.content{padding:40px 24px 120px;}h1{font-size:38px;}}
+  @media(max-width:600px){.content{padding:28px 16px 120px;}h1{font-size:30px;}h2{font-size:24px;}}
+</style>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="shortcut icon" href="/favicon.ico">
+<style>@media(max-width:480px){.nav-divider{display:none}.nav-left{gap:8px}}</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="../../index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="../../index.html" class="nav-back">&#x2302; Home</a>
+    <div class="nav-divider"></div>
+    <a href="../../courses.html" class="nav-back">← AI in Healthcare</a>
+    <div class="nav-divider"></div>
+    <span class="nav-label">Module 6</span>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">☀</span></button>
+</nav>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+
+<div class="page-wrapper">
+<aside class="sidebar">
+  <div class="sidebar-course">Course</div>
+  <div class="sidebar-course-name">AI in Healthcare</div>
+  <div class="sidebar-module"><a href="module-1.html" class="sidebar-module-link"><span class="sidebar-num">1</span>AI's Transformation of Medicine</a></div>
+  <div class="sidebar-module"><a href="module-2.html" class="sidebar-module-link"><span class="sidebar-num">2</span>Diagnostic AI</a></div>
+  <div class="sidebar-module"><a href="module-3.html" class="sidebar-module-link"><span class="sidebar-num">3</span>Drug Discovery and AI</a></div>
+  <div class="sidebar-module"><a href="module-4.html" class="sidebar-module-link"><span class="sidebar-num">4</span>Clinical Decision Support</a></div>
+  <div class="sidebar-module"><a href="module-5.html" class="sidebar-module-link"><span class="sidebar-num">5</span>AI in Mental Health</a></div>
+  <div class="sidebar-module"><a href="module-6.html" class="sidebar-module-link active"><span class="sidebar-num">6</span>Genomics and Personalized Medicine</a></div>
+  <div class="sidebar-module"><a href="module-7.html" class="sidebar-module-link"><span class="sidebar-num">7</span>Healthcare Operations</a></div>
+  <div class="sidebar-module"><a href="module-8.html" class="sidebar-module-link"><span class="sidebar-num">8</span>Regulation, Ethics, and the Future</a></div>
+  <div class="sidebar-module"><a href="quiz.html" class="sidebar-module-link" style="color:var(--accent);margin-top:4px;"><span class="sidebar-num" style="background:var(--accent-dim);color:var(--accent);">✦</span>Final Assessment</a></div>
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-progress-label"><span>Course progress</span><span style="color:var(--accent);">5 / 8</span></div>
+  <div class="sidebar-progress-track"><div class="sidebar-progress-fill"></div></div>
+</aside>
+
+<main>
+<div class="content">
+  <div class="module-eyebrow"><span class="module-tag">Module 6</span><span class="module-meta">22 min read · AI in Healthcare</span></div>
+  <h1>Genomics and Personalized Medicine</h1>
+  <p class="intro-text">The human genome contains approximately 3.2 billion base pairs. Analyzing that data — and understanding how genetic variation relates to disease, drug response, and health outcomes — requires computational power that was simply unavailable before the current generation of AI. The result is a transformation in personalized medicine: moving from population-level treatment protocols toward interventions designed for the biology of individual patients.</p>
+
+  <h2>AlphaFold and the Protein Folding Revolution</h2>
+  <p>In 2020, DeepMind's AlphaFold2 solved what had been called the protein folding problem — predicting the three-dimensional structure of a protein from its amino acid sequence alone, with accuracy comparable to experimental methods. This was not an incremental improvement. It was a genuine scientific breakthrough that had been unsolved for fifty years, since the problem was first formally posed. Proteins are the machinery of life: enzymes, receptors, structural components, signaling molecules. Their function is determined by their three-dimensional shape. Understanding that shape is the starting point for understanding how to affect them with drugs.</p>
+  <p>In 2024, the Nobel Prize in Chemistry was awarded to Demis Hassabis and John Jumper of DeepMind and David Baker of the University of Washington for this work. The Nobel Committee's recognition reflects the scientific community's judgment that AlphaFold represents a fundamental advance rather than a clever tool. Baker's work on protein design — using AI to design novel proteins that do not exist in nature — is the complement to AlphaFold's predictive capability.</p>
+  <p>DeepMind has made AlphaFold predictions publicly available through a database that now covers over 200 million protein structures — essentially the entire known protein universe. This is a scientific resource of extraordinary value, freely accessible to any researcher in the world. Labs that previously spent months and hundreds of thousands of dollars determining a single protein structure can now retrieve a high-accuracy prediction in minutes for free.</p>
+
+  <div class="callout">
+    <div class="callout-label">The Scale of the Breakthrough</div>
+    <p>Before AlphaFold, determining a single protein structure experimentally — using X-ray crystallography or cryo-electron microscopy — took months and cost hundreds of thousands of dollars. AlphaFold makes accurate structure predictions in minutes for free. The implications for drug discovery are direct: protein structure is the starting point for designing molecules that bind to and affect biological targets. Every drug target that now has a freely available AlphaFold structure is a potential accelerant for drug discovery research.</p>
+  </div>
+
+  <h2>AI in Genomic Medicine</h2>
+  <p>The human genome generates enormous quantities of data, but raw genomic data is not clinically useful on its own. A whole genome sequence contains approximately 4–5 million variants relative to the reference genome for any given individual. The clinical challenge is distinguishing the handful of variants that are pathogenic — that cause or significantly increase risk of disease — from the vast majority that are benign. This variant classification problem was previously addressed through expert review, literature search, and population databases, a process that could take hours per variant for complex cases. AI dramatically accelerates this classification at scale.</p>
+  <p>Beyond single variants, polygenic risk scoring uses AI to integrate thousands of variants simultaneously to predict disease risk. Traditional risk scores — the Framingham Risk Score for cardiovascular disease, for example — incorporate a handful of clinical variables. Polygenic risk scores for conditions like coronary artery disease now incorporate over a million genetic variants and outperform clinical risk scores on their own, with even greater power when combined with clinical variables. The UK Biobank, with genomic and health data from 500,000 participants, and the NIH All of Us Research Program, targeting 1 million participants with emphasis on underrepresented populations, are creating the training infrastructure these models require.</p>
+  <p>Pharmacogenomics — predicting how a patient will metabolize a given drug based on their genetic profile — is one of the most immediately actionable applications. The clinical relevance of pharmacogenomic variation is well-established, but implementation at scale requires AI to make genomic interpretation fast enough to be available at the point of prescribing. The Mayo Clinic's RIGHT protocol has demonstrated that prospective pharmacogenomic testing with AI-assisted interpretation reduces adverse drug events in the patients tested.</p>
+
+  <h2>Precision Oncology: The Leading Application</h2>
+  <p>Cancer treatment has been more profoundly transformed by the combination of genomic sequencing and AI than any other clinical domain. Cancer is fundamentally a genomic disease — it originates in mutations that disrupt normal cellular control. Understanding which mutations are driving a patient's specific tumor points directly to which targeted therapies might work. The gap between standard chemotherapy — which treats all cancer cells indiscriminately — and targeted therapy matched to a tumor's molecular profile is the gap between a blunt instrument and a precision tool.</p>
+  <p>Liquid biopsy represents one of the most consequential near-term advances. Cell-free DNA circulates in the blood of cancer patients, shed by tumor cells as they die. AI analyzing the pattern of mutations in this cell-free DNA can detect early-stage cancers from a blood draw before symptoms appear or before imaging would identify them. GRAIL's Galleri test can detect signals for more than 50 cancer types from a single blood draw, with a specificity above 99% — meaning fewer than 1% of positive results in cancer-free individuals are false positives. The clinical impact of detecting cancer at Stage I rather than Stage IV is profound: five-year survival rates for many cancers are 70–90% at Stage I and below 20% at Stage IV.</p>
+
+  <div class="comparison-wrapper">
+    <table>
+      <tr><th>Oncology Approach</th><th>Method</th><th>Applicable To</th><th>AI's Role</th></tr>
+      <tr><td>Standard Chemotherapy</td><td>Population-level protocols</td><td>Most cancers</td><td>None</td></tr>
+      <tr><td>Genomic Tumor Profiling</td><td>Sequence tumor DNA</td><td>Solid tumors</td><td>Variant classification + therapy matching</td></tr>
+      <tr><td>Liquid Biopsy</td><td>Cell-free DNA in blood</td><td>Screening + monitoring</td><td>Signal detection in noisy data</td></tr>
+      <tr><td>CAR-T Cell Therapy</td><td>Engineered immune cells</td><td>Blood cancers</td><td>Target identification</td></tr>
+    </table>
+  </div>
+
+  <h2>Pharmacogenomics: Right Drug, Right Dose</h2>
+  <p>Approximately 7% of FDA-approved drugs have known pharmacogenomic interactions — meaning a patient's genetic profile meaningfully affects how the drug works or is metabolized. This is not an edge case. It represents hundreds of commonly prescribed medications across cardiology, psychiatry, oncology, and pain management. The consequences of ignoring pharmacogenomic variation range from reduced efficacy to life-threatening toxicity.</p>
+  <p>Codeine is the canonical example. Codeine is a prodrug — it must be converted by the CYP2D6 enzyme into morphine to produce analgesia. Patients who are "ultra-rapid metabolizers" of CYP2D6 convert codeine to morphine at an extreme rate, such that a standard therapeutic dose can cause fatal respiratory depression. Children have died from codeine prescribed after routine tonsillectomy. The FDA has issued a Black Box warning restricting codeine use in children under 12 and in nursing mothers. Similar pharmacogenomic concerns apply to abacavir (risk of life-threatening hypersensitivity reaction in HLA-B*57:01 carriers), carbamazepine (Stevens-Johnson syndrome risk in certain populations), and warfarin (dramatically varying dose requirements based on CYP2C9 and VKORC1 variants).</p>
+  <p>The barrier to widespread clinical pharmacogenomics has historically been interpretation speed — the genetic data can be collected, but turning it into actionable prescribing guidance in real time requires AI to make the interpretation fast enough to be useful before the medication is ordered. Several health systems, including Vanderbilt and St. Jude Children's Research Hospital, have implemented preemptive pharmacogenomic testing programs that store each patient's results in their EHR and flag relevant interactions at the point of prescribing. The results show reductions in adverse drug events and improved therapeutic outcomes in patients with tested variants.</p>
+
+  <h2>The Future: AI-Designed Therapeutics</h2>
+  <p>The direction of travel in AI and genomics points beyond interpretation toward generation: AI not just analyzing biological data but designing novel molecules and therapies. Insilico Medicine used generative AI to design a novel drug candidate for idiopathic pulmonary fibrosis — a fatal lung disease with limited treatment options — that reached clinical trials in under 18 months. The conventional timeline for the same process, from target identification to first-in-human trials, is 4 to 6 years. This compression was enabled by AI handling the drug candidate generation and optimization steps that previously required years of iterative synthesis and testing.</p>
+  <p>Recursion Pharmaceuticals takes a different approach: imaging-based drug discovery. Their platform captures trillions of images of cells exposed to millions of compound-disease combinations, using AI to identify which perturbations move cells toward healthy states. This approach can screen a vastly larger space of potential therapies than human scientists could evaluate, identifying unexpected drug-disease relationships that conventional hypothesis-driven research would never have examined. The platform has generated dozens of drug candidates now in clinical development.</p>
+
+  <div class="good">
+    <div class="good-label">A Convergence with Profound Implications</div>
+    <p>The convergence of AI, genomics, and protein structure prediction is creating the conditions for a new era of medicine: one where treatments can be designed for the biology of specific diseases at molecular resolution rather than discovered through empirical trial and error. The first generation of AI-designed drugs is now in human clinical trials. Within a decade, AI-designed therapeutics targeting genomically-defined patient populations may be standard rather than exceptional.</p>
+  </div>
+
+</div>
+</main>
+</div>
+
+<div class="sticky-bar">
+  <div class="sticky-bar-reading" id="sticky-reading">Read to the end to unlock the next module</div>
+  <div class="sticky-bar-track"><div class="sticky-bar-fill" id="sticky-fill"></div></div>
+  <div class="sticky-bar-label" id="sticky-label">0%</div>
+  <button class="sticky-bar-btn" id="sticky-btn" onclick="completeAndNext()">Module 7: Healthcare Operations →</button>
+</div>
+
+<script>
+  function toggleTheme(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='☾'):(h.setAttribute('data-theme','dark'),i.textContent='☀');}
+  window.addEventListener('scroll',()=>{const d=document.documentElement,s=d.scrollTop||document.body.scrollTop,t=d.scrollHeight-d.clientHeight;document.getElementById('progress').style.width=(s/t*100)+'%';});
+  let unlocked=false;
+  function updateScrollProgress(){
+    const pct=Math.min(100,Math.round(((window.scrollY+window.innerHeight)/document.documentElement.scrollHeight)*100));
+    document.getElementById('sticky-fill').style.width=pct+'%';
+    document.getElementById('sticky-label').textContent=pct+'%';
+    if(pct>=95&&!unlocked){unlocked=true;document.getElementById('sticky-btn').style.display='block';document.getElementById('sticky-reading').style.display='none';document.getElementById('sticky-fill').style.background='#22c55e';document.getElementById('sticky-label').style.color='#22c55e';}
+  }
+  window.addEventListener('scroll',updateScrollProgress);updateScrollProgress();
+  function completeAndNext(){
+    if(window.__meridianSaveProgress){ try{ window.__meridianSaveProgress("m6"); }catch(e){} }
+    setTimeout(function(){ window.location.href="module-7.html"; }, 120);
+  }
+</script>
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import { getFirestore, doc, setDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  const app = initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+  const auth = getAuth(app); const db = getFirestore(app);
+  let meridianUser = null;
+  onAuthStateChanged(auth, u => { meridianUser = u; });
+  window.__meridianSaveProgress = async function(mValue){
+    if(!meridianUser) return;
+    try { await setDoc(doc(db,"users",meridianUser.uid), { healthcareModules: arrayUnion(mValue) }, { merge: true }); } catch(e) {}
+  };
+</script>
+</body>
+</html>

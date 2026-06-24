@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Final Assessment — AI in Education — Meridian Institute of AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#f59e0b;--accent-dim:rgba(245,158,11,0.1);--nav-bg:rgba(8,8,8,0.9);--success:#22c55e;--success-bg:rgba(34,197,94,0.08);--success-border:rgba(34,197,94,0.25);--fail-bg:rgba(239,68,68,0.08);--fail-border:rgba(239,68,68,0.25);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#d97706;--accent-dim:rgba(217,119,6,0.08);--nav-bg:rgba(250,250,248,0.9);--success:#16a34a;--success-bg:rgba(22,163,74,0.06);--success-border:rgba(22,163,74,0.25);--fail-bg:rgba(220,38,38,0.06);--fail-border:rgba(220,38,38,0.25);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}
+  .nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}.nav-back{font-size:13px;color:var(--text-2);text-decoration:none;}.nav-back:hover{color:var(--text);}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;}
+  .page{max-width:680px;margin:0 auto;padding:90px 24px 80px;}
+  .quiz-eyebrow{font-size:11px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:12px;}
+  .quiz-title{font-family:'Cormorant Garamond',serif;font-size:42px;font-weight:300;color:var(--text);line-height:1.1;margin-bottom:12px;}
+  .quiz-sub{font-size:15px;color:var(--text-2);line-height:1.7;margin-bottom:28px;}
+  .quiz-rules{background:var(--bg-2);border:1px solid var(--border);border-radius:12px;padding:18px 22px;margin-bottom:28px;display:flex;gap:20px;flex-wrap:wrap;}
+  .quiz-rule{font-size:13px;color:var(--text-2);display:flex;align-items:center;gap:8px;}
+  .btn-start{padding:14px 32px;background:var(--accent);color:#fff;border-radius:10px;font-size:15px;font-weight:500;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;margin-top:4px;}
+  #quiz-section{display:none;}
+  .progress-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;}
+  .progress-label{font-size:13px;color:var(--text-3);}
+  .progress-track{height:3px;background:var(--border);border-radius:2px;overflow:hidden;margin-bottom:36px;}
+  .progress-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.3s;}
+  .question-num{font-size:11px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:14px;}
+  .question-text{font-family:'Cormorant Garamond',serif;font-size:27px;font-weight:400;color:var(--text);line-height:1.35;margin-bottom:28px;}
+  .options{display:flex;flex-direction:column;gap:10px;margin-bottom:24px;}
+  .option{display:flex;align-items:flex-start;gap:14px;padding:15px 18px;border:1px solid var(--border-2);border-radius:12px;cursor:pointer;transition:all 0.18s;background:var(--bg-2);}
+  .option:hover{border-color:var(--accent);background:var(--accent-dim);}
+  .option.selected{border-color:var(--accent);background:var(--accent-dim);}
+  .option.correct{border-color:var(--success);background:var(--success-bg);cursor:default;}
+  .option.wrong{border-color:#ef4444;background:var(--fail-bg);cursor:default;}
+  .option.disabled{cursor:default;opacity:0.55;}
+  .option-letter{width:26px;height:26px;border-radius:6px;background:var(--bg-3);border:1px solid var(--border-2);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:500;color:var(--text-3);flex-shrink:0;margin-top:2px;}
+  .option.selected .option-letter{background:var(--accent);color:#fff;border-color:var(--accent);}
+  .option.correct .option-letter{background:var(--success);color:#fff;border-color:var(--success);}
+  .option.wrong .option-letter{background:#ef4444;color:#fff;border-color:#ef4444;}
+  .option-text{font-size:15px;color:var(--text-2);line-height:1.55;}
+  .option.selected .option-text,.option.correct .option-text{color:var(--text);}
+  .feedback{padding:16px 20px;border-radius:10px;font-size:14px;line-height:1.65;margin-bottom:20px;display:none;}
+  .feedback.show{display:block;}
+  .feedback.correct{background:var(--success-bg);border:1px solid var(--success-border);color:var(--success);}
+  .feedback.wrong{background:var(--fail-bg);border:1px solid var(--fail-border);color:#ef4444;}
+  .btn-next{padding:12px 28px;background:var(--accent);color:#fff;border-radius:9px;font-size:14px;font-weight:500;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;display:none;}
+  .btn-next.show{display:inline-block;}
+  #result-section{display:none;text-align:center;padding:20px 0;}
+  .result-icon{font-size:64px;margin-bottom:20px;}
+  .result-title{font-family:'Cormorant Garamond',serif;font-size:42px;font-weight:300;color:var(--text);margin-bottom:12px;}
+  .result-score{font-size:56px;font-weight:300;font-family:'Cormorant Garamond',serif;margin:20px 0;}
+  .result-score.pass{color:var(--success);}.result-score.fail{color:#ef4444;}
+  .result-message{font-size:16px;color:var(--text-2);line-height:1.7;max-width:520px;margin:0 auto 32px;}
+  .result-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
+  .btn-result{padding:13px 28px;border-radius:10px;font-size:14px;font-weight:500;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;text-decoration:none;display:inline-block;}
+  .btn-primary{background:var(--accent);color:#fff;}.btn-ghost{background:transparent;color:var(--text-2);border:1px solid var(--border-2);}
+  @media(max-width:600px){.quiz-title{font-size:34px;}.question-text{font-size:23px;}}
+</style>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="shortcut icon" href="/favicon.ico">
+<style>@media(max-width:480px){.nav-divider{display:none}.nav-left{gap:8px}}</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="../../index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="../../index.html" class="nav-back">Home</a>
+    <div class="nav-divider"></div>
+    <a href="../../courses.html" class="nav-back">← AI in Education</a>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">☀</span></button>
+</nav>
+<div class="page">
+  <div id="start-section">
+    <div class="quiz-eyebrow">Final Assessment · AI in Education</div>
+    <div class="quiz-title">Test Your Knowledge</div>
+    <div class="quiz-sub">25 questions drawn from a pool of 30+. These are application questions — they test whether you can use the concepts, not just recall them. You need 70% to pass and earn your certificate.</div>
+    <div class="quiz-rules">
+      <div class="quiz-rule">📋 25 of 30+ questions per attempt</div>
+      <div class="quiz-rule">✅ 70% to pass (18 of 25)</div>
+      <div class="quiz-rule">🔀 Randomized each attempt</div>
+      <div class="quiz-rule">🏆 Pass to earn your certificate</div>
+    </div>
+    <button class="btn-start" onclick="startQuiz()">Begin Assessment →</button>
+  </div>
+  <div id="quiz-section">
+    <div class="progress-header">
+      <span class="progress-label" id="progress-label">Question 1 of 25</span>
+      <span class="progress-label" id="score-label">0 correct</span>
+    </div>
+    <div class="progress-track"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+    <div class="question-num" id="question-num">Question 1</div>
+    <div class="question-text" id="question-text"></div>
+    <div class="options" id="options"></div>
+    <div class="feedback" id="feedback"></div>
+    <button class="btn-next" id="btn-next" onclick="nextQuestion()">Next Question →</button>
+  </div>
+  <div id="result-section">
+    <div class="result-icon" id="result-icon"></div>
+    <div class="result-title" id="result-title"></div>
+    <div class="result-score" id="result-score"></div>
+    <div class="result-message" id="result-message"></div>
+    <div class="result-actions" id="result-actions"></div>
+  </div>
+</div>
+<script type="module">
+import{initializeApp}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import{getAuth,onAuthStateChanged}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import{getFirestore,doc,setDoc,arrayUnion}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+const app=initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+const auth=getAuth(app);const db=getFirestore(app);let currentUser=null;
+onAuthStateChanged(auth,u=>{currentUser=u;});
+
+const ALL_QUESTIONS=[
+{"q":"RAND Corporation estimates teachers spend what proportion of their time on non-teaching tasks?","options":["About 15-20% of their time","40-50% of their time","Only about 10%, since most schools have administrative support","Roughly 25-30% of their time"],"answer":1,"explain":"RAND research consistently finds teachers spend 40-50% of their time on non-teaching work — grading, planning, administration, parent communication — leaving less than half their working hours for actual instruction."},
+{"q":"McKinsey estimates AI could automate what percentage of teacher administrative time?","options":["About 5-10% of administrative tasks","20-40% of administrative time, potentially returning 10+ hours per week to teachers","Nearly all administrative work within 5 years","Only highly repetitive tasks representing about 15% of the total"],"answer":1,"explain":"McKinsey's analysis found AI could automate 20-40% of teacher administrative burden — time currently spent on rubric generation, feedback drafting, lesson planning, and parent communication templates."},
+{"q":"A 2024 RAND study found that classrooms using AI-assisted formative assessment showed what achievement improvement?","options":["About 5% improvement in standardized test scores","18% higher student achievement gains, concentrated in students who previously received the least individualized attention","50% improvement in grades but no measurable change in retention","Results were mixed with no statistically significant overall improvement"],"answer":1,"explain":"The RAND study found 18% higher achievement gains with AI formative assessment — and critically, the benefit was largest for the students who historically received the least individual attention, suggesting AI helps close equity gaps."},
+{"q":"Why is the fundamental assumption of AI detection tools for student writing flawed?","options":["AI detection tools are too expensive for most schools to afford","AI text and human text exist on the same statistical continuum — there is no binary signal distinguishing them, making reliable detection impossible","AI detection tools only work for essays written in English","Detection tools can only identify AI use by specific models, not all AI tools"],"answer":1,"explain":"AI-generated and human-written text differ in degree, not kind — both are sequences of words that follow language patterns. There is no reliable binary signal, which is why current detectors have unacceptable false positive rates."},
+{"q":"Stanford research found that Turnitin's AI detector had what problem with non-native English speaker essays?","options":["It flagged them as plagiarism rather than AI-generated","It flagged more than 50% of essays written by non-native English speakers as AI-generated, even when written entirely by the student","It was unable to process essays written in non-English languages","Non-native speaker essays were rated as lower quality but not flagged as AI-generated"],"answer":1,"explain":"Non-native speakers tend to write more formally, use simpler vocabulary, and avoid idiomatic expressions — all characteristics that overlap with AI-generated text patterns. This creates a systematic bias in AI detection tools against non-native speakers."},
+{"q":"What is 'alert fatigue' in the context of AI-resistant assignment design?","options":["Students becoming fatigued by too many warnings about AI use policies","The overuse of high-stakes assessments creating student anxiety about performance","Teachers becoming overwhelmed by the volume of AI-generated submissions requiring individual review","When students ignore academic integrity policies because consequences aren't enforced consistently"],"answer":3,"explain":"In the assignment design context, alert fatigue refers to the policy-enforcement equivalent: when rules are too broad or inconsistently enforced, everyone ignores them. Clear, specific policies with proportional enforcement are more effective than sweeping bans."},
+{"q":"Which assignment type is most resistant to AI substitution?","options":["Multiple choice tests with randomized question order","In-class essays on assigned topics with defined time limits","Oral defenses where students must explain and defend their thinking in real time to a questioning instructor","Take-home essays on broad topics with generous time limits"],"answer":2,"explain":"Oral defenses require students to reason in real time without access to AI, respond to unexpected follow-up questions, and demonstrate genuine understanding through live dialogue — none of which AI can substitute for."},
+{"q":"A World Economic Forum report projected AI-personalized learning could add the equivalent of how much additional schooling over a K-12 career?","options":["About 3-6 months of additional learning","The equivalent of 1-2 additional years of schooling","Only marginal gains equivalent to a few weeks","Up to 4 additional years if fully deployed"],"answer":1,"explain":"The 2023 WEF report projected AI personalization could add the equivalent of 1-2 additional years of schooling over a student's K-12 career — through more efficient use of student attention and genuinely adaptive pacing."},
+{"q":"What was the finding of a 2024 UNESCO report about over-reliance on AI in education?","options":["AI in education showed no significant positive or negative effects on independent thinking","Over-reliance on AI risked creating students who could use AI tools but could not think independently without them, citing over-calculator use in mathematics as a historical precedent","AI education tools improved both dependent and independent thinking equally","UNESCO recommended eliminating AI from primary education entirely based on the evidence"],"answer":1,"explain":"UNESCO drew the parallel to calculator dependency in math education: students who never practiced arithmetic independently lost the number sense that makes higher mathematics possible. The same risk applies to AI-assisted thinking."},
+{"q":"Carnegie Mellon research found that students using AI to generate practice questions and explain answers aloud retained material at what rate compared to passive note review?","options":["About the same as passive note review — no significant difference","35% higher retention than passive note review","Twice the retention rate of any other study method","10% lower retention because AI-generated questions were less accurate than textbook questions"],"answer":1,"explain":"The CMU study found 35% higher retention from the active retrieval practice + explanation combination — consistent with the broader retrieval practice research showing that testing yourself is one of the most effective learning strategies."},
+{"q":"What does 'desirable difficulties' mean in the context of AI in education?","options":["Making coursework harder to filter out students who aren't sufficiently motivated","Making learning harder in the right ways — adding spacing, interleaving, and retrieval practice — produces better long-term retention than smooth, easy learning experiences","Using AI to generate difficult questions that challenge advanced students","The difficulties educators face in implementing AI tools in traditional classroom settings"],"answer":1,"explain":"Robert Bjork's research on desirable difficulties shows that learning conditions that feel harder — spaced practice, interleaving, retrieval practice — produce better long-term retention than easier, massed practice, even when immediate performance is lower."},
+{"q":"What does 'AI as a thinking partner rather than a crutch' mean in practice for students?","options":["Using AI to check your work after you've already completed it independently","Using AI to generate ideas but never using those ideas in submitted work","Using AI in ways that build your own understanding — asking it to probe your thinking, challenge your assumptions, or explain concepts — rather than outsourcing the thinking itself","Limiting AI use to research tasks and never using it for writing or analysis"],"answer":2,"explain":"A thinking partner relationship with AI means the student is doing the cognitive work — forming ideas, building arguments, developing understanding — while AI serves as a responsive resource that deepens and challenges that thinking."},
+{"q":"The AACU 2024 survey found what gap in AI literacy at the college level?","options":["87% of faculty believed AI literacy was core, but only 23% had received any training in how to teach it","Most faculty had received AI training but only 23% believed it was a core student competency","Faculty and administrators disagreed about AI importance, with a 64-point gap in their assessments","Only 23% of students used AI for academic work despite 87% reporting access to AI tools"],"answer":0,"explain":"The AACU survey revealed the faculty-training gap: nearly universal recognition that AI literacy is essential, combined with almost no institutional support for faculty to actually develop or teach it."},
+{"q":"What is a polygenic risk score and what does AI enable in this context?","options":["A score that measures a patient's risk from multiple simultaneous diseases","A statistical measure integrating thousands of genetic variants to predict disease risk — AI enables calculating accurate scores from very large numbers of variants simultaneously","A scoring system for evaluating the quality of genomic sequencing data","A risk assessment for pharmaceutical companies developing polygenic therapies"],"answer":1,"explain":"Polygenic risk scores aggregate the small effects of thousands of genetic variants that each individually contribute marginally to disease risk. Calculating accurate scores requires handling very large feature sets — a task where ML substantially outperforms traditional statistical methods."},
+{"q":"Why does the course argue that AI literacy is not a fixed credential but a continuous practice?","options":["Because AI literacy certifications expire after two years and must be renewed","Because the tools, models, and applications continuously change — what matters is a durable mental framework for evaluating any AI system, not specific tool knowledge","Because AI literacy is too complex to be fully learned and therefore must be practiced indefinitely","Because AI is different in every country, requiring continuous adaptation as a student moves between contexts"],"answer":1,"explain":"Specific tools and models will change dramatically. The underlying framework — understanding capabilities, limitations, evaluation methods, and ethical implications — remains applicable across the changes and is the durable skill to develop."},
+{"q":"What is the National AI Literacy Project's framework for AI literacy competencies?","options":["Read, Write, Code, Deploy, Govern","Know, Use, Evaluate, Ethics, Action","Understand, Apply, Analyze, Synthesize, Create","Identify, Question, Verify, Apply, Teach"],"answer":1,"explain":"The National AI Literacy Project defines 5 competencies: Know (understand what AI is and how it works), Use (apply AI tools effectively), Evaluate (critically assess AI outputs), Ethics (understand social and ethical implications), and Action (take informed action as a result)."},
+{"q":"What does Sal Khan's vision for AI in education describe as the two roles of AI?","options":["AI as teacher replacement and AI as administrative assistant","AI tutor for every student, and AI teaching assistant for every teacher — extending access to personalized support rather than replacing human educators","AI as content creator and AI as assessment grader","AI as learning designer and AI as student coach"],"answer":1,"explain":"Khan's framing is access-focused: AI can provide every student with the individualized tutoring only the wealthy currently have, while simultaneously giving every teacher a capable assistant — fundamentally changing the equity equation of personalized learning."},
+{"q":"A teacher uses MagicSchool AI to generate differentiated reading materials for three different levels in the same class. What educational principle does this illustrate?","options":["Standardized curriculum delivery — using technology to deliver the same content to all students","Differentiated instruction — tailoring the difficulty, format, or approach of materials to match different students' learning needs","Formative assessment — using frequent low-stakes checks to monitor student understanding","Cooperative learning — using technology to facilitate student collaboration on shared tasks"],"answer":1,"explain":"Differentiated instruction means meeting students where they are rather than teaching to the median. AI enables producing genuinely differentiated materials at scale — previously impractical for teachers to produce manually for large classes."},
+{"q":"What was the key finding of the 2017 Woebot RCT published in JMIR Mental Health?","options":["Woebot had no measurable effect on mental health symptoms compared to a waitlist control","Users showed significant reduction in depression and anxiety symptoms over two weeks of using the CBT-based chatbot","Woebot was only effective for mild symptoms and showed no benefit for moderate depression","Users preferred Woebot to human therapists at a statistically significant rate"],"answer":1,"explain":"The Woebot RCT was the first rigorous evidence that a conversational AI for mental health could produce measurable symptom reduction — a foundational study for the field, though limited by its short duration and relatively mild symptom population."},
+{"q":"What does it mean to 'operationalize' AI ethics in an educational context rather than just 'intend' it?","options":["Publishing an AI ethics policy for the institution that all stakeholders agree to","Creating concrete, unskippable processes — like academic integrity disclosures and assignment redesign checklists — that make ethical AI use the default, not a goal that depends on individual compliance","Hiring an AI ethics officer to review all course materials for potential AI misuse","Having students complete an AI ethics training course before being permitted to use AI tools"],"answer":1,"explain":"Intention without process is aspirational. Operationalization means the ethical behavior is built into the workflow — disclosure forms, assignment designs that require genuine thinking, clear review processes — so it happens by default rather than by individual virtue."},
+{"q":"The global edtech investment market exceeded what value in 2023, with AI-focused companies raising what in 2024?","options":["$5 billion total; $1 billion in AI-focused investment","$20 billion total; $4.1 billion in AI-focused edtech venture funding in 2024","$50 billion total; $10 billion in AI-focused investment","$8 billion total; $2.5 billion in AI-focused investment"],"answer":1,"explain":"Global edtech exceeded $20 billion in investment in 2023, with AI-specific edtech raising $4.1 billion in venture funding in 2024 alone — a significant acceleration driven by large language model capabilities becoming accessible to edtech product teams."},
+{"q":"What is the 'three policy model' framework for institutional AI academic integrity policies?","options":["Prohibit, Monitor, Enforce — the three stages of effective policy implementation","AI Prohibited; AI Permitted with Citation; AI Integrated — representing different stances on AI use appropriate for different contexts","Freshman policy; Upper Division policy; Graduate policy — tiered by academic level","Content policy; Process policy; Output policy — targeting different stages of the academic work process"],"answer":1,"explain":"The three models reflect different educational philosophies: Prohibited (appropriate for foundational skills where the practice matters), Permitted with Citation (AI as a transparent tool like any other), and Integrated (AI use is part of the assignment design itself)."},
+{"q":"What is the Feynman technique combined with AI, and why does it develop deeper understanding than passive AI use?","options":["Having AI explain a concept multiple times using different analogies until the student understands","Explaining a concept to AI in your own words and having AI probe your understanding — the act of explanation forces active retrieval and reveals gaps in your own knowledge","Using AI to generate Feynman diagrams for physics problems","Having AI grade your explanation of a concept using the Feynman scoring rubric"],"answer":1,"explain":"The Feynman technique is fundamentally about active retrieval and explaining to teach. Using AI as the audience means the student must actually articulate their understanding clearly — a process that develops real comprehension rather than passive reception."},
+{"q":"What skill does the course identify as most at risk of atrophy if students over-rely on AI for academic work?","options":["Typing speed and physical writing skill","Metacognition — the ability to know what you actually understand versus what you've only seen AI produce — and independent critical reasoning","Memorization of facts and specific information","The ability to use traditional research methods like library catalogs and print sources"],"answer":1,"explain":"Metacognition — knowing what you know — is the foundational skill for learning how to learn. If AI always produces the answer, students never develop the internal monitoring that tells them when they actually understand something versus when they're fooled by fluent output."},
+{"q":"According to the WEF, AI literacy will be among the top 5 most demanded skills across industries by what year?","options":["2030","2027","2035","2025"],"answer":1,"explain":"The WEF projects AI literacy will be among the top 5 demanded skills by 2027 — meaning students developing this literacy now are building a capability that will be in high demand before many of them enter the workforce."},
+{"q":"What is Carnegie Learning's MATHia and what makes it an example of genuine AI personalization?","options":["A teaching assistant AI that grades math homework automatically","An intelligent tutoring system that adapts every student's learning path in real time based on demonstrated mastery, adjusting problem difficulty and type to target each student's specific gaps","A math content library with AI-generated practice problems","An AI tool that helps math teachers design lesson plans aligned to standards"],"answer":1,"explain":"MATHia uses model-tracing tutoring, built on decades of cognitive science research, that creates a detailed knowledge model for each student and adapts problem selection to address demonstrated misconceptions — representing the state of the art in adaptive learning systems."},
+{"q":"What does the concept of 'AI literacy without application is trivia' mean for how students should approach this course?","options":["This course is useless unless students immediately build AI products after completing it","Understanding AI concepts is only valuable when it changes how you actually work, learn, and think — the goal is behavioral change, not just knowledge acquisition","Students who don't code are not truly AI literate and should pursue technical training","Only students who will work in AI-related industries benefit from AI literacy education"],"answer":1,"explain":"Literacy is instrumental — it enables something. AI literacy that doesn't change how you research, write, evaluate sources, or structure your thinking hasn't transferred from knowledge to capability. The measure of success is whether your actual practice changes."},
+{"q":"Why does the course frame AI as 'multiplying teacher effectiveness' rather than 'replacing teachers'?","options":["Because replacing teachers would be politically unpopular and regulatory bodies would prohibit it","Because the relationship, motivational, and judgment-based aspects of teaching are genuinely beyond current AI capabilities — AI handles information and routine tasks, teachers handle the human dimensions","Because AI tools are not yet reliable enough to replace teachers even in routine tasks","Because replacing teachers would eliminate the accountability that makes educational institutions function"],"answer":1,"explain":"The irreplaceable elements of teaching — knowing a specific child's emotional state, building trust that makes a student willing to struggle, modeling adult character — require human presence and genuine relationship that current AI cannot replicate."},
+{"q":"What is 'ambient AI documentation' in the classroom context and what problem does it solve?","options":["AI that monitors student behavior through classroom cameras to detect off-task behavior","AI that listens to classroom instruction and generates lesson summaries, notes, and documentation automatically — reducing teacher administrative burden without requiring teachers to pause instruction","AI that creates ambient music to improve student focus during independent work","AI-generated ambient audio that explains concepts at a low volume for students who are struggling"],"answer":1,"explain":"While ambient documentation is primarily a healthcare concept in this course material, the parallel in education is AI that handles the documentation work of teaching — lesson notes, assessment records — by listening and generating rather than requiring teachers to manually document everything."},
+{"q":"A student copies an AI-generated essay and submits it without modification. According to the course's framework, what is the core educational harm?","options":["The harm is primarily reputational — to the institution's credibility and to other students whose honest work is devalued","The harm is primarily economic — the student has effectively stolen the teacher's time","The student has bypassed the cognitive work that produces learning — they have a grade, but not the knowledge, skills, or capabilities the assignment was designed to develop","The harm is entirely external — to future employers who will hire an unqualified candidate"],"answer":2,"explain":"Academic dishonesty harms the dishonest student most directly: they haven't developed the capability the assignment was designed to build. They've optimized for the credential while sacrificing the learning — a trade-off with serious long-term consequences."},
+];
+
+let questions=[],current=0,score=0,answered=false;
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+window.startQuiz=function(){
+  questions=shuffle([...ALL_QUESTIONS]).slice(0,25);current=0;score=0;
+  document.getElementById('start-section').style.display='none';
+  document.getElementById('quiz-section').style.display='block';renderQuestion();
+};
+function renderQuestion(){
+  answered=false;const q=questions[current];
+  document.getElementById('question-num').textContent=`Question ${current+1} of 25`;
+  document.getElementById('question-text').textContent=q.q;
+  document.getElementById('progress-label').textContent=`Question ${current+1} of 25`;
+  document.getElementById('score-label').textContent=`${score} correct`;
+  document.getElementById('progress-fill').style.width=`${(current/25)*100}%`;
+  document.getElementById('feedback').className='feedback';document.getElementById('btn-next').className='btn-next';
+  const letters=['A','B','C','D'];const optionsEl=document.getElementById('options');optionsEl.innerHTML='';
+  const indices=shuffle([0,1,2,3]);
+  indices.forEach((origIdx,displayIdx)=>{
+    const opt=document.createElement('div');opt.className='option';
+    opt.innerHTML=`<div class="option-letter">${letters[displayIdx]}</div><div class="option-text">${q.options[origIdx]}</div>`;
+    opt.onclick=()=>selectAnswer(opt,origIdx===q.answer,indices.indexOf(q.answer),q.explain);
+    optionsEl.appendChild(opt);
+  });
+}
+function selectAnswer(clickedEl,isCorrect,correctShuffledIdx,explain){
+  if(answered)return;answered=true;
+  document.querySelectorAll('.option').forEach((o,i)=>{o.classList.add('disabled');if(i===correctShuffledIdx)o.classList.add('correct');});
+  if(isCorrect){clickedEl.classList.add('correct');score++;}else{clickedEl.classList.add('wrong');}
+  document.getElementById('score-label').textContent=`${score} correct`;
+  const fb=document.getElementById('feedback');fb.className=`feedback ${isCorrect?'correct':'wrong'} show`;
+  fb.textContent=isCorrect?`✓ Correct. ${explain}`:`✗ ${explain}`;
+  const btn=document.getElementById('btn-next');btn.className='btn-next show';btn.textContent=current===24?'See Results →':'Next Question →';
+}
+window.nextQuestion=function(){current++;if(current>=25)showResults();else renderQuestion();};
+async function showResults(){
+  document.getElementById('quiz-section').style.display='none';document.getElementById('result-section').style.display='block';
+  const passed=score>=18;const pct=Math.round((score/25)*100);
+  document.getElementById('result-icon').textContent=passed?'🏆':'📚';
+  document.getElementById('result-title').textContent=passed?'Assessment Passed':'Not This Time';
+  document.getElementById('result-score').className=`result-score ${passed?'pass':'fail'}`;
+  document.getElementById('result-score').textContent=`${score} / 25`;
+  if(passed){
+    document.getElementById('result-message').textContent=`You scored ${pct}% — above the 70% threshold. Your AI in Education certificate is being issued.`;
+    if(currentUser){
+      try{
+        const certId=currentUser.uid+'-education';const completedDate=new Date();
+        await setDoc(doc(db,'users',currentUser.uid),{certificatesEarned:arrayUnion('education'),educationCompletedAt:completedDate,educationCertId:certId,educationCertificate:true},{merge:true});
+        await setDoc(doc(db,'certificates',certId),{name:currentUser.displayName||'Meridian Student',email:currentUser.email,course:'AI in Education — Meridian Institute of AI',issuedAt:completedDate,certId:certId,valid:true});
+        document.getElementById('result-actions').innerHTML=`<a href="../../certificate.html?id=${certId}" class="btn-result btn-primary" target="_blank">View Certificate →</a><a href="../../dashboard.html" class="btn-result btn-ghost">Dashboard</a>`;
+      }catch(e){document.getElementById('result-actions').innerHTML=`<a href="../../dashboard.html" class="btn-result btn-primary">Dashboard</a>`;}
+    }
+  }else{
+    document.getElementById('result-message').textContent=`You scored ${pct}% — you need 70% to pass. Review the modules where your answers were weakest and try again.`;
+    document.getElementById('result-actions').innerHTML=`<a href="module-1.html" class="btn-result btn-primary">Review from Module 1</a><button class="btn-result btn-ghost" onclick="location.reload()">Try Again</button>`;
+  }
+}
+window.toggleTheme=function(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='☾'):(h.setAttribute('data-theme','dark'),i.textContent='☀');};
+</script>
+</body>
+</html>

@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 9: Production-Ready AI Apps — Building with AI APIs — Meridian Institute of AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#0F4C81;--accent-dim:rgba(15,76,129,0.1);--accent-dim2:rgba(15,76,129,0.05);--nav-bg:rgba(8,8,8,0.9);--callout-bg:rgba(15,76,129,0.07);--callout-border:rgba(15,76,129,0.25);--good-bg:rgba(34,197,94,0.07);--good-border:rgba(34,197,94,0.2);--warn-bg:rgba(251,146,60,0.07);--warn-border:rgba(251,146,60,0.2);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#1E40AF;--accent-dim:rgba(30,64,175,0.08);--accent-dim2:rgba(30,64,175,0.04);--nav-bg:rgba(250,250,248,0.9);--callout-bg:rgba(30,64,175,0.05);--callout-border:rgba(30,64,175,0.2);--good-bg:rgba(22,163,74,0.06);--good-border:rgba(22,163,74,0.2);--warn-bg:rgba(234,88,12,0.05);--warn-border:rgba(234,88,12,0.2);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;overflow-x:hidden;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.7;overflow-x:hidden;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}
+  .nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}
+  .nav-back{font-size:13px;color:var(--text-2);text-decoration:none;transition:color 0.2s;}
+  .nav-back:hover{color:var(--text);}
+  .nav-label{font-size:13px;color:var(--text-3);}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;transition:all 0.2s;}
+  .theme-toggle:hover{background:var(--bg-3);color:var(--text);}
+  .progress-bar{position:fixed;top:60px;left:0;right:0;z-index:99;height:2px;background:var(--border);}
+  .progress-fill{height:100%;background:var(--accent);width:0%;transition:width 0.1s;}
+  .page-wrapper{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:100vh;padding-top:62px;overflow:hidden;}
+  .sidebar{position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto;border-right:1px solid var(--border);padding:32px 24px;background:var(--bg-2);}
+  .sidebar-course{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;}
+  .sidebar-course-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+  .sidebar-module{margin-bottom:4px;}
+  .sidebar-module-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:13px;color:var(--text-2);text-decoration:none;transition:all 0.2s;line-height:1.4;}
+  .sidebar-module-link:hover{background:var(--bg-3);color:var(--text);}
+  .sidebar-module-link.active{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-num{font-size:11px;font-weight:500;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--bg-4);color:var(--text-3);}
+  .sidebar-module-link.active .sidebar-num{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-divider{height:1px;background:var(--border);margin:20px 0;}
+  .sidebar-progress-label{font-size:12px;color:var(--text-3);margin-bottom:8px;display:flex;justify-content:space-between;}
+  .sidebar-progress-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sidebar-progress-fill{height:100%;width:90%;background:var(--accent);border-radius:2px;}
+  main{display:block;min-width:0;overflow:hidden;}
+  .content{max-width:760px;width:100%;padding:60px 64px 140px;margin:0 auto;}
+  .module-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+  .module-tag{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(15,76,129,0.2);padding:4px 12px;border-radius:100px;}
+  .module-meta{font-size:12px;color:var(--text-3);}
+  h1{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1.05;letter-spacing:-0.02em;color:var(--text);margin-bottom:24px;}
+  .intro-text{font-size:19px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+  h2{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:400;color:var(--text);margin:52px 0 18px;line-height:1.2;}
+  h3{font-size:16px;font-weight:500;color:var(--text);margin:32px 0 12px;}
+  p{font-size:16px;font-weight:300;color:var(--text-2);line-height:1.8;margin-bottom:20px;}
+  strong{font-weight:500;color:var(--text);}
+  em{font-style:italic;}
+  ul,ol{margin:0 0 20px 22px;color:var(--text-2);}
+  li{font-size:16px;font-weight:300;line-height:1.8;margin-bottom:8px;}
+  .callout{background:var(--callout-bg);border:1px solid var(--callout-border);border-radius:12px;padding:24px 28px;margin:32px 0;}
+  .callout-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+  .callout p{margin:0;font-size:15px;color:var(--text-2);}
+  .callout p+p{margin-top:12px;}
+  .good{background:var(--good-bg);border:1px solid var(--good-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .good-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#22c55e;margin-bottom:10px;}
+  .good p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn{background:var(--warn-bg);border:1px solid var(--warn-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .warn-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#fb923c;margin-bottom:10px;}
+  .warn p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn p+p{margin-top:12px;}
+  .principle-list{display:flex;flex-direction:column;gap:12px;margin:24px 0;}
+  .principle{background:var(--bg-2);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:0 12px 12px 0;padding:20px 24px;}
+  .principle-title{font-size:15px;font-weight:500;color:var(--text);margin-bottom:6px;}
+  .principle-desc{font-size:14px;color:var(--text-2);line-height:1.65;margin:0;}
+  .sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:var(--bg-2);border-top:1px solid var(--border-2);padding:14px 5%;display:flex;align-items:center;justify-content:space-between;gap:16px;backdrop-filter:blur(12px);}
+  .sticky-bar-track{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sticky-bar-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.2s;width:0%;}
+  .sticky-bar-label{font-size:12px;color:var(--text-3);white-space:nowrap;min-width:60px;text-align:right;}
+  .sticky-bar-btn{padding:10px 20px;border-radius:8px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;background:var(--accent);color:#fff;border:none;cursor:pointer;white-space:nowrap;transition:opacity 0.2s;display:none;}
+  .sticky-bar-btn:hover{opacity:0.88;}
+  .sticky-bar-reading{font-size:12px;color:var(--text-3);white-space:nowrap;}
+  @media(max-width:900px){.page-wrapper{grid-template-columns:1fr;}.sidebar{display:none;}.content{padding:40px 24px 120px;}h1{font-size:38px;}}
+  @media(max-width:600px){.content{padding:28px 16px 120px;}h1{font-size:30px;}h2{font-size:24px;}}
+</style>
+<style>@media(max-width:480px){.nav-divider{display:none}.nav-left{gap:8px}}</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="courses.html" class="nav-back">&#8592; Building with AI APIs</a>
+    <div class="nav-divider"></div>
+    <span class="nav-label">Module 9</span>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">&#9728;</span></button>
+</nav>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+
+<div class="page-wrapper">
+<aside class="sidebar">
+  <div class="sidebar-course">Expert Track</div>
+  <div class="sidebar-course-name">Building with AI APIs</div>
+  <div class="sidebar-module"><a href="apis-module-1.html" class="sidebar-module-link"><span class="sidebar-num">1</span>API Fundamentals</a></div>
+  <div class="sidebar-module"><a href="apis-module-2.html" class="sidebar-module-link"><span class="sidebar-num">2</span>Your First API Call</a></div>
+  <div class="sidebar-module"><a href="apis-module-3.html" class="sidebar-module-link"><span class="sidebar-num">3</span>Chat Completions in Depth</a></div>
+  <div class="sidebar-module"><a href="apis-module-4.html" class="sidebar-module-link"><span class="sidebar-num">4</span>Tokens and Cost Optimization</a></div>
+  <div class="sidebar-module"><a href="apis-module-5.html" class="sidebar-module-link"><span class="sidebar-num">5</span>Structured Outputs</a></div>
+  <div class="sidebar-module"><a href="apis-module-6.html" class="sidebar-module-link"><span class="sidebar-num">6</span>Streaming Responses</a></div>
+  <div class="sidebar-module"><a href="apis-module-7.html" class="sidebar-module-link"><span class="sidebar-num">7</span>Embeddings and Semantic Search</a></div>
+  <div class="sidebar-module"><a href="apis-module-8.html" class="sidebar-module-link"><span class="sidebar-num">8</span>Function Calling and Tool Use</a></div>
+  <div class="sidebar-module"><a href="apis-module-9.html" class="sidebar-module-link active"><span class="sidebar-num">9</span>Production-Ready AI Apps</a></div>
+  <div class="sidebar-module"><a href="apis-module-10.html" class="sidebar-module-link"><span class="sidebar-num">10</span>Multi-Provider Strategies</a></div>
+  <div class="sidebar-module"><a href="quiz-apis.html" class="sidebar-module-link" style="color:var(--accent);margin-top:4px;"><span class="sidebar-num" style="background:var(--accent-dim);color:var(--accent);">&#10022;</span>Final Assessment</a></div>
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-progress-label"><span>Course progress</span><span style="color:var(--accent);">9 / 10</span></div>
+  <div class="sidebar-progress-track"><div class="sidebar-progress-fill"></div></div>
+</aside>
+
+<main>
+<div class="content">
+  <div class="module-eyebrow"><span class="module-tag">Module 9</span><span class="module-meta">34 min read &middot; Building with AI APIs</span></div>
+  <h1>Production-Ready AI Apps</h1>
+
+  <p class="intro-text">A working prototype and a production application are separated by a long list of concerns that have nothing to do with model quality: rate limits, authentication, cost controls, error recovery, latency, caching, content moderation, and observability. Developers who have only called AI APIs in notebooks are often surprised by how much engineering separates a working demo from a reliable service. This module covers the production layer — the problems you will hit when real users arrive, and the patterns that actually solve them.</p>
+
+  <h2>Rate limits and exponential backoff</h2>
+  <p>Every AI API enforces rate limits on two dimensions: <strong>requests per minute (RPM)</strong> and <strong>tokens per minute (TPM)</strong>. In a prototype you make calls sequentially and rarely approach either limit. With concurrent users in production, you can hit both limits simultaneously and unpredictably. The correct response to a 429 Too Many Requests is exponential backoff with jitter — waiting progressively longer between retries while adding randomness to prevent synchronized retry storms from multiple clients.</p>
+  <p>The OpenAI and Anthropic Python SDKs both include built-in retry logic you can configure with <code>max_retries</code> on the client constructor. For custom retry logic, the pattern is: catch the rate limit exception, compute a wait time of <code>(2 ** attempt) + random.uniform(0, 1)</code> seconds, sleep, and retry up to a maximum attempt count. Never retry immediately on a 429 — you will just hit the limit again.</p>
+  <p>Beyond reactive retries, proactive rate limit management involves tracking your remaining rate limit headroom using the headers returned with each response (<code>x-ratelimit-remaining-requests</code>, <code>x-ratelimit-remaining-tokens</code>) and slowing down proactively before you hit the limit rather than after.</p>
+
+  <h2>Caching to reduce cost and latency</h2>
+  <p>Many production AI API calls are identical or near-identical. A customer support bot receives the same questions repeatedly. A document analysis pipeline processes the same document multiple times. Caching eliminates redundant API calls entirely.</p>
+
+  <h3>Exact-match caching</h3>
+  <p>Hash the complete request — system prompt plus user message plus model and key parameters — and store the response in Redis or Memcached with a TTL appropriate for how frequently the underlying data changes. Cache hits skip the API call entirely, returning stored responses in under 1ms. For applications with repetitive queries and stable knowledge bases, exact-match cache hit rates of 40-70% are achievable, which translates directly to cost and latency reductions.</p>
+
+  <h3>Prompt caching (provider-side)</h3>
+  <p>Anthropic's Claude API supports explicit prompt caching: if you mark a portion of your prompt with a <code>cache_control</code> parameter, the API caches the KV computation for that prefix and charges reduced rates for subsequent calls that share the same prefix. This is particularly valuable for applications with long, stable system prompts — a legal AI assistant with a 10,000-token policy document in its system prompt can have 90% of that computation cached, dramatically reducing per-call cost. OpenAI similarly caches system prompts automatically for prompts above 1,024 tokens.</p>
+
+  <h2>API key security</h2>
+  <p>API keys are credentials with spending authority. Exposed keys result in unauthorized charges — attackers find exposed keys systematically through GitHub scanning and exploit them within minutes of exposure. The rules are non-negotiable in production.</p>
+
+  <div class="principle-list">
+    <div class="principle">
+      <div class="principle-title">Never commit keys to version control</div>
+      <div class="principle-desc">Store API keys in environment variables loaded from a .env file that is gitignored, or in a secrets management service (AWS Secrets Manager, Google Secret Manager, HashiCorp Vault). If you need to share secrets across a team, use a secrets manager — never a shared .env file in a repo.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Never expose keys to the browser</div>
+      <div class="principle-desc">Client-side JavaScript that calls AI APIs directly necessarily exposes your API key to any user who opens the browser developer tools. All AI API calls must go through your backend. Your frontend calls your server; your server calls the AI API with the secret key. This is not optional — there is no safe way to make direct browser-to-AI-API calls with a secret key.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Set spending limits on your account</div>
+      <div class="principle-desc">All major AI API providers allow you to set hard monthly spending caps. Set one. A runaway bug, an unexpected traffic spike, or a malicious user exploiting an endpoint without rate limiting can generate an unbounded bill in hours. A spending cap is the last line of defense.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Use per-environment keys</div>
+      <div class="principle-desc">Separate API keys for development, staging, and production. Apply lower rate limits and spending caps to development keys. If a development key is leaked or a developer's machine is compromised, the blast radius is limited to the development key's spending cap rather than your production account.</div>
+    </div>
+  </div>
+
+  <h2>Observability: logging and tracing</h2>
+  <p>In a production AI application, something will go wrong — a model will produce an incorrect output, a user will report that "the AI said something weird," a cost spike will appear in your billing dashboard. Without structured logging of every API call, debugging these problems requires guesswork. With it, you can reconstruct exactly what happened.</p>
+  <p>At minimum, log for every API call: the timestamp, the model, the full prompt (system + messages), the full response, the token counts (prompt and completion), the latency, and any error information. Store these logs with a unique request ID that you can correlate with user sessions and backend traces. For longer-running tasks, log at each step so you can identify where a failure occurred.</p>
+  <p>Purpose-built AI observability tools — <strong>LangSmith</strong> (for LangChain-based apps), <strong>Arize Phoenix</strong>, <strong>Weights and Biases Weave</strong>, and <strong>Helicone</strong> — provide dashboards on top of this structured logging: cost over time, token usage by endpoint, latency percentiles, error rates, and the ability to search and replay past conversations. They integrate with most AI SDKs and add minimal overhead. For anything beyond a toy project, using one of these tools is worth the setup time — debugging without them is substantially more painful.</p>
+
+  <h2>Content moderation and output validation</h2>
+  <p>AI models produce outputs that can be incorrect, harmful, or outside your application's intended use case. A customer support bot can be prompted by a user to discuss topics unrelated to your product. A code generation tool can produce syntactically valid but functionally incorrect code. A document summarization tool can hallucinate details not present in the source.</p>
+
+  <h3>Input moderation</h3>
+  <p>OpenAI provides a free moderation endpoint (<code>client.moderations.create</code>) that classifies text along categories including hate speech, harassment, self-harm, sexual content, and violence. Run user inputs through the moderation endpoint before passing them to your main model. This catches the most obvious misuse patterns at minimal cost (the moderation endpoint is free and fast). It is not a complete solution — it catches high-confidence policy violations but misses subtle prompt injection and jailbreak attempts.</p>
+
+  <h3>Output validation</h3>
+  <p>For applications where output correctness is critical, validate model outputs programmatically before displaying them to users. If your application expects structured JSON, validate the schema. If it expects code, attempt to parse it. If it expects factual claims about your product, check them against a ground truth knowledge base. Structured outputs (from Module 5) make this validation tractable by constraining model outputs to valid JSON schemas — invalid outputs are caught at the API level rather than in your application code.</p>
+
+  <h2>Per-user rate limiting</h2>
+  <p>Without per-user rate limiting, a single user can exhaust your API quota for all users. Implement a token bucket or leaky bucket rate limiter at the user level, keyed to user ID or IP address, stored in Redis. Reject requests that exceed per-user limits with a 429 response and a <code>Retry-After</code> header. This prevents any single user from degrading the experience for others and limits the damage from prompt injection attacks that try to generate enormous amounts of tokens.</p>
+
+  <div class="callout">
+    <div class="callout-label">The cost accounting problem</div>
+    <p>If your application is multi-tenant and you want to charge users or customers for AI usage, you need per-request cost accounting from day one — not retrofitted later. The inputs are available in the API response: prompt tokens, completion tokens, and model. The output is a cost figure computed from published per-token pricing. Log this per request, aggregate by user and billing period, and build the billing UI on top. Retrofitting cost accounting into an application that was not designed for it is a significant engineering project; building it in from the start is an afternoon of work.</p>
+  </div>
+
+  <p>In the final module, we examine multi-provider strategies — how to architect AI applications that can use multiple model providers, and why that flexibility is more valuable than single-provider lock-in.</p>
+</div>
+</main>
+</div>
+
+<div class="sticky-bar" id="sticky-bar">
+  <div class="sticky-bar-reading" id="sticky-reading">Read to the end to unlock the next module</div>
+  <div class="sticky-bar-track"><div class="sticky-bar-fill" id="sticky-fill"></div></div>
+  <div class="sticky-bar-label" id="sticky-label">0%</div>
+  <button class="sticky-bar-btn" id="sticky-btn" onclick="completeAndNext()">Module 10: Multi-Provider Strategies &#8594;</button>
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import { getFirestore, doc, setDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  const app=initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+  const auth=getAuth(app);const db=getFirestore(app);
+  let currentUser=null;
+  onAuthStateChanged(auth,u=>{currentUser=u;});
+
+  window.toggleTheme=function(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='&#9790;'):(h.setAttribute('data-theme','dark'),i.textContent='&#9728;');};
+  window.addEventListener('scroll',()=>{const d=document.documentElement,s=d.scrollTop||document.body.scrollTop,t=d.scrollHeight-d.clientHeight;document.getElementById('progress').style.width=(s/t*100)+'%';});
+
+  let unlocked=false;
+  function updateScrollProgress(){
+    const scrolled=window.scrollY+window.innerHeight;
+    const total=document.documentElement.scrollHeight;
+    const pct=Math.min(100,Math.round((scrolled/total)*100));
+    const fill=document.getElementById('sticky-fill');
+    const label=document.getElementById('sticky-label');
+    const btn=document.getElementById('sticky-btn');
+    const reading=document.getElementById('sticky-reading');
+    if(fill)fill.style.width=pct+'%';
+    if(label)label.textContent=pct+'%';
+    if(pct>=95&&!unlocked){
+      unlocked=true;
+      if(btn)btn.style.display='block';
+      if(reading)reading.style.display='none';
+      if(fill)fill.style.background='#22c55e';
+      if(label)label.style.color='#22c55e';
+    }
+  }
+  window.addEventListener('scroll',updateScrollProgress);
+  updateScrollProgress();
+
+  window.completeAndNext=async function(){
+    if(currentUser){
+      try{
+        await setDoc(doc(db,'users',currentUser.uid),{
+          apisModules: arrayUnion('m9')
+        },{merge:true});
+      }catch(e){}
+    }
+    window.location.href='apis-module-10.html';
+  };
+</script>
+</body>
+</html>

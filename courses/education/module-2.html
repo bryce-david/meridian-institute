@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Tutoring and Personalized Learning — AI in Education — Meridian Institute of AI</title>
+<meta name="description" content="Free AI in Education course — module 2. Explore how AI tutoring and personalized learning systems actually work, and what the evidence says about their effectiveness.">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="AI Tutoring and Personalized Learning — AI in Education — Meridian Institute of AI">
+<meta property="og:description" content="Free AI in Education course — module 2. Explore how AI tutoring systems work and what the research shows.">
+<meta property="og:url" content="https://meridianinstituteai.com/courses/education/module-2.html">
+<meta property="og:type" content="website">
+<link rel="canonical" href="https://meridianinstituteai.com/courses/education/module-2.html">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#f59e0b;--accent-dim:rgba(245,158,11,0.1);--nav-bg:rgba(8,8,8,0.9);--callout-bg:rgba(245,158,11,0.07);--callout-border:rgba(245,158,11,0.25);--good-bg:rgba(34,197,94,0.07);--good-border:rgba(34,197,94,0.2);--warn-bg:rgba(251,146,60,0.07);--warn-border:rgba(251,146,60,0.2);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#d97706;--accent-dim:rgba(217,119,6,0.08);--nav-bg:rgba(250,250,248,0.9);--callout-bg:rgba(217,119,6,0.05);--callout-border:rgba(217,119,6,0.2);--good-bg:rgba(22,163,74,0.06);--good-border:rgba(22,163,74,0.2);--warn-bg:rgba(234,88,12,0.05);--warn-border:rgba(234,88,12,0.2);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;overflow-x:hidden;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.7;overflow-x:hidden;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}
+  .nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}
+  .nav-back{font-size:13px;color:var(--text-2);text-decoration:none;transition:color 0.2s;}
+  .nav-back:hover{color:var(--text);}
+  .nav-label{font-size:13px;color:var(--text-3);}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;transition:all 0.2s;}
+  .progress-bar{position:fixed;top:60px;left:0;right:0;z-index:99;height:2px;background:var(--border);}
+  .progress-fill{height:100%;background:var(--accent);width:0%;transition:width 0.1s;}
+  .page-wrapper{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:100vh;padding-top:62px;}
+  .sidebar{position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto;border-right:1px solid var(--border);padding:32px 24px;background:var(--bg-2);}
+  .sidebar-course{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;}
+  .sidebar-course-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+  .sidebar-module{margin-bottom:4px;}
+  .sidebar-module-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:13px;color:var(--text-2);text-decoration:none;transition:all 0.2s;line-height:1.4;}
+  .sidebar-module-link:hover{background:var(--bg-3);color:var(--text);}
+  .sidebar-module-link.active{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-num{font-size:11px;font-weight:500;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--bg-4);color:var(--text-3);}
+  .sidebar-module-link.active .sidebar-num{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-divider{height:1px;background:var(--border);margin:20px 0;}
+  .sidebar-progress-label{font-size:12px;color:var(--text-3);margin-bottom:8px;display:flex;justify-content:space-between;}
+  .sidebar-progress-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sidebar-progress-fill{height:100%;width:28%;background:var(--accent);border-radius:2px;}
+  main{display:block;min-width:0;}
+  .content{max-width:760px;width:100%;padding:60px 64px 140px;margin:0 auto;}
+  .module-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+  .module-tag{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(245,158,11,0.2);padding:4px 12px;border-radius:100px;}
+  .module-meta{font-size:12px;color:var(--text-3);}
+  h1{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1.05;letter-spacing:-0.02em;color:var(--text);margin-bottom:24px;}
+  .intro-text{font-size:19px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+  h2{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:400;color:var(--text);margin:52px 0 18px;line-height:1.2;}
+  h3{font-size:16px;font-weight:500;color:var(--text);margin:32px 0 12px;}
+  p{font-size:16px;font-weight:300;color:var(--text-2);line-height:1.8;margin-bottom:20px;}
+  strong{font-weight:500;color:var(--text);}
+  .callout{background:var(--callout-bg);border:1px solid var(--callout-border);border-radius:12px;padding:24px 28px;margin:32px 0;}
+  .callout-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+  .callout p{margin:0;font-size:15px;color:var(--text-2);}
+  .callout p+p{margin-top:12px;}
+  .good{background:var(--good-bg);border:1px solid var(--good-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .good-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#22c55e;margin-bottom:10px;}
+  .good p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn{background:var(--warn-bg);border:1px solid var(--warn-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .warn-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#fb923c;margin-bottom:10px;}
+  .warn p{margin:0;font-size:15px;color:var(--text-2);}
+  .comparison-wrapper{overflow-x:auto;-webkit-overflow-scrolling:touch;width:100%;margin:28px 0;}
+  table{width:100%;border-collapse:collapse;font-size:14px;min-width:480px;}
+  th{text-align:left;padding:12px 16px;font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-3);border-bottom:1px solid var(--border-2);}
+  td{padding:14px 16px;border-bottom:1px solid var(--border);color:var(--text-2);line-height:1.6;vertical-align:top;}
+  tr:last-child td{border-bottom:none;}
+  td:first-child{color:var(--text);font-weight:500;}
+  .principle-list{display:flex;flex-direction:column;gap:12px;margin:24px 0;}
+  .principle{background:var(--bg-2);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:0 12px 12px 0;padding:20px 24px;}
+  .principle-title{font-size:15px;font-weight:500;color:var(--text);margin-bottom:6px;}
+  .principle-desc{font-size:14px;color:var(--text-2);line-height:1.65;margin:0;}
+  .sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:var(--bg-2);border-top:1px solid var(--border-2);padding:14px 5%;display:flex;align-items:center;justify-content:space-between;gap:16px;backdrop-filter:blur(12px);}
+  .sticky-bar-track{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sticky-bar-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.2s;width:0%;}
+  .sticky-bar-label{font-size:12px;color:var(--text-3);white-space:nowrap;min-width:60px;text-align:right;}
+  .sticky-bar-btn{padding:10px 20px;border-radius:8px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;background:var(--accent);color:#fff;border:none;cursor:pointer;white-space:nowrap;transition:opacity 0.2s;display:none;}
+  .sticky-bar-btn:hover{opacity:0.88;}
+  .sticky-bar-reading{font-size:12px;color:var(--text-3);white-space:nowrap;}
+  @media(max-width:900px){.page-wrapper{grid-template-columns:1fr;}.sidebar{display:none;}.content{padding:40px 24px 120px;}h1{font-size:38px;}}
+  @media(max-width:600px){.content{padding:28px 16px 120px;}h1{font-size:30px;}h2{font-size:24px;}}
+</style>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="shortcut icon" href="/favicon.ico">
+<style>@media(max-width:480px){.nav-divider{display:none}.nav-left{gap:8px}}</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="../../index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="../../index.html" class="nav-back">Home</a>
+    <div class="nav-divider"></div>
+    <a href="../../courses.html" class="nav-back">← AI in Education</a>
+    <div class="nav-divider"></div>
+    <span class="nav-label">Module 2</span>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">☀</span></button>
+</nav>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+
+<div class="page-wrapper">
+<aside class="sidebar">
+  <div class="sidebar-course">Course</div>
+  <div class="sidebar-course-name">AI in Education</div>
+  <div class="sidebar-module"><a href="module-1.html" class="sidebar-module-link"><span class="sidebar-num">1</span>How AI is Transforming Education</a></div>
+  <div class="sidebar-module"><a href="module-2.html" class="sidebar-module-link active"><span class="sidebar-num">2</span>AI Tutoring and Personalized Learning</a></div>
+  <div class="sidebar-module"><a href="module-3.html" class="sidebar-module-link"><span class="sidebar-num">3</span>Using AI as a Student</a></div>
+  <div class="sidebar-module"><a href="module-4.html" class="sidebar-module-link"><span class="sidebar-num">4</span>AI Tools for Educators</a></div>
+  <div class="sidebar-module"><a href="module-5.html" class="sidebar-module-link"><span class="sidebar-num">5</span>Academic Integrity in the AI Era</a></div>
+  <div class="sidebar-module"><a href="module-6.html" class="sidebar-module-link"><span class="sidebar-num">6</span>The Future Classroom</a></div>
+  <div class="sidebar-module"><a href="module-7.html" class="sidebar-module-link"><span class="sidebar-num">7</span>Building Your AI Literacy</a></div>
+  <div class="sidebar-module"><a href="quiz.html" class="sidebar-module-link" style="color:var(--accent);margin-top:4px;"><span class="sidebar-num" style="background:var(--accent-dim);color:var(--accent);">✦</span>Final Assessment</a></div>
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-progress-label"><span>Course progress</span><span style="color:var(--accent);">2 / 7</span></div>
+  <div class="sidebar-progress-track"><div class="sidebar-progress-fill"></div></div>
+</aside>
+
+<main>
+<div class="content">
+  <div class="module-eyebrow"><span class="module-tag">Module 2</span><span class="module-meta">24 min read · AI in Education</span></div>
+  <h1>AI Tutoring and Personalized Learning</h1>
+  <p class="intro-text">The one-to-one tutor has always been the gold standard of education. Research by Benjamin Bloom in 1984 showed that students who received individual tutoring performed two standard deviations better than those in conventional classrooms — the "2-sigma problem." For decades, no one knew how to deliver that at scale. AI may finally be the answer, but the details matter enormously.</p>
+
+  <h2>What personalized learning actually means</h2>
+  <p>The phrase "personalized learning" has been thrown around in education reform for decades, often to describe software that lets students move at their own pace through the same content. Real personalized learning is more demanding than that. It means adapting not just the pace but the <strong>sequence, the explanation style, the practice type, and the feedback</strong> based on what an individual student actually understands and misunderstands.</p>
+  <p>A good human tutor does this naturally. When a student struggles with fractions, the tutor probes to find out why — is it the concept of division, the visual representation, the notation? — and adjusts the approach in real time. When the student makes a particular type of error repeatedly, the tutor flags it and constructs targeted practice. When the student is bored because material is too easy, the tutor accelerates.</p>
+  <p>This kind of responsiveness has been essentially impossible at scale in traditional classroom settings. One teacher cannot simultaneously track the learning state of thirty students and adapt instruction to each. AI changes this constraint — and that's why the potential here is genuinely significant.</p>
+
+  <h2>Intelligent Tutoring Systems — 40 years of research</h2>
+  <p>Most people think AI tutoring started with ChatGPT. It didn't. Intelligent Tutoring Systems (ITS) have been in development since the 1970s, and the research base is one of the strongest in educational technology.</p>
+  <p>Early ITS like LISP Tutor (1983) and Cognitive Tutor (1990s) were built on cognitive science models of how students learn specific subjects. They tracked student knowledge state through a technique called <strong>Knowledge Tracing</strong> — maintaining a probabilistic model of what each student does and doesn't know, updated with each response. When a student answers incorrectly, the system doesn't just mark it wrong; it tries to infer which component of knowledge is missing and provides targeted remediation.</p>
+
+  <div class="callout">
+    <div class="callout-label">The research verdict on ITS</div>
+    <p>A 2011 meta-analysis by VanLehn found that ITS produced effect sizes of approximately 0.76 compared to classroom instruction — nearly as effective as human tutoring (effect size ~0.79) and far better than classroom teaching alone. This held across dozens of studies in math, science, and reading. Thirty years of evidence shows AI-assisted tutoring works when it's built on sound cognitive science principles.</p>
+  </div>
+
+  <h2>Khanmigo — the Socratic AI tutor</h2>
+  <p>Khan Academy's Khanmigo is the most prominent contemporary example of AI tutoring built with pedagogical intentionality. Built on GPT-4, it is deliberately constrained not to give answers directly. Instead, it asks questions that lead students toward the answer themselves — the Socratic method implemented at scale.</p>
+
+  <h3>How it actually works</h3>
+  <p>When a student is stuck on a math problem, Khanmigo doesn't solve it. It asks what the student has tried. It asks them to explain their thinking. It offers a hint — not a solution — and checks whether that hint was enough. If the student is still stuck, it offers another layer of guidance, always stopping short of the full answer. The goal is to keep the productive struggle happening, because that's where the learning occurs.</p>
+  <p>Khanmigo also has a teacher-facing mode. Teachers can see which students asked Khanmigo for help, which concepts triggered the most confusion, and which students are struggling in patterns that suggest deeper knowledge gaps. This converts AI tutoring interactions into actionable classroom intelligence.</p>
+
+  <h3>What users actually report</h3>
+  <p>Teacher feedback on Khanmigo has been largely positive on the concept, more mixed on the execution. The Socratic approach is pedagogically sound, but students sometimes find it frustrating — they want an answer and Khanmigo keeps asking questions. This frustration is actually pedagogically correct (productive struggle is real) but requires students to have some buy-in to the idea that the process matters, not just the answer. Students who approach Khanmigo looking for shortcuts tend to disengage.</p>
+
+  <h2>The learning science behind AI tutoring</h2>
+  <p>Good AI tutoring isn't just conversational AI applied to education. The best systems are built on cognitive science research about how humans actually acquire and retain knowledge.</p>
+
+  <div class="principle-list">
+    <div class="principle">
+      <div class="principle-title">Spaced repetition</div>
+      <div class="principle-desc">The forgetting curve, documented by Ebbinghaus in 1885, shows that memory decays rapidly after learning unless reinforced at strategic intervals. Spaced repetition exploits this by scheduling review sessions when a memory is about to be forgotten — maximizing retention per unit of study time. AI makes spaced repetition fully adaptive: the schedule for each concept adjusts to each student's actual performance, not a generic curve.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Interleaving</div>
+      <div class="principle-desc">Students naturally prefer "blocked" practice — completing all problems of one type before moving to the next. Research consistently shows that interleaved practice (mixing problem types) produces significantly better long-term retention, even though it feels harder. AI tutors can enforce interleaving without the student having to choose it — and the best systems explain why they're mixing problems, building student trust in the approach.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Retrieval practice</div>
+      <div class="principle-desc">Testing yourself on material — not just re-reading it — is one of the most powerful learning strategies in the research literature. AI tutors can convert any content into retrieval practice: generating questions, presenting flashcard-style challenges, asking students to explain concepts in their own words. Retrieval practice is often underused in traditional education because generating practice questions at scale is labor-intensive for teachers. AI eliminates that bottleneck.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Elaborative interrogation</div>
+      <div class="principle-desc">Asking "why" and "how" questions — rather than "what" — forces students to connect new information to existing knowledge structures. This deeper processing produces more durable learning. AI tutors like Khanmigo are specifically designed to ask elaborative questions, though the quality of this interrogation depends heavily on the sophistication of the underlying model and prompt engineering.</div>
+    </div>
+  </div>
+
+  <h2>Adaptive learning platforms</h2>
+  <p>Beyond dedicated AI tutors, a class of platforms uses adaptive algorithms to adjust the content path through a curriculum based on demonstrated student performance. These aren't as conversational as Khanmigo but operate at larger scale.</p>
+
+  <div class="comparison-wrapper">
+    <table>
+      <tr><th>Platform</th><th>Subject focus</th><th>Adaptive mechanism</th><th>Evidence base</th></tr>
+      <tr><td>Carnegie Learning MATHia</td><td>K-12 math</td><td>ITS with knowledge tracing; 30+ years of cognitive science</td><td>Strong — multiple RCT studies</td></tr>
+      <tr><td>Duolingo</td><td>Language learning</td><td>Spaced repetition + ML-adjusted difficulty</td><td>Moderate — strong engagement data</td></tr>
+      <tr><td>ALEKS</td><td>Math and chemistry</td><td>Knowledge space theory; maps exact knowledge state</td><td>Strong — widely studied</td></tr>
+      <tr><td>Newsela</td><td>Reading / literacy</td><td>Lexile-adjusted text difficulty</td><td>Moderate — classroom effectiveness studies</td></tr>
+      <tr><td>IXL</td><td>Math and ELA</td><td>Adaptive problem selection based on SmartScore</td><td>Moderate — correlational studies</td></tr>
+    </table>
+  </div>
+
+  <h2>Reading and writing AI tutors</h2>
+  <p>Math and science have clearer correct answers, which makes AI tutoring more tractable. Reading and writing are harder — they involve judgment, voice, argumentation, and interpretation in ways that resist simple right/wrong evaluation.</p>
+  <p>That said, AI writing tutors have made real progress. Tools like Writable and EssayJack provide AI-generated feedback on student writing — not just grammar and mechanics, but argument structure, evidence use, and clarity. The key constraint is that AI feedback on writing quality is only as good as the underlying model's understanding of what good writing is, which varies by genre, audience, and purpose.</p>
+
+  <div class="warn">
+    <div class="warn-label">The feedback quality problem</div>
+    <p>AI-generated writing feedback can be generic, miss the student's actual intent, or provide technically accurate but contextually wrong suggestions. A student writing a persuasive essay for one purpose and a personal narrative for another needs different feedback — and AI systems don't always distinguish well between contexts. Teacher review of AI feedback remains important.</p>
+  </div>
+
+  <h2>Does AI tutoring actually improve learning outcomes?</h2>
+  <p>The research base divides cleanly into two eras: pre-LLM (Intelligent Tutoring Systems) and post-LLM (conversational AI tutors).</p>
+  <p>For ITS, the evidence is clear: well-designed systems consistently outperform no tutoring and often match human tutoring. Carnegie Learning's MATHia has been studied in multiple randomized controlled trials and consistently shows positive effects on math achievement.</p>
+  <p>For LLM-based tutors, the evidence is newer and more mixed. A 2023 study at MIT found that students using an AI tutor in an economics course significantly outperformed a control group on assessments — but also found that some students who over-relied on AI showed weaker retention on delayed testing. This is a critical nuance: AI tutoring helps learning when it keeps students thinking; it hurts when it substitutes for thinking.</p>
+
+  <div class="good">
+    <div class="good-label">The key finding</div>
+    <p>The research consistently shows that AI tutoring is beneficial when it maintains student cognitive engagement — when it asks questions, creates productive struggle, and requires students to explain their reasoning. It is harmful when it shortcuts thinking by providing answers directly. The difference between a good AI tutor and a bad one is essentially whether it keeps the student in the driver's seat.</p>
+  </div>
+
+  <h2>What's coming in the next three years</h2>
+  <p>The trajectory of AI tutoring development points toward several near-term advances.</p>
+  <p><strong>Multimodal tutoring.</strong> Current AI tutors are primarily text-based. Models with vision and voice capabilities will enable tutors that can watch a student work through a problem on paper, listen to their explanation, and respond in real-time audio. This more closely replicates the experience of a human tutor sitting alongside a student.</p>
+  <p><strong>Emotion and engagement detection.</strong> Some research systems already use computer vision to detect signs of confusion, boredom, or frustration in students. As these systems mature, AI tutors will be able to adapt not just to knowledge gaps but to emotional state — offering encouragement when a student is frustrated, accelerating when they're engaged, taking a different approach when they're confused.</p>
+  <p><strong>Better knowledge tracing for complex subjects.</strong> Current knowledge tracing works well for subjects with clear competency hierarchies (math, foreign language vocabulary). Extending these models to more complex domains — literary analysis, historical reasoning, scientific argumentation — is an active research area with real progress.</p>
+  <p><strong>Teacher-AI collaboration tools.</strong> The next generation of AI tutoring won't be designed to replace teacher instruction but to complement it — feeding teachers real-time data about which students are struggling with which concepts, allowing teachers to make more informed decisions about where to direct their limited classroom time.</p>
+
+</div>
+</main>
+</div>
+
+<div class="sticky-bar">
+  <div class="sticky-bar-reading" id="sticky-reading">Read to the end to unlock the next module</div>
+  <div class="sticky-bar-track"><div class="sticky-bar-fill" id="sticky-fill"></div></div>
+  <div class="sticky-bar-label" id="sticky-label">0%</div>
+  <button class="sticky-bar-btn" id="sticky-btn" onclick="completeAndNext()">Module 3: Using AI as a Student →</button>
+</div>
+
+<script>
+  function toggleTheme(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='☾'):(h.setAttribute('data-theme','dark'),i.textContent='☀');}
+  window.addEventListener('scroll',()=>{const d=document.documentElement,s=d.scrollTop||document.body.scrollTop,t=d.scrollHeight-d.clientHeight;document.getElementById('progress').style.width=(s/t*100)+'%';});
+  let unlocked=false;
+  function updateScrollProgress(){
+    const pct=Math.min(100,Math.round(((window.scrollY+window.innerHeight)/document.documentElement.scrollHeight)*100));
+    document.getElementById('sticky-fill').style.width=pct+'%';
+    document.getElementById('sticky-label').textContent=pct+'%';
+    if(pct>=95&&!unlocked){unlocked=true;document.getElementById('sticky-btn').style.display='block';document.getElementById('sticky-reading').style.display='none';document.getElementById('sticky-fill').style.background='#22c55e';document.getElementById('sticky-label').style.color='#22c55e';}
+  }
+  window.addEventListener('scroll',updateScrollProgress);updateScrollProgress();
+  function completeAndNext(){
+    if(window.__meridianSaveProgress){ try{ window.__meridianSaveProgress("m2"); }catch(e){} }
+    setTimeout(function(){ window.location.href="module-3.html"; }, 120);
+  }
+</script>
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import { getFirestore, doc, setDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  const app = initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+  const auth = getAuth(app); const db = getFirestore(app);
+  let meridianUser = null;
+  onAuthStateChanged(auth, u => { meridianUser = u; });
+  window.__meridianSaveProgress = async function(mValue){
+    if(!meridianUser) return;
+    try { await setDoc(doc(db,"users",meridianUser.uid), { educationModules: arrayUnion(mValue) }, { merge: true }); } catch(e) {}
+  };
+</script>
+</body>
+</html>

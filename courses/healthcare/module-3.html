@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Drug Discovery and AI — AI in Healthcare — Meridian Institute of AI</title>
+<meta name="description" content="Free AI in Healthcare course — module 3. AlphaFold, generative molecule design, AI drug companies, and the first AI-designed drug in human trials.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://meridianinstituteai.com/courses/healthcare/module-3.html">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#06b6d4;--accent-dim:rgba(6,182,212,0.1);--nav-bg:rgba(8,8,8,0.9);--callout-bg:rgba(6,182,212,0.07);--callout-border:rgba(6,182,212,0.25);--good-bg:rgba(34,197,94,0.07);--good-border:rgba(34,197,94,0.2);--warn-bg:rgba(251,146,60,0.07);--warn-border:rgba(251,146,60,0.2);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#0891b2;--accent-dim:rgba(8,145,178,0.08);--nav-bg:rgba(250,250,248,0.9);--callout-bg:rgba(8,145,178,0.05);--callout-border:rgba(8,145,178,0.2);--good-bg:rgba(22,163,74,0.06);--good-border:rgba(22,163,74,0.2);--warn-bg:rgba(234,88,12,0.05);--warn-border:rgba(234,88,12,0.2);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;overflow-x:hidden;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.7;overflow-x:hidden;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}
+  .nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}
+  .nav-back{font-size:13px;color:var(--text-2);text-decoration:none;transition:color 0.2s;}
+  .nav-back:hover{color:var(--text);}
+  .nav-label{font-size:13px;color:var(--text-3);}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;transition:all 0.2s;}
+  .progress-bar{position:fixed;top:60px;left:0;right:0;z-index:99;height:2px;background:var(--border);}
+  .progress-fill{height:100%;background:var(--accent);width:0%;transition:width 0.1s;}
+  .page-wrapper{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:100vh;padding-top:62px;}
+  .sidebar{position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto;border-right:1px solid var(--border);padding:32px 24px;background:var(--bg-2);}
+  .sidebar-course{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;}
+  .sidebar-course-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+  .sidebar-module{margin-bottom:4px;}
+  .sidebar-module-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:13px;color:var(--text-2);text-decoration:none;transition:all 0.2s;line-height:1.4;}
+  .sidebar-module-link:hover{background:var(--bg-3);color:var(--text);}
+  .sidebar-module-link.active{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-num{font-size:11px;font-weight:500;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--bg-4);color:var(--text-3);}
+  .sidebar-module-link.active .sidebar-num{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-divider{height:1px;background:var(--border);margin:20px 0;}
+  .sidebar-progress-label{font-size:12px;color:var(--text-3);margin-bottom:8px;display:flex;justify-content:space-between;}
+  .sidebar-progress-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sidebar-progress-fill{height:100%;width:37%;background:var(--accent);border-radius:2px;}
+  main{display:block;min-width:0;}
+  .content{max-width:760px;width:100%;padding:60px 64px 140px;margin:0 auto;}
+  .module-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+  .module-tag{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(6,182,212,0.2);padding:4px 12px;border-radius:100px;}
+  .module-meta{font-size:12px;color:var(--text-3);}
+  h1{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1.05;letter-spacing:-0.02em;color:var(--text);margin-bottom:24px;}
+  .intro-text{font-size:19px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+  h2{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:400;color:var(--text);margin:52px 0 18px;line-height:1.2;}
+  h3{font-size:16px;font-weight:500;color:var(--text);margin:32px 0 12px;}
+  p{font-size:16px;font-weight:300;color:var(--text-2);line-height:1.8;margin-bottom:20px;}
+  strong{font-weight:500;color:var(--text);}
+  .callout{background:var(--callout-bg);border:1px solid var(--callout-border);border-radius:12px;padding:24px 28px;margin:32px 0;}
+  .callout-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+  .callout p{margin:0;font-size:15px;color:var(--text-2);}
+  .callout p+p{margin-top:12px;}
+  .good{background:var(--good-bg);border:1px solid var(--good-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .good-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#22c55e;margin-bottom:10px;}
+  .good p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn{background:var(--warn-bg);border:1px solid var(--warn-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .warn-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#fb923c;margin-bottom:10px;}
+  .warn p{margin:0;font-size:15px;color:var(--text-2);}
+  .comparison-wrapper{overflow-x:auto;-webkit-overflow-scrolling:touch;width:100%;margin:28px 0;}
+  table{width:100%;border-collapse:collapse;font-size:14px;min-width:480px;}
+  th{text-align:left;padding:12px 16px;font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-3);border-bottom:1px solid var(--border-2);}
+  td{padding:14px 16px;border-bottom:1px solid var(--border);color:var(--text-2);line-height:1.6;vertical-align:top;}
+  tr:last-child td{border-bottom:none;}
+  td:first-child{color:var(--text);font-weight:500;}
+  .principle-list{display:flex;flex-direction:column;gap:12px;margin:24px 0;}
+  .principle{background:var(--bg-2);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:0 12px 12px 0;padding:20px 24px;}
+  .principle-title{font-size:15px;font-weight:500;color:var(--text);margin-bottom:6px;}
+  .principle-desc{font-size:14px;color:var(--text-2);line-height:1.65;margin:0;}
+  .sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:var(--bg-2);border-top:1px solid var(--border-2);padding:14px 5%;display:flex;align-items:center;justify-content:space-between;gap:16px;backdrop-filter:blur(12px);}
+  .sticky-bar-track{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sticky-bar-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.2s;width:0%;}
+  .sticky-bar-label{font-size:12px;color:var(--text-3);white-space:nowrap;min-width:60px;text-align:right;}
+  .sticky-bar-btn{padding:10px 20px;border-radius:8px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;background:var(--accent);color:#fff;border:none;cursor:pointer;white-space:nowrap;transition:opacity 0.2s;display:none;}
+  .sticky-bar-btn:hover{opacity:0.88;}
+  .sticky-bar-reading{font-size:12px;color:var(--text-3);white-space:nowrap;}
+  @media(max-width:900px){.page-wrapper{grid-template-columns:1fr;}.sidebar{display:none;}.content{padding:40px 24px 120px;}h1{font-size:38px;}}
+  @media(max-width:600px){.content{padding:28px 16px 120px;}h1{font-size:30px;}h2{font-size:24px;}}
+</style>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="shortcut icon" href="/favicon.ico">
+<style>@media(max-width:480px){.nav-divider{display:none}.nav-left{gap:8px}}</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="../../index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="../../index.html" class="nav-back">&#x2302; Home</a>
+    <div class="nav-divider"></div>
+    <a href="module-2.html" class="nav-back">← Module 2</a>
+    <div class="nav-divider"></div>
+    <span class="nav-label">Module 3</span>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">☀</span></button>
+</nav>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+
+<div class="page-wrapper">
+<aside class="sidebar">
+  <div class="sidebar-course">Course</div>
+  <div class="sidebar-course-name">AI in Healthcare</div>
+  <div class="sidebar-module"><a href="module-1.html" class="sidebar-module-link"><span class="sidebar-num">1</span>AI's Transformation of Medicine</a></div>
+  <div class="sidebar-module"><a href="module-2.html" class="sidebar-module-link"><span class="sidebar-num">2</span>Diagnostic AI</a></div>
+  <div class="sidebar-module"><a href="module-3.html" class="sidebar-module-link active"><span class="sidebar-num">3</span>Drug Discovery and AI</a></div>
+  <div class="sidebar-module"><a href="module-4.html" class="sidebar-module-link"><span class="sidebar-num">4</span>Clinical Decision Support</a></div>
+  <div class="sidebar-module"><a href="module-5.html" class="sidebar-module-link"><span class="sidebar-num">5</span>AI in Mental Health</a></div>
+  <div class="sidebar-module"><a href="module-6.html" class="sidebar-module-link"><span class="sidebar-num">6</span>Genomics and Personalized Medicine</a></div>
+  <div class="sidebar-module"><a href="module-7.html" class="sidebar-module-link"><span class="sidebar-num">7</span>Healthcare Operations</a></div>
+  <div class="sidebar-module"><a href="module-8.html" class="sidebar-module-link"><span class="sidebar-num">8</span>Regulation, Ethics, and the Future</a></div>
+  <div class="sidebar-module"><a href="quiz.html" class="sidebar-module-link" style="color:var(--accent);margin-top:4px;"><span class="sidebar-num" style="background:var(--accent-dim);color:var(--accent);">✦</span>Final Assessment</a></div>
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-progress-label"><span>Course progress</span><span style="color:var(--accent);">3 / 8</span></div>
+  <div class="sidebar-progress-track"><div class="sidebar-progress-fill"></div></div>
+</aside>
+
+<main>
+<div class="content">
+  <div class="module-eyebrow"><span class="module-tag">Module 3</span><span class="module-meta">26 min read · AI in Healthcare</span></div>
+  <h1>Drug Discovery and AI</h1>
+  <p class="intro-text">Drug discovery is broken. The current pharmaceutical pipeline takes 12 to 15 years, costs an average of $2.6 billion per approved drug, and fails 90% of the time. AI is being applied to every stage of this pipeline — not with hype-driven promises, but with demonstrated, measurable improvements. This module covers how the pipeline works, what AI changes at each stage, and what the landmark developments actually mean.</p>
+
+  <h2>Why traditional drug discovery fails</h2>
+  <p>The traditional drug discovery pipeline has remained roughly the same for decades. A target protein implicated in a disease is identified. High-throughput screening tests thousands to millions of existing compounds for activity against the target. Promising "hits" are refined into "lead" candidates with better drug-like properties. Leads are optimized for potency, selectivity, and safety. The most promising candidates go through preclinical testing in cell cultures and animals, then Phase I (safety in humans), Phase II (efficacy in patients), and Phase III (large-scale efficacy and safety) trials — after which the FDA reviews and (in roughly 10% of cases) approves the drug.</p>
+  <p>The 90% failure rate is distributed across the pipeline, but late-stage failures — in Phase II and III trials — are the most expensive. The root cause of most late-stage failures is <strong>insufficient understanding of disease biology early in the process</strong>: wrong target selection, inadequate patient stratification, poor prediction of human response from animal models. This is exactly where AI offers structural advantages.</p>
+
+  <div class="callout">
+    <div class="callout-label">The Attrition Problem</div>
+    <p>Of drugs that enter Phase I trials, roughly 90% never reach approval. The primary reasons: efficacy failure (the drug doesn't work as hoped in humans, ~57% of failures), safety failure (unacceptable side effects, ~28%), and commercial/development issues (~15%). AI's highest-value contribution is improving target selection and patient stratification to reduce efficacy failures — the biggest single driver of cost and wasted time.</p>
+  </div>
+
+  <h2>How AI changes the pipeline</h2>
+
+  <div class="principle-list">
+    <div class="principle">
+      <div class="principle-title">Target identification</div>
+      <div class="principle-desc">AI analyzes genomic, proteomic, and disease data to identify proteins and pathways that are causally implicated in disease — not just correlated. Traditional target ID relied heavily on hypothesis-driven research and was slow. AI can process population-scale genetic data (biobanks with hundreds of thousands of patients) to identify which genetic variants cause disease, providing strong causal evidence for which proteins would make good drug targets.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Hit discovery</div>
+      <div class="principle-desc">Instead of physically testing millions of compounds in high-throughput screens, AI can virtually screen billions of potential molecules in silico — predicting which will bind to the target with high affinity and selectivity. This reduces wet lab costs dramatically and allows exploration of chemical space far beyond what any physical screening library contains.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Lead optimization</div>
+      <div class="principle-desc">Taking a "hit" and optimizing it for drug-likeness (good oral bioavailability, appropriate half-life, low toxicity, synthetic accessibility) traditionally required extensive medicinal chemistry work and many design-synthesize-test cycles. AI models that predict ADMET properties (absorption, distribution, metabolism, excretion, toxicity) from molecular structure can dramatically reduce the number of physical synthesis and testing iterations required.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Generative molecular design</div>
+      <div class="principle-desc">Rather than selecting from existing molecules, generative AI designs entirely new molecular structures optimized for target properties. These are molecules that have never existed — designed by AI to satisfy multiple constraints simultaneously: high target affinity, selectivity over related proteins, predicted good oral bioavailability, low toxicity, and synthetic accessibility. This represents a qualitative shift from searching existing chemical space to generating new chemical space.</div>
+    </div>
+  </div>
+
+  <h2>AlphaFold2 — what it actually means</h2>
+  <p>In 2020, DeepMind's AlphaFold2 achieved a breakthrough that structural biologists described as a "once in a generation advance." At the CASP14 protein structure prediction competition, AlphaFold2 predicted protein structures with atomic-level accuracy — solving in minutes problems that had previously taken crystallographers years. The significance requires some background to appreciate.</p>
+  <p>Proteins are the molecular machinery of biology. They're long chains of amino acids that fold into specific three-dimensional shapes, and that shape determines what the protein does — what other molecules it can bind, what reactions it can catalyze, what diseases it's involved in. Drug discovery is essentially a 3D shape-matching problem: design a molecule whose shape complements the target protein's binding pocket.</p>
+  <p>But for most proteins, we didn't know the 3D structure. Experimental methods for determining protein structure — X-ray crystallography, cryo-electron microscopy, NMR spectroscopy — are slow, expensive, and work only for certain protein types. Of the roughly 200 million known protein sequences, only a small fraction had experimentally determined structures in the Protein Data Bank. Everything else required either experimental determination (expensive and slow) or computational prediction (previously inaccurate).</p>
+  <p>AlphaFold2 essentially solved protein structure prediction. DeepMind released predicted structures for virtually all human proteins, and later for proteins from most major organisms, making the entire dataset publicly available. The practical implications for drug discovery:</p>
+  <p><strong>Structural basis for target selection:</strong> We now have 3D structures for disease-relevant proteins that were previously uncharacterized, enabling structure-based drug design for targets that were previously structurally undruggable. <strong>Faster hit identification:</strong> Structure-based virtual screening requires knowing the target structure — now we have it for most proteins of interest. <strong>Understanding disease mechanisms:</strong> Many genetic variants that cause disease work by disrupting protein structure or protein-protein interactions — AlphaFold makes these mechanisms clearer and more designable against.</p>
+
+  <div class="good">
+    <div class="good-label">The AlphaFold Dataset Is Public</div>
+    <p>DeepMind and the European Bioinformatics Institute released AlphaFold-predicted structures for over 200 million proteins as a free, open database. This is genuinely transformative for academic drug discovery — previously, access to structural data was partly a competitive advantage for well-resourced pharmaceutical companies with structural biology departments. The democratization of structural data is one of the most significant shifts in the history of drug discovery.</p>
+  </div>
+
+  <h2>Generative AI for molecule design</h2>
+  <p>The current frontier in AI drug discovery is generative molecular design. Using architectures borrowed from large language models — transformers, diffusion models, graph neural networks — researchers have built systems that generate novel molecular structures optimized for specified properties.</p>
+  <p>These systems work by learning the "language" of molecular structure from databases of known molecules, then generating new molecules in regions of chemical space predicted to have desired properties. The analogy to language models is direct: just as a language model learns to generate coherent text by predicting the next token, a generative chemistry model learns to generate valid, synthesizable molecules by learning the rules of chemical structure.</p>
+  <p>The critical constraint is synthesizability. A generative model optimized only for target binding will often propose molecules that can't actually be synthesized in a lab. Sophisticated systems incorporate explicit synthesizability constraints — either by learning from retrosynthetically validated training data or by coupling the generator to a retrosynthesis prediction model that verifies whether the proposed molecule can be made from commercially available starting materials.</p>
+
+  <h2>AI companies to know</h2>
+
+  <div class="comparison-wrapper">
+    <table>
+      <tr><th>Company</th><th>Approach</th><th>Notable developments</th></tr>
+      <tr><td>Recursion Pharmaceuticals</td><td>Phenomics — AI that learns disease biology from images of cells treated with millions of compounds</td><td>Publicly traded; partnered with Bayer and Roche; running multiple AI-identified compounds in clinical trials</td></tr>
+      <tr><td>Insilico Medicine</td><td>End-to-end AI drug discovery platform spanning target ID, hit finding, and clinical design</td><td>First AI-designed drug (ISM001-055, a CDK7 inhibitor for idiopathic pulmonary fibrosis) to enter Phase I trials, 2023; achieved in 18 months vs. typical 4–5 years</td></tr>
+      <tr><td>AbCellera</td><td>AI for antibody drug discovery — rapidly identifies antibody candidates from immune cells</td><td>Discovered bamlanivimab (COVID-19 antibody treatment) in 90 days in partnership with Eli Lilly; now publicly traded</td></tr>
+      <tr><td>Exscientia</td><td>AI-designed small molecule discovery platform</td><td>First AI-designed molecule to enter clinical trials (2020, OCD treatment); multiple programs in oncology</td></tr>
+      <tr><td>BenevolentAI</td><td>Knowledge graph AI for target identification from biomedical literature</td><td>Identified baricitinib as potential COVID-19 treatment, later validated in RCT; oncology pipeline</td></tr>
+      <tr><td>Schrodinger</td><td>Physics-based simulation platform with AI layer for drug design</td><td>Broadly licensed to pharma; hybrid physics-AI approach is particularly strong for selectivity optimization</td></tr>
+    </table>
+  </div>
+
+  <h2>Case study: the first AI-designed drug in human trials</h2>
+  <p>Insilico Medicine's ISM001-055 is the most documented example of an AI-designed drug molecule reaching human clinical trials. The story is worth examining in detail because it illustrates both the genuine power of AI in this space and the appropriate calibration of what "AI-designed" means.</p>
+  <p>In 2021, Insilico published in Nature Biotechnology a description of their end-to-end AI drug discovery process for idiopathic pulmonary fibrosis (IPF), a progressive, fatal lung scarring disease with limited treatment options. The platform:</p>
+  <p>First identified CDK7 (cyclin-dependent kinase 7) as a promising target using AI analysis of IPF gene expression data and protein interaction networks. Then used a generative AI system called GENTRL to design novel small molecule inhibitors of CDK7 optimized for target binding, selectivity over related kinases, and drug-like properties. Then ran preclinical validation in cell-based assays and animal models. The entire process from target identification to a preclinical candidate took 18 months. Phase I trials began in 2023.</p>
+  <p>The key nuance: "AI-designed" doesn't mean AI operated autonomously. Human scientists guided the process at every stage — choosing which AI analyses to pursue, evaluating AI outputs, deciding which candidates to advance. AI dramatically accelerated each step, but it was AI-assisted human drug discovery, not autonomous AI drug discovery. This distinction matters for setting appropriate expectations.</p>
+
+  <h2>AI in clinical trial design and patient matching</h2>
+  <p>Drug discovery extends into clinical trials, and AI is transforming trial design in ways that could substantially reduce the catastrophic late-stage failure rate.</p>
+  <p><strong>Patient stratification:</strong> Many drugs that fail in Phase III succeed in subpopulations — the drug works, but only in patients with a specific biomarker, genetic variant, or disease subtype. AI trained on molecular data can identify these subpopulations prospectively, enabling trials designed to test the drug in the patients most likely to respond. This approach (called "enrichment design") is now standard practice in oncology.</p>
+  <p><strong>Synthetic control arms:</strong> A significant portion of clinical trial costs and time is spent on placebo/control arm patients. AI analysis of existing clinical databases can construct "synthetic control arms" from historical patient data, potentially reducing the number of patients needed in a controlled trial. The FDA has accepted synthetic controls for certain rare disease applications.</p>
+  <p><strong>Site selection and enrollment optimization:</strong> AI predicts which clinical sites will enroll patients fastest, identifies eligible patients in EHR systems who should be approached about trials, and monitors enrollment rates in real time to redirect resources. Late enrollment is one of the most common sources of clinical trial delay and cost overrun.</p>
+
+  <div class="warn">
+    <div class="warn-label">Calibrating the Hype</div>
+    <p>AI is genuinely accelerating drug discovery. But almost no AI-designed drug has yet completed Phase III trials and received approval. The impressive time savings are in preclinical phases — target ID, hit finding, lead optimization. The clinical trial phases, which represent the majority of total time and cost, are not obviously faster with AI because they're governed by human biology: you can't accelerate how long it takes to observe drug effects in patients. The biggest long-run wins from AI in drug discovery may come 10–15 years from now as AI-designed drugs complete the full pipeline.</p>
+  </div>
+
+</div>
+</main>
+</div>
+
+<div class="sticky-bar">
+  <div class="sticky-bar-reading" id="sticky-reading">Read to the end to unlock the next module</div>
+  <div class="sticky-bar-track"><div class="sticky-bar-fill" id="sticky-fill"></div></div>
+  <div class="sticky-bar-label" id="sticky-label">0%</div>
+  <button class="sticky-bar-btn" id="sticky-btn" onclick="completeAndNext()">Module 4: Clinical Decision Support →</button>
+</div>
+
+<script>
+  function toggleTheme(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='☾'):(h.setAttribute('data-theme','dark'),i.textContent='☀');}
+  window.addEventListener('scroll',()=>{const d=document.documentElement,s=d.scrollTop||document.body.scrollTop,t=d.scrollHeight-d.clientHeight;document.getElementById('progress').style.width=(s/t*100)+'%';});
+  let unlocked=false;
+  function updateScrollProgress(){
+    const pct=Math.min(100,Math.round(((window.scrollY+window.innerHeight)/document.documentElement.scrollHeight)*100));
+    document.getElementById('sticky-fill').style.width=pct+'%';
+    document.getElementById('sticky-label').textContent=pct+'%';
+    if(pct>=95&&!unlocked){unlocked=true;document.getElementById('sticky-btn').style.display='block';document.getElementById('sticky-reading').style.display='none';document.getElementById('sticky-fill').style.background='#22c55e';document.getElementById('sticky-label').style.color='#22c55e';}
+  }
+  window.addEventListener('scroll',updateScrollProgress);updateScrollProgress();
+  function completeAndNext(){
+    if(window.__meridianSaveProgress){ try{ window.__meridianSaveProgress("m3"); }catch(e){} }
+    setTimeout(function(){ window.location.href="module-4.html"; }, 120);
+  }
+</script>
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import { getFirestore, doc, setDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  const app = initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+  const auth = getAuth(app); const db = getFirestore(app);
+  let meridianUser = null;
+  onAuthStateChanged(auth, u => { meridianUser = u; });
+  window.__meridianSaveProgress = async function(mValue){
+    if(!meridianUser) return;
+    try { await setDoc(doc(db,"users",meridianUser.uid), { healthcareModules: arrayUnion(mValue) }, { merge: true }); } catch(e) {}
+  };
+</script>
+</body>
+</html>

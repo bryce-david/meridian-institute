@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The EU AI Act — AI Governance — Meridian Institute of AI</title>
+<meta name="description" content="Free AI Governance course — module 2. Understand the EU AI Act's risk-tier framework, prohibited uses, high-risk obligations, GPAI rules, and compliance requirements.">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="The EU AI Act — AI Governance — Meridian Institute of AI">
+<meta property="og:url" content="https://meridianinstituteai.com/courses/governance/module-2.html">
+<link rel="canonical" href="https://meridianinstituteai.com/courses/governance/module-2.html">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#8b5cf6;--accent-dim:rgba(139,92,246,0.1);--nav-bg:rgba(8,8,8,0.9);--callout-bg:rgba(139,92,246,0.07);--callout-border:rgba(139,92,246,0.25);--good-bg:rgba(34,197,94,0.07);--good-border:rgba(34,197,94,0.2);--warn-bg:rgba(251,146,60,0.07);--warn-border:rgba(251,146,60,0.2);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#7c3aed;--accent-dim:rgba(124,58,237,0.08);--nav-bg:rgba(250,250,248,0.9);--callout-bg:rgba(124,58,237,0.05);--callout-border:rgba(124,58,237,0.2);--good-bg:rgba(22,163,74,0.06);--good-border:rgba(22,163,74,0.2);--warn-bg:rgba(234,88,12,0.05);--warn-border:rgba(234,88,12,0.2);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;overflow-x:hidden;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.7;overflow-x:hidden;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}
+  .nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}
+  .nav-back{font-size:13px;color:var(--text-2);text-decoration:none;transition:color 0.2s;}
+  .nav-back:hover{color:var(--text);}
+  .nav-label{font-size:13px;color:var(--text-3);}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;transition:all 0.2s;}
+  .progress-bar{position:fixed;top:60px;left:0;right:0;z-index:99;height:2px;background:var(--border);}
+  .progress-fill{height:100%;background:var(--accent);width:0%;transition:width 0.1s;}
+  .page-wrapper{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:100vh;padding-top:62px;}
+  .sidebar{position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto;border-right:1px solid var(--border);padding:32px 24px;background:var(--bg-2);}
+  .sidebar-course{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;}
+  .sidebar-course-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+  .sidebar-module{margin-bottom:4px;}
+  .sidebar-module-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:13px;color:var(--text-2);text-decoration:none;transition:all 0.2s;line-height:1.4;}
+  .sidebar-module-link:hover{background:var(--bg-3);color:var(--text);}
+  .sidebar-module-link.active{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-num{font-size:11px;font-weight:500;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--bg-4);color:var(--text-3);}
+  .sidebar-module-link.active .sidebar-num{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-divider{height:1px;background:var(--border);margin:20px 0;}
+  .sidebar-progress-label{font-size:12px;color:var(--text-3);margin-bottom:8px;display:flex;justify-content:space-between;}
+  .sidebar-progress-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sidebar-progress-fill{height:100%;width:28%;background:var(--accent);border-radius:2px;}
+  main{display:block;min-width:0;}
+  .content{max-width:760px;width:100%;padding:60px 64px 140px;margin:0 auto;}
+  .module-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+  .module-tag{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(139,92,246,0.2);padding:4px 12px;border-radius:100px;}
+  .module-meta{font-size:12px;color:var(--text-3);}
+  h1{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1.05;letter-spacing:-0.02em;color:var(--text);margin-bottom:24px;}
+  .intro-text{font-size:19px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+  h2{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:400;color:var(--text);margin:52px 0 18px;line-height:1.2;}
+  h3{font-size:16px;font-weight:500;color:var(--text);margin:32px 0 12px;}
+  p{font-size:16px;font-weight:300;color:var(--text-2);line-height:1.8;margin-bottom:20px;}
+  strong{font-weight:500;color:var(--text);}
+  .callout{background:var(--callout-bg);border:1px solid var(--callout-border);border-radius:12px;padding:24px 28px;margin:32px 0;}
+  .callout-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+  .callout p{margin:0;font-size:15px;color:var(--text-2);}
+  .callout p+p{margin-top:12px;}
+  .good{background:var(--good-bg);border:1px solid var(--good-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .good-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#22c55e;margin-bottom:10px;}
+  .good p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn{background:var(--warn-bg);border:1px solid var(--warn-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .warn-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#fb923c;margin-bottom:10px;}
+  .warn p{margin:0;font-size:15px;color:var(--text-2);}
+  .principle-list{display:flex;flex-direction:column;gap:12px;margin:24px 0;}
+  .principle{background:var(--bg-2);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:0 12px 12px 0;padding:20px 24px;}
+  .principle-title{font-size:15px;font-weight:500;color:var(--text);margin-bottom:6px;}
+  .principle-desc{font-size:14px;color:var(--text-2);line-height:1.65;margin:0;}
+  .comparison-wrapper{overflow-x:auto;-webkit-overflow-scrolling:touch;width:100%;margin:28px 0;}
+  table{width:100%;border-collapse:collapse;font-size:14px;min-width:480px;}
+  th{text-align:left;padding:12px 16px;font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-3);border-bottom:1px solid var(--border-2);}
+  td{padding:14px 16px;border-bottom:1px solid var(--border);color:var(--text-2);line-height:1.6;vertical-align:top;}
+  tr:last-child td{border-bottom:none;}
+  td:first-child{color:var(--text);font-weight:500;}
+  .tier-block{border-radius:12px;padding:20px 24px;margin:12px 0;}
+  .tier-prohibited{background:rgba(239,68,68,0.07);border:1px solid rgba(239,68,68,0.25);}
+  .tier-high{background:rgba(251,146,60,0.07);border:1px solid rgba(251,146,60,0.25);}
+  .tier-limited{background:rgba(234,179,8,0.07);border:1px solid rgba(234,179,8,0.2);}
+  .tier-minimal{background:rgba(34,197,94,0.07);border:1px solid rgba(34,197,94,0.2);}
+  .tier-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:8px;}
+  .tier-prohibited .tier-label{color:#ef4444;}
+  .tier-high .tier-label{color:#fb923c;}
+  .tier-limited .tier-label{color:#eab308;}
+  .tier-minimal .tier-label{color:#22c55e;}
+  .tier-block p{margin:0;font-size:14px;color:var(--text-2);line-height:1.65;}
+  .sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:var(--bg-2);border-top:1px solid var(--border-2);padding:14px 5%;display:flex;align-items:center;justify-content:space-between;gap:16px;backdrop-filter:blur(12px);}
+  .sticky-bar-track{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sticky-bar-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.2s;width:0%;}
+  .sticky-bar-label{font-size:12px;color:var(--text-3);white-space:nowrap;min-width:60px;text-align:right;}
+  .sticky-bar-btn{padding:10px 20px;border-radius:8px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;background:var(--accent);color:#fff;border:none;cursor:pointer;white-space:nowrap;transition:opacity 0.2s;display:none;}
+  .sticky-bar-btn:hover{opacity:0.88;}
+  .sticky-bar-reading{font-size:12px;color:var(--text-3);white-space:nowrap;}
+  @media(max-width:900px){.page-wrapper{grid-template-columns:1fr;}.sidebar{display:none;}.content{padding:40px 24px 120px;}h1{font-size:38px;}}
+  @media(max-width:600px){.content{padding:28px 16px 120px;}h1{font-size:30px;}h2{font-size:24px;}}
+</style>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="shortcut icon" href="/favicon.ico">
+<style>@media(max-width:480px){.nav-divider{display:none}.nav-left{gap:8px}}</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="../../index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="../../index.html" class="nav-back">&#8962; Home</a>
+    <div class="nav-divider"></div>
+    <a href="../../courses.html" class="nav-back">&#8592; AI Governance</a>
+    <div class="nav-divider"></div>
+    <span class="nav-label">Module 2</span>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">&#9728;</span></button>
+</nav>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+
+<div class="page-wrapper">
+<aside class="sidebar">
+  <div class="sidebar-course">Course</div>
+  <div class="sidebar-course-name">AI Governance</div>
+  <div class="sidebar-module"><a href="module-1.html" class="sidebar-module-link"><span class="sidebar-num">1</span>What AI Governance Is</a></div>
+  <div class="sidebar-module"><a href="module-2.html" class="sidebar-module-link active"><span class="sidebar-num">2</span>The EU AI Act</a></div>
+  <div class="sidebar-module"><a href="module-3.html" class="sidebar-module-link"><span class="sidebar-num">3</span>US AI Policy</a></div>
+  <div class="sidebar-module"><a href="module-4.html" class="sidebar-module-link"><span class="sidebar-num">4</span>AI Ethics</a></div>
+  <div class="sidebar-module"><a href="module-5.html" class="sidebar-module-link"><span class="sidebar-num">5</span>Corporate AI Governance</a></div>
+  <div class="sidebar-module"><a href="module-6.html" class="sidebar-module-link"><span class="sidebar-num">6</span>International AI Policy</a></div>
+  <div class="sidebar-module"><a href="module-7.html" class="sidebar-module-link"><span class="sidebar-num">7</span>Implementing Responsible AI</a></div>
+  <div class="sidebar-module"><a href="quiz.html" class="sidebar-module-link" style="color:var(--accent);margin-top:4px;"><span class="sidebar-num" style="background:var(--accent-dim);color:var(--accent);">&#10022;</span>Final Assessment</a></div>
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-progress-label"><span>Course progress</span><span style="color:var(--accent);">2 / 7</span></div>
+  <div class="sidebar-progress-track"><div class="sidebar-progress-fill"></div></div>
+</aside>
+
+<main>
+<div class="content">
+  <div class="module-eyebrow"><span class="module-tag">Module 2</span><span class="module-meta">26 min read &middot; AI Governance</span></div>
+  <h1>The EU AI Act — The World's First Comprehensive AI Law</h1>
+  <p class="intro-text">The EU AI Act is the most consequential piece of AI legislation enacted anywhere in the world. It is the first law to regulate AI comprehensively across all sectors and use cases, and its extraterritorial reach means it applies to companies and systems far outside Europe's borders. Understanding it is not optional for anyone working in AI — whether in policy, business, engineering, or law.</p>
+
+  <h2>What the EU AI Act is</h2>
+  <p>The EU AI Act is a <strong>regulation</strong> — not a directive — which means it has direct legal effect in all 27 EU member states without requiring national implementation legislation. It was adopted by the European Parliament in March 2024 and entered into force in August 2024, with provisions phasing in over 24 to 36 months.</p>
+  <p>The Act's central organizing principle is <strong>risk-proportionality</strong>: it imposes obligations that scale with the potential harm an AI system can cause. The higher the risk, the more stringent the requirements. This approach attempts to avoid the binary problem of either regulating everything heavily or nothing at all.</p>
+
+  <div class="callout">
+    <div class="callout-label">Implementation timeline</div>
+    <p><strong>August 2024:</strong> Act enters into force. Six-month transition begins for prohibited AI systems.</p>
+    <p><strong>February 2025:</strong> Prohibited AI uses become enforceable. GPAI model rules begin applying.</p>
+    <p><strong>August 2025:</strong> Obligations for General Purpose AI (GPAI) models with systemic risk take effect.</p>
+    <p><strong>August 2026:</strong> High-risk AI obligations become fully enforceable. National competent authorities must be operational.</p>
+  </div>
+
+  <h2>The risk-tier framework</h2>
+  <p>The Act classifies AI systems into four tiers based on risk to health, safety, and fundamental rights.</p>
+
+  <div class="tier-block tier-prohibited">
+    <div class="tier-label">Unacceptable Risk — Prohibited</div>
+    <p>AI systems in this tier are banned entirely. They pose risks so fundamental that no compliance framework can make them acceptable. Prohibition is immediate and absolute.</p>
+  </div>
+
+  <div class="tier-block tier-high">
+    <div class="tier-label">High Risk — Heavy Obligations</div>
+    <p>AI systems in this tier can be deployed but must meet extensive requirements before market placement: conformity assessments, technical documentation, human oversight mechanisms, data governance practices, and post-market monitoring.</p>
+  </div>
+
+  <div class="tier-block tier-limited">
+    <div class="tier-label">Limited Risk — Transparency Requirements</div>
+    <p>AI systems that interact with humans or generate content must disclose their AI nature. Chatbots must identify themselves as AI. Deepfakes must be labeled. Requirements are minimal but mandatory.</p>
+  </div>
+
+  <div class="tier-block tier-minimal">
+    <div class="tier-label">Minimal Risk — No Requirements</div>
+    <p>The vast majority of AI applications fall here: spam filters, AI-enabled video games, recommendation systems in most contexts. No legal obligations apply, though voluntary codes of conduct are encouraged.</p>
+  </div>
+
+  <h2>Prohibited AI uses</h2>
+  <p>The Act bans eight categories of AI application that the EU has determined cross fundamental rights lines. These prohibitions are absolute — there is no compliance pathway, no derogation for national security, no exception for beneficial use cases within these categories.</p>
+
+  <div class="principle-list">
+    <div class="principle">
+      <div class="principle-title">Social scoring by public authorities</div>
+      <div class="principle-desc">AI systems that evaluate or classify individuals based on their social behavior or personality traits in ways that lead to detrimental treatment in unrelated contexts. The Chinese social credit system is the canonical example, but the prohibition extends to any EU public authority attempting something analogous.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Real-time remote biometric identification in public spaces</div>
+      <div class="principle-desc">Live facial recognition by law enforcement in publicly accessible spaces. The prohibition includes narrow exceptions for searching for missing children, preventing terrorist attacks, and locating serious crime suspects — but these require prior judicial or administrative authorization and are subject to strict limits.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Subliminal or manipulative AI</div>
+      <div class="principle-desc">AI that deploys subliminal techniques beyond a person's consciousness or that exploits vulnerabilities (age, disability, social circumstance) to distort behavior in ways that cause harm. Distinguishing permitted persuasion from prohibited manipulation is one of the Act's genuinely difficult interpretive challenges.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Emotion recognition in workplaces and schools</div>
+      <div class="principle-desc">Systems that infer emotional states from biometric data in educational institutions or professional environments. Exceptions for medical or safety purposes are narrow and must be genuinely justified.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Biometric categorization revealing sensitive attributes</div>
+      <div class="principle-desc">Systems that categorize individuals based on biometric data to infer race, political opinions, trade union membership, religious beliefs, or sexual orientation.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Predictive policing of individuals</div>
+      <div class="principle-desc">AI that assesses the risk of an individual committing a criminal offense based solely on profiling or personality traits, without objective and verifiable facts directly linked to criminal activity.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Untargeted facial scraping for recognition databases</div>
+      <div class="principle-desc">Mass scraping of facial images from the internet or CCTV footage to build or expand recognition databases.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Post-hoc remote biometric identification</div>
+      <div class="principle-desc">Using biometric identification after the fact to identify individuals in recordings of public spaces, with very narrow exceptions for prosecution of serious crimes.</div>
+    </div>
+  </div>
+
+  <h2>High-risk AI: obligations and scope</h2>
+  <p>High-risk AI is where the Act's operational complexity lives. The designation applies to two categories of systems:</p>
+  <p><strong>AI systems in Annex I regulated products</strong> — embedded in products subject to existing EU product safety legislation: medical devices, machinery, vehicles, aviation, elevators, toys. Any AI component affecting safety falls into high-risk territory.</p>
+  <p><strong>AI systems listed in Annex III</strong> — eight high-risk use case categories:</p>
+  <div class="comparison-wrapper">
+    <table>
+      <tr><th>Category</th><th>Example applications</th></tr>
+      <tr><td>Biometric identification and categorization</td><td>Workplace attendance systems, identity verification</td></tr>
+      <tr><td>Critical infrastructure management</td><td>AI controlling power grids, water systems, traffic</td></tr>
+      <tr><td>Education and vocational training</td><td>AI determining access to educational institutions, evaluating students</td></tr>
+      <tr><td>Employment and worker management</td><td>CV screening, task allocation, performance monitoring AI</td></tr>
+      <tr><td>Essential private and public services</td><td>Credit scoring, insurance underwriting, public benefit assessment</td></tr>
+      <tr><td>Law enforcement</td><td>Polygraph-like systems, crime analytics, criminal risk assessment</td></tr>
+      <tr><td>Migration, asylum, border control</td><td>Visa assessment, document verification, risk profiling</td></tr>
+      <tr><td>Administration of justice and democracy</td><td>AI assisting judges, influencing elections, political campaigning</td></tr>
+    </table>
+  </div>
+
+  <h3>What high-risk providers must do</h3>
+  <div class="principle-list">
+    <div class="principle">
+      <div class="principle-title">Conformity assessment</div>
+      <div class="principle-desc">Before deployment, providers must demonstrate through documented assessment that the system meets the Act's requirements. For most Annex III systems, self-assessment is permitted. For biometric identification and critical infrastructure, third-party assessment by a notified body is required.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Technical documentation</div>
+      <div class="principle-desc">Providers must maintain comprehensive documentation: general description of the system, design specifications, development process, training methodologies, testing results, performance benchmarks, and monitoring procedures. This documentation must be maintained for 10 years after the system is placed on the market.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Data governance</div>
+      <div class="principle-desc">Training, validation, and testing datasets must be subject to governance practices addressing data quality, relevance, completeness, and freedom from bias. Providers must document what data was used and how it was processed.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Logging and traceability</div>
+      <div class="principle-desc">High-risk systems must maintain automated logs sufficient to enable post-hoc investigation of incidents. Logs must be kept for defined periods and made available to competent authorities on request.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Transparency and user information</div>
+      <div class="principle-desc">Deployers must receive information from providers sufficient to understand what the system does, its capabilities and limitations, and how to use it appropriately — including information on residual risks and oversight requirements.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Human oversight</div>
+      <div class="principle-desc">High-risk systems must be designed to enable natural persons to oversee their operation, understand and monitor behavior, intervene or override, and stop the system. This is a design requirement, not merely a procedural one.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Accuracy, robustness, and cybersecurity</div>
+      <div class="principle-desc">Systems must achieve levels of accuracy, robustness against errors and manipulation, and cybersecurity protection appropriate for their intended purpose — measured against performance metrics disclosed in technical documentation.</div>
+    </div>
+  </div>
+
+  <h2>General Purpose AI (GPAI) model rules</h2>
+  <p>The Act's treatment of GPAI models — foundation models like GPT-4, Claude, Gemini, and Llama — was one of its most contested provisions, added late in the legislative process to address capabilities that didn't fit the product-centric original framework.</p>
+  <p>All GPAI providers must maintain technical documentation, publish summaries of training data used (to support copyright compliance), and comply with EU copyright law. These baseline obligations apply regardless of model scale.</p>
+
+  <div class="callout">
+    <div class="callout-label">Systemic risk models</div>
+    <p>GPAI models trained using more than 10^25 FLOPs (floating point operations) are classified as posing "systemic risk" and face additional obligations: adversarial testing (red-teaming), incident reporting to the EU AI Office, cybersecurity protections, and energy efficiency reporting. As of 2025, this threshold captures the largest frontier models — GPT-4 class and above.</p>
+    <p>The EU AI Office, established within the European Commission, is responsible for overseeing GPAI model compliance — a new institutional creation with significant authority over the most powerful AI systems globally.</p>
+  </div>
+
+  <h2>Extraterritorial reach</h2>
+  <p>The Act applies to: <strong>(1)</strong> providers placing AI systems on the EU market, regardless of where the provider is established; <strong>(2)</strong> providers deploying AI systems whose output is used in the EU; and <strong>(3)</strong> importers and distributors of AI systems in the EU market.</p>
+  <p>This means an American company that sells AI-powered hiring software used by a European company, a Chinese company whose recommendation algorithm is used by European users, and an Indian company whose medical AI is deployed in European hospitals — all must comply. The Act has genuine global reach through market access.</p>
+
+  <h2>Enforcement and fines</h2>
+  <div class="comparison-wrapper">
+    <table>
+      <tr><th>Violation type</th><th>Maximum fine</th><th>Context</th></tr>
+      <tr><td>Prohibited AI uses (unacceptable risk)</td><td>€35 million or 7% of global annual revenue</td><td>Whichever is higher. Applied to the most serious violations.</td></tr>
+      <tr><td>High-risk AI obligations</td><td>€15 million or 3% of global annual revenue</td><td>Covers failures of conformity assessment, documentation, oversight requirements.</td></tr>
+      <tr><td>Providing incorrect or misleading information</td><td>€7.5 million or 1.5% of global annual revenue</td><td>Applied to deception of regulators or in conformity assessments.</td></tr>
+      <tr><td>SME and startup treatment</td><td>Lower of the percentage-based or fixed fine</td><td>Fines apply the lower alternative for smaller entities to avoid disproportionate burden.</td></tr>
+    </table>
+  </div>
+
+  <div class="warn">
+    <div class="warn-label">The 7% global revenue ceiling</div>
+    <p>For large technology companies, 7% of global annual revenue is an enormous number. Applied to a company with $100 billion in revenue, it would be $7 billion — comparable to the largest GDPR fines in history, multiplied by several times. Whether regulators will actually impose fines at this level is unknown. But the ceiling creates strong incentive for compliance, particularly for market leaders who cannot afford to exit the EU market.</p>
+  </div>
+
+  <h2>Practical compliance steps for organizations</h2>
+  <p>For organizations that build or deploy AI and have any EU market exposure, the practical compliance path involves several steps that can begin now — ahead of full enforcement in 2026.</p>
+
+  <div class="principle-list">
+    <div class="principle">
+      <div class="principle-title">Step 1: Inventory your AI systems</div>
+      <div class="principle-desc">Map every AI system you develop or deploy — including third-party AI integrated into your products. Document the purpose, data inputs, decision outputs, and affected users of each system. You cannot comply with what you haven't identified.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Step 2: Apply the risk classification</div>
+      <div class="principle-desc">For each system, work through the risk tiers. Is any functionality prohibited? Does the use case appear in Annex I or Annex III? What transparency requirements apply? This classification drives what work is required.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Step 3: Build technical documentation now</div>
+      <div class="principle-desc">Even before full enforcement, building the documentation required for high-risk systems — design specs, training data descriptions, performance benchmarks, testing results — improves system quality and positions you for compliance. Retroactive documentation is harder.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Step 4: Establish human oversight mechanisms</div>
+      <div class="principle-desc">For any high-risk system, design human oversight into the product — not as an afterthought. This means understanding what decisions can be overridden, how users are informed of AI involvement, and what escalation paths exist for errors or concerns.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Step 5: Watch the standards</div>
+      <div class="principle-desc">European standards bodies (CEN-CENELEC) and international bodies (ISO/IEC) are developing harmonized standards that will define what technical compliance looks like in practice. Following these standards creates a presumption of conformity. Monitor their development.</div>
+    </div>
+  </div>
+
+  <div class="good">
+    <div class="good-label">The GPAI code of practice</div>
+    <p>The EU AI Office has convened an industry-led Code of Practice for GPAI models, with participation from major AI companies. While participation is voluntary, it shapes the interpretation of GPAI obligations and gives participating companies significant influence over how the rules develop in practice. Companies building or deploying large foundation models should track this process closely.</p>
+  </div>
+
+</div>
+</main>
+</div>
+
+<div class="sticky-bar">
+  <div class="sticky-bar-reading" id="sticky-reading">Read to the end to unlock the next module</div>
+  <div class="sticky-bar-track"><div class="sticky-bar-fill" id="sticky-fill"></div></div>
+  <div class="sticky-bar-label" id="sticky-label">0%</div>
+  <button class="sticky-bar-btn" id="sticky-btn" onclick="completeAndNext()">Module 3: US AI Policy &#8594;</button>
+</div>
+
+<script>
+  function toggleTheme(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='☾'):(h.setAttribute('data-theme','dark'),i.textContent='☀');}
+  window.addEventListener('scroll',()=>{const d=document.documentElement,s=d.scrollTop||document.body.scrollTop,t=d.scrollHeight-d.clientHeight;document.getElementById('progress').style.width=(s/t*100)+'%';});
+  let unlocked=false;
+  function updateScrollProgress(){
+    const pct=Math.min(100,Math.round(((window.scrollY+window.innerHeight)/document.documentElement.scrollHeight)*100));
+    document.getElementById('sticky-fill').style.width=pct+'%';
+    document.getElementById('sticky-label').textContent=pct+'%';
+    if(pct>=95&&!unlocked){unlocked=true;document.getElementById('sticky-btn').style.display='block';document.getElementById('sticky-reading').style.display='none';document.getElementById('sticky-fill').style.background='#22c55e';document.getElementById('sticky-label').style.color='#22c55e';}
+  }
+  window.addEventListener('scroll',updateScrollProgress);updateScrollProgress();
+  function completeAndNext(){
+    if(window.__meridianSaveProgress){try{window.__meridianSaveProgress("m2");}catch(e){}}
+    setTimeout(function(){window.location.href="module-3.html";},120);
+  }
+</script>
+<script type="module">
+  import{initializeApp}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import{getAuth,onAuthStateChanged}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import{getFirestore,doc,setDoc,arrayUnion}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  const app=initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+  const auth=getAuth(app);const db=getFirestore(app);
+  let meridianUser=null;
+  onAuthStateChanged(auth,u=>{meridianUser=u;});
+  window.__meridianSaveProgress=async function(mValue){
+    if(!meridianUser)return;
+    try{await setDoc(doc(db,"users",meridianUser.uid),{governanceModules:arrayUnion(mValue)},{merge:true});}catch(e){}
+  };
+</script>
+</body>
+</html>

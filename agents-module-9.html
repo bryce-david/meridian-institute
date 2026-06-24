@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 9: Building with Agent Frameworks — Agentic AI and Autonomous Systems — Meridian Institute of AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#6B21A8;--accent-dim:rgba(107,33,168,0.1);--accent-dim2:rgba(107,33,168,0.05);--nav-bg:rgba(8,8,8,0.9);--callout-bg:rgba(107,33,168,0.07);--callout-border:rgba(107,33,168,0.25);--good-bg:rgba(34,197,94,0.07);--good-border:rgba(34,197,94,0.2);--warn-bg:rgba(251,146,60,0.07);--warn-border:rgba(251,146,60,0.2);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#581C87;--accent-dim:rgba(88,28,135,0.08);--accent-dim2:rgba(88,28,135,0.04);--nav-bg:rgba(250,250,248,0.9);--callout-bg:rgba(88,28,135,0.05);--callout-border:rgba(88,28,135,0.2);--good-bg:rgba(22,163,74,0.06);--good-border:rgba(22,163,74,0.2);--warn-bg:rgba(234,88,12,0.05);--warn-border:rgba(234,88,12,0.2);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;overflow-x:hidden;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.7;overflow-x:hidden;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}
+  .nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}
+  .nav-back{font-size:13px;color:var(--text-2);text-decoration:none;transition:color 0.2s;}
+  .nav-back:hover{color:var(--text);}
+  .nav-label{font-size:13px;color:var(--text-3);}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;transition:all 0.2s;}
+  .theme-toggle:hover{background:var(--bg-3);color:var(--text);}
+  .progress-bar{position:fixed;top:60px;left:0;right:0;z-index:99;height:2px;background:var(--border);}
+  .progress-fill{height:100%;background:var(--accent);width:0%;transition:width 0.1s;}
+  .page-wrapper{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:100vh;padding-top:62px;overflow:hidden;}
+  .sidebar{position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto;border-right:1px solid var(--border);padding:32px 24px;background:var(--bg-2);}
+  .sidebar-course{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;}
+  .sidebar-course-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+  .sidebar-module{margin-bottom:4px;}
+  .sidebar-module-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:13px;color:var(--text-2);text-decoration:none;transition:all 0.2s;line-height:1.4;}
+  .sidebar-module-link:hover{background:var(--bg-3);color:var(--text);}
+  .sidebar-module-link.active{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-num{font-size:11px;font-weight:500;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--bg-4);color:var(--text-3);}
+  .sidebar-module-link.active .sidebar-num{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-divider{height:1px;background:var(--border);margin:20px 0;}
+  .sidebar-progress-label{font-size:12px;color:var(--text-3);margin-bottom:8px;display:flex;justify-content:space-between;}
+  .sidebar-progress-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sidebar-progress-fill{height:100%;width:90%;background:var(--accent);border-radius:2px;}
+  main{display:block;min-width:0;overflow:hidden;}
+  .content{max-width:760px;width:100%;padding:60px 64px 140px;margin:0 auto;}
+  .module-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+  .module-tag{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(107,33,168,0.2);padding:4px 12px;border-radius:100px;}
+  .module-meta{font-size:12px;color:var(--text-3);}
+  h1{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1.05;letter-spacing:-0.02em;color:var(--text);margin-bottom:24px;}
+  .intro-text{font-size:19px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+  h2{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:400;color:var(--text);margin:52px 0 18px;line-height:1.2;}
+  h3{font-size:16px;font-weight:500;color:var(--text);margin:32px 0 12px;}
+  p{font-size:16px;font-weight:300;color:var(--text-2);line-height:1.8;margin-bottom:20px;}
+  strong{font-weight:500;color:var(--text);}
+  em{font-style:italic;}
+  ul,ol{margin:0 0 20px 22px;color:var(--text-2);}
+  li{font-size:16px;font-weight:300;line-height:1.8;margin-bottom:8px;}
+  .callout{background:var(--callout-bg);border:1px solid var(--callout-border);border-radius:12px;padding:24px 28px;margin:32px 0;}
+  .callout-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+  .callout p{margin:0;font-size:15px;color:var(--text-2);}
+  .callout p+p{margin-top:12px;}
+  .good{background:var(--good-bg);border:1px solid var(--good-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .good-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#22c55e;margin-bottom:10px;}
+  .good p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn{background:var(--warn-bg);border:1px solid var(--warn-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .warn-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#fb923c;margin-bottom:10px;}
+  .warn p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn p+p{margin-top:12px;}
+  .principle-list{display:flex;flex-direction:column;gap:12px;margin:24px 0;}
+  .principle{background:var(--bg-2);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:0 12px 12px 0;padding:20px 24px;}
+  .principle-title{font-size:15px;font-weight:500;color:var(--text);margin-bottom:6px;}
+  .principle-desc{font-size:14px;color:var(--text-2);line-height:1.65;margin:0;}
+  .sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:var(--bg-2);border-top:1px solid var(--border-2);padding:14px 5%;display:flex;align-items:center;justify-content:space-between;gap:16px;backdrop-filter:blur(12px);}
+  .sticky-bar-track{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sticky-bar-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.2s;width:0%;}
+  .sticky-bar-label{font-size:12px;color:var(--text-3);white-space:nowrap;min-width:60px;text-align:right;}
+  .sticky-bar-btn{padding:10px 20px;border-radius:8px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;background:var(--accent);color:#fff;border:none;cursor:pointer;white-space:nowrap;transition:opacity 0.2s;display:none;}
+  .sticky-bar-btn:hover{opacity:0.88;}
+  .sticky-bar-reading{font-size:12px;color:var(--text-3);white-space:nowrap;}
+  @media(max-width:900px){.page-wrapper{grid-template-columns:1fr;}.sidebar{display:none;}.content{padding:40px 24px 120px;}h1{font-size:38px;}}
+  @media(max-width:600px){.content{padding:28px 16px 120px;}h1{font-size:30px;}h2{font-size:24px;}}
+</style>
+<style>@media(max-width:480px){.nav-divider{display:none}.nav-left{gap:8px}}</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="courses.html" class="nav-back">← Agentic AI and Autonomous Systems</a>
+    <div class="nav-divider"></div>
+    <span class="nav-label">Module 9</span>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">☀</span></button>
+</nav>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+
+<div class="page-wrapper">
+<aside class="sidebar">
+  <div class="sidebar-course">Expert Track</div>
+  <div class="sidebar-course-name">Agentic AI and Autonomous Systems</div>
+  <div class="sidebar-module"><a href="agents-module-1.html" class="sidebar-module-link"><span class="sidebar-num">1</span>What Are AI Agents?</a></div>
+  <div class="sidebar-module"><a href="agents-module-2.html" class="sidebar-module-link"><span class="sidebar-num">2</span>The Agent Loop: Perceive, Reason, Act</a></div>
+  <div class="sidebar-module"><a href="agents-module-3.html" class="sidebar-module-link"><span class="sidebar-num">3</span>Tool Use and Function Calling</a></div>
+  <div class="sidebar-module"><a href="agents-module-4.html" class="sidebar-module-link"><span class="sidebar-num">4</span>Memory Systems in AI Agents</a></div>
+  <div class="sidebar-module"><a href="agents-module-5.html" class="sidebar-module-link"><span class="sidebar-num">5</span>Multi-Agent Architectures</a></div>
+  <div class="sidebar-module"><a href="agents-module-6.html" class="sidebar-module-link"><span class="sidebar-num">6</span>Planning and Task Decomposition</a></div>
+  <div class="sidebar-module"><a href="agents-module-7.html" class="sidebar-module-link"><span class="sidebar-num">7</span>Retrieval-Augmented Generation</a></div>
+  <div class="sidebar-module"><a href="agents-module-8.html" class="sidebar-module-link"><span class="sidebar-num">8</span>Agent Safety and Reliability</a></div>
+  <div class="sidebar-module"><a href="agents-module-9.html" class="sidebar-module-link active"><span class="sidebar-num">9</span>Building with Agent Frameworks</a></div>
+  <div class="sidebar-module"><a href="agents-module-10.html" class="sidebar-module-link"><span class="sidebar-num">10</span>The Future of Autonomous AI</a></div>
+  <div class="sidebar-module"><a href="quiz-agents.html" class="sidebar-module-link" style="color:var(--accent);margin-top:4px;"><span class="sidebar-num" style="background:var(--accent-dim);color:var(--accent);">✦</span>Final Assessment</a></div>
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-progress-label"><span>Course progress</span><span style="color:var(--accent);">9 / 10</span></div>
+  <div class="sidebar-progress-track"><div class="sidebar-progress-fill"></div></div>
+</aside>
+
+<main>
+<div class="content">
+  <div class="module-eyebrow"><span class="module-tag">Module 9</span><span class="module-meta">32 min read · Agentic AI and Autonomous Systems</span></div>
+  <h1>Building with Agent Frameworks</h1>
+
+  <p class="intro-text">The gap between understanding how agents work in theory and shipping an agent that works reliably in production is where most practitioners get stuck. Agent frameworks — LangChain, LangGraph, AutoGen, CrewAI, and the emerging wave of newer entrants — exist to close that gap. They provide abstractions for the agent loop, memory management, tool orchestration, and multi-agent coordination that would otherwise require hundreds of lines of scaffolding code. This module examines the major frameworks, their trade-offs, and the practical decisions involved in building production-grade agentic systems.</p>
+
+  <h2>Why frameworks exist</h2>
+  <p>An agent built from scratch using only a raw LLM API quickly accumulates boilerplate: you need to handle the tool call → execute → observe loop, manage conversation history so it doesn't exceed context limits, route between multiple tools, handle retries on API failures, log every step for debugging, and integrate with persistent storage. Each of these is solvable, but solving all of them repeatedly across projects is expensive and error-prone.</p>
+  <p>Frameworks abstract these concerns. They provide a defined interface for tools (register a function and the framework handles schema generation, call routing, and result injection), built-in memory management patterns, composable chain-of-processing abstractions, and increasingly, first-class support for multi-agent workflows. The cost is abstraction overhead: framework code adds indirection that can make debugging harder and makes it more difficult to deviate from the framework's opinionated design when your use case doesn't fit its model.</p>
+  <p>The decision of when to use a framework versus building custom is not primarily about capability — anything a framework does, you can implement yourself — but about development velocity and maintenance burden. For prototyping and common patterns, frameworks win. For highly specialized requirements, custom implementations often end up cleaner.</p>
+
+  <h2>LangChain: the dominant but divisive framework</h2>
+  <p>LangChain is the most widely adopted agent framework, with millions of downloads and extensive community support. It provides abstractions for chains (sequences of LLM calls and operations), agents (LLM-driven decision makers with tools), and memory (persistent conversation state). Its ecosystem is large: there are community integrations for hundreds of LLM providers, vector databases, and external services.</p>
+
+  <h3>Core concepts</h3>
+  <p>LangChain's architecture centers on the LCEL (LangChain Expression Language) syntax for composing processing pipelines. You define components — prompts, LLMs, output parsers, tools — and compose them with the pipe operator (<code>|</code>). The result is a chain that takes an input dict and produces an output, with each step's output feeding the next. For agents specifically, LangChain provides <code>AgentExecutor</code>, which wraps the agent loop: call the LLM, check whether it wants to use a tool, execute the tool, inject the result, repeat until the LLM produces a final answer.</p>
+
+  <div class="callout">
+    <div class="callout-label">LangChain's strengths</div>
+    <p>The integration ecosystem is LangChain's primary strength. If you need to connect to a specific vector database, cloud storage provider, or external service, there is almost certainly a LangChain integration that handles authentication, schema mapping, and error handling. This reduces the cost of switching infrastructure components — you can swap the underlying vector store from Pinecone to Weaviate with a one-line change rather than rewriting integration code. For teams iterating quickly on infrastructure decisions, this matters enormously.</p>
+  </div>
+
+  <h3>LangChain's criticisms</h3>
+  <p>LangChain has faced persistent criticism for abstraction layers that make simple tasks unnecessarily complex, frequent breaking changes across major versions, and performance overhead from deeply nested chain invocations. The framework's early rapid growth led to architectural decisions that accumulated technical debt, and some teams have found that LangChain's abstractions obscure what is actually happening in a way that makes debugging slow.</p>
+  <p>The criticism is not unfair, but it is also not universal. For teams building CRUD-style LLM apps — document question-answering, conversational interfaces, structured data extraction — LangChain's abstractions fit well and the integration ecosystem provides genuine value. For teams building complex custom agent logic, the framework's opinions can become constraints.</p>
+
+  <h2>LangGraph: stateful agent workflows</h2>
+  <p>LangGraph, built by the LangChain team, addresses a fundamental limitation of simple chain-based agents: they cannot handle state that persists across multiple decision points, loops, or conditional branches. LangGraph models agent execution as a directed graph where nodes are processing steps (LLM calls, tool executions, human interactions) and edges represent transitions that can be conditional, looping, or parallel.</p>
+
+  <h3>When graphs beat chains</h3>
+  <p>Consider an agent that must: (1) search for information, (2) determine whether the search result is sufficient, (3) if not, refine the query and search again, (4) if yes, draft a response, (5) validate the response against the original requirements, and (6) if validation fails, revise. This workflow has conditional branches and loops that a simple sequential chain cannot represent. LangGraph encodes this as a graph with nodes for each step and edges that include conditional logic for routing.</p>
+  <p>The graph representation makes complex agent workflows explicit and visualizable. You can inspect the state at any node, add human-in-the-loop interrupts at specific edges, and reason about what paths through the graph are possible in a way that sequential code does not support.</p>
+
+  <div class="good">
+    <div class="good-label">LangGraph's killer feature: persistence</div>
+    <p>LangGraph has first-class support for persistent checkpoints. The graph's state — every node's output, the current position in the workflow, accumulated context — can be saved to a database after each step. This enables: resuming workflows that were interrupted (a web server restart, a user abandoning a long task), implementing human-in-the-loop approval gates that require the workflow to pause until a human takes action outside the system, and debugging by replaying a failed workflow from any checkpoint. For production agents that run long tasks, persistence is not a nice-to-have — it is essential.</p>
+  </div>
+
+  <h2>AutoGen: multi-agent conversation</h2>
+  <p>Microsoft Research's AutoGen takes a different architectural stance: it models agent systems as conversations between multiple specialized agents. Where LangChain and LangGraph think in terms of chains and graphs, AutoGen thinks in terms of agents sending messages to each other. A typical AutoGen workflow involves an orchestrator agent that manages a task, specialist agents that have domain-specific tools and instructions, and a human proxy agent that allows humans to participate in the conversation at defined points.</p>
+  <p>AutoGen's conversation model maps naturally to problems that genuinely require diverse expertise: a coding task might involve a planner agent that breaks down requirements, a coder agent that writes code, a reviewer agent that checks the code for bugs, and a tester agent that executes tests and reports results. Each agent has its own system prompt, tool access, and decision authority. The conversation between them is the actual work product.</p>
+
+  <h3>AutoGen's trade-offs</h3>
+  <p>The conversation-centric model creates natural structure for multi-agent workflows but can lead to verbose, expensive token usage — agents are essentially sending each other full context windows. AutoGen works best when the diversity of agent specializations is genuine (different tools, different domain knowledge, different decision authorities) rather than artificially imposed structure. Using AutoGen to orchestrate two agents that both have the same tools and instructions is worse than using a single agent.</p>
+
+  <h2>CrewAI: role-based agent teams</h2>
+  <p>CrewAI provides a higher-level abstraction than AutoGen, centering on the concept of a "crew" — a team of role-defined agents with explicit task assignments and a defined process (sequential or hierarchical) for executing those assignments. The API is deliberately opinionated: you define agents by role ("Senior Data Analyst", "Report Writer", "QA Reviewer"), assign tasks to agents, and define whether tasks execute sequentially or whether a manager agent routes tasks to the most appropriate specialist.</p>
+  <p>CrewAI's opinionation makes it faster to get started with multi-agent patterns but less flexible for custom orchestration logic. It is particularly well-suited for document processing pipelines, research assistants, and content generation workflows where the role structure maps naturally to how a human team would approach the problem.</p>
+
+  <h2>Choosing a framework: a decision framework</h2>
+  <div class="principle-list">
+    <div class="principle">
+      <div class="principle-title">Single-agent, linear workflow</div>
+      <div class="principle-desc">Use LangChain with LCEL or a direct API implementation. The framework's chain abstractions and integration ecosystem give you integrations with databases, vector stores, and external services without boilerplate. LangGraph is overkill here — you don't need the graph machinery.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Single-agent, complex stateful workflow</div>
+      <div class="principle-desc">Use LangGraph. Workflows with conditional branches, loops, or human-in-the-loop requirements are exactly what LangGraph was built for. The checkpoint persistence system is a major practical advantage for anything running longer than a few seconds.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Multi-agent with diverse specialist roles</div>
+      <div class="principle-desc">AutoGen or CrewAI. Use CrewAI if the role structure maps naturally and you want faster setup. Use AutoGen if you need fine-grained control over the conversation protocol or if some agents need different LLM backends (AutoGen supports mixing models across agents).</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Highly customized or performance-critical</div>
+      <div class="principle-desc">Consider a minimal custom implementation using only the LLM SDK directly. Frameworks add latency and abstraction overhead. If your use case has unique requirements that consistently fight the framework's design, the battle to make the framework do what you want will cost more than building the specific scaffolding you need.</div>
+    </div>
+  </div>
+
+  <h2>Production concerns common to all frameworks</h2>
+  <p>Regardless of which framework you choose, the same production concerns apply to every agentic deployment.</p>
+  <p><strong>Observability.</strong> You need structured logs of every LLM call, tool invocation, tool result, and decision point. LangSmith (for LangChain/LangGraph), Arize Phoenix, and Weights & Biases Weave all provide agent-specific tracing. Without tracing, debugging a failed run requires reconstructing what happened from incomplete outputs — a painful process that gets worse as agent complexity grows.</p>
+  <p><strong>Cost controls.</strong> Agents can consume surprisingly large amounts of tokens if they loop, retrieve large documents, or run in parallel. Set hard limits on tokens per run, implement budget checks before each LLM call, and alert when per-task cost exceeds a threshold. An agent that loops 50 times instead of the expected 5 can cost 10x more than expected — and without cost controls, you won't notice until the billing cycle closes.</p>
+  <p><strong>Graceful degradation.</strong> Production agents encounter rate limits, API outages, malformed tool responses, and unexpected inputs. Every tool call should have retry logic with exponential backoff. Every agent run should have a total timeout. Every agent should have a defined fallback behavior when it cannot complete the task — returning partial results with an explanation is almost always preferable to timing out silently or throwing an unhandled exception.</p>
+
+  <div class="warn">
+    <div class="warn-label">Framework lock-in</div>
+    <p>Agent frameworks are evolving quickly, and the framework that is dominant today may not be the best choice in two years. Architecturally, this argues for keeping your business logic — the actual task instructions, tool implementations, and domain-specific logic — as decoupled from the framework as possible. If your tool implementations are pure Python functions that happen to be wrapped by LangChain's tool decorator, switching frameworks costs a wrapper change. If your tool logic is deeply entangled with LangChain's abstractions, switching costs a rewrite. Design for portability from the start.</p>
+  </div>
+
+  <p>In the final module, we zoom out from the mechanics of building agents to consider where the technology is heading: what autonomous AI systems will be capable of in the near term, what societal and governance questions they raise, and what it means to build responsibly in a space that is moving this fast.</p>
+</div>
+</main>
+</div>
+
+<div class="sticky-bar" id="sticky-bar">
+  <div class="sticky-bar-reading" id="sticky-reading">Read to the end to unlock the next module</div>
+  <div class="sticky-bar-track"><div class="sticky-bar-fill" id="sticky-fill"></div></div>
+  <div class="sticky-bar-label" id="sticky-label">0%</div>
+  <button class="sticky-bar-btn" id="sticky-btn" onclick="completeAndNext()">Module 10: The Future of Autonomous AI →</button>
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import { getFirestore, doc, setDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  const app=initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+  const auth=getAuth(app);const db=getFirestore(app);
+  let currentUser=null;
+  onAuthStateChanged(auth,u=>{currentUser=u;});
+
+  window.toggleTheme=function(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='☾'):(h.setAttribute('data-theme','dark'),i.textContent='☀');};
+  window.addEventListener('scroll',()=>{const d=document.documentElement,s=d.scrollTop||document.body.scrollTop,t=d.scrollHeight-d.clientHeight;document.getElementById('progress').style.width=(s/t*100)+'%';});
+
+  let unlocked=false;
+  function updateScrollProgress(){
+    const scrolled=window.scrollY+window.innerHeight;
+    const total=document.documentElement.scrollHeight;
+    const pct=Math.min(100,Math.round((scrolled/total)*100));
+    const fill=document.getElementById('sticky-fill');
+    const label=document.getElementById('sticky-label');
+    const btn=document.getElementById('sticky-btn');
+    const reading=document.getElementById('sticky-reading');
+    if(fill)fill.style.width=pct+'%';
+    if(label)label.textContent=pct+'%';
+    if(pct>=95&&!unlocked){
+      unlocked=true;
+      if(btn)btn.style.display='block';
+      if(reading)reading.style.display='none';
+      if(fill)fill.style.background='#22c55e';
+      if(label)label.style.color='#22c55e';
+    }
+  }
+  window.addEventListener('scroll',updateScrollProgress);
+  updateScrollProgress();
+
+  window.completeAndNext=async function(){
+    if(currentUser){
+      try{
+        await setDoc(doc(db,'users',currentUser.uid),{
+          agentsModules: arrayUnion('m9')
+        },{merge:true});
+      }catch(e){}
+    }
+    window.location.href='agents-module-10.html';
+  };
+</script>
+</body>
+</html>

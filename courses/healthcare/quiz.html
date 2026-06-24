@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Final Assessment — AI in Healthcare — Meridian Institute of AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#06b6d4;--accent-dim:rgba(6,182,212,0.1);--nav-bg:rgba(8,8,8,0.9);--success:#22c55e;--success-bg:rgba(34,197,94,0.08);--success-border:rgba(34,197,94,0.25);--fail-bg:rgba(239,68,68,0.08);--fail-border:rgba(239,68,68,0.25);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#0891b2;--accent-dim:rgba(8,145,178,0.08);--nav-bg:rgba(250,250,248,0.9);--success:#16a34a;--success-bg:rgba(22,163,74,0.06);--success-border:rgba(22,163,74,0.25);--fail-bg:rgba(220,38,38,0.06);--fail-border:rgba(220,38,38,0.25);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}
+  .nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}.nav-back{font-size:13px;color:var(--text-2);text-decoration:none;}.nav-back:hover{color:var(--text);}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;}
+  .page{max-width:680px;margin:0 auto;padding:90px 24px 80px;}
+  .quiz-eyebrow{font-size:11px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:12px;}
+  .quiz-title{font-family:'Cormorant Garamond',serif;font-size:42px;font-weight:300;color:var(--text);line-height:1.1;margin-bottom:12px;}
+  .quiz-sub{font-size:15px;color:var(--text-2);line-height:1.7;margin-bottom:28px;}
+  .quiz-rules{background:var(--bg-2);border:1px solid var(--border);border-radius:12px;padding:18px 22px;margin-bottom:28px;display:flex;gap:20px;flex-wrap:wrap;}
+  .quiz-rule{font-size:13px;color:var(--text-2);display:flex;align-items:center;gap:8px;}
+  .btn-start{padding:14px 32px;background:var(--accent);color:#fff;border-radius:10px;font-size:15px;font-weight:500;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;margin-top:4px;}
+  #quiz-section{display:none;}
+  .progress-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;}
+  .progress-label{font-size:13px;color:var(--text-3);}
+  .progress-track{height:3px;background:var(--border);border-radius:2px;overflow:hidden;margin-bottom:36px;}
+  .progress-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.3s;}
+  .question-num{font-size:11px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:14px;}
+  .question-text{font-family:'Cormorant Garamond',serif;font-size:27px;font-weight:400;color:var(--text);line-height:1.35;margin-bottom:28px;}
+  .options{display:flex;flex-direction:column;gap:10px;margin-bottom:24px;}
+  .option{display:flex;align-items:flex-start;gap:14px;padding:15px 18px;border:1px solid var(--border-2);border-radius:12px;cursor:pointer;transition:all 0.18s;background:var(--bg-2);}
+  .option:hover{border-color:var(--accent);background:var(--accent-dim);}
+  .option.selected{border-color:var(--accent);background:var(--accent-dim);}
+  .option.correct{border-color:var(--success);background:var(--success-bg);cursor:default;}
+  .option.wrong{border-color:#ef4444;background:var(--fail-bg);cursor:default;}
+  .option.disabled{cursor:default;opacity:0.55;}
+  .option-letter{width:26px;height:26px;border-radius:6px;background:var(--bg-3);border:1px solid var(--border-2);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:500;color:var(--text-3);flex-shrink:0;margin-top:2px;}
+  .option.selected .option-letter{background:var(--accent);color:#fff;border-color:var(--accent);}
+  .option.correct .option-letter{background:var(--success);color:#fff;border-color:var(--success);}
+  .option.wrong .option-letter{background:#ef4444;color:#fff;border-color:#ef4444;}
+  .option-text{font-size:15px;color:var(--text-2);line-height:1.55;}
+  .option.selected .option-text,.option.correct .option-text{color:var(--text);}
+  .feedback{padding:16px 20px;border-radius:10px;font-size:14px;line-height:1.65;margin-bottom:20px;display:none;}
+  .feedback.show{display:block;}
+  .feedback.correct{background:var(--success-bg);border:1px solid var(--success-border);color:var(--success);}
+  .feedback.wrong{background:var(--fail-bg);border:1px solid var(--fail-border);color:#ef4444;}
+  .btn-next{padding:12px 28px;background:var(--accent);color:#fff;border-radius:9px;font-size:14px;font-weight:500;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;display:none;}
+  .btn-next.show{display:inline-block;}
+  #result-section{display:none;text-align:center;padding:20px 0;}
+  .result-icon{font-size:64px;margin-bottom:20px;}
+  .result-title{font-family:'Cormorant Garamond',serif;font-size:42px;font-weight:300;color:var(--text);margin-bottom:12px;}
+  .result-score{font-size:56px;font-weight:300;font-family:'Cormorant Garamond',serif;margin:20px 0;}
+  .result-score.pass{color:var(--success);}.result-score.fail{color:#ef4444;}
+  .result-message{font-size:16px;color:var(--text-2);line-height:1.7;max-width:520px;margin:0 auto 32px;}
+  .result-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
+  .btn-result{padding:13px 28px;border-radius:10px;font-size:14px;font-weight:500;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;text-decoration:none;display:inline-block;}
+  .btn-primary{background:var(--accent);color:#fff;}.btn-ghost{background:transparent;color:var(--text-2);border:1px solid var(--border-2);}
+  @media(max-width:600px){.quiz-title{font-size:34px;}.question-text{font-size:23px;}}
+</style>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="shortcut icon" href="/favicon.ico">
+<style>@media(max-width:480px){.nav-divider{display:none}.nav-left{gap:8px}}</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="../../index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="../../index.html" class="nav-back">Home</a>
+    <div class="nav-divider"></div>
+    <a href="../../courses.html" class="nav-back">← AI in Healthcare</a>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">☀</span></button>
+</nav>
+<div class="page">
+  <div id="start-section">
+    <div class="quiz-eyebrow">Final Assessment · AI in Healthcare</div>
+    <div class="quiz-title">Test Your Knowledge</div>
+    <div class="quiz-sub">25 questions drawn from a pool of 30+. These are application questions — they test whether you can use the concepts, not just recall them. You need 70% to pass and earn your certificate.</div>
+    <div class="quiz-rules">
+      <div class="quiz-rule">📋 25 of 30+ questions per attempt</div>
+      <div class="quiz-rule">✅ 70% to pass (18 of 25)</div>
+      <div class="quiz-rule">🔀 Randomized each attempt</div>
+      <div class="quiz-rule">🏆 Pass to earn your certificate</div>
+    </div>
+    <button class="btn-start" onclick="startQuiz()">Begin Assessment →</button>
+  </div>
+  <div id="quiz-section">
+    <div class="progress-header">
+      <span class="progress-label" id="progress-label">Question 1 of 25</span>
+      <span class="progress-label" id="score-label">0 correct</span>
+    </div>
+    <div class="progress-track"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+    <div class="question-num" id="question-num">Question 1</div>
+    <div class="question-text" id="question-text"></div>
+    <div class="options" id="options"></div>
+    <div class="feedback" id="feedback"></div>
+    <button class="btn-next" id="btn-next" onclick="nextQuestion()">Next Question →</button>
+  </div>
+  <div id="result-section">
+    <div class="result-icon" id="result-icon"></div>
+    <div class="result-title" id="result-title"></div>
+    <div class="result-score" id="result-score"></div>
+    <div class="result-message" id="result-message"></div>
+    <div class="result-actions" id="result-actions"></div>
+  </div>
+</div>
+<script type="module">
+import{initializeApp}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import{getAuth,onAuthStateChanged}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import{getFirestore,doc,setDoc,arrayUnion}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+const app=initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+const auth=getAuth(app);const db=getFirestore(app);let currentUser=null;
+onAuthStateChanged(auth,u=>{currentUser=u;});
+
+const ALL_QUESTIONS=[
+{"q":"A 2019 JAMA study found clinicians override what percentage of drug-drug interaction alerts, and what is the primary cause?","options":["About 30%, primarily because the alerts are technically difficult to dismiss","69% of alerts, primarily because alert fatigue — caused by too many low-value alerts — reduces the signal value of every alert","Nearly all alerts, because EHR systems are poorly designed for the clinical workflow","About 50%, primarily because the alerts lack adequate clinical evidence to support the recommendations"],"answer":1,"explain":"69% override rate is the canonical alert fatigue statistic. When most alerts fire for non-critical interactions and require the same dismissal action as genuine emergencies, clinicians habituate and the signal value collapses — making AI-powered alert prioritization essential."},
+{"q":"What did the Duke Health AI sepsis detection study find about patient outcomes?","options":["The AI system reduced unnecessary antibiotic use by 30% without affecting mortality","The AI reduced 30-day mortality by 18% by flagging deteriorating patients an average of 6 hours earlier than clinical identification","The AI system was equivalent to clinical judgment when all other variables were controlled","The AI reduced average sepsis treatment costs by $8,000 per patient with equivalent outcomes"],"answer":1,"explain":"The 6-hour head start is the critical finding — sepsis mortality increases approximately 7% for every hour of delayed treatment. Six hours of earlier identification represents a life-saving margin when followed by appropriate intervention."},
+{"q":"Why is sepsis particularly well-suited to AI clinical decision support?","options":["Sepsis has a simple, well-defined biomarker set that makes algorithmic detection straightforward","Its early signs are subtle, overlap with dozens of other conditions, and appear across multiple continuous data streams — exactly the pattern-recognition problem AI excels at","Sepsis is the most common hospital condition, providing the largest training dataset for AI models","Clinical guidelines for sepsis are perfectly standardized, enabling rule-based rather than learning-based detection"],"answer":1,"explain":"Sepsis is hard for humans because early signs are nonspecific and distributed across vital signs, labs, and clinical notes monitored discontinuously. AI continuously integrates all data streams and can detect the subtle pattern of multi-organ dysfunction hours before it becomes clinically obvious."},
+{"q":"AlphaFold2 solved the protein folding problem. What was the specific breakthrough?","options":["It designed new proteins that don't exist in nature with desired therapeutic properties","It predicted the 3D structure of proteins from amino acid sequences with accuracy comparable to experimental methods — previously unsolvable for 50 years","It sequenced the human proteome faster than any previous computational method","It identified which proteins are responsible for specific diseases by analyzing genome-wide association data"],"answer":1,"explain":"Protein structure determination previously required expensive, slow experimental methods (X-ray crystallography, cryo-EM). AlphaFold2's accuracy on par with experiments, achieved computationally in minutes, democratized structural biology and fundamentally accelerated drug discovery."},
+{"q":"The Nobel Prize in Chemistry 2024 was awarded for work on protein folding. Who received it?","options":["Geoffrey Hinton and Yann LeCun for the deep learning algorithms underlying AlphaFold","Demis Hassabis and John Jumper of DeepMind, and David Baker for related protein design work","Jennifer Doudna and Emmanuelle Charpentier for combining CRISPR with AlphaFold","Eric Topol and Siddhartha Mukherjee for applying AlphaFold to clinical medicine"],"answer":1,"explain":"The 2024 Nobel in Chemistry recognized the AlphaFold breakthrough: Hassabis and Jumper for AlphaFold itself, and Baker for related computational protein design work — the first time an AI system's direct scientific contribution was recognized with a Nobel Prize."},
+{"q":"What is a 'Predetermined Change Control Plan' and what FDA regulatory problem does it solve?","options":["A manufacturer's plan for voluntary product recalls when AI models produce harmful outputs","A pre-approved framework allowing specified types of model updates post-deployment without full re-review — solving the problem of applying static device regulation to adaptive AI that continuously learns","A consent form that patients must sign before being treated by an AI-assisted diagnostic system","A quality management plan ensuring AI model performance is maintained within specified bounds after deployment"],"answer":1,"explain":"Traditional FDA approval is for a locked product. Adaptive AI changes after deployment — creating regulatory ambiguity about when re-review is required. The TPLC/PCCP approach pre-approves the change types, enabling continuous improvement within defined bounds without regulatory paralysis."},
+{"q":"What was the Optum algorithm's documented bias and what was its root cause?","options":["It under-diagnosed Black patients with diabetes because the training data contained fewer Black patients","It used healthcare cost as a proxy for healthcare need — systematically under-referring Black patients because historical barriers to care meant they had incurred lower costs despite equivalent health burden","It was deliberately programmed with racial exclusion criteria by the algorithm's designers","It produced equal predictions across racial groups but was applied differently by healthcare administrators at the point of decision"],"answer":1,"explain":"The Optum case (Science, 2019) is the canonical proxy bias example: using cost as a proxy for need worked for populations without access barriers, but failed for populations whose lower historical costs reflected denied care rather than better health."},
+{"q":"According to Annals of Internal Medicine research, how do physicians currently spend their time relative to patient care?","options":["Equal time with patients and on EHR documentation","2 hours on EHR documentation for every 1 hour with patients","About 30 minutes of documentation per hour of patient care","Documentation is less than 20% of total physician time with modern EHR systems"],"answer":1,"explain":"The 2:1 documentation-to-patient-care ratio is one of the most cited statistics in healthcare AI. Ambient AI documentation — AI that listens and generates notes — directly targets this ratio, potentially reclaiming hundreds of hours annually per physician."},
+{"q":"What is GRAIL's Galleri test and what makes it clinically significant?","options":["A genetic test for hereditary cancer risk using BRCA and other known risk variants","A liquid biopsy that can detect 50+ cancer types from a single blood draw by analyzing cell-free DNA — potentially enabling cancer detection before symptoms appear","A blood test that measures specific cancer biomarkers for 5 common cancer types","A test that identifies which chemotherapy regimens a cancer patient's tumor is likely to respond to"],"answer":1,"explain":"Galleri represents the clinical potential of liquid biopsy: a single blood draw with multi-cancer early detection. Current cancer screening is cancer-type specific and symptom-triggered; a universal screening test could detect cancers at treatable stages before patients have symptoms."},
+{"q":"The AMA reports prior authorization consumes how much physician time per week?","options":["About 3-4 hours per physician per week","14.6 hours per physician per week — roughly a third of the clinical work week","About 7-8 hours per week for primary care physicians only","2-3 hours per week, primarily for specialty practices"],"answer":1,"explain":"14.6 hours per week is the AMA figure — nearly a full day-and-a-half of physician time spent on insurance approval processes per week. AI automation of prior auth is one of the highest-ROI administrative AI applications in healthcare."},
+{"q":"A 2023 NEJM AI study found that what percentage of clinicians would distrust an AI recommendation they couldn't understand the reasoning behind?","options":["About 20% — most clinicians accept evidence-based AI recommendations regardless of explainability","43% of clinicians said they would distrust an AI recommendation if they couldn't understand the reasoning","Only about 10%, since clinicians are trained to rely on evidence regardless of mechanism","Almost 80% — the explainability problem is the primary barrier to AI adoption across all clinical settings"],"answer":1,"explain":"43% distrust for unexplainable AI is a significant adoption barrier — meaning nearly half of potential users are lost before the system even demonstrates its value. Explainable AI is not just ethically important; it is commercially necessary for clinical deployment."},
+{"q":"What is the global mental health treatment gap and why does it make AI mental health tools urgent?","options":["About 20% of people with mental health conditions go untreated — a significant but manageable gap","The treatment gap exceeds 70% in low- and middle-income countries and is above 50% in the US — the sheer scale of unmet need makes human-only solutions mathematically insufficient","The gap is primarily in rural areas, with urban populations adequately served by existing mental health infrastructure","The treatment gap exists mainly for severe mental illness; mild to moderate conditions are adequately addressed"],"answer":1,"explain":"Treatment gaps of this magnitude — the majority of people with mental health conditions receiving no care — cannot be closed by training more therapists alone. AI extends the reach of care into settings and scales where human providers simply don't exist."},
+{"q":"The Vanderbilt EHR suicide risk prediction model achieves what AUC performance, and what does AUC measure?","options":["AUC of 0.95, where AUC measures the proportion of patients correctly identified as high-risk","AUC of 0.83-0.88, where AUC (Area Under the Curve) measures the model's ability to discriminate high-risk from low-risk patients — 1.0 is perfect, 0.5 is chance","AUC of 0.72, where AUC measures the sensitivity of the model across different threshold settings","AUC of 0.99, where AUC measures the overall accuracy of binary classification across all patients"],"answer":1,"explain":"AUC of 0.83-0.88 represents strong discrimination — substantially better than clinical interview alone for near-term suicide attempt prediction. The metric matters: AUC measures the model's ability to rank patients correctly across all possible threshold settings."},
+{"q":"What is pharmacogenomics and what is a clinically significant example of a drug-gene interaction?","options":["The study of how drugs affect gene expression, used to identify cancer treatment targets","The study of how genetic variation affects drug metabolism and response — codeine is a critical example: ultra-rapid CYP2D6 metabolizers convert it to morphine so fast that a standard dose can be fatal","The science of using genetic information to design novel drug molecules from first principles","The analysis of how drugs interact with each other in patients taking multiple medications simultaneously"],"answer":1,"explain":"Codeine-CYP2D6 is the paradigmatic pharmacogenomics case: the same dose that is analgesic in a normal metabolizer can produce life-threatening morphine levels in an ultra-rapid metabolizer. The FDA Black Box warning reflects a real, documented risk that genetic testing can eliminate."},
+{"q":"What is behavioral biometrics in the context of smartphone mental health monitoring?","options":["Using facial recognition to detect emotional states from smartphone selfies","Analyzing passive data from how users interact with their phones — GPS patterns, usage frequency, typing dynamics — to detect changes in mental health status without requiring active engagement","Recording and analyzing audio from smartphones to detect vocal biomarkers of depression","Monitoring social media activity to identify signs of deteriorating mental health"],"answer":1,"explain":"Passive sensing for mental health is compelling precisely because it requires no active engagement — users who are too depressed to use a wellness app still carry and interact with their phones. The behavioral signature of depression (reduced mobility, disrupted sleep patterns, social withdrawal) shows up in passive data."},
+{"q":"US healthcare administration costs approximately what percentage of total healthcare expenditures, compared to Canada?","options":["About equal to Canada at approximately 15% of total expenditures","34% of US healthcare expenditures vs. 12% in Canada — a gap of over $400 billion annually representing the administrative overhead burden","About 20% in the US vs. 18% in Canada — a modest difference driven primarily by billing complexity","US administrative costs are actually lower than Canada's due to EHR efficiency gains"],"answer":1,"explain":"The 34% vs 12% gap represents roughly $500+ billion annually in administrative costs that don't produce care. AI targeting even a fraction of this overhead — prior auth automation, ambient documentation, scheduling optimization — represents enormous potential value."},
+{"q":"Insilico Medicine used AI to design a drug candidate for idiopathic pulmonary fibrosis. What was notable about the timeline?","options":["They completed the design in 3 months, which improved on the typical 2-year design phase","They reached clinical trials in under 18 months — a process that typically takes 4-6 years using traditional methods","They achieved FDA approval in 2 years, compared to the typical 10-12 year timeline","They completed Phase 3 trials in 18 months using AI-accelerated recruitment"],"answer":1,"explain":"The 18-month-to-clinical-trial timeline for an AI-designed novel molecule compressed a process that historically took half a decade. This is the proof-of-concept that AI-designed therapeutics can dramatically accelerate the drug discovery pipeline."},
+{"q":"What is the FDA's distinction between 'locked' and 'adaptive' AI algorithms, and why does it matter for regulation?","options":["Locked algorithms are approved for use; adaptive algorithms are still in clinical trials","Locked algorithms are fixed at deployment and regulated like traditional devices; adaptive algorithms change over time, creating a regulatory mismatch with static approval frameworks","Locked algorithms protect patient data; adaptive algorithms are the security-vulnerable versions","This distinction applies only to AI used in medical devices, not in clinical decision support software"],"answer":1,"explain":"The locked/adaptive distinction is the central regulatory challenge for healthcare AI: traditional FDA approval assumes a fixed product, but AI that continuously learns from new data is never fully 'locked.' The TPLC/PCCP framework was created to address this mismatch."},
+{"q":"The 2023 Woebot RCT is significant for what specific finding?","options":["It demonstrated that Woebot was more effective than licensed therapists for treating major depressive disorder","It showed significant reduction in depression and anxiety symptoms over two weeks — providing the first rigorous evidence that a conversational AI could produce measurable mental health symptom improvement","It found that users preferred AI therapy to human therapy when cost was equalized","It demonstrated that AI-based CBT could prevent suicidal ideation in high-risk populations"],"answer":1,"explain":"The significance is methodological as much as clinical: an RCT with a control group, measurable outcomes, showing that the AI intervention produced symptom reduction rather than just user satisfaction. Rigorous evidence is rare in mental health technology."},
+{"q":"What is HIPAA's Business Associate Agreement requirement in the context of AI tools?","options":["A contract requiring AI vendors to indemnify healthcare organizations for any HIPAA violations caused by the AI","A legal agreement requiring AI vendors who handle protected health information to comply with HIPAA safeguards and assume responsibility for PHI protection","A government license required before any AI company can offer services to HIPAA-covered entities","An agreement between two healthcare organizations sharing patient data for AI model training"],"answer":1,"explain":"Any vendor handling PHI on behalf of a covered entity must sign a BAA, agreeing to HIPAA safeguards. Using non-BAA AI tools (like consumer ChatGPT) to process patient information is a HIPAA violation regardless of intent — a critical compliance requirement for healthcare AI deployment."},
+{"q":"What is 'ambient AI documentation' and which companies are leading this clinical application?","options":["AI that monitors patient vital signs continuously and documents changes in the EHR automatically","AI that listens to physician-patient conversations and generates clinical notes automatically — leading companies include Nuance DAX (Microsoft), Suki, and Ambience Healthcare","AI that reads and summarizes existing medical records to create structured clinical summaries","AI that generates discharge summaries by analyzing inpatient data from the EHR"],"answer":1,"explain":"Ambient documentation is one of the highest-impact near-term AI applications in healthcare: physicians save 1-2 hours per day, note quality improves, and the quality of the patient visit improves because the physician can focus on the patient rather than the keyboard."},
+{"q":"What did Kaiser Permanente's AI-based capacity management pilot find regarding ED wait times?","options":["No significant reduction in wait times, though patient satisfaction improved","25% reduction in ED wait times by using AI to predict volume and enable dynamic staffing","50% reduction in average wait times in hospitals that deployed the full AI capacity suite","A 10% reduction in wait times at a cost that made the intervention uneconomical at scale"],"answer":1,"explain":"25% reduction in ED wait times represents substantial clinical value — not just patient satisfaction, but actual care quality. ED overcrowding delays care for arriving patients; reducing wait times through AI-optimized staffing directly improves outcomes."},
+{"q":"The Optum algorithm case was documented in what journal, and why does the publication venue matter?","options":["It was published in JAMA, the most-read clinical journal, maximizing awareness among practicing physicians","It was published in Science, a top general science journal, giving it a broader audience and greater credibility beyond the healthcare field","It was published in a company white paper, which limited its impact because it lacked peer review","It was published in a government report, triggering mandatory regulatory review of all health insurer AI systems"],"answer":1,"explain":"Publication in Science — a top-tier general science journal with broad readership outside medicine — gave the Optum finding the visibility and credibility needed to drive policy change. Research in specialized clinical journals rarely achieves the same cross-disciplinary impact."},
+{"q":"What is a 'liquid biopsy' and what AI problem does it solve?","options":["A diagnostic procedure using AI-enhanced ultrasound imaging to detect tumors without tissue sampling","A blood test that analyzes cell-free DNA shed by cancer cells — AI is required to detect the minute cancer signal against the background noise of normal cfDNA","A minimally invasive biopsy technique using AI-guided robotics to target tumor samples precisely","A test that analyzes liquid tumor samples from surgical drainage to characterize cancer biology"],"answer":1,"explain":"The signal detection problem is the core AI contribution to liquid biopsy: cancer cfDNA is a small fraction of total circulating DNA, and distinguishing cancer-specific mutations from sequencing noise and normal variation requires ML models trained on large datasets. The biology is easy; the signal extraction is hard."},
+{"q":"WHO's 2023 report on AI in health identified which group as the highest-potential beneficiaries of healthcare AI?","options":["High-income countries with advanced healthcare infrastructure that can implement AI at scale","Low- and middle-income countries, where physician shortages are most severe and AI diagnostic tools can provide access where specialists are unavailable","Elderly populations who have the greatest healthcare needs and would benefit most from AI monitoring","Pediatric populations, whose diseases are underrepresented in clinical research and would benefit from AI pattern recognition"],"answer":1,"explain":"The WHO framing reorients the conversation: the biggest impact of healthcare AI isn't marginal efficiency gains in well-resourced systems — it's providing diagnostic capability that doesn't exist at all in settings where a radiologist or specialist is days away or unaffordable."},
+{"q":"What is the NIST AI RMF's 'Govern' function and why does it come first in the framework?","options":["It refers to external regulatory compliance — ensuring the organization meets all applicable legal requirements for AI","It establishes the organizational policies, accountability structures, roles, and culture needed to support the other functions — it comes first because governance capacity is prerequisite for identifying, measuring, and managing AI risk","It refers to how the AI system governs its own behavior through built-in constraints and safety mechanisms","It specifies which government agencies have oversight authority over different categories of AI deployment"],"answer":1,"explain":"Governance is foundational: without clear accountability, defined roles, and an organizational culture that takes AI risk seriously, the subsequent Map-Measure-Manage functions lack the institutional context to produce real risk reduction rather than just compliance theater."},
+{"q":"What does the course identify as AI's highest-potential impact in mental health at the population level?","options":["Replacing psychiatrists in inpatient settings, where physician shortages are most acute","Providing initial contact and support for the enormous population that currently receives no care at all — extending reach rather than improving quality at the top","Improving outcomes for severe mental illness, which is currently undertreated despite available therapies","Reducing psychiatric medication prescribing by offering therapy alternatives to patients who prefer non-pharmacological treatment"],"answer":1,"explain":"Reach extension is the transformational potential: AI doesn't need to match the quality of expert human therapy to be valuable if it's the only option reaching the 70%+ of people globally who currently receive nothing. Imperfect support for many may matter more than excellent support for the few."},
+{"q":"A hospital implements an AI sepsis model that fires too frequently for non-septic patients. What is the primary risk?","options":["The hospital will face FDA enforcement action for deploying an unapproved AI medical device","Alert fatigue — clinicians will habituate to the alerts and begin dismissing them reflexively, reducing the clinical value of genuine alerts for actual sepsis cases","The model will be retrained on the false positive cases and become progressively less accurate over time","False positive alerts will cause unnecessary antibiotic treatment, creating antibiotic resistance in treated patients"],"answer":1,"explain":"The alert fatigue risk is the primary concern with high-sensitivity, low-specificity clinical AI. A model that fires too often trains clinicians to dismiss it — at which point it loses its clinical value even for genuine positives. Calibration (appropriate balance of sensitivity and specificity) is crucial."},
+{"q":"What is the significance of the AlphaFold protein structure database containing over 200 million structures?","options":["It provides a training set that allows other AI models to predict protein function from structure at scale","It means virtually every protein in biology now has a computationally predicted structure available for free — removing a major bottleneck in drug discovery, basic research, and understanding of disease mechanisms","It allows pharmaceutical companies to patent AI-predicted protein structures before competitors can discover them experimentally","It provides a comprehensive map of all human proteins, enabling personalized medicine based on each patient's unique protein expression profile"],"answer":1,"explain":"Before AlphaFold, most proteins had no known structure — limiting drug discovery to targets with available structures. The public database of 200M+ structures effectively removed structure as a bottleneck, enabling drug discovery programs to target previously inaccessible proteins."},
+{"q":"What does it mean for healthcare AI to be 'clinically validated,' and why do many commercial AI tools lack this?","options":["Clinical validation means regulatory approval from FDA — most tools lack this because the approval process takes 7-10 years","Clinical validation means evidence from rigorous studies (ideally RCTs) in the target patient population that the tool improves relevant outcomes — most commercial tools lack this because validation is expensive and time-consuming while products can often be sold without it","Clinical validation is a voluntary certification from a medical specialty society, which most companies don't pursue","Clinical validation means the AI was trained on clinical data rather than general internet data — tools trained on clinical data are automatically considered validated"],"answer":1,"explain":"The clinical validation gap is one of the most significant problems in healthcare AI: most deployed tools have demonstrated technical performance (accuracy on test sets) but not clinical impact (improved patient outcomes). The evidence standard for AI should match the standard for other medical interventions."},
+];
+
+let questions=[],current=0,score=0,answered=false;
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+window.startQuiz=function(){
+  questions=shuffle([...ALL_QUESTIONS]).slice(0,25);current=0;score=0;
+  document.getElementById('start-section').style.display='none';
+  document.getElementById('quiz-section').style.display='block';renderQuestion();
+};
+function renderQuestion(){
+  answered=false;const q=questions[current];
+  document.getElementById('question-num').textContent=`Question ${current+1} of 25`;
+  document.getElementById('question-text').textContent=q.q;
+  document.getElementById('progress-label').textContent=`Question ${current+1} of 25`;
+  document.getElementById('score-label').textContent=`${score} correct`;
+  document.getElementById('progress-fill').style.width=`${(current/25)*100}%`;
+  document.getElementById('feedback').className='feedback';document.getElementById('btn-next').className='btn-next';
+  const letters=['A','B','C','D'];const optionsEl=document.getElementById('options');optionsEl.innerHTML='';
+  const indices=shuffle([0,1,2,3]);
+  indices.forEach((origIdx,displayIdx)=>{
+    const opt=document.createElement('div');opt.className='option';
+    opt.innerHTML=`<div class="option-letter">${letters[displayIdx]}</div><div class="option-text">${q.options[origIdx]}</div>`;
+    opt.onclick=()=>selectAnswer(opt,origIdx===q.answer,indices.indexOf(q.answer),q.explain);
+    optionsEl.appendChild(opt);
+  });
+}
+function selectAnswer(clickedEl,isCorrect,correctShuffledIdx,explain){
+  if(answered)return;answered=true;
+  document.querySelectorAll('.option').forEach((o,i)=>{o.classList.add('disabled');if(i===correctShuffledIdx)o.classList.add('correct');});
+  if(isCorrect){clickedEl.classList.add('correct');score++;}else{clickedEl.classList.add('wrong');}
+  document.getElementById('score-label').textContent=`${score} correct`;
+  const fb=document.getElementById('feedback');fb.className=`feedback ${isCorrect?'correct':'wrong'} show`;
+  fb.textContent=isCorrect?`✓ Correct. ${explain}`:`✗ ${explain}`;
+  const btn=document.getElementById('btn-next');btn.className='btn-next show';btn.textContent=current===24?'See Results →':'Next Question →';
+}
+window.nextQuestion=function(){current++;if(current>=25)showResults();else renderQuestion();};
+async function showResults(){
+  document.getElementById('quiz-section').style.display='none';document.getElementById('result-section').style.display='block';
+  const passed=score>=18;const pct=Math.round((score/25)*100);
+  document.getElementById('result-icon').textContent=passed?'🏆':'📚';
+  document.getElementById('result-title').textContent=passed?'Assessment Passed':'Not This Time';
+  document.getElementById('result-score').className=`result-score ${passed?'pass':'fail'}`;
+  document.getElementById('result-score').textContent=`${score} / 25`;
+  if(passed){
+    document.getElementById('result-message').textContent=`You scored ${pct}% — above the 70% threshold. Your AI in Healthcare certificate is being issued.`;
+    if(currentUser){
+      try{
+        const certId=currentUser.uid+'-healthcare';const completedDate=new Date();
+        await setDoc(doc(db,'users',currentUser.uid),{certificatesEarned:arrayUnion('healthcare'),healthcareCompletedAt:completedDate,healthcareCertId:certId,healthcareCertificate:true},{merge:true});
+        await setDoc(doc(db,'certificates',certId),{name:currentUser.displayName||'Meridian Student',email:currentUser.email,course:'AI in Healthcare — Meridian Institute of AI',issuedAt:completedDate,certId:certId,valid:true});
+        document.getElementById('result-actions').innerHTML=`<a href="../../certificate.html?id=${certId}" class="btn-result btn-primary" target="_blank">View Certificate →</a><a href="../../dashboard.html" class="btn-result btn-ghost">Dashboard</a>`;
+      }catch(e){document.getElementById('result-actions').innerHTML=`<a href="../../dashboard.html" class="btn-result btn-primary">Dashboard</a>`;}
+    }
+  }else{
+    document.getElementById('result-message').textContent=`You scored ${pct}% — you need 70% to pass. Review the modules where your answers were weakest and try again.`;
+    document.getElementById('result-actions').innerHTML=`<a href="module-1.html" class="btn-result btn-primary">Review from Module 1</a><button class="btn-result btn-ghost" onclick="location.reload()">Try Again</button>`;
+  }
+}
+window.toggleTheme=function(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='☾'):(h.setAttribute('data-theme','dark'),i.textContent='☀');};
+</script>
+</body>
+</html>

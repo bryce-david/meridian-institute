@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Implementing Responsible AI — AI Governance — Meridian Institute of AI</title>
+<meta name="description" content="Free AI Governance course — module 7. Implement responsible AI: the principles-to-practice gap, AI lifecycle governance, team structure, model cards, and career paths.">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="Implementing Responsible AI — AI Governance — Meridian Institute of AI">
+<meta property="og:description" content="Free AI Governance course — module 7. Implement responsible AI: the principles-to-practice gap, AI lifecycle governance, team structure, model cards, and career paths.">
+<meta property="og:url" content="https://meridianinstituteai.com/courses/governance/module-7.html">
+<meta property="og:type" content="website">
+<link rel="canonical" href="https://meridianinstituteai.com/courses/governance/module-7.html">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#8b5cf6;--accent-dim:rgba(139,92,246,0.1);--nav-bg:rgba(8,8,8,0.9);--callout-bg:rgba(139,92,246,0.07);--callout-border:rgba(139,92,246,0.25);--good-bg:rgba(34,197,94,0.07);--good-border:rgba(34,197,94,0.2);--warn-bg:rgba(251,146,60,0.07);--warn-border:rgba(251,146,60,0.2);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#7c3aed;--accent-dim:rgba(124,58,237,0.08);--nav-bg:rgba(250,250,248,0.9);--callout-bg:rgba(124,58,237,0.05);--callout-border:rgba(124,58,237,0.2);--good-bg:rgba(22,163,74,0.06);--good-border:rgba(22,163,74,0.2);--warn-bg:rgba(234,88,12,0.05);--warn-border:rgba(234,88,12,0.2);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;overflow-x:hidden;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.7;overflow-x:hidden;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}
+  .nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}
+  .nav-back{font-size:13px;color:var(--text-2);text-decoration:none;transition:color 0.2s;}
+  .nav-back:hover{color:var(--text);}
+  .nav-label{font-size:13px;color:var(--text-3);}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;transition:all 0.2s;}
+  .progress-bar{position:fixed;top:60px;left:0;right:0;z-index:99;height:2px;background:var(--border);}
+  .progress-fill{height:100%;background:var(--accent);width:0%;transition:width 0.1s;}
+  .page-wrapper{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:100vh;padding-top:62px;}
+  .sidebar{position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto;border-right:1px solid var(--border);padding:32px 24px;background:var(--bg-2);}
+  .sidebar-course{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;}
+  .sidebar-course-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+  .sidebar-module{margin-bottom:4px;}
+  .sidebar-module-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:13px;color:var(--text-2);text-decoration:none;transition:all 0.2s;line-height:1.4;}
+  .sidebar-module-link:hover{background:var(--bg-3);color:var(--text);}
+  .sidebar-module-link.active{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-num{font-size:11px;font-weight:500;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--bg-4);color:var(--text-3);}
+  .sidebar-module-link.active .sidebar-num{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-divider{height:1px;background:var(--border);margin:20px 0;}
+  .sidebar-progress-label{font-size:12px;color:var(--text-3);margin-bottom:8px;display:flex;justify-content:space-between;}
+  .sidebar-progress-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sidebar-progress-fill{height:100%;width:86%;background:var(--accent);border-radius:2px;}
+  main{display:block;min-width:0;}
+  .content{max-width:760px;width:100%;padding:60px 64px 140px;margin:0 auto;}
+  .module-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+  .module-tag{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(139,92,246,0.2);padding:4px 12px;border-radius:100px;}
+  .module-meta{font-size:12px;color:var(--text-3);}
+  h1{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1.05;letter-spacing:-0.02em;color:var(--text);margin-bottom:24px;}
+  .intro-text{font-size:19px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+  h2{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:400;color:var(--text);margin:52px 0 18px;line-height:1.2;}
+  h3{font-size:16px;font-weight:500;color:var(--text);margin:32px 0 12px;}
+  p{font-size:16px;font-weight:300;color:var(--text-2);line-height:1.8;margin-bottom:20px;}
+  strong{font-weight:500;color:var(--text);}
+  .callout{background:var(--callout-bg);border:1px solid var(--callout-border);border-radius:12px;padding:24px 28px;margin:32px 0;}
+  .callout-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+  .callout p{margin:0;font-size:15px;color:var(--text-2);}
+  .callout p+p{margin-top:12px;}
+  .good{background:var(--good-bg);border:1px solid var(--good-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .good-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#22c55e;margin-bottom:10px;}
+  .good p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn{background:var(--warn-bg);border:1px solid var(--warn-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .warn-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#fb923c;margin-bottom:10px;}
+  .warn p{margin:0;font-size:15px;color:var(--text-2);}
+  .principle-list{display:flex;flex-direction:column;gap:12px;margin:24px 0;}
+  .principle{background:var(--bg-2);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:0 12px 12px 0;padding:20px 24px;}
+  .principle-title{font-size:15px;font-weight:500;color:var(--text);margin-bottom:6px;}
+  .principle-desc{font-size:14px;color:var(--text-2);line-height:1.65;margin:0;}
+  .comparison-wrapper{overflow-x:auto;-webkit-overflow-scrolling:touch;width:100%;margin:28px 0;}
+  table{width:100%;border-collapse:collapse;font-size:14px;min-width:480px;}
+  th{text-align:left;padding:12px 16px;font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-3);border-bottom:1px solid var(--border-2);}
+  td{padding:14px 16px;border-bottom:1px solid var(--border);color:var(--text-2);line-height:1.6;vertical-align:top;}
+  tr:last-child td{border-bottom:none;}
+  td:first-child{color:var(--text);font-weight:500;}
+  .sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:var(--bg-2);border-top:1px solid var(--border-2);padding:14px 5%;display:flex;align-items:center;justify-content:space-between;gap:16px;backdrop-filter:blur(12px);}
+  .sticky-bar-track{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sticky-bar-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.2s;width:0%;}
+  .sticky-bar-label{font-size:12px;color:var(--text-3);white-space:nowrap;min-width:60px;text-align:right;}
+  .sticky-bar-btn{padding:10px 20px;border-radius:8px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;background:var(--accent);color:#fff;border:none;cursor:pointer;white-space:nowrap;transition:opacity 0.2s;display:none;}
+  .sticky-bar-btn:hover{opacity:0.88;}
+  .sticky-bar-reading{font-size:12px;color:var(--text-3);white-space:nowrap;}
+  @media(max-width:900px){.page-wrapper{grid-template-columns:1fr;}.sidebar{display:none;}.content{padding:40px 24px 120px;}h1{font-size:38px;}}
+  @media(max-width:600px){.content{padding:28px 16px 120px;}h1{font-size:30px;}h2{font-size:24px;}}
+</style>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="shortcut icon" href="/favicon.ico">
+<style>@media(max-width:480px){.nav-divider{display:none}.nav-left{gap:8px}}</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="../../index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="../../index.html" class="nav-back">&#8962; Home</a>
+    <div class="nav-divider"></div>
+    <a href="../../courses.html" class="nav-back">&#8592; AI Governance</a>
+    <div class="nav-divider"></div>
+    <span class="nav-label">Module 7</span>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">&#9728;</span></button>
+</nav>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+
+<div class="page-wrapper">
+<aside class="sidebar">
+  <div class="sidebar-course">Course</div>
+  <div class="sidebar-course-name">AI Governance</div>
+  <div class="sidebar-module"><a href="module-1.html" class="sidebar-module-link"><span class="sidebar-num">1</span>What AI Governance Is</a></div>
+  <div class="sidebar-module"><a href="module-2.html" class="sidebar-module-link"><span class="sidebar-num">2</span>The EU AI Act</a></div>
+  <div class="sidebar-module"><a href="module-3.html" class="sidebar-module-link"><span class="sidebar-num">3</span>US AI Policy</a></div>
+  <div class="sidebar-module"><a href="module-4.html" class="sidebar-module-link"><span class="sidebar-num">4</span>AI Ethics</a></div>
+  <div class="sidebar-module"><a href="module-5.html" class="sidebar-module-link"><span class="sidebar-num">5</span>Corporate AI Governance</a></div>
+  <div class="sidebar-module"><a href="module-6.html" class="sidebar-module-link"><span class="sidebar-num">6</span>International AI Policy</a></div>
+  <div class="sidebar-module"><a href="module-7.html" class="sidebar-module-link active"><span class="sidebar-num">7</span>Implementing Responsible AI</a></div>
+  <div class="sidebar-module"><a href="quiz.html" class="sidebar-module-link" style="color:var(--accent);margin-top:4px;"><span class="sidebar-num" style="background:var(--accent-dim);color:var(--accent);">&#10022;</span>Final Assessment</a></div>
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-progress-label"><span>Course progress</span><span style="color:var(--accent);">6 / 7</span></div>
+  <div class="sidebar-progress-track"><div class="sidebar-progress-fill"></div></div>
+</aside>
+
+<main>
+<div class="content">
+  <div class="module-eyebrow"><span class="module-tag">Module 7</span><span class="module-meta">20 min read &middot; AI Governance</span></div>
+  <h1>Implementing Responsible AI</h1>
+  <p class="intro-text">Responsible AI is not a set of principles to post on a website — it is a set of processes, roles, and tools embedded into how an organization actually builds, deploys, and monitors AI systems. The gap between stated AI principles and actual AI practice is one of the most documented phenomena in technology governance. Closing that gap is the real work of implementing responsible AI.</p>
+
+  <h2>The Principles-to-Practice Gap</h2>
+  <p>A 2023 Stanford HAI survey of major technology companies found that 84% had published AI ethics principles — detailed public statements about fairness, transparency, human oversight, privacy, and accountability. Only 27% had implemented the governance mechanisms that would make those principles operationally enforceable: dedicated responsible AI teams, formal review processes, escalation procedures, and accountability structures that tied AI outcomes to organizational consequences. The other 57% had principles without practice — a combination that provides reputational positioning without actual risk reduction.</p>
+  <p>The gap exists for structural reasons. Principles are costless to publish — they require only that someone write them, and they generate positive press and investor signals. Governance infrastructure is expensive to build: it requires dedicated staff, executive attention, engineering integration, legal review processes, and ongoing operational maintenance. When organizations under competitive pressure face a choice between faster AI deployment and more thorough governance review, the structural incentives favor speed. Closing the gap requires making governance a hard constraint, not a soft preference — which means it must have organizational authority, not just organizational aspiration.</p>
+  <p>The organizations that have effectively closed the principles-to-practice gap share common structural characteristics: responsible AI teams that report directly to C-suite leadership rather than being embedded in product teams, clear and enforced escalation paths for governance concerns, and explicit accountability — typically tied to performance reviews and compensation — for AI governance outcomes. These are design choices, not cultural accidents.</p>
+
+  <div class="callout">
+    <div class="callout-label">Industry evidence</div>
+    <p>Google, Microsoft, and Meta all published detailed AI ethics principles — Google's AI Principles, Microsoft's Responsible AI Standard, Meta's responsible AI framework — before experiencing significant AI-related controversies that attracted regulatory scrutiny, legal action, or reputational damage. The existence of published principles did not prevent controversies in any of these cases. This is not evidence that the principles were insincere; it is evidence that principles without enforcement mechanisms provide minimal actual risk reduction. The lesson is not to publish better principles but to build better governance.</p>
+  </div>
+
+  <h2>The Responsible AI Lifecycle</h2>
+  <p>The most common governance failure mode is treating responsible AI as a deployment gate — a review process that happens just before a system goes live — rather than as something embedded throughout the development lifecycle. By the time a system reaches pre-deployment review, fundamental design choices that determine its fairness properties, transparency characteristics, and risk profile have already been made. Retrofitting governance at deployment is expensive, often inadequate, and sometimes impossible when it would require rebuilding core components.</p>
+  <p>Responsible AI embedded in the full lifecycle looks like this: at <strong>problem definition</strong>, stakeholder analysis identifies who will be affected by the system, what their interests are, and whether the proposed AI application is appropriate for the context at all — some problems are better solved without AI. During <strong>development</strong>, data ethics reviews assess training data for representational bias and consent issues, bias testing is conducted across demographic groups throughout training rather than only at the end, and documentation is built contemporaneously using Model Card and Datasheet standards rather than reconstructed later. At <strong>pre-deployment</strong>, algorithmic impact assessments formalize the bias testing results and their implications, red team exercises probe for failure modes not caught by standard evaluation, and legal review confirms regulatory compliance. Post-deployment, <strong>monitoring</strong> tracks model performance disaggregated by demographic group over time, with drift detection triggering review when performance diverges from deployment-time baselines.</p>
+  <p>The key insight is that governance at earlier stages is always cheaper and more effective than governance at later stages. A bias discovered during training can be addressed by modifying the dataset or retraining with different objectives. The same bias discovered after deployment, after decisions affecting thousands of individuals have already been made, requires remediation that is costly, legally complex, and potentially impossible to fully reverse.</p>
+
+  <div class="comparison-wrapper">
+    <table>
+      <tr><th>Lifecycle Stage</th><th>Key Governance Activity</th><th>Common Failure Mode</th><th>Tool / Method</th></tr>
+      <tr><td>Problem Definition</td><td>Stakeholder analysis</td><td>Skipping affected communities</td><td>Structured consultation</td></tr>
+      <tr><td>Development</td><td>Bias testing</td><td>Testing only on majority group</td><td>Fairlearn / Aequitas</td></tr>
+      <tr><td>Pre-deployment</td><td>Red teaming</td><td>Insufficient adversarial testing</td><td>Structured red team protocols</td></tr>
+      <tr><td>Post-deployment</td><td>Drift monitoring</td><td>Assuming model stays accurate</td><td>Evidently AI / WhyLabs</td></tr>
+    </table>
+  </div>
+
+  <h2>Building a Responsible AI Team</h2>
+  <p>Responsible AI requires distinct roles that most product and engineering organizations do not currently have. An <strong>AI Ethics Researcher</strong> does the conceptual work: what does fairness mean in this specific organizational context, what are the relevant ethical considerations for this application, what does the academic literature say about known failure modes in this domain. An <strong>AI Red Teamer</strong> adversarially tests AI systems before deployment — attempting to elicit biased outputs, find safety failure modes, test edge cases that standard evaluation misses, and probe for behavior that would be unacceptable if discovered post-deployment. A <strong>Responsible AI Program Manager</strong> is the organizational connective tissue: embedding responsible AI practices across product and engineering teams, managing the governance review process, tracking compliance with internal standards, and ensuring governance activities are resourced and scheduled. An <strong>AI Auditor</strong> — ideally independent from the teams that built the system — conducts systematic assessment of AI systems against governance standards, with authority to document findings and require remediation.</p>
+  <p>Not every organization needs all of these roles as dedicated full-time positions. A startup deploying a limited set of AI features may appropriately contract external red teamers and auditors rather than building internal capability. But every organization deploying AI that materially affects individuals needs someone clearly responsible for each of these functions, with authority to raise concerns and the organizational protection to do so without career risk.</p>
+
+  <div class="principle-list">
+    <div class="principle">
+      <div class="principle-title">Independence</div>
+      <div class="principle-desc">The responsible AI function must be able to escalate concerns about AI systems without retaliation — including concerns about systems that are commercial priorities or backed by senior leadership. Independence does not require organizational separation, but it requires explicit protection and senior sponsorship.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Authority</div>
+      <div class="principle-desc">The responsible AI function must have genuine power to block or modify deployments, not just to document concerns. A team that can only advise — whose recommendations can be overridden without consequence — is not a governance function. It is a documentation function that creates liability without risk reduction.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Resources</div>
+      <div class="principle-desc">The responsible AI function must be adequately resourced — in staff, tools, and time — to actually perform its function rather than rubber-stamp decisions under time pressure. Symbolic responsible AI teams that are chronically understaffed relative to their scope are a governance theater, not governance infrastructure.</div>
+    </div>
+  </div>
+
+  <h2>Model Cards, Datasheets, and Documentation</h2>
+  <p>Documentation standards have emerged as a practical mechanism for making responsible AI commitments legible and auditable. <strong>Model Cards</strong>, introduced by Google researchers in a 2019 paper, provide structured documentation of a model's intended use cases, performance characteristics across demographic groups, known limitations, and ethical considerations. A Model Card for a hiring AI would specify which job categories the model was evaluated on, performance metrics disaggregated by gender and race, the population the model was trained on, and the contexts in which the model should not be used. Hugging Face has made model card templates the de facto standard for open-source AI model releases, and they are increasingly required by enterprise customers and regulators as part of procurement and compliance processes.</p>
+  <p><strong>Datasheets for Datasets</strong>, proposed by researchers at Microsoft in 2018, apply the same structured documentation approach to training data: how was the data collected, from whom, with what consent, what is known about its demographic composition, what biases are present, how should it be used and not used. The absence of dataset documentation has been a primary driver of bias failures — systems trained on data whose properties were not understood, let alone documented.</p>
+  <p>These documentation standards serve multiple functions simultaneously: they force developers to think rigorously about the properties of what they are building, they create accountability artifacts that can be reviewed by auditors and regulators, they enable downstream deployers to make informed decisions about whether a model is appropriate for their use case, and they provide the evidentiary basis for investigating failures when they occur. The EU AI Act requires technical documentation for high-risk AI systems that substantially overlaps with what Model Cards and Datasheets provide — organizations that have adopted these standards will find compliance significantly simpler.</p>
+
+  <h2>From This Course to Practice</h2>
+  <p>The AI governance field is young by the standards of other regulated industries. The EU AI Act, the most significant AI governance instrument to date, only entered into force in 2024 and is still in phased implementation. The NIST AI Risk Management Framework was published in 2023. The Bletchley Declaration is less than two years old. We are at the beginning of AI governance as an institutionalized field, not in its mature phase — which means the practices, tools, and career paths described in this course are still being built, and the people building them are the first generation of practitioners in a field that will only grow more important.</p>
+  <p>Organizations that build AI governance capability now will be positioned ahead of the mandatory requirements coming in the next two to five years. The EU AI Act's obligations for high-risk AI systems become fully enforceable in 2026. US state AI laws are accumulating. Sector regulators are becoming more specific. The organizations that treat compliance as a reason to build governance infrastructure rather than a burden to minimize will have a structural advantage: their governance systems will be built and tested before the regulatory deadlines, and their governance capabilities will translate into actual risk reduction rather than last-minute compliance scrambling.</p>
+  <p>The broader trajectory is clear. AI is becoming infrastructure — embedded in healthcare, finance, employment, criminal justice, education, and every other domain where consequential decisions are made about people's lives. The governance frameworks developed in the next decade will determine how this infrastructure operates: who it serves, whose interests it protects, who bears its costs, and who has recourse when it fails. The people with the skills to design, implement, and enforce those frameworks — people who understand both what AI systems actually do and what governance actually requires — are among the most consequential professionals of the coming generation.</p>
+
+  <div class="good">
+    <div class="good-label">Career outlook</div>
+    <p>The skills developed in this course — regulatory framework analysis, ethics reasoning, governance structure design, and responsible AI implementation — are in significant and growing demand. AI governance roles at major technology companies, financial institutions, healthcare systems, and consulting firms command salaries of $150,000–$250,000, and the field is growing faster than talent supply. More importantly, this is work that matters: the governance decisions being made now will shape how AI develops for decades. The practitioners who build AI governance well will have contributed to one of the most consequential infrastructure projects of the 21st century.</p>
+  </div>
+
+</div>
+</main>
+</div>
+
+<div class="sticky-bar">
+  <div class="sticky-bar-reading" id="sticky-reading">Read to the end to unlock the final assessment</div>
+  <div class="sticky-bar-track"><div class="sticky-bar-fill" id="sticky-fill"></div></div>
+  <div class="sticky-bar-label" id="sticky-label">0%</div>
+  <button class="sticky-bar-btn" id="sticky-btn" onclick="completeAndNext()">Final Assessment &#8594;</button>
+</div>
+
+<script>
+  function toggleTheme(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='☾'):(h.setAttribute('data-theme','dark'),i.textContent='☀');}
+  window.addEventListener('scroll',()=>{const d=document.documentElement,s=d.scrollTop||document.body.scrollTop,t=d.scrollHeight-d.clientHeight;document.getElementById('progress').style.width=(s/t*100)+'%';});
+  let unlocked=false;
+  function updateScrollProgress(){
+    const pct=Math.min(100,Math.round(((window.scrollY+window.innerHeight)/document.documentElement.scrollHeight)*100));
+    document.getElementById('sticky-fill').style.width=pct+'%';
+    document.getElementById('sticky-label').textContent=pct+'%';
+    if(pct>=95&&!unlocked){unlocked=true;document.getElementById('sticky-btn').style.display='block';document.getElementById('sticky-reading').style.display='none';document.getElementById('sticky-fill').style.background='#22c55e';document.getElementById('sticky-label').style.color='#22c55e';}
+  }
+  window.addEventListener('scroll',updateScrollProgress);updateScrollProgress();
+  function completeAndNext(){
+    if(window.__meridianSaveProgress){try{window.__meridianSaveProgress("m7");}catch(e){}}
+    setTimeout(function(){window.location.href="quiz.html";},120);
+  }
+</script>
+<script type="module">
+  import{initializeApp}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import{getAuth,onAuthStateChanged}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import{getFirestore,doc,setDoc,arrayUnion}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  const app=initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+  const auth=getAuth(app);const db=getFirestore(app);
+  let meridianUser=null;
+  onAuthStateChanged(auth,u=>{meridianUser=u;});
+  window.__meridianSaveProgress=async function(mValue){
+    if(!meridianUser)return;
+    try{await setDoc(doc(db,"users",meridianUser.uid),{governanceModules:arrayUnion(mValue)},{merge:true});}catch(e){}
+  };
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Course","name":"AI Governance","description":"A free, comprehensive course on AI governance — regulation, ethics, policy, and responsible AI implementation.","provider":{"@type":"Organization","name":"Meridian Institute of AI","url":"https://meridianinstituteai.com"},"url":"https://meridianinstituteai.com/courses/governance/module-7.html","isAccessibleForFree":true,"educationalLevel":"Intermediate","inLanguage":"en","teaches":"Responsible AI implementation, AI governance lifecycle, model cards, datasheets, AI ethics teams"}
+</script>
+</body>
+</html>

@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Defending Against AI Attacks — AI in Cybersecurity — Meridian Institute of AI</title>
+<meta name="description" content="Learn how modern organizations deploy AI-native defenses, adversarial ML countermeasures, and Zero Trust architecture to defend against AI-powered attacks.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://meridianinstituteai.com/courses/cybersecurity/module-5.html">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#ef4444;--accent-dim:rgba(239,68,68,0.1);--nav-bg:rgba(8,8,8,0.9);--callout-bg:rgba(239,68,68,0.07);--callout-border:rgba(239,68,68,0.25);--good-bg:rgba(34,197,94,0.07);--good-border:rgba(34,197,94,0.2);--warn-bg:rgba(251,146,60,0.07);--warn-border:rgba(251,146,60,0.2);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#dc2626;--accent-dim:rgba(220,38,38,0.08);--nav-bg:rgba(250,250,248,0.9);--callout-bg:rgba(220,38,38,0.05);--callout-border:rgba(220,38,38,0.2);--good-bg:rgba(22,163,74,0.06);--good-border:rgba(22,163,74,0.2);--warn-bg:rgba(234,88,12,0.05);--warn-border:rgba(234,88,12,0.2);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;overflow-x:hidden;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.7;overflow-x:hidden;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}
+  .nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}
+  .nav-back{font-size:13px;color:var(--text-2);text-decoration:none;transition:color 0.2s;}
+  .nav-back:hover{color:var(--text);}
+  .nav-label{font-size:13px;color:var(--text-3);}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;transition:all 0.2s;}
+  .progress-bar{position:fixed;top:60px;left:0;right:0;z-index:99;height:2px;background:var(--border);}
+  .progress-fill{height:100%;background:var(--accent);width:0%;transition:width 0.1s;}
+  .page-wrapper{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:100vh;padding-top:62px;}
+  .sidebar{position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto;border-right:1px solid var(--border);padding:32px 24px;background:var(--bg-2);}
+  .sidebar-course{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;}
+  .sidebar-course-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+  .sidebar-module{margin-bottom:4px;}
+  .sidebar-module-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:13px;color:var(--text-2);text-decoration:none;transition:all 0.2s;line-height:1.4;}
+  .sidebar-module-link:hover{background:var(--bg-3);color:var(--text);}
+  .sidebar-module-link.active{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-num{font-size:11px;font-weight:500;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--bg-4);color:var(--text-3);}
+  .sidebar-module-link.active .sidebar-num{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-divider{height:1px;background:var(--border);margin:20px 0;}
+  .sidebar-progress-label{font-size:12px;color:var(--text-3);margin-bottom:8px;display:flex;justify-content:space-between;}
+  .sidebar-progress-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sidebar-progress-fill{height:100%;background:var(--accent);border-radius:2px;}
+  main{display:block;min-width:0;}
+  .content{max-width:760px;width:100%;padding:60px 64px 140px;margin:0 auto;}
+  .module-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+  .module-tag{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(239,68,68,0.2);padding:4px 12px;border-radius:100px;}
+  .module-meta{font-size:12px;color:var(--text-3);}
+  h1{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1.05;letter-spacing:-0.02em;color:var(--text);margin-bottom:24px;}
+  .intro-text{font-size:19px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+  h2{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:400;color:var(--text);margin:52px 0 18px;line-height:1.2;}
+  h3{font-size:16px;font-weight:500;color:var(--text);margin:32px 0 12px;}
+  p{font-size:16px;font-weight:300;color:var(--text-2);line-height:1.8;margin-bottom:20px;}
+  strong{font-weight:500;color:var(--text);}
+  .callout{background:var(--callout-bg);border:1px solid var(--callout-border);border-radius:12px;padding:24px 28px;margin:32px 0;}
+  .callout-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+  .callout p{margin:0;font-size:15px;color:var(--text-2);}
+  .good{background:var(--good-bg);border:1px solid var(--good-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .good-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#22c55e;margin-bottom:10px;}
+  .good p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn{background:var(--warn-bg);border:1px solid var(--warn-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .warn-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#fb923c;margin-bottom:10px;}
+  .warn p{margin:0;font-size:15px;color:var(--text-2);}
+  .principle-list{display:flex;flex-direction:column;gap:12px;margin:24px 0;}
+  .principle{background:var(--bg-2);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:0 12px 12px 0;padding:20px 24px;}
+  .principle-title{font-size:15px;font-weight:500;color:var(--text);margin-bottom:6px;}
+  .principle-desc{font-size:14px;color:var(--text-2);line-height:1.65;margin:0;}
+  .comparison-wrapper{overflow-x:auto;margin:28px 0;}
+  table{width:100%;border-collapse:collapse;font-size:14px;min-width:480px;}
+  th{text-align:left;padding:12px 16px;font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-3);border-bottom:1px solid var(--border-2);}
+  td{padding:14px 16px;border-bottom:1px solid var(--border);color:var(--text-2);line-height:1.6;vertical-align:top;}
+  tr:last-child td{border-bottom:none;}
+  td:first-child{color:var(--text);font-weight:500;}
+  .sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:var(--bg-2);border-top:1px solid var(--border-2);padding:14px 5%;display:flex;align-items:center;justify-content:space-between;gap:16px;backdrop-filter:blur(12px);}
+  .sticky-bar-track{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sticky-bar-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.2s;width:0%;}
+  .sticky-bar-label{font-size:12px;color:var(--text-3);white-space:nowrap;min-width:60px;text-align:right;}
+  .sticky-bar-btn{padding:10px 20px;border-radius:8px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;background:var(--accent);color:#fff;border:none;cursor:pointer;white-space:nowrap;transition:opacity 0.2s;display:none;}
+  .sticky-bar-btn:hover{opacity:0.88;}
+  .sticky-bar-reading{font-size:12px;color:var(--text-3);white-space:nowrap;}
+  @media(max-width:900px){.page-wrapper{grid-template-columns:1fr;}.sidebar{display:none;}.content{padding:40px 24px 120px;}h1{font-size:38px;}}
+</style>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="shortcut icon" href="/favicon.ico">
+<style>@media(max-width:480px){.nav-divider{display:none}.nav-left{gap:8px}}</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="../../index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="../../index.html" class="nav-back">Home</a>
+    <div class="nav-divider"></div>
+    <a href="../../courses.html" class="nav-back">← AI in Cybersecurity</a>
+    <div class="nav-divider"></div>
+    <span class="nav-label">Module 5</span>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">☀</span></button>
+</nav>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+<div class="page-wrapper">
+<aside class="sidebar">
+  <div class="sidebar-course">Course</div>
+  <div class="sidebar-course-name">AI in Cybersecurity</div>
+  <div class="sidebar-module"><a href="module-1.html" class="sidebar-module-link"><span class="sidebar-num">1</span>The AI-Cybersecurity Intersection</a></div>
+  <div class="sidebar-module"><a href="module-2.html" class="sidebar-module-link"><span class="sidebar-num">2</span>AI-Powered Threat Detection</a></div>
+  <div class="sidebar-module"><a href="module-3.html" class="sidebar-module-link"><span class="sidebar-num">3</span>AI in Offensive Security</a></div>
+  <div class="sidebar-module"><a href="module-4.html" class="sidebar-module-link"><span class="sidebar-num">4</span>Social Engineering and AI</a></div>
+  <div class="sidebar-module"><a href="module-5.html" class="sidebar-module-link active"><span class="sidebar-num">5</span>Defending Against AI Attacks</a></div>
+  <div class="sidebar-module"><a href="module-6.html" class="sidebar-module-link"><span class="sidebar-num">6</span>AI in Identity and Access</a></div>
+  <div class="sidebar-module"><a href="module-7.html" class="sidebar-module-link"><span class="sidebar-num">7</span>The Future of AI Security</a></div>
+  <div class="sidebar-module"><a href="quiz.html" class="sidebar-module-link" style="color:var(--accent);margin-top:4px;"><span class="sidebar-num" style="background:var(--accent-dim);color:var(--accent);">✦</span>Final Assessment</a></div>
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-progress-label"><span>Course progress</span><span style="color:var(--accent);">4 / 7</span></div>
+  <div class="sidebar-progress-track"><div class="sidebar-progress-fill" style="width:57%"></div></div>
+</aside>
+<main>
+<div class="content">
+  <div class="module-eyebrow"><span class="module-tag">Module 5</span><span class="module-meta">20 min read · AI in Cybersecurity</span></div>
+  <h1>Defending Against AI Attacks</h1>
+  <p class="intro-text">The same AI capabilities that power new attacks also power the most effective defenses. But defense in the AI era requires more than deploying AI tools — it requires rethinking security architecture, training pipelines, and organizational processes from the ground up.</p>
+
+  <h2>The Defensive AI Stack</h2>
+  <p>Modern enterprise defense is built in layers, and AI now operates at every level of that stack. At the foundation sit <strong>SIEM platforms</strong> — Security Information and Event Management systems that aggregate logs and telemetry across an organization. Tools like <strong>Splunk Enterprise Security</strong> and <strong>Microsoft Sentinel</strong> have moved far beyond passive log aggregation; they use ML models to correlate events across thousands of sources simultaneously, surfacing anomalies that no human analyst could detect in real time. Sentinel, for instance, uses fusion detection to connect low-fidelity signals across identity, endpoint, network, and application layers into high-confidence incident alerts.</p>
+  <p>Above the SIEM layer, <strong>EDR and XDR platforms</strong> handle endpoint and cross-domain detection and response. CrowdStrike Falcon and SentinelOne both use behavioral AI models that run directly on the endpoint — meaning they can detect and interrupt an attack even when the endpoint is offline and cannot communicate with a central server. CrowdStrike's threat graph processes over 3 trillion events per week to train the models deployed to customer endpoints. SentinelOne's Singularity platform can autonomously roll back malicious changes using AI-generated remediation steps, restoring a compromised system to a clean state without human intervention.</p>
+  <p>Network traffic analysis (NTA) completes the picture. AI models trained on packet metadata, flow records, and DNS telemetry can identify command-and-control beaconing, data exfiltration patterns, and lateral movement even when traffic is encrypted. Gartner estimates that <strong>more than 60% of enterprise security alerts are now analyzed by AI</strong> before they reach a human analyst — a figure that is rising rapidly as organizations expand their AI security investment.</p>
+
+  <div class="comparison-wrapper">
+    <table>
+      <tr><th>Approach</th><th>Alert Volume Handled</th><th>Mean Time to Detect</th><th>False Positive Rate</th></tr>
+      <tr><td>Traditional SIEM</td><td>Rule-based correlation; scales poorly beyond ~10K events/sec</td><td>Hours to days; analysts manually investigate queues</td><td>High — static rules generate noise on any deviation from known patterns</td></tr>
+      <tr><td>AI-Native SIEM</td><td>ML-driven triage handles millions of events/sec; auto-prioritizes</td><td>Minutes; behavioral models flag anomalies in near-real time</td><td>Significantly lower — models learn normal baselines per user, device, and application</td></tr>
+    </table>
+  </div>
+
+  <h2>Adversarial Machine Learning Defense</h2>
+  <p>The most sophisticated category of AI-era attacks targets the AI models themselves rather than the systems they protect. <strong>Adversarial examples</strong> are inputs crafted to fool a classifier by adding carefully computed perturbations — changes so small they are imperceptible to a human observer but sufficient to push a model's output across a decision boundary. In an image classifier, this might mean altering a handful of pixels; in a network traffic classifier, it means manipulating packet timing or payload structure in ways that preserve function while evading detection. Adversarial examples were first described formally by Szegedy et al. in 2013 and have since been demonstrated against virtually every category of ML model used in security.</p>
+  <p><strong>Data poisoning</strong> is a longer-cycle attack that operates on training pipelines rather than live inference. An attacker who can inject malicious samples into the data used to train a security model can cause that model to learn systematically wrong associations — for example, labeling a specific malware family as benign, or teaching an anomaly detector to ignore a particular pattern of lateral movement. This is especially dangerous in federated or continuously-updating models where training data flows from many sources that may not be fully controlled. <strong>Model inversion attacks</strong> go further: by probing a model with carefully chosen inputs and observing outputs, an attacker can reconstruct approximations of the training data — potentially leaking sensitive information embedded in the model itself.</p>
+  <p>Defenses against adversarial ML operate at three levels. <strong>Adversarial training</strong> augments the training dataset with adversarial examples so the model learns to be robust to them — the most direct approach, though computationally expensive and imperfect against unseen attack methods. <strong>Input validation and preprocessing</strong> — smoothing, denoising, or running inputs through a separate certified classifier — can strip adversarial perturbations before inference. <strong>Ensemble models</strong> that combine multiple independent classifiers are harder to attack simultaneously; an adversarial example crafted against one model typically does not transfer cleanly to others with different architectures and training data.</p>
+
+  <div class="callout">
+    <div class="callout-label">Research Finding</div>
+    <p>Microsoft research found that 80% of organizations using AI for security had experienced at least one adversarial attack on their ML models by 2024 — yet fewer than a third had formal adversarial robustness testing in their security model development process.</p>
+  </div>
+
+  <h2>Zero Trust as the Correct Architectural Response</h2>
+  <p>Zero Trust is not a product — it is an architectural principle: <strong>never trust, always verify</strong>. The traditional perimeter model assumed that anything inside the network could be trusted; Zero Trust treats every access request as potentially hostile regardless of where it originates. This shift was already underway before the AI era, driven by cloud adoption and remote work, but AI has become essential to making Zero Trust operationally viable at scale. Continuously verifying every access request in real time — across every user, device, application, and session — generates a volume of decision-making that no human-operated process can sustain.</p>
+  <p>AI enables Zero Trust by powering <strong>continuous behavioral authentication</strong>: rather than verifying identity once at login, the system continuously scores the behavioral plausibility of every action taken during a session. If a user who normally accesses three internal applications suddenly begins querying a database they have never touched, downloading large volumes of files, and connecting to external endpoints — all within a single session — an AI-driven Zero Trust system can detect that anomaly and trigger step-up authentication or session termination without waiting for a human to notice.</p>
+  <p><strong>NIST SP 800-207</strong> defines the Zero Trust Architecture framework, establishing the logical components and deployment models. CISA's Zero Trust Maturity Model provides a practical roadmap for federal agencies and enterprises. Both documents treat AI-driven policy enforcement as an assumed component of a mature Zero Trust implementation — a recognition that the verification requirements of ZTA cannot be met without machine-speed decision-making.</p>
+
+  <div class="principle-list">
+    <div class="principle">
+      <div class="principle-title">Verify Explicitly</div>
+      <div class="principle-desc">Always authenticate and authorize based on all available data points — identity, location, device health, service or workload, data classification, and anomalies — not just a username and password at login.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Least Privilege Access</div>
+      <div class="principle-desc">Limit user access to only exactly what they need to complete a specific task. Minimize standing access; prefer just-in-time provisioning that grants permissions for a defined window and revokes them automatically.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Assume Breach</div>
+      <div class="principle-desc">Design systems assuming an adversary is already present. Segment access, encrypt all internal traffic, implement end-to-end visibility, and optimize for detection and containment rather than perimeter prevention alone.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Continuous Validation</div>
+      <div class="principle-desc">Never grant standing access that is implicitly trusted indefinitely. Continuously re-evaluate trust scores throughout every session and revoke or restrict access when behavioral anomalies emerge.</div>
+    </div>
+  </div>
+
+  <h2>Threat Intelligence and AI</h2>
+  <p>Effective defense requires understanding the adversary — not just detecting their tools, but mapping their tactics, techniques, and procedures (TTPs) to anticipate what they will do next. The <strong>MITRE ATT&amp;CK framework</strong> provides the industry-standard taxonomy for adversary behavior: a structured knowledge base of real-world attack techniques organized by tactic (initial access, execution, persistence, lateral movement, exfiltration, etc.). AI systems can automatically map observed indicators in a network to specific ATT&amp;CK techniques, giving analysts immediate context about what an attacker is likely trying to accomplish and what moves they might make next. This shifts security operations from reactive alert-triage to proactive adversary-tracking.</p>
+  <p>Automated threat intelligence platforms like <strong>Recorded Future</strong> and <strong>Mandiant Advantage</strong> take this further by correlating AI-analyzed data from across the internet — dark web forums, paste sites, code repositories, threat actor infrastructure — with internal telemetry. The scale involved is staggering: Recorded Future processes over 1.5 million new items daily from open, technical, and dark web sources. AI enables correlating millions of indicators of compromise across global telemetry to identify emerging campaigns before they reach a specific organization — turning external threat intelligence into a proactive early warning system rather than a post-incident reference tool.</p>
+
+  <h2>The Human-AI Security Operations Center</h2>
+  <p>The traditional Security Operations Center model — analysts reviewing a queue of alerts, triaging manually, escalating what looks serious — does not scale against AI-generated attack volume. The average enterprise SOC receives tens of thousands of alerts per day; the average analyst can meaningfully investigate perhaps 30–40 per shift. The gap between alerts generated and alerts properly investigated is where breaches hide. AI does not solve this by replacing analysts — it solves it by handling the work that doesn't require human judgment.</p>
+  <p>In a modern AI-augmented SOC, <strong>AI handles tier-1 triage automatically</strong>: correlating related alerts into incidents, enriching each incident with threat intelligence and asset context, scoring severity and confidence, and closing or suppressing the alerts that are demonstrably false positives. This reduces the queue from tens of thousands of alerts to hundreds of prioritized incidents — work that human analysts can actually process. <strong>Human analysts focus on tier-2 and tier-3 work</strong>: deep investigation of complex, ambiguous, or high-stakes incidents that require contextual reasoning, threat hunting, and the kind of adversarial thinking that AI systems are not yet reliable at.</p>
+  <p>The organizational impact of this restructuring is significant. Tier-1 analysts — historically junior staff doing largely mechanical work — see their role evolve toward AI supervisor and investigator. Senior analysts and threat hunters work on harder, more interesting problems. The SOC as a whole becomes dramatically more capable per headcount. This restructuring is not theoretical: organizations that have deployed mature AI-augmented SOC workflows report compressing both their alert backlogs and their incident response timelines by factors that would have been implausible five years ago.</p>
+
+  <div class="good">
+    <div class="good-label">IBM X-Force Finding</div>
+    <p>IBM X-Force found that AI-augmented SOC teams reduced mean time to respond by 55% compared to all-human teams — and that the improvement scaled with alert volume, meaning AI-augmented teams maintained their performance advantage precisely when it mattered most: during high-volume attack campaigns when all-human teams were most likely to be overwhelmed.</p>
+  </div>
+</div>
+</main>
+</div>
+<div class="sticky-bar">
+  <div class="sticky-bar-reading" id="sticky-reading">Read to the end to unlock the next module</div>
+  <div class="sticky-bar-track"><div class="sticky-bar-fill" id="sticky-fill"></div></div>
+  <div class="sticky-bar-label" id="sticky-label">0%</div>
+  <button class="sticky-bar-btn" id="sticky-btn" onclick="completeAndNext()">Module 6: AI in Identity and Access &rarr;</button>
+</div>
+<script>
+  function toggleTheme(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='☾'):(h.setAttribute('data-theme','dark'),i.textContent='☀');}
+  window.addEventListener('scroll',()=>{const d=document.documentElement,s=d.scrollTop||document.body.scrollTop,t=d.scrollHeight-d.clientHeight;document.getElementById('progress').style.width=(s/t*100)+'%';});
+  let unlocked=false;
+  function updateScrollProgress(){const pct=Math.min(100,Math.round(((window.scrollY+window.innerHeight)/document.documentElement.scrollHeight)*100));document.getElementById('sticky-fill').style.width=pct+'%';document.getElementById('sticky-label').textContent=pct+'%';if(pct>=95&&!unlocked){unlocked=true;document.getElementById('sticky-btn').style.display='block';document.getElementById('sticky-reading').style.display='none';document.getElementById('sticky-fill').style.background='#22c55e';document.getElementById('sticky-label').style.color='#22c55e';}}
+  window.addEventListener('scroll',updateScrollProgress);updateScrollProgress();
+  function completeAndNext(){if(window.__meridianSaveProgress){try{window.__meridianSaveProgress("m5");}catch(e){}}setTimeout(function(){window.location.href="module-6.html";},120);}
+</script>
+<script type="module">
+  import{initializeApp}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import{getAuth,onAuthStateChanged}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import{getFirestore,doc,setDoc,arrayUnion}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  const app=initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+  const auth=getAuth(app);const db=getFirestore(app);let meridianUser=null;
+  onAuthStateChanged(auth,u=>{meridianUser=u;});
+  window.__meridianSaveProgress=async function(mValue){if(!meridianUser)return;try{await setDoc(doc(db,"users",meridianUser.uid),{cybersecurityModules:arrayUnion(mValue)},{merge:true});}catch(e){}};
+</script>
+</body>
+</html>

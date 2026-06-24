@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 8: Function Calling and Tool Use — Building with AI APIs — Meridian Institute of AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#0F4C81;--accent-dim:rgba(15,76,129,0.1);--accent-dim2:rgba(15,76,129,0.05);--nav-bg:rgba(8,8,8,0.9);--callout-bg:rgba(15,76,129,0.07);--callout-border:rgba(15,76,129,0.25);--good-bg:rgba(34,197,94,0.07);--good-border:rgba(34,197,94,0.2);--warn-bg:rgba(251,146,60,0.07);--warn-border:rgba(251,146,60,0.2);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#1E40AF;--accent-dim:rgba(30,64,175,0.08);--accent-dim2:rgba(30,64,175,0.04);--nav-bg:rgba(250,250,248,0.9);--callout-bg:rgba(30,64,175,0.05);--callout-border:rgba(30,64,175,0.2);--good-bg:rgba(22,163,74,0.06);--good-border:rgba(22,163,74,0.2);--warn-bg:rgba(234,88,12,0.05);--warn-border:rgba(234,88,12,0.2);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;overflow-x:hidden;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.7;overflow-x:hidden;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}
+  .nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}
+  .nav-back{font-size:13px;color:var(--text-2);text-decoration:none;transition:color 0.2s;}
+  .nav-back:hover{color:var(--text);}
+  .nav-label{font-size:13px;color:var(--text-3);}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;transition:all 0.2s;}
+  .theme-toggle:hover{background:var(--bg-3);color:var(--text);}
+  .progress-bar{position:fixed;top:60px;left:0;right:0;z-index:99;height:2px;background:var(--border);}
+  .progress-fill{height:100%;background:var(--accent);width:0%;transition:width 0.1s;}
+  .page-wrapper{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:100vh;padding-top:62px;overflow:hidden;}
+  .sidebar{position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto;border-right:1px solid var(--border);padding:32px 24px;background:var(--bg-2);}
+  .sidebar-course{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;}
+  .sidebar-course-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+  .sidebar-module{margin-bottom:4px;}
+  .sidebar-module-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:13px;color:var(--text-2);text-decoration:none;transition:all 0.2s;line-height:1.4;}
+  .sidebar-module-link:hover{background:var(--bg-3);color:var(--text);}
+  .sidebar-module-link.active{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-num{font-size:11px;font-weight:500;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--bg-4);color:var(--text-3);}
+  .sidebar-module-link.active .sidebar-num{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-divider{height:1px;background:var(--border);margin:20px 0;}
+  .sidebar-progress-label{font-size:12px;color:var(--text-3);margin-bottom:8px;display:flex;justify-content:space-between;}
+  .sidebar-progress-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sidebar-progress-fill{height:100%;width:80%;background:var(--accent);border-radius:2px;}
+  main{display:block;min-width:0;overflow:hidden;}
+  .content{max-width:760px;width:100%;padding:60px 64px 140px;margin:0 auto;}
+  .module-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+  .module-tag{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(15,76,129,0.2);padding:4px 12px;border-radius:100px;}
+  .module-meta{font-size:12px;color:var(--text-3);}
+  h1{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1.05;letter-spacing:-0.02em;color:var(--text);margin-bottom:24px;}
+  .intro-text{font-size:19px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+  h2{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:400;color:var(--text);margin:52px 0 18px;line-height:1.2;}
+  h3{font-size:16px;font-weight:500;color:var(--text);margin:32px 0 12px;}
+  p{font-size:16px;font-weight:300;color:var(--text-2);line-height:1.8;margin-bottom:20px;}
+  strong{font-weight:500;color:var(--text);}
+  em{font-style:italic;}
+  ul,ol{margin:0 0 20px 22px;color:var(--text-2);}
+  li{font-size:16px;font-weight:300;line-height:1.8;margin-bottom:8px;}
+  .callout{background:var(--callout-bg);border:1px solid var(--callout-border);border-radius:12px;padding:24px 28px;margin:32px 0;}
+  .callout-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+  .callout p{margin:0;font-size:15px;color:var(--text-2);}
+  .callout p+p{margin-top:12px;}
+  .good{background:var(--good-bg);border:1px solid var(--good-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .good-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#22c55e;margin-bottom:10px;}
+  .good p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn{background:var(--warn-bg);border:1px solid var(--warn-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .warn-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#fb923c;margin-bottom:10px;}
+  .warn p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn p+p{margin-top:12px;}
+  .principle-list{display:flex;flex-direction:column;gap:12px;margin:24px 0;}
+  .principle{background:var(--bg-2);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:0 12px 12px 0;padding:20px 24px;}
+  .principle-title{font-size:15px;font-weight:500;color:var(--text);margin-bottom:6px;}
+  .principle-desc{font-size:14px;color:var(--text-2);line-height:1.65;margin:0;}
+  .sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:var(--bg-2);border-top:1px solid var(--border-2);padding:14px 5%;display:flex;align-items:center;justify-content:space-between;gap:16px;backdrop-filter:blur(12px);}
+  .sticky-bar-track{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sticky-bar-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.2s;width:0%;}
+  .sticky-bar-label{font-size:12px;color:var(--text-3);white-space:nowrap;min-width:60px;text-align:right;}
+  .sticky-bar-btn{padding:10px 20px;border-radius:8px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;background:var(--accent);color:#fff;border:none;cursor:pointer;white-space:nowrap;transition:opacity 0.2s;display:none;}
+  .sticky-bar-btn:hover{opacity:0.88;}
+  .sticky-bar-reading{font-size:12px;color:var(--text-3);white-space:nowrap;}
+  @media(max-width:900px){.page-wrapper{grid-template-columns:1fr;}.sidebar{display:none;}.content{padding:40px 24px 120px;}h1{font-size:38px;}}
+  @media(max-width:600px){.content{padding:28px 16px 120px;}h1{font-size:30px;}h2{font-size:24px;}}
+</style>
+<style>@media(max-width:480px){.nav-divider{display:none}.nav-left{gap:8px}}</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="courses.html" class="nav-back">← Building with AI APIs</a>
+    <div class="nav-divider"></div>
+    <span class="nav-label">Module 8</span>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">☀</span></button>
+</nav>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+
+<div class="page-wrapper">
+<aside class="sidebar">
+  <div class="sidebar-course">Expert Track</div>
+  <div class="sidebar-course-name">Building with AI APIs</div>
+  <div class="sidebar-module"><a href="apis-module-1.html" class="sidebar-module-link"><span class="sidebar-num">1</span>API Fundamentals</a></div>
+  <div class="sidebar-module"><a href="apis-module-2.html" class="sidebar-module-link"><span class="sidebar-num">2</span>Your First API Call</a></div>
+  <div class="sidebar-module"><a href="apis-module-3.html" class="sidebar-module-link"><span class="sidebar-num">3</span>Chat Completions in Depth</a></div>
+  <div class="sidebar-module"><a href="apis-module-4.html" class="sidebar-module-link"><span class="sidebar-num">4</span>Tokens and Cost Optimization</a></div>
+  <div class="sidebar-module"><a href="apis-module-5.html" class="sidebar-module-link"><span class="sidebar-num">5</span>Structured Outputs</a></div>
+  <div class="sidebar-module"><a href="apis-module-6.html" class="sidebar-module-link"><span class="sidebar-num">6</span>Streaming Responses</a></div>
+  <div class="sidebar-module"><a href="apis-module-7.html" class="sidebar-module-link"><span class="sidebar-num">7</span>Embeddings and Semantic Search</a></div>
+  <div class="sidebar-module"><a href="apis-module-8.html" class="sidebar-module-link active"><span class="sidebar-num">8</span>Function Calling and Tool Use</a></div>
+  <div class="sidebar-module"><a href="apis-module-9.html" class="sidebar-module-link"><span class="sidebar-num">9</span>Production-Ready AI Apps</a></div>
+  <div class="sidebar-module"><a href="apis-module-10.html" class="sidebar-module-link"><span class="sidebar-num">10</span>Multi-Provider Strategies</a></div>
+  <div class="sidebar-module"><a href="quiz-apis.html" class="sidebar-module-link" style="color:var(--accent);margin-top:4px;"><span class="sidebar-num" style="background:var(--accent-dim);color:var(--accent);">&#10022;</span>Final Assessment</a></div>
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-progress-label"><span>Course progress</span><span style="color:var(--accent);">8 / 10</span></div>
+  <div class="sidebar-progress-track"><div class="sidebar-progress-fill"></div></div>
+</aside>
+
+<main>
+<div class="content">
+  <div class="module-eyebrow"><span class="module-tag">Module 8</span><span class="module-meta">30 min read · Building with AI APIs</span></div>
+  <h1>Function Calling and Tool Use</h1>
+
+  <p class="intro-text">Every module so far has treated the LLM as a text transformer: text goes in, text comes out. Function calling changes this. With function calling, the LLM can decide to invoke a function you have defined — passing it structured arguments — and use the function's return value to inform its final response. This is the mechanism that transforms a passive text generator into an active agent that can look things up, run calculations, query databases, call external APIs, and take actions in the world. Understanding function calling at the API level is essential before using any agent framework, because every framework is ultimately an abstraction over this mechanism.</p>
+
+  <h2>How function calling works</h2>
+  <p>The function calling protocol is a structured conversation between your code and the model. You define a set of tools — each described by a name, a description in natural language, and a JSON Schema specifying the arguments. You include these tool definitions in your API request. The model reads the tool descriptions, decides whether any tool is useful for the current task, and if so, returns a special response indicating which tool to call and with what arguments. Your code executes the function, collects the result, and appends it to the conversation. The model then generates its final response, informed by the function's output.</p>
+  <p>The model never executes your code directly. It generates a structured description of what to call and how to call it. Your code is responsible for the actual execution, input validation, error handling, and result formatting. This separation matters: the LLM provides the decision-making about what to call, your code provides the actual capabilities.</p>
+
+  <h2>Defining a tool in the API</h2>
+  <p>A tool definition has three fields: <code>type</code> (always "function"), <code>name</code>, <code>description</code>, and <code>parameters</code> (a JSON Schema object). The description is critical — it is what the model reads to decide whether and when to use this tool. A good description specifies what the function does, what it returns, and when it should (and should not) be used.</p>
+
+  <pre style="background:var(--bg-3);border:1px solid var(--border);border-radius:8px;padding:20px;font-size:13px;color:var(--text-2);overflow-x:auto;margin:0 0 20px;"><code>tools = [
+    {
+        "type": "function",
+        "function": {
+            "name": "get_current_weather",
+            "description": "Get the current weather for a specific city. "
+                           "Use this when the user asks about current weather conditions.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "city": {
+                        "type": "string",
+                        "description": "The city name, e.g. 'San Francisco'"
+                    },
+                    "units": {
+                        "type": "string",
+                        "enum": ["celsius", "fahrenheit"],
+                        "description": "Temperature units"
+                    }
+                },
+                "required": ["city"]
+            }
+        }
+    }
+]</code></pre>
+
+  <h2>The full function calling loop</h2>
+  <p>A complete implementation handles three phases: sending the initial request with tools, detecting and dispatching tool calls in the response, and sending the tool results back.</p>
+
+  <pre style="background:var(--bg-3);border:1px solid var(--border);border-radius:8px;padding:20px;font-size:13px;color:var(--text-2);overflow-x:auto;margin:0 0 20px;"><code>import json
+from openai import OpenAI
+
+client = OpenAI()
+messages = [{"role": "user", "content": "What's the weather in Tokyo?"}]
+
+# Step 1: Send request with tools
+response = client.chat.completions.create(
+    model="gpt-4o",
+    messages=messages,
+    tools=tools
+)
+
+choice = response.choices[0]
+
+# Step 2: Check if model wants to call a tool
+if choice.finish_reason == "tool_calls":
+    tool_call = choice.message.tool_calls[0]
+    args = json.loads(tool_call.function.arguments)
+
+    # Step 3: Execute the function (your code)
+    result = get_current_weather(**args)
+
+    # Step 4: Append assistant message and tool result to conversation
+    messages.append(choice.message)  # assistant's tool_call message
+    messages.append({
+        "role": "tool",
+        "tool_call_id": tool_call.id,
+        "content": json.dumps(result)
+    })
+
+    # Step 5: Send again to get final response
+    final_response = client.chat.completions.create(
+        model="gpt-4o",
+        messages=messages,
+        tools=tools
+    )
+    print(final_response.choices[0].message.content)</code></pre>
+
+  <div class="callout">
+    <div class="callout-label">Parallel tool calls</div>
+    <p>GPT-4o and Claude 3+ support parallel tool calling: the model can decide to call multiple tools simultaneously rather than sequentially, returning multiple tool call objects in a single response. This matters for performance when tasks require independent information from multiple sources — fetching weather and stock data simultaneously rather than one after the other. Your dispatch loop must handle multiple tool calls in a single response and return all results before the model generates its final answer.</p>
+  </div>
+
+  <h2>Tool choice control</h2>
+  <p>By default, the model decides whether to call a tool or respond directly. The <code>tool_choice</code> parameter lets you override this. Setting it to <code>"none"</code> prevents tool use entirely (useful when you want a pure text response from a model that has tools available). Setting it to <code>"required"</code> forces the model to call at least one tool. Setting it to a specific function name forces a call to that specific function, which is useful when you need structured output in the tool call format but don't actually have a function to execute.</p>
+
+  <h2>Designing good tool interfaces</h2>
+  <p>The model's ability to call your tools correctly depends almost entirely on how well you describe them. Several principles make tool definitions more reliable.</p>
+
+  <div class="principle-list">
+    <div class="principle">
+      <div class="principle-title">Write descriptions for the model, not for humans</div>
+      <div class="principle-desc">The model reads your description to decide when to use the tool and what arguments to pass. Be explicit about the purpose, the expected input format, what the function returns, and any conditions under which it should or should not be called. "Search the knowledge base for relevant documents. Returns a list of document chunks ranked by relevance score. Use this when the user asks a question that may be answered by stored documents." is much better than "Search documents."</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Use enums to constrain parameters</div>
+      <div class="principle-desc">If a parameter has a fixed set of valid values, define it as an enum in the JSON Schema. The model will choose from the specified values rather than hallucinating a plausible-but-invalid argument. For a sorting parameter, "enum": ["asc", "desc"] is better than "type": "string" with a description saying "either 'asc' or 'desc'".</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Mark parameters as required thoughtfully</div>
+      <div class="principle-desc">Required parameters that the model cannot always know — a user ID that requires authentication context the model doesn't have — will cause the model to hallucinate values or fail to call the tool. If a parameter has a sensible default, make it optional. If a parameter truly requires context the model doesn't have, inject it at the orchestration layer rather than expecting the model to supply it.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Return structured results, not prose</div>
+      <div class="principle-desc">Tool results should be structured data — JSON with named fields — not prose descriptions. A weather function should return {"temperature": 22, "conditions": "cloudy", "humidity": 65} rather than "It is 22 degrees with cloudy conditions and 65% humidity." Structured results give the model unambiguous data to work with and are easier to validate programmatically.</div>
+    </div>
+  </div>
+
+  <h2>Error handling in tool execution</h2>
+  <p>Tools fail. External APIs return errors, database queries time out, input validation catches bad arguments. How you surface these failures to the model matters — you can either propagate the error as a tool result (letting the model decide how to handle it) or handle it before the model sees it.</p>
+  <p>The recommended approach is to return error information as a structured tool result rather than raising an exception that aborts the whole conversation. A result like <code>{"error": "rate_limited", "message": "Weather API rate limit exceeded. Try again in 60 seconds."}</code> gives the model enough information to tell the user what happened and suggest alternatives. An uncaught exception that crashes your tool dispatch loop loses all conversation state and provides no recovery path.</p>
+
+  <div class="warn">
+    <div class="warn-label">Validate before executing</div>
+    <p>The model's tool call arguments should be treated as untrusted input, not as correct values. Validate all arguments before passing them to your actual function implementation: check that required fields are present and have the expected types, that string values don't exceed expected lengths, that numeric values are within expected ranges, and that any IDs or references actually exist in your system. A hallucinated user ID passed directly to a database query is a reliability bug; passed to a financial system, it is a safety issue.</p>
+  </div>
+
+  <p>Module 9 builds on function calling to cover the full stack of production AI application development: authentication, rate limit management, caching, error recovery, and the deployment patterns that turn a working prototype into a reliable production service.</p>
+</div>
+</main>
+</div>
+
+<div class="sticky-bar" id="sticky-bar">
+  <div class="sticky-bar-reading" id="sticky-reading">Read to the end to unlock the next module</div>
+  <div class="sticky-bar-track"><div class="sticky-bar-fill" id="sticky-fill"></div></div>
+  <div class="sticky-bar-label" id="sticky-label">0%</div>
+  <button class="sticky-bar-btn" id="sticky-btn" onclick="completeAndNext()">Module 9: Production-Ready AI Apps →</button>
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import { getFirestore, doc, setDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  const app=initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+  const auth=getAuth(app);const db=getFirestore(app);
+  let currentUser=null;
+  onAuthStateChanged(auth,u=>{currentUser=u;});
+
+  window.toggleTheme=function(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='☾'):(h.setAttribute('data-theme','dark'),i.textContent='☀');};
+  window.addEventListener('scroll',()=>{const d=document.documentElement,s=d.scrollTop||document.body.scrollTop,t=d.scrollHeight-d.clientHeight;document.getElementById('progress').style.width=(s/t*100)+'%';});
+
+  let unlocked=false;
+  function updateScrollProgress(){
+    const scrolled=window.scrollY+window.innerHeight;
+    const total=document.documentElement.scrollHeight;
+    const pct=Math.min(100,Math.round((scrolled/total)*100));
+    const fill=document.getElementById('sticky-fill');
+    const label=document.getElementById('sticky-label');
+    const btn=document.getElementById('sticky-btn');
+    const reading=document.getElementById('sticky-reading');
+    if(fill)fill.style.width=pct+'%';
+    if(label)label.textContent=pct+'%';
+    if(pct>=95&&!unlocked){
+      unlocked=true;
+      if(btn)btn.style.display='block';
+      if(reading)reading.style.display='none';
+      if(fill)fill.style.background='#22c55e';
+      if(label)label.style.color='#22c55e';
+    }
+  }
+  window.addEventListener('scroll',updateScrollProgress);
+  updateScrollProgress();
+
+  window.completeAndNext=async function(){
+    if(currentUser){
+      try{
+        await setDoc(doc(db,'users',currentUser.uid),{
+          apisModules: arrayUnion('m8')
+        },{merge:true});
+      }catch(e){}
+    }
+    window.location.href='apis-module-9.html';
+  };
+</script>
+</body>
+</html>

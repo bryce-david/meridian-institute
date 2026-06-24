@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Using AI as a Student — AI in Education — Meridian Institute of AI</title>
+<meta name="description" content="Free AI in Education course — module 3. Learn specific, practical techniques for using AI as a thinking partner — not an answer machine — to deepen your learning.">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="Using AI as a Student — AI in Education — Meridian Institute of AI">
+<meta property="og:description" content="Free AI in Education course — module 3. Practical techniques for using AI as a student without shortcutting your learning.">
+<meta property="og:url" content="https://meridianinstituteai.com/courses/education/module-3.html">
+<meta property="og:type" content="website">
+<link rel="canonical" href="https://meridianinstituteai.com/courses/education/module-3.html">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#f59e0b;--accent-dim:rgba(245,158,11,0.1);--nav-bg:rgba(8,8,8,0.9);--callout-bg:rgba(245,158,11,0.07);--callout-border:rgba(245,158,11,0.25);--good-bg:rgba(34,197,94,0.07);--good-border:rgba(34,197,94,0.2);--warn-bg:rgba(251,146,60,0.07);--warn-border:rgba(251,146,60,0.2);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#d97706;--accent-dim:rgba(217,119,6,0.08);--nav-bg:rgba(250,250,248,0.9);--callout-bg:rgba(217,119,6,0.05);--callout-border:rgba(217,119,6,0.2);--good-bg:rgba(22,163,74,0.06);--good-border:rgba(22,163,74,0.2);--warn-bg:rgba(234,88,12,0.05);--warn-border:rgba(234,88,12,0.2);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;overflow-x:hidden;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.7;overflow-x:hidden;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}
+  .nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}
+  .nav-back{font-size:13px;color:var(--text-2);text-decoration:none;transition:color 0.2s;}
+  .nav-back:hover{color:var(--text);}
+  .nav-label{font-size:13px;color:var(--text-3);}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;transition:all 0.2s;}
+  .progress-bar{position:fixed;top:60px;left:0;right:0;z-index:99;height:2px;background:var(--border);}
+  .progress-fill{height:100%;background:var(--accent);width:0%;transition:width 0.1s;}
+  .page-wrapper{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:100vh;padding-top:62px;}
+  .sidebar{position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto;border-right:1px solid var(--border);padding:32px 24px;background:var(--bg-2);}
+  .sidebar-course{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;}
+  .sidebar-course-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+  .sidebar-module{margin-bottom:4px;}
+  .sidebar-module-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:13px;color:var(--text-2);text-decoration:none;transition:all 0.2s;line-height:1.4;}
+  .sidebar-module-link:hover{background:var(--bg-3);color:var(--text);}
+  .sidebar-module-link.active{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-num{font-size:11px;font-weight:500;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--bg-4);color:var(--text-3);}
+  .sidebar-module-link.active .sidebar-num{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-divider{height:1px;background:var(--border);margin:20px 0;}
+  .sidebar-progress-label{font-size:12px;color:var(--text-3);margin-bottom:8px;display:flex;justify-content:space-between;}
+  .sidebar-progress-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sidebar-progress-fill{height:100%;width:42%;background:var(--accent);border-radius:2px;}
+  main{display:block;min-width:0;}
+  .content{max-width:760px;width:100%;padding:60px 64px 140px;margin:0 auto;}
+  .module-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+  .module-tag{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(245,158,11,0.2);padding:4px 12px;border-radius:100px;}
+  .module-meta{font-size:12px;color:var(--text-3);}
+  h1{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1.05;letter-spacing:-0.02em;color:var(--text);margin-bottom:24px;}
+  .intro-text{font-size:19px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+  h2{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:400;color:var(--text);margin:52px 0 18px;line-height:1.2;}
+  h3{font-size:16px;font-weight:500;color:var(--text);margin:32px 0 12px;}
+  p{font-size:16px;font-weight:300;color:var(--text-2);line-height:1.8;margin-bottom:20px;}
+  strong{font-weight:500;color:var(--text);}
+  .callout{background:var(--callout-bg);border:1px solid var(--callout-border);border-radius:12px;padding:24px 28px;margin:32px 0;}
+  .callout-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+  .callout p{margin:0;font-size:15px;color:var(--text-2);}
+  .callout p+p{margin-top:12px;}
+  .good{background:var(--good-bg);border:1px solid var(--good-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .good-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#22c55e;margin-bottom:10px;}
+  .good p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn{background:var(--warn-bg);border:1px solid var(--warn-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .warn-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#fb923c;margin-bottom:10px;}
+  .warn p{margin:0;font-size:15px;color:var(--text-2);}
+  .comparison-wrapper{overflow-x:auto;-webkit-overflow-scrolling:touch;width:100%;margin:28px 0;}
+  table{width:100%;border-collapse:collapse;font-size:14px;min-width:480px;}
+  th{text-align:left;padding:12px 16px;font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-3);border-bottom:1px solid var(--border-2);}
+  td{padding:14px 16px;border-bottom:1px solid var(--border);color:var(--text-2);line-height:1.6;vertical-align:top;}
+  tr:last-child td{border-bottom:none;}
+  td:first-child{color:var(--text);font-weight:500;}
+  .principle-list{display:flex;flex-direction:column;gap:12px;margin:24px 0;}
+  .principle{background:var(--bg-2);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:0 12px 12px 0;padding:20px 24px;}
+  .principle-title{font-size:15px;font-weight:500;color:var(--text);margin-bottom:6px;}
+  .principle-desc{font-size:14px;color:var(--text-2);line-height:1.65;margin:0;}
+  .sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:var(--bg-2);border-top:1px solid var(--border-2);padding:14px 5%;display:flex;align-items:center;justify-content:space-between;gap:16px;backdrop-filter:blur(12px);}
+  .sticky-bar-track{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sticky-bar-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.2s;width:0%;}
+  .sticky-bar-label{font-size:12px;color:var(--text-3);white-space:nowrap;min-width:60px;text-align:right;}
+  .sticky-bar-btn{padding:10px 20px;border-radius:8px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;background:var(--accent);color:#fff;border:none;cursor:pointer;white-space:nowrap;transition:opacity 0.2s;display:none;}
+  .sticky-bar-btn:hover{opacity:0.88;}
+  .sticky-bar-reading{font-size:12px;color:var(--text-3);white-space:nowrap;}
+  @media(max-width:900px){.page-wrapper{grid-template-columns:1fr;}.sidebar{display:none;}.content{padding:40px 24px 120px;}h1{font-size:38px;}}
+  @media(max-width:600px){.content{padding:28px 16px 120px;}h1{font-size:30px;}h2{font-size:24px;}}
+</style>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="shortcut icon" href="/favicon.ico">
+<style>@media(max-width:480px){.nav-divider{display:none}.nav-left{gap:8px}}</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="../../index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="../../index.html" class="nav-back">Home</a>
+    <div class="nav-divider"></div>
+    <a href="../../courses.html" class="nav-back">← AI in Education</a>
+    <div class="nav-divider"></div>
+    <span class="nav-label">Module 3</span>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">☀</span></button>
+</nav>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+
+<div class="page-wrapper">
+<aside class="sidebar">
+  <div class="sidebar-course">Course</div>
+  <div class="sidebar-course-name">AI in Education</div>
+  <div class="sidebar-module"><a href="module-1.html" class="sidebar-module-link"><span class="sidebar-num">1</span>How AI is Transforming Education</a></div>
+  <div class="sidebar-module"><a href="module-2.html" class="sidebar-module-link"><span class="sidebar-num">2</span>AI Tutoring and Personalized Learning</a></div>
+  <div class="sidebar-module"><a href="module-3.html" class="sidebar-module-link active"><span class="sidebar-num">3</span>Using AI as a Student</a></div>
+  <div class="sidebar-module"><a href="module-4.html" class="sidebar-module-link"><span class="sidebar-num">4</span>AI Tools for Educators</a></div>
+  <div class="sidebar-module"><a href="module-5.html" class="sidebar-module-link"><span class="sidebar-num">5</span>Academic Integrity in the AI Era</a></div>
+  <div class="sidebar-module"><a href="module-6.html" class="sidebar-module-link"><span class="sidebar-num">6</span>The Future Classroom</a></div>
+  <div class="sidebar-module"><a href="module-7.html" class="sidebar-module-link"><span class="sidebar-num">7</span>Building Your AI Literacy</a></div>
+  <div class="sidebar-module"><a href="quiz.html" class="sidebar-module-link" style="color:var(--accent);margin-top:4px;"><span class="sidebar-num" style="background:var(--accent-dim);color:var(--accent);">✦</span>Final Assessment</a></div>
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-progress-label"><span>Course progress</span><span style="color:var(--accent);">3 / 7</span></div>
+  <div class="sidebar-progress-track"><div class="sidebar-progress-fill"></div></div>
+</aside>
+
+<main>
+<div class="content">
+  <div class="module-eyebrow"><span class="module-tag">Module 3</span><span class="module-meta">26 min read · AI in Education</span></div>
+  <h1>Using AI as a Student</h1>
+  <p class="intro-text">The students who will thrive in an AI-abundant world are not the ones who use AI the most — they're the ones who use it best. There's a critical difference between using AI to think and using AI instead of thinking. This module gives you the specific techniques that produce the former, and the warnings that prevent the latter.</p>
+
+  <h2>The mindset shift — thinking partner, not answer machine</h2>
+  <p>The most common way students misuse AI is treating it as an oracle: input question, receive answer, done. This approach short-circuits the learning process entirely. The goal of education isn't to get answers — it's to build the capacity to generate answers, evaluate them, and construct new knowledge. AI can support that capacity or atrophy it, depending entirely on how you use it.</p>
+  <p>The right mental model is <strong>AI as a thinking partner</strong>. A thinking partner doesn't do your thinking for you. It asks clarifying questions. It pushes back on weak reasoning. It offers a different perspective. It explains the same concept five ways until one clicks. It tells you when your argument has a hole. Used this way, AI accelerates learning rather than replacing it.</p>
+
+  <div class="callout">
+    <div class="callout-label">The core principle</div>
+    <p>Before you ask AI for an answer, ask yourself: have I actually tried to answer this myself? The most effective use of AI is after you've attempted something — so you can compare your thinking to AI's, identify gaps, and refine your understanding. AI-first kills the productive struggle that is the actual mechanism of learning.</p>
+  </div>
+
+  <h2>Effective study techniques with AI</h2>
+
+  <h3>The Socratic approach — make AI question you</h3>
+  <p>Instead of asking AI to explain a concept, ask AI to quiz you on it. After reading a chapter on thermodynamics, tell the AI: "Quiz me on the first and second laws of thermodynamics. Ask one question at a time, wait for my answer, tell me what I got right and wrong, and then ask the next question." This turns passive reading into active retrieval — the learning strategy with the highest evidence base.</p>
+  <p>You can escalate this further: "After I answer each question, ask me a follow-up that requires me to apply the concept rather than just define it." This mimics the kind of examination that actually tests understanding rather than memorization.</p>
+
+  <h3>Rubber duck debugging — for any subject</h3>
+  <p>Programmers have a technique called "rubber duck debugging": explaining your code to a rubber duck forces you to articulate your reasoning clearly enough that bugs become obvious. AI is a much better rubber duck. When you're stuck on a problem in any subject — math, philosophy, history, economics — explain your current thinking to the AI and ask it to identify gaps or errors.</p>
+  <p>"Here's my understanding of how the Federal Reserve uses interest rates to control inflation. [explanation] What am I missing or getting wrong?" This approach externalized your current mental model, makes gaps visible, and positions AI as a corrector rather than an answer-giver. You keep ownership of the thinking.</p>
+
+  <h3>Concept mapping with AI</h3>
+  <p>Ask AI to help you build explicit connections between ideas. "I understand supply and demand separately, and I understand elasticity separately. Help me understand how they connect — what does elasticity tell me about the shape and behavior of supply and demand curves?" This type of connective questioning builds the knowledge networks that make information retrievable and usable rather than just memorized.</p>
+
+  <h3>The "explain it five ways" technique</h3>
+  <p>When a concept isn't clicking, don't re-read the same explanation. Ask AI to explain the same idea through a completely different lens: "Explain the concept of statistical significance as if I've never taken statistics. Now explain it using a concrete example from medical research. Now explain what it means in plain English without any technical terms." The variety of framings builds a richer mental model than any single explanation.</p>
+
+  <h2>Using AI for research — what it's good at and what it's not</h2>
+  <p>AI is a powerful research tool, but it has specific limitations that every student needs to understand before relying on it for academic work.</p>
+
+  <div class="comparison-wrapper">
+    <table>
+      <tr><th>AI research use</th><th>Quality</th><th>Why</th></tr>
+      <tr><td>Explaining background concepts on a topic</td><td>Excellent</td><td>Well-covered in training data; not time-sensitive</td></tr>
+      <tr><td>Generating an outline or research framework</td><td>Excellent</td><td>Structural thinking; doesn't require fresh facts</td></tr>
+      <tr><td>Summarizing a document you've uploaded</td><td>Very good</td><td>Reading and summarizing is a core LLM strength</td></tr>
+      <tr><td>Identifying counterarguments to your thesis</td><td>Good</td><td>AI can steelman positions effectively</td></tr>
+      <tr><td>Citing specific studies or statistics</td><td>Poor — verify everything</td><td>AI hallucinates citations frequently and confidently</td></tr>
+      <tr><td>Current events and recent developments</td><td>Poor without web access</td><td>Training cutoff; use AI with search or Perplexity instead</td></tr>
+      <tr><td>Primary source interpretation</td><td>Moderate</td><td>Good at analysis; may miss context-specific nuance</td></tr>
+    </table>
+  </div>
+
+  <div class="warn">
+    <div class="warn-label">Never trust AI citations</div>
+    <p>AI will confidently cite academic papers, books, and statistics that do not exist. This is called hallucination and it happens with AI-generated citations far more often than most students expect. Always verify any specific citation, study, or statistic that AI gives you before including it in your work. Use Google Scholar, your library database, or the actual source to confirm it exists and says what AI claims it says.</p>
+  </div>
+
+  <h2>Building better essays with AI while keeping your thinking</h2>
+  <p>There's a productive way to use AI in the writing process that improves your final product without substituting AI thinking for yours. The key is using AI on your ideas, not using AI instead of your ideas.</p>
+
+  <h3>The right workflow</h3>
+  <p><strong>Step 1: Develop your argument first.</strong> Before touching AI, write your thesis and the core structure of your argument in your own words, however rough. Even three bullet points. This forces you to think, and means any AI assistance will be improving your ideas rather than generating new ones.</p>
+  <p><strong>Step 2: Use AI to stress-test your argument.</strong> Share your thesis and outline with AI. Ask: "What are the strongest objections to this argument? What evidence might contradict it? What is this argument assuming that it shouldn't take for granted?" Use AI as an adversarial reader before you write.</p>
+  <p><strong>Step 3: Write the first draft yourself.</strong> Seriously. The struggle of translating your ideas into sentences is a core part of developing your thinking. AI first drafts will always be better-polished than yours — which is exactly why they're bad for learning. Write yours first.</p>
+  <p><strong>Step 4: Use AI for feedback on your draft.</strong> Once you have a draft, AI can give you valuable feedback: "What is the clearest sentence in this essay? What is the most confusing? Where does the argument lose momentum? Where does the evidence not quite support the claim?" This is legitimate use of AI as an editor.</p>
+  <p><strong>Step 5: Revise yourself.</strong> Take the AI feedback and make your own decisions about what to change and how. Don't let AI rewrite paragraphs for you — that's where the learning stops.</p>
+
+  <h2>AI for problem sets and STEM — when to use it vs. when to fight through</h2>
+  <p>STEM subjects require a calibrated approach to AI assistance. The whole point of a problem set is to build problem-solving skill through practice. If AI solves the problem, you learn nothing.</p>
+
+  <div class="principle-list">
+    <div class="principle">
+      <div class="principle-title">Use AI: for understanding what you got wrong</div>
+      <div class="principle-desc">After you've attempted a problem and gotten it wrong, ask AI to walk through the correct approach step by step. Focus on identifying exactly where your thinking diverged from the correct path. This is post-attempt remediation, which is productive — you had the cognitive engagement of attempting first.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Use AI: for concept clarification mid-problem</div>
+      <div class="principle-desc">If you're stuck because you don't understand a concept the problem requires, ask AI to explain just that concept — not to solve the problem. "Explain how to apply integration by parts" is different from "solve this integral." Get the concept, then close the AI and try the problem yourself.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Don't use AI: to get the answer first</div>
+      <div class="principle-desc">Looking at the answer before attempting the problem is not learning — it's answer-copying with extra steps. The productive struggle of attempting hard problems is the mechanism by which problem-solving skill develops. Skipping it by consulting AI first systematically prevents skill development, which becomes obvious on exams.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Don't use AI: as a first resort when stuck</div>
+      <div class="principle-desc">When you hit a wall on a problem, sit with it for at least 15–20 minutes before consulting AI. Frustration during problem-solving is a sign that productive struggle is happening — not a sign that something is wrong. The cognitive work of being stuck, trying approaches, and finding what doesn't work is itself part of learning the material.</div>
+    </div>
+  </div>
+
+  <h2>Time management and AI — what to automate, what to own</h2>
+  <p>AI can legitimately save student time on tasks that aren't the core learning activity. The key is being honest with yourself about what is and isn't core.</p>
+
+  <div class="good">
+    <div class="good-label">Legitimate time saves</div>
+    <p>Formatting a bibliography. Converting notes from a lecture into a structured outline. Generating a list of potential sources to investigate. Summarizing a long document you've already read to identify what to re-read. Creating a study schedule. Getting a quick definition or concept overview before diving into a dense reading. These are administrative or orientation tasks — not the thinking work itself.</p>
+  </div>
+
+  <div class="warn">
+    <div class="warn-label">False time saves</div>
+    <p>Having AI summarize readings instead of reading them. Having AI generate your first draft. Having AI solve problem sets. Having AI create your thesis. These feel like time saves but they're actually learning deferrals — you're skipping the experience that builds the capability. The test (or the job) doesn't care that AI can do it. It cares whether you can.</p>
+  </div>
+
+  <h2>Specific workflows by subject</h2>
+
+  <h3>History and social sciences</h3>
+  <p>Use AI to give you context before you read primary sources — historical background, key figures, what was at stake. Then read the actual primary source yourself with that context. Afterward, ask AI: "What are the most contested interpretations of this document/event? What do historians disagree about?" This positions AI as background and context, not as the analysis itself.</p>
+
+  <h3>Mathematics</h3>
+  <p>Never use AI to get the answer. Use it to get the concept, check a step when you're confident you made an error, or understand why a formula works the way it does ("why does completing the square work?"). The most valuable use of AI in math is having it explain the intuition behind a procedure, not execute the procedure for you.</p>
+
+  <h3>Literature and writing-heavy courses</h3>
+  <p>Use AI as a reader — not a writer. Share passages you find confusing and ask what the author might mean. Ask AI to explain the thematic significance of an element you've noticed. Ask AI to steelman a reading you disagree with. Then write your own analysis. If your instructor assigned the reading, they want your interpretation — give it to them.</p>
+
+  <h3>Sciences</h3>
+  <p>AI excels at explaining mechanisms — why does osmosis work, what is the mechanism by which a catalyst increases reaction rate, how does natural selection operate on a population. Use it for mechanism explanations and conceptual clarification. Be more cautious with specific numerical values or recent research findings — verify those against your textbook or the actual literature.</p>
+
+  <h3>Foreign languages</h3>
+  <p>AI is an extraordinary language learning tool when used right. Practice conversations in your target language with the AI. Ask it to correct your grammar after each response. Ask it to explain why a particular construction is wrong. Ask it to suggest more natural phrasing. Never have it translate something you're supposed to write yourself — do have it help you understand why your translation was wrong after you've attempted it.</p>
+
+</div>
+</main>
+</div>
+
+<div class="sticky-bar">
+  <div class="sticky-bar-reading" id="sticky-reading">Read to the end to unlock the next module</div>
+  <div class="sticky-bar-track"><div class="sticky-bar-fill" id="sticky-fill"></div></div>
+  <div class="sticky-bar-label" id="sticky-label">0%</div>
+  <button class="sticky-bar-btn" id="sticky-btn" onclick="completeAndNext()">Module 4: AI Tools for Educators →</button>
+</div>
+
+<script>
+  function toggleTheme(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='☾'):(h.setAttribute('data-theme','dark'),i.textContent='☀');}
+  window.addEventListener('scroll',()=>{const d=document.documentElement,s=d.scrollTop||document.body.scrollTop,t=d.scrollHeight-d.clientHeight;document.getElementById('progress').style.width=(s/t*100)+'%';});
+  let unlocked=false;
+  function updateScrollProgress(){
+    const pct=Math.min(100,Math.round(((window.scrollY+window.innerHeight)/document.documentElement.scrollHeight)*100));
+    document.getElementById('sticky-fill').style.width=pct+'%';
+    document.getElementById('sticky-label').textContent=pct+'%';
+    if(pct>=95&&!unlocked){unlocked=true;document.getElementById('sticky-btn').style.display='block';document.getElementById('sticky-reading').style.display='none';document.getElementById('sticky-fill').style.background='#22c55e';document.getElementById('sticky-label').style.color='#22c55e';}
+  }
+  window.addEventListener('scroll',updateScrollProgress);updateScrollProgress();
+  function completeAndNext(){
+    if(window.__meridianSaveProgress){ try{ window.__meridianSaveProgress("m3"); }catch(e){} }
+    setTimeout(function(){ window.location.href="module-4.html"; }, 120);
+  }
+</script>
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import { getFirestore, doc, setDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  const app = initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+  const auth = getAuth(app); const db = getFirestore(app);
+  let meridianUser = null;
+  onAuthStateChanged(auth, u => { meridianUser = u; });
+  window.__meridianSaveProgress = async function(mValue){
+    if(!meridianUser) return;
+    try { await setDoc(doc(db,"users",meridianUser.uid), { educationModules: arrayUnion(mValue) }, { merge: true }); } catch(e) {}
+  };
+</script>
+</body>
+</html>

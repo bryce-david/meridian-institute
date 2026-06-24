@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>US AI Policy — AI Governance — Meridian Institute of AI</title>
+<meta name="description" content="Free AI Governance course — module 3. Understand US AI policy: executive orders, sector-specific regulation, state legislation, and the congressional landscape.">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="US AI Policy — AI Governance — Meridian Institute of AI">
+<meta property="og:description" content="Free AI Governance course — module 3. Understand US AI policy: executive orders, sector-specific regulation, state legislation, and the congressional landscape.">
+<meta property="og:url" content="https://meridianinstituteai.com/courses/governance/module-3.html">
+<meta property="og:type" content="website">
+<link rel="canonical" href="https://meridianinstituteai.com/courses/governance/module-3.html">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#8b5cf6;--accent-dim:rgba(139,92,246,0.1);--nav-bg:rgba(8,8,8,0.9);--callout-bg:rgba(139,92,246,0.07);--callout-border:rgba(139,92,246,0.25);--good-bg:rgba(34,197,94,0.07);--good-border:rgba(34,197,94,0.2);--warn-bg:rgba(251,146,60,0.07);--warn-border:rgba(251,146,60,0.2);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#7c3aed;--accent-dim:rgba(124,58,237,0.08);--nav-bg:rgba(250,250,248,0.9);--callout-bg:rgba(124,58,237,0.05);--callout-border:rgba(124,58,237,0.2);--good-bg:rgba(22,163,74,0.06);--good-border:rgba(22,163,74,0.2);--warn-bg:rgba(234,88,12,0.05);--warn-border:rgba(234,88,12,0.2);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;overflow-x:hidden;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.7;overflow-x:hidden;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}
+  .nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}
+  .nav-back{font-size:13px;color:var(--text-2);text-decoration:none;transition:color 0.2s;}
+  .nav-back:hover{color:var(--text);}
+  .nav-label{font-size:13px;color:var(--text-3);}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;transition:all 0.2s;}
+  .progress-bar{position:fixed;top:60px;left:0;right:0;z-index:99;height:2px;background:var(--border);}
+  .progress-fill{height:100%;background:var(--accent);width:0%;transition:width 0.1s;}
+  .page-wrapper{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:100vh;padding-top:62px;}
+  .sidebar{position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto;border-right:1px solid var(--border);padding:32px 24px;background:var(--bg-2);}
+  .sidebar-course{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;}
+  .sidebar-course-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+  .sidebar-module{margin-bottom:4px;}
+  .sidebar-module-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:13px;color:var(--text-2);text-decoration:none;transition:all 0.2s;line-height:1.4;}
+  .sidebar-module-link:hover{background:var(--bg-3);color:var(--text);}
+  .sidebar-module-link.active{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-num{font-size:11px;font-weight:500;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--bg-4);color:var(--text-3);}
+  .sidebar-module-link.active .sidebar-num{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-divider{height:1px;background:var(--border);margin:20px 0;}
+  .sidebar-progress-label{font-size:12px;color:var(--text-3);margin-bottom:8px;display:flex;justify-content:space-between;}
+  .sidebar-progress-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sidebar-progress-fill{height:100%;width:29%;background:var(--accent);border-radius:2px;}
+  main{display:block;min-width:0;}
+  .content{max-width:760px;width:100%;padding:60px 64px 140px;margin:0 auto;}
+  .module-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+  .module-tag{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(139,92,246,0.2);padding:4px 12px;border-radius:100px;}
+  .module-meta{font-size:12px;color:var(--text-3);}
+  h1{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1.05;letter-spacing:-0.02em;color:var(--text);margin-bottom:24px;}
+  .intro-text{font-size:19px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+  h2{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:400;color:var(--text);margin:52px 0 18px;line-height:1.2;}
+  h3{font-size:16px;font-weight:500;color:var(--text);margin:32px 0 12px;}
+  p{font-size:16px;font-weight:300;color:var(--text-2);line-height:1.8;margin-bottom:20px;}
+  strong{font-weight:500;color:var(--text);}
+  .callout{background:var(--callout-bg);border:1px solid var(--callout-border);border-radius:12px;padding:24px 28px;margin:32px 0;}
+  .callout-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+  .callout p{margin:0;font-size:15px;color:var(--text-2);}
+  .callout p+p{margin-top:12px;}
+  .good{background:var(--good-bg);border:1px solid var(--good-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .good-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#22c55e;margin-bottom:10px;}
+  .good p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn{background:var(--warn-bg);border:1px solid var(--warn-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .warn-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#fb923c;margin-bottom:10px;}
+  .warn p{margin:0;font-size:15px;color:var(--text-2);}
+  .principle-list{display:flex;flex-direction:column;gap:12px;margin:24px 0;}
+  .principle{background:var(--bg-2);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:0 12px 12px 0;padding:20px 24px;}
+  .principle-title{font-size:15px;font-weight:500;color:var(--text);margin-bottom:6px;}
+  .principle-desc{font-size:14px;color:var(--text-2);line-height:1.65;margin:0;}
+  .comparison-wrapper{overflow-x:auto;-webkit-overflow-scrolling:touch;width:100%;margin:28px 0;}
+  table{width:100%;border-collapse:collapse;font-size:14px;min-width:480px;}
+  th{text-align:left;padding:12px 16px;font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-3);border-bottom:1px solid var(--border-2);}
+  td{padding:14px 16px;border-bottom:1px solid var(--border);color:var(--text-2);line-height:1.6;vertical-align:top;}
+  tr:last-child td{border-bottom:none;}
+  td:first-child{color:var(--text);font-weight:500;}
+  .sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:var(--bg-2);border-top:1px solid var(--border-2);padding:14px 5%;display:flex;align-items:center;justify-content:space-between;gap:16px;backdrop-filter:blur(12px);}
+  .sticky-bar-track{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sticky-bar-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.2s;width:0%;}
+  .sticky-bar-label{font-size:12px;color:var(--text-3);white-space:nowrap;min-width:60px;text-align:right;}
+  .sticky-bar-btn{padding:10px 20px;border-radius:8px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;background:var(--accent);color:#fff;border:none;cursor:pointer;white-space:nowrap;transition:opacity 0.2s;display:none;}
+  .sticky-bar-btn:hover{opacity:0.88;}
+  .sticky-bar-reading{font-size:12px;color:var(--text-3);white-space:nowrap;}
+  @media(max-width:900px){.page-wrapper{grid-template-columns:1fr;}.sidebar{display:none;}.content{padding:40px 24px 120px;}h1{font-size:38px;}}
+  @media(max-width:600px){.content{padding:28px 16px 120px;}h1{font-size:30px;}h2{font-size:24px;}}
+</style>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="shortcut icon" href="/favicon.ico">
+<style>@media(max-width:480px){.nav-divider{display:none}.nav-left{gap:8px}}</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="../../index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="../../index.html" class="nav-back">&#8962; Home</a>
+    <div class="nav-divider"></div>
+    <a href="../../courses.html" class="nav-back">&#8592; AI Governance</a>
+    <div class="nav-divider"></div>
+    <span class="nav-label">Module 3</span>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">&#9728;</span></button>
+</nav>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+
+<div class="page-wrapper">
+<aside class="sidebar">
+  <div class="sidebar-course">Course</div>
+  <div class="sidebar-course-name">AI Governance</div>
+  <div class="sidebar-module"><a href="module-1.html" class="sidebar-module-link"><span class="sidebar-num">1</span>What AI Governance Is</a></div>
+  <div class="sidebar-module"><a href="module-2.html" class="sidebar-module-link"><span class="sidebar-num">2</span>The EU AI Act</a></div>
+  <div class="sidebar-module"><a href="module-3.html" class="sidebar-module-link active"><span class="sidebar-num">3</span>US AI Policy</a></div>
+  <div class="sidebar-module"><a href="module-4.html" class="sidebar-module-link"><span class="sidebar-num">4</span>AI Ethics</a></div>
+  <div class="sidebar-module"><a href="module-5.html" class="sidebar-module-link"><span class="sidebar-num">5</span>Corporate AI Governance</a></div>
+  <div class="sidebar-module"><a href="module-6.html" class="sidebar-module-link"><span class="sidebar-num">6</span>International AI Policy</a></div>
+  <div class="sidebar-module"><a href="module-7.html" class="sidebar-module-link"><span class="sidebar-num">7</span>Implementing Responsible AI</a></div>
+  <div class="sidebar-module"><a href="quiz.html" class="sidebar-module-link" style="color:var(--accent);margin-top:4px;"><span class="sidebar-num" style="background:var(--accent-dim);color:var(--accent);">&#10022;</span>Final Assessment</a></div>
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-progress-label"><span>Course progress</span><span style="color:var(--accent);">2 / 7</span></div>
+  <div class="sidebar-progress-track"><div class="sidebar-progress-fill"></div></div>
+</aside>
+
+<main>
+<div class="content">
+  <div class="module-eyebrow"><span class="module-tag">Module 3</span><span class="module-meta">20 min read &middot; AI Governance</span></div>
+  <h1>US AI Policy</h1>
+  <p class="intro-text">Unlike the European Union, the United States has not yet passed comprehensive federal AI legislation. What exists instead is a patchwork: executive orders, agency guidance, sector-specific rules, and a Congress that has held hundreds of hearings but produced little binding law. Understanding this landscape — and why it looks the way it does — is essential for anyone working with AI in an American context.</p>
+
+  <h2>The Executive Order on AI (October 2023)</h2>
+  <p>Biden's Executive Order 14110 was the most comprehensive US AI policy action to date. Signed in October 2023, it represented the federal government's first attempt to address AI governance across multiple dimensions simultaneously — safety, security, privacy, equity, workers' rights, and innovation. The scope was deliberately broad because the administration wanted to move before Congress could act, and because the absence of legislation meant an executive order was the most powerful available instrument.</p>
+  <p>Key provisions included: mandatory safety testing for frontier AI models trained above certain compute thresholds (10<sup>26</sup> floating-point operations), a requirement that federal agencies develop AI use policies within 365 days, a directive to NIST to develop AI safety and evaluation standards, and tasking DHS and CISA to assess AI risks to critical infrastructure. The order also addressed immigration pathways for AI talent, watermarking of AI-generated content, and equity considerations in AI deployment by federal agencies.</p>
+  <p>The EO represented genuine policy ambition constrained by the limits of executive authority. Because Congress had not acted, the order could direct federal agencies but could not impose binding requirements on private sector AI development beyond safety reporting. It functioned primarily as a coordination mechanism across the executive branch and a signal of political intent rather than a regulatory framework with enforcement teeth.</p>
+
+  <div class="callout">
+    <div class="callout-label">Key provision</div>
+    <p>The EO required developers of the most powerful AI systems — those trained above 10<sup>26</sup> FLOPs — to share safety test results with the federal government before public deployment. This was the first time the US government formally required private AI companies to provide safety information to a government body. However, critics noted it lacked independent enforcement mechanisms and depended substantially on voluntary compliance for provisions affecting the broader industry.</p>
+  </div>
+
+  <h2>The Trump Administration and AI Deregulation</h2>
+  <p>In January 2025, President Trump revoked EO 14110 on his first day in office and issued a new executive order titled "Removing Barriers to American Leadership in Artificial Intelligence." The new order directed federal agencies to develop AI action plans focused on removing "undue burdens" on AI development, eliminated Biden-era equity requirements in federal AI procurement, and emphasized that the US should lead globally through "freedom from unnecessary government control" rather than precautionary regulation.</p>
+  <p>The shift represents more than a change in policy details — it reflects a fundamentally different regulatory philosophy. Where the Biden framework treated AI governance as a risk management problem requiring coordinated federal action, the Trump framework treats regulation itself as a primary risk to be managed. This creates a distinctly different US posture from the EU's risk-based approach and has increased regulatory uncertainty for companies that were planning compliance programs around EO 14110's requirements. For organizations operating across jurisdictions, the result is that US federal policy and EU AI Act requirements now point in increasingly divergent directions.</p>
+
+  <h2>Sector-Specific Federal Regulation</h2>
+  <p>In the absence of comprehensive federal AI legislation, sector regulators are filling the governance gap through their existing authorities. This approach reflects both the limits of congressional inaction and the genuine diversity of AI risks across industries — what constitutes appropriate AI governance in medical devices is necessarily different from what it means in mortgage lending or energy grid management.</p>
+  <p>The FDA has been the most active sector regulator on AI. By 2024, it had approved over 950 AI-enabled medical devices and published detailed guidance on AI/ML-based software as a medical device (SaMD), including a proposed framework for AI systems that continuously learn after deployment. The FTC has used its unfair and deceptive practices authority to issue warnings about AI-enabled deception, including enforcement actions against companies making unsupported AI capability claims. The CFPB has warned financial institutions that using AI in credit decisions does not exempt them from fair lending law requirements under the Equal Credit Opportunity Act. The SEC has addressed AI use in investment advice, requiring that AI-driven recommendations meet the same fiduciary and suitability standards as human advice.</p>
+  <p>This sector-by-sector approach produces governance, but not coordination. A company deploying AI across healthcare, finance, and employment simultaneously faces different regulatory frameworks, different reporting requirements, and different standards of care in each domain — with no overarching framework reconciling them.</p>
+
+  <div class="comparison-wrapper">
+    <table>
+      <tr><th>Sector</th><th>Regulator</th><th>Key AI Concern</th><th>Status of Guidance</th></tr>
+      <tr><td>Healthcare</td><td>FDA</td><td>Device safety and post-market surveillance</td><td>Published; SaMD framework active</td></tr>
+      <tr><td>Financial Services</td><td>CFPB / SEC</td><td>Algorithmic bias and disclosure in credit/investment</td><td>Guidance issued; enforcement actions ongoing</td></tr>
+      <tr><td>Employment</td><td>EEOC</td><td>Discriminatory hiring AI under Title VII</td><td>Guidance issued 2023; technical assistance available</td></tr>
+      <tr><td>Critical Infrastructure</td><td>CISA</td><td>AI risks to power grids, water systems, finance</td><td>Risk assessment framework under development</td></tr>
+    </table>
+  </div>
+
+  <h2>State-Level AI Legislation</h2>
+  <p>In the absence of federal leadership, US states have become the primary sites of AI legislative activity. The pattern mirrors what happened with data privacy: California led with CCPA, other states followed, and the resulting patchwork eventually created pressure for federal preemption. The same dynamic is now playing out with AI.</p>
+  <p>Colorado passed the Colorado AI Act in 2024 — the first comprehensive US state AI law — requiring developers and deployers of high-risk AI systems to use reasonable care to protect consumers from known or reasonably foreseeable harms, conduct impact assessments, and provide transparency about AI use in consequential decisions. California's legislature passed SB 1047, which would have required safety testing for frontier AI models above certain thresholds, but Governor Newsom vetoed it in September 2024, citing concerns about regulatory overreach. Texas, Virginia, Connecticut, and at least a dozen other states have pending or recently enacted AI legislation with varying scope and requirements.</p>
+  <p>The underlying challenge is that state AI laws are not harmonized. Colorado's definition of "high-risk AI" differs from the EU AI Act's, which differs from what Texas is proposing. A company building an AI hiring tool must navigate potentially conflicting obligations across every state where its customers operate — a compliance burden that compounds rapidly as state legislative activity increases.</p>
+
+  <div class="warn">
+    <div class="warn-label">Compliance fragmentation risk</div>
+    <p>Companies operating nationally face the prospect of complying with 50 different state AI laws if federal preemption legislation doesn't pass. This compliance burden disproportionately affects smaller organizations that lack the legal resources of large technology companies. It also creates perverse incentives: organizations may avoid deploying beneficial AI applications in high-regulation states simply because the compliance cost exceeds the revenue opportunity — a governance failure that is invisible in the legislative record.</p>
+  </div>
+
+  <h2>The Congressional Landscape</h2>
+  <p>Congress has held more than 200 AI-related hearings since 2022 — featuring testimony from AI researchers, ethicists, industry executives, and civil society groups — but has passed almost no AI-specific legislation. The Senate Commerce Committee and the Senate Judiciary Subcommittee on AI (Rights, Privacy, Technology, and the Law) have been the primary venues for AI policy discussions. The National AI Initiative Act (2020) and the AI in Government Act (2020) remain the most significant AI-related federal legislation, both predating the current AI era and neither imposing significant regulatory obligations on the private sector.</p>
+  <p>The AI Safety Institute (AISI) at NIST represents the most institutionalized federal AI governance body produced by the executive order era. Established in 2023, it conducts safety evaluations of frontier AI models, develops testing methodologies, and serves as a coordinating point between government and industry. Under the Biden administration it was positioned as the US equivalent of the UK AI Safety Institute. Its mandate and resourcing under the Trump administration has been subject to revision, creating uncertainty about its long-term role.</p>
+
+  <div class="principle-list">
+    <div class="principle">
+      <div class="principle-title">Jurisdiction Fragmentation</div>
+      <div class="principle-desc">AI spans nearly every sector of the economy, yet no single congressional committee controls AI policy. Commerce, Judiciary, Intelligence, Armed Services, Finance, and HELP committees all have jurisdiction over AI-related issues, producing competing and uncoordinated legislative activity.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Industry Lobbying</div>
+      <div class="principle-desc">Major AI companies have invested heavily in Washington presence. OpenAI, Google, Microsoft, Meta, and Amazon collectively employ hundreds of lobbyists and have spent tens of millions on federal lobbying. This shapes what legislation gets drafted, what amendments pass, and which provisions are softened before floor votes.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Partisan Division</div>
+      <div class="principle-desc">AI regulation has been partially mapped onto existing partisan divisions: Democrats have generally been more open to precautionary regulation emphasizing rights and safety; Republicans have generally framed regulation as a threat to US competitiveness and innovation. Bipartisan compromise has been achievable on specific issues (child safety, national security) but not on comprehensive governance frameworks.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Technical Complexity</div>
+      <div class="principle-desc">Congressional staff lack the capacity to draft technically precise AI legislation. Understanding the difference between a large language model and a traditional ML classifier, or between training compute and inference compute, requires domain expertise that most Hill offices do not have in-house. This creates dependence on industry-provided expertise that disadvantages independent regulatory design.</div>
+    </div>
+  </div>
+
+</div>
+</main>
+</div>
+
+<div class="sticky-bar">
+  <div class="sticky-bar-reading" id="sticky-reading">Read to the end to unlock the next module</div>
+  <div class="sticky-bar-track"><div class="sticky-bar-fill" id="sticky-fill"></div></div>
+  <div class="sticky-bar-label" id="sticky-label">0%</div>
+  <button class="sticky-bar-btn" id="sticky-btn" onclick="completeAndNext()">Module 4: AI Ethics &#8594;</button>
+</div>
+
+<script>
+  function toggleTheme(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='☾'):(h.setAttribute('data-theme','dark'),i.textContent='☀');}
+  window.addEventListener('scroll',()=>{const d=document.documentElement,s=d.scrollTop||document.body.scrollTop,t=d.scrollHeight-d.clientHeight;document.getElementById('progress').style.width=(s/t*100)+'%';});
+  let unlocked=false;
+  function updateScrollProgress(){
+    const pct=Math.min(100,Math.round(((window.scrollY+window.innerHeight)/document.documentElement.scrollHeight)*100));
+    document.getElementById('sticky-fill').style.width=pct+'%';
+    document.getElementById('sticky-label').textContent=pct+'%';
+    if(pct>=95&&!unlocked){unlocked=true;document.getElementById('sticky-btn').style.display='block';document.getElementById('sticky-reading').style.display='none';document.getElementById('sticky-fill').style.background='#22c55e';document.getElementById('sticky-label').style.color='#22c55e';}
+  }
+  window.addEventListener('scroll',updateScrollProgress);updateScrollProgress();
+  function completeAndNext(){
+    if(window.__meridianSaveProgress){try{window.__meridianSaveProgress("m3");}catch(e){}}
+    setTimeout(function(){window.location.href="module-4.html";},120);
+  }
+</script>
+<script type="module">
+  import{initializeApp}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import{getAuth,onAuthStateChanged}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import{getFirestore,doc,setDoc,arrayUnion}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  const app=initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+  const auth=getAuth(app);const db=getFirestore(app);
+  let meridianUser=null;
+  onAuthStateChanged(auth,u=>{meridianUser=u;});
+  window.__meridianSaveProgress=async function(mValue){
+    if(!meridianUser)return;
+    try{await setDoc(doc(db,"users",meridianUser.uid),{governanceModules:arrayUnion(mValue)},{merge:true});}catch(e){}
+  };
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Course","name":"AI Governance","description":"A free, comprehensive course on AI governance — regulation, ethics, policy, and responsible AI implementation.","provider":{"@type":"Organization","name":"Meridian Institute of AI","url":"https://meridianinstituteai.com"},"url":"https://meridianinstituteai.com/courses/governance/module-3.html","isAccessibleForFree":true,"educationalLevel":"Intermediate","inLanguage":"en","teaches":"AI governance, US AI policy, executive orders, sector regulation, state AI law"}
+</script>
+</body>
+</html>

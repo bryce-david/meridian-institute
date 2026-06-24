@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Final Assessment — AI Governance — Meridian Institute of AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#8b5cf6;--accent-dim:rgba(139,92,246,0.1);--nav-bg:rgba(8,8,8,0.9);--success:#22c55e;--success-bg:rgba(34,197,94,0.08);--success-border:rgba(34,197,94,0.25);--fail-bg:rgba(239,68,68,0.08);--fail-border:rgba(239,68,68,0.25);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#7c3aed;--accent-dim:rgba(124,58,237,0.08);--nav-bg:rgba(250,250,248,0.9);--success:#16a34a;--success-bg:rgba(22,163,74,0.06);--success-border:rgba(22,163,74,0.25);--fail-bg:rgba(220,38,38,0.06);--fail-border:rgba(220,38,38,0.25);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}
+  .nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}.nav-back{font-size:13px;color:var(--text-2);text-decoration:none;}.nav-back:hover{color:var(--text);}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;}
+  .page{max-width:680px;margin:0 auto;padding:90px 24px 80px;}
+  .quiz-eyebrow{font-size:11px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:12px;}
+  .quiz-title{font-family:'Cormorant Garamond',serif;font-size:42px;font-weight:300;color:var(--text);line-height:1.1;margin-bottom:12px;}
+  .quiz-sub{font-size:15px;color:var(--text-2);line-height:1.7;margin-bottom:28px;}
+  .quiz-rules{background:var(--bg-2);border:1px solid var(--border);border-radius:12px;padding:18px 22px;margin-bottom:28px;display:flex;gap:20px;flex-wrap:wrap;}
+  .quiz-rule{font-size:13px;color:var(--text-2);display:flex;align-items:center;gap:8px;}
+  .btn-start{padding:14px 32px;background:var(--accent);color:#fff;border-radius:10px;font-size:15px;font-weight:500;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;margin-top:4px;}
+  #quiz-section{display:none;}
+  .progress-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;}
+  .progress-label{font-size:13px;color:var(--text-3);}
+  .progress-track{height:3px;background:var(--border);border-radius:2px;overflow:hidden;margin-bottom:36px;}
+  .progress-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.3s;}
+  .question-num{font-size:11px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:14px;}
+  .question-text{font-family:'Cormorant Garamond',serif;font-size:27px;font-weight:400;color:var(--text);line-height:1.35;margin-bottom:28px;}
+  .options{display:flex;flex-direction:column;gap:10px;margin-bottom:24px;}
+  .option{display:flex;align-items:flex-start;gap:14px;padding:15px 18px;border:1px solid var(--border-2);border-radius:12px;cursor:pointer;transition:all 0.18s;background:var(--bg-2);}
+  .option:hover{border-color:var(--accent);background:var(--accent-dim);}
+  .option.selected{border-color:var(--accent);background:var(--accent-dim);}
+  .option.correct{border-color:var(--success);background:var(--success-bg);cursor:default;}
+  .option.wrong{border-color:#ef4444;background:var(--fail-bg);cursor:default;}
+  .option.disabled{cursor:default;opacity:0.55;}
+  .option-letter{width:26px;height:26px;border-radius:6px;background:var(--bg-3);border:1px solid var(--border-2);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:500;color:var(--text-3);flex-shrink:0;margin-top:2px;}
+  .option.selected .option-letter{background:var(--accent);color:#fff;border-color:var(--accent);}
+  .option.correct .option-letter{background:var(--success);color:#fff;border-color:var(--success);}
+  .option.wrong .option-letter{background:#ef4444;color:#fff;border-color:#ef4444;}
+  .option-text{font-size:15px;color:var(--text-2);line-height:1.55;}
+  .option.selected .option-text,.option.correct .option-text{color:var(--text);}
+  .feedback{padding:16px 20px;border-radius:10px;font-size:14px;line-height:1.65;margin-bottom:20px;display:none;}
+  .feedback.show{display:block;}
+  .feedback.correct{background:var(--success-bg);border:1px solid var(--success-border);color:var(--success);}
+  .feedback.wrong{background:var(--fail-bg);border:1px solid var(--fail-border);color:#ef4444;}
+  .btn-next{padding:12px 28px;background:var(--accent);color:#fff;border-radius:9px;font-size:14px;font-weight:500;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;display:none;}
+  .btn-next.show{display:inline-block;}
+  #result-section{display:none;text-align:center;padding:20px 0;}
+  .result-icon{font-size:64px;margin-bottom:20px;}
+  .result-title{font-family:'Cormorant Garamond',serif;font-size:42px;font-weight:300;color:var(--text);margin-bottom:12px;}
+  .result-score{font-size:56px;font-weight:300;font-family:'Cormorant Garamond',serif;margin:20px 0;}
+  .result-score.pass{color:var(--success);}.result-score.fail{color:#ef4444;}
+  .result-message{font-size:16px;color:var(--text-2);line-height:1.7;max-width:520px;margin:0 auto 32px;}
+  .result-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
+  .btn-result{padding:13px 28px;border-radius:10px;font-size:14px;font-weight:500;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;text-decoration:none;display:inline-block;}
+  .btn-primary{background:var(--accent);color:#fff;}.btn-ghost{background:transparent;color:var(--text-2);border:1px solid var(--border-2);}
+  @media(max-width:600px){.quiz-title{font-size:34px;}.question-text{font-size:23px;}}
+</style>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="shortcut icon" href="/favicon.ico">
+<style>@media(max-width:480px){.nav-divider{display:none}.nav-left{gap:8px}}</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="../../index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="../../index.html" class="nav-back">Home</a>
+    <div class="nav-divider"></div>
+    <a href="../../courses.html" class="nav-back">← AI Governance</a>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">☀</span></button>
+</nav>
+<div class="page">
+  <div id="start-section">
+    <div class="quiz-eyebrow">Final Assessment · AI Governance</div>
+    <div class="quiz-title">Test Your Knowledge</div>
+    <div class="quiz-sub">25 questions drawn from a pool of 30+. These are application questions — they test whether you can use the concepts, not just recall them. You need 70% to pass and earn your certificate.</div>
+    <div class="quiz-rules">
+      <div class="quiz-rule">📋 25 of 30+ questions per attempt</div>
+      <div class="quiz-rule">✅ 70% to pass (18 of 25)</div>
+      <div class="quiz-rule">🔀 Randomized each attempt</div>
+      <div class="quiz-rule">🏆 Pass to earn your certificate</div>
+    </div>
+    <button class="btn-start" onclick="startQuiz()">Begin Assessment →</button>
+  </div>
+  <div id="quiz-section">
+    <div class="progress-header">
+      <span class="progress-label" id="progress-label">Question 1 of 25</span>
+      <span class="progress-label" id="score-label">0 correct</span>
+    </div>
+    <div class="progress-track"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+    <div class="question-num" id="question-num">Question 1</div>
+    <div class="question-text" id="question-text"></div>
+    <div class="options" id="options"></div>
+    <div class="feedback" id="feedback"></div>
+    <button class="btn-next" id="btn-next" onclick="nextQuestion()">Next Question →</button>
+  </div>
+  <div id="result-section">
+    <div class="result-icon" id="result-icon"></div>
+    <div class="result-title" id="result-title"></div>
+    <div class="result-score" id="result-score"></div>
+    <div class="result-message" id="result-message"></div>
+    <div class="result-actions" id="result-actions"></div>
+  </div>
+</div>
+<script type="module">
+import{initializeApp}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import{getAuth,onAuthStateChanged}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import{getFirestore,doc,setDoc,arrayUnion}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+const app=initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+const auth=getAuth(app);const db=getFirestore(app);let currentUser=null;
+onAuthStateChanged(auth,u=>{currentUser=u;});
+
+const ALL_QUESTIONS=[
+{"q":"The EU AI Act classifies AI systems into risk tiers. Which category faces the most stringent requirements?","options":["General purpose AI like large language models","Limited-risk AI such as chatbots with disclosure requirements","High-risk AI systems including those used in hiring, credit decisions, and critical infrastructure","Minimal-risk AI such as spam filters and AI in video games"],"answer":2,"explain":"High-risk AI systems face mandatory conformity assessments, technical documentation, transparency obligations, human oversight requirements, and registration in an EU database before deployment."},
+{"q":"Amazon's AI hiring tool, scrapped in 2018, became a canonical example of algorithmic bias. What was the root cause?","options":["The model was deliberately programmed with discriminatory criteria by engineers","The model was trained on historical hiring data that reflected historical discrimination, then reproduced and automated that discrimination","The model was hacked by a competitor who introduced discriminatory parameters","Amazon's HR team overrode the AI's neutral recommendations with biased human decisions"],"answer":1,"explain":"The model learned from Amazon's historical hiring patterns — predominantly male technical hires — and identified characteristics correlated with successful candidates that were also proxies for being male. This is a canonical case of historical bias encoded in training data."},
+{"q":"Biden's Executive Order 14110 required developers of the most powerful AI systems to take what action?","options":["Register with a new federal AI agency before releasing models to the public","Share safety test results with the federal government for models above 10^26 FLOPs training compute","Submit to mandatory third-party audits before any commercial deployment","Obtain FDA-like approval for any AI system used in consequential decisions"],"answer":1,"explain":"EO 14110's most significant new obligation was requiring frontier AI developers to share safety testing results with the government — the first time such a disclosure requirement was imposed on the AI industry, though without strong enforcement mechanisms."},
+{"q":"What is the primary philosophical difference between the EU AI Act and the US regulatory approach?","options":["The EU focuses on innovation while the US focuses on rights protection","The EU takes a precautionary, rights-based approach with comprehensive legislation; the US takes a lighter-touch, sector-specific, market-led approach","The EU regulates only large AI companies while the US regulates all AI deployments","They are essentially the same approach expressed in different legal traditions"],"answer":1,"explain":"The EU AI Act is premised on fundamental rights protection and risk-based precaution — regulating AI before harms occur. The US approach has historically been reactive and sector-specific, intervening after harms emerge through existing agency authority."},
+{"q":"NIST SP 800-207 defines the Zero Trust security framework. What is Zero Trust's core governance implication for AI systems?","options":["AI systems should be trusted once they pass initial safety testing, similar to traditional software certification","AI systems should never receive standing trust — they require continuous verification, logging, and human oversight regardless of prior performance","AI systems from government-approved vendors are trusted; others require additional verification","Zero Trust applies only to cybersecurity and has no governance implications for AI deployment"],"answer":1,"explain":"Zero Trust's principle of 'never trust, always verify, assume breach' maps directly to AI governance: no AI system should receive permanent approval — all deployments require ongoing monitoring, logging, and periodic revalidation of their behavior."},
+{"q":"The COMPAS recidivism algorithm controversy involved what finding published in Science?","options":["The algorithm was found to be 100% accurate for white defendants but completely inaccurate for Black defendants","The algorithm systematically predicted higher recidivism for Black defendants at roughly twice the rate of white defendants even when controlling for prior offense history","The algorithm's developers deliberately inserted racial bias into the model's parameters","COMPAS was found to be less accurate than a simple linear regression model for all demographic groups"],"answer":1,"explain":"ProPublica's analysis, and the subsequent academic debate it sparked, found that COMPAS had substantially different false positive rates across racial groups — a canonical case of algorithmic fairness problems in high-stakes criminal justice applications."},
+{"q":"McKinsey's 2024 State of AI report found that organizations with mature AI governance frameworks were how much more likely to report value from AI investments?","options":["About 20% more likely to report value","2.5 times more likely to report value from AI investments","Roughly 50% more likely to report positive outcomes","Marginally more likely, with a statistically insignificant difference"],"answer":1,"explain":"McKinsey's finding reframes governance from a cost center to a value driver — organizations with governance infrastructure actually capture more value from AI, likely because they deploy AI into contexts where it works reliably and manage the failure modes that otherwise erode value."},
+{"q":"What is the Bletchley Declaration and why was it historically significant?","options":["The first national AI regulation, passed by the UK Parliament in 2023","The first international agreement on frontier AI risks, signed by 29 countries including the US, EU, and China in November 2023","A voluntary industry commitment by leading AI companies to share safety research","The founding document of the UK AI Safety Institute"],"answer":1,"explain":"The Bletchley Declaration was the first time countries from different geopolitical blocs — including the US, EU, China, and UK — jointly agreed that frontier AI poses serious risks requiring international coordination. Non-binding but symbolically significant as the start of global AI safety diplomacy."},
+{"q":"What is a 'Model Card' in AI governance and who introduced the standard?","options":["A physical credential issued to AI developers who pass a government certification exam","Structured documentation of a model's intended use, performance across demographic groups, limitations, and ethical considerations — introduced by Google researchers","A regulatory filing required by the EU AI Act for all high-risk AI systems","A financial disclosure document showing the cost of developing and deploying an AI model"],"answer":1,"explain":"Model Cards were introduced in a 2019 paper by Google researchers as a way to standardize AI system documentation. They enable informed deployment decisions, support accountability, and are now required by some regulators and enterprise procurement processes."},
+{"q":"China's Algorithm Recommendation Regulations (2022) were historically notable for what reason?","options":["They were the first national legislation to ban AI in political advertising","They were the first regulations in the world specifically targeting recommendation algorithms — before any other country had passed comparable rules","They required all AI systems in China to be open-source and independently auditable","They established China as the most permissive AI regulatory environment globally"],"answer":1,"explain":"China moved faster than Western regulators on specific AI application regulation — its 2022 Algorithm Recommendation Regulations predate comparable EU or US action and represent a different governance model: targeted rules on specific applications rather than comprehensive legislation."},
+{"q":"What does 'algorithmic impact assessment' mean as a concrete governance practice?","options":["A quarterly financial audit of the costs and revenues generated by AI systems","A pre-deployment structured analysis of a proposed AI system's potential harms, biases, and failure modes across affected populations","An annual report to regulators describing all AI systems an organization operates","A technical test that determines whether an AI system is operating within its performance specifications"],"answer":1,"explain":"An AIA is a structured pre-deployment governance tool — assessing who will be affected, what could go wrong, whether the system produces fair outcomes across different groups, and what mitigation measures are needed before the system goes live."},
+{"q":"A company's AI hiring tool consistently rates candidates from certain universities lower than others for no stated reason. Which fairness concept does this most likely violate?","options":["Individual fairness — the principle that similar individuals should receive similar outcomes","Group fairness — the principle that outcomes should be equally accurate or beneficial across demographic groups","Counterfactual fairness — the principle that a decision should be the same in a counterfactual world where the individual belonged to a different group","Predictive parity — the principle that predictions should be equally accurate across groups"],"answer":1,"explain":"If candidates from certain universities cluster with particular demographic groups, systematically downranking them creates disparate impact — a group fairness violation — even without any explicit demographic variable in the model."},
+{"q":"What does it mean for a corporate AI governance structure to have an 'AI Review Board'?","options":["A board of directors subcommittee that reviews the financial performance of AI investments","A cross-functional body with authority to approve or require modification of AI deployments before they go live, particularly for high-risk use cases","An external advisory panel of AI researchers who evaluate the organization's AI ethics principles","A legal team that reviews all AI-related contracts and vendor agreements"],"answer":1,"explain":"An AI Review Board provides a structured pre-deployment approval gate for consequential AI systems — requiring cross-functional assessment (legal, ethics, technical, domain) before deployment, rather than leaving each team to make its own deployment decisions."},
+{"q":"What is the 'governance gap' that MIT Sloan research identified in industry AI deployment?","options":["The gap between the AI capabilities of leading companies and smaller competitors","Only 24% of companies that have deployed AI have a dedicated AI governance function, even though 78% report experiencing significant AI-related incidents","The gap between government AI regulation and industry practice","The difference in AI governance quality between US companies and EU companies"],"answer":1,"explain":"The MIT Sloan survey revealed a systematic disconnect: most companies deploying AI lack the governance infrastructure to manage the risks, resulting in high rates of AI-related incidents that better governance would have prevented."},
+{"q":"What is the primary risk of regulatory fragmentation across jurisdictions for global AI deployments?","options":["Regulatory competition will cause countries to lower standards to attract AI companies","Different jurisdictions may impose requirements that directly contradict each other, creating compliance impossibilities for global operators","Fragmentation will slow AI development globally by adding compliance costs","Regulatory fragmentation mainly affects small companies; large companies can navigate it with legal teams"],"answer":1,"explain":"The EU AI Act, US sector-specific rules, and China's targeted regulations may impose conflicting requirements on the same AI system — particularly around data handling, transparency, and content moderation — creating genuine compliance conflicts, not just complexity."},
+{"q":"What did Stanford HAI's survey find about the relationship between published AI ethics principles and implemented governance?","options":["84% of companies have both published principles and implemented governance mechanisms","84% of major tech companies have published AI ethics principles, but only 27% have implemented the governance mechanisms to enforce them","Most companies prioritize governance implementation over public principles statements","Companies with published principles were 3x more likely to have strong governance than those without"],"answer":1,"explain":"This finding captures the 'principles washing' problem: publishing ethics principles is costless and generates positive press. Actually building the governance infrastructure to enforce those principles is expensive and organizationally difficult — explaining the wide gap."},
+{"q":"Under the EU AI Act, what obligation applies to organizations using AI in high-risk applications regarding human oversight?","options":["Human review is required only when an AI system makes a decision that is challenged by the affected individual","High-risk AI systems must have meaningful human oversight mechanisms — humans who can understand, monitor, and override AI decisions — built into the deployment architecture","Human oversight is required only for medical AI; other high-risk categories can be fully automated","Organizations must employ one certified AI safety officer per AI system deployed"],"answer":1,"explain":"The EU AI Act's human oversight requirements are architectural — the system must be designed so that a human can meaningfully understand, monitor, and intervene in AI decisions. This rules out pure automation for high-risk applications."},
+{"q":"What is a 'Datasheet for Datasets' and what governance problem does it address?","options":["A financial document disclosing the cost of acquiring or licensing training data","Structured documentation of training data — how it was collected, who it represents, known biases, and intended use — enabling informed decisions about which datasets to use for which applications","A legal agreement governing who owns the intellectual property in AI training data","A technical specification sheet for the hardware used to store and process AI training data"],"answer":1,"explain":"Datasheets for Datasets address the training data opacity problem: AI behavior depends fundamentally on what it was trained on, but training data provenance and characteristics are rarely disclosed. Datasheets make this information available for governance decisions."},
+{"q":"What is the African Union AI Continental Strategy (2024) significant for?","options":["It was the first international agreement to ban facial recognition AI in public spaces","It was the first continental AI governance framework from the Global South, addressing a region significantly underrepresented in major AI governance frameworks","It established binding AI safety standards that all AU member states must implement by 2026","It created the first Africa-based AI safety research institute with international funding"],"answer":1,"explain":"The AU strategy is significant because it represents the Global South beginning to develop its own AI governance frameworks rather than simply adopting frameworks designed by and for Western regulatory contexts, which may not reflect different development priorities and risks."},
+{"q":"Why does the course describe responsible AI as requiring governance at every stage of the AI lifecycle, not just at deployment?","options":["Regulatory requirements in most jurisdictions cover the full development lifecycle","Problems embedded in problem definition, training data, or model architecture cannot be fully corrected after deployment — governance must catch them earlier","Pre-deployment governance is optional, but post-deployment monitoring is mandatory in all major jurisdictions","Lifecycle governance is only required for high-risk applications; low-risk AI can be governed at deployment only"],"answer":1,"explain":"Biases in training data, flawed problem framings, and architectural choices that produce unfair outcomes are much harder — sometimes impossible — to fully correct post-deployment. Finding them earlier in the lifecycle is both more effective and less costly."},
+{"q":"What does 'contestability' mean as an accountability principle for corporate AI systems?","options":["The ability of regulators to contest an organization's AI governance claims in court","Affected individuals have a meaningful mechanism to challenge AI decisions that affect them — to present their case and receive a genuine review","AI systems must be technically contestable, meaning they can be retrained or modified when needed","Organizations must be able to contest vendor AI systems that produce inaccurate results"],"answer":1,"explain":"Contestability is a due process principle applied to AI: when AI makes a consequential decision about a person, that person should have access to a meaningful review process — not just a form response, but genuine reconsideration with human judgment."},
+{"q":"A company uses a third-party AI vendor for credit decisions and the system is found to discriminate. Who bears regulatory liability?","options":["The vendor, since the algorithm was entirely the vendor's design and the company had no control over it","The company deploying the system — as a 2023 CFPB enforcement case illustrated when a retailer was fined $2.5 million despite claiming vendor responsibility","Both companies share liability equally under current regulatory frameworks","Neither company, as AI decision-making creates a liability gap that current law hasn't resolved"],"answer":1,"explain":"The CFPB enforcement case established that deploying a discriminatory third-party AI system doesn't transfer liability to the vendor. The deploying organization is responsible for the outcomes of systems it deploys, regardless of who built them."},
+{"q":"What is 'XAI' (Explainable AI) and what governance problem does it address?","options":["Extended AI — AI systems that exceed human performance on complex tasks","AI systems designed to provide human-understandable explanations for their decisions — addressing the black box problem in high-stakes applications where accountability requires knowing why a decision was made","A standard for AI transparency developed by NIST that applies to all federal AI deployments","AI that can explain its own limitations and knows when to defer to human judgment"],"answer":1,"explain":"XAI methods (LIME, SHAP, attention visualization) create local or global explanations for model decisions. They address the accountability gap in complex models: if you can't explain why a consequential decision was made, you can't identify or correct errors or biases."},
+{"q":"What is the key difference between the UK's AI governance approach and the EU's approach?","options":["The UK has no AI regulation while the EU has comprehensive legislation","The UK takes a pro-innovation, principles-based approach using sector-specific guidance and the AI Safety Institute; the EU takes a comprehensive legislative approach with specific binding rules","The UK regulates only AI developed by UK companies while the EU regulates all AI used in Europe","The approaches are essentially identical as the UK's law was based directly on EU law"],"answer":1,"explain":"Post-Brexit, the UK deliberately chose a different path: no comprehensive AI Act, but instead the AI Safety Institute, sector-specific regulatory guidance, and principles-based frameworks — explicitly framing this as a competitive advantage over the EU's more prescriptive approach."},
+{"q":"The NIST AI Risk Management Framework (AI RMF) organizes AI governance around which four core functions?","options":["Prevent, Detect, Respond, Recover — adapted from the NIST Cybersecurity Framework","Govern, Map, Measure, Manage — a lifecycle approach to identifying, assessing, and managing AI risks","Design, Develop, Deploy, Decommission — covering the full AI system lifecycle","Identify, Protect, Detect, Respond — covering risk identification and mitigation"],"answer":1,"explain":"The AI RMF's Govern-Map-Measure-Manage structure provides a comprehensive organizational approach: Govern (establish accountability structures), Map (identify AI risks), Measure (assess their likelihood and impact), Manage (respond to and reduce risks)."},
+{"q":"What is UNESCO's Recommendation on the Ethics of AI and why is it significant?","options":["A binding international treaty on AI ethics ratified by 193 UN member states","A non-binding recommendation on AI ethics adopted by all 193 UNESCO member states — the only truly global AI ethics instrument, covering nations that are not party to any other AI agreement","A set of voluntary industry standards developed with industry participation at UNESCO","A regional agreement covering UNESCO's European member states on AI governance principles"],"answer":1,"explain":"UNESCO's 2021 Recommendation is significant because of its universality — 193 member states including countries that are not party to the EU AI Act, OECD AI Principles, or US frameworks. It represents the broadest international consensus on AI ethics principles currently in existence."},
+{"q":"What does 'high-risk AI' mean under the EU AI Act's classification system?","options":["Any AI system that poses existential or catastrophic risk to civilization","AI systems in eight regulated sectors or use cases — including education, employment, credit, healthcare, law enforcement, and critical infrastructure — where AI decisions significantly affect individuals","Any AI system that has ever produced an error or biased output in testing","AI systems with more than a specified number of parameters or trained on more than a specified compute budget"],"answer":1,"explain":"The EU AI Act's high-risk category is sector and use-case defined — not based on technical characteristics. It covers applications where AI decisions about individuals have significant consequences, requiring the most comprehensive governance requirements."},
+{"q":"Why does the course say the principles-to-practice gap in AI ethics exists at the organizational level?","options":["Because AI ethics principles are intentionally vague so they can be interpreted to justify any behavior","Because publishing principles is cheap and generates positive attention, while building enforcement mechanisms is expensive and organizationally difficult — creating a systematic incentive to do the former without the latter","Because executives don't actually believe AI ethics is important and publish principles purely for public relations","Because AI ethics principles are technically impossible to implement given current AI capabilities"],"answer":1,"explain":"The asymmetric cost is the core explanation: press releases and ethics statements are near-costless. Dedicated responsible AI teams, mandatory review processes, and genuine authority to block deployments require real organizational resources and create friction with shipping speed."},
+{"q":"What is the significance of the US export controls on NVIDIA A100 and H100 chips?","options":["They protect NVIDIA's intellectual property from being copied by foreign competitors","They restrict adversaries' access to the compute required to train frontier AI models — a direct use of trade policy as a tool of AI governance and geopolitical competition","They ensure that advanced AI chips are used only for approved applications in recipient countries","They are a domestic industrial policy measure to incentivize NVIDIA to manufacture chips in the US"],"answer":1,"explain":"The chip export controls represent a new form of AI governance through supply chain restriction — the US using its dominant position in advanced semiconductors to limit adversary nations' ability to develop frontier AI capabilities, blurring the line between trade policy and national security AI governance."},
+{"q":"A responsible AI team recommends blocking a product launch due to bias concerns. What structural condition does the course say is necessary for this to work?","options":["The team must publish their concerns publicly to create external pressure on the organization","The team must have genuine authority to block or modify deployments — not just advisory authority — and must be protected from retaliation for raising concerns","The team must have a direct reporting line to the board of directors rather than to the CEO","The team's concerns must be validated by an external auditor before they can block a deployment"],"answer":1,"explain":"Advisory-only responsible AI teams are structurally unable to prevent harmful deployments — they can recommend, but business pressure routinely overrides recommendations without consequences. Real authority and retaliation protection are prerequisite for the function to work."},
+];
+
+let questions=[],current=0,score=0,answered=false;
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+window.startQuiz=function(){
+  questions=shuffle([...ALL_QUESTIONS]).slice(0,25);current=0;score=0;
+  document.getElementById('start-section').style.display='none';
+  document.getElementById('quiz-section').style.display='block';renderQuestion();
+};
+function renderQuestion(){
+  answered=false;const q=questions[current];
+  document.getElementById('question-num').textContent=`Question ${current+1} of 25`;
+  document.getElementById('question-text').textContent=q.q;
+  document.getElementById('progress-label').textContent=`Question ${current+1} of 25`;
+  document.getElementById('score-label').textContent=`${score} correct`;
+  document.getElementById('progress-fill').style.width=`${(current/25)*100}%`;
+  document.getElementById('feedback').className='feedback';document.getElementById('btn-next').className='btn-next';
+  const letters=['A','B','C','D'];const optionsEl=document.getElementById('options');optionsEl.innerHTML='';
+  const indices=shuffle([0,1,2,3]);
+  indices.forEach((origIdx,displayIdx)=>{
+    const opt=document.createElement('div');opt.className='option';
+    opt.innerHTML=`<div class="option-letter">${letters[displayIdx]}</div><div class="option-text">${q.options[origIdx]}</div>`;
+    opt.onclick=()=>selectAnswer(opt,origIdx===q.answer,indices.indexOf(q.answer),q.explain);
+    optionsEl.appendChild(opt);
+  });
+}
+function selectAnswer(clickedEl,isCorrect,correctShuffledIdx,explain){
+  if(answered)return;answered=true;
+  document.querySelectorAll('.option').forEach((o,i)=>{o.classList.add('disabled');if(i===correctShuffledIdx)o.classList.add('correct');});
+  if(isCorrect){clickedEl.classList.add('correct');score++;}else{clickedEl.classList.add('wrong');}
+  document.getElementById('score-label').textContent=`${score} correct`;
+  const fb=document.getElementById('feedback');fb.className=`feedback ${isCorrect?'correct':'wrong'} show`;
+  fb.textContent=isCorrect?`✓ Correct. ${explain}`:`✗ ${explain}`;
+  const btn=document.getElementById('btn-next');btn.className='btn-next show';btn.textContent=current===24?'See Results →':'Next Question →';
+}
+window.nextQuestion=function(){current++;if(current>=25)showResults();else renderQuestion();};
+async function showResults(){
+  document.getElementById('quiz-section').style.display='none';document.getElementById('result-section').style.display='block';
+  const passed=score>=18;const pct=Math.round((score/25)*100);
+  document.getElementById('result-icon').textContent=passed?'🏆':'📚';
+  document.getElementById('result-title').textContent=passed?'Assessment Passed':'Not This Time';
+  document.getElementById('result-score').className=`result-score ${passed?'pass':'fail'}`;
+  document.getElementById('result-score').textContent=`${score} / 25`;
+  if(passed){
+    document.getElementById('result-message').textContent=`You scored ${pct}% — above the 70% threshold. Your AI Governance certificate is being issued.`;
+    if(currentUser){
+      try{
+        const certId=currentUser.uid+'-governance';const completedDate=new Date();
+        await setDoc(doc(db,'users',currentUser.uid),{certificatesEarned:arrayUnion('governance'),governanceCompletedAt:completedDate,governanceCertId:certId,governanceCertificate:true},{merge:true});
+        await setDoc(doc(db,'certificates',certId),{name:currentUser.displayName||'Meridian Student',email:currentUser.email,course:'AI Governance — Meridian Institute of AI',issuedAt:completedDate,certId:certId,valid:true});
+        document.getElementById('result-actions').innerHTML=`<a href="../../certificate.html?id=${certId}" class="btn-result btn-primary" target="_blank">View Certificate →</a><a href="../../dashboard.html" class="btn-result btn-ghost">Dashboard</a>`;
+      }catch(e){document.getElementById('result-actions').innerHTML=`<a href="../../dashboard.html" class="btn-result btn-primary">Dashboard</a>`;}
+    }
+  }else{
+    document.getElementById('result-message').textContent=`You scored ${pct}% — you need 70% to pass. Review the modules where your answers were weakest and try again.`;
+    document.getElementById('result-actions').innerHTML=`<a href="module-1.html" class="btn-result btn-primary">Review from Module 1</a><button class="btn-result btn-ghost" onclick="location.reload()">Try Again</button>`;
+  }
+}
+window.toggleTheme=function(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='☾'):(h.setAttribute('data-theme','dark'),i.textContent='☀');};
+</script>
+</body>
+</html>

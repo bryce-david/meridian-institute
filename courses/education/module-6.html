@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Future Classroom — AI in Education — Meridian Institute of AI</title>
+<meta name="description" content="Free AI in Education course — module 6. What education looks like in 2030: personalized learning, hybrid human-AI instruction, and the skills that will matter most.">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="The Future Classroom — AI in Education — Meridian Institute of AI">
+<meta property="og:description" content="Free AI in Education course — module 6. What education looks like in 2030: personalized learning, hybrid human-AI instruction, and the skills that will matter most.">
+<meta property="og:url" content="https://meridianinstituteai.com/courses/education/module-6.html">
+<meta property="og:type" content="website">
+<link rel="canonical" href="https://meridianinstituteai.com/courses/education/module-6.html">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#f59e0b;--accent-dim:rgba(245,158,11,0.1);--nav-bg:rgba(8,8,8,0.9);--callout-bg:rgba(245,158,11,0.07);--callout-border:rgba(245,158,11,0.25);--good-bg:rgba(34,197,94,0.07);--good-border:rgba(34,197,94,0.2);--warn-bg:rgba(251,146,60,0.07);--warn-border:rgba(251,146,60,0.2);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#d97706;--accent-dim:rgba(217,119,6,0.08);--nav-bg:rgba(250,250,248,0.9);--callout-bg:rgba(217,119,6,0.05);--callout-border:rgba(217,119,6,0.2);--good-bg:rgba(22,163,74,0.06);--good-border:rgba(22,163,74,0.2);--warn-bg:rgba(234,88,12,0.05);--warn-border:rgba(234,88,12,0.2);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;overflow-x:hidden;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.7;overflow-x:hidden;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}
+  .nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}
+  .nav-back{font-size:13px;color:var(--text-2);text-decoration:none;transition:color 0.2s;}
+  .nav-back:hover{color:var(--text);}
+  .nav-label{font-size:13px;color:var(--text-3);}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;transition:all 0.2s;}
+  .progress-bar{position:fixed;top:60px;left:0;right:0;z-index:99;height:2px;background:var(--border);}
+  .progress-fill{height:100%;background:var(--accent);width:0%;transition:width 0.1s;}
+  .page-wrapper{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:100vh;padding-top:62px;}
+  .sidebar{position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto;border-right:1px solid var(--border);padding:32px 24px;background:var(--bg-2);}
+  .sidebar-course{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;}
+  .sidebar-course-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+  .sidebar-module{margin-bottom:4px;}
+  .sidebar-module-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:13px;color:var(--text-2);text-decoration:none;transition:all 0.2s;line-height:1.4;}
+  .sidebar-module-link:hover{background:var(--bg-3);color:var(--text);}
+  .sidebar-module-link.active{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-num{font-size:11px;font-weight:500;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--bg-4);color:var(--text-3);}
+  .sidebar-module-link.active .sidebar-num{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-divider{height:1px;background:var(--border);margin:20px 0;}
+  .sidebar-progress-label{font-size:12px;color:var(--text-3);margin-bottom:8px;display:flex;justify-content:space-between;}
+  .sidebar-progress-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sidebar-progress-fill{height:100%;width:71%;background:var(--accent);border-radius:2px;}
+  main{display:block;min-width:0;}
+  .content{max-width:760px;width:100%;padding:60px 64px 140px;margin:0 auto;}
+  .module-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+  .module-tag{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(245,158,11,0.2);padding:4px 12px;border-radius:100px;}
+  .module-meta{font-size:12px;color:var(--text-3);}
+  h1{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1.05;letter-spacing:-0.02em;color:var(--text);margin-bottom:24px;}
+  .intro-text{font-size:19px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+  h2{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:400;color:var(--text);margin:52px 0 18px;line-height:1.2;}
+  h3{font-size:16px;font-weight:500;color:var(--text);margin:32px 0 12px;}
+  p{font-size:16px;font-weight:300;color:var(--text-2);line-height:1.8;margin-bottom:20px;}
+  strong{font-weight:500;color:var(--text);}
+  .callout{background:var(--callout-bg);border:1px solid var(--callout-border);border-radius:12px;padding:24px 28px;margin:32px 0;}
+  .callout-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+  .callout p{margin:0;font-size:15px;color:var(--text-2);}
+  .callout p+p{margin-top:12px;}
+  .good{background:var(--good-bg);border:1px solid var(--good-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .good-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#22c55e;margin-bottom:10px;}
+  .good p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn{background:var(--warn-bg);border:1px solid var(--warn-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .warn-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#fb923c;margin-bottom:10px;}
+  .warn p{margin:0;font-size:15px;color:var(--text-2);}
+  .comparison-wrapper{overflow-x:auto;-webkit-overflow-scrolling:touch;width:100%;margin:28px 0;}
+  table{width:100%;border-collapse:collapse;font-size:14px;min-width:480px;}
+  th{text-align:left;padding:12px 16px;font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-3);border-bottom:1px solid var(--border-2);}
+  td{padding:14px 16px;border-bottom:1px solid var(--border);color:var(--text-2);line-height:1.6;vertical-align:top;}
+  tr:last-child td{border-bottom:none;}
+  td:first-child{color:var(--text);font-weight:500;}
+  .principle-list{display:flex;flex-direction:column;gap:12px;margin:24px 0;}
+  .principle{background:var(--bg-2);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:0 12px 12px 0;padding:20px 24px;}
+  .principle-title{font-size:15px;font-weight:500;color:var(--text);margin-bottom:6px;}
+  .principle-desc{font-size:14px;color:var(--text-2);line-height:1.65;margin:0;}
+  .sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:var(--bg-2);border-top:1px solid var(--border-2);padding:14px 5%;display:flex;align-items:center;justify-content:space-between;gap:16px;backdrop-filter:blur(12px);}
+  .sticky-bar-track{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sticky-bar-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.2s;width:0%;}
+  .sticky-bar-label{font-size:12px;color:var(--text-3);white-space:nowrap;min-width:60px;text-align:right;}
+  .sticky-bar-btn{padding:10px 20px;border-radius:8px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;background:var(--accent);color:#fff;border:none;cursor:pointer;white-space:nowrap;transition:opacity 0.2s;display:none;}
+  .sticky-bar-btn:hover{opacity:0.88;}
+  .sticky-bar-reading{font-size:12px;color:var(--text-3);white-space:nowrap;}
+  @media(max-width:900px){.page-wrapper{grid-template-columns:1fr;}.sidebar{display:none;}.content{padding:40px 24px 120px;}h1{font-size:38px;}}
+  @media(max-width:600px){.content{padding:28px 16px 120px;}h1{font-size:30px;}h2{font-size:24px;}}
+</style>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="shortcut icon" href="/favicon.ico">
+<style>@media(max-width:480px){.nav-divider{display:none}.nav-left{gap:8px}}</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="../../index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="../../index.html" class="nav-back">Home</a>
+    <div class="nav-divider"></div>
+    <a href="../../courses.html" class="nav-back">← AI in Education</a>
+    <div class="nav-divider"></div>
+    <span class="nav-label">Module 6</span>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">☀</span></button>
+</nav>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+
+<div class="page-wrapper">
+<aside class="sidebar">
+  <div class="sidebar-course">Course</div>
+  <div class="sidebar-course-name">AI in Education</div>
+  <div class="sidebar-module"><a href="module-1.html" class="sidebar-module-link"><span class="sidebar-num">1</span>How AI is Transforming Education</a></div>
+  <div class="sidebar-module"><a href="module-2.html" class="sidebar-module-link"><span class="sidebar-num">2</span>AI Tutoring and Personalized Learning</a></div>
+  <div class="sidebar-module"><a href="module-3.html" class="sidebar-module-link"><span class="sidebar-num">3</span>Using AI as a Student</a></div>
+  <div class="sidebar-module"><a href="module-4.html" class="sidebar-module-link"><span class="sidebar-num">4</span>AI Tools for Educators</a></div>
+  <div class="sidebar-module"><a href="module-5.html" class="sidebar-module-link"><span class="sidebar-num">5</span>Academic Integrity in the AI Era</a></div>
+  <div class="sidebar-module"><a href="module-6.html" class="sidebar-module-link active"><span class="sidebar-num">6</span>The Future Classroom</a></div>
+  <div class="sidebar-module"><a href="module-7.html" class="sidebar-module-link"><span class="sidebar-num">7</span>Building Your AI Literacy</a></div>
+  <div class="sidebar-module"><a href="quiz.html" class="sidebar-module-link" style="color:var(--accent);margin-top:4px;"><span class="sidebar-num" style="background:var(--accent-dim);color:var(--accent);">✦</span>Final Assessment</a></div>
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-progress-label"><span>Course progress</span><span style="color:var(--accent);">5 / 7</span></div>
+  <div class="sidebar-progress-track"><div class="sidebar-progress-fill"></div></div>
+</aside>
+
+<main>
+<div class="content">
+  <div class="module-eyebrow"><span class="module-tag">Module 6</span><span class="module-meta">20 min read · AI in Education</span></div>
+  <h1>The Future Classroom</h1>
+  <p class="intro-text">The classroom of 2030 will not look like the classroom of 2020. AI is not merely adding tools to an existing system — it is surfacing deep questions about what school is for, what learning means, and which human capabilities are worth preserving and building. These are not abstract philosophical questions. They are being answered right now in school districts, universities, and ed-tech companies around the world.</p>
+
+  <h2>The Personalization Horizon</h2>
+  <p>The most significant long-term promise of AI in education is full personalized learning at scale — a system in which every student's learning path is continuously adapted in real time based on what they know, what they don't know, how fast they're moving, and what kind of explanations work for them. This is not a theoretical concept. Carnegie Learning's MATHia platform has been doing adaptive math instruction since the 1990s, built on cognitive science research from Carnegie Mellon. Khan Academy's Khanmigo extends that philosophy to a conversational AI model. What's new is not the concept but the breadth and quality of the personalization now achievable with large language models.</p>
+  <p>The vision Sal Khan has articulated — every student with the equivalent of a private tutor, every teacher with the equivalent of a teaching assistant — was impossible at any prior point in history. Private tutoring has historically cost $50 to $150 per hour, placing it out of reach for the majority of students globally. A student in Lagos, in rural Montana, or in a classroom with 40 students and one teacher now has access to patient, knowledgeable, always-available instructional support at no cost. The gap between the top and bottom of the opportunity distribution for instructional support is narrowing in a way that nothing else has achieved.</p>
+  <p>The practical constraint is not technology — it is access and implementation. Devices, reliable internet, and the student self-regulation to use AI productively don't distribute evenly. A personalization system that only works for students who have those prerequisites amplifies existing advantages rather than democratizing learning. Getting from the current state to full deployment of AI-personalized learning at scale is fundamentally a policy and infrastructure problem, not a technical one.</p>
+
+  <div class="callout">
+    <div class="callout-label">Scale of impact</div>
+    <p>A 2023 World Economic Forum report projected that AI-personalized learning could raise global student achievement levels by the equivalent of 1 to 2 additional years of schooling over a student's K-12 career — if broadly deployed. For context, 2 additional years of effective schooling is roughly equivalent to raising a student from the 50th to the 70th percentile in most academic outcome distributions. Applied globally, that would represent one of the largest improvements in human educational attainment in history.</p>
+  </div>
+
+  <h2>Hybrid Human-AI Instruction</h2>
+  <p>The model emerging in the most forward-looking schools and universities is not "AI replaces teachers" — it is a restructuring of what teachers do. AI handles the low-complexity instructional work: delivering explanations, generating practice problems, providing immediate feedback on drafts, answering factual questions, helping students who are stuck get unstuck. That work is real and valuable, but it is also the work that can be replicated by a sufficiently capable system. The result is that teachers are freed — potentially freed — to spend their time on the work only humans can do: facilitating rich discussion, mentoring students through difficulty, designing projects that connect learning to students' real lives, and building the relationships that make learning possible in the first place.</p>
+  <p>Sal Khan's dual vision is clarifying here: an AI tutor for every student and an AI teaching assistant for every teacher. The teacher-facing AI handles planning, differentiation, feedback generation, and administrative documentation. The student-facing AI handles practice, explanation, and support. The teacher's time moves toward discussion facilitation, mentoring, and the social-emotional dimensions of the classroom that are irreducibly human. This is not a reduction in the importance of teachers — it is an elevation of what teachers spend their time on, assuming the implementation goes well.</p>
+  <p>The risk in implementation is not that AI takes over but that cost pressures lead institutions to use AI as a justification for increasing class sizes or reducing staffing. A teacher freed of 10 hours of administrative work per week who is then given 10 additional students to manage has not gained anything. The gains from AI in education accrue to students only if the time savings translate into more and better human interaction, not into institutional savings at students' expense. This is a governance and policy question, not a technology question.</p>
+
+  <h2>What Must Be Preserved</h2>
+  <p>The most important caution in the AI-in-education conversation concerns what cognitive scientists call desirable difficulties. Robert Bjork's decades of research at UCLA established that certain kinds of challenge — spacing practice over time, interleaving different topics, requiring retrieval rather than passive review — produce better long-term retention precisely because they feel harder in the moment. A learning environment that removes all friction, that explains everything immediately and clearly, that never allows a student to sit with confusion, may feel more pleasant and produce worse learning outcomes.</p>
+  <p>AI tutoring systems designed to maximize engagement can inadvertently optimize away the struggle that produces deep learning. A student who is stuck and gets an immediate, perfectly tailored explanation has not done the cognitive work of retrieving and constructing an answer. That work is uncomfortable. It is also where much of the learning happens. The design challenge for AI educational tools is not just "how do we make this more helpful" but "how do we make this helpful in ways that preserve productive struggle and don't substitute AI output for student thinking."</p>
+  <p>Beyond cognitive science, there are dimensions of education that simply cannot be replicated by AI and must be actively protected in curriculum design. Collaboration — students working together on a problem, navigating disagreement, learning to communicate across different perspectives — is both a skill and a social practice. Physical learning — making things, conducting experiments, performing, playing sports — develops capabilities that screen-based AI instruction cannot touch. Human relationship — the trust between a student and a teacher who knows them and believes in them — is not a nice-to-have feature of education. For many students, it is the thing that makes learning possible at all.</p>
+
+  <div class="warn">
+    <div class="warn-label">Over-automation risk</div>
+    <p>A 2024 UNESCO report warned that over-reliance on AI in education risked creating a generation of students who could use AI tools fluently but could not think independently without them — drawing on evidence from over-calculator use in mathematics education as a historical precedent. Students who used calculators for all arithmetic before developing number sense often struggled with estimation, reasonableness checking, and mathematical intuition. The parallel in AI is students who can generate coherent text but cannot construct an argument, or students who can produce code but cannot debug or reason about what the code is doing.</p>
+  </div>
+
+  <h2>EdTech Investment and the Market</h2>
+  <p>The commercial forces shaping the future classroom are significant. Global edtech investment exceeded $20 billion in 2023. AI-focused edtech companies alone raised $4.1 billion in venture funding in 2024 — a figure that reflects both the scale of the opportunity and the intensity of competitive pressure to capture it. The current landscape includes hundreds of AI tutoring, lesson planning, and assessment tools, most of which launched in the two years following ChatGPT's release.</p>
+  <p>Market consolidation is coming. The pattern in edtech, as in most software markets, is that a large number of early entrants compete until a handful of clear winners emerge and the rest fail or get acquired. The tools that will survive are those with the deepest integration into institutional workflows, the strongest evidence base for learning outcomes, and the most durable relationships with districts and universities. Duolingo, Carnegie Learning, Synthesis, and Age of Learning represent companies with genuine depth — years of user data, strong evidence for efficacy, and infrastructure that new entrants cannot replicate quickly. Tools that launched purely on the capability wave of 2022-2024 without that foundation face significant attrition risk.</p>
+
+  <h2>Skills That Will Matter</h2>
+  <p>The most important question the future classroom must answer is: what does it mean to be educated in a world where AI can retrieve, synthesize, write, and code at a level that exceeds most humans in most contexts? The traditional answer — a well-educated person has deep knowledge of a subject — remains true but incomplete. Knowledge is no longer a scarce resource. What remains scarce is the ability to do something meaningful with knowledge: to evaluate it critically, to combine it in novel ways, to communicate it compellingly, and to navigate the ethical dimensions of applying it.</p>
+  <p>The skills that AI cannot replicate at a meaningful level are the skills that will distinguish educated people in the labor market and in civic life. Critical evaluation — reading a source, an argument, or an AI output and knowing whether it's right, where it's incomplete, and what it's missing — is not a skill AI can substitute for. Creative synthesis — taking ideas from different domains and combining them in ways that produce something genuinely new — requires the kind of associative thinking that remains distinctively human. Communication — expressing ideas to human audiences in ways that persuade, inspire, or inform — remains a human craft even as AI can produce technically correct text. Ethical reasoning — navigating value conflicts where there is no algorithm for the right answer — cannot be delegated.</p>
+  <p>The curriculum implication is significant: schools that continue to optimize for information retention and first-draft production are preparing students for a world that no longer exists. Schools that develop critical thinking, creative synthesis, communication, and ethical reasoning — with AI as a tool rather than a substitute — are preparing students for the world that does.</p>
+
+  <div class="principle-list">
+    <div class="principle">
+      <div class="principle-title">Critical Thinking</div>
+      <div class="principle-desc">The ability to evaluate AI-generated and human-generated information with equal rigor — assessing sources, identifying missing context, recognizing bias, and distinguishing strong from weak reasoning.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Creative Synthesis</div>
+      <div class="principle-desc">Combining ideas across disciplines and domains to generate genuinely novel solutions, arguments, or artifacts — the kind of originality that emerges from deep domain knowledge plus cross-domain exposure.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Communication</div>
+      <div class="principle-desc">Expressing ideas to human audiences in ways that are clear, compelling, and calibrated to the audience — a craft that requires understanding human psychology, not just language mechanics.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Ethical Reasoning</div>
+      <div class="principle-desc">Navigating value conflicts where multiple legitimate interests are in tension and there is no algorithm for the right answer — the capacity to reason carefully about what matters and why.</div>
+    </div>
+  </div>
+
+</div>
+</main>
+</div>
+
+<div class="sticky-bar">
+  <div class="sticky-bar-reading" id="sticky-reading">Read to the end to unlock the next module</div>
+  <div class="sticky-bar-track"><div class="sticky-bar-fill" id="sticky-fill"></div></div>
+  <div class="sticky-bar-label" id="sticky-label">0%</div>
+  <button class="sticky-bar-btn" id="sticky-btn" onclick="completeAndNext()">Module 7: Building Your AI Literacy →</button>
+</div>
+
+<script>
+  function toggleTheme(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='☾'):(h.setAttribute('data-theme','dark'),i.textContent='☀');}
+  window.addEventListener('scroll',()=>{const d=document.documentElement,s=d.scrollTop||document.body.scrollTop,t=d.scrollHeight-d.clientHeight;document.getElementById('progress').style.width=(s/t*100)+'%';});
+  let unlocked=false;
+  function updateScrollProgress(){
+    const pct=Math.min(100,Math.round(((window.scrollY+window.innerHeight)/document.documentElement.scrollHeight)*100));
+    document.getElementById('sticky-fill').style.width=pct+'%';
+    document.getElementById('sticky-label').textContent=pct+'%';
+    if(pct>=95&&!unlocked){unlocked=true;document.getElementById('sticky-btn').style.display='block';document.getElementById('sticky-reading').style.display='none';document.getElementById('sticky-fill').style.background='#22c55e';document.getElementById('sticky-label').style.color='#22c55e';}
+  }
+  window.addEventListener('scroll',updateScrollProgress);updateScrollProgress();
+  function completeAndNext(){
+    if(window.__meridianSaveProgress){ try{ window.__meridianSaveProgress("m6"); }catch(e){} }
+    setTimeout(function(){ window.location.href="module-7.html"; }, 120);
+  }
+</script>
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import { getFirestore, doc, setDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  const app = initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+  const auth = getAuth(app); const db = getFirestore(app);
+  let meridianUser = null;
+  onAuthStateChanged(auth, u => { meridianUser = u; });
+  window.__meridianSaveProgress = async function(mValue){
+    if(!meridianUser) return;
+    try { await setDoc(doc(db,"users",meridianUser.uid), { educationModules: arrayUnion(mValue) }, { merge: true }); } catch(e) {}
+  };
+</script>
+</body>
+</html>
