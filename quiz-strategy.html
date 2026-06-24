@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Final Assessment — AI Strategy — Meridian Institute of AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#1E40AF;--accent-dim:rgba(30,64,175,0.1);--nav-bg:rgba(8,8,8,0.9);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#1a37a0;--accent-dim:rgba(26,55,160,0.08);--nav-bg:rgba(250,250,248,0.9);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}.nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}.nav-back{font-size:13px;color:var(--text-2);text-decoration:none;}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;}
+  .quiz-wrap{max-width:720px;margin:0 auto;padding:100px 32px 80px;}
+  .quiz-header{text-align:center;margin-bottom:48px;}
+  .quiz-tag{display:inline-block;font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(30,64,175,0.2);padding:4px 14px;border-radius:100px;margin-bottom:20px;}
+  h1{font-family:'Cormorant Garamond',serif;font-size:44px;font-weight:300;line-height:1.1;margin-bottom:16px;}
+  .quiz-subhead{font-size:16px;color:var(--text-2);font-weight:300;}
+  .quiz-meta{display:flex;gap:24px;justify-content:center;margin-top:20px;padding-top:20px;border-top:1px solid var(--border);}
+  .quiz-meta-item{font-size:13px;color:var(--text-3);}
+  .start-btn{display:block;width:100%;max-width:320px;margin:32px auto 0;padding:14px 0;background:var(--accent);color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:500;font-family:'DM Sans',sans-serif;cursor:pointer;transition:opacity 0.2s;}.start-btn:hover{opacity:0.88;}
+  #quiz-area{display:none;}
+  .q-block{background:var(--bg-2);border:1px solid var(--border);border-radius:14px;padding:28px 32px;margin-bottom:20px;}
+  .q-num{font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-3);margin-bottom:10px;}
+  .q-text{font-size:17px;font-weight:400;color:var(--text);line-height:1.55;margin-bottom:20px;}
+  .q-options{display:flex;flex-direction:column;gap:10px;}
+  .q-opt{display:flex;align-items:flex-start;gap:12px;padding:12px 16px;border-radius:9px;border:1px solid var(--border);cursor:pointer;transition:all 0.15s;font-size:15px;color:var(--text-2);line-height:1.5;background:var(--bg-3);}
+  .q-opt:hover{border-color:var(--accent);color:var(--text);}.q-opt input[type=radio]{accent-color:var(--accent);margin-top:3px;flex-shrink:0;}
+  .q-opt.selected{border-color:var(--accent);background:var(--accent-dim);color:var(--text);}
+  .progress-track{height:3px;background:var(--border);border-radius:2px;margin-bottom:32px;overflow:hidden;}.progress-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.3s;}
+  .quiz-submit{display:block;width:100%;padding:15px 0;background:var(--accent);color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:500;font-family:'DM Sans',sans-serif;cursor:pointer;margin-top:12px;transition:opacity 0.2s;}.quiz-submit:hover{opacity:0.88;}.quiz-submit:disabled{opacity:0.4;cursor:not-allowed;}
+  #result-screen{display:none;text-align:center;padding:60px 0;}
+  .result-icon{font-size:56px;margin-bottom:16px;}.result-title{font-family:'Cormorant Garamond',serif;font-size:40px;font-weight:400;margin-bottom:12px;}
+  .result-score{font-size:20px;color:var(--text-2);margin-bottom:8px;}.result-msg{font-size:15px;color:var(--text-3);margin-bottom:36px;max-width:480px;margin-left:auto;margin-right:auto;line-height:1.6;}
+  .cert-box{background:var(--bg-2);border:1px solid var(--border);border-radius:14px;padding:24px 28px;margin:0 auto 32px;max-width:440px;}
+  .cert-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:8px;}.cert-id{font-size:14px;color:var(--text-2);font-family:monospace;word-break:break-all;}
+  .result-btn{display:inline-block;padding:12px 28px;border-radius:9px;font-size:14px;font-weight:500;cursor:pointer;border:none;font-family:'DM Sans',sans-serif;}
+  .result-btn-primary{background:var(--accent);color:#fff;margin-right:10px;}.result-btn-primary:hover{opacity:0.88;}
+  .result-btn-secondary{background:var(--bg-2);color:var(--text-2);border:1px solid var(--border);}.result-btn-secondary:hover{color:var(--text);}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="courses.html" class="nav-back">← All Courses</a>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">☀</span></button>
+</nav>
+<div class="quiz-wrap">
+  <div class="quiz-header">
+    <div class="quiz-tag">Final Assessment</div>
+    <h1>AI Strategy</h1>
+    <p class="quiz-subhead">25 questions · 70% required to pass · Earn your certificate</p>
+    <div class="quiz-meta">
+      <span class="quiz-meta-item">25 questions</span>
+      <span class="quiz-meta-item">~15 minutes</span>
+      <span class="quiz-meta-item">Passing: 18 / 25</span>
+    </div>
+  </div>
+  <div id="start-screen">
+    <button class="start-btn" onclick="startQuiz()">Begin Assessment</button>
+  </div>
+  <div id="quiz-area">
+    <div class="progress-track"><div class="progress-fill" id="q-progress"></div></div>
+    <div id="questions-container"></div>
+    <button class="quiz-submit" id="submit-btn" onclick="submitQuiz()" disabled>Submit Assessment</button>
+  </div>
+  <div id="result-screen">
+    <div class="result-icon" id="result-icon"></div>
+    <div class="result-title" id="result-title"></div>
+    <div class="result-score" id="result-score"></div>
+    <div class="result-msg" id="result-msg"></div>
+    <div class="cert-box" id="cert-box" style="display:none;"><div class="cert-label">Certificate ID</div><div class="cert-id" id="cert-id-text"></div></div>
+    <button class="result-btn result-btn-primary" onclick="window.location.href='courses.html'">Back to Courses</button>
+    <button class="result-btn result-btn-secondary" id="retry-btn" onclick="retryQuiz()" style="display:none;">Retry Assessment</button>
+  </div>
+</div>
+<script type="module">
+import{initializeApp}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import{getAuth,onAuthStateChanged}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import{getFirestore,doc,setDoc}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+const app=initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+const auth=getAuth(app);const db=getFirestore(app);let currentUser=null;
+onAuthStateChanged(auth,u=>{currentUser=u;});
+window.toggleTheme=function(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='☾'):(h.setAttribute('data-theme','dark'),i.textContent='☀');};
+
+const ALL_QUESTIONS=[
+  {q:"What is a 'use case' in AI strategy and why is identifying the right one the most critical first step?",opts:["A legal document for AI usage","A specific, bounded application of AI to a business problem — choosing the wrong use case wastes resources and produces no value, while a well-chosen one delivers measurable impact","A type of AI model","A software testing scenario"],a:1},
+  {q:"What does 'build vs. buy vs. partner' mean as a strategic AI decision?",opts:["Decisions about AI hardware procurement","Choosing between developing AI capabilities in-house (build), licensing existing models or tools (buy), or collaborating with an external AI provider (partner) — the right choice depends on strategic differentiation, data sensitivity, and resources","A legal framework for AI","A model training approach"],a:1},
+  {q:"What is 'AI readiness' and what organizational factors determine it?",opts:["Having the fastest computers","The degree to which an organization has the data infrastructure, talent, leadership alignment, and cultural openness to successfully adopt and scale AI — assessing readiness prevents failed implementations","A government certification for AI systems","The speed of a company's internet connection"],a:1},
+  {q:"What is a 'data moat' and why is it strategically valuable in AI competition?",opts:["A security barrier around servers","A proprietary, hard-to-replicate dataset that gives an organization a persistent advantage in training or fine-tuning better AI models than competitors — data quality and exclusivity are key dimensions","A method for data storage","A type of firewall"],a:1},
+  {q:"What is 'Goodhart's Law' and why is it relevant to measuring AI ROI?",opts:["A law about AI patent protection","When a measure becomes a target, it ceases to be a good measure — organizations that optimize AI systems purely for proxy metrics (e.g., throughput) may undermine the true business outcome (e.g., customer satisfaction) they care about","A theory of economic growth","A method for data labeling"],a:1},
+  {q:"What distinguishes 'AI augmentation' from 'AI automation' as strategic approaches?",opts:["They are identical","Augmentation enhances human capability by pairing AI with human judgment for complex tasks; automation replaces human involvement in well-defined repetitive tasks — the right approach depends on task structure and the value of human judgment","Augmentation is always better","Automation is cheaper in all cases"],a:1},
+  {q:"What is an 'AI center of excellence' and what organizational problem does it solve?",opts:["A building for AI research","A centralized team that sets standards, builds shared tools, and disseminates AI expertise across business units — it prevents duplicated effort, inconsistent practices, and the knowledge silos that slow enterprise AI adoption","A certification body for AI products","An external consulting firm"],a:1},
+  {q:"What is 'model risk management' (MRM) and in which industries is it especially critical?",opts:["Managing the risk of buying the wrong GPU","The formal process of validating, monitoring, and governing quantitative models including AI — critical in finance, healthcare, and insurance where model errors can cause regulatory violations or significant harm","A method for reducing model file size","A project management framework"],a:1},
+  {q:"What is 'AI technical debt' and how does it accumulate?",opts:["The cost of AI hardware depreciation","The accumulated cost of shortcuts in AI system design — hasty model integrations, undocumented pipelines, and skipped monitoring create future rework that becomes increasingly expensive to resolve","A financial accounting category","A measure of data quality"],a:1},
+  {q:"What is 'change management' in the context of AI deployment and why do many AI projects fail here?",opts:["Updating software version numbers","The process of preparing, supporting, and helping people transition to new AI-enabled workflows — most AI ROI failures stem not from technical problems but from employees not adopting or trusting the new system","A data migration process","A model retraining procedure"],a:1},
+  {q:"What is 'vendor lock-in' risk in AI strategy and how can organizations mitigate it?",opts:["A security risk from external vendors","Dependence on a single AI provider's proprietary infrastructure or model format that makes switching prohibitively expensive — mitigated by favoring open standards, maintaining data portability, and avoiding deep coupling to proprietary APIs","A software licensing issue only","The risk of vendor bankruptcy"],a:1},
+  {q:"What is an 'AI pilot' and what criteria determine whether to scale it?",opts:["A person who tests AI systems","A small, time-bounded deployment to test an AI application's viability — scale when the pilot demonstrates measurable value, acceptable error rates, user adoption, and a credible path to production infrastructure","A type of AI model","A marketing experiment"],a:1},
+  {q:"What is 'responsible AI' as a strategic commitment, and what are its typical pillars?",opts:["Following AI regulations only","An organizational framework for developing and deploying AI ethically — typical pillars include fairness, transparency, accountability, privacy, and reliability — increasingly required by enterprise customers and regulators","A PR campaign","A model training methodology"],a:1},
+  {q:"What is the 'AI talent market' challenge and what are the main strategic responses?",opts:["AI replacing HR departments","A shortage of ML engineers, data scientists, and AI product managers — organizations respond through competitive compensation, university partnerships, upskilling existing employees, and acquiring AI startups for their teams","A regulatory challenge","A data licensing issue"],a:1},
+  {q:"What is 'AI strategy vs. data strategy' and why must they be aligned?",opts:["They are unrelated","AI strategy defines how AI will create competitive value; data strategy governs how data is collected, stored, and governed — misalignment produces AI initiatives that cannot be trained, evaluated, or improved because the required data is unavailable or poor quality","Data strategy comes first, always","AI strategy is always a subset of IT strategy"],a:1},
+  {q:"What is 'total cost of ownership' (TCO) for an AI system and what components does it include?",opts:["The purchase price of the model","The full lifecycle cost including data labeling, compute, engineering, integration, monitoring, retraining, and compliance overhead — typically far exceeds the initial model licensing or development cost","The cost of the API calls only","The hardware cost alone"],a:1},
+  {q:"What is 'explainability' in AI systems and when is it a strategic requirement, not just a nice-to-have?",opts:["Making AI user interfaces simpler","The ability to provide human-understandable reasons for AI decisions — becomes a legal or regulatory requirement in high-stakes domains (credit, hiring, healthcare, criminal justice) where opaque decisions create liability or violate law","A method for improving model accuracy","A user experience design principle"],a:1},
+  {q:"What is 'AI procurement' and what key questions should organizations ask vendors?",opts:["Buying AI-themed office supplies","The process of evaluating and acquiring external AI systems — critical questions include: How was the model trained and on what data? What are failure modes? How is it monitored in production? What are data privacy practices?","A government contracting process only","A method for evaluating open-source tools"],a:1},
+  {q:"What is 'competitive intelligence' in the context of AI strategy?",opts:["Using AI to spy on competitors","Systematically monitoring competitors' AI capabilities, product launches, talent moves, and research publications to inform strategic decisions about where to invest and differentiate","A marketing analytics tool","A model benchmarking exercise"],a:1},
+  {q:"What is a 'platform strategy' in AI and what companies have executed it successfully?",opts:["Building AI on cloud platforms only","Creating an AI ecosystem where a core model or API enables third-party applications to be built on top — creating network effects, as demonstrated by OpenAI's API platform strategy with GPT models","A web hosting strategy","An internal IT strategy"],a:1},
+  {q:"What is 'AI-first' product design and how does it differ from adding AI features to an existing product?",opts:["Products that only use AI","Designing the product's core value proposition around AI capabilities from the ground up, enabling fundamentally different user experiences — rather than bolting AI onto existing workflows, which typically limits impact to marginal efficiency gains","A marketing label","A development methodology for startups only"],a:1},
+  {q:"What is 'human-in-the-loop' design in AI systems and when is it strategically appropriate?",opts:["Hiring humans to run the AI","Designing systems where humans review, approve, or override AI decisions at critical steps — appropriate when errors are costly or irreversible, regulatory requirements mandate human accountability, or AI confidence is insufficient for full automation","A fallback when AI fails","A type of user interface"],a:1},
+  {q:"What is the 'make-or-buy' decision for foundation models, and what factors favor building proprietary models?",opts:["Whether to buy GPU hardware","Whether to fine-tune or use existing foundation models versus training new ones — proprietary training is favored when the organization has unique data that creates differentiation, standard models lack domain performance, and compute costs are justified by competitive advantage","A cloud vs. on-premise decision","A data storage decision"],a:1},
+  {q:"What does 'AI portfolio management' mean at the enterprise level?",opts:["Investing in AI company stocks","Maintaining a balanced mix of AI initiatives across time horizons — near-term efficiency projects, medium-term product enhancements, and long-term transformational bets — with governance processes to allocate resources, retire failures, and scale successes","A machine learning technique","A data science team structure"],a:1},
+  {q:"What is 'AI ethics risk' as a business risk category distinct from technical risk?",opts:["The risk that AI will become sentient","Reputational, legal, and social harm arising from AI systems that discriminate, violate privacy, or produce harmful outputs — organizations face regulatory fines, customer loss, and public backlash independent of whether the AI performs technically well on narrow metrics","A type of cybersecurity risk","A risk only relevant to AI companies"],a:1}
+];
+
+let activeQuestions=[];let userAnswers={};
+function shuffle(arr){const a=[...arr];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+window.startQuiz=function(){activeQuestions=shuffle(ALL_QUESTIONS).slice(0,25);userAnswers={};document.getElementById('start-screen').style.display='none';document.getElementById('quiz-area').style.display='block';renderQuestions();};
+function renderQuestions(){const c=document.getElementById('questions-container');c.innerHTML=activeQuestions.map((q,qi)=>`<div class="q-block" id="qb-${qi}"><div class="q-num">Question ${qi+1} of ${activeQuestions.length}</div><div class="q-text">${q.q}</div><div class="q-options">${q.opts.map((o,oi)=>`<label class="q-opt" id="opt-${qi}-${oi}"><input type="radio" name="q${qi}" value="${oi}" onchange="selectOpt(${qi},${oi})">${o}</label>`).join('')}</div></div>`).join('');}
+window.selectOpt=function(qi,oi){userAnswers[qi]=oi;activeQuestions[qi].opts.forEach((_,i)=>{const el=document.getElementById(`opt-${qi}-${i}`);if(el)el.classList.toggle('selected',i===oi);});const answered=Object.keys(userAnswers).length;document.getElementById('q-progress').style.width=(answered/activeQuestions.length*100)+'%';document.getElementById('submit-btn').disabled=answered<activeQuestions.length;};
+window.submitQuiz=async function(){let correct=0;activeQuestions.forEach((q,i)=>{if(userAnswers[i]===q.a)correct++;});const pct=Math.round(correct/activeQuestions.length*100);const passed=pct>=70;if(passed&&currentUser){try{const id='STR-'+Date.now();await setDoc(doc(db,'users',currentUser.uid),{strategyCertId:id},{merge:true});document.getElementById('cert-id-text').textContent=id;document.getElementById('cert-box').style.display='block';}catch(e){}}document.getElementById('quiz-area').style.display='none';document.getElementById('result-icon').textContent=passed?'🎓':'📖';document.getElementById('result-title').textContent=passed?'Certificate Earned':'Keep Studying';document.getElementById('result-score').textContent=`${correct} / ${activeQuestions.length} correct (${pct}%)`;document.getElementById('result-msg').textContent=passed?'Congratulations! You\'ve demonstrated a solid understanding of AI Strategy.':'You need 70% to pass. Review the modules and try again when you\'re ready.';if(!passed){document.getElementById('retry-btn').style.display='inline-block';}document.getElementById('result-screen').style.display='block';};
+window.retryQuiz=function(){document.getElementById('result-screen').style.display='none';document.getElementById('cert-box').style.display='none';document.getElementById('retry-btn').style.display='none';window.startQuiz();};
+</script>
+</body>
+</html>

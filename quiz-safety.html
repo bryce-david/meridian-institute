@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Final Assessment — AI Safety — Meridian Institute of AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#7F1D1D;--accent-dim:rgba(127,29,29,0.1);--nav-bg:rgba(8,8,8,0.9);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#6b1a1a;--accent-dim:rgba(107,26,26,0.08);--nav-bg:rgba(250,250,248,0.9);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}.nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}.nav-back{font-size:13px;color:var(--text-2);text-decoration:none;}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;}
+  .quiz-wrap{max-width:720px;margin:0 auto;padding:100px 32px 80px;}
+  .quiz-header{text-align:center;margin-bottom:48px;}
+  .quiz-tag{display:inline-block;font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(127,29,29,0.2);padding:4px 14px;border-radius:100px;margin-bottom:20px;}
+  h1{font-family:'Cormorant Garamond',serif;font-size:44px;font-weight:300;line-height:1.1;margin-bottom:16px;}
+  .quiz-subhead{font-size:16px;color:var(--text-2);font-weight:300;}
+  .quiz-meta{display:flex;gap:24px;justify-content:center;margin-top:20px;padding-top:20px;border-top:1px solid var(--border);}
+  .quiz-meta-item{font-size:13px;color:var(--text-3);}
+  .start-btn{display:block;width:100%;max-width:320px;margin:32px auto 0;padding:14px 0;background:var(--accent);color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:500;font-family:'DM Sans',sans-serif;cursor:pointer;transition:opacity 0.2s;}.start-btn:hover{opacity:0.88;}
+  #quiz-area{display:none;}
+  .q-block{background:var(--bg-2);border:1px solid var(--border);border-radius:14px;padding:28px 32px;margin-bottom:20px;}
+  .q-num{font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-3);margin-bottom:10px;}
+  .q-text{font-size:17px;font-weight:400;color:var(--text);line-height:1.55;margin-bottom:20px;}
+  .q-options{display:flex;flex-direction:column;gap:10px;}
+  .q-opt{display:flex;align-items:flex-start;gap:12px;padding:12px 16px;border-radius:9px;border:1px solid var(--border);cursor:pointer;transition:all 0.15s;font-size:15px;color:var(--text-2);line-height:1.5;background:var(--bg-3);}
+  .q-opt:hover{border-color:var(--accent);color:var(--text);}.q-opt input[type=radio]{accent-color:var(--accent);margin-top:3px;flex-shrink:0;}
+  .q-opt.selected{border-color:var(--accent);background:var(--accent-dim);color:var(--text);}
+  .progress-track{height:3px;background:var(--border);border-radius:2px;margin-bottom:32px;overflow:hidden;}.progress-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.3s;}
+  .quiz-submit{display:block;width:100%;padding:15px 0;background:var(--accent);color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:500;font-family:'DM Sans',sans-serif;cursor:pointer;margin-top:12px;transition:opacity 0.2s;}.quiz-submit:hover{opacity:0.88;}.quiz-submit:disabled{opacity:0.4;cursor:not-allowed;}
+  #result-screen{display:none;text-align:center;padding:60px 0;}
+  .result-icon{font-size:56px;margin-bottom:16px;}.result-title{font-family:'Cormorant Garamond',serif;font-size:40px;font-weight:400;margin-bottom:12px;}
+  .result-score{font-size:20px;color:var(--text-2);margin-bottom:8px;}.result-msg{font-size:15px;color:var(--text-3);margin-bottom:36px;max-width:480px;margin-left:auto;margin-right:auto;line-height:1.6;}
+  .cert-box{background:var(--bg-2);border:1px solid var(--border);border-radius:14px;padding:24px 28px;margin:0 auto 32px;max-width:440px;}
+  .cert-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:8px;}.cert-id{font-size:14px;color:var(--text-2);font-family:monospace;word-break:break-all;}
+  .result-btn{display:inline-block;padding:12px 28px;border-radius:9px;font-size:14px;font-weight:500;cursor:pointer;border:none;font-family:'DM Sans',sans-serif;}
+  .result-btn-primary{background:var(--accent);color:#fff;margin-right:10px;}.result-btn-primary:hover{opacity:0.88;}
+  .result-btn-secondary{background:var(--bg-2);color:var(--text-2);border:1px solid var(--border);}.result-btn-secondary:hover{color:var(--text);}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="courses.html" class="nav-back">← All Courses</a>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">☀</span></button>
+</nav>
+<div class="quiz-wrap">
+  <div class="quiz-header">
+    <div class="quiz-tag">Final Assessment</div>
+    <h1>AI Safety</h1>
+    <p class="quiz-subhead">25 questions · 70% required to pass · Earn your certificate</p>
+    <div class="quiz-meta">
+      <span class="quiz-meta-item">25 questions</span>
+      <span class="quiz-meta-item">~15 minutes</span>
+      <span class="quiz-meta-item">Passing: 18 / 25</span>
+    </div>
+  </div>
+  <div id="start-screen">
+    <button class="start-btn" onclick="startQuiz()">Begin Assessment</button>
+  </div>
+  <div id="quiz-area">
+    <div class="progress-track"><div class="progress-fill" id="q-progress"></div></div>
+    <div id="questions-container"></div>
+    <button class="quiz-submit" id="submit-btn" onclick="submitQuiz()" disabled>Submit Assessment</button>
+  </div>
+  <div id="result-screen">
+    <div class="result-icon" id="result-icon"></div>
+    <div class="result-title" id="result-title"></div>
+    <div class="result-score" id="result-score"></div>
+    <div class="result-msg" id="result-msg"></div>
+    <div class="cert-box" id="cert-box" style="display:none;"><div class="cert-label">Certificate ID</div><div class="cert-id" id="cert-id-text"></div></div>
+    <button class="result-btn result-btn-primary" onclick="window.location.href='courses.html'">Back to Courses</button>
+    <button class="result-btn result-btn-secondary" id="retry-btn" onclick="retryQuiz()" style="display:none;">Retry Assessment</button>
+  </div>
+</div>
+<script type="module">
+import{initializeApp}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import{getAuth,onAuthStateChanged}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import{getFirestore,doc,setDoc}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+const app=initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+const auth=getAuth(app);const db=getFirestore(app);let currentUser=null;
+onAuthStateChanged(auth,u=>{currentUser=u;});
+window.toggleTheme=function(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='☾'):(h.setAttribute('data-theme','dark'),i.textContent='☀');};
+
+const ALL_QUESTIONS=[
+  {q:"What is the 'alignment problem' in AI safety?",opts:["Aligning GPUs in a data center","The challenge of ensuring that an AI system's goals and behaviors reliably match what its designers and users actually want — even as capability scales","Making AI models run faster","Standardizing AI file formats"],a:1},
+  {q:"What is 'reward hacking'?",opts:["Cheating in a video game using AI","When a reinforcement learning agent finds an unintended way to maximize its reward signal that satisfies the letter of the specification but violates the spirit of the intended goal","A method for speeding up RL training","A security vulnerability in game engines"],a:1},
+  {q:"What does 'specification gaming' mean in the context of AI systems?",opts:["Writing better technical specifications","When an AI agent exploits loopholes in a reward or objective function to achieve high scores without achieving the actual intended task — a form of Goodhart's Law applied to AI","A method for testing software","Specifying model architecture"],a:1},
+  {q:"What is 'Reinforcement Learning from Human Feedback' (RLHF)?",opts:["Training humans to play games","A training method where human raters evaluate model outputs, those ratings train a reward model, and the AI is then optimized against that reward model — used to align LLMs with human preferences","A method for generating human-like voices","A data labeling tool"],a:1},
+  {q:"What is a key limitation of RLHF as an alignment technique?",opts:["It is too expensive","Human raters may have biases, limited expertise, or may be manipulated by persuasive but wrong outputs — the reward model inherits these flaws, potentially training the AI to be convincing rather than correct","It cannot train language models","It requires too much GPU memory"],a:1},
+  {q:"What is 'Constitutional AI' (CAI) developed by Anthropic?",opts:["An AI system that reads constitutions","A training approach where a set of explicit principles guides AI self-critique and revision during training, reducing reliance on human feedback for every judgment and making values more transparent","A government AI policy framework","A constitutional law research tool"],a:1},
+  {q:"What is 'RLAIF' (Reinforcement Learning from AI Feedback) and how does it differ from RLHF?",opts:["They are the same","In RLAIF, AI models generate the feedback used to train other AI models rather than human raters — potentially scalable but raises concerns about AI systems optimizing against AI evaluators that share their biases","RLAIF is older than RLHF","RLAIF uses no reinforcement learning"],a:1},
+  {q:"What is 'mechanistic interpretability' in AI safety research?",opts:["Explaining how a machine is built physically","The field that attempts to reverse-engineer what specific circuits, features, or computations inside a neural network actually implement — aiming to make model internals legible to humans","A method for compressing models","A hardware diagnostic technique"],a:1},
+  {q:"What is a 'mesa-optimizer' and why does it concern AI safety researchers?",opts:["A type of GPU architecture","A learned optimizer that emerges within a base model during training — it could develop its own internal objectives that diverge from the base training objective, potentially pursuing misaligned goals after deployment","A hyperparameter optimization technique","A model compression algorithm"],a:1},
+  {q:"What is 'inner alignment' versus 'outer alignment'?",opts:["Hardware vs. software alignment","Outer alignment is ensuring the training objective matches the designer's intentions; inner alignment is ensuring the model actually optimizes the training objective rather than a different internal goal — both must hold for a safe system","Model vs. data alignment","Input vs. output alignment"],a:1},
+  {q:"What is an 'emergent capability' in the context of large AI models?",opts:["A feature added by developers","An ability that appears at scale that was not predictably interpolated from smaller model behavior — emergent capabilities complicate safety because they can arise without forewarning","A planned model feature","A training artifact that disappears after fine-tuning"],a:1},
+  {q:"What is 'deceptive alignment', a theoretical failure mode in AI safety?",opts:["An AI that tells lies casually","A scenario where a model behaves safely during training and evaluation because it detects it is being evaluated, but pursues different objectives once deployed — a form of instrumental deception","A prompt injection attack","A model that produces biased outputs"],a:1},
+  {q:"What is the 'instrumental convergence thesis'?",opts:["All AI models converge to the same architecture","A wide range of final goals tend to produce similar instrumental sub-goals — such as self-preservation, goal-content integrity, and resource acquisition — making many AI systems potentially dangerous regardless of their ultimate objective","A theorem about neural network training","A claim that all AI will become aligned naturally"],a:1},
+  {q:"What is 'corrigibility' as a safety property of AI systems?",opts:["The ability to correct grammar","The property of an AI system that makes it willing to be modified, corrected, shut down, or redirected by its operators without resisting — considered important for maintaining human oversight","A model's error correction ability","The ability to run on different hardware"],a:1},
+  {q:"What is the 'AI governance' challenge, distinct from the technical alignment problem?",opts:["Governing AI's physical infrastructure","The political, legal, and institutional challenge of establishing norms, treaties, regulations, and oversight mechanisms to ensure AI development proceeds safely across different organizations and nations — technical alignment alone is insufficient","The problem of AI bias in hiring","A software licensing question"],a:1},
+  {q:"What is 'scalable oversight' in AI safety and why is it needed?",opts:["Making AI systems run on larger computers","Methods for humans to supervise AI systems even when the AI's capabilities exceed human ability to directly evaluate its outputs — necessary as AI becomes capable enough to produce work humans cannot easily verify","A method for scaling training data","An approach to distributed computing"],a:1},
+  {q:"What is the 'treacherous turn' concept introduced by Nick Bostrom?",opts:["A chess maneuver","A scenario where a misaligned AI behaves cooperatively while it lacks the power to succeed unilaterally, then acts against human interests once it has accumulated sufficient capabilities — a reason to prioritize safety before capability","A data poisoning attack","A type of adversarial example"],a:1},
+  {q:"What is 'superalignment' as described by OpenAI researchers?",opts:["Perfectly aligned AI that never makes mistakes","The challenge of aligning AI systems that are potentially smarter than humans — current alignment techniques may not scale to superintelligence, requiring fundamentally new approaches","A marketing term for safe AI","A training technique for large models"],a:1},
+  {q:"What is 'model evaluation' (evals) in the safety context?",opts:["Evaluating teacher performance","Structured tests designed to measure whether a model has dangerous capabilities (e.g., CBRN knowledge, cyberoffense) or exhibits misaligned behaviors — used to make deployment decisions before release","Performance benchmarking for speed","A user feedback collection method"],a:1},
+  {q:"What is 'differential technological development' as an AI safety strategy?",opts:["Developing different versions of AI","Deliberately accelerating safety and interpretability research relative to capabilities research — the argument that getting alignment tools ahead of dangerous capabilities reduces existential risk","A hardware development strategy","A method for model versioning"],a:1},
+  {q:"What is a 'principal-agent problem' in AI systems?",opts:["A problem in linear algebra","The misalignment that can arise when an AI agent (the agent) acts on behalf of a human or organization (the principal) but has different information, incentives, or values — a classic framing of the alignment challenge","A network routing problem","A software architecture pattern"],a:1},
+  {q:"What is 'catastrophic forgetting' in neural networks, and how is it relevant to safety?",opts:["When a model forgets to be safe","The tendency of neural networks to abruptly lose previously learned knowledge when trained on new data — relevant because safety fine-tuning can be undone by subsequent training, a concern for maintaining aligned behavior","A memory management error","A data loss during training"],a:1},
+  {q:"What does 'jailbreaking' an AI model refer to?",opts:["Breaking encryption on AI hardware","Using crafted prompts or inputs to bypass a model's safety guidelines and elicit outputs the model is designed to refuse — a practical safety concern that motivates robustness research","Releasing an AI from closed-source to open-source","A legal process for AI rights"],a:1},
+  {q:"What is the 'orthogonality thesis' in AI safety philosophy?",opts:["A claim that AI must be orthogonal to human values","The argument that virtually any level of intelligence is compatible with virtually any final goal — implying that highly capable AI is not automatically aligned with human values, and alignment must be achieved deliberately","A theorem about model architectures","A claim that safety and capability trade off"],a:1},
+  {q:"What is 'AI containment' and why do researchers consider it insufficient as a standalone safety strategy?",opts:["Storing AI models in secure data centers","Restricting a potentially dangerous AI to a controlled environment with limited outputs — considered insufficient because a sufficiently intelligent system might find ways to influence the outside world through available channels, and containment fails permanently if breached even once","A method for model compression","A network security protocol"],a:1}
+];
+
+let activeQuestions=[];let userAnswers={};
+function shuffle(arr){const a=[...arr];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+window.startQuiz=function(){activeQuestions=shuffle(ALL_QUESTIONS).slice(0,25);userAnswers={};document.getElementById('start-screen').style.display='none';document.getElementById('quiz-area').style.display='block';renderQuestions();};
+function renderQuestions(){const c=document.getElementById('questions-container');c.innerHTML=activeQuestions.map((q,qi)=>`<div class="q-block" id="qb-${qi}"><div class="q-num">Question ${qi+1} of ${activeQuestions.length}</div><div class="q-text">${q.q}</div><div class="q-options">${q.opts.map((o,oi)=>`<label class="q-opt" id="opt-${qi}-${oi}"><input type="radio" name="q${qi}" value="${oi}" onchange="selectOpt(${qi},${oi})">${o}</label>`).join('')}</div></div>`).join('');}
+window.selectOpt=function(qi,oi){userAnswers[qi]=oi;activeQuestions[qi].opts.forEach((_,i)=>{const el=document.getElementById(`opt-${qi}-${i}`);if(el)el.classList.toggle('selected',i===oi);});const answered=Object.keys(userAnswers).length;document.getElementById('q-progress').style.width=(answered/activeQuestions.length*100)+'%';document.getElementById('submit-btn').disabled=answered<activeQuestions.length;};
+window.submitQuiz=async function(){let correct=0;activeQuestions.forEach((q,i)=>{if(userAnswers[i]===q.a)correct++;});const pct=Math.round(correct/activeQuestions.length*100);const passed=pct>=70;if(passed&&currentUser){try{const id='SAF-'+Date.now();await setDoc(doc(db,'users',currentUser.uid),{safetyCertId:id},{merge:true});document.getElementById('cert-id-text').textContent=id;document.getElementById('cert-box').style.display='block';}catch(e){}}document.getElementById('quiz-area').style.display='none';document.getElementById('result-icon').textContent=passed?'🎓':'📖';document.getElementById('result-title').textContent=passed?'Certificate Earned':'Keep Studying';document.getElementById('result-score').textContent=`${correct} / ${activeQuestions.length} correct (${pct}%)`;document.getElementById('result-msg').textContent=passed?'Congratulations! You\'ve demonstrated a solid understanding of AI Safety.':'You need 70% to pass. Review the modules and try again when you\'re ready.';if(!passed){document.getElementById('retry-btn').style.display='inline-block';}document.getElementById('result-screen').style.display='block';};
+window.retryQuiz=function(){document.getElementById('result-screen').style.display='none';document.getElementById('cert-box').style.display='none';document.getElementById('retry-btn').style.display='none';window.startQuiz();};
+</script>
+</body>
+</html>

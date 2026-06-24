@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Final Assessment — AI for Research — Meridian Institute of AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#064E3B;--accent-dim:rgba(6,78,59,0.1);--nav-bg:rgba(8,8,8,0.9);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#053d2f;--accent-dim:rgba(5,61,47,0.08);--nav-bg:rgba(250,250,248,0.9);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}.nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}.nav-back{font-size:13px;color:var(--text-2);text-decoration:none;}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;}
+  .quiz-wrap{max-width:720px;margin:0 auto;padding:100px 32px 80px;}
+  .quiz-header{text-align:center;margin-bottom:48px;}
+  .quiz-tag{display:inline-block;font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(6,78,59,0.2);padding:4px 14px;border-radius:100px;margin-bottom:20px;}
+  h1{font-family:'Cormorant Garamond',serif;font-size:44px;font-weight:300;line-height:1.1;margin-bottom:16px;}
+  .quiz-subhead{font-size:16px;color:var(--text-2);font-weight:300;}
+  .quiz-meta{display:flex;gap:24px;justify-content:center;margin-top:20px;padding-top:20px;border-top:1px solid var(--border);}
+  .quiz-meta-item{font-size:13px;color:var(--text-3);}
+  .start-btn{display:block;width:100%;max-width:320px;margin:32px auto 0;padding:14px 0;background:var(--accent);color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:500;font-family:'DM Sans',sans-serif;cursor:pointer;transition:opacity 0.2s;}.start-btn:hover{opacity:0.88;}
+  #quiz-area{display:none;}
+  .q-block{background:var(--bg-2);border:1px solid var(--border);border-radius:14px;padding:28px 32px;margin-bottom:20px;}
+  .q-num{font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-3);margin-bottom:10px;}
+  .q-text{font-size:17px;font-weight:400;color:var(--text);line-height:1.55;margin-bottom:20px;}
+  .q-options{display:flex;flex-direction:column;gap:10px;}
+  .q-opt{display:flex;align-items:flex-start;gap:12px;padding:12px 16px;border-radius:9px;border:1px solid var(--border);cursor:pointer;transition:all 0.15s;font-size:15px;color:var(--text-2);line-height:1.5;background:var(--bg-3);}
+  .q-opt:hover{border-color:var(--accent);color:var(--text);}.q-opt input[type=radio]{accent-color:var(--accent);margin-top:3px;flex-shrink:0;}
+  .q-opt.selected{border-color:var(--accent);background:var(--accent-dim);color:var(--text);}
+  .progress-track{height:3px;background:var(--border);border-radius:2px;margin-bottom:32px;overflow:hidden;}.progress-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.3s;}
+  .quiz-submit{display:block;width:100%;padding:15px 0;background:var(--accent);color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:500;font-family:'DM Sans',sans-serif;cursor:pointer;margin-top:12px;transition:opacity 0.2s;}.quiz-submit:hover{opacity:0.88;}.quiz-submit:disabled{opacity:0.4;cursor:not-allowed;}
+  #result-screen{display:none;text-align:center;padding:60px 0;}
+  .result-icon{font-size:56px;margin-bottom:16px;}.result-title{font-family:'Cormorant Garamond',serif;font-size:40px;font-weight:400;margin-bottom:12px;}
+  .result-score{font-size:20px;color:var(--text-2);margin-bottom:8px;}.result-msg{font-size:15px;color:var(--text-3);margin-bottom:36px;max-width:480px;margin-left:auto;margin-right:auto;line-height:1.6;}
+  .cert-box{background:var(--bg-2);border:1px solid var(--border);border-radius:14px;padding:24px 28px;margin:0 auto 32px;max-width:440px;}
+  .cert-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:8px;}.cert-id{font-size:14px;color:var(--text-2);font-family:monospace;word-break:break-all;}
+  .result-btn{display:inline-block;padding:12px 28px;border-radius:9px;font-size:14px;font-weight:500;cursor:pointer;border:none;font-family:'DM Sans',sans-serif;}
+  .result-btn-primary{background:var(--accent);color:#fff;margin-right:10px;}.result-btn-primary:hover{opacity:0.88;}
+  .result-btn-secondary{background:var(--bg-2);color:var(--text-2);border:1px solid var(--border);}.result-btn-secondary:hover{color:var(--text);}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="courses.html" class="nav-back">← All Courses</a>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">☀</span></button>
+</nav>
+<div class="quiz-wrap">
+  <div class="quiz-header">
+    <div class="quiz-tag">Final Assessment</div>
+    <h1>AI for Research</h1>
+    <p class="quiz-subhead">25 questions · 70% required to pass · Earn your certificate</p>
+    <div class="quiz-meta">
+      <span class="quiz-meta-item">25 questions</span>
+      <span class="quiz-meta-item">~15 minutes</span>
+      <span class="quiz-meta-item">Passing: 18 / 25</span>
+    </div>
+  </div>
+  <div id="start-screen">
+    <button class="start-btn" onclick="startQuiz()">Begin Assessment</button>
+  </div>
+  <div id="quiz-area">
+    <div class="progress-track"><div class="progress-fill" id="q-progress"></div></div>
+    <div id="questions-container"></div>
+    <button class="quiz-submit" id="submit-btn" onclick="submitQuiz()" disabled>Submit Assessment</button>
+  </div>
+  <div id="result-screen">
+    <div class="result-icon" id="result-icon"></div>
+    <div class="result-title" id="result-title"></div>
+    <div class="result-score" id="result-score"></div>
+    <div class="result-msg" id="result-msg"></div>
+    <div class="cert-box" id="cert-box" style="display:none;"><div class="cert-label">Certificate ID</div><div class="cert-id" id="cert-id-text"></div></div>
+    <button class="result-btn result-btn-primary" onclick="window.location.href='courses.html'">Back to Courses</button>
+    <button class="result-btn result-btn-secondary" id="retry-btn" onclick="retryQuiz()" style="display:none;">Retry Assessment</button>
+  </div>
+</div>
+<script type="module">
+import{initializeApp}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import{getAuth,onAuthStateChanged}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import{getFirestore,doc,setDoc}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+const app=initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+const auth=getAuth(app);const db=getFirestore(app);let currentUser=null;
+onAuthStateChanged(auth,u=>{currentUser=u;});
+window.toggleTheme=function(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='☾'):(h.setAttribute('data-theme','dark'),i.textContent='☀');};
+
+const ALL_QUESTIONS=[
+  {q:"What is 'retrieval-augmented generation' (RAG) and why is it useful for research tasks?",opts:["A method for training new models","A technique that retrieves relevant documents from a knowledge base and feeds them to an LLM as context, grounding responses in up-to-date or domain-specific sources rather than parametric memory","A citation management system","A peer review automation tool"],a:1},
+  {q:"When using AI to assist with a systematic literature review, what is the most critical limitation to account for?",opts:["AI reads too slowly","AI training data has a cutoff date and may miss recent publications — all AI-generated literature summaries require verification against authoritative databases","AI cannot read PDFs","AI only works with English papers"],a:1},
+  {q:"What is 'citation hallucination' in the context of AI research tools?",opts:["Misformatting a citation","When an AI generates plausible-looking but entirely fabricated paper titles, authors, or DOIs that do not exist in any real publication database","Citing old papers","Using the wrong citation style"],a:1},
+  {q:"Which of the following AI tools is specifically designed for academic literature discovery and provides verified paper metadata?",opts:["ChatGPT","Semantic Scholar or Elicit — tools built on real academic databases that return actual papers with verified metadata, unlike general LLMs","Google Docs","GitHub Copilot"],a:1},
+  {q:"What is 'hypothesis generation' as an AI-assisted research workflow step?",opts:["Writing the conclusion first","Using AI to explore relationships in prior literature or data and propose candidate hypotheses that human researchers then evaluate for novelty and testability","Replacing the scientific method","Automating the entire experiment"],a:1},
+  {q:"What does 'grounding' mean when prompting an AI to help write a research paper section?",opts:["Setting the paper in a geographic location","Providing the model with the actual source texts, data, or references it should draw upon — preventing fabrication by anchoring the output to supplied evidence","Reducing the model's temperature","Asking the model to be formal in tone"],a:1},
+  {q:"What is the primary ethical concern when using AI to write portions of a peer-reviewed academic paper?",opts:["AI uses too many words","Undisclosed AI authorship can violate journal integrity policies and mislead readers about the epistemic origin of claims — disclosure norms are still evolving","AI makes papers too long","AI cannot understand complex topics"],a:1},
+  {q:"What does 'thematic synthesis' mean in the context of AI-assisted literature review?",opts:["Choosing a color theme for a presentation","Identifying recurring themes or patterns across multiple papers, which AI can assist with by clustering and summarizing large volumes of abstracts","Summarizing a single paper","Writing a bibliography"],a:1},
+  {q:"When using AI to analyze a qualitative dataset, what is the most important human role to preserve?",opts:["Data entry","Interpreting meaning, validating codes, and ensuring analytical decisions are grounded in domain expertise — AI pattern recognition can scaffold but not replace expert judgment","Formatting tables","Exporting CSV files"],a:1},
+  {q:"What is a 'living systematic review' and how can AI tools support it?",opts:["A review about living organisms","A review that is continuously updated as new evidence emerges — AI can assist by monitoring literature databases for new papers matching inclusion criteria and flagging them","A review without methodology","An informal literature search"],a:1},
+  {q:"What is the role of 'structured data extraction' in AI-assisted research?",opts:["Downloading files from the internet","Using AI to pull specific variables (e.g., sample size, effect size, methods) from papers in a standardized format — accelerates meta-analysis data collection","A database backup procedure","A way to format citations"],a:1},
+  {q:"Why is it important to cross-check AI-generated summaries of academic papers against the original source?",opts:["AI summaries are always too short","AI can misrepresent findings, omit nuance, or introduce errors — the original paper remains the authoritative source and must be verified before citing","AI summaries are too long","Cross-checking improves writing style"],a:1},
+  {q:"What is 'PICO' in research methodology and how might AI assist with it?",opts:["A type of AI model","A framework for structuring clinical research questions (Population, Intervention, Comparison, Outcome) — AI can help formulate PICO questions and search for relevant studies","A citation style","A data visualization method"],a:1},
+  {q:"What is the difference between a 'narrative review' and a 'systematic review', and how does AI affect both?",opts:["They are the same","Narrative reviews are informal and interpretive; systematic reviews follow explicit, reproducible search and inclusion criteria — AI can assist both but introduces reproducibility questions if not documented","Systematic reviews are always better","Narrative reviews use quantitative data"],a:1},
+  {q:"What is 'data triangulation' in research and why is it relevant to AI-assisted analysis?",opts:["Drawing triangles on data charts","Using multiple data sources or methods to corroborate findings — important when AI analysis is one input, as it should be validated against other evidence rather than treated as definitive","A statistical technique","A citation method"],a:1},
+  {q:"What is 'research integrity' in the context of AI tool use, and what practices protect it?",opts:["Keeping research files organized","Honesty about methods, including full disclosure of AI use, verification of AI outputs, and ensuring claims are supported by actual evidence — AI does not diminish the researcher's responsibility for accuracy","A journal formatting requirement","A data storage standard"],a:1},
+  {q:"What is 'Zotero' and how can it be used alongside AI research tools?",opts:["An AI model for literature review","An open-source reference manager that organizes citations and PDFs — it can be combined with AI tools that help discover or summarize papers, with Zotero storing verified sources","A statistical analysis package","A writing assistant"],a:1},
+  {q:"What does 'peer review' accomplish in the scientific process, and what is a risk of AI-generated text in this context?",opts:["It speeds up publication","Peer review assesses validity, originality, and rigor — AI-generated text that mimics scholarly language without sound methodology can pass superficial review, increasing the risk of low-quality research entering the literature","It formats papers correctly","It checks grammar only"],a:1},
+  {q:"What is 'annotation' in a research data context and how can AI accelerate it?",opts:["Adding footnotes to a paper","Labeling data points with categories or attributes — AI can pre-annotate large datasets at scale, with human researchers reviewing and correcting a sample for quality assurance","A citation style","A literature search strategy"],a:1},
+  {q:"What is 'bibliometric analysis' and which AI-assisted tools support it?",opts:["Counting the number of books in a library","Quantitative analysis of publication patterns, citation networks, and research trends — tools like VOSviewer, connected to databases like Web of Science, can be enhanced with AI-driven clustering","A grammar checking method","A qualitative research technique"],a:1},
+  {q:"When communicating research findings, what role can AI play in translating technical content for a general audience?",opts:["AI should rewrite the entire paper","AI can help simplify language, generate plain-language summaries, and suggest analogies — but the researcher must verify that scientific accuracy is preserved in the simplification","AI should not be used for communication","AI only works for technical audiences"],a:1},
+  {q:"What is 'preprint' culture in academic research, and how does AI affect evaluating preprint claims?",opts:["Printing papers before writing them","Preprints are papers shared publicly before peer review — AI can help researchers quickly scan and summarize preprints, but the absence of peer review means extra skepticism about AI-amplified preprint claims is warranted","A type of journal","A data sharing protocol"],a:1},
+  {q:"What is 'research question scoping' and why is it a valuable use of AI early in a project?",opts:["Writing the abstract first","Refining a broad topic into a specific, answerable question by using AI to survey existing literature gaps, identify what has been studied, and surface adjacent work — saves time before committing to a research direction","A data collection technique","A peer review step"],a:1},
+  {q:"What is a 'knowledge graph' and how can it be used in AI-assisted research?",opts:["A bar chart of research citations","A structured representation of entities and relationships (e.g., concepts, papers, authors) — AI tools can construct or query knowledge graphs to reveal connections across large bodies of literature","A flowchart of the research process","A type of neural network architecture"],a:1},
+  {q:"What distinguishes 'AI-assisted research' from 'automated research', and why does the distinction matter?",opts:["They are the same thing","AI-assisted research uses AI as a tool to augment human judgment at specific steps; automated research attempts to replace the human research process entirely — the distinction matters because scientific knowledge-making requires human epistemic agency, accountability, and interpretive judgment","Automated research is always faster","AI-assisted research requires no human involvement"],a:1}
+];
+
+let activeQuestions=[];let userAnswers={};
+function shuffle(arr){const a=[...arr];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+window.startQuiz=function(){activeQuestions=shuffle(ALL_QUESTIONS).slice(0,25);userAnswers={};document.getElementById('start-screen').style.display='none';document.getElementById('quiz-area').style.display='block';renderQuestions();};
+function renderQuestions(){const c=document.getElementById('questions-container');c.innerHTML=activeQuestions.map((q,qi)=>`<div class="q-block" id="qb-${qi}"><div class="q-num">Question ${qi+1} of ${activeQuestions.length}</div><div class="q-text">${q.q}</div><div class="q-options">${q.opts.map((o,oi)=>`<label class="q-opt" id="opt-${qi}-${oi}"><input type="radio" name="q${qi}" value="${oi}" onchange="selectOpt(${qi},${oi})">${o}</label>`).join('')}</div></div>`).join('');}
+window.selectOpt=function(qi,oi){userAnswers[qi]=oi;activeQuestions[qi].opts.forEach((_,i)=>{const el=document.getElementById(`opt-${qi}-${i}`);if(el)el.classList.toggle('selected',i===oi);});const answered=Object.keys(userAnswers).length;document.getElementById('q-progress').style.width=(answered/activeQuestions.length*100)+'%';document.getElementById('submit-btn').disabled=answered<activeQuestions.length;};
+window.submitQuiz=async function(){let correct=0;activeQuestions.forEach((q,i)=>{if(userAnswers[i]===q.a)correct++;});const pct=Math.round(correct/activeQuestions.length*100);const passed=pct>=70;if(passed&&currentUser){try{const id='RES-'+Date.now();await setDoc(doc(db,'users',currentUser.uid),{researchCertId:id},{merge:true});document.getElementById('cert-id-text').textContent=id;document.getElementById('cert-box').style.display='block';}catch(e){}}document.getElementById('quiz-area').style.display='none';document.getElementById('result-icon').textContent=passed?'🎓':'📖';document.getElementById('result-title').textContent=passed?'Certificate Earned':'Keep Studying';document.getElementById('result-score').textContent=`${correct} / ${activeQuestions.length} correct (${pct}%)`;document.getElementById('result-msg').textContent=passed?'Congratulations! You\'ve demonstrated a solid understanding of AI for Research.':'You need 70% to pass. Review the modules and try again when you\'re ready.';if(!passed){document.getElementById('retry-btn').style.display='inline-block';}document.getElementById('result-screen').style.display='block';};
+window.retryQuiz=function(){document.getElementById('result-screen').style.display='none';document.getElementById('cert-box').style.display='none';document.getElementById('retry-btn').style.display='none';window.startQuiz();};
+</script>
+</body>
+</html>
