@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 8: AI Governance — AI Safety and Alignment — Meridian Institute of AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#7F1D1D;--accent-dim:rgba(127,29,29,0.1);--accent-dim2:rgba(127,29,29,0.05);--nav-bg:rgba(8,8,8,0.9);--callout-bg:rgba(127,29,29,0.07);--callout-border:rgba(127,29,29,0.25);--good-bg:rgba(34,197,94,0.07);--good-border:rgba(34,197,94,0.2);--warn-bg:rgba(251,146,60,0.07);--warn-border:rgba(251,146,60,0.2);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#991B1B;--accent-dim:rgba(153,27,27,0.08);--accent-dim2:rgba(153,27,27,0.04);--nav-bg:rgba(250,250,248,0.9);--callout-bg:rgba(153,27,27,0.05);--callout-border:rgba(153,27,27,0.2);--good-bg:rgba(22,163,74,0.06);--good-border:rgba(22,163,74,0.2);--warn-bg:rgba(234,88,12,0.05);--warn-border:rgba(234,88,12,0.2);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;overflow-x:hidden;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.7;overflow-x:hidden;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}
+  .nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}
+  .nav-back{font-size:13px;color:var(--text-2);text-decoration:none;transition:color 0.2s;}
+  .nav-back:hover{color:var(--text);}
+  .nav-label{font-size:13px;color:var(--text-3);}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;transition:all 0.2s;}
+  .theme-toggle:hover{background:var(--bg-3);color:var(--text);}
+  .progress-bar{position:fixed;top:60px;left:0;right:0;z-index:99;height:2px;background:var(--border);}
+  .progress-fill{height:100%;background:var(--accent);width:0%;transition:width 0.1s;}
+  .page-wrapper{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:100vh;padding-top:62px;overflow:hidden;}
+  .sidebar{position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto;border-right:1px solid var(--border);padding:32px 24px;background:var(--bg-2);}
+  .sidebar-course{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;}
+  .sidebar-course-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+  .sidebar-module{margin-bottom:4px;}
+  .sidebar-module-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:13px;color:var(--text-2);text-decoration:none;transition:all 0.2s;line-height:1.4;}
+  .sidebar-module-link:hover{background:var(--bg-3);color:var(--text);}
+  .sidebar-module-link.active{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-num{font-size:11px;font-weight:500;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--bg-4);color:var(--text-3);}
+  .sidebar-module-link.active .sidebar-num{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-divider{height:1px;background:var(--border);margin:20px 0;}
+  .sidebar-progress-label{font-size:12px;color:var(--text-3);margin-bottom:8px;display:flex;justify-content:space-between;}
+  .sidebar-progress-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sidebar-progress-fill{height:100%;width:80%;background:var(--accent);border-radius:2px;}
+  main{display:block;min-width:0;overflow:hidden;}
+  .content{max-width:760px;width:100%;padding:60px 64px 140px;margin:0 auto;}
+  .module-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+  .module-tag{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(127,29,29,0.2);padding:4px 12px;border-radius:100px;}
+  .module-meta{font-size:12px;color:var(--text-3);}
+  h1{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1.05;letter-spacing:-0.02em;color:var(--text);margin-bottom:24px;}
+  .intro-text{font-size:19px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+  h2{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:400;color:var(--text);margin:52px 0 18px;line-height:1.2;}
+  h3{font-size:16px;font-weight:500;color:var(--text);margin:32px 0 12px;}
+  p{font-size:16px;font-weight:300;color:var(--text-2);line-height:1.8;margin-bottom:20px;}
+  strong{font-weight:500;color:var(--text);}
+  em{font-style:italic;}
+  ul,ol{margin:0 0 20px 22px;color:var(--text-2);}
+  li{font-size:16px;font-weight:300;line-height:1.8;margin-bottom:8px;}
+  .callout{background:var(--callout-bg);border:1px solid var(--callout-border);border-radius:12px;padding:24px 28px;margin:32px 0;}
+  .callout-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+  .callout p{margin:0;font-size:15px;color:var(--text-2);}
+  .callout p+p{margin-top:12px;}
+  .good{background:var(--good-bg);border:1px solid var(--good-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .good-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#22c55e;margin-bottom:10px;}
+  .good p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn{background:var(--warn-bg);border:1px solid var(--warn-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .warn-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#fb923c;margin-bottom:10px;}
+  .warn p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn p+p{margin-top:12px;}
+  .principle-list{display:flex;flex-direction:column;gap:12px;margin:24px 0;}
+  .principle{background:var(--bg-2);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:0 12px 12px 0;padding:20px 24px;}
+  .principle-title{font-size:15px;font-weight:500;color:var(--text);margin-bottom:6px;}
+  .principle-desc{font-size:14px;color:var(--text-2);line-height:1.65;margin:0;}
+  .sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:var(--bg-2);border-top:1px solid var(--border-2);padding:14px 5%;display:flex;align-items:center;justify-content:space-between;gap:16px;backdrop-filter:blur(12px);}
+  .sticky-bar-track{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sticky-bar-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.2s;width:0%;}
+  .sticky-bar-label{font-size:12px;color:var(--text-3);white-space:nowrap;min-width:60px;text-align:right;}
+  .sticky-bar-btn{padding:10px 20px;border-radius:8px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;background:var(--accent);color:#fff;border:none;cursor:pointer;white-space:nowrap;transition:opacity 0.2s;display:none;}
+  .sticky-bar-btn:hover{opacity:0.88;}
+  .sticky-bar-reading{font-size:12px;color:var(--text-3);white-space:nowrap;}
+  @media(max-width:900px){.page-wrapper{grid-template-columns:1fr;}.sidebar{display:none;}.content{padding:40px 24px 120px;}h1{font-size:38px;}}
+  @media(max-width:600px){.content{padding:28px 16px 120px;}h1{font-size:30px;}h2{font-size:24px;}}
+</style>
+<style>@media(max-width:480px){.nav-divider{display:none}.nav-left{gap:8px}}</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="courses.html" class="nav-back">← AI Safety and Alignment</a>
+    <div class="nav-divider"></div>
+    <span class="nav-label">Module 8</span>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">☀</span></button>
+</nav>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+
+<div class="page-wrapper">
+<aside class="sidebar">
+  <div class="sidebar-course">Expert Track</div>
+  <div class="sidebar-course-name">AI Safety and Alignment</div>
+  <div class="sidebar-module"><a href="safety-module-1.html" class="sidebar-module-link"><span class="sidebar-num">1</span>What Is AI Safety?</a></div>
+  <div class="sidebar-module"><a href="safety-module-2.html" class="sidebar-module-link"><span class="sidebar-num">2</span>The Alignment Problem</a></div>
+  <div class="sidebar-module"><a href="safety-module-3.html" class="sidebar-module-link"><span class="sidebar-num">3</span>Reward Hacking and Specification Gaming</a></div>
+  <div class="sidebar-module"><a href="safety-module-4.html" class="sidebar-module-link"><span class="sidebar-num">4</span>Reinforcement Learning from Human Feedback</a></div>
+  <div class="sidebar-module"><a href="safety-module-5.html" class="sidebar-module-link"><span class="sidebar-num">5</span>Constitutional AI and RLAIF</a></div>
+  <div class="sidebar-module"><a href="safety-module-6.html" class="sidebar-module-link"><span class="sidebar-num">6</span>Interpretability Research</a></div>
+  <div class="sidebar-module"><a href="safety-module-7.html" class="sidebar-module-link"><span class="sidebar-num">7</span>Emergent Capabilities</a></div>
+  <div class="sidebar-module"><a href="safety-module-8.html" class="sidebar-module-link active"><span class="sidebar-num">8</span>AI Governance</a></div>
+  <div class="sidebar-module"><a href="safety-module-9.html" class="sidebar-module-link"><span class="sidebar-num">9</span>Catastrophic Risk Scenarios</a></div>
+  <div class="sidebar-module"><a href="safety-module-10.html" class="sidebar-module-link"><span class="sidebar-num">10</span>Paths to Safe AI</a></div>
+  <div class="sidebar-module"><a href="quiz-safety.html" class="sidebar-module-link" style="color:var(--accent);margin-top:4px;"><span class="sidebar-num" style="background:var(--accent-dim);color:var(--accent);">✦</span>Final Assessment</a></div>
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-progress-label"><span>Course progress</span><span style="color:var(--accent);">8 / 10</span></div>
+  <div class="sidebar-progress-track"><div class="sidebar-progress-fill"></div></div>
+</aside>
+
+<main>
+<div class="content">
+  <div class="module-eyebrow"><span class="module-tag">Module 8 · Expert Track</span><span class="module-meta">24 min read · AI Safety and Alignment</span></div>
+  <h1>AI Governance</h1>
+
+  <p class="intro-text">Technical alignment research addresses the question of whether AI systems can be made to behave as intended. AI governance addresses the question of whether they will be — a question that depends not just on the capabilities of researchers but on the incentives, institutional structures, legal frameworks, and international agreements that shape who builds AI, how, and under what constraints. These two problems are separable but inseparable in practice: even a technically solvable alignment problem remains unsolved if governance structures fail to mandate safe practices.</p>
+
+  <h2>The governance landscape in 2024</h2>
+  <p>AI governance has moved from academic discussion to active legislation faster than almost any comparable technology. In 2023 and 2024 alone, the European Union finalized the world's first comprehensive AI regulation, the United States issued a sweeping executive order, the United Kingdom established a dedicated AI Safety Institute, China published binding regulations on generative AI, and the G7 adopted voluntary governance principles. The pace of activity reflects both genuine concern and competitive pressure — every major jurisdiction fears being left behind both in capability and in being seen to lead on safety.</p>
+  <p>The governance approaches taken by different jurisdictions reflect genuinely different political philosophies and risk assessments. Understanding those differences — and their practical implications for how AI development unfolds — is essential for anyone working at the frontier of AI or in AI policy.</p>
+
+  <h2>The EU AI Act</h2>
+  <p>The EU AI Act, which entered into force in August 2024, is the world's first comprehensive binding legal framework for AI systems. Its structure reflects a risk-based approach: systems are classified into four risk tiers — unacceptable risk (banned outright), high risk (subject to mandatory conformity assessments), limited risk (transparency requirements only), and minimal risk (effectively unregulated).</p>
+
+  <h3>The risk classification system</h3>
+  <p>Unacceptable-risk systems include social scoring systems used by governments, real-time biometric surveillance in public spaces (with narrow exceptions), and subliminal manipulation that bypasses rational agency. These are prohibited regardless of technical design or claimed safeguards. The prohibition on social scoring is a direct response to China's social credit system; the biometric surveillance prohibition responds to proposals for city-wide facial recognition deployments in European cities.</p>
+  <p>High-risk systems — those used in critical infrastructure, education, employment decisions, credit scoring, law enforcement, migration, and administration of justice — must comply with mandatory requirements before they can be deployed. These include: risk management systems, data governance procedures, technical documentation, logging requirements, human oversight mechanisms, accuracy and robustness requirements, and cybersecurity protections. Third-party conformity assessments are required for the highest-stakes applications.</p>
+
+  <h3>General-purpose AI and frontier model provisions</h3>
+  <p>The Act's treatment of general-purpose AI (GPAI) models — which includes large language models like GPT-4 and Claude — was the most contentious part of the negotiation. The final text creates a two-tier GPAI regime. Standard GPAI models must provide technical documentation, comply with copyright law, and publish training data summaries. Models above a compute threshold of 10^25 FLOPS — a rough proxy for "frontier" models — face additional requirements: mandatory adversarial testing, incident reporting to the EU AI Office, cybersecurity protections, and energy efficiency reporting.</p>
+  <p>The compute threshold matters because it is a current-state proxy for capability, not a capability assessment itself. This mirrors the logic of responsible scaling policies (discussed below) while translating it into a regulatory framework that regulators can administer without conducting their own capability evaluations. It is an imperfect proxy — a highly capable model trained efficiently might fall below the threshold — but it is currently the only administratively tractable approach.</p>
+
+  <div class="callout">
+    <div class="callout-label">The EU AI Office</div>
+    <p>The EU AI Act created the AI Office, housed within the European Commission, as the central body responsible for overseeing GPAI models across all EU member states. The AI Office has investigative powers, can conduct technical evaluations, and can impose fines of up to 3% of global annual revenue (or €15 million for GPAI model providers, whichever is higher) for violations. This is the first EU-level body with direct authority over AI companies rather than relying on member-state enforcement — a significant institutional innovation with implications for how AI governance is structured globally.</p>
+  </div>
+
+  <h2>US executive and legislative activity</h2>
+  <p>The United States has taken a different approach, relying primarily on executive action and voluntary commitments rather than binding legislation, reflecting both the constitutional structure of US government (where Congress moves slowly on complex technical issues) and a political economy that is more skeptical of regulation affecting a major domestic industry.</p>
+
+  <h3>Executive Order 14110</h3>
+  <p>Executive Order 14110 on Safe, Secure, and Trustworthy AI, signed by President Biden in October 2023, was the most comprehensive federal AI governance action to date. Its key provisions included: mandatory reporting requirements for AI models trained above a compute threshold (initially 10^26 FLOPS for dual-use foundation models), directing NIST to develop AI safety and security standards, requiring federal agencies to appoint Chief AI Officers, directing DHS to assess AI risks to critical infrastructure, and instructing the State Department to develop international AI governance frameworks.</p>
+  <p>The compute reporting requirement — requiring developers to notify the federal government of training runs above the threshold — was designed to give the government visibility into the frontier AI landscape without imposing substantive restrictions. This is a lighter touch than the EU approach: notification, not permission. The threshold itself was set at 10^26 FLOPS, higher than the EU's 10^25 FLOPS threshold, reflecting the administration's concern about imposing requirements on a wider range of models.</p>
+
+  <h3>Voluntary commitments and the White House framework</h3>
+  <p>In parallel with formal rulemaking, the Biden administration secured voluntary safety commitments from seven major AI companies (Anthropic, Google, Microsoft, Meta, Amazon, Inflection, and OpenAI) in July 2023, and an expanded set of commitments from fifteen companies in September 2023. The commitments included: pre-deployment safety testing, information sharing on safety incidents, investment in cybersecurity, and public reporting on capabilities and limitations.</p>
+  <p>The voluntary commitment approach has been criticized as unenforceable and insufficient relative to the risk — companies that make voluntary commitments can withdraw from them without legal consequence. Defenders argue that voluntary commitments are faster to implement than legislation, can be updated more easily as the technology evolves, and that enforcement through reputational consequences may be meaningful for companies whose products depend on public trust.</p>
+
+  <h2>The UK AI Safety Institute</h2>
+  <p>The United Kingdom established the AI Safety Institute (AISI) in November 2023, housed within the Department for Science, Innovation and Technology. The AISI is notable for being the world's first government body specifically tasked with evaluating the safety of frontier AI models — a capability-assessment function rather than a regulatory function.</p>
+  <p>The AISI's approach involves direct access to frontier models before their public deployment for structured safety evaluations. The Institute has signed agreements with Anthropic, OpenAI, Google DeepMind, and other frontier labs giving it pre-deployment evaluation access. Its evaluations focus on dangerous capabilities — particularly in the domains of chemical, biological, radiological, and nuclear (CBRN) threats, cyberoffense, and autonomous AI behavior — rather than on broad product safety.</p>
+
+  <div class="good">
+    <div class="good-label">The AISI Model</div>
+    <p>The AISI's evaluation-focused model is arguably more technically sophisticated than purely regulatory approaches. Rather than specifying in advance what systems may not be capable of (which requires knowing what dangerous capabilities look like), the AISI tests actual model behavior against structured threat scenarios. This generates empirical data about actual system behavior rather than relying on developer self-certification. The limitation is that the AISI has no enforcement authority — it can evaluate, report, and advise, but cannot compel developers to change their systems or delay deployment. The relationship is cooperative, not coercive.</p>
+  </div>
+
+  <h2>China's AI governance approach</h2>
+  <p>China has taken a different path, implementing binding regulations faster than any Western democracy but focusing primarily on content governance and the political implications of generative AI rather than on safety in the technical alignment sense.</p>
+  <p>The Interim Measures for the Management of Generative AI Services, effective August 2023, require providers of generative AI services in China to: register with the Cyberspace Administration of China (CAC), conduct security assessments, label AI-generated content, protect training data privacy, and ensure that AI outputs "uphold core socialist values" and do not subvert state power or spread "false information." The political content requirements are the most distinctive feature of China's approach — the regulation is as much concerned with preventing AI from being used against the state as with preventing harm to users.</p>
+  <p>China also published a framework for the regulation of algorithms in 2022 and has implemented content controls on recommendation systems that have no Western equivalent. The overall approach reflects a governance philosophy in which the state's relationship to AI is one of control and integration, not just oversight and safety.</p>
+
+  <h2>Compute governance and chip controls</h2>
+  <p>Compute governance — the idea that controlling access to the hardware required to train frontier AI systems is a tractable lever for AI governance — has become one of the most consequential and contested areas of AI policy.</p>
+
+  <h3>The logic of compute governance</h3>
+  <p>The argument for compute governance rests on three observations. First, frontier AI training is extremely compute-intensive and requires specialized hardware (primarily Nvidia A100 and H100 GPUs and their successors) that is produced by a very small number of companies in a very small number of locations. Second, these chips flow through identifiable supply chains that governments can monitor and restrict. Third, unlike algorithms (which are easily copied and shared) or data (which is difficult to control), physical hardware has a specific location at all times and is subject to import/export controls.</p>
+  <p>This analysis suggests that controlling the flow of advanced AI chips — particularly export controls preventing them from reaching actors who might develop dangerous AI — is a more tractable governance lever than trying to regulate algorithms or training procedures directly.</p>
+
+  <h3>US export controls</h3>
+  <p>The Biden administration's export controls on advanced chips to China, announced in October 2022 and significantly expanded in October 2023, are the most significant application of compute governance to date. The controls restrict the export of Nvidia A100 and H100 chips, and chips meeting equivalent performance thresholds, to China and certain other countries. They also restrict the export of the manufacturing equipment required to produce these chips, targeting ASML (the Dutch company that makes the extreme ultraviolet lithography machines required for leading-edge chip fabrication) and Applied Materials, Lam Research, and KLA Corporation (US equipment makers).</p>
+  <p>The goal was twofold: to prevent China from training frontier AI models for military applications, and to slow China's development of domestic semiconductor manufacturing capacity. The controls have had measurable effects on Nvidia's China revenue and on the availability of advanced chips in China, though the extent to which they have actually delayed AI development — as opposed to diverting it toward alternative chips and domestic production — is disputed.</p>
+
+  <div class="warn">
+    <div class="warn-label">The Evasion Problem</div>
+    <p>Compute governance through export controls faces a fundamental evasion problem. Advanced chips can be purchased through third countries that are not subject to controls and then transshipped to restricted destinations. The US government has identified significant transshipment through distributors in the UAE, Malaysia, and other countries. Addressing this requires coordinating export controls across many governments — a difficult diplomatic task. More fundamentally, if domestic chip manufacturing capacity develops in restricted countries, export controls become ineffective over the medium term. The question of whether compute governance buys years, decades, or only months of meaningful constraint is unresolved.</p>
+  </div>
+
+  <h2>Responsible Scaling Policies</h2>
+  <p>Responsible scaling policies (RSPs) are voluntary frameworks adopted by AI labs themselves that commit to specific safety requirements before training or deploying models above capability thresholds. They represent an attempt by leading AI companies to self-impose governance structures that fill the gap left by slow-moving legislation.</p>
+
+  <h3>Anthropic's Responsible Scaling Policy</h3>
+  <p>Anthropic published the first formal RSP in September 2023. The policy defines a series of "AI Safety Levels" (ASLs) analogous to biosafety levels in laboratory biosafety frameworks. Each ASL corresponds to a capability level assessed through structured evaluations. The key mechanism is a "don't train past a capability threshold without having mitigations in place" commitment: Anthropic commits not to train models that would exceed a given ASL unless it has either demonstrated that the model does not have the relevant dangerous capabilities, or developed and implemented safety measures sufficient to manage the risk at that capability level.</p>
+  <p>The ASL framework is specific about what capabilities trigger which levels. ASL-3 — the level requiring the most stringent current mitigations — is triggered by models that could provide "serious uplift" to actors seeking to create biological, chemical, nuclear, or radiological weapons, or by models capable of "meaningful" autonomous operation that could enable AI to attack critical infrastructure. The policy requires specific evaluations to determine whether a model is at ASL-3, and specifies what security and deployment controls are required for ASL-3 models.</p>
+
+  <h3>OpenAI's Preparedness Framework</h3>
+  <p>OpenAI published its Preparedness Framework in November 2023. The framework uses a four-level risk taxonomy (low, medium, high, critical) applied across four domains: cybersecurity, biological threats, nuclear/radiological threats, and autonomous AI behavior. The key commitment is that models assessed as "high" or "critical" risk in any domain will not be deployed without mitigations in place, and models assessed as "critical" in any domain will not be trained to that capability level at all.</p>
+  <p>The Preparedness Framework also established the Preparedness team at OpenAI, with a mandate to conduct capability evaluations, red-teaming, and safety research specifically targeting dangerous capabilities. The team reports directly to the CEO and has a formal "safety advisory group" that reviews their assessments. This institutional structure — a safety team with direct CEO access — is designed to give safety concerns organizational weight against product and capability teams.</p>
+
+  <h2>Third-party evaluations and red-teaming mandates</h2>
+  <p>A recurring theme across both voluntary RSPs and formal regulation is the requirement for external evaluation — having parties other than the developer assess a model's safety properties. This reflects a general principle from product safety regulation: self-certification by the manufacturer is insufficient for high-risk products.</p>
+  <p>The EU AI Act requires third-party conformity assessments for high-risk AI systems, and mandates that GPAI models above the compute threshold undergo adversarial testing. The UK AISI conducts pre-deployment evaluations. Several of the US voluntary commitments include sharing information about safety evaluations with third parties. This emerging norm of external evaluation mirrors pharmaceutical clinical trials, aviation safety certification, and nuclear facility inspections — domains where catastrophic failure risk is high enough that self-certification is considered inadequate.</p>
+
+  <h3>The red-teaming ecosystem</h3>
+  <p>Red-teaming — the practice of having dedicated adversarial testers attempt to elicit dangerous behaviors from AI systems — has developed into a distinct professional discipline. Organizations including Scale AI, Redwood Research, ARC Evals (now part of Metr), and various academic groups conduct structured red-teaming for AI labs. The Biden executive order directed NIST to develop standards for AI red-teaming, and the EU AI Act references adversarial testing requirements for frontier models.</p>
+  <p>Red-teaming's effectiveness as a safety measure depends critically on the quality and creativity of the testers, the adversarial scenarios they explore, and whether the model is evaluated in conditions similar to real-world deployment. A model can pass a red-team evaluation conducted under constrained conditions and still exhibit dangerous behaviors when deployed against creative adversarial users at scale. Current red-teaming is necessary but not sufficient as a safety guarantee.</p>
+
+  <h2>Governance gaps and enforcement challenges</h2>
+  <p>The current governance landscape has significant gaps. The most important are: the absence of international coordination, the difficulty of enforcing compute thresholds as metrics for regulatory triggering, the challenge of governing open-source models, and the weakness of enforcement mechanisms for the most consequential potential harms.</p>
+
+  <h3>The open-source governance problem</h3>
+  <p>Open-source AI models — including Meta's Llama series, Mistral, and various community fine-tunes — present a distinct governance challenge. Once model weights are publicly released, they cannot be recalled or restricted. The EU AI Act and most national frameworks focus on commercial deployment and require registration and compliance from model providers — but if the model is open-source, there is no single provider to regulate, and users who deploy the model for harmful purposes may be beyond the reach of any jurisdiction.</p>
+  <p>The governance debate over open-source AI reflects a genuine tension. Open-source releases democratize access to AI capabilities, enable research, and prevent monopolization of transformative technology by a small number of companies. They also put dangerous capabilities in the hands of actors who may have no interest in safety practices and no accountability to regulators. Current governance frameworks have not resolved this tension; they have largely deferred it.</p>
+
+  <div class="warn">
+    <div class="warn-label">The International Coordination Gap</div>
+    <p>The most fundamental governance gap is the absence of international coordination. AI development is global; governance is national. A company or government that trains a dangerous AI system in a jurisdiction with minimal regulation creates a risk that falls on the entire world. The analogy to nuclear nonproliferation is imperfect but instructive: nuclear governance required international treaties with inspection regimes and export controls. AI governance will ultimately require similar international mechanisms. The 2023 Bletchley Declaration — signed by 28 governments at the UK AI Safety Summit — acknowledged the need for international cooperation but created no binding commitments or enforcement mechanisms. It is a starting point, not a solution.</p>
+  </div>
+
+  <h2>The dual challenge: safety without stifling</h2>
+  <p>Every governance framework faces the challenge of imposing meaningful safety requirements without stifling beneficial AI development. This tension is real and politically significant. Regulatory compliance costs fall disproportionately on smaller organizations and may entrench the position of large incumbents who can absorb compliance costs. Requirements that are technically demanding may be feasible only for well-resourced labs, effectively creating regulatory barriers to entry that concentrate AI development in a small number of companies. Governance frameworks that slow the development of beneficial AI applications — in healthcare, climate, education — impose real costs that must be weighed against safety benefits.</p>
+  <p>The tension between safety and innovation is not a reason to abandon governance, but it is a reason to design governance carefully. Requirements calibrated to actual risk — proportionate to the capability level and deployment context of a system — impose less unnecessary burden than requirements applied uniformly across all AI systems. The risk-based approach of the EU AI Act is specifically designed to address this: systems with minimal risk face minimal requirements, while frontier systems with genuinely dangerous potential face stringent ones. Whether the calibration is well-tuned is an empirical question that will unfold as the Act is implemented.</p>
+
+  <div class="good">
+    <div class="good-label">The Governance Opportunity</div>
+    <p>The current moment — when frontier AI is being deployed at scale but before the most dangerous potential capabilities have emerged — is the optimal window for establishing governance frameworks. Governance that is built before a crisis is more likely to be thoughtful, well-calibrated, and durable than governance built in reaction to a catastrophic failure. The historical pattern in technology governance (nuclear, aviation, pharmaceuticals, financial regulation) is that serious governance comes after a disaster. In AI, the opportunity to establish governance before the disaster occurs is being actively seized, however imperfectly. This is genuinely unprecedented and worth protecting.</p>
+  </div>
+
+</div>
+</main>
+</div>
+
+<div class="sticky-bar" id="sticky-bar">
+  <div class="sticky-bar-reading" id="sticky-reading">Read to the end to unlock the next module</div>
+  <div class="sticky-bar-track"><div class="sticky-bar-fill" id="sticky-fill"></div></div>
+  <div class="sticky-bar-label" id="sticky-label">0%</div>
+  <button class="sticky-bar-btn" id="sticky-btn" onclick="completeAndNext()">Module 9: Catastrophic Risk Scenarios →</button>
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import { getFirestore, doc, setDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  const app=initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+  const auth=getAuth(app);const db=getFirestore(app);
+  let currentUser=null;
+  onAuthStateChanged(auth,u=>{currentUser=u;});
+  window.toggleTheme=function(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='☾'):(h.setAttribute('data-theme','dark'),i.textContent='☀');};
+  window.addEventListener('scroll',()=>{const d=document.documentElement,s=d.scrollTop||document.body.scrollTop,t=d.scrollHeight-d.clientHeight;document.getElementById('progress').style.width=(s/t*100)+'%';});
+  let unlocked=false;
+  function updateScrollProgress(){
+    const scrolled=window.scrollY+window.innerHeight;const total=document.documentElement.scrollHeight;
+    const pct=Math.min(100,Math.round((scrolled/total)*100));
+    const fill=document.getElementById('sticky-fill');const label=document.getElementById('sticky-label');
+    const btn=document.getElementById('sticky-btn');const reading=document.getElementById('sticky-reading');
+    if(fill)fill.style.width=pct+'%';if(label)label.textContent=pct+'%';
+    if(pct>=95&&!unlocked){unlocked=true;if(btn)btn.style.display='block';if(reading)reading.style.display='none';if(fill)fill.style.background='#22c55e';if(label)label.style.color='#22c55e';}
+  }
+  window.addEventListener('scroll',updateScrollProgress);updateScrollProgress();
+  window.completeAndNext=async function(){
+    if(currentUser){try{await setDoc(doc(db,'users',currentUser.uid),{safetyModules:arrayUnion('m8')},{merge:true});}catch(e){}}
+    window.location.href='safety-module-9.html';
+  };
+</script>
+</body>
+</html>

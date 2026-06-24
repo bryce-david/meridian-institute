@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 10: Paths to Safe AI — AI Safety and Alignment — Meridian Institute of AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#7F1D1D;--accent-dim:rgba(127,29,29,0.1);--accent-dim2:rgba(127,29,29,0.05);--nav-bg:rgba(8,8,8,0.9);--callout-bg:rgba(127,29,29,0.07);--callout-border:rgba(127,29,29,0.25);--good-bg:rgba(34,197,94,0.07);--good-border:rgba(34,197,94,0.2);--warn-bg:rgba(251,146,60,0.07);--warn-border:rgba(251,146,60,0.2);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#991B1B;--accent-dim:rgba(153,27,27,0.08);--accent-dim2:rgba(153,27,27,0.04);--nav-bg:rgba(250,250,248,0.9);--callout-bg:rgba(153,27,27,0.05);--callout-border:rgba(153,27,27,0.2);--good-bg:rgba(22,163,74,0.06);--good-border:rgba(22,163,74,0.2);--warn-bg:rgba(234,88,12,0.05);--warn-border:rgba(234,88,12,0.2);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;overflow-x:hidden;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.7;overflow-x:hidden;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}
+  .nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}
+  .nav-back{font-size:13px;color:var(--text-2);text-decoration:none;transition:color 0.2s;}
+  .nav-back:hover{color:var(--text);}
+  .nav-label{font-size:13px;color:var(--text-3);}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;transition:all 0.2s;}
+  .theme-toggle:hover{background:var(--bg-3);color:var(--text);}
+  .progress-bar{position:fixed;top:60px;left:0;right:0;z-index:99;height:2px;background:var(--border);}
+  .progress-fill{height:100%;background:var(--accent);width:0%;transition:width 0.1s;}
+  .page-wrapper{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:100vh;padding-top:62px;overflow:hidden;}
+  .sidebar{position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto;border-right:1px solid var(--border);padding:32px 24px;background:var(--bg-2);}
+  .sidebar-course{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;}
+  .sidebar-course-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+  .sidebar-module{margin-bottom:4px;}
+  .sidebar-module-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:13px;color:var(--text-2);text-decoration:none;transition:all 0.2s;line-height:1.4;}
+  .sidebar-module-link:hover{background:var(--bg-3);color:var(--text);}
+  .sidebar-module-link.active{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-num{font-size:11px;font-weight:500;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--bg-4);color:var(--text-3);}
+  .sidebar-module-link.active .sidebar-num{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-divider{height:1px;background:var(--border);margin:20px 0;}
+  .sidebar-progress-label{font-size:12px;color:var(--text-3);margin-bottom:8px;display:flex;justify-content:space-between;}
+  .sidebar-progress-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sidebar-progress-fill{height:100%;width:100%;background:var(--accent);border-radius:2px;}
+  main{display:block;min-width:0;overflow:hidden;}
+  .content{max-width:760px;width:100%;padding:60px 64px 140px;margin:0 auto;}
+  .module-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+  .module-tag{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(127,29,29,0.2);padding:4px 12px;border-radius:100px;}
+  .module-meta{font-size:12px;color:var(--text-3);}
+  h1{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1.05;letter-spacing:-0.02em;color:var(--text);margin-bottom:24px;}
+  .intro-text{font-size:19px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+  h2{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:400;color:var(--text);margin:52px 0 18px;line-height:1.2;}
+  h3{font-size:16px;font-weight:500;color:var(--text);margin:32px 0 12px;}
+  p{font-size:16px;font-weight:300;color:var(--text-2);line-height:1.8;margin-bottom:20px;}
+  strong{font-weight:500;color:var(--text);}
+  em{font-style:italic;}
+  ul,ol{margin:0 0 20px 22px;color:var(--text-2);}
+  li{font-size:16px;font-weight:300;line-height:1.8;margin-bottom:8px;}
+  .callout{background:var(--callout-bg);border:1px solid var(--callout-border);border-radius:12px;padding:24px 28px;margin:32px 0;}
+  .callout-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+  .callout p{margin:0;font-size:15px;color:var(--text-2);}
+  .callout p+p{margin-top:12px;}
+  .good{background:var(--good-bg);border:1px solid var(--good-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .good-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#22c55e;margin-bottom:10px;}
+  .good p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn{background:var(--warn-bg);border:1px solid var(--warn-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .warn-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#fb923c;margin-bottom:10px;}
+  .warn p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn p+p{margin-top:12px;}
+  .principle-list{display:flex;flex-direction:column;gap:12px;margin:24px 0;}
+  .principle{background:var(--bg-2);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:0 12px 12px 0;padding:20px 24px;}
+  .principle-title{font-size:15px;font-weight:500;color:var(--text);margin-bottom:6px;}
+  .principle-desc{font-size:14px;color:var(--text-2);line-height:1.65;margin:0;}
+  .sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:var(--bg-2);border-top:1px solid var(--border-2);padding:14px 5%;display:flex;align-items:center;justify-content:space-between;gap:16px;backdrop-filter:blur(12px);}
+  .sticky-bar-track{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sticky-bar-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.2s;width:0%;}
+  .sticky-bar-label{font-size:12px;color:var(--text-3);white-space:nowrap;min-width:60px;text-align:right;}
+  .sticky-bar-btn{padding:10px 20px;border-radius:8px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;background:var(--accent);color:#fff;border:none;cursor:pointer;white-space:nowrap;transition:opacity 0.2s;display:none;}
+  .sticky-bar-btn:hover{opacity:0.88;}
+  .sticky-bar-reading{font-size:12px;color:var(--text-3);white-space:nowrap;}
+  @media(max-width:900px){.page-wrapper{grid-template-columns:1fr;}.sidebar{display:none;}.content{padding:40px 24px 120px;}h1{font-size:38px;}}
+  @media(max-width:600px){.content{padding:28px 16px 120px;}h1{font-size:30px;}h2{font-size:24px;}}
+</style>
+<style>@media(max-width:480px){.nav-divider{display:none}.nav-left{gap:8px}}</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="courses.html" class="nav-back">← AI Safety and Alignment</a>
+    <div class="nav-divider"></div>
+    <span class="nav-label">Module 10</span>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">☀</span></button>
+</nav>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+
+<div class="page-wrapper">
+<aside class="sidebar">
+  <div class="sidebar-course">Expert Track</div>
+  <div class="sidebar-course-name">AI Safety and Alignment</div>
+  <div class="sidebar-module"><a href="safety-module-1.html" class="sidebar-module-link"><span class="sidebar-num">1</span>What Is AI Safety?</a></div>
+  <div class="sidebar-module"><a href="safety-module-2.html" class="sidebar-module-link"><span class="sidebar-num">2</span>The Alignment Problem</a></div>
+  <div class="sidebar-module"><a href="safety-module-3.html" class="sidebar-module-link"><span class="sidebar-num">3</span>Reward Hacking and Specification Gaming</a></div>
+  <div class="sidebar-module"><a href="safety-module-4.html" class="sidebar-module-link"><span class="sidebar-num">4</span>Reinforcement Learning from Human Feedback</a></div>
+  <div class="sidebar-module"><a href="safety-module-5.html" class="sidebar-module-link"><span class="sidebar-num">5</span>Constitutional AI and RLAIF</a></div>
+  <div class="sidebar-module"><a href="safety-module-6.html" class="sidebar-module-link"><span class="sidebar-num">6</span>Interpretability Research</a></div>
+  <div class="sidebar-module"><a href="safety-module-7.html" class="sidebar-module-link"><span class="sidebar-num">7</span>Emergent Capabilities</a></div>
+  <div class="sidebar-module"><a href="safety-module-8.html" class="sidebar-module-link"><span class="sidebar-num">8</span>AI Governance</a></div>
+  <div class="sidebar-module"><a href="safety-module-9.html" class="sidebar-module-link"><span class="sidebar-num">9</span>Catastrophic Risk Scenarios</a></div>
+  <div class="sidebar-module"><a href="safety-module-10.html" class="sidebar-module-link active"><span class="sidebar-num">10</span>Paths to Safe AI</a></div>
+  <div class="sidebar-module"><a href="quiz-safety.html" class="sidebar-module-link" style="color:var(--accent);margin-top:4px;"><span class="sidebar-num" style="background:var(--accent-dim);color:var(--accent);">✦</span>Final Assessment</a></div>
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-progress-label"><span>Course progress</span><span style="color:var(--accent);">10 / 10</span></div>
+  <div class="sidebar-progress-track"><div class="sidebar-progress-fill"></div></div>
+</aside>
+
+<main>
+<div class="content">
+  <div class="module-eyebrow"><span class="module-tag">Module 10 · Expert Track</span><span class="module-meta">28 min read · AI Safety and Alignment</span></div>
+  <h1>Paths to Safe AI</h1>
+
+  <p class="intro-text">This final module is about tractability. The preceding nine modules have established that AI safety is a genuine, serious, and multidimensional challenge. This one addresses the more important question: what are we actually doing about it, and does it have a realistic chance of working? The answer — carefully hedged — is yes. The technical problems are hard but not obviously unsolvable. The governance challenges are real but not unprecedented. And the window in which decisive investments in safety can be made is open now, though it will not remain open indefinitely.</p>
+
+  <h2>The technical agenda</h2>
+  <p>The technical path to safe AI is not a single research program but a portfolio of complementary approaches, each addressing different aspects of the alignment and safety problems. No single technique is sufficient on its own; the case for tractability rests on the portfolio working together.</p>
+
+  <h3>Interpretability research</h3>
+  <p>The interpretability agenda (covered in detail in Module 6) is the most fundamental technical approach to AI safety. The core insight is that we cannot safely deploy systems whose internal operations are opaque. If we cannot determine what a model is actually optimizing for, what representations it has formed, or whether its apparent alignment is genuine or instrumental, we are deploying blindly. Interpretability research aims to change this by developing tools to understand model internals well enough to catch misalignment before it causes harm.</p>
+  <p>The current state of interpretability research is promising but incomplete. Mechanistic interpretability has produced significant results — the identification of circuits implementing specific capabilities, the superposition hypothesis explaining how models store many more features than they have dimensions, and the discovery of specific neurons implementing interpretable features. Anthropic's research has identified individual neurons in Claude's residual stream corresponding to specific concepts, and developed sparse autoencoders as tools for decomposing activations into interpretable features. But scaling these tools to models with hundreds of billions of parameters, and developing the understanding needed to reliably detect subtle misalignment, remains a major open challenge.</p>
+
+  <h3>Scalable oversight</h3>
+  <p>Scalable oversight (mentioned in earlier modules) addresses the problem that as AI systems become more capable, human evaluators may lose the ability to directly assess whether AI outputs are correct and aligned. If a superintelligent AI produces a proof of a major mathematical theorem, verifying it may be beyond any human's individual ability. If an AI system designs a novel drug, evaluating whether the design is actually optimal may require more domain expertise than any human reviewer possesses.</p>
+  <p>Two specific techniques have attracted the most research attention. <strong>Debate</strong>, proposed by Geoffrey Irving and Paul Christiano at OpenAI in 2018, proposes that two AI systems argue for different claims and a human judge evaluates the argument quality rather than the conclusions. The key insight is that verifying a proof of correctness can be easier than generating one: even a human who cannot independently solve a problem may be able to evaluate which of two competing arguments is stronger. <strong>Amplification</strong>, also developed by Christiano and colleagues, proposes bootstrapping human oversight by having humans use AI assistance to evaluate AI outputs — the human asks the AI system to help them understand the AI's own outputs, using the AI's knowledge to compensate for the human's limitations.</p>
+  <p>Both approaches face significant challenges. Debate only works if the human judge can reliably evaluate argument quality, which may not hold for highly technical or subtle questions. Amplification may not scale if the AI system being used for assistance is also potentially misaligned. Research in scalable oversight is active and has produced empirical results suggesting these concerns are not immediately fatal, but neither approach has been demonstrated at the scale where they would be most needed.</p>
+
+  <h3>Automated alignment research</h3>
+  <p>One of the most discussed and controversial ideas in AI safety is the possibility of using AI systems to assist in solving the alignment problem — what is sometimes called "using AI to align AI." The intuition is that the alignment problem may be too technically difficult for humans to solve unaided, and that AI systems with relevant capabilities might provide the research assistance necessary to make progress.</p>
+  <p>Anthropic's "Core Views" document and OpenAI's superalignment initiative both explicitly discuss the goal of developing AI systems capable of conducting alignment research, potentially accelerating the pace of progress enough to stay ahead of the capability curve. The superalignment team at OpenAI, before its dissolution in 2024, proposed using GPT-4 to evaluate the outputs of more capable models as a path toward scalable oversight.</p>
+  <p>The challenge — which Anthropic researchers have articulated clearly — is circular: using a potentially misaligned AI to help align other AI systems requires that the assisting AI system is itself sufficiently aligned to be trusted with that role. This circularity is not necessarily fatal if it can be bootstrapped: starting with a smaller, more interpretable model that can be verified as aligned, and using it to help align slightly more capable models, and iterating. But the bootstrap path requires that each step be reliably verified, which requires the interpretability tools that are themselves under development.</p>
+
+  <div class="callout">
+    <div class="callout-label">The Research Interdependence Problem</div>
+    <p>A recurring theme across the technical safety agenda is that the tools needed to verify each approach depend on other tools that are themselves under development. Scalable oversight depends on interpretability to verify that AI assistants are providing genuine help rather than misleading the human supervisor. Automated alignment research depends on scalable oversight to verify the AI's outputs. Interpretability research is trying to develop the foundational tools but has not yet reached the scale where the most important applications become possible. This interdependence is not a reason for pessimism — it accurately describes the state of a young field with genuine momentum — but it is a reason to be clear-eyed about what remains unsolved.</p>
+  </div>
+
+  <h2>The governance agenda</h2>
+  <p>Technical solutions are necessary but not sufficient for safe AI. Even if interpretability research provides reliable tools for verifying AI alignment, those tools will only be used if the incentive structures and governance frameworks require their use. The governance agenda addresses this: what policies, institutions, and international agreements are needed to ensure that AI development proceeds safely?</p>
+
+  <h3>International coordination</h3>
+  <p>The most important governance gap identified in Module 8 is the absence of international coordination on AI safety. The historical analogy most often cited is the nuclear nonproliferation framework: the Nuclear Non-Proliferation Treaty, the International Atomic Energy Agency's inspection regime, and the network of export controls and bilateral agreements that collectively govern nuclear materials and weapons development.</p>
+  <p>AI governance scholars including Allan Dafoe, Helen Toner, and the team at the Centre for the Governance of AI at Oxford have sketched frameworks for analogous AI governance structures. The core elements of proposals include: an international technical body (analogous to the IAEA) with the authority to conduct inspections of frontier AI training runs and access to evaluate deployed systems, a treaty framework establishing minimum safety standards for frontier AI development, and international compute governance mechanisms (building on the export control infrastructure discussed in Module 8) coordinated across chip-manufacturing and chip-consuming nations.</p>
+  <p>The obstacles are formidable. The nuclear nonproliferation framework took decades to develop and has significant gaps (several states have developed nuclear weapons outside the treaty framework). AI development is more distributed than nuclear development — the underlying technology is not as exclusively tied to rare physical materials — which makes containment harder. Geopolitical competition, particularly US-China strategic rivalry over AI dominance, creates strong incentives against meaningful coordination even when both parties might benefit from it. And the pace of AI development may outrun the pace of treaty negotiation.</p>
+
+  <h3>Compute governance</h3>
+  <p>As discussed in Module 8, compute governance — controlling access to the hardware necessary for frontier AI training — is potentially the most tractable near-term lever for international AI governance. The semiconductor supply chain is concentrated enough that a coordinated export control regime could be meaningfully enforced, at least for the most capable chips and the most advanced manufacturing equipment.</p>
+  <p>The Semiconductor Industry and Supply Chain Management (SISCM) proposals developed by researchers including Tim Fist and Tristan Croll propose requiring cryptographic reporting mechanisms built into high-performance AI chips that would allow governments to monitor large training runs. The idea is that each chip would record and report the existence (not the content) of training runs above specified thresholds, providing governments with visibility into frontier AI development that current voluntary reporting frameworks cannot guarantee. This "know your compute" approach mirrors the "know your customer" framework in financial regulation and is a technically specific proposal for how international compute monitoring could work.</p>
+
+  <h3>Third-party audits and certification</h3>
+  <p>The pharmaceutical and aviation industries have developed robust frameworks for third-party safety assessment: independent organizations evaluate products against specified safety standards before they can be deployed. AI safety governance increasingly recognizes that analogous frameworks are needed for frontier AI systems. The EU AI Act's conformity assessment requirements and the UK AISI's pre-deployment evaluations are the most advanced current implementations.</p>
+  <p>For third-party audit frameworks to be effective, three things are required. First, auditors need access to the models being evaluated — both behavioral access (the ability to run any prompt against the model) and weight access (the ability to run mechanistic interpretability analyses on the model's internal representations). Second, auditors need agreed evaluation standards — the set of tests that constitute a "pass" on safety requirements — which requires technical consensus about what dangerous capabilities look like. Third, the legal framework needs to give auditor findings meaningful consequence — the ability to delay or prevent deployment of models that fail safety assessments. Current frameworks are making progress on the first two but struggle with the third.</p>
+
+  <h3>Whistleblower protections</h3>
+  <p>A less discussed but potentially important governance mechanism is legal protection for AI safety whistleblowers — employees of AI labs who identify safety violations or concerns and report them to regulators or the public. The history of safety in other industries (aviation, pharmaceuticals, nuclear) includes cases where internal safety concerns were suppressed until they became public through the actions of whistleblowers. Legal frameworks that protect and incentivize this disclosure are part of any robust safety governance system.</p>
+  <p>Current US federal whistleblower protections (primarily under the Sarbanes-Oxley Act and the False Claims Act) apply primarily to financial fraud and government contractor misconduct, not to AI safety concerns. Developing legal frameworks specifically addressing AI safety whistleblowers — including protections against retaliation and safe channels for disclosure to regulators — is part of the governance agenda that remains largely unimplemented.</p>
+
+  <h2>The cultural agenda</h2>
+  <p>Beyond technical research and formal governance, the trajectory of AI safety depends on the culture of AI development — whether safety is treated as a core value by the people and organizations building AI systems, or as a compliance requirement to be minimized. Culture is harder to measure and govern than regulations, but it may be more durable and more important.</p>
+
+  <h3>Safety as a core organizational value</h3>
+  <p>The most successful safety cultures in high-stakes industries — commercial aviation, nuclear power operations, surgical safety in medicine — share a common feature: safety is not treated as opposed to the organization's core mission but as constitutive of it. Airlines do not succeed by sometimes getting planes to their destinations safely; safety is the foundation on which everything else is built. The cultural shift required in AI development is analogous: safety must be understood not as a constraint on capability development but as a prerequisite for the kind of long-term trust and deployment at scale that makes AI valuable at all.</p>
+  <p>Several frontier AI labs have made explicit commitments to this cultural orientation. Anthropic's public documentation describes the company as occupying a "peculiar position" — believing it may be building one of the most potentially dangerous technologies in history, while pressing ahead because being at the frontier of AI development is the best position from which to work on safety. Whether this position is coherent, and whether it is genuinely reflected in organizational priorities, is something outsiders can assess only imperfectly through the lab's public actions: what research it publishes, what it declines to deploy, and how it responds when safety and commercial pressures conflict.</p>
+
+  <h3>Open publication of safety research</h3>
+  <p>A specific cultural norm with significant consequences is the degree to which AI safety research is published openly. There is an inherent tension in safety research between openness (making safety tools and knowledge available to the entire field) and security (avoiding the publication of information that could be misused). The tension is real: a paper that describes how to elicit dangerous capabilities from AI systems could help safety researchers patch vulnerabilities and help bad actors exploit them.</p>
+  <p>The current norm in the field tilts toward openness for most safety research, with specific carve-outs for information with clear dual-use concern (detailed biosecurity evaluation methodologies, specific jailbreaking techniques that have not yet been patched). The Anthropic alignment science team, DeepMind's safety team, and academic groups at UC Berkeley (the Center for Human-Compatible AI), MIT, and elsewhere publish the large majority of their research. This openness has contributed to a field-wide discourse and collaborative culture that has accelerated safety research — researchers build on each other's work, identify flaws in proposed solutions, and develop shared standards. The alternative — safety research conducted entirely behind closed doors — would probably produce slower progress and less trust from the broader scientific community.</p>
+
+  <h2>The funding and talent landscape</h2>
+  <p>AI safety research is funded from several distinct sources with different implications for the field's direction and independence.</p>
+
+  <h3>Open Philanthropy and EA-aligned funding</h3>
+  <p>Open Philanthropy, the philanthropic organization primarily funded by Dustin Moskovitz (a Facebook co-founder) and Cari Tuna, has been the largest non-profit funder of AI safety research since approximately 2015. Open Philanthropy's grantmaking in AI safety reflects an effective altruist framework that prioritizes risks to humanity's long-term future, which leads to emphasis on existential-risk-focused work. Major grantees have included MIRI (the Machine Intelligence Research Institute), the Center for Human-Compatible AI at Berkeley, Redwood Research, ARC Evals (now Metr), the Centre for the Governance of AI at Oxford, and significant funding for safety teams at Anthropic and OpenAI.</p>
+  <p>Open Philanthropy's dominance in AI safety funding has both advantages and disadvantages. The advantage is that it has funded work on long-horizon, high-uncertainty research that commercially-oriented funders would not support. The disadvantage is that a field disproportionately funded by a single organization with a particular philosophical orientation may develop blind spots. The effective altruist community's emphasis on existential risk has at times been at tension with other researchers' focus on near-term harms, and funding structures that favor one framing over the other shape which research programs receive support.</p>
+  <p>Other significant funders include the Survival and Flourishing Fund (another EA-aligned organization), the Long-Term Future Fund, and a growing number of government programs including DARPA's AI safety programs and the UK's AI Safety Institute research budget. The funding landscape is becoming more diverse, which is broadly healthy for the field.</p>
+
+  <h3>Frontier lab safety teams</h3>
+  <p>Frontier AI laboratories have substantially expanded their internal safety teams over the past several years, driven by a combination of genuine organizational commitment, reputational pressure, and — increasingly — regulatory requirement. Anthropic's safety team spans multiple research areas including alignment science, interpretability, model behavior, and policy. Google DeepMind's safety team is one of the largest in the field. OpenAI's safety work continues across multiple teams despite significant organizational turbulence including the departure of the Superalignment team leads in 2024.</p>
+  <p>The key question about internal safety teams is whether they have meaningful organizational authority when safety concerns conflict with commercial or capability priorities. The departures from OpenAI in 2024 — including Ilya Sutskever, Jan Leike, and others from the safety organization — raised public concerns about whether safety considerations receive adequate organizational weight at the frontier labs. Structural features that support safety team authority include: direct reporting lines to the CEO or board, formal veto power over model releases, and transparency requirements that make it possible to identify when safety concerns have been overridden.</p>
+
+  <h2>What individual practitioners can do</h2>
+  <p>This course has been technical and field-level. What does it imply for someone who is at the beginning of a career in AI development, policy, or research?</p>
+
+  <div class="principle-list">
+    <div class="principle">
+      <div class="principle-title">Develop technical depth in safety-relevant areas</div>
+      <div class="principle-desc">Interpretability, scalable oversight, formal verification, robustness, and evaluation methodology are the technical areas where safety expertise is most needed and currently undersupplied. A practitioner with deep expertise in one of these areas and a genuine commitment to applying it to safety problems is more valuable than one with broad but shallow safety knowledge.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Participate in red-teaming and responsible disclosure</div>
+      <div class="principle-desc">Red-teaming programs at frontier labs are one of the most direct ways for technically skilled individuals to contribute to AI safety. When you identify a safety vulnerability in a deployed AI system, responsible disclosure — reporting it to the developer rather than publicizing it without notice — gives the developer the opportunity to address it before it is exploited. Most major AI labs have bug bounty or responsible disclosure programs.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Choose employers and projects with genuine safety commitments</div>
+      <div class="principle-desc">Skilled AI researchers and engineers have significant leverage in the current labor market. Working for organizations with genuine safety commitments — organizations where safety teams have real authority, where safety research is published openly, and where deployment decisions reflect safety evaluations — is a direct way to strengthen the safety culture of the organizations doing frontier AI development.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Engage with governance as a technical expert</div>
+      <div class="principle-desc">Policymakers developing AI governance frameworks need technical expertise to design regulations that are both effective and implementable. Providing technical input to regulatory processes — through comment periods, advisory roles, or direct engagement with policy organizations like GovAI, CAIS, or government AI offices — allows technical knowledge to shape governance in ways that generalist policy staff cannot achieve.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Maintain intellectual honesty about uncertainty</div>
+      <div class="principle-desc">AI safety involves genuine uncertainty about probabilities, timelines, and which interventions will be most effective. Practitioners who express more confidence than the evidence supports — in either direction, whether claiming safety is solved or claiming catastrophe is inevitable — do more harm than good. Epistemic honesty about what we know, what we don't, and what evidence would change our views is a professional standard the field needs.</div>
+    </div>
+  </div>
+
+  <h2>The relationship between safety and capability research</h2>
+  <p>A persistent misconception about AI safety is that it is fundamentally in tension with capability research — that making AI more capable necessarily makes it less safe, and that making it safer requires accepting capability penalties. This framing has some truth in narrow contexts (safety training sometimes reduces performance on specific benchmarks) but is misleading as a general characterization of the relationship between the fields.</p>
+  <p>Many of the most important safety advances have come from understanding AI systems better — which is also what capability research requires. Mechanistic interpretability research that helps us understand how models work is also research that could inform more efficient training. Evaluation research that helps us assess what models can and cannot do serves both safety purposes (identifying dangerous capabilities) and capability purposes (identifying capability gaps). Robustness research that makes models reliably perform well under distribution shift serves both safety purposes (preventing unexpected failures) and deployment purposes (making products reliable).</p>
+  <p>The deeper insight is that capabilities and alignment are not the dimensions they appear to be from outside the field. A system that is more capable of understanding human intent is, in an important sense, more aligned. A system that is more robust to adversarial inputs is both safer and more capable. The framing of safety versus capability as a fundamental tradeoff reflects an early-stage view of the field that more mature research has increasingly complicated.</p>
+
+  <div class="callout">
+    <div class="callout-label">The Competitive Dynamics Question</div>
+    <p>The most challenging version of the safety-capability tradeoff is not technical but strategic: if safety requirements slow down one lab's development, competitors who do not face those requirements may reach critical capability thresholds first, potentially with less safe systems. This "race to the bottom" dynamic is a genuine concern that pure technical safety research cannot address. The governance agenda — specifically, frameworks that impose roughly equivalent safety requirements across competing organizations and jurisdictions — is the response to this concern. A safety practice that applies only to organizations that choose it voluntarily provides much weaker guarantees than one that applies across the field through legally binding requirements.</p>
+  </div>
+
+  <h2>Cautious optimism and why the problem is tractable</h2>
+  <p>It would be easy — and wrong — to conclude from the preceding nine modules that AI safety is an unsolvable problem, that catastrophe is inevitable, or that the field is too far behind the capability curve to make a difference. None of these conclusions follow from a clear-eyed reading of the evidence.</p>
+  <p>The problem is tractable for specific, concrete reasons. First, interpretability research is making genuine progress. The sparse autoencoder work at Anthropic, the circuit-level understanding achieved for specific capabilities, and the development of better tools for analyzing model internals represent real advances, not just optimistic claims. The pace of progress is slower than the pace of capability development, but the gap is not obviously unbridgeable given the current level of investment.</p>
+  <p>Second, governance frameworks are being built in the window before catastrophic capabilities emerge. The EU AI Act, the UK AISI, the US executive order, and the international dialogue frameworks established at the 2023 and 2024 AI Safety Summits are imperfect but real. Governance that is established before a crisis is more likely to be well-designed and durable than governance that is scrambled together in response to a catastrophic event.</p>
+  <p>Third, the talent and funding flowing into safety research have increased dramatically since 2020. The number of serious researchers working on alignment, interpretability, governance, and safety evaluation is larger than at any previous point in the field's history. The quality and depth of the research have improved correspondingly.</p>
+  <p>Fourth, and perhaps most importantly, the leading AI labs — whatever their internal tensions and competitive pressures — have made concrete safety commitments that constrain their behavior in ways that would have been unimaginable five years ago. Responsible scaling policies, pre-deployment evaluations, mandatory red-teaming, and engagement with external oversight bodies are now standard practice at Anthropic, Google DeepMind, and (with more variability) OpenAI. These commitments are imperfect and could be abandoned under sufficient competitive pressure, but they represent a real institutional shift in how frontier AI development is conducted.</p>
+
+  <div class="good">
+    <div class="good-label">The Case for Optimism Is Conditional</div>
+    <p>Cautious optimism is not unconditional optimism. The case for tractability depends on continued investment in technical safety research at a pace that keeps up with capability development, governance frameworks that are binding rather than merely voluntary, and international cooperation that prevents races to the bottom across competing jurisdictions. Each of these conditions is plausible but not guaranteed. The outcome is not predetermined — it depends critically on what the people working in and around AI development choose to do with the knowledge and leverage they have. That is not a comfortable place to land, but it is the accurate one. The problem is solvable. Whether it is solved depends on choices being made now.</p>
+  </div>
+
+</div>
+</main>
+</div>
+
+<div class="sticky-bar" id="sticky-bar">
+  <div class="sticky-bar-reading" id="sticky-reading">Read to the end to unlock the final assessment</div>
+  <div class="sticky-bar-track"><div class="sticky-bar-fill" id="sticky-fill"></div></div>
+  <div class="sticky-bar-label" id="sticky-label">0%</div>
+  <button class="sticky-bar-btn" id="sticky-btn" onclick="completeAndNext()">Final Assessment →</button>
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import { getFirestore, doc, setDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  const app=initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+  const auth=getAuth(app);const db=getFirestore(app);
+  let currentUser=null;
+  onAuthStateChanged(auth,u=>{currentUser=u;});
+  window.toggleTheme=function(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='☾'):(h.setAttribute('data-theme','dark'),i.textContent='☀');};
+  window.addEventListener('scroll',()=>{const d=document.documentElement,s=d.scrollTop||document.body.scrollTop,t=d.scrollHeight-d.clientHeight;document.getElementById('progress').style.width=(s/t*100)+'%';});
+  let unlocked=false;
+  function updateScrollProgress(){
+    const scrolled=window.scrollY+window.innerHeight;const total=document.documentElement.scrollHeight;
+    const pct=Math.min(100,Math.round((scrolled/total)*100));
+    const fill=document.getElementById('sticky-fill');const label=document.getElementById('sticky-label');
+    const btn=document.getElementById('sticky-btn');const reading=document.getElementById('sticky-reading');
+    if(fill)fill.style.width=pct+'%';if(label)label.textContent=pct+'%';
+    if(pct>=95&&!unlocked){unlocked=true;if(btn)btn.style.display='block';if(reading)reading.style.display='none';if(fill)fill.style.background='#22c55e';if(label)label.style.color='#22c55e';}
+  }
+  window.addEventListener('scroll',updateScrollProgress);updateScrollProgress();
+  window.completeAndNext=async function(){
+    if(currentUser){try{await setDoc(doc(db,'users',currentUser.uid),{safetyModules:arrayUnion('m10')},{merge:true});}catch(e){}}
+    window.location.href='quiz-safety.html';
+  };
+</script>
+</body>
+</html>

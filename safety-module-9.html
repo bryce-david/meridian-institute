@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 9: Catastrophic Risk Scenarios — AI Safety and Alignment — Meridian Institute of AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"]{--bg:#080808;--bg-2:#111111;--bg-3:#1a1a1a;--bg-4:#222222;--text:#f0f0f0;--text-2:#a0a0a0;--text-3:#606060;--border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.15);--accent:#7F1D1D;--accent-dim:rgba(127,29,29,0.1);--accent-dim2:rgba(127,29,29,0.05);--nav-bg:rgba(8,8,8,0.9);--callout-bg:rgba(127,29,29,0.07);--callout-border:rgba(127,29,29,0.25);--good-bg:rgba(34,197,94,0.07);--good-border:rgba(34,197,94,0.2);--warn-bg:rgba(251,146,60,0.07);--warn-border:rgba(251,146,60,0.2);}
+  :root[data-theme="light"]{--bg:#fafaf8;--bg-2:#f0f0ec;--bg-3:#e8e8e2;--bg-4:#ddddd6;--text:#0a0a0a;--text-2:#555550;--text-3:#999990;--border:rgba(0,0,0,0.08);--border-2:rgba(0,0,0,0.15);--accent:#991B1B;--accent-dim:rgba(153,27,27,0.08);--accent-dim2:rgba(153,27,27,0.04);--nav-bg:rgba(250,250,248,0.9);--callout-bg:rgba(153,27,27,0.05);--callout-border:rgba(153,27,27,0.2);--good-bg:rgba(22,163,74,0.06);--good-border:rgba(22,163,74,0.2);--warn-bg:rgba(234,88,12,0.05);--warn-border:rgba(234,88,12,0.2);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;overflow-x:hidden;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.7;overflow-x:hidden;transition:background 0.3s,color 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-left{display:flex;align-items:center;gap:16px;}
+  .nav-logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .nav-divider{width:1px;height:16px;background:var(--border-2);}
+  .nav-back{font-size:13px;color:var(--text-2);text-decoration:none;transition:color 0.2s;}
+  .nav-back:hover{color:var(--text);}
+  .nav-label{font-size:13px;color:var(--text-3);}
+  .theme-toggle{width:32px;height:32px;border-radius:7px;border:1px solid var(--border-2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:14px;transition:all 0.2s;}
+  .theme-toggle:hover{background:var(--bg-3);color:var(--text);}
+  .progress-bar{position:fixed;top:60px;left:0;right:0;z-index:99;height:2px;background:var(--border);}
+  .progress-fill{height:100%;background:var(--accent);width:0%;transition:width 0.1s;}
+  .page-wrapper{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:100vh;padding-top:62px;overflow:hidden;}
+  .sidebar{position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto;border-right:1px solid var(--border);padding:32px 24px;background:var(--bg-2);}
+  .sidebar-course{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;}
+  .sidebar-course-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+  .sidebar-module{margin-bottom:4px;}
+  .sidebar-module-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:13px;color:var(--text-2);text-decoration:none;transition:all 0.2s;line-height:1.4;}
+  .sidebar-module-link:hover{background:var(--bg-3);color:var(--text);}
+  .sidebar-module-link.active{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-num{font-size:11px;font-weight:500;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--bg-4);color:var(--text-3);}
+  .sidebar-module-link.active .sidebar-num{background:var(--accent-dim);color:var(--accent);}
+  .sidebar-divider{height:1px;background:var(--border);margin:20px 0;}
+  .sidebar-progress-label{font-size:12px;color:var(--text-3);margin-bottom:8px;display:flex;justify-content:space-between;}
+  .sidebar-progress-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sidebar-progress-fill{height:100%;width:90%;background:var(--accent);border-radius:2px;}
+  main{display:block;min-width:0;overflow:hidden;}
+  .content{max-width:760px;width:100%;padding:60px 64px 140px;margin:0 auto;}
+  .module-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+  .module-tag{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(127,29,29,0.2);padding:4px 12px;border-radius:100px;}
+  .module-meta{font-size:12px;color:var(--text-3);}
+  h1{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1.05;letter-spacing:-0.02em;color:var(--text);margin-bottom:24px;}
+  .intro-text{font-size:19px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+  h2{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:400;color:var(--text);margin:52px 0 18px;line-height:1.2;}
+  h3{font-size:16px;font-weight:500;color:var(--text);margin:32px 0 12px;}
+  p{font-size:16px;font-weight:300;color:var(--text-2);line-height:1.8;margin-bottom:20px;}
+  strong{font-weight:500;color:var(--text);}
+  em{font-style:italic;}
+  ul,ol{margin:0 0 20px 22px;color:var(--text-2);}
+  li{font-size:16px;font-weight:300;line-height:1.8;margin-bottom:8px;}
+  .callout{background:var(--callout-bg);border:1px solid var(--callout-border);border-radius:12px;padding:24px 28px;margin:32px 0;}
+  .callout-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+  .callout p{margin:0;font-size:15px;color:var(--text-2);}
+  .callout p+p{margin-top:12px;}
+  .good{background:var(--good-bg);border:1px solid var(--good-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .good-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#22c55e;margin-bottom:10px;}
+  .good p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn{background:var(--warn-bg);border:1px solid var(--warn-border);border-radius:12px;padding:24px 28px;margin:24px 0;}
+  .warn-label{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#fb923c;margin-bottom:10px;}
+  .warn p{margin:0;font-size:15px;color:var(--text-2);}
+  .warn p+p{margin-top:12px;}
+  .principle-list{display:flex;flex-direction:column;gap:12px;margin:24px 0;}
+  .principle{background:var(--bg-2);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:0 12px 12px 0;padding:20px 24px;}
+  .principle-title{font-size:15px;font-weight:500;color:var(--text);margin-bottom:6px;}
+  .principle-desc{font-size:14px;color:var(--text-2);line-height:1.65;margin:0;}
+  .sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:var(--bg-2);border-top:1px solid var(--border-2);padding:14px 5%;display:flex;align-items:center;justify-content:space-between;gap:16px;backdrop-filter:blur(12px);}
+  .sticky-bar-track{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+  .sticky-bar-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.2s;width:0%;}
+  .sticky-bar-label{font-size:12px;color:var(--text-3);white-space:nowrap;min-width:60px;text-align:right;}
+  .sticky-bar-btn{padding:10px 20px;border-radius:8px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;background:var(--accent);color:#fff;border:none;cursor:pointer;white-space:nowrap;transition:opacity 0.2s;display:none;}
+  .sticky-bar-btn:hover{opacity:0.88;}
+  .sticky-bar-reading{font-size:12px;color:var(--text-3);white-space:nowrap;}
+  @media(max-width:900px){.page-wrapper{grid-template-columns:1fr;}.sidebar{display:none;}.content{padding:40px 24px 120px;}h1{font-size:38px;}}
+  @media(max-width:600px){.content{padding:28px 16px 120px;}h1{font-size:30px;}h2{font-size:24px;}}
+</style>
+<style>@media(max-width:480px){.nav-divider{display:none}.nav-left{gap:8px}}</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="index.html" class="nav-logo-mark">M</a>
+    <div class="nav-divider"></div>
+    <a href="courses.html" class="nav-back">← AI Safety and Alignment</a>
+    <div class="nav-divider"></div>
+    <span class="nav-label">Module 9</span>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">☀</span></button>
+</nav>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+
+<div class="page-wrapper">
+<aside class="sidebar">
+  <div class="sidebar-course">Expert Track</div>
+  <div class="sidebar-course-name">AI Safety and Alignment</div>
+  <div class="sidebar-module"><a href="safety-module-1.html" class="sidebar-module-link"><span class="sidebar-num">1</span>What Is AI Safety?</a></div>
+  <div class="sidebar-module"><a href="safety-module-2.html" class="sidebar-module-link"><span class="sidebar-num">2</span>The Alignment Problem</a></div>
+  <div class="sidebar-module"><a href="safety-module-3.html" class="sidebar-module-link"><span class="sidebar-num">3</span>Reward Hacking and Specification Gaming</a></div>
+  <div class="sidebar-module"><a href="safety-module-4.html" class="sidebar-module-link"><span class="sidebar-num">4</span>Reinforcement Learning from Human Feedback</a></div>
+  <div class="sidebar-module"><a href="safety-module-5.html" class="sidebar-module-link"><span class="sidebar-num">5</span>Constitutional AI and RLAIF</a></div>
+  <div class="sidebar-module"><a href="safety-module-6.html" class="sidebar-module-link"><span class="sidebar-num">6</span>Interpretability Research</a></div>
+  <div class="sidebar-module"><a href="safety-module-7.html" class="sidebar-module-link"><span class="sidebar-num">7</span>Emergent Capabilities</a></div>
+  <div class="sidebar-module"><a href="safety-module-8.html" class="sidebar-module-link"><span class="sidebar-num">8</span>AI Governance</a></div>
+  <div class="sidebar-module"><a href="safety-module-9.html" class="sidebar-module-link active"><span class="sidebar-num">9</span>Catastrophic Risk Scenarios</a></div>
+  <div class="sidebar-module"><a href="safety-module-10.html" class="sidebar-module-link"><span class="sidebar-num">10</span>Paths to Safe AI</a></div>
+  <div class="sidebar-module"><a href="quiz-safety.html" class="sidebar-module-link" style="color:var(--accent);margin-top:4px;"><span class="sidebar-num" style="background:var(--accent-dim);color:var(--accent);">✦</span>Final Assessment</a></div>
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-progress-label"><span>Course progress</span><span style="color:var(--accent);">9 / 10</span></div>
+  <div class="sidebar-progress-track"><div class="sidebar-progress-fill"></div></div>
+</aside>
+
+<main>
+<div class="content">
+  <div class="module-eyebrow"><span class="module-tag">Module 9 · Expert Track</span><span class="module-meta">26 min read · AI Safety and Alignment</span></div>
+  <h1>Catastrophic Risk Scenarios</h1>
+
+  <p class="intro-text">The field of AI safety exists in large part because of a specific claim: AI development, if pursued without adequate precautions, could lead to outcomes that are not merely bad but catastrophic — outcomes that are severe, large-scale, and potentially irreversible. Understanding what those scenarios actually are, how they work mechanistically, and how likely they are requires moving beyond vague gestures toward specific, concrete analysis. This module does that analysis.</p>
+
+  <h2>A taxonomy of catastrophic AI risks</h2>
+  <p>Catastrophic AI risks fall into three structurally distinct categories that are worth keeping separate, because they have different causes, different probability structures, and different mitigations.</p>
+
+  <div class="principle-list">
+    <div class="principle">
+      <div class="principle-title">Misuse risks</div>
+      <div class="principle-desc">AI systems are used by humans — including malicious actors — to cause harm at scales or with effectiveness that would not have been possible without AI assistance. The AI system itself may be functioning exactly as designed; the risk comes from who is using it and for what. Bioweapons uplift, cyberweapons generation, and influence operations at scale are the primary current misuse concerns.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Misalignment risks</div>
+      <div class="principle-desc">AI systems pursue goals that diverge from what their operators intend or what is good for humanity, potentially causing harm as a byproduct of or in service of those misaligned goals. The AI is not being misused by humans; it is itself acting in ways that are contrary to human interests. This category includes scenarios sometimes described as "AI takeover" but covers a much broader range of failure modes.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">Systemic and structural risks</div>
+      <div class="principle-desc">AI deployment changes the structure of power, institutions, or social systems in ways that concentrate control, undermine accountability mechanisms, or create systemic fragilities. No single AI system is the cause; the risk emerges from the cumulative effect of AI deployment across society. AI-enabled authoritarianism and economic concentration are the primary examples.</div>
+    </div>
+  </div>
+
+  <p>These categories can interact. A misaligned AI system might be misused by a small group to concentrate power (combining misalignment and structural risk). AI-enabled bioweapon development might create a catastrophic event that in turn enables structural changes to governance. Understanding the categories helps; the scenarios that actually matter often involve multiple risk types simultaneously.</p>
+
+  <h2>Bioweapons uplift and the dual-use research problem</h2>
+  <p>Of the near-term misuse risks, AI-assisted bioweapon development is consistently rated by frontier AI researchers as the most concerning. The reasoning is specific: the main barrier to developing a pathogen capable of causing mass casualties has historically been technical knowledge and skill, not materials. Unlike nuclear weapons, which require rare physical materials (highly enriched uranium, plutonium) that are extremely difficult to obtain, biological agents can in principle be synthesized by anyone with sufficient knowledge of pathogen biology, genetic engineering, and acquisition of standard laboratory equipment.</p>
+  <p>AI systems capable of providing detailed technical guidance in molecular biology, virology, and synthetic biology could lower the knowledge barrier dramatically. The concern is not that AI would make bioweapon development trivially easy — significant practical obstacles remain — but that it could extend the set of actors technically capable of serious attempts. A state actor with modest resources, a non-state group with access to a well-equipped biology laboratory, or even a lone actor with a chemistry background might gain meaningful capability from AI uplift that currently lies beyond their reach.</p>
+
+  <h3>What "uplift" means technically</h3>
+  <p>Uplift is a specific technical term in this context: it refers to the degree to which an AI system increases a would-be actor's probability of successfully developing a dangerous capability relative to their baseline probability without AI assistance. An AI system provides significant uplift if it can explain synthesis routes, troubleshoot failed attempts, suggest modifications to increase transmissibility or lethality, or help acquire necessary precursors while avoiding detection — in short, if it functions as an expert collaborator on the development project.</p>
+  <p>Current frontier models are evaluated for biosecurity risk using structured elicitation tasks developed by RAND, the Center for Health Security at Johns Hopkins, and other organizations. The evaluations test whether models provide information beyond what is available from open-source literature, help non-experts understand and operationalize technical information, or provide assistance that is specifically useful for weapons development rather than legitimate research.</p>
+
+  <h3>The dual-use research problem</h3>
+  <p>Biology presents a fundamental dual-use problem that makes AI governance in this domain exceptionally difficult. The same knowledge that allows researchers to understand and defend against dangerous pathogens also allows bad actors to create them. Gain-of-function research — experiments that increase the transmissibility or virulence of pathogens — is conducted by legitimate scientists to understand pandemic risk, yet the same research could provide a blueprint for weaponization. AI systems that can assist legitimate biosecurity research can also assist hostile actors pursuing the same technical goals.</p>
+  <p>This creates a genuine dilemma for AI labs. Refusing to engage with any biology question is too restrictive — it would prevent legitimate researchers from using AI for valuable work. Engaging with all biology questions is too permissive — it provides uplift to hostile actors. The current approach, implemented across major frontier labs, is to train models to refuse specific categories of requests (detailed synthesis routes for dangerous pathogens, enhancement of transmissibility, acquisition strategies that circumvent safety regulations) while engaging with general biology education and research assistance. The challenge is that the boundary between permissible and impermissible is blurry, context-dependent, and easily obscured by adversarial framings.</p>
+
+  <div class="warn">
+    <div class="warn-label">The Specificity Problem</div>
+    <p>AI biosecurity evaluations consistently find that the most dangerous assistance is not general information (which is widely available) but specific, operationally relevant guidance — troubleshooting specific synthesis failures, suggesting modifications targeted to particular desired properties, or helping integrate information from disparate sources into a coherent development plan. A model that refuses to discuss pathogens in the abstract but engages with highly specific technical questions framed as "research" may provide significant uplift while passing surface-level safety evaluations. The specificity problem is why biosecurity evaluations must go beyond checking whether a model will discuss dangerous topics and must assess whether it provides meaningful operational assistance.</p>
+  </div>
+
+  <h2>Cyberweapons and critical infrastructure</h2>
+  <p>AI-assisted cyberweapon development is a second major misuse concern, and in some ways a more tractable one because the attack/defense dynamics are more symmetrical and the harm ceiling, while potentially very high, is generally lower than for biological threats.</p>
+  <p>The concern is that AI systems capable of sophisticated code generation and vulnerability analysis could significantly lower the barrier to developing novel cyberweapons — specifically, to discovering zero-day vulnerabilities in critical infrastructure systems and developing exploit code that takes advantage of them. Currently, finding novel vulnerabilities in well-defended systems requires a combination of deep technical knowledge, creativity, and extensive time. AI that can assist with vulnerability research at scale could expand this capability to a much larger set of actors and accelerate the speed at which new attack vectors are discovered.</p>
+  <p>The critical infrastructure dimension is particularly concerning. Power grids, water treatment systems, financial infrastructure, and hospital networks are interconnected in ways that make cascading failures possible. A sophisticated cyberattack on a power grid during winter, for example, could produce civilian casualties through secondary effects (loss of heating, failure of medical equipment) that dwarf the direct damage from the attack itself. AI-assisted attack development that makes such attacks accessible to less sophisticated actors is a meaningful escalation of this risk.</p>
+
+  <h3>The asymmetric defense problem</h3>
+  <p>In cybersecurity, AI uplift is available to both attackers and defenders, and there is a reasonable case that AI benefits defenders more than attackers in many contexts — AI can monitor network traffic at scales no human team can, identify anomalous patterns, and respond to threats faster than human incident response teams. But the asymmetry cuts both ways: AI can also assist attackers in generating novel attack variations faster than defenders can update their defenses, and in automating the scanning and exploitation process that currently requires skilled human operators.</p>
+
+  <h2>Loss of human oversight at scale</h2>
+  <p>A third category of catastrophic risk concerns the structural loss of meaningful human oversight over consequential decisions as AI systems are deployed at scale and with increasing autonomy. This risk is not primarily about a single AI system making a catastrophically bad decision but about the cumulative erosion of human control over domains where human judgment is essential.</p>
+  <p>Consider the trajectory of AI deployment in high-stakes domains: AI-assisted medical diagnosis, AI-assisted legal research, AI-assisted financial decision-making, AI-assisted military targeting systems. In each domain, the economic incentives favor increasing automation, increasing speed, and reducing the number of human decision-makers in the loop. Each individual step may be defensible — AI diagnostics that are more accurate than average radiologists improve patient outcomes, AI financial systems that react faster than humans reduce arbitrage opportunities. But the cumulative effect may be a world in which consequential decisions across many domains are made by AI systems that humans cannot meaningfully audit, override, or correct.</p>
+
+  <div class="callout">
+    <div class="callout-label">Autonomy and Accountability</div>
+    <p>A specific version of this concern applies to autonomous weapon systems. As of 2024, significant AI integration in military targeting systems exists across multiple major powers, including systems that can identify and track targets autonomously. The question of when and whether autonomous systems can select and engage targets without direct human authorization is the subject of ongoing international debate under the UN Convention on Certain Conventional Weapons. The concern from an AI safety perspective is not just ethical (the question of whether autonomous killing is acceptable) but structural: military decision-making systems that exclude meaningful human oversight are systems where errors — including catastrophic errors — cannot be corrected in real time. The speed advantage of autonomous systems comes precisely from removing the latency introduced by human judgment, and that latency is also the window in which errors can be caught.</p>
+  </div>
+
+  <h2>Concentration of power through AI</h2>
+  <p>Perhaps the most structurally significant catastrophic risk from AI is not any single failure mode but a class of scenarios in which AI dramatically accelerates the concentration of economic, political, or military power in a small number of entities — whether states, corporations, or individuals — in ways that undermine the competitive and institutional checks that currently prevent any single actor from dominating human civilization.</p>
+  <p>The mechanism is not mysterious. AI dramatically amplifies the productivity of already-capable actors. A company with access to frontier AI systems can potentially do the work of a much larger organization. A government that comprehensively deploys AI in intelligence, economic planning, and military systems gains advantages over adversaries that compounds over time. An individual with access to the most capable AI systems can exercise influence at scales previously unavailable to individuals. If AI capability is highly concentrated, the productivity amplification it provides flows primarily to those who already have concentrated power, accelerating inequality and concentration rather than distributing the benefits of the technology.</p>
+
+  <h3>Economic concentration</h3>
+  <p>The economic dimension of power concentration is already visible. AI development is capital-intensive, dominated by a small number of frontier labs with access to very large compute budgets, enormous proprietary datasets, and deep talent pipelines. Network effects in AI — the value of models trained on more data, with more compute, using more researchers — favor scale in ways that tend toward natural monopoly dynamics. If a small number of companies develop AI systems substantially more capable than anything available to competitors, and if those systems provide decisive productivity advantages in many sectors, the economic concentration could be severe.</p>
+
+  <h3>Political and military concentration</h3>
+  <p>The political and military dimensions are potentially more acute. A government that develops substantially more capable AI than its geopolitical rivals gains surveillance and intelligence advantages, logistical and planning advantages, and potentially decisive military advantages. The Cold War nuclear deterrence framework was premised on roughly symmetrical destructive capability — Mutually Assured Destruction worked because neither side could strike without facing equal retaliation. If AI capability becomes highly asymmetric, this equilibrium breaks down. A sufficiently capable AI system deployed for military applications could provide one state with decisive tactical and strategic advantages that no amount of human ingenuity by the opposing side could overcome.</p>
+
+  <div class="warn">
+    <div class="warn-label">The Lock-In Problem</div>
+    <p>What makes power concentration through AI a potentially catastrophic rather than merely bad outcome is the possibility of lock-in — a scenario in which whoever reaches a decisive advantage in AI capability uses that advantage to cement their position in ways that cannot be reversed. This could occur through AI-assisted surveillance and control of domestic populations, AI-assisted suppression of political opposition, AI-assisted economic dominance that makes competitors structurally dependent, or AI-assisted military superiority that makes armed resistance impossible. The historical record shows that very extreme concentrations of power can persist for decades or generations once established. An AI-enabled lock-in of authoritarian control — at the national or global level — would represent a catastrophe that, unlike many other risks, might not self-correct over time.</p>
+  </div>
+
+  <h2>AI-enabled mass surveillance and authoritarianism</h2>
+  <p>A specific version of the power concentration concern focuses on AI's potential to dramatically improve the capability of surveillance and social control systems. The ingredients of effective authoritarian surveillance are: the ability to observe a population's movements and communications at scale, the ability to identify individuals who express dissent or engage in organized opposition, and the ability to respond quickly enough to suppress coordination before it becomes self-sustaining. AI improves all three.</p>
+  <p>Large-scale facial recognition in public spaces, combined with gait analysis and behavioral pattern recognition, makes it possible to track individuals' movements across a city with minimal human labor. Natural language processing applied to communications surveillance can flag sentiment and detect coordinated opposition. Social graph analysis can identify the most influential nodes in opposition networks and prioritize suppression efforts. Predictive systems can identify individuals likely to engage in protest or organization before they do so.</p>
+  <p>These capabilities are not theoretical. China's deployment of AI-assisted surveillance in Xinjiang — including facial recognition at scale, mandatory phone data extraction, behavioral profiling, and predictive detention — has been documented in detail by researchers, journalists, and government reports from multiple countries. The infrastructure developed there has been exported to other governments. The question for AI safety is not whether AI surveillance systems can enable authoritarian control — they demonstrably can — but whether the development and export of these capabilities can be governed, and what the implications are for the long-term trajectory of human governance.</p>
+
+  <h2>Catastrophic versus existential risk</h2>
+  <p>AI safety discourse often conflates "catastrophic" and "existential" risk, but the distinction matters both analytically and practically. A catastrophic outcome is one that causes enormous harm — deaths at scale, severe degradation of human welfare, long-lasting damage to institutions. An existential risk is a catastrophic outcome that also affects humanity's long-term potential — either causing human extinction or permanently curtailing what humanity could otherwise achieve.</p>
+  <p>Most of the scenarios discussed in this module are catastrophic without being existential in the strict sense. An AI-assisted bioweapon causing a severe pandemic would be a catastrophe comparable to or exceeding historical pandemics; it would not by itself end human civilization. An AI-enabled authoritarian regime would impose enormous suffering; humanity has survived previous authoritarian regimes. The scenarios that rise to the level of existential risk involve either very high casualties (pandemic killing most of humanity, not just a substantial fraction) or mechanisms for permanent lock-in (a global AI-enabled authoritarianism with no viable path to overthrow).</p>
+
+  <div class="callout">
+    <div class="callout-label">Why Both Matter</div>
+    <p>The distinction between catastrophic and existential risk is analytically important but should not become a reason to neglect the non-existential catastrophic risks. A pandemic that kills 10% of humanity is not existential but it is an overwhelming moral catastrophe. An authoritarian lock-in that affects a single country of a billion people is not a threat to humanity's long-term potential but involves staggering human suffering. AI safety work that focuses exclusively on extinction-level risks and neglects the more probable and near-term catastrophic risks is both practically and morally incomplete. The field has increasingly recognized this, with major organizations including the Center for AI Safety, the Future of Humanity Institute, and GovAI all maintaining research portfolios that address near-term catastrophic risks alongside longer-term existential scenarios.</p>
+  </div>
+
+  <h2>Near-term versus long-term risk timelines</h2>
+  <p>A persistent and sometimes acrimonious debate in AI safety concerns the relative priority of near-term versus long-term risks. Near-term risks include AI-assisted bioweapons, cyberweapons, surveillance, discrimination, labor displacement, and economic concentration — these are risks that current or near-current AI systems plausibly contribute to. Long-term risks include scenarios involving much more capable future AI systems that might develop misaligned goals or enable catastrophic power concentration in ways that current systems cannot.</p>
+  <p>The debate is not just about timelines but about prioritization. Research attention, funding, and policy focus are limited resources. Prioritizing long-term existential risks means potentially underinvesting in near-term catastrophic risks that are both more probable in the short run and affect many people who are alive today. Prioritizing near-term risks means potentially underinvesting in the technical safety research that may be necessary to prevent long-term catastrophic risks from materializing as AI systems become more capable.</p>
+
+  <h3>Why both timelines deserve serious attention</h3>
+  <p>The strongest case for taking both timelines seriously is that they are not independent. Near-term AI-enabled catastrophes — a pandemic, a severe cyberattack on critical infrastructure, significant erosion of democratic institutions — would damage the social, institutional, and political infrastructure that governance of more powerful future AI systems depends on. If AI development undermines the institutions and international cooperation that future AI governance requires, the probability of catastrophic outcomes from more capable future systems increases. Near-term safety is a prerequisite for the conditions in which long-term safety can be achieved.</p>
+  <p>Similarly, the technical research needed to address long-term risks often has near-term applications. Interpretability research that helps identify when models are hiding information from evaluators is directly applicable to near-term deployment safety, not just to distant hypothetical superintelligent AI. Responsible scaling policies that mandate capability evaluations before each scale increment address both near-term risk (ensuring models are not deployed with currently dangerous capabilities) and long-term risk (building the evaluation infrastructure and organizational culture needed for safe development of future, more capable systems).</p>
+
+  <div class="good">
+    <div class="good-label">Convergence, Not Competition</div>
+    <p>The framing of near-term versus long-term risk as a zero-sum competition for resources and attention obscures more than it reveals. The interventions most robustly beneficial across both timelines — building the technical infrastructure for AI capability evaluation, establishing international governance norms, developing interpretability tools, fostering a culture of safety in AI development — are the same. A research program focused on those convergent interventions avoids the worst of the tradeoff. The disagreement that matters most in AI safety is not between those who care about near-term risks and those who care about long-term risks, but between those who believe the problem is tractable and worth investing in now, and those who believe current concern is premature or misallocated.</p>
+  </div>
+
+</div>
+</main>
+</div>
+
+<div class="sticky-bar" id="sticky-bar">
+  <div class="sticky-bar-reading" id="sticky-reading">Read to the end to unlock the next module</div>
+  <div class="sticky-bar-track"><div class="sticky-bar-fill" id="sticky-fill"></div></div>
+  <div class="sticky-bar-label" id="sticky-label">0%</div>
+  <button class="sticky-bar-btn" id="sticky-btn" onclick="completeAndNext()">Module 10: Paths to Safe AI →</button>
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import { getFirestore, doc, setDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  const app=initializeApp({apiKey:"AIzaSyCIi2144rkUBIFfFPif0mgJ25z9mbseVKU",authDomain:"meridian-institute.firebaseapp.com",projectId:"meridian-institute",storageBucket:"meridian-institute.firebasestorage.app",messagingSenderId:"355371012929",appId:"1:355371012929:web:244fc2f15ee8ac656887c0"});
+  const auth=getAuth(app);const db=getFirestore(app);
+  let currentUser=null;
+  onAuthStateChanged(auth,u=>{currentUser=u;});
+  window.toggleTheme=function(){const h=document.documentElement,i=document.getElementById('theme-icon');h.getAttribute('data-theme')==='dark'?(h.setAttribute('data-theme','light'),i.textContent='☾'):(h.setAttribute('data-theme','dark'),i.textContent='☀');};
+  window.addEventListener('scroll',()=>{const d=document.documentElement,s=d.scrollTop||document.body.scrollTop,t=d.scrollHeight-d.clientHeight;document.getElementById('progress').style.width=(s/t*100)+'%';});
+  let unlocked=false;
+  function updateScrollProgress(){
+    const scrolled=window.scrollY+window.innerHeight;const total=document.documentElement.scrollHeight;
+    const pct=Math.min(100,Math.round((scrolled/total)*100));
+    const fill=document.getElementById('sticky-fill');const label=document.getElementById('sticky-label');
+    const btn=document.getElementById('sticky-btn');const reading=document.getElementById('sticky-reading');
+    if(fill)fill.style.width=pct+'%';if(label)label.textContent=pct+'%';
+    if(pct>=95&&!unlocked){unlocked=true;if(btn)btn.style.display='block';if(reading)reading.style.display='none';if(fill)fill.style.background='#22c55e';if(label)label.style.color='#22c55e';}
+  }
+  window.addEventListener('scroll',updateScrollProgress);updateScrollProgress();
+  window.completeAndNext=async function(){
+    if(currentUser){try{await setDoc(doc(db,'users',currentUser.uid),{safetyModules:arrayUnion('m9')},{merge:true});}catch(e){}}
+    window.location.href='safety-module-10.html';
+  };
+</script>
+</body>
+</html>
