@@ -93,14 +93,21 @@
   .section-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(36px, 5vw, 56px); font-weight: 300; line-height: 1.1; letter-spacing: -0.01em; color: var(--text); max-width: 700px; margin-bottom: 20px; }
   .section-sub { font-size: 16px; font-weight: 300; color: var(--text-2); max-width: 540px; line-height: 1.7; margin-bottom: 56px; }
   .centered { text-align: center; margin-left: auto; margin-right: auto; }
-  .tracks-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1px; border: 1px solid var(--border); border-radius: 16px; overflow: hidden; background: var(--border); }
-  .track-card { background: var(--card-bg); padding: 36px; transition: background 0.2s; text-decoration: none; display: block; }
-  .track-card:hover { background: var(--card-bg-hover); }
-  .track-icon { width: 44px; height: 44px; border-radius: 10px; background: var(--accent-dim); border: 1px solid rgba(91,143,248,0.2); display: flex; align-items: center; justify-content: center; margin-bottom: 24px; font-size: 20px; }
-  .track-badge { display: inline-block; font-size: 10px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; padding: 4px 10px; border-radius: 100px; margin-bottom: 12px; }
-  .badge-free { background: rgba(91,143,248,0.12); color: var(--accent); border: 1px solid rgba(91,143,248,0.2); }
-  .badge-inter { background: rgba(217,119,87,0.1); color: #D97757; border: 1px solid rgba(217,119,87,0.2); }
-  .badge-adv { background: rgba(240,180,41,0.1); color: #F0B429; border: 1px solid rgba(240,180,41,0.2); }
+  .tracks-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 700px) { .tracks-grid { grid-template-columns: 1fr; } }
+  .track-card { background: var(--bg-2); border: 1px solid var(--border); border-radius: 16px; padding: 32px; transition: border-color 0.2s, background 0.2s; text-decoration: none; display: flex; flex-direction: column; gap: 0; position: relative; overflow: hidden; }
+  .track-card:hover { border-color: var(--border-2); }
+  .track-card.beginner { grid-column: 1 / -1; flex-direction: row; align-items: center; gap: 40px; }
+  @media (max-width: 700px) { .track-card.beginner { flex-direction: column; align-items: flex-start; gap: 20px; } }
+  .track-level { font-size: 10px; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 10px; }
+  .track-title-lg { font-family: 'Cormorant Garamond', serif; font-size: 32px; font-weight: 300; color: var(--text); line-height: 1.1; margin-bottom: 12px; }
+  .track-desc-new { font-size: 14px; color: var(--text-2); line-height: 1.7; font-weight: 300; flex: 1; }
+  .track-courses-list { display: flex; flex-wrap: wrap; gap: 6px; margin: 16px 0 0; }
+  .track-pill { font-size: 11px; color: var(--text-3); background: var(--bg-3); border: 1px solid var(--border); border-radius: 100px; padding: 3px 10px; }
+  .track-count { font-size: 48px; font-weight: 300; font-family: 'Cormorant Garamond', serif; line-height: 1; margin-bottom: 4px; }
+  .track-count-label { font-size: 11px; color: var(--text-3); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 20px; }
+  .track-cta-new { font-size: 13px; font-weight: 500; margin-top: auto; padding-top: 20px; }
+  .track-free-badge { display: inline-block; font-size: 10px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; padding: 3px 10px; border-radius: 100px; background: rgba(91,143,248,0.12); color: var(--accent); border: 1px solid rgba(91,143,248,0.2); margin-bottom: 16px; }
   .track-title { font-size: 18px; font-weight: 500; color: var(--text); margin-bottom: 10px; line-height: 1.3; }
   .track-desc { font-size: 14px; font-weight: 300; color: var(--text-2); line-height: 1.65; margin-bottom: 24px; }
   .track-cta { font-size: 14px; font-weight: 500; }
@@ -190,28 +197,53 @@
     <p class="section-sub">Start free with foundations, advance into applied domains, and develop expert-level skills for real-world impact.</p>
   </div>
   <div class="tracks-grid reveal">
-    <a href="module-1-what-ai-actually-is.html" class="track-card">
-      <div class="track-icon">◈</div>
-      <span class="track-badge badge-free">Free</span>
-      <h3 class="track-title">Beginner</h3>
-      <p class="track-desc">What AI is, how it works, and how to use it. Core concepts, prompt engineering, and ethical frameworks. No prerequisites required.</p>
-      <p style="font-size:12px;color:var(--accent);margin:8px 0 0;font-weight:500;">New to AI? Start here first.</p>
-      <div class="track-cta" style="color:var(--accent);">Start here →</div>
+
+    <a href="module-1-what-ai-actually-is.html" class="track-card beginner">
+      <div style="flex:1;min-width:0;">
+        <span class="track-free-badge">Free to start</span>
+        <div class="track-level" style="color:var(--accent);">Step 1 — Beginner</div>
+        <div class="track-title-lg">Foundations of AI</div>
+        <p class="track-desc-new">Everything you need to understand AI from the ground up — what it is, how it works, how to prompt it, and how to think critically about it. No background required. Free forever.</p>
+        <div class="track-cta-new" style="color:var(--accent);">Start here — it's free →</div>
+      </div>
+      <div style="flex-shrink:0;text-align:center;padding:0 8px;">
+        <div class="track-count" style="color:var(--accent);">6</div>
+        <div class="track-count-label">modules</div>
+        <div style="font-size:11px;color:var(--text-3);margin-top:4px;">+ Certificate</div>
+      </div>
     </a>
+
     <a href="courses.html#intermediate" class="track-card">
-      <div class="track-icon">◉</div>
-      <span class="track-badge badge-inter">Intermediate</span>
-      <h3 class="track-title">Intermediate</h3>
-      <p class="track-desc">Master Claude, ChatGPT, Gemini, and Perplexity. Real tools, real workflows, and four individual certificates that stack toward the capstone.</p>
-      <div class="track-cta" style="color:#D97757;">Explore courses →</div>
+      <div class="track-level" style="color:#D97757;">Step 2 — Intermediate</div>
+      <div class="track-title-lg" style="font-size:26px;">Tool Mastery</div>
+      <p class="track-desc-new">Master the four AI tools defining professional work. Each earns its own certificate, all four stack toward the Capstone.</p>
+      <div class="track-courses-list">
+        <span class="track-pill">Claude</span>
+        <span class="track-pill">ChatGPT</span>
+        <span class="track-pill">Gemini</span>
+        <span class="track-pill">Perplexity</span>
+      </div>
+      <div class="track-cta-new" style="color:#D97757;">Explore courses →</div>
     </a>
+
     <a href="courses.html#advanced" class="track-card">
-      <div class="track-icon">◎</div>
-      <span class="track-badge badge-adv">Advanced</span>
-      <h3 class="track-title">Advanced</h3>
-      <p class="track-desc">Deep domain mastery across Finance, Law, Healthcare, Cybersecurity, Education, Governance, Politics, and Society. Each track earns its own certificate.</p>
-      <div class="track-cta" style="color:#F0B429;">Explore domains →</div>
+      <div class="track-level" style="color:#F0B429;">Step 3 — Advanced</div>
+      <div class="track-title-lg" style="font-size:26px;">Domain Mastery</div>
+      <p class="track-desc-new">Apply AI inside the field you work in — or plan to. Nine tracks, each 10 modules, each with a certificate.</p>
+      <div class="track-courses-list">
+        <span class="track-pill">Finance</span>
+        <span class="track-pill">Law</span>
+        <span class="track-pill">Healthcare</span>
+        <span class="track-pill">Cybersecurity</span>
+        <span class="track-pill">Education</span>
+        <span class="track-pill">Governance</span>
+        <span class="track-pill">Politics</span>
+        <span class="track-pill">Society</span>
+        <span class="track-pill">AI for Students</span>
+      </div>
+      <div class="track-cta-new" style="color:#F0B429;">Explore domains →</div>
     </a>
+
   </div>
 </section>
 

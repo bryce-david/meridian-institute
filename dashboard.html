@@ -359,8 +359,18 @@ onAuthStateChanged(auth,async u=>{
     }
     const totalCerts=earnedCount+advEarned+(data.proficiencyCertId?1:0);
     document.getElementById('welcome-sub').textContent=`${totalCerts} certificate${totalCerts===1?'':'s'} earned · ${totalModules} modules completed`;
+    sortCertGrid();
   }catch(e){document.getElementById('welcome-sub').textContent='Start a course below.';}
 });
+function sortCertGrid(){
+  const grid=document.querySelector('.cert-grid');
+  if(!grid)return;
+  const cards=[...grid.children];
+  const earned=cards.filter(c=>c.classList.contains('earned')||c.classList.contains('capstone-earned'));
+  const notEarned=cards.filter(c=>!c.classList.contains('earned')&&!c.classList.contains('capstone-earned'));
+  earned.forEach(c=>grid.appendChild(c));
+  notEarned.forEach(c=>grid.appendChild(c));
+}
 </script>
 </body>
 </html>
