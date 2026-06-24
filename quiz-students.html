@@ -121,7 +121,7 @@
   ];
 
   function shuffle(arr){for(let i=arr.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]];}return arr;}
-  const QUESTIONS=shuffle([...ALL_QUESTIONS]).slice(0,25);
+  const QUESTIONS=shuffle([...ALL_QUESTIONS]).slice(0,25).map(q=>{const ct=q.o[q.a];const s=[...q.o];for(let i=s.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[s[i],s[j]]=[s[j],s[i]];}return{...q,o:s,a:s.indexOf(ct)};});
   const answers={};
 
   function render(){
@@ -170,7 +170,7 @@
     document.getElementById('result-msg').textContent=passed?`You scored ${score} out of 25. Excellent work — you've demonstrated a strong grasp of AI tools for academic success.`:`You scored ${score} out of 25. You need 70% to pass. Review the modules and try again.`;
     if(passed){
       document.getElementById('cert-preview').style.display='block';
-      if(currentUser){try{const id='STU-'+Date.now();await setDoc(doc(db,'users',currentUser.uid),{studentsCertId:id},{merge:true});}catch(e){}}
+      if(currentUser){try{const id='STU-'+Date.now();await setDoc(doc(db,'users',currentUser.uid),{studentsCertId:id},{merge:true});await setDoc(doc(db,'certificates',id),{name:currentUser.displayName||'Meridian Student',email:currentUser.email,course:'AI for Students — Meridian Institute of AI',issuedAt:new Date(),certId:id,valid:true});}catch(e){}}
     }
     rb.scrollIntoView({behavior:'smooth'});
   };
