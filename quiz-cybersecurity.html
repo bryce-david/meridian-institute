@@ -111,281 +111,31 @@ const auth=getAuth(app);const db=getFirestore(app);let currentUser=null;
 onAuthStateChanged(auth,u=>{currentUser=u;});
 
 const ALL_QUESTIONS=[
-  {
-    "q": "What fundamental shift has AI introduced to the modern cyber threat landscape?",
-    "options": [
-      "Automation that enables attackers to scale sophisticated attacks far beyond what human operators could execute alone",
-      "A permanent reduction in attack frequency because AI-powered defenses now block most intrusion attempts automatically",
-      "The elimination of social engineering as a viable attack vector, since AI detects manipulative content instantly",
-      "A shift toward purely nation-state actors, as AI tooling is too expensive for criminal organizations to access"
-    ],
-    "answer": 0,
-    "explain": "AI removes the human bottleneck from attacks. Reconnaissance, payload generation, and delivery that once required skilled teams can now be automated and executed at massive scale, fundamentally changing the threat calculus."
-  },
-  {
-    "q": "What is the primary limitation of traditional signature-based intrusion detection systems?",
-    "options": [
-      "They generate too many false positives when monitoring encrypted network traffic on modern enterprise networks",
-      "They cannot detect unknown or zero-day threats because they rely on matching patterns of previously observed attacks",
-      "They require dedicated hardware that is prohibitively expensive for most organizations to deploy and maintain",
-      "They can only monitor network traffic and are entirely blind to host-based activity and endpoint behavior"
-    ],
-    "answer": 1,
-    "explain": "Signature-based IDS works by matching traffic or file patterns against a database of known attack signatures. A novel or zero-day threat has no signature yet, so it passes through undetected — the fundamental blind spot these systems cannot overcome."
-  },
-  {
-    "q": "How does AI fundamentally change the economics of spear phishing attacks?",
-    "options": [
-      "It makes spear phishing cheaper to defend against by automating the detection of personalized malicious emails",
-      "It enables attackers to craft highly personalized, convincing messages and deliver them at mass scale simultaneously",
-      "It eliminates the research phase of spear phishing by replacing OSINT with fabricated but plausible target profiles",
-      "It shifts spear phishing costs to defenders by requiring constant retraining of email security models"
-    ],
-    "answer": 1,
-    "explain": "Traditionally, spear phishing required manual research per target, limiting scale. AI can ingest public data about thousands of targets and generate individually tailored lures at the same cost as sending one — personalisation at mass scale."
-  },
-  {
-    "q": "What is 'static analysis' in the context of ML-based malware detection?",
-    "options": [
-      "Observing a suspicious program's behavior in a sandboxed environment while it is actively running and executing",
-      "Analyzing a binary's code, structure, and metadata without ever executing the file itself",
-      "Comparing a file's network traffic patterns against a database of known malicious command-and-control signatures",
-      "Running multiple antivirus engines simultaneously against a file and aggregating their individual verdicts"
-    ],
-    "answer": 1,
-    "explain": "Static analysis inspects a binary — its byte sequences, imported functions, strings, and structural features — without execution. ML models trained on these features can classify malware families without risking detonation of the payload."
-  },
-  {
-    "q": "What is 'smart fuzzing' in AI-assisted vulnerability assessment?",
-    "options": [
-      "A technique that automatically patches discovered vulnerabilities before they can be exploited in production",
-      "ML-guided input generation that learns from code coverage feedback to reach deeper, harder-to-test program paths",
-      "A method of generating random inputs at very high speed using GPU-accelerated brute-force computation",
-      "An approach where AI prioritizes fuzzing targets based on their Common Vulnerability Scoring System ratings"
-    ],
-    "answer": 1,
-    "explain": "Traditional fuzzing sends random inputs blindly. Smart fuzzing uses ML to learn which mutations actually increase code coverage, intelligently steering toward unexplored branches and finding vulnerabilities traditional fuzzers miss."
-  },
-  {
-    "q": "What is an adversarial example in machine learning?",
-    "options": [
-      "A mislabeled training sample that causes a model to learn an incorrect association during the training process",
-      "A carefully crafted input with small, often imperceptible perturbations specifically designed to fool an ML classifier",
-      "An example drawn from a different data distribution than the model was trained on, causing distribution shift errors",
-      "A training sample contributed by a malicious researcher intending to insert a backdoor into an open-source model"
-    ],
-    "answer": 1,
-    "explain": "Adversarial examples exploit the geometry of the model's decision boundary. Tiny, deliberate perturbations — often invisible to humans — push an input across that boundary, causing confident misclassification. This is a fundamental vulnerability of gradient-based ML."
-  },
-  {
-    "q": "What problem does AI primarily solve in modern Security Operations Centers?",
-    "options": [
-      "The shortage of physical hardware needed to store and process the growing volume of security log data",
-      "Alert fatigue — AI correlates and prioritizes the enormous volume of security alerts that human analysts cannot triage manually",
-      "The legal complexity of attributing attacks to specific threat actors across international jurisdictions",
-      "The challenge of encrypting sensitive incident response communications between distributed SOC team members"
-    ],
-    "answer": 1,
-    "explain": "A large SOC can receive millions of alerts daily. Human analysts cannot triage them all, causing critical alerts to be buried. AI correlates events, suppresses low-fidelity noise, and surfaces genuine threats — solving the core alert fatigue problem."
-  },
-  {
-    "q": "What is differential privacy in the context of AI security systems?",
-    "options": [
-      "A network segmentation technique that prevents different user groups from accessing each other's security telemetry",
-      "A mathematical guarantee that individual records cannot be identified or inferred from the aggregate outputs of a model",
-      "An encryption standard that protects model weights from being extracted by adversaries with API access",
-      "A method of training separate models for different data sensitivity levels and ensembling their outputs at inference"
-    ],
-    "answer": 1,
-    "explain": "Differential privacy adds carefully calibrated noise to model outputs or training processes, providing a formal mathematical bound on how much any single individual's data can influence the result — making re-identification from aggregate statistics provably difficult."
-  },
-  {
-    "q": "What is the core principle of zero-trust architecture?",
-    "options": [
-      "All internal network traffic is encrypted end-to-end, while external traffic is blocked at the perimeter firewall",
-      "Never trust, always verify — no implicit trust is granted based on network location; every access request is authenticated and authorized",
-      "All user devices must be managed and enrolled in an MDM solution before any corporate resource access is permitted",
-      "Security policies are defined at the application layer only, removing the need for network-level access controls entirely"
-    ],
-    "answer": 1,
-    "explain": "Zero-trust abandons the castle-and-moat model where inside the perimeter meant trusted. Every request — regardless of source network, device, or user — must be explicitly authenticated, authorized, and continuously validated before access is granted."
-  },
-  {
-    "q": "What does 'AI red teaming' refer to in the security context?",
-    "options": [
-      "Using AI to automate the generation of penetration testing reports after a human red team completes an engagement",
-      "Systematically testing AI systems for vulnerabilities, biases, and failure modes using adversarial probing techniques",
-      "Replacing human red teamers entirely with autonomous AI agents that conduct offensive security operations",
-      "A regulatory compliance framework requiring AI vendors to disclose their model architectures to government reviewers"
-    ],
-    "answer": 1,
-    "explain": "AI red teaming applies the same adversarial mindset as traditional red teaming to AI systems themselves — probing for prompt injection, jailbreaks, data leakage, hallucinations under adversarial input, and other failure modes specific to ML systems."
-  },
-  {
-    "q": "What does UEBA (User and Entity Behavior Analytics) primarily use to detect insider threats and compromised accounts?",
-    "options": [
-      "A continuously updated signature database of known malicious user actions compiled from industry threat feeds",
-      "Behavioral baselines for each user and entity, flagging statistically anomalous deviations from their established patterns",
-      "Manual review queues where security analysts inspect raw authentication logs for suspicious login attempts",
-      "Network packet inspection to identify malicious payloads embedded in the traffic generated by internal users"
-    ],
-    "answer": 1,
-    "explain": "UEBA builds a statistical profile of normal behavior for every user and entity — typical login times, accessed resources, data volumes. Deviations from these baselines, such as accessing unusual systems at odd hours, trigger alerts even with no known signature."
-  },
-  {
-    "q": "What is a data poisoning attack against a machine learning model?",
-    "options": [
-      "Injecting adversarial examples into the model's inference pipeline to cause misclassification at prediction time",
-      "Deliberately corrupting or manipulating the training data to cause the model to learn incorrect or malicious behaviors",
-      "Extracting private training data from a model by querying it with carefully crafted adversarial prompts",
-      "Overloading a model's API endpoint with requests until it fails, denying service to legitimate users"
-    ],
-    "answer": 1,
-    "explain": "Poisoning attacks target the training phase. By injecting malicious samples into training data, an attacker can cause the resulting model to misclassify specific inputs, reduce overall accuracy, or embed a hidden backdoor — all without ever touching the deployed system."
-  },
-  {
-    "q": "How has AI elevated the threat posed by Business Email Compromise (BEC) attacks?",
-    "options": [
-      "AI has reduced BEC effectiveness by enabling email security gateways to detect all fraudulent wire transfer requests",
-      "AI enables attackers to generate highly convincing impersonations of executives using scraped writing style data, at scale",
-      "AI makes BEC attacks detectable by analyzing the metadata of emails to identify non-corporate sending infrastructure",
-      "AI has shifted BEC attacks away from email entirely toward voice calls, making the email vector largely obsolete"
-    ],
-    "answer": 1,
-    "explain": "BEC traditionally required crafting convincing impersonations manually. AI can analyze an executive's email corpus or LinkedIn posts, learn their writing style, and auto-generate convincing fraud requests targeting finance teams — scaling what was once a bespoke attack."
-  },
-  {
-    "q": "What is a model inversion attack?",
-    "options": [
-      "An attack that reverses the weights of a neural network to convert it from a classifier into a generator",
-      "An attack that queries a model repeatedly to reconstruct sensitive training data or private attributes about individuals",
-      "An attack that inverts the labels in a model's training set, causing it to predict the opposite of the intended output",
-      "An attack that exploits model versioning systems to roll back a deployed model to a less secure earlier version"
-    ],
-    "answer": 1,
-    "explain": "Model inversion exploits the fact that model outputs leak information about their training data. An attacker crafts queries to iteratively reconstruct sensitive inputs — such as reconstructing faces from a facial recognition model — violating privacy of training subjects."
-  },
-  {
-    "q": "What is the primary function of a SOAR (Security Orchestration, Automation and Response) platform in an AI-enhanced SOC?",
-    "options": [
-      "Storing raw security logs in a compressed format to reduce storage costs and improve forensic search performance",
-      "Automating repetitive response workflows and orchestrating actions across multiple security tools without manual intervention",
-      "Providing a threat intelligence subscription service that feeds curated indicators of compromise to security tools",
-      "Replacing the SIEM by ingesting and correlating all security telemetry in a single unified data pipeline"
-    ],
-    "answer": 1,
-    "explain": "SOAR platforms connect disparate security tools and automate response playbooks — isolating a host, blocking an IP, opening a ticket, notifying a team — without requiring a human to manually execute each step, dramatically reducing response time."
-  },
-  {
-    "q": "How does federated learning enable collaborative threat intelligence without sharing raw data?",
-    "options": [
-      "It encrypts threat intelligence feeds so that only authorized partner organizations can decrypt and read the indicators",
-      "It trains models locally at each organization and shares only model updates, never the underlying raw security data",
-      "It creates anonymized copies of each organization's data and stores them in a neutral third-party data lake",
-      "It uses blockchain to provide an immutable audit trail of all data shared between threat intelligence partners"
-    ],
-    "answer": 1,
-    "explain": "Federated learning keeps raw data on-premises at each organization. Only gradient updates or model weights are shared and aggregated. This allows multiple organizations to train a shared threat detection model without ever exposing their sensitive logs or events."
-  },
-  {
-    "q": "What role does microsegmentation play in a zero-trust architecture?",
-    "options": [
-      "It compresses network packets into smaller units to improve throughput on high-latency wide area network links",
-      "It divides the network into granular segments with strict per-segment access controls, limiting lateral movement after a breach",
-      "It automates the patching of network devices by segmenting update traffic from production data flows",
-      "It provides micro-level monitoring of individual packets to detect covert channel exfiltration in real time"
-    ],
-    "answer": 1,
-    "explain": "Once an attacker breaches the perimeter, flat networks let them move laterally freely. Microsegmentation creates fine-grained zones with explicit allow-rules, so a compromised endpoint in one segment cannot reach systems in another without re-authentication."
-  },
-  {
-    "q": "How has AI-powered voice cloning changed the threat landscape for vishing (voice phishing) attacks?",
-    "options": [
-      "It has made vishing obsolete by enabling organizations to authenticate callers biometrically using voice fingerprints",
-      "It allows attackers to impersonate trusted individuals — executives, IT staff, family members — convincingly in real-time calls",
-      "It has shifted vishing attacks to text-only channels because synthetic voices are still detectable by human listeners",
-      "It enables defenders to automatically flag calls from unknown numbers before any conversation takes place"
-    ],
-    "answer": 1,
-    "explain": "Voice cloning models can synthesize a convincing replica of any person's voice from a short audio sample. Attackers use this to impersonate a CFO authorizing a transfer or an IT worker requesting credentials — eroding the trust humans place in voice as an authentication channel."
-  },
-  {
-    "q": "What advantage does ML-based malware family classification offer over simple binary malware detection?",
-    "options": [
-      "It eliminates false positives entirely, since family classification models are trained on more data than binary detectors",
-      "It reveals which threat actor group and toolset is likely involved, enabling targeted incident response and attribution",
-      "It removes the need for dynamic analysis by identifying malware behavior from static features alone in all cases",
-      "It allows endpoint agents to automatically decrypt and neutralize encrypted malware payloads upon detection"
-    ],
-    "answer": 1,
-    "explain": "Knowing a file is malicious is step one. Knowing it belongs to the Lazarus Group's toolchain or is a variant of Emotet tells the SOC which TTPs to expect, which other systems may be affected, and which threat intel is relevant — dramatically accelerating response."
-  },
-  {
-    "q": "What is a backdoor (trojan) attack on a machine learning model, and why is it particularly dangerous?",
-    "options": [
-      "An attack where the adversary gains SSH access to the training server and directly modifies the saved model weights",
-      "A hidden trigger embedded during training that causes the model to misclassify any input containing that trigger, while behaving normally otherwise",
-      "A form of model stealing where an attacker uses API queries to reconstruct a functionally equivalent copy of the model",
-      "An attack where poisoned inference-time inputs gradually corrupt the model's internal representations over many queries"
-    ],
-    "answer": 1,
-    "explain": "A backdoored model behaves perfectly normally on clean inputs, passing all validation tests. Only inputs containing the secret trigger pattern — a specific pixel pattern, phrase, or feature — activate the malicious behavior. This makes detection extremely difficult without knowing what to look for."
-  },
-  {
-    "q": "How do AI systems improve Mean Time to Detect (MTTD) and Mean Time to Respond (MTTR) in SOC operations?",
-    "options": [
-      "By replacing human analysts entirely, removing the human decision-making latency from every step of the response process",
-      "By continuously correlating telemetry in real time and automating initial triage and containment steps, compressing both metrics",
-      "By predicting attacks before they happen, giving defenders weeks of advance warning before any breach attempt occurs",
-      "By outsourcing detection and response to cloud-based AI services that operate in different time zones around the clock"
-    ],
-    "answer": 1,
-    "explain": "AI reduces MTTD by detecting anomalies in real time across all telemetry rather than relying on humans reviewing dashboards. It reduces MTTR by triggering automated playbooks — isolating systems, blocking IPs — before a human even opens the alert."
-  },
-  {
-    "q": "What is the core tension between GDPR and AI-based security monitoring systems?",
-    "options": [
-      "GDPR prohibits any automated decision-making, making all AI security tools illegal in the European Union",
-      "Security monitoring requires processing behavioral data at scale, while GDPR mandates data minimization and purpose limitation",
-      "GDPR requires all security logs to be deleted within 24 hours, making forensic analysis after incidents impossible",
-      "AI security tools must be open-source under GDPR so regulators can audit their decision logic and training data"
-    ],
-    "answer": 1,
-    "explain": "Effective AI security monitoring thrives on rich behavioral data retained over time. GDPR's data minimization and purpose limitation principles create genuine tension — organizations must justify what they collect, why, and for how long, often requiring a documented legitimate interest basis."
-  },
-  {
-    "q": "Why are behavioral baselines critical to anomaly detection, and what is their key weakness?",
-    "options": [
-      "They are infallible because they are derived from cryptographic proofs of normal behavior rather than statistical estimates",
-      "They enable detection of novel threats without signatures, but an attacker who moves slowly can blend into an evolving baseline",
-      "They work best for detecting known malware families but fail entirely on network-based intrusion attempts",
-      "They eliminate false positives by design, since any deviation from baseline is by definition a confirmed attack"
-    ],
-    "answer": 1,
-    "explain": "Baselines catch threats that have no signature, which is their great strength. Their weakness is the slow-burn attacker who deliberately operates within normal thresholds, or who compromises a system long enough that their malicious behavior becomes incorporated into the new normal baseline."
-  },
-  {
-    "q": "What does the 'asymmetric advantage' in AI-enabled cyber offense mean for defenders?",
-    "options": [
-      "Defenders have an inherent advantage because they control the infrastructure and can observe all traffic on their own networks",
-      "Attackers only need to succeed once while defenders must succeed always — AI amplifies attacker efficiency, worsening this asymmetry",
-      "AI eliminates the asymmetry entirely by giving defenders the same automated capabilities as well-resourced nation-state actors",
-      "The asymmetry refers to defenders having more budget than attackers, which AI compounds by reducing defense costs further"
-    ],
-    "answer": 1,
-    "explain": "The defender's dilemma — succeed every time or lose — has always favored attackers. AI compounds this by dramatically lowering the cost, skill threshold, and time required to launch sophisticated attacks, while defenders must defend an ever-larger, more complex attack surface."
-  },
-  {
-    "q": "Why is post-quantum cryptography becoming a pressing concern for cybersecurity AI teams today, before quantum computers exist at scale?",
-    "options": [
-      "Quantum computers can already break RSA encryption at small scales, making migration to quantum-safe algorithms urgent now",
-      "Adversaries are harvesting encrypted data now to decrypt it later once quantum capability matures — a harvest-now, decrypt-later attack",
-      "AI systems require quantum-safe encryption because classical algorithms are too slow for the data volumes AI models process",
-      "Regulators have already mandated post-quantum cryptography adoption by all organizations handling sensitive data"
-    ],
-    "answer": 1,
-    "explain": "The harvest-now, decrypt-later threat is real and active. Nation-states are collecting encrypted communications today — VPN traffic, authentication sessions, sensitive data — with the intent to decrypt them once sufficiently powerful quantum computers become available, potentially years from now."
-  }
+  {"q":"What fundamental shift has AI introduced to the cyber threat landscape?","options":["Automation enabling attackers to scale sophisticated attacks far beyond what human operators could execute","A permanent reduction in attack frequency because AI-powered defenses now block most intrusion attempts","The elimination of social engineering since AI detects manipulative content instantly","A shift toward purely nation-state actors as AI tooling is too expensive for criminal organizations"],"answer":0,"explain":"AI removes the human bottleneck from attacks. Reconnaissance, payload generation, and delivery that once required skilled teams can now be automated and executed at massive scale."},
+  {"q":"What is the primary blind spot of traditional signature-based intrusion detection systems?","options":["They generate too many false positives when monitoring encrypted network traffic","They cannot detect unknown or zero-day threats because they rely on matching patterns of previously observed attacks","They require dedicated hardware that is prohibitively expensive for most organizations to deploy","They can only monitor network traffic and are blind to host-based endpoint activity"],"answer":1,"explain":"Signature-based IDS matches traffic against a database of known attack signatures. A novel or zero-day threat has no signature yet, so it passes through undetected — the fundamental blind spot these systems cannot overcome."},
+  {"q":"How does AI change the economics of spear phishing attacks?","options":["It makes spear phishing cheaper to defend against by automating detection of personalized malicious emails","It enables attackers to craft highly personalized, convincing messages and deliver them at mass scale simultaneously","It eliminates the research phase by replacing OSINT with fabricated but plausible target profiles","It shifts costs to defenders by requiring constant retraining of email security models"],"answer":1,"explain":"Traditional spear phishing required manual research per target, limiting scale. AI can ingest public data about thousands of targets and generate individually tailored lures — personalisation at mass scale."},
+  {"q":"What is 'static analysis' in the context of ML-based malware detection?","options":["Observing a suspicious program's behavior in a sandboxed environment while it is actively running","Analyzing a binary's code, structure, and metadata without executing the file itself","Comparing a file's network traffic patterns against a known malicious command-and-control database","Running multiple antivirus engines simultaneously against a file and aggregating their individual verdicts"],"answer":1,"explain":"Static analysis inspects a binary — byte sequences, imported functions, strings, structural features — without execution. ML models trained on these features can classify malware families without detonating the payload."},
+  {"q":"What is an adversarial example in machine learning?","options":["A mislabeled training sample that causes a model to learn an incorrect association during training","A carefully crafted input with small, often imperceptible perturbations specifically designed to fool an ML classifier","An example from a different data distribution than the model was trained on, causing distribution shift errors","A training sample contributed by a malicious researcher intending to insert a backdoor into an open-source model"],"answer":1,"explain":"Adversarial examples exploit the geometry of the model's decision boundary. Tiny deliberate perturbations — often invisible to humans — push an input across that boundary, causing confident misclassification."},
+  {"q":"What problem does AI primarily solve in modern Security Operations Centers?","options":["The shortage of physical hardware needed to store and process the growing volume of security log data","Alert fatigue — AI correlates and prioritizes the enormous volume of alerts that human analysts cannot manually triage","The legal complexity of attributing attacks to specific threat actors across international jurisdictions","The challenge of encrypting incident response communications between distributed SOC team members"],"answer":1,"explain":"A large SOC can receive millions of alerts daily. Human analysts cannot triage them all, burying critical alerts. AI correlates events, suppresses low-fidelity noise, and surfaces genuine threats."},
+  {"q":"What is a 'model poisoning' attack against an AI security system?","options":["An attack that corrupts the model weights after deployment by injecting adversarial inputs at inference time","An attack that corrupts the training data to cause the model to learn incorrect classifications or hidden backdoors","An attack that prevents the model from accessing its training data by blocking the database connection","An attack that causes the model to consume excessive computational resources, creating a denial-of-service condition"],"answer":1,"explain":"Model poisoning attacks target the training process — injecting corrupted data to cause the model to learn wrong associations or triggerable backdoors that persist into deployment."},
+  {"q":"What is 'smart fuzzing' in AI-assisted vulnerability assessment?","options":["A technique that automatically patches discovered vulnerabilities before they can be exploited in production","ML-guided input generation that learns from code coverage feedback to reach deeper, harder-to-test program paths","A method of generating random inputs at very high speed using GPU-accelerated brute-force computation","An approach where AI prioritizes fuzzing targets based on their Common Vulnerability Scoring System ratings"],"answer":1,"explain":"Traditional fuzzing sends random inputs blindly. Smart fuzzing uses ML to learn which mutations increase code coverage, intelligently steering toward unexplored branches and finding vulnerabilities traditional fuzzers miss."},
+  {"q":"What is the primary threat model around deepfakes in enterprise security contexts?","options":["Deepfakes are mainly used to impersonate celebrities in social media disinformation campaigns","Deepfakes enable social engineering attacks — audio and video spoofing of executives to authorize fraudulent transfers or access","Deepfakes are used to falsify surveillance camera footage to provide fraudulent alibis","Deepfakes allow attackers to bypass facial recognition systems by generating synthetic enrollment images"],"answer":1,"explain":"In enterprise security, deepfakes most commonly enable fraud — AI-generated audio or video of executives instructing employees to transfer funds or grant access, bypassing human authentication."},
+  {"q":"What is the 'dual-use dilemma' in security AI research?","options":["Security AI tools are too expensive for defenders but cheap for attackers, creating an asymmetric cost problem","The same AI capabilities that enable defenders — threat detection, vulnerability discovery — also empower attackers when shared publicly","Security AI research is banned in some jurisdictions while permitted in others, creating legal ambiguity for researchers","AI tools can only be used for either offense or defense in a single deployment but not both simultaneously"],"answer":1,"explain":"Security AI research is inherently dual-use — a vulnerability scanner helps defenders patch systems but also helps attackers find exploitable flaws. Publishing capabilities inevitably arms both sides."},
+  {"q":"How does AI-powered threat detection differ from rule-based detection in its approach to unknown threats?","options":["AI-powered detection uses more rules than rule-based systems, giving it more comprehensive coverage of known threats","AI-powered detection identifies behavioral anomalies that deviate from learned baselines, enabling detection of novel attacks without prior signatures","AI-powered detection requires more human analyst time than rule-based systems because it produces more complex alerts","AI-powered detection only works for network-based threats and cannot analyze host-level behavior"],"answer":1,"explain":"Behavioral anomaly detection establishes a baseline of normal activity and flags deviations — enabling detection of novel attacks that have no signature, which is the core limitation of rule-based systems."},
+  {"q":"What is 'living off the land' as a technique, and why does it challenge ML-based detection?","options":["Attackers use organic social engineering to gather credentials rather than exploiting technical vulnerabilities","Attackers use legitimate built-in system tools — PowerShell, WMI, cmd.exe — so malicious activity looks indistinguishable from normal administration","Attackers deploy malware that harvests environmental variables before executing its main payload","Attackers establish persistence by hiding malware inside firmware that survives operating system reinstallation"],"answer":1,"explain":"Living-off-the-land attacks use legitimate tools already on the system, so the malicious behavior looks like normal administrative activity. This makes behavioral detection very difficult because there is no anomalous binary to flag."},
+  {"q":"What risk does AI-generated malware specifically introduce that traditional malware development did not enable at scale?","options":["AI-generated malware can target firmware below the operating system, which traditional malware cannot reach","AI can rapidly generate novel malware variants that evade existing signatures, lowering the skill bar for creating polymorphic threats","AI-generated malware automatically self-replicates to new networks without any attacker interaction or command and control","AI malware can permanently destroy hardware components that traditional software-based malware cannot affect"],"answer":1,"explain":"AI dramatically lowers the barrier to creating novel malware variants. What once required skilled developers can now be assisted by LLMs — and variants can be generated faster than signature updates."},
+  {"q":"What does MITRE ATT&CK provide that traditional vulnerability databases like CVE do not?","options":["CVE-style severity scores calibrated specifically for AI-assisted attacks that CVE cannot currently represent","A structured taxonomy of adversary tactics, techniques, and procedures observed in real-world attacks, enabling behavioral threat hunting","A real-time feed of newly discovered zero-day vulnerabilities as they are identified by security researchers","A certification framework for security tools that have been independently validated against real threat actor techniques"],"answer":1,"explain":"CVE catalogs specific vulnerabilities in specific software. MITRE ATT&CK catalogs how adversaries actually behave — their tactics, techniques, and procedures — enabling threat hunting based on behavior rather than just known flaws."},
+  {"q":"What is 'evasion' as an adversarial machine learning attack, and in which domain is it most concerning for security?","options":["An attacker evades AI-based detection by physically moving their attack infrastructure to a new data center","An attacker crafts inputs at inference time specifically designed to be misclassified by a deployed model without corrupting training","An attacker evades detection by slowing down their attack to fall below the AI system's rate-based detection thresholds","An attacker deliberately generates too many alerts to overflow the model's classification buffer"],"answer":1,"explain":"Evasion attacks craft inputs that fool a deployed model at inference time — for example, crafting malware that evades an ML-based AV classifier without corrupting its training data."},
+  {"q":"What is 'threat hunting' as distinct from automated AI-powered detection?","options":["Threat hunting is the automated process of scanning all network traffic for known malicious signatures","Threat hunting is proactive, human-led investigation using AI tools to search for adversaries who may have evaded automated detection","Threat hunting refers to the process of discovering new zero-day vulnerabilities before they are exploited by attackers","Threat hunting is the post-incident forensic analysis conducted after a breach has been confirmed by automated systems"],"answer":1,"explain":"Threat hunting is proactive and human-led — analysts hypothesize about how attackers might be present, then use AI tools to search for evidence. It targets adversaries sophisticated enough to evade automated detection."},
+  {"q":"Why is attributing a cyberattack to a specific nation-state or threat actor inherently uncertain?","options":["Nation-state attackers always use unique custom malware that is easy to identify but hard to attribute correctly","Attackers can use false flags, shared tools, compromised infrastructure, and deliberately mimicked TTPs to mislead attribution analysis","Nation-state attribution requires physical evidence that can only be gathered through diplomatic intelligence sharing treaties","AI has made attribution impossible because all cyberattacks now use identical AI-generated code with no distinguishing features"],"answer":1,"explain":"Sophisticated attackers deliberately mislead attribution through false flags — using shared tooling, routing through third-party infrastructure, and mimicking other groups' techniques to make confident attribution extremely difficult."},
+  {"q":"What is the primary concern about using LLMs to assist in writing exploit code?","options":["LLMs write exploit code that is always detectable by modern AV because it lacks the evasion sophistication of human-written code","LLMs lower the skill threshold for exploit development, enabling less skilled attackers to create functional attack tools","LLMs refuse to write any code that could be used offensively, so the risk is primarily theoretical","LLMs produce exploit code that only works against outdated legacy systems rather than modern targets"],"answer":1,"explain":"LLMs can assist in writing functional attack code, lowering the barrier to entry for less skilled threat actors and accelerating the development cycle for more sophisticated ones — a genuine dual-use concern."},
+  {"q":"What is a 'honeypot' and how can AI enhance its effectiveness?","options":["A honeypot is an encrypted vault for storing sensitive credentials safely isolated from production network segments","A honeypot is a decoy system designed to lure attackers; AI can make honeypots more convincing and analyze attacker behavior in real time","A honeypot is a type of anomaly detection that monitors network traffic for unusual packet patterns","A honeypot is a legal tool that allows organizations to conduct active countermeasures against attackers without liability"],"answer":1,"explain":"Honeypots are decoy systems that attract attackers and gather intelligence on their tools and techniques. AI can make them more realistic, more adaptive, and can analyze attacker behavior as it unfolds."},
+  {"q":"Why does the course describe AI as 'raising the floor but also raising the ceiling' in cybersecurity?","options":["AI makes basic security tasks cheaper while making advanced attacks more expensive, narrowing the gap between defenders and attackers","AI makes basic security automation accessible to under-resourced defenders while also enabling more sophisticated attacks than were previously possible","AI raises the cost of defense and the cost of offense equally, maintaining the same balance between the two sides","AI only benefits defenders since attackers cannot use AI tools without accessing proprietary corporate training data"],"answer":1,"explain":"AI helps smaller organizations automate basic defenses they could not previously afford — but also helps attackers automate more sophisticated attacks than they could previously build. Both floors and ceilings rise simultaneously."},
+  {"q":"What is 'supply chain compromise' in the context of AI security, and why is it particularly difficult to detect?","options":["Attackers compromise AI cloud providers to access all customer training data simultaneously","Attackers insert malicious code or backdoors into AI models or tools during development, so the compromise is already inside the trusted supply chain when deployed","Attackers compromise the supply chains of organizations that build physical AI hardware chips","Attackers manipulate AI model outputs by corrupting the supply of inference hardware after deployment"],"answer":1,"explain":"Supply chain compromise inserts the attack inside trusted software, models, or dependencies before they reach the target. Because the source is trusted, standard perimeter defenses do not catch it."},
+  {"q":"In AI-assisted incident response, what task does AI perform best, and what task must remain human-led?","options":["AI performs best at strategic decision-making while humans focus on log parsing and pattern recognition tasks","AI performs best at rapid triage and pattern recognition across large volumes of data while humans lead containment strategy and external communications","AI performs best at external communications while humans perform technical forensics and evidence collection","AI performs best at physical access revocation while humans perform the automated network isolation tasks"],"answer":1,"explain":"AI is strong at fast, large-scale pattern recognition — triaging thousands of alerts, correlating events across data sources. Containment strategy, communication, and judgment calls under uncertainty remain human-led."},
+  {"q":"What is differential privacy and why is it relevant to AI security systems that use sensitive data for training?","options":["Differential privacy is a method for encrypting sensitive data at rest so it cannot be accessed by unauthorized parties","Differential privacy is a mathematical framework that adds calibrated noise to training data so individual records cannot be recovered from the trained model, even if an attacker queries it","Differential privacy is a regulatory standard requiring organizations to use different data for training than for production use","Differential privacy is a technique for deleting sensitive records from training datasets after a model has been trained"],"answer":1,"explain":"Differential privacy protects individuals in training data by adding mathematically calibrated noise so that an attacker who queries the model cannot recover whether a specific individual was in the training set."},
+  {"q":"What makes zero-day discovery using AI a dual-use concern distinct from other security AI capabilities?","options":["Zero-day discovery AI is exclusively owned by nation-states so there is no risk of criminal actor access","AI-discovered zero-days can be exploited before defenders know the vulnerability exists, and the same AI that helps defenders find flaws also helps attackers find exploitable vulnerabilities first","Zero-day discovery AI only works on open-source software and cannot find vulnerabilities in proprietary systems","AI zero-day discovery always requires physical access to the target system, limiting its applicability"],"answer":1,"explain":"The race between finders and fixers is the core tension. AI that discovers zero-days faster helps defenders patch — but the same capability helps attackers exploit before patches are available or even discovered by defenders."},
+  {"q":"What does 'assume breach' mean as a cybersecurity posture, and why does AI reinforce this approach?","options":["Assume breach means accepting that data loss is inevitable and focusing exclusively on minimizing regulatory penalties","Assume breach means designing systems on the premise that attackers may already be inside, prioritizing detection and containment over perimeter prevention alone","Assume breach means running continuous penetration tests that simulate an active breach scenario on all production systems","Assume breach is a legal strategy for minimizing liability by preemptively disclosing potential security incidents"],"answer":1,"explain":"Given the sophistication of AI-assisted attacks that can evade perimeter defenses, assuming an attacker may already be inside shifts focus to detection, lateral movement prevention, and containment — the capabilities where defenders now invest most."}
 ];
 
 let questions=[],current=0,score=0,answered=false;
